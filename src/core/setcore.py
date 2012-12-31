@@ -215,7 +215,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '4.3.3'
+    define_version = '4.3.4'
     return define_version
 
 class create_menu:
@@ -495,7 +495,7 @@ def update_metasploit():
 #
 def update_set():
     print_info("Updating the Social-Engineer Toolkit, be patient...")
-    subprocess.Popen("svn update", shell=True).wait()
+    subprocess.Popen("git pull", shell=True).wait()
     print_status("The updating has finished, returning to main menu..")
     time.sleep(2)
 
