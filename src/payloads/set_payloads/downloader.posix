@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+wget URLHERE
+chmod +x FILENAMEHERE
+./ FILENAMEHERE

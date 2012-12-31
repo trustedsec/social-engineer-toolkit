@@ -1,0 +1,31 @@
+		<div class="post">
+		<h4 class="dates">The Social-Engineer Toolkit (SET) Wireless Attack Vector</h4>
+			<div class="entry">
+				<h2>Wireless Access Point Attack Vector</h2>
+Welcome to the Wireless Attack Vector, this will create an access point leveraging
+your wireless card and redirect all DNS queries to you. The concept is fairly simple,
+SET will create a wireless access point, dhcp server, and spoof DNS to redirect traffic
+to the attacker machine. It will then exit out of that menu with everything running as
+a child process.
+<br><br>
+You can then launch any SET attack vector you want, for example the Java Applet attack and
+when a victim joins your access point and tries going to a website, will be redirected to
+your attacker machine.
+<br><br>
+This attack vector uses AirBase-NG, AirMon-NG, DNSSpoof, and dhcpd3 to work properly.
+<br>
+<br><p><b>Wireless Options</b></p>
+<form action="/wireless_post" method="POST">
+<input type="checkbox" name="wireless" value="1"> Start the SET Wireless Attack Vector Access Point<br>				
+<input type="checkbox" name="wireless" value="2"> Stop the SET Wireless Attack Vector Access Point<br>
+<br><br>
+Enter your wifi interface: <input type="text" name="wifi_interface" STYLE="font-family : arial; font-size : 7pt"/><br />
+<br><br>
+<input type="submit" value="Launch Attack"></form>
+</form>
+			</div>  
+		</div> 
+		
+		
+		<br><br>	
+	</div> 

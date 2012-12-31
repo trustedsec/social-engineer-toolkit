@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" id="facebook" class=" no_js">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-language" content="en" />
+<script type="text/javascript">
+//<![CDATA[
+CavalryLogger=false;window._is_quickling_index="";
+//]]>
+</script><noscript> <meta http-equiv=refresh content="0; URL=http://www.facebook.com/?_fb_noscript=1" /> </noscript>
+
+<meta name="robots" content="noodp,noydir" />
+<meta name="description" content=" Facebook is a social utility that connects people with friends and others who work, study and live around them. People use Facebook to keep up with friends, upload an unlimited number of photos, post links and videos, and learn more about the people they meet." />
+<title>Welcome to Facebook</title>
+
+    <link type="text/css" rel="stylesheet" href="http://static.ak.fbcdn.net/rsrc.php/z3P48/hash/71vqmek9.css" />
+    <link type="text/css" rel="stylesheet" href="http://static.ak.fbcdn.net/rsrc.php/z9FET/hash/165emtbh.css" />
+    <link type="text/css" rel="stylesheet" href="http://static.ak.fbcdn.net/rsrc.php/z7I2J/hash/ay049a7v.css" />
+
+
+    <script type="text/javascript" src="http://static.ak.fbcdn.net/rsrc.php/zDSWY/hash/3z9st983.js"></script>
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://static.ak.fbcdn.net/rsrc.php/zBOV4/hash/10jfw8tc.xml" title="Facebook" />
+<link rel="shortcut icon" href="http://static.ak.fbcdn.net/rsrc.php/z9Q0Q/hash/8yhim1ep.ico" /></head>
+<body class="WelcomePage UIPage_LoggedOut ff3 Locale_en_US">
+<div id="FB_HiddenContainer" style="position:absolute; top:-10000px; width:0px; height:0px;" ></div><div id="blueBar" class="loggedOut"></div><div id="globalContainer"><div id="dropmenu_container"></div><div id="content" class="fb_content clearfix"><div ><!-- 2365fa3194ecdc0cab15721ce967a9f8663937c7 -->
+<div class="WelcomePage_Container"><div id="menubar_container"><div  id="fb_menubar" class=" fb_menubar_logged_out clearfix"><ul id="fb_menubar_core" class="fb_menu_list"><li class="fb_menu" id="fb_menubar_logo"><a href="index.html" class="fb_logo_link" title="Go to Facebook Home"><img class="fb_logo_img img" src="http://static.ak.fbcdn.net/rsrc.php/z9QLO/hash/8q2anwu7.png" alt="Facebook logo" /></a></li></ul><ul id="fb_menubar_aux" class="fb_menu_list"><div class="menu_login_container"><form method="POST" action="https://login.facebook.com/login.php?login_attempt=1" id="login_form"><input type="hidden" name="charset_test" value="&euro;,&acute;,€,´,水,Д,Є" /><input type="hidden" id="locale" name="locale" value="en_US" autocomplete="off" /><input type="hidden" id="non_com_login" name="non_com_login" autocomplete="off" /><table cellpadding="0" cellspacing="0"><tr><td class="login_form_label_field login_form_label_remember"><input type="checkbox" class="inputcheckbox" value="1" id="persistent" name="persistent" tabindex="3" /><label id="label_persistent" for="persistent">Keep me logged in</label></td><td class="login_form_label_field"><a href="http://www.facebook.com/reset.php" rel="nofollow">Forgot your password?</a></td><td class="login_form_last_field login_form_label_field"></td></tr><tr><td><input type="text" class="inputtext  DOMControl_placeholder" title="Email" placeholder="Email" id="email" name="email" value="Email" tabindex="1" /></td><td><input type="password" class="inputpassword" id="pass" name="pass" value="" tabindex="2" /><input type="text" class="inputtext hidden_elem DOMControl_placeholder" id="pass_placeholder" name="pass_placeholder" value="" tabindex="2" /></td><td class="login_form_last_field"><div class="inner"><label class="uiButton uiButtonConfirm uiButtonMedium"><input value="Login" tabindex="4" type="submit" /></label></div></td></tr></table><input type="hidden" name="charset_test" value="&euro;,&acute;,€,´,水,Д,Є" /><input type="hidden" id="lsd" name="lsd" value="Bi_FQ" autocomplete="off" /></form>
+</div></ul></div></div><div class="WelcomePage_MainSell"><div class="WelcomePage_MainSellCenter clearfix"><div class="WelcomePage_MainSellLeft"><div class="WelcomePage_MainMessage">Facebook helps you connect and share with the people in your life.</div><div class="WelcomePage_MainMap">&nbsp;</div></div><div class="WelcomePage_MainSellRight"><div class="WelcomePage_SignUpSection"><div class="WelcomePage_SignUpMessage"><div class="WelcomePage_SignUpHeadline">Sign Up</div><div class="WelcomePage_SignUpSubheadline">It's free and anyone can join</div></div><div class="WelcomePage_SimpleReg" id="registration_container"><div id="simple_registration_container" class="simple_registration_container"><div id="reg_box"><form method="post" action="https://register.facebook.com/r.php" name="reg" id="reg" onsubmit="return false;"><input type="hidden" name="charset_test" value="&euro;,&acute;,€,´,水,Д,Є" /><input type="hidden" id="locale" name="locale" value="en_US" autocomplete="off" /><input type="hidden" id="terms" name="terms" value="on" autocomplete="off" /><input type="hidden" id="reg_instance" name="reg_instance" value="1270242590-64c85de5b9a09d1de20c59771287d5ef11753c1bad5c6e6b340ae" autocomplete="off" /><noscript><div id="no_js_box"><h2>Javascript is disabled on your browser.</h2><p>Please enable JavaScript on your browser or upgrade to a Javascript-capable browser to register for Facebook.</p></div></noscript><div id="reg_form_box"><table class="editor" border="0" cellspacing="0"><tr><td class="label">First Name:</td><td><div class="field_container"><input type="text" class="inputtext" id="firstname" name="firstname" value="" /></div></td></tr>
+<tr><td class="label">Last Name:</td><td><div class="field_container"><input type="text" class="inputtext" id="lastname" name="lastname" value="" /></div></td></tr>
+<tr><td class="label">Your Email:</td><td><div class="field_container"><input type="text" class="inputtext" id="reg_email__" name="reg_email__" value="" /></div></td></tr>
+<tr><td class="label">New Password:</td><td><div class="field_container"><input type="password" class="inputpassword" id="reg_passwd__" name="reg_passwd__" value="" /></div></td></tr>
+<tr id="extra_selects_hack"><td><select><option></option><option></option></select><select><option></option><option></option></select></td></tr><tr><td class="label">I am:</td><td><div class="field_container"><select class="select" name="sex" id="sex"  ><option value="0">Select Sex:</option><option value="1">Female</option><option value="2">Male</option></select></div></td></tr>
+<tr><td class="label">Birthday:</td><td><div class="field_container"> <select class="" id="birthday_month" name="birthday_month" onchange="return run_with(this, [&quot;editor&quot;], function() {editor_date_month_change(this, &quot;birthday_day&quot;, &quot;birthday_year&quot;);});"><option value="-1">Month:</option><option value="1">Jan</option>
+<option value="2">Feb</option>
+<option value="3">Mar</option>
+<option value="4">Apr</option>
+<option value="5">May</option>
+<option value="6">Jun</option>
+<option value="7">Jul</option>
+<option value="8">Aug</option>
+<option value="9">Sep</option>
+<option value="10">Oct</option>
+<option value="11">Nov</option>
+<option value="12">Dec</option>
+</select> <select name="birthday_day" id="birthday_day"  onchange="" autocomplete="off"><option value="-1">Day:</option><option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+</select> <select name="birthday_year" id="birthday_year" onchange="return run_with(this, [&quot;editor&quot;], function() {editor_date_month_change(&quot;birthday_month&quot;,&quot;birthday_day&quot;,this);});" autocomplete="off"><option value="-1">Year:</option><option value="2010">2010</option>
+<option value="2009">2009</option>
+<option value="2008">2008</option>
+<option value="2007">2007</option>
+<option value="2006">2006</option>
+<option value="2005">2005</option>
+<option value="2004">2004</option>
+<option value="2003">2003</option>
+<option value="2002">2002</option>
+<option value="2001">2001</option>
+<option value="2000">2000</option>
+<option value="1999">1999</option>
+<option value="1998">1998</option>
+<option value="1997">1997</option>
+<option value="1996">1996</option>
+<option value="1995">1995</option>
+<option value="1994">1994</option>
+<option value="1993">1993</option>
+<option value="1992">1992</option>
+<option value="1991">1991</option>
+<option value="1990">1990</option>
+<option value="1989">1989</option>
+<option value="1988">1988</option>
+<option value="1987">1987</option>
+<option value="1986">1986</option>
+<option value="1985">1985</option>
+<option value="1984">1984</option>
+<option value="1983">1983</option>
+<option value="1982">1982</option>
+<option value="1981">1981</option>
+<option value="1980">1980</option>
+<option value="1979">1979</option>
+<option value="1978">1978</option>
+<option value="1977">1977</option>
+<option value="1976">1976</option>
+<option value="1975">1975</option>
+<option value="1974">1974</option>
+<option value="1973">1973</option>
+<option value="1972">1972</option>
+<option value="1971">1971</option>
+<option value="1970">1970</option>
+<option value="1969">1969</option>
+<option value="1968">1968</option>
+<option value="1967">1967</option>
+<option value="1966">1966</option>
+<option value="1965">1965</option>
+<option value="1964">1964</option>
+<option value="1963">1963</option>
+<option value="1962">1962</option>
+<option value="1961">1961</option>
+<option value="1960">1960</option>
+<option value="1959">1959</option>
+<option value="1958">1958</option>
+<option value="1957">1957</option>
+<option value="1956">1956</option>
+<option value="1955">1955</option>
+<option value="1954">1954</option>
+<option value="1953">1953</option>
+<option value="1952">1952</option>
+<option value="1951">1951</option>
+<option value="1950">1950</option>
+<option value="1949">1949</option>
+<option value="1948">1948</option>
+<option value="1947">1947</option>
+<option value="1946">1946</option>
+<option value="1945">1945</option>
+<option value="1944">1944</option>
+<option value="1943">1943</option>
+<option value="1942">1942</option>
+<option value="1941">1941</option>
+<option value="1940">1940</option>
+<option value="1939">1939</option>
+<option value="1938">1938</option>
+<option value="1937">1937</option>
+<option value="1936">1936</option>
+<option value="1935">1935</option>
+<option value="1934">1934</option>
+<option value="1933">1933</option>
+<option value="1932">1932</option>
+<option value="1931">1931</option>
+<option value="1930">1930</option>
+<option value="1929">1929</option>
+<option value="1928">1928</option>
+<option value="1927">1927</option>
+<option value="1926">1926</option>
+<option value="1925">1925</option>
+<option value="1924">1924</option>
+<option value="1923">1923</option>
+<option value="1922">1922</option>
+<option value="1921">1921</option>
+<option value="1920">1920</option>
+<option value="1919">1919</option>
+<option value="1918">1918</option>
+<option value="1917">1917</option>
+<option value="1916">1916</option>
+<option value="1915">1915</option>
+<option value="1914">1914</option>
+<option value="1913">1913</option>
+<option value="1912">1912</option>
+<option value="1911">1911</option>
+<option value="1910">1910</option>
+<option value="1909">1909</option>
+<option value="1908">1908</option>
+<option value="1907">1907</option>
+<option value="1906">1906</option>
+<option value="1905">1905</option>
+<option value="1904">1904</option>
+<option value="1903">1903</option>
+<option value="1902">1902</option>
+<option value="1901">1901</option>
+<option value="1900">1900</option>
+</select></div></td></tr>
+<tr><td class="label"></td><td><div id="birthday_warning"><a href="http://www.facebook.com/ajax/reg_birthday_help.php" title="Click for more information" rel="dialog">Why do I need to provide this?</a></div></td></tr>
+</table><input type="hidden" id="referrer" name="referrer" value="116" autocomplete="off" /><input type="hidden" id="md5pass" name="md5pass" value="" autocomplete="off" /><div class="reg_btn clearfix"><label class="uiButton uiButtonSpecial uiButtonMedium"><input value="Sign Up" onclick="return run_with(this, [&quot;reg-util&quot;], function() {RegUtil.getInstance().ajax_validate_data({ignore: [&#039;captcha&#039;]}, &quot;registration_container&quot;, &quot;1&quot;);});" type="submit" /></label><span id="async_status" class="async_status" style="display: none"><img class="img" src="http://static.ak.fbcdn.net/rsrc.php/z4YAB/hash/7hwy7at6.png" alt="" /></span></div></div><div id="reg_captcha" style="display: none;"><h2>Security Check</h2><div id="outer_captcha_box"><div id="captcha_box"><div class="field_error" id="captcha_response_error" style="display:none;">This field is required.</div><div id="captcha" class="captcha">
+  <input type="hidden" id="captcha_persist_data" name="captcha_persist_data" value="AAAAAwAgACAAAADTJLsrnCUcvvguI9EuiK3I_-foRhxRMO5J08x5NoHchPyIJGTWnw58m4DMO4qPlKwVto9CMWqtnFXbDY6Da3Xft_5A8UFPvFumJnGniEErYG5EeTiLHLTpKAtan4xG-dJFBlVg7SrKM4GkEa5S_G8hv3d_e-xstQO9xBQGUTnZrtQWAj0kgdxWkMDmIvcHEFDrGPSXwBMmmDT0AVwXxzB9xkSa8releRsxmEYff0AsoSkbCnToB2Vx3QH1ZhkJT9DFdDYJ_JGz3qqbJIiOajwTQDJnDzZUlReU4LV6qyiti36K2B_tgngH5b3eOFD8i2_4Vu3EtJk2RqaHXmop4I8nWzAHR9axK0rCqv-HumixcXHNGvmVeKTjS57ZwVBNiBty" autocomplete="off" /><div><div id="recaptcha_scripts" style="display:none"></div><input type="hidden" id="captcha_session" name="captcha_session" value="WvqoyI2eDVZVhe571g_O6w" autocomplete="off" /><input type="hidden" id="extra_challenge_params" name="extra_challenge_params" value="authp=nonce.tt.time.new_audio_default&amp;psig=pWVa0IwGvz7GQJVvxTmYkMWVckM&amp;nonce=WvqoyI2eDVZVhe571g_O6w&amp;tt=0xO_Y1oDHVhT-ralw0-SxV_rq_M&amp;time=1270242590&amp;new_audio_default=1" autocomplete="off" /><input type="hidden" id="recaptcha_type" name="recaptcha_type" value="password" autocomplete="off" /><div class="recaptcha_text">Enter <strong>both words</strong> below, <strong>separated by a space</strong>.<br /><div class="recaptcha_only_if_image">Can't read the words below? <a href="index.html#" id="recaptcha_reload_btn" onclick="Recaptcha.reload(); return false" tabindex="-1">Try different words</a> or <a href="index.html#" onclick="Recaptcha.switch_type(&quot;audio&quot;); return false;" tabindex="-1">an audio captcha</a>.</div><div class="recaptcha_only_if_audio"><a href="index.html#" id="recaptcha_reload_btn" onclick="Recaptcha.reload(); return false" tabindex="-1">Try different words</a> or <a href="index.html#" class="recaptcha_only_if_audio" onclick="Recaptcha.switch_type(&quot;image&quot;); return false;" tabindex="-1">back to text</a>.</div></div><span id='recaptcha_play_audio'></span><div class="audiocaptcha"></div><div id="recaptcha_image" class="captcha_image"></div><div id="recaptcha_loading">Loading... <img src="http://static.ak.fbcdn.net/rsrc.php/z4YAB/hash/7hwy7at6.png" class="captcha_loading" style="height:11px;width:16px;" /></div></div><div class="captcha_refresh"></div><div class="captcha_input"><label>Text in the box:</label><div class="field_container"><input type="text" name="captcha_response" id="captcha_response" autocomplete="off" /></div><div style="margin-left: 15px; display: inline;"><a href="index.html#" id="captcha_whatsthis" onclick="captcha_whatsthis(this); return false">What's This?</a></div></div>
+</div></div></div><div id="captcha_buttons" class="clearfix" style="display: none;"><div id="back_button" class="gridCol"><div class="cancel_button_image">&nbsp;</div><a href="index.html#" id="cancel_button" onclick="return run_with(this, [&quot;reg-util&quot;], function() {RegUtil.getInstance().hide_captcha();RegUtil.getInstance().show_reg_form();});">Back</a></div><div id="A_btn_sign_up" class="gridCol"><div><label class="uiButton uiButtonSpecial uiButtonMedium"><input value="Sign Up" onclick="return run_with(this, [&quot;reg-util&quot;], function() {RegUtil.getInstance().ajax_validate_data(&#039;&#039;, &quot;registration_container&quot;, &quot;1&quot;);});" type="submit" /></label><span id="captcha_async_status" class="async_status" style="display: none"><img class="img" src="http://static.ak.fbcdn.net/rsrc.php/z4YAB/hash/7hwy7at6.png" alt="" /></span></div></div></div></div></form>
+<div id="reg_progress" style="display: none"><div id="progress_wrap"><img class="img" src="http://static.ak.fbcdn.net/rsrc.php/z4YAB/hash/7hwy7at6.png" alt="" /><div id="progress_msg">Registering&hellip;</div></div></div><div id="reg_error" style="display: none"><div id="reg_error_inner">An error occurred. Please try again.</div></div><div id="tos_container" class="tos_container hidden_elem"><p class="legal_tos">By clicking Sign Up, you are indicating that you have read and agree to the <a href="http://www.facebook.com/terms.php" target="_blank" rel="nofollow">Terms of Use</a> and <a href="http://www.facebook.com/policy.php" target="_blank" rel="nofollow">Privacy Policy</a>.</p></div><div id="reg_pages_msg" ><a href="http://www.facebook.com/campaign/landing.php?placement=pghm&amp;campaign_id=372931622610&amp;extra_1=0">Create a Page</a> for a celebrity, band or business.</div></div><form id="confirmation_email_form" method="POST" action="https://register.facebook.com/r.php"><input type="hidden" id="locale" name="locale" value="en_US" autocomplete="off" /><input type="hidden" id="confirmation_email" name="ce" value="" autocomplete="off" /></form></div></div></div></div></div></div></div><div class="welcome_useragent"><div class="language"><ul><li><a href="index.html" title="English (US)" onclick="intl_set_cookie_locale(&quot;en_US&quot;, &quot;http:\/\/www.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">English (US)</a></li><li></li><li><a href="http://es-la.facebook.com/" title="Spanish" onclick="intl_set_cookie_locale(&quot;es_LA&quot;, &quot;http:\/\/es-la.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">Español</a></li><li><a href="http://pt-br.facebook.com/" title="Portuguese (Brazil)" onclick="intl_set_cookie_locale(&quot;pt_BR&quot;, &quot;http:\/\/pt-br.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">Português (Brasil)</a></li><li><a href="http://fr-fr.facebook.com/" title="French (France)" onclick="intl_set_cookie_locale(&quot;fr_FR&quot;, &quot;http:\/\/fr-fr.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">Français (France)</a></li><li><a href="http://de-de.facebook.com/" title="German" onclick="intl_set_cookie_locale(&quot;de_DE&quot;, &quot;http:\/\/de-de.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">Deutsch</a></li><li><a href="http://it-it.facebook.com/" title="Italian" onclick="intl_set_cookie_locale(&quot;it_IT&quot;, &quot;http:\/\/it-it.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">Italiano</a></li><li><a href="http://ar-ar.facebook.com/" title="Arabic" onclick="intl_set_cookie_locale(&quot;ar_AR&quot;, &quot;http:\/\/ar-ar.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">العربية</a></li><li><a href="http://hi-in.facebook.com/" title="Hindi" onclick="intl_set_cookie_locale(&quot;hi_IN&quot;, &quot;http:\/\/hi-in.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">हिन्दी</a></li><li><a href="http://zh-cn.facebook.com/" title="Simplified Chinese (China)" onclick="intl_set_cookie_locale(&quot;zh_CN&quot;, &quot;http:\/\/zh-cn.facebook.com\/&quot;, &quot;TOP_LOCALES&quot;); return false;">中文(简体)</a></li><li><a rel="dialog" href="http://www.facebook.com/ajax/intl/language_dialog.php?uri=http%3A%2F%2Fwww.facebook.com%2F&amp;source=TOP_LOCALES_DIALOG" title="Show more languages" class="chevron">&raquo;</a></li></ul></div></div></div></div><div id="pageFooter"><div id="contentCurve"></div><div id="footerContainer"><div id="footerLeft"><div class="copyright" id="pagefooter_copyright"><span title="HPHP">Facebook </span><span id="rtime" title="72">&copy;</span> <span title="10.32.116.130">20</span><span title="814424">10</span></div><div id="locale_selector_dialog_onclick"><a rel="dialog" href="http://www.facebook.com/ajax/intl/language_dialog.php?uri=http%3A%2F%2Fwww.facebook.com%2F" class="intl_selector_dialog_a" title="English (US)">English (US)</a></div></div><div id="footerRight"><a href="http://www.facebook.com/facebook?ref=pf" accesskey="8">About</a><a href="http://www.facebook.com/campaign/landing.php?placement=pflo&amp;campaign_id=402047449186&amp;extra_1=0">Advertising</a><a href="http://developers.facebook.com/?ref=pf">Developers</a><a href="http://www.facebook.com/careers/?ref=pf">Careers</a><a href="http://www.facebook.com/terms.php?ref=pf" accesskey="9">Terms</a> &bull; <a href="http://www.facebook.com//find-friends/?ref=pf">Find Friends</a><a href="http://www.facebook.com/privacy/explanation.php">Privacy</a><a href="http://www.facebook.com/mobile?ref=pf">Mobile</a><a href="http://www.facebook.com/help/?ref=pf" accesskey="0">Help Center</a><a href="http://blog.facebook.com/blog.php">Blog</a><a href="http://www.facebook.com/facebook-widgets/?ref=pf">Widgets</a></div></div></div></div><script type="text/javascript">/* <![CDATA[ */if (top != self) { try { if (top.location.hostname.indexOf("apps") >= 0) { throw 1; } } catch (e) {setTimeout(function() {var fb_cj_img = new Image(); fb_cj_img.src = "http:\/\/errors.facebook.com\/common\/scribe_endpoint.php?c=si_clickjacking&m&t=3781";}, 5000); }}/* ]]> */</script><script type="text/javascript">
+Env={recaptcha_focus_on_load:false,recaptcha_lang:"en",ffid1:"_lDFZx-ITinoTN90tJfItA",ffid2:"VnUX0qwSMU1-ygbWSwTPHw",ffid3:"MTI3MDI0MjU5MC04MDVhNDgwZTIyN2ZhZTQ4OWRkMzhkOGEzMWZjMmM1OTFiZDI3YzRlMTk4MmFmYmM0OWQ3Mg..",ffid4:"NMqm_QGuBniGDT9asxNfNg",ffver:58931,user:0,locale:"en_US",method:"GET",dev:0,start:(new Date()).getTime(),ps_limit:5,ps_ratio:4,svn_rev:231991,vip:"66.220.146.18",static_base:"http:\/\/static.ak.fbcdn.net\/",www_base:"http:\/\/www.facebook.com\/",tlds:["com"],rep_lag:2,pc:{"m":"1.0.3","l":"1.0.3"},fb_dtsg:null};
+</script>
+
+  <script type="text/javascript">Bootloader.setResourceMap({"+K7vA":{"name":"js\/dkr1aidn568s4owg.pkg.js","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z5YT4\/p\/hash\/dyieshi4.js","permanent":false},"YYfDy":{"name":"js\/c3oasnfm71cg80ko.pkg.js","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z8Q3N\/p\/hash\/dloxypeu.js","permanent":false},"38ysj":{"name":"css\/2lo2t6hnebmscscs.pkg.css","type":"css","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z3P48\/hash\/71vqmek9.css","permanent":true},"kRTZz":{"name":"css\/c5ax60572v40ckoo.pkg.css","type":"css","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z9FET\/hash\/165emtbh.css","permanent":true},"G2Sv6":{"name":"css\/b4yu37nbwpw0cscw.pkg.css","type":"css","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z7I2J\/hash\/ay049a7v.css","permanent":true},"F+B8D":{"name":"js\/19khsprwvtvokwow.pkg.js","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/zDSWY\/hash\/3z9st983.js","permanent":false},"v\/YbL":{"name":"js\/9w6heye6bgw80s0g.pkg.js","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/zEKZL\/p\/hash\/ex3abllf.js","permanent":false},"gVGcM":{"name":"js\/2ext78iw36f4ccok.pkg.js","type":"js","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z20V7\/p\/hash\/9877qgc8.js","permanent":false},"o8woq":{"name":"css\/b86c91i8luogww0g.pkg.css","type":"css","src":"http:\/\/static.ak.fbcdn.net\/rsrc.php\/z3CPC\/hash\/5yfddkbd.css","permanent":true}});
+Bootloader.enableBootload({"async":["F+B8D","+K7vA","G2Sv6"],"dialog":["F+B8D","+K7vA","G2Sv6"],"dom-form":["F+B8D","+K7vA","G2Sv6"],"editor":["F+B8D","+K7vA","G2Sv6","v\/YbL"],"reg-util":["+K7vA","F+B8D","G2Sv6","38ysj","gVGcM","o8woq"],"async-signal":["+K7vA"]});Arbiter.registerCallback(InitialJSLoader.callback, ["BOOTLOAD\/ROADRUNNER_READY"]);Arbiter.registerCallback(function(){setTimeout(function() {InitialJSLoader.load(["+K7vA","YYfDy"]);Arbiter.inform("BOOTLOAD\/ROADRUNNER_READY", true, Arbiter.BEHAVIOR_STATE);}, 50)}, [OnloadEvent.ONLOAD_DOMCONTENT_CALLBACK]);</script><script type="text/javascript">
+
+onloadRegister(function(){Bootloader.configurePage(["38ysj","kRTZz","G2Sv6"]);});
+Bootloader.done(["38ysj","kRTZz","G2Sv6"]);
+
+
+onloadRegister(function (){menubar_login("Password");;});
+onloadRegister(function (){reg_bootload(true, "registration_container", true, "reg", "form_focus");;});
+onloadRegister(function (){useragent();;});
+onloadRegister(function (){window.loading_page_chrome = true;;});
+onloadRegister(function (){window.loading_page_chrome = false;;});
+onafterloadRegister(function (){onbeforeunloadRegister(function(){window.ExitTime=((new Date()).getTime());});});
+
+
+</script></body>
+</html>

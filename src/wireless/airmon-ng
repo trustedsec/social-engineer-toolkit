@@ -1,0 +1,1133 @@
+#!/bin/sh
+
+USERID=""
+IFACE=""
+KISMET=/etc/kismet/kismet.conf
+CH=$3; [ x$3 = "x" ] && CH=10
+IFACE_FOUND="false"
+MADWIFI=0
+MAC80211=0
+USE_IW=0
+IW_SOURCE="http://wireless.kernel.org/download/iw/iw-0.9.19.tar.bz2"
+IW_ERROR=""
+UDEV_ISSUE=0
+
+if [ -f "`which iw 2>&1`" ]
+then
+	USE_IW=1
+fi
+
+if [ "x$MON_PREFIX"="x" ]
+then
+MON_PREFIX="mon"
+fi
+
+PROCESSES="wpa_action\|wpa_supplicant\|wpa_cli\|dhclient\|ifplugd\|dhcdbd\|dhcpcd\|NetworkManager\|knetworkmanager\|avahi-autoipd\|avahi-daemon\|wlassistant\|wifibox"
+PS_ERROR="invalid"
+
+usage() {
+	printf "usage: `basename $0` <start|stop|check> <interface> [channel or frequency]\n"
+	echo
+	exit
+}
+
+startStdIface() {
+	iwconfig $1 mode monitor >/dev/null 2>&1
+	if [ ! -z $2 ]
+	then
+	    if [ $2 -lt 1000 ]
+	    then
+		iwconfig $1 channel $2 >/dev/null 2>&1
+	    else
+		iwconfig $1 freq "$2"000000 > /dev/null 2>&1
+	    fi
+	fi
+	iwconfig $1 key off >/dev/null 2>&1
+	ifconfig $1 up
+	printf " (monitor mode enabled)"
+}
+
+
+stopStdIface() {
+	ifconfig $1 down >/dev/null 2>&1
+	iwconfig $1 mode Managed >/dev/null 2>&1
+	ifconfig $1 down >/dev/null 2>&1
+	printf " (monitor mode disabled)"
+}
+
+getModule() {
+    if [ -f "/sys/class/net/$1/device/driver/module/srcversion" ]
+    then
+        srcver1=`cat "/sys/class/net/$1/device/driver/module/srcversion"`
+        for j in `lsmod | awk '{print $1}' | grep -v "^Module$"`
+        do
+            srcver2="`modinfo $j 2>/dev/null | grep srcversion | awk '{print $2}'`"
+            if [ $srcver1 = "$srcver2" ]
+            then
+                MODULE=$j
+                break
+            fi
+        done
+    else
+        MODULE=""
+    fi
+#    return 0
+}
+
+getDriver() {
+   if [ -e "/sys/class/net/$1/device/driver" ]
+   then
+       DRIVER="`ls -l "/sys/class/net/$1/device/driver" | sed 's/^.*\/\([a-zA-Z0-9_-]*\)$/\1/'`"
+       BUS="`ls -l "/sys/class/net/$1/device/driver" | sed 's/^.*\/\([a-zA-Z0-9_-]*\)\/.*\/.*$/\1/'`"
+   else
+       DRIVER=""
+       BUS=""
+   fi
+   if [ x$(echo $DRIVER | grep ath5k) != "x" ]
+   then
+       DRIVER="ath5k"
+   fi
+   if [ x$(echo $DRIVER | grep ath9k) != "x" ]
+   then
+       DRIVER="ath9k"
+   fi
+}
+
+scanProcesses() {
+    match=`ps -A -o comm= | grep $PROCESSES | grep -v grep | wc -l`
+    if [ $match -gt 0 -a x"$1" != xkill ]
+    then
+        printf "\n\n"
+        echo "Found $match processes that could cause trouble."
+        echo "If airodump-ng, aireplay-ng or airtun-ng stops working after"
+        echo "a short period of time, you may want to kill (some of) them!"
+        echo -e "\nPID\tName"
+    else
+        if [ x"$1" != xkill ]
+        then
+            return
+        fi
+    fi
+
+    if [ $match -gt 0 -a x"$1" = xkill ]
+    then
+        echo "Killing all those processes..."
+    fi
+
+    i=1
+    while [ $i -le $match ]
+    do
+        pid=`ps -A -o pid= -o comm= | grep $PROCESSES | grep -v grep | head -n $i | tail -n 1 | awk '{print $1}'`
+        pname=`ps -A -o pid= -o comm= | grep $PROCESSES | grep -v grep | head -n $i | tail -n 1 | awk '{print $2}'`
+        if [ x"$1" != xkill ]
+        then
+            printf "$pid\t$pname\n"
+        else
+            kill $pid
+        fi
+        i=$(($i+1))
+    done
+}
+
+checkProcessesIface() {
+    if [ x"$1" = x ]
+    then
+        return
+    fi
+
+    match2=`ps -o comm= -p 1 2>&1 | grep $PS_ERROR | grep -v grep | wc -l`
+    if [ $match2 -gt 0 ]
+    then
+	return
+    fi
+
+    for i in `ps auxw | grep $1 | grep -v "grep" | grep -v "airmon-ng" | awk '{print $2}'`
+    do
+        pname=`ps -o comm= -p $i`
+        echo "Process with PID $i ($pname) is running on interface $1"
+    done
+}
+
+getStack() {
+    if [ x"$1" = x ]
+    then
+        return
+    fi
+
+    if [ -d /sys/class/net/$1/phy80211/ ]
+    then
+        MAC80211=1
+    else
+        MAC80211=0
+    fi
+}
+
+#you need to run getDriver $iface prior to getChipset
+getChipset() {
+    if [ x"$1" = x ]
+    then
+        return
+    fi
+
+    CHIPSET="Unknown "
+
+    if [ x$DRIVER = "xOtus" -o x$DRIVER = "xarusb_lnx" -o x$DRIVER = "xar9170usb" ]
+    then
+	CHIPSET="AR9001U"
+    fi
+
+    if [ x$DRIVER = "xzd1211rw" -o x$DRIVER = "xzd1211rw_mac80211" ]
+    then
+        CHIPSET="ZyDAS 1211"
+    fi
+
+    if [ x$DRIVER = "xacx" -o x$DRIVER = "xacx-mac80211" -o x$DRIVER = "xacx1xx" ]
+    then
+        CHIPSET="TI ACX1xx"
+    fi
+
+    if [ x$DRIVER = "adm8211" ]
+    then
+        CHIPSET="ADMtek 8211"
+    fi
+
+    if [ x$DRIVER = "xat76_usb" ]
+    then
+        CHIPSET="Atmel   "
+    fi
+
+    if [ x$DRIVER = "xb43" -o x$DRIVER = "xb43legacy" -o x$DRIVER = "xbcm43xx" -o x$DRIVER = "xwl" ]
+    then
+        CHIPSET="Broadcom"
+    fi
+
+    if [ x$DRIVER = "xprism54" -o x$DRIVER = "xp54pci" -o x$DRIVER = "xp54usb" ]
+    then
+        CHIPSET="PrismGT "
+    fi
+
+    if [ x$DRIVER = "xhostap" ]
+    then
+        CHIPSET="Prism 2/2.5/3"
+    fi
+
+    if [ x$DRIVER = "xr8180" -o x$DRIVER = "xrtl8180" ]
+    then
+        CHIPSET="RTL8180/RTL8185"
+    fi
+
+    if [ x$DRIVER = "xr8187" -o x$DRIVER = "xrtl8187" ]
+    then
+        CHIPSET="RTL8187 "
+    fi
+
+    if [ x$DRIVER = "xrt2570" -o x$DRIVER = "xrt2500usb" ]
+    then
+        CHIPSET="Ralink 2570 USB"
+    fi
+
+    if [ x$DRIVER = "xrt2400" -o x$DRIVER = "xrt2400pci" ]
+    then
+        CHIPSET="Ralink 2400 PCI"
+    fi
+
+    if [ x$DRIVER = "xrt2500" -o x$DRIVER = "xrt2500pci" ]
+    then
+        CHIPSET="Ralink 2560 PCI"
+    fi
+
+    if [ x$DRIVER = "xrt61" -o x$DRIVER = "xrt61pci" ]
+    then
+        CHIPSET="Ralink 2561 PCI"
+    fi
+
+    if [ x$DRIVER = "xrt73" -o x$DRIVER = "xrt73usb" ]
+    then
+        CHIPSET="Ralink 2573 USB"
+    fi
+
+    if [ x$DRIVER = "xrt2800" -o x$DRIVER = "xrt2800usb" ]
+    then
+        CHIPSET="Ralink RT2870/3070"
+    fi
+
+    if [ x$DRIVER = "xipw2100" ]
+    then
+        CHIPSET="Intel 2100B"
+    fi
+
+    if [ x$DRIVER = "xipw2200" ]
+    then
+        CHIPSET="Intel 2200BG"
+    fi
+
+    if [ x$DRIVER = "xipw3945" -o x$DRIVER = "xipwraw" -o x$DRIVER = "xiwl3945" ]
+    then
+        CHIPSET="Intel 3945ABG"
+    fi
+
+    if [ x$DRIVER = "xipw4965" -o x$DRIVER = "xiwl4965" ]
+    then
+        CHIPSET="Intel 4965AGN"
+    fi
+
+    if [ x$DRIVER = "xiwlagn" ]
+    then
+        CHIPSET="Intel 4965/5xxx"
+    fi
+
+    if [ x$DRIVER = "xath_pci" -o x$DRIVER = "xath5k" -o x$DRIVER = "xath9k" ]
+    then
+        CHIPSET="Atheros "
+    fi
+
+    if [ x$DRIVER = "xorinoco" ]
+    then
+        CHIPSET="Hermes/Prism"
+    fi
+}
+
+getPhy() {
+    PHYDEV=""
+    if [ x"$1" = x ]
+    then
+        return
+    fi
+
+    if [ x$MAC80211 = "x" ]
+    then
+        return
+    fi
+
+    PHYDEV="`ls -l "/sys/class/net/$1/phy80211" | sed 's/^.*\/\([a-zA-Z0-9_-]*\)$/\1/'`"
+}
+
+getNewMon() {
+    i=0
+
+    while [ -d /sys/class/net/$MON_PREFIX$i/ ]
+    do
+        i=$(($i+1))
+    done
+
+    MONDEV="$MON_PREFIX$i"
+}
+
+if [ x"`which id 2> /dev/null`" != "x" ]
+then
+	USERID="`id -u 2> /dev/null`"
+fi
+
+if [ x$USERID = "x" -a x$UID != "x" ]
+then
+	USERID=$UID
+fi
+
+if [ x$USERID != "x" -a x$USERID != "x0" ]
+then
+	echo Run it as root ; exit ;
+fi
+
+iwpriv > /dev/null 2> /dev/null ||
+  { echo Wireless tools not found ; exit ; }
+
+if [ x"$1" = xcheck ] || [ x"$1" = xstart ]
+then
+    scanProcesses
+    for iface in `iwconfig 2>/dev/null | egrep '(IEEE|ESSID|802\.11|WLAN)' | sed 's/^\([a-zA-Z0-9_]*\) .*/\1/' | grep -v wifi`
+    do
+#         getModule $iface
+#         getDriver $iface
+        checkProcessesIface $iface
+    done
+
+    if [ x"$2" = xkill ]
+    then
+        scanProcesses "$2"
+    fi
+    if [ x"$1" = xcheck ]
+    then
+        exit
+    fi
+fi
+
+printf "\n\n"
+
+if [ $# -ne "0" ]
+then
+    if [ x$1 != "xstart" ] && [ x$1 != "xstop" ]
+    then
+        usage
+    fi
+
+    if [ x$2 = "x" ]
+    then
+        usage
+    fi
+fi
+
+SYSFS=0
+if [ -d /sys/ ]
+then
+    SYSFS=1
+fi
+
+printf "Interface\tChipset\t\tDriver\n\n"
+
+
+for iface in `ifconfig -a 2>/dev/null | egrep UNSPEC | sed 's/^\([a-zA-Z0-9_]*\) .*/\1/'`
+do
+
+ if [ x"`iwpriv $iface 2>/dev/null | grep ipwraw-ng`" != "x" ]
+ then
+        printf "$iface\t\tIntel 3945ABG\tipwraw-ng"
+        if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+        then
+                cp $KISMET~ $KISMET 2>/dev/null &&
+                echo "source=ipw3945,$iface,Centrino_abg" >>$KISMET
+                startStdIface $iface $CH
+                iwconfig $iface rate 1M 2> /dev/null >/dev/null
+                iwconfig $iface txpower 16 2> /dev/null >/dev/null
+        fi
+        if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+        then
+                stopStdIface $iface
+                iwconfig $iface txpower 15 2> /dev/null >/dev/null
+                iwconfig $iface rate 54M 2> /dev/null >/dev/null
+        fi
+        echo
+        continue
+ fi
+
+ if [ -e "/proc/sys/dev/$iface/fftxqmin" ]
+ then
+    MADWIFI=1
+    ifconfig $iface up
+    printf "$iface\t\tAtheros\t\tmadwifi-ng"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+        IFACE=`wlanconfig ath create wlandev $iface wlanmode monitor -bssid | grep ath`
+        cp $KISMET~ $KISMET 2>/dev/null &&
+        echo "source=madwifi_g,$iface,Atheros" >>$KISMET
+        ifconfig $iface up 2>/dev/null >/dev/null
+        if [ $CH -lt 1000 ]
+        then
+            iwconfig $IFACE channel $CH 2>/dev/null >/dev/null
+        else
+            iwconfig $IFACE freq "$CH"000000 2>/dev/null >/dev/null
+        fi
+        ifconfig $IFACE up 2>/dev/null >/dev/null
+        UDEV_ISSUE=$?
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+    then
+            echo "$iface does not support 'stop', do it on ath interface"
+    fi
+    echo
+    continue
+ fi
+done
+
+if [ $MADWIFI -eq 1 ]
+then
+	sleep 1s
+fi
+
+for iface in `iwconfig 2>/dev/null | egrep '(IEEE|ESSID|802\.11|WLAN)' | sed 's/^\([a-zA-Z0-9_]*\) .*/\1/' | grep -v wifi`
+do
+ getModule  $iface
+ getDriver  $iface
+ getStack   $iface
+ getChipset $DRIVER
+
+
+ if [ x$MAC80211 = "x1" ]
+ then
+    getPhy $iface
+    getNewMon
+    printf "$iface\t\t$CHIPSET\t$DRIVER - [$PHYDEV]"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+        if [ $USE_IW = 1 ]
+        then
+            IW_ERROR=`iw dev $iface interface add $MONDEV type monitor 2>&1 | grep "nl80211 not found"`
+            if [ x$IW_ERROR = "x" ]
+            then
+                sleep 1s
+		if [ ! -z $3 ]
+                then
+            	    if [ $3 -lt 1000 ]
+            	    then
+                	iwconfig $MONDEV channel $3 >/dev/null 2>&1
+            	    else
+                	iwconfig $MONDEV freq "$3"000000 >/dev/null 2>&1
+            	    fi
+            	fi
+                ifconfig $MONDEV up
+                printf "\n\t\t\t\t(monitor mode enabled on $MONDEV)"
+            else
+                if [ -f /sys/class/ieee80211/"$PHYDEV"/add_iface ]
+                then
+                    echo -n "$MONDEV" > /sys/class/ieee80211/"$PHYDEV"/add_iface
+                    sleep 1s
+                    if [ $3 -lt 1000 ]
+                    then
+                        iwconfig $MONDEV mode Monitor channel $3 >/dev/null 2>&1
+                    else
+                        iwconfig $MONDEV mode Monitor freq "$3"000000 >/dev/null 2>&1
+                    fi
+                    ifconfig $MONDEV up
+                    printf "\n\t\t\t\t(monitor mode enabled on $MONDEV)"
+                else
+                    printf "\n\nERROR: nl80211 support is disabled in your kernel.\nPlease recompile your kernel with nl80211 support enabled.\n"
+                fi
+            fi
+        else
+            if [ -f /sys/class/ieee80211/"$PHYDEV"/add_iface ]
+            then
+                echo -n "$MONDEV" > /sys/class/ieee80211/"$PHYDEV"/add_iface
+                sleep 1s
+                if [ $3 -lt 1000 ]
+                then
+                    iwconfig $MONDEV mode Monitor channel $3 >/dev/null 2>&1
+                else
+                    iwconfig $MONDEV mode Monitor freq "$3"000000 >/dev/null 2>&1
+                fi
+                ifconfig $MONDEV up
+                printf "\n\t\t\t\t(monitor mode enabled on $MONDEV)"
+            else
+                printf "\n\nERROR: Neither the sysfs interface links nor the iw command is available.\nPlease download and install iw from\n$IW_SOURCE\n"
+            fi
+        fi
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+    then
+        z="`echo $iface | cut -b -${#MON_PREFIX}`"
+        if [ x$z = "x$MON_PREFIX" ]
+        then
+            if [ $USE_IW = 1 ]
+            then
+                IW_ERROR=`iw dev "$iface" interface del 2>&1 | grep "nl80211 not found"`
+                if [ x$IW_ERROR = "x" ]
+                then
+                    printf " (removed)"
+                else
+                    if [ -f /sys/class/ieee80211/"$PHYDEV"/remove_iface ]
+                    then
+                        echo -n "$iface" > /sys/class/ieee80211/"$PHYDEV"/remove_iface
+                        printf " (removed)"
+                    else
+                        printf "\n\nERROR: nl80211 support is disabled in your kernel.\nPlease recompile your kernel with nl80211 support enabled.\n"
+                fi
+                fi
+            else
+                if [ -f /sys/class/ieee80211/"$PHYDEV"/remove_iface ]
+                then
+                    echo -n "$iface" > /sys/class/ieee80211/"$PHYDEV"/remove_iface
+                    printf " (removed)"
+                else
+                    printf "\n\nERROR: Neither the sysfs interface links nor the iw command is available.\nPlease download and install iw from\n$IW_SOURCE\n"
+                fi
+	    fi
+        else
+            ifconfig $iface down
+            iwconfig $iface mode managed
+            printf "\n\t\t\t\t(monitor mode disabled)"
+        fi
+    fi
+    echo
+    continue
+ fi
+
+
+ if [ x$DRIVER = "xorinoco" ] || [ x"`iwpriv $iface 2>/dev/null | grep get_rid`" != "x" ] || [ x"`iwpriv $iface 2>/dev/null | grep dump_recs`" != "x" ]
+ then
+    printf "$iface\t\tHermesI\t\torinoco"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+        cp $KISMET~ $KISMET 2>/dev/null &&
+        echo "source=orinoco,$iface,HermesI" >>$KISMET
+        if [ $CH -lt 1000 ]
+        then
+            iwconfig $iface mode Monitor channel $CH >/dev/null 2>&1
+        else
+            iwconfig $iface mode Monitor freq "$CH"000000 >/dev/null 2>&1
+        fi
+        iwpriv $iface monitor 1 $CH >/dev/null 2>&1
+        ifconfig $iface up
+        printf " (monitor mode enabled)"
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+    then
+        ifconfig $iface down
+        iwpriv $iface monitor 0 >/dev/null 2>&1
+        iwconfig $iface mode Managed >/dev/null 2>&1
+        printf " (monitor mode disabled)"
+    fi
+    echo
+    continue
+ fi
+
+
+ if [ x$DRIVER = "xipw2100" ] || [ x"`iwpriv $iface 2>/dev/null | grep set_crc_check`" != "x" ]
+ then
+    printf "$iface\t\tIntel 2100B\tipw2100"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+        cp $KISMET~ $KISMET 2>/dev/null &&
+        echo "source=ipw2100,$iface,Centrino_b" >>$KISMET
+        startStdIface $iface $CH
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+    then
+        stopStdIface $iface
+    fi
+    echo
+    continue
+ fi
+
+
+ if [ x$DRIVER = "xarusb_lnx" ] || [ x$DRIVER = "Otus" ]
+ then
+    printf "$iface\t\tAR9001USB\tOtus"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+	echo "Monitor mode not yet supported"
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+    then
+	stopStdIface $iface
+    fi
+    echo
+    continue
+ fi  
+
+ if [ x$DRIVER = "xipw2200" ] || [ x"`iwpriv $iface 2>/dev/null | grep sw_reset`" != "x" ]
+ then
+    MODINFO=`modinfo ipw2200  2>/dev/null | awk '/^version/ {print $2}'`
+    if { echo "$MODINFO" | grep -E '^1\.0\.(0|1|2|3)$' ; }
+    then
+    	echo "Monitor mode not supported, please upgrade"
+    else
+	printf "$iface\t\tIntel 2200BG\tipw2200"
+	if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+	then
+	    cp $KISMET~ $KISMET 2>/dev/null &&
+	    echo "source=ipw2200,$iface,Centrino_g" >>$KISMET
+	    startStdIface $iface $CH
+	fi
+	if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+	then
+	    stopStdIface $iface
+	fi
+
+    	if { echo "$MODINFO" | grep -E '^1\.0\.(5|7|8|11)$' ; }
+	then
+		printf " (Warning: bad module version, you should upgrade)"
+	fi
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xcx3110x" ] || [ x"`iwpriv $iface 2>/dev/null | grep set_backscan`" != "x" ]
+ then
+     printf "$iface\t\tNokia 770\t\tcx3110x"
+     if [ x$1 = "xstart" ] || [ x$1 = "xstop" ]
+     then
+     	printf " (Enable/disable monitor mode not yet supported)"
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xipw3945" ] || [ x"`iwpriv $iface 2>/dev/null | grep set_preamble | grep -v set_crc_check`" != "x" ]
+  then
+        printf "$iface\t\tIntel 3945ABG\tipw3945"
+        if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+         then
+                cp $KISMET~ $KISMET 2>/dev/null &&
+                echo "source=ipw3945,$iface,Centrino_g" >>$KISMET
+                startStdIface $iface $CH
+        fi
+        if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+         then
+                stopStdIface $iface
+        fi
+        echo
+        continue
+ fi
+
+
+ if [ x"`iwpriv $iface 2>/dev/null | grep inact_auth`" != "x" ]
+ then
+     if [ -e "/proc/sys/net/$iface/%parent" ]
+     then
+        printf "$iface\t\tAtheros\t\tmadwifi-ng VAP (parent: `cat /proc/sys/net/$iface/%parent`)"
+	if [ x$2 = x$iface ] && [ x$1 = "xstop" ]
+	then
+		wlanconfig $iface destroy
+		printf " (VAP destroyed)"
+	fi
+	if [ x$1 = "xstart" ]
+	then
+		if [ $iface = "$IFACE" ]
+		then
+			printf " (monitor mode enabled)"
+		fi
+		if [ x$2 = x$iface ]
+		then
+			printf " (VAP cannot be put in monitor mode)"
+		fi
+	fi
+
+	echo ""
+        continue
+
+     fi
+     printf "$iface\t\tAtheros\t\tmadwifi"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=madwifi_g,$iface,Atheros" >>$KISMET
+         startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xprism54" ] || [ x"`iwpriv $iface 2>/dev/null | grep getPolicy`" != "x" ]
+ then
+     printf "$iface\t\tPrismGT\t\tprism54"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=prism54g,$iface,Prism54" >>$KISMET
+         ifconfig $iface up
+         if [ $CH -lt 1000 ]
+         then
+             iwconfig $iface mode Monitor channel $CH
+         else
+             iwconfig $iface mode Monitor freq "$CH"000000
+         fi
+         iwpriv $iface set_prismhdr 1 >/dev/null 2>&1
+         printf " (monitor mode enabled)"
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xhostap" ] || [ x"`iwpriv $iface 2>/dev/null | grep antsel_rx`" != "x" ]
+ then
+     printf "$iface\t\tPrism 2/2.5/3\tHostAP"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=hostap,$iface,Prism2" >>$KISMET
+         if [ $CH -lt 1000 ]
+         then
+             iwconfig $iface mode Monitor channel $CH
+         else
+             iwconfig $iface mode Monitor freq "$CH"000000
+         fi
+         iwpriv $iface monitor_type 1 >/dev/null 2>&1
+         ifconfig $iface up
+         printf " (monitor mode enabled)"
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xwlan-ng" ] || [ x"`wlancfg show $iface 2>/dev/null | grep p2CnfWEPFlags`" != "x" ]
+ then
+     printf "$iface\t\tPrism 2/2.5/3\twlan-ng"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=wlanng,$iface,Prism2" >>$KISMET
+         wlanctl-ng $iface lnxreq_ifstate ifstate=enable >/dev/null
+         wlanctl-ng $iface lnxreq_wlansniff enable=true channel=$CH \
+                           prismheader=true wlanheader=false \
+                           stripfcs=true keepwepflags=true >/dev/null
+         echo p2CnfWEPFlags=0,4,7 | wlancfg set $iface
+         ifconfig $iface up
+         printf " (monitor mode enabled)"
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         ifconfig $iface down
+         wlanctl-ng $iface lnxreq_wlansniff enable=false  >/dev/null
+         wlanctl-ng $iface lnxreq_ifstate ifstate=disable >/dev/null
+         printf " (monitor mode disabled)"
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$SYSFS = "x" ] && [ x"`iwpriv $iface 2>/dev/null | grep get_RaAP_Cfg`" != "x" ]
+ then
+    if [ x"`iwconfig $iface | grep ESSID | awk -F\  '{ print $2}' | grep -i rt61`" != "x" ]
+    then
+    	printf "$iface\t\tRalink 2561 PCI\trt61"
+    fi
+
+    if [ x"`iwconfig $iface | grep ESSID | awk -F\  '{ print $2}' | grep -i rt73`" != "x" ]
+    then
+        printf "$iface\t\tRalink 2573 USB\trt73"
+    fi
+
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+         startStdIface $iface $CH
+         iwpriv $iface rfmontx 1
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprismheader`" != "x" ]
+         then
+             iwpriv $iface forceprismheader 1
+         fi
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprism`" != "x" ]
+         then
+             iwpriv $iface forceprism 1
+         fi
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+     	stopStdIface $iface
+    fi
+    echo
+    continue
+
+ fi
+
+
+ if [ x$DRIVER = "xrt61" ]
+ then
+    printf "$iface\t\tRalink 2561 PCI\trt61"
+
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+         startStdIface $iface $CH
+         iwpriv $iface rfmontx 1
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprismheader`" != "x" ]
+         then
+             iwpriv $iface forceprismheader 1
+         fi
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprism`" != "x" ]
+         then
+             iwpriv $iface forceprism 1
+         fi
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+     	stopStdIface $iface
+    fi    
+    echo
+    continue
+
+ fi
+
+
+ if [ x$DRIVER = "xrt73" ]
+ then
+    printf "$iface\t\tRalink 2573 USB\trt73"
+
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+         startStdIface $iface $CH
+         iwpriv $iface rfmontx 1
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprismheader`" != "x" ]
+         then
+             iwpriv $iface forceprismheader 1
+         fi
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprism`" != "x" ]
+         then
+             iwpriv $iface forceprism 1
+         fi
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+     	stopStdIface $iface
+    fi    
+    echo
+    continue
+
+ fi
+
+
+ if [ x$DRIVER = "xrt2500" ] || [ x"`iwpriv $iface 2>/dev/null | grep bbp`" != "x" ]
+ then
+     printf "$iface\t\tRalink 2560 PCI\trt2500"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=rt2500,$iface,Ralink_g" >>$KISMET
+         iwconfig $iface mode ad-hoc 2> /dev/null >/dev/null
+         startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xrt2570" ] || [ x"`iwpriv $iface 2>/dev/null | grep wpapsk`" != "x" ] && [ x"`iwpriv $iface 2>/dev/null | grep get_RaAP_Cfg`" = "x" ]
+ then
+     printf "$iface\t\tRalink 2570 USB\trt2570"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=rt2500,$iface,Ralink_g" >>$KISMET
+         iwconfig $iface mode ad-hoc 2> /dev/null >/dev/null
+         startStdIface $iface $CH
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprismheader`" != "x" ]
+         then
+             iwpriv $iface forceprismheader 1
+         fi
+         if [ x"`iwpriv $iface 2>/dev/null | grep forceprism`" != "x" ]
+         then
+             iwpriv $iface forceprism 1
+         fi
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xr8180" ] || [ x"`iwpriv $iface 2>/dev/null | grep debugtx`" != "x" ]
+ then
+     printf "$iface\t\tRTL8180/RTL8185\tr8180"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=rt8180,$iface,Realtek" >>$KISMET
+         if [ $CH -lt 1000 ]
+         then
+             iwconfig $iface mode Monitor channel $CH
+         else
+             iwconfig $iface mode Monitor freq "$CH"000000
+         fi
+         if [ x"`iwpriv $iface 2>/dev/null | grep prismhdr`" != "x" ]
+         then
+            iwpriv $iface prismhdr 1 >/dev/null 2>&1
+         fi
+         ifconfig $iface up
+         printf " (monitor mode enabled)"
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xr8187" ] || [ x"`iwpriv $iface 2>/dev/null | grep badcrc`" != "x" ]
+ then
+     printf "$iface\t\tRTL8187\t\tr8187"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=rt8180,$iface,Realtek" >>$KISMET
+         if [ $CH -lt 1000 ]
+         then
+             iwconfig $iface mode Monitor channel $CH
+         else
+             iwconfig $iface mode Monitor freq "$CH"000000
+         fi
+         if [ x"`iwpriv $iface 2>/dev/null | grep rawtx`" != "x" ]
+         then
+             iwpriv $iface rawtx 1 >/dev/null 2>&1
+         fi
+         ifconfig $iface up
+         printf " (monitor mode enabled)"
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xzd1211rw" ] || [ x"`iwpriv $iface 2>/dev/null | grep get_regdomain`" != "x" ]
+ then
+     printf "$iface\t\tZyDAS 1211\tzd1211rw"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=zd1211,$iface,ZyDAS" >>$KISMET
+         startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xzd1211" ] || [ x"`iwpriv $iface 2>/dev/null | grep dbg_flag`" != "x" ]
+ then
+     printf "$iface\t\tZyDAS 1211\tzd1211"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=zd1211,$iface,ZyDAS" >>$KISMET
+         startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xacx" ] || [ x"`iwpriv $iface 2>/dev/null | grep GetAcx1`" != "x" ]
+ then
+     printf "$iface\t\tTI ACX1xx\tacx"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=acx100,$iface,TI" >>$KISMET
+         iwpriv $iface monitor 2 $CH 2> /dev/null >/dev/null
+         startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xbcm43xx" ] || [ x"`iwpriv $iface 2>/dev/null | grep write_sprom`" != "x" ]
+ then
+     printf "$iface\t\tBroadcom\tbcm43xx"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         cp $KISMET~ $KISMET 2>/dev/null &&
+         echo "source=bcm43xx,$iface,broadcom" >>$KISMET
+         startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+         ifconfig $iface up
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER = "xislsm" ] || [ x"`iwpriv $iface 2>/dev/null | grep set_announcedpkt`" != "x" ]
+ then
+    printf "$iface\t\tPrismGT\t\tislsm"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+         startStdIface $iface $CH
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+     	stopStdIface $iface
+    fi    
+    echo
+    continue
+
+ fi
+
+
+ if [ x$DRIVER = "xat76c503a" ] || [ x"`iwpriv $iface 2>/dev/null | grep set_announcedpkt`" != "x" ]
+  then
+     printf "$iface\t\tAtmel\t\tat76c503a"
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+          startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+      then
+      	 stopStdIface $iface
+     fi     
+     echo
+     continue
+
+ fi
+
+
+ if [ x$DRIVER = "xndiswrapper" ] || [ x"`iwpriv $iface 2>/dev/null | grep ndis_reset`" != "x" ]
+ then
+     printf "$iface\t\tUnknown\t\tndiswrapper"
+     if [ x$2 = x$iface ]
+     then
+         echo " (MONITOR MODE NOT SUPPORTED)"
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+
+ if [ x$DRIVER != "x" ]
+ then
+     if [ x$CHIPSET = "x" ]
+     then
+         printf "$iface\t\tUNKNOWN\t\t$DRIVER"
+     else
+         printf "$iface\t\t$CHIPSET\t\t$DRIVER"
+     fi
+
+     if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+     then
+         startStdIface $iface $CH
+     fi
+     if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+     then
+         stopStdIface $iface
+     fi
+     echo
+     continue
+ fi
+
+printf "$iface\t\tUnknown\t\tUnknown (MONITOR MODE NOT SUPPORTED)\n"
+
+done
+
+echo
+
+if [ $UDEV_ISSUE != 0 ] ; then
+	echo udev renamed the interface. Read the following for a solution:
+	echo http://www.aircrack-ng.org/doku.php?id=airmon-ng#interface_athx_number_rising_ath0_ath1_ath2...._ath45
+	echo 
+fi

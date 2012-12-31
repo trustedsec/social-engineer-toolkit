@@ -1,0 +1,21 @@
+				
+		<div class="post">
+		<h4 class="dates">The Social-Engineer Toolkit (SET) Fast-Track Attacks</h4>
+			<div class="entry">
+				<h2>SET - Fast-Track - Web Interface</h2>
+				<p>
+Welcome to the Social-Engineer Toolkit - Fast-Track Penetration Testing. These will list all of the attack vectors available through the SET interface.
+<br>
+<br><b>Select the attack vector you want:</b>
+<br><br>
+<a href="/autopwn">Metasploit Autopwn</a><br><br>
+<a href="/mssql_bruter">Microsoft SQL Brute Forcer</a><br><br>
+Select the attack vector that you want to perform. 
+</p>
+		
+			</div>  
+		</div> 
+		
+		
+		<br><br>	
+	</div> 

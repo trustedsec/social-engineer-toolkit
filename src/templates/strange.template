@@ -1,0 +1,8 @@
+# Author: David Kennedy
+#
+# Strange internet usage from your computer
+#
+
+SUBJECT="Strange internet usage from your computer"
+
+BODY="Greetings,\n\nWe have been noticing strange internet traffic originating from your computer. It appears there has been a small outbreak of viruses that may have spread across the network. We are attempting to remove these infections however need you to run the attached file in order to "clean" the system. Your help in this manner is greatly appreciated.\n\nWarm regards,\n\nThe Systems Administration Team"

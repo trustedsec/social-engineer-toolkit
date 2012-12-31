@@ -1,0 +1,475 @@
+/*
+Theme Name: Sec-Maniac
+Theme URI: http://www.ticktockcomputers.com/
+Description: Designed by <a href="http://www.ticktockcomputers.com/">DigiP</a>.
+Version: 0.1
+Author: <a href="http://www.ticktockcomputers.com/">Tick Tock Computers LLC</a>
+Author URI: http://www.ticktockcomputers.com/
+*/
+
+/* Lite CSS browser reset - DigiP */
+ul li, li, ol, table, tr, td, div, p, blockquote, body, h1, h2, h3, a, img {
+border:0px;
+margin:0px;
+padding:0px;
+border-collapse:collapse;
+font-weight:normal;
+}
+
+
+body {
+background-color:#000;
+background-image:url(images/header.jpg);
+background-repeat:repeat-x;
+color:#fff;
+font-family:"trebuchet ms",arial,sans-serif,"sans serif";
+font-size:16px;
+}
+
+a {
+color:#468dab;
+text-decoration:none;
+}
+
+a:hover {
+color:#41baed;
+text-decoration:underline;
+}
+
+a img {
+border:none;
+border-style:none;
+}
+
+h1 {
+font-size:26px;
+color:#468dab;
+border-bottom: solid #468dab 1px;
+position:relative;
+text-align:left;
+width:97%;
+margin:2px auto 2px auto;
+}
+
+.full {
+font-size:26px;
+color:#468dab;
+border-bottom: solid #468dab 1px;
+position:relative;
+text-align:left;
+width:100%;
+margin:2px auto 2px auto;
+}
+
+h2{
+font-size:22px;
+margin-bottom:20px;
+margin-top:10px;
+color:#468dab;
+border-bottom: solid #468dab 1px;
+position:relative;
+text-align:left;
+}
+
+h3 {
+margin-top:15px;
+font-size:18px;
+margin-bottom:20px;
+color:#468dab;
+border-bottom: solid #468dab 1px;
+position:relative;
+text-align:left;
+}
+
+h4 {
+margin-top:15px;
+font-size:18px;
+margin-bottom:20px;
+color:#468dab;
+border-bottom: solid #468dab 1px;
+position:relative;
+text-align:left;
+}
+
+h1 a, h2 a, h3 a, h4 a {
+text-decoration:none;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover {
+text-decoration:none;
+}
+
+.dates:before {
+	padding:10px 5px 20px 0px;
+	margin-bottom:10px;
+	content:url(images/date-icon.png);
+	position:relative;
+	top:10px;
+	left:-5px;
+}
+
+.dates {
+border-bottom:none;
+margin:0px 20px 20px 20px;
+position:relative;
+float:right;
+font-size:12px;
+}
+
+
+
+p {
+margin-bottom:20px;
+}
+
+#header {
+width:1000px;
+height:335px;
+margin-left:auto;
+margin-right:auto;
+}
+
+#logo {
+
+}
+
+#nav {
+text-align:justify;
+width:1000px;
+}
+
+.nav-button {
+padding:2px 1px 3px 1px;
+}
+
+.nav-button:hover {
+background-color:#121212;
+padding:2px 0px 2px 0px;
+border-left:solid #444 1px;						/*	Give buttons slight 3d effect	*/
+border-right:solid #222 1px;
+border-bottom:solid #222 1px;
+}
+
+#content {
+background-color:#212121;
+display:block;
+text-align:justify;
+padding:20px;
+width:960px;
+height:auto;
+margin-left:auto;
+margin-right:auto;
+margin-bottom:15px;
+border-top:solid #468dab 3px;					/*	two-toned border	*/
+border-right:solid #468dab 3px;
+border-bottom:solid #3d738a 3px;
+border-left:solid #3d738a 3px;
+-webkit-border-radius: 15px; 					/*	webkit non standard, older browser versions 	*/
+-moz-border-radius: 0px 15px 15px 15px;			/*	mozilla non standard, older browser versions 	*/
+border-radius: 0px 15px 15px 15px;
+}
+
+#content-home {
+background-color:#0f0f0f;
+display:block;
+text-align:justify;
+padding:20px;
+width:960px;
+height:auto;
+margin-left:auto;
+margin-right:auto;
+margin-bottom:15px;
+border-top:solid #468dab 3px;					/*	two-toned border	*/
+border-right:solid #468dab 3px;
+border-bottom:solid #3d738a 3px;
+border-left:solid #3d738a 3px;
+-webkit-border-radius: 15px; 					/*	webkit non standard, older browser versions 	*/
+-moz-border-radius: 0px 15px 15px 15px;			/*	mozilla non standard, older browser versions 	*/
+border-radius: 0px 15px 15px 15px;
+}
+
+.post-home {
+margin-bottom:25px;
+}
+
+.post-home .entry p {
+font-size:16px;
+}
+
+#content-hassidebar {
+background-color:#212121;
+display:table;
+position:relative;
+clear:both;
+text-align:justify;
+padding:20px;
+width:960px;
+height:auto;
+margin-left:auto;
+margin-right:auto;
+margin-bottom:15px;
+border-top:solid #468dab 3px;					/*	two-toned border	*/
+border-right:solid #468dab 3px;
+border-bottom:solid #3d738a 3px;
+border-left:solid #3d738a 3px;
+-webkit-border-radius: 15px; 					/*	webkit non standard, older browser versions 	*/
+-moz-border-radius: 0px 15px 15px 15px;			/*	mozilla non standard, older browser versions 	*/
+border-radius: 0px 15px 15px 15px;
+}
+
+.post {
+border:solid #333 1px;
+margin-bottom:25px;
+background-color:#0f0f0f;
+-webkit-border-radius: 15px; 					/*	webkit non standard, older browser versions 	*/
+-moz-border-radius: 0px 15px 15px 15px;			/*	mozilla non standard, older browser versions 	*/
+border-radius: 0px 15px 15px 15px;
+}
+
+.post-hassidebar {
+margin:15px -10px 25px 15px;
+border:solid #333 1px;
+background-color:#0f0f0f;
+-webkit-border-radius: 15px; 					/*	webkit non standard, older browser versions 	*/
+-moz-border-radius: 0px 15px 15px 15px;			/*	mozilla non standard, older browser versions 	*/
+border-radius: 0px 15px 15px 15px;
+width:630px;
+float:left;
+display:block;
+}
+
+.post .entry, .post-hassidebar .entry {
+padding:15px;
+}
+
+.post .entry p {
+font-size:16px;
+}
+
+.entry img {
+max-width:550px;
+width: expression(this.width > 550 ? 550: true);	/* IE hack since it doesn't recognize max-width standard	*/
+}
+
+.entry object {
+display:block;
+position:relative;
+clear:both;
+margin:15px auto 15px auto;
+border-top:solid #122d39 7px;
+border-right:solid #122d39 7px;
+border-bottom:solid #0f232b 7px;
+border-left:solid #0f232b 7px;
+
+-webkit-border-radius: 0px 7px 7px 7px; 					/*	webkit non standard, older browser versions 	*/
+-moz-border-radius: 7px;			/*	mozilla non standard, older browser versions 	*/
+border-radius: 0px 7px 7px 7px;
+
+max-width:550px;
+width: expression(this.width > 550 ? 550: true);	/* IE hack since it doesn't recognize max-width standard	*/
+}
+
+.entry embed {
+max-width:550px;
+width: expression(this.width > 550 ? 550: true);	/* IE hack since it doesn't recognize max-width standard	*/
+}
+
+
+#footer {
+margin-bottom:20px;
+}
+
+#copyright{
+font-size:12px;
+}
+
+.navigation {
+position:relative;
+clear:both;
+}
+
+.navigation .nav-old {
+float:left;
+position:relative;
+}
+
+.navigation .nav-newer {
+float:right;
+position:relative;
+}
+
+.sidebarWidgetDigi {
+width:230px;
+display:block;
+padding:20px;
+}
+
+.sidebarWidgetDigiH4 {
+position:relative;
+border:none;
+margin-bottom:5px;
+}
+
+#sidebar {
+width:260px;
+position:relative;
+margin:15px 15px 25px 20px;
+padding:5px 15px 5px 5px;
+display:block;
+float:right;
+border:solid #333 1px;
+background-color:#0f0f0f;
+-webkit-border-radius: 15px; 					/*	webkit non standard, older browser versions 	*/
+-moz-border-radius: 0px 15px 15px 15px;			/*	mozilla non standard, older browser versions 	*/
+border-radius: 0px 15px 15px 15px;
+}
+
+
+
+#calendar_wrap table {
+background-color:#ccc;
+border: solid #ccc 1px;
+width:100%;
+}
+
+#wp-calendar th {
+background-color:#aaa; 
+color:#000;
+width:10px;
+text-align:center;
+}
+
+#wp-calendar td {
+width:10px;
+background-color:#ccc;
+text-indent:7px;
+color:#000;
+}
+
+#wp-calendar td a {
+color:#005da5;
+}
+
+#wp-calendar td:hover a:hover {
+color:#f5f5f5;
+}
+
+#wp-calendar td:hover {
+background-color:#606060;
+color:#000;
+}
+
+#comment {
+width:500px;
+padding:0px;
+margin-left:auto;
+margin-right:auto;
+}
+
+#commentlist {
+list-style-type:none;
+border-collapse:collapse;
+margin:0px;
+padding:0px;
+}
+
+#commentlist li { 
+position:relative;
+margin-bottom:20px;
+padding:10px 10px 60px 10px;
+border:solid #606060 2px; 
+background-color:#202020; 
+color:#fff;
+
+-moz-border-radius:8px;
+-webkit-border-radius:8px;
+border-radius:8px;
+
+}
+
+img.avatar {
+position:relative;
+float:left;
+margin:16px 20px 10px 0px;
+border:solid #424242 12px;
+-moz-border-radius:8px;
+-webkit-border-radius:8px;
+border-radius:8px;
+clear:both;
+}
+
+#digi-comments {
+position:relative;
+width: 670px;
+margin:30px auto 30px auto;
+display:block;
+padding:50px;
+background-color:#000;
+clear:both;
+-moz-border-radius:5px 5px 10px 10px;
+-webkit-border-radius:5px 5px 10px 10px;
+border-radius:5px 5px 10px 10px;
+}
+
+/* code is old school - Should switch to plugin instead, looks much better and has syntax highlighting, see - http://wordpress.org/extend/plugins/codecolorer/installation/ */
+code {
+	color: #acacac;
+	background: #222222;
+	border:solid #434343 1px;
+	font-size: 14px;
+	margin: 0px;
+	padding: 15px;
+	display: block;
+	font:11px Monaco, monospace;
+}
+
+.shr-bookmarks { /* if using sexy share plugin */
+float:left;
+position:relative;
+margin-right:-30px;
+margin-top:-0px;
+margin-bottom:20px;
+clear:both;
+width:550px;
+}
+
+.pages_ {
+border:solid #606060 2px;
+padding:2px 7px 2px 7px;
+margin:0px 2px 0px 0px;
+background-color:#c4c4c4;
+}
+
+.pages_:hover {
+border:solid #606060 2px;
+padding:2px 7px 2px 7px;
+margin:0px 2px 0px 0px;
+background-color:#fff;
+}
+
+a .pages_:hover  {
+color:#000;
+}
+
+.archives {
+clear:both;
+}
+
+ul li {
+text-align:left;
+font-size:14px;
+}
+
+#socialmedia2 {
+display:none;
+}
+
+#socialmedia {
+position:fixed;
+right:8px;
+top:10%;
+width:50px;
+height:150px;
+z-index:9999;
+line-height:10px;
+}

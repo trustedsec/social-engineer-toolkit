@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+#
+# simple svn update for set pulling from core modules
+#
+
+import sys
+from src.core.setcore import *
+
+try:
+    # pull update set from the core libraries
+    update_set()
+
+# except keyboard interrupts
+except KeyboardInterrupt:
+    print "\n[!] Control-C detected. Exiting updating SET."
+
+# handle all other errors
+except Exception, e: print "\n[!] Something went wrong.. Printing the error: " + e
+

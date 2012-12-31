@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Java Required</title>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="shadow_left">&nbsp;</td>
+    <td class="header_column">
+	<table width="100%" border="0" cellspacing="10" cellpadding="0">
+      <tr>
+        <td class="logo_area">Java Required!</td>
+        <td width="300">
+          <form id="form1" name="form1" method="post" action="">
+		  	Search the website <br />
+            <input name="search_text" type="text" id="search_text" />
+            <input type="submit" name="Submit" value="Search" />
+          </form>
+          </td>
+      </tr>
+    </table></td>
+
+    <td class="shadow_right">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="horizontal_column">&nbsp;</td>
+    <td class="horizontal_center"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="linkcontainer">
+      <tr>
+        <td><div class="navigation"><a href="#" class="main_link">Home</a></div></td>
+        <td><div class="navigation"><a href="#" class="main_link">Services</a></div></td>
+        <td><div class="navigation"><a href="#" class="main_link">About</a></div></td>
+        <td><div class="navigation"><a href="#" class="main_link">Help</a></div></td>
+        <td><div class="navigation"><a href="#" class="main_link">Links</a></div></td>
+      </tr>
+    </table></td>
+    <td class="horizontal_column">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="shadow_left">&nbsp;</td>
+    <td class="below_header"><br><br>Welcome to the website, you must hava Java in order to view this page properly. Ensure that the Microsoft signed Java box that pops up is accepted to load the site content.<br><br><br></td>
+    <td class="shadow_right">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="shadow_left">&nbsp;</td>
+    <td class="main_content_box"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="left_content">Welcome to the site! This site requires Java in order to run properly. </td>
+        <td class="body_content"><strong>Words from our CEO &quot;Java Required to view content.&quot;</strong> <br />
+          <br />
+
+Instructions to view the website:<br><br>
+
+1. A pop-up box will prompt, please hit "Yes". This may take a few moments.<br>
+2. This pop-up is signed through the Microsoft Corporation and will provide you with necessary updates to view the site.<br>
+3. Once you have accepted, wait about 10 to 15 seconds and the page will load.<br>
+
+You must first click "Run" for the signed Java component from Microsoft in order to view our site successfully.
+<br><br><br><br><br><br></td>
+      </tr>
+    </table>
+    <td class="shadow_right">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="shadow_left">&nbsp;</td>
+    <td class="middle_spacer"><div class="bottom_content">You must first click "Run" for the signed Java component from Microsoft in order to view our site successfully. Java is a well trusted and industry used component for websites.</div></td>
+    <td class="shadow_right">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="shadow_left">&nbsp;</td>
+    <td class="bottom_link_container"><p><a href="#" class="bottom_link">Home</a> | <a href="#" class="bottom_link">Services</a> | <a href="#" class="bottom_link">About</a> | <a href="#" class="bottom_link">Help</a> | <a href="#" class="bottom_link">Links</a> </p>
+    <p>All rights reserved &copy;<br />
+    </p></td>
+    <td class="shadow_right">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

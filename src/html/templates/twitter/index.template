@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+        <script type="text/javascript">
+//<![CDATA[
+var page={};var onCondition=function(D,C,A,B){D=D;A=A?Math.min(A,5):5;B=B||100;if(D()){C()}else{if(A>1){setTimeout(function(){onCondition(D,C,A-1,B)},B)}}};
+//]]>
+</script>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="Twitter is without a doubt the best way to share and discover what is happening right now." name="description" />
+<meta content="no" http-equiv="imagetoolbar" />
+<meta content="width = 780" name="viewport" />
+<meta content="4FTTxY4uvo0RZTMQqIyhh18HsepyJOctQ+XTOu1zsfE=" name="verify-v1" />
+<meta content="" name="page" />
+<meta content="NOODP" name="robots" />
+<meta content="n" name="session-loggedin" />
+    <title id="page_title">Twitter</title>
+    <link href="http://a1.twimg.com/a/1270236195/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="http://a1.twimg.com/a/1270236195/images/twitter_57.png" rel="apple-touch-icon" />
+    
+    <link href="http://a0.twimg.com/a/1270236195/stylesheets/twitter.css?1270236852" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://a0.twimg.com/a/1270236195/stylesheets/geo.css?1270236852" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://a0.twimg.com/a/1270236195/stylesheets/buttons_new.css?1270236852" media="screen" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+      
+        body { background: #C0DEED url('http://a3.twimg.com/a/1270236195/images/bg-clouds.png') repeat-x; }
+      
+      
+      
+    </style>
+    
+  </head>
+
+  <body class="sessions firefox" id="new">    
+    <script type="text/javascript">
+//<![CDATA[
+if (window.top !== window.self) {document.write = "";window.top.location = window.self.location; setTimeout(function(){document.body.innerHTML='';},1);window.self.onload=function(evt){document.body.innerHTML='';};}
+//]]>
+</script>
+    
+    
+    <div id="dim-screen"></div>
+    <ul id="accessibility" class="offscreen">
+  <li><a href="login#content" accesskey="0">Skip past navigation</a></li>
+  <li>On a mobile phone? Check out <a href="http://m.twitter.com/">m.twitter.com</a>!</li>
+  <li><a href="login#footer" accesskey="2">Skip to navigation</a></li>
+    <li><a href="login#signin">Skip to sign in form</a></li>
+</ul>
+
+    
+    
+
+    <div id="container" class="subpage">
+            <span id="loader" style="display:none"><img alt="Loader" src="http://a0.twimg.com/a/1270236195/images/loader.gif" /></span>
+      <div class="clearfix" id="header">
+  <a href="http://twitter.com/" title="Twitter / Home" accesskey="1" id="logo">
+          <img alt="Twitter.com" height="36" src="http://a0.twimg.com/a/1270236195/images/twitter_logo_header.png" width="155" />    
+  </a>
+            <form method="post" id="sign_out_form" action="http://twitter.com/sessions/destroy" style="display:none;">
+        <input name="authenticity_token" value="c76eede7eca50f4867ae41ecef71230f18a96787" type="hidden"/>
+      </form>
+
+              
+  <ul class="top-navigation round">
+    <li><a href="login" accesskey="l">Login</a></li>
+    <li class="signup-link"><a href="http://twitter.com/signup">Join Twitter!</a></li>
+  </ul>
+
+
+            </div>
+
+
+
+      
+
+      
+        <div class="content-bubble-arrow"></div>
+      
+      
+      
+      
+        <table cellspacing="0" class="columns">
+          <tbody>
+            <tr>
+              <td id="content" class="round-left column">
+                                <div class="wrapper">
+                  
+                  <h2>Sign in to Twitter</h2>
+
+<p>
+  If you&rsquo;ve been using Twitter from your phone, <a href="http://twitter.com/account/complete">click here</a> and we&rsquo;ll get you signed up on the web.</p>
+
+<form action="https://twitter.com/sessions" class="signin" method="post"><div style="margin:0;padding:0"><input name="authenticity_token" type="hidden" value="c76eede7eca50f4867ae41ecef71230f18a96787" /></div>  <input id="authenticity_token" name="authenticity_token" type="hidden" value="c76eede7eca50f4867ae41ecef71230f18a96787" />  <fieldset class="common-form standard-form">
+    <table cellspacing="0">
+      <tr>
+        <th><label for="username_or_email">Username or email</label></th>
+        <td><input id="username_or_email" name="session[username_or_email]" type="text" value="" /></td>
+      </tr>
+      <tr>
+        <th><label for="password">Password</label></th>
+        <td><input id="password" name="session[password]" type="password" value="" /> <small><a href="http://twitter.com/account/resend_password">Forgot?</a></small></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td><input id="remember_me" name="remember_me" type="checkbox" value="1" /> <label for="remember_me" class="inline">Remember me</label></td>
+      </tr>
+      
+      <tr>
+        <th></th>
+        <td><input id="signin_submit" name="commit" type="submit" value="Sign In" /></td>
+      </tr>
+    </table>
+  </fieldset>
+</form>
+
+
+
+
+
+                </div>
+                              </td>
+              
+                <td id="side_base" class="column round-right">
+                                  
+                  <div id="side">
+                      <div class="section">
+  <div class="section-header">
+    <h1>Create Your Account</h1>
+  </div>
+  <div class="join">
+    <form name="account_signup_form" id="account_signup_form" action="http://twitter.com/signup">
+      <input id="join" name="commit" type="submit" value="Join!" />
+    </form>
+    <p class="complete">
+      Already using Twitter<br /> from your phone?
+      <a href="http://twitter.com/account/complete">Click here</a>.
+    </p>
+  </div>
+</div>
+<div class="section">
+  <div id="lang-select"><form action="http://twitter.com/sessions/change_locale" id="lf" method="post" style="margin-top:2px"><div style="margin:0;padding:0"><input name="authenticity_token" type="hidden" value="c76eede7eca50f4867ae41ecef71230f18a96787" /></div>
+  <select name="lang" onchange="document.getElementById('lf').submit();">
+    <option value="" selected="selected">Select Language ...&nbsp;</option>
+  <option value="it">Italian - Italiano</option>
+  <option value="es">Spanish - Español</option>
+  <option value="en">English</option>
+  <option value="fr">French - français</option>
+  <option value="de">German - Deutsch</option>
+  <option value="ja">Japanese - 日本語</option>
+
+  </select>
+</form>
+</div>
+</div>
+
+
+                  </div>
+                                </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      
+
+      
+  <div id="footer" class="round">
+      <h3 class="offscreen">Footer</h3>
+      
+      
+      <ul class="footer-nav">
+          <li class="first">&copy; 2010 Twitter</li>
+          <li><a href="http://twitter.com/about">About Us</a></li>
+          <li><a href="http://twitter.com/about/contact">Contact</a></li>
+          <li><a href="http://blog.twitter.com">Blog</a></li>
+          <li><a href="http://status.twitter.com">Status</a></li>
+                      <li><a href="http://twitter.com/goodies">Goodies</a></li>
+                    <li><a href="http://apiwiki.twitter.com/">API</a></li>
+                      <li><a href="http://business.twitter.com/twitter101">Business</a></li>
+                    <li><a href="http://twitter.com/help/start">Help</a></li>
+          <li><a href="http://twitter.com/jobs">Jobs</a></li>
+          <li><a href="http://twitter.com/tos">Terms</a></li>
+          <li><a href="http://twitter.com/privacy">Privacy</a></li>
+      </ul>
+  </div>
+
+
+
+      <hr />
+
+    </div>
+
+    
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js" type="text/javascript"></script>
+<script src="http://a2.twimg.com/a/1270236195/javascripts/twitter.js?1270236852" type="text/javascript"></script>
+<script src="http://a1.twimg.com/a/1270236195/javascripts/lib/jquery.tipsy.min.js?1270236852" type="text/javascript"></script>
+
+  <!--[if lte IE 7]>
+  <script type="text/javascript">
+    $(function() {
+      $(document).bind("signinMenu.show", function() {
+        $("#lang-select").css({visibility: "hidden"});
+      }).bind("signinMenu.hide", function() {
+        $("#lang-select").css({visibility: "visible"});
+      });
+    });
+  </script>
+  <![endif]-->
+
+<script type="text/javascript">
+//<![CDATA[
+      page.controller_name = 'SessionsController';
+      page.action_name = 'new';
+      twttr.form_authenticity_token = 'c76eede7eca50f4867ae41ecef71230f18a96787';
+      $.ajaxSetup({ data: { authenticity_token: 'c76eede7eca50f4867ae41ecef71230f18a96787' } });
+
+      // FIXME: Reconcile with the kinds on the Status model.
+      twttr.statusKinds = {
+        UPDATE: 1,
+        SHARE: 2
+      };
+      twttr.ListPerUserLimit = 20;
+      
+    
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+      $( function () {
+          if(document.activeElement.id != 'password') {
+    $('#username_or_email').focus();
+  }
+
+      });
+    
+//]]>
+</script>
+
+        <!-- BEGIN google analytics -->
+
+  <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+
+  <script type="text/javascript">
+
+    try {
+      var pageTracker = _gat._getTracker("UA-30775-6");
+      pageTracker._setDomainName("twitter.com");
+            pageTracker._setVar('Not Logged In');
+            pageTracker._setVar('lang: en');
+            pageTracker._initData();
+                              pageTracker._trackPageview();
+                  } catch(err) { }
+
+  </script>
+
+  <!-- END google analytics -->
+
+
+
+
+
+    <div id="notifications"></div>
+
+
+    
+
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,16 @@
+	<div id="footer">
+		<center><span style="color: rgb(102, 102, 102);">Visit us on</span> <span style="color: rgb(70, 141, 171);">irc.freenode.net</span> <span style="color: rgb(102, 102, 102);">#backtrack-linux or #social-engineer</span></center>
+		<div id="copyright">
+		<center><a href="http://www.secmaniac.com/">© SecManiac.com All rights reserved.</a></center>
+		</div>
+	
+	</div>
+
+		
+
+	<div id="socialmedia">
+		<a href="http://www.secmaniac.com/feed/"><img src="files/rss.png" alt="RSS Feed" title="RSS Feed"></a><br><br>
+		<a href="http://twitter.com/dave_rel1k"><img src="files/tweet.png" alt="Twitter" title="Follow Me On Twitter!"></a>
+	</div>
+	
+	</body></html>

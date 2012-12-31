@@ -1,0 +1,129 @@
+		<div class="post">
+		<h4 class="dates">Social-Engineer Toolkit (SET) Web-Attack Vector</h4>
+			<div class="entry">
+				<h2>Web-Attack Vector Options</h2>
+Welcome to the Social-Engineer Toolkit web interface, be sure to only select what is applicable to your attack. For example for Credential Harvester you would only select the attack method and which site to clone. If you were using something different like the Java Applet Attack Vector you would select the attack, site to clone, payload, encoding, etc.<br><br>
+<br><p><b>Web Attack Methods</b></p>
+<form action="/web_attack_post" method="POST">
+
+<select name="attack" STYLE="font-family : arial; font-size : 7pt">
+<option value="1">Java Applet Attack Vector</option>
+<option value="2">Metasploit Browser Exploit Method</option>
+<option value="3">Credential Harvester Attack Method</option>
+<option value="4">Tabnabbing Attack Method</option>
+<option value="5">Man Left in the Middle Attack Method</option>
+<option value="6">Web Jacking Attack Method</option>
+<option value="7">Multi-Attack Web Method</option>
+</select>
+
+<br><br>
+<p><b>Site Cloning Menu</b></p>
+Site to clone: <input type="text" name="cloner" STYLE="font-family : arial; font-size : 7pt" /><br />
+<br><br>
+<p><b>Metasploit Browser Attack Exploit (Multi-Attack and Client-Side Attack ONLY) (select one)</b></p>
+<select name="browser" STYLE="font-family : arial; font-size : 7pt">
+
+<option value="1" selected="selected">Java AtomicReferenceArray Type Violation Vulnerability</option>
+<option value="2">Java Applet Field Bytecode Verifier Cache Remote Code Execution</option>
+<option value="3">MS12-037 Internet Explorer Same ID Property Deleted Object Handling Memory Corruption</option>
+<option value="4">Microsoft XML Core Services MSXML Uninitialized Memory Corruption</option>
+<option value="5">Adobe Flash Player Object Type Confusion</option>
+<option value="6">Adobe Flash Player MP4 'cprt' Overflow</option>
+<option value="7">MS12-004 midiOutPlayNextPolyEvent Heap Overflow</option>
+<option value="8">Java Applet Rhino Script Engine Remote Code Execution</option>
+<option value="9">MS11-050 IE mshtml!CObjectElement Use After Free</option>
+<option value="10">Adobe Flash PLayer 10.2.143.1 SWF Memory Corruption Vulnerability</option>
+<option value="11">Cisco AnyConnect VPN Client ActiveX URL Property Download and Execute</option>
+<option value="12">Internet Explorer CSS Import Use After Free</option>
+<option value="13">Microsoft WMI Administration Tools ActiveX Buffer Overflow</option>
+<option value="14">Internet Explorer CSS Tags Memory Corruption</option>
+<optionv alue="15">Sun Java Applet2ClassLoader Remote Code Execution</option>
+<option value="16">Sun Java Runtime New Plugin docbase Buffer Overflow</option>
+<option value="17">Microsoft WebDav Application DLL Hijacker</option>
+<option value="18">Adobe Flash Player AVM Bytecode Verification Vulnerability</option>
+<option value="19">Adobe Shockwave rcsL Memory Corruption Exploit</option>
+<option value="20">Adobe CoolType SING Table 'uniqueName'</option>
+<option value="21">Apple QuickTime 7.6.7 Marshaled_pUnk</option>
+<option value="22">Microsoft Help Center XSS (MS10-042)</option>
+<option value="23">Microsoft Internet Explorer iepeers.dll (MS10-018)</option>
+<option value="24">Microsoft Internet Explorer Tabular Data Control (MS10-018)</option>
+<option value="25">Microsoft Internet Explorer "Aurora" Memory Corruption (MS10-002)</option>
+<option value="26">Microsoft Internet Explorer 7 Uninitialized Mem Corruption (MS09-002)</option>
+<option value="27">Microsoft Internet Explorer Style getElementsbyTagName (MS09-072)</option>
+<option value="28">Microsoft Internet Explorer isComponentInstalled Overflow</option>
+<option value="29">Microsoft Internet Explorer Data Binding (MS08-078)</option>
+<option value="30">Mcirosoft Internet Explorer Unsane Scripting Misconfiguration</option>
+<option value="31">FireFox 3.5 escape Return Value Memory Corruption</option>
+<option value="32">FireFox 3.6.16 mChannel use after free vulnerability</option>
+<option value="33">Metasploit Browser Autopwn (USE AT OWN RISK!)</option>
+</select>
+
+<br>
+<br><p><b>Payload options (only for Java Applet, Metasploit Browser, and Multi-Attack) (select one)</b><p>
+<select name="payload_selection" STYLE="font-family : arial; font-size : 7pt">
+<option value="1">Windows Shell Reverse TCP</option>
+<option value="2" selected="selected">Windows Reverse TCP Meterpreter</option>
+<option value="3">Windows Reverse TCP VNC DLL</option>
+<option value="4">Windows Bind Shell</option>
+<option value="5">Windows Bind Shell X64</option>
+<option value="6">Windows Shell Reverse TCP X64</option>
+<option value="7">Windows Meterpreter Reverse TCP X64</option>
+<option value="8">Windows Meterpreter Egress Buster</option>
+<option value="9">Windows Meterpreter Reverse HTTPS</option>
+<option value="10">Windows Meterpreter Reverse DNS</option>
+<option value="11">SE Toolkit Interactive Command Shell (Java Applet Only)</option>
+<option value="12">SE Toolkit HTTP Reverse Shell</option>
+<option value="13">RATTE HTTP Tunneling Payload (Java Applet Only)</option>
+<option value="14">ShellCodeExec Alphanum Shellcode </option>
+</select>
+<br>
+<br>Import your own: <input type="file" name="payload_selection_filename" size="5" STYLE="font-family : arial; font-size : 7pt">
+<br><br>
+<p><b>Encoding Options</b></p>
+<select name="encoding" STYLE="font-family : arial; font-size : 7pt">
+ <option value="1">avoid_utf8_tolower</option>
+<option value="2">shikata_ga_nai</option>
+<option value="3">alpha_mixed</option>
+<option value="4">alpha_upper</option>
+<option value="5">call4_dword_xor</option>
+<option value="6">countdown</option>
+<option value="7">fnstenv_mov</option>
+<option value="8">jmp_call_additive</option>
+<option value="9">nonalpha</option>
+<option value="10">nonupper</option>
+<option value="11">unicode_mixed</option>
+<option value="12">unicode_upper</option>
+<option value="13">alpha2</option>
+<option value="14">No Encoding</option>
+<option value="15">Multi-Encoder</option>
+<option value="16" selected="selected">Backdoored Executable</option>
+</select>
+
+<br><br>
+<p><b>Default Port for Listener</b></p>
+Enter the default port: <input type="text" name="port" size="7" value="443" STYLE="font-family : arial; font-size : 7pt"/>
+<br><br>
+<br><p><b>Java Applet ONLY - Additional Targets</b><p>
+<input type="checkbox" name="osxlinuxtarget" value="osx"> Target OSX and Linux<br>
+Enter the default port OSX: <input type="text" name="portosx" size="7" value="8080" STYLE="font-family : arial; font-size : 7pt"/><br><br>
+Enter the default port Linux: <input type="text" name="portlin" size="7" value="8081" STYLE="font-family : arial; font-size : 7pt"/>
+<br><br>
+<p><b>Multi-Attack Vector Only - Do not use this unless Multi-Attack Vector is enabled.</b</p>
+<input type="checkbox" name="multiattack1" value="1"> Java Applet Attack Method<br>
+<input type="checkbox" name="multiattack2" value="2"> Metasploit Browser Exploit Method<br>
+<input type="checkbox" name="multiattack3" value="3"> Credential Harvester Attack Method<br>
+<input type="checkbox" name="multiattack4" value="4"> Tabnabbing Attack Method<br>
+<input type="checkbox" name="multiattack5" value="5"> Man Left in the Middle Attack Method<br>
+<input type="checkbox" name="multiattack6" value="6"> Web Jacking Attack Method<br>
+<input type="checkbox" name="multiattack7" value="7"> Use them all - A.K.A. 'Tactical Nuke'<br>
+
+<CHECKHERE>
+
+<br><br><input type="submit" value="Launch Attack" STYLE="font-family : arial; font-size : 7pt">
+</form>
+			</div>  
+		</div> 
+		
+		
+		<br><br>	
+	</div> 

@@ -1,0 +1,67 @@
+#!/usr/bin/python
+
+#
+# Simple proxy for SET, note will show up in history
+#
+
+import pexpect
+import sys
+import getpass
+
+from src.core.setcore import *
+
+# grab the operating system
+operating_system = check_os()
+
+# if windows then do some stuff
+if operating_system == "posix":
+
+        definepath = os.getcwd()
+
+        print "\n[*] Welcome to the SET-Proxy Configuration Utility"
+        print "\nEnter the proxy setting informatiom below.\n\nExample: http://10.3.1.1:8080\n"
+
+        try:
+
+                proxy = raw_input("Enter the proxy server: ")
+                username = raw_input("Enter the username for the proxy (hit enter for none): ")
+                password = getpass.getpass("Enter the password for the proxy (hit enter for none): ")
+
+        except KeyboardInterrupt: 
+                print "\n[!] Exiting the Social-Engineer Toolkit."
+                sys.exit()
+
+        if username != "":
+                proxy_string = "export http_proxy='http://%s:%s@%s'" % (username,password,proxy)
+
+        if username == "":
+                proxy_string = "export http_proxy='http://%s'" % (proxy)
+
+        filewrite = file("src/program_junk/proxy.config", "w")
+        filewrite.write(proxy_string)
+        filewrite.close()
+
+        from src.core.set import *
+
+        def kill_proc(port,flag):
+                proc=subprocess.Popen("netstat -antp | grep '%s'" % (port), shell=True, stdout=subprocess.PIPE)
+                stdout_value=proc.communicate()[0]
+                a=re.search("\d+/%s" % (flag), stdout_value)
+                if a:
+                        b=a.group()
+                        b=b.replace("/%s" % (flag),"")
+                        subprocess.Popen("kill -9 %s 1> /dev/null 2> /dev/null" % (b), shell=True).wait()
+
+        # cleans up stale processes from SET
+        try:
+                # kill anything python running on 80
+                kill_proc("80","python")
+                # kill anything on 443 ruby which is generally a rogue listener
+                kill_proc("443", "ruby")
+
+        # handle errors
+        except Exception, error:
+                log(error)
+                pass
+else:
+        print "[!] Sorry, this only works on posix (nix) based systems and is not compatible with this operating system."

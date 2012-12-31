@@ -1,0 +1,1528 @@
+~~~~~~~~~~~~~~~~
+version 4.3.3
+~~~~~~~~~~~~~~~~
+
+* Added the new Metasploit IE zero-day Microsoft Internet Explorer CDwnBindInfo Object Use-After-Free Vulnerability to SET
+
+~~~~~~~~~~~~~~~~
+version 4.3.2
+~~~~~~~~~~~~~~~~
+
+* Added a check to see if a user inserted the right query string parameter in the new track user feature
+* Added a string replace in the event the user puts in a .html instead of a .php, will automatically rename to .php
+* Added better description handling around the track email in smtp_web with bold colors and easier descriptions on what to do
+
+~~~~~~~~~~~~~~~~
+version 4.3.1
+~~~~~~~~~~~~~~~~
+
+* Fixed a bug that would cause the imported executable in web attack vectors to download but not execute
+* Cleaned up the Java Applet code and made the codebase significantly smaller
+* Made a change to the track user emails that removes a step that was un-needed and removes an additional prompt
+* Added faster multi-injector binary - should execute payloads much faster now
+* Added new compiled Java Applet with better obfuscation
+
+~~~~~~~~~~~~~~~~
+version 4.3
+~~~~~~~~~~~~~~~~
+
+* Added print statements to exporting powershell injection attacks. When using the powershell attacks it will tell you the location of the file
+* Removed the autorun script for enumeration on OSX, seems to break the host now
+* Added new set routine metasploit_shellcode which has predefined built meterpreter payloads, this will completely speed up the generation time on pyinjector
+* Added new set routine called shellcode_replace which will dynamically create IP addresses and port from the shellcode
+* PyInjector now no longer needs to dynamically create shellcode through msfvenom, the shellcode is now pregenerated and dynamically created on the fly speeding up payload delivery by at least 40 seconds.
+* Increased the powershell injection creation time by adding the new creation routine that has predefined payloads already generated via shellcode then dynamically changes the shellcode on the fly
+* Stablized and added more meterpreter payloads so that you have a choice between https, reverse_tcp, http, and allports.
+* Recompiled the pyinjector payloads and encrypted / packed with anti-debuggers
+* Recompiled shellcodeexec payload and encrypted / packed with anti-debuggers
+* Added a backup path for the credential harvester for the raw logs under src/logs/harvester.logs. In case theres an issue with the harvester not reporting back the findings you can find the log in the backup directory under the src/logs/harvester.log
+* Added a pause delay in the fast-track MSSQL attack vector in order for sluggish systems to catch up with the payload delivery system
+* Removed a stale __init__.py file that wasn't needed in the SET root directory
+* Fixed a bug that would cause the authentication piece for open relays without password authentication to fail (thanks Jeremy)
+* Cleaned up the smtp_web code and added more comments into the file
+* Re-issued the SET self signed certificate for Java Applet it was expired
+* Cleaned up code in the Java Applet and obfuscated the code again
+* Added check for wget, if installed it will clone better otherwise it will use urllib2
+* Added a new OSX/LINUX deploy binaries, you can turn this on and off in the config if you don't want to generate OSX / Linux payloads. By default it will now remain off, it makes the load time to generate things significantly faster.
+* Fixed a bug where pyinjector would die and cause a loop on victim machine if closed improperly 
+* Added brand new payload called MultiPyInjector which will inject multiple payloads into memory. You can dynamically add this now through the Java Applet attack vector and select as many payloads as you want.
+* Fixed a bug with the multipyinjector that would cause certain areas to error out on specified port.
+* Fixed a patching bug for port 21 where patching the shellcode caused an error message.
+* Encrypted and packed the multi-pyinjector payload and added anti-debugger technology.
+* Added the ability to dynamically patch Metasploit payloads for the MultiPyInjector new payload. Uses the same as PyInjector now
+* Added new config option called TRACK_EMAIL_ADDRESSES=ON/oFF which will now allow you through web attack vectors to track email addresses through SET. When you send out a large phish, the email address will be base64 encoded in the URL you specify within the toolkit. You will be prompted to insert where in the menu you want, for example say http://www.trustedsec.com was your normal phish link. You would specify http://www.trustedsec.com?INSERTUSERHERE. SET will then replace just the INSERTUSERHERE with the TO field of each victim which will be base64 encoded. Once clicked, SET will then handle the requests and let you know the user that clicked on each one in order to track.
+* Cleaned up the code in the smtp_web and made it more readable for the mail function. Needed to be done while adding the TRACK_EMAIL_ADDRESSES
+* Fixed a bug that would cause the WEBATTACK_EMAIL to fail when using the credential harvester
+* Added track email addresses to harvester and java applet attack vectors when TRACK_EMAIL_USERS is specified
+* Added base 64 handling to credential harvester and directly into a index.php versus index.html - needed in order to execute php code
+* Tested the new track email addresses with credential harvester and made it track if track_email is on to automatically kick in apache server mode and webattack email without having to specify in the config
+* Tested the new track email with java applet and made it track if track_email is on to automatically trigger WEBATTACK_EMAIL and APACHE_SERVER to automatically set to ON
+* Converted old code from legacy times around checking config files to check_config through src/core/setcore routines
+* Tested SET 4.3 on Windows 8 fully patched on the various different attacks, everything appears to be working as anticipated. Powershell injection is also working properly now with minor modifications.
+* Added a check within Java Applet to automatically disable Apache if it is already started
+* Fixed a bug that caused import payloads to throw an invalid payload option (thanks Tyler)
+
+~~~~~~~~~~~~~~~~
+version 4.2.1
+~~~~~~~~~~~~~~~~
+
+* Fixed the Java Repeater - had to rewrite some portions in order to use separate_jvm and caching in order to work.
+
+~~~~~~~~~~~~~~~~
+version 4.2
+~~~~~~~~~~~~~~~~
+
+* Improved Java Applet performance when executing
+* Added additional payloads and encrypted formated for bypassing security mechanisms
+* Fixed a bug in applet when used on older operating systems
+* Fixed a lockup issue within the applet
+* Used process builder for the back-end running of commands in Java Applet, adds new functionality and better performance without hangs
+* Coverted all windows based java applet background processes to ProcessBuilder in java for better speed
+* Removed AUTO_MIGRATE=ON by default, this ruins bypassuac - need to do more research, may be able to process ride to explorer.exe instead versus notepad.exe
+* Added additional virtualization for pe files to SET payloads
+
+~~~~~~~~~~~~~~~~
+version 4.1.4
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that would cause the dell drac scanner to not work properly
+
+~~~~~~~~~~~~~~~~
+version 4.1.3
+~~~~~~~~~~~~~~~~
+
+* Added multiple checks when importing file, no longer exits the entire application
+
+~~~~~~~~~~~~~~~~
+version 4.1.2
+~~~~~~~~~~~~~~~~
+
+* Added the ability to copy just a single file on custom imports or the entire folder when selecting site import on Java Applet
+* Added ability to detect index.html automatically if the file is specified
+* Added better handling if a folder doesn't end with a forward slash, it performs slashes checks and appends as needed
+* Added ability to better detect index.html files when appended at the end
+* Added more obfsucation and encryption to the pyinjector payload
+* Added an additional check if apache is started with APACHE_SERVER turned to off. Will automatically prompt to shut it off for you
+
+~~~~~~~~~~~~~~~~
+version 4.1.1
+~~~~~~~~~~~~~~~~
+
+* Added automatic detection of apache on or off during credential harvester
+* Added prompt to turn apache on automatically
+* Added ability to use payloadgen infectious media with pyinjector and shellcodeinject
+
+~~~~~~~~~~~~~~~~
+version 4.1
+~~~~~~~~~~~~~~~~
+
+* Removed the Java Exploit from being built into the Java Applet. Being detected by to many AV vendors.
+* Added core libraries to the scraper, needed for check_config and apache mode checks
+* Added check for apache mode within harvester, will move new php customize script to apache directory and extract under different directory
+* Rewrote new check mechanism in scraper for config checks and cleaned up code
+* Fixed a bug that would cause the verified signature import to error out when selecting number 9 in the web attack menu
+* Added a custom php script into harvester that allows you to check harvested credentials through apache
+* Added compatibility with multiattack and apache mode for credential harvester and java applet combined
+* Fixed the allports payload, really buggy at first with powershell injection, got it more stable
+* Added better stability for the credential harvester to handle exceptions when being passed certain pieces of data including null connections
+* Added better stability on the multiattack credential harvester php and applet attack
+* Fixed a bug that would cause payload selection to not work correctly when using pyInjector
+* Added so the peensy attack will prompt for an IP address and rewrite the pde file for the appropriate IP addresses
+* Added datetime on teensy devices so they don't overwrite the teensy.pde files anymore
+* Added better encoding into the java applet attack vector
+* Added better packing and encryption on the pyinjector attack, loads super fast now when executing applet
+* Added better reliability in the Java Applet
+* Even more improved load times for the Java Applet and executable execution
+* Added anti debugger and encryption to the initial staged downloader which is used for fast loading of payloads
+
+~~~~~~~~~~~~~~~~
+version 4.0.4
+~~~~~~~~~~~~~~~~
+
+* Added multithreading to credential harvester and better error handling
+* Added allports payload for shellcodeexec and pyinjector
+
+~~~~~~~~~~~~~~~~
+version 4.0.3
+~~~~~~~~~~~~~~~~
+
+* Added copyfile(src, dst) core routine and fixed its original src copy path
+* Changed copyfile to include folders and files
+* Removed some old print statements
+
+~~~~~~~~~~~~~~~~
+version 4.0.2
+~~~~~~~~~~~~~~~~
+
+* Bug fix with the multiattack and importing custom web pages - would throw an exceptions error, this has been resolved
+* Bug fix that would cause multiattack to not work with credential harvester and java applet
+
+~~~~~~~~~~~~~~~~
+version 4.0.1
+~~~~~~~~~~~~~~~~
+
+* small bug fix that caused payloads to throw an exceptions when selecting normal executables
+
+~~~~~~~~~~~~~~~~
+version 4.0
+~~~~~~~~~~~~~~~~
+
+* added a new attack vector to SET called the Dell Drac attack vector under the Fast-Track menu.
+* Optimized the new attack vector into SET with standard core libraries
+* Added the source code for pyinjector to the set payloads
+* Added an optimized and obfuscated binary for pyinjector to the set payloads
+* Restructured menu systems to support new pyinjector payload for Java Applet Attack
+* Added new option to SET Java Applet - PyInjector - injects shellcode straight into memory through a byte compiled python executable. Does not require python to be installed on victim
+* Added base64 encoded to the parameters passed in shellcodexec and pyInjector
+* Added base64 decode routine in Java Applet using sun.misc.BASE64Decoder - native base64 decoding in Java is the suck
+* Java Applet redirect has been fixed - was a bug in how dynamic config files were changed
+* Fixed the UNC embed to work when the flag is set properly in the config file
+* Fixed the Java Repeater which would not work even if toggled on within the config file
+* Fixed an operand error when selecting high payloads, it would cause a non harmful error and an additional delay when selecting certain payloads in Java Applet
+* Added anti-debugging protection to pyinjector 
+* Added anti-debugging protection to SET interactive shell
+* Added anti-debugging protection to Shellcodeexec
+* Added virtual entry points and virtualized PE files to pyinjector
+* Added virtual entry points and virtualized PE files to SET interactive shell
+* Added virtual entry points and virtualized PE files to Shellcodeexec
+* Added better obfsucation per generation on SET interactive shell and pyinjector
+* Redesigned Java Applet which adds heavily obfsucated methods for deploying
+* Removed Java Applet source code from being public - since redesign of applet, there are techniques used to obfuscate each time that are dynamic, better shelf life for applet 
+* Added a new config option to allow you to select the payloads for the powershell injection attack. By specifying the config options allows you to customize what payload gets delivered via the powershell shellcode injection attack
+* Added double base64 encoding to make it more fun and better obfuscation per generation
+* Added update_config() each time SET is loaded, will ensure that all of the updates are always present and in place when launching the toolkit
+* Rewrote large portions of the Java Applet to be dynamic in nature and place a number of non descriptive things into place
+* Added better stability to the Java Applet attack, note that the delay between execution is a couple seconds based on the obfuscation techniques in place
+* Completely obfsucated the MAC and Linux binaries and generate a random name each time for deployment
+* Fixed a bug that would cause custom imported executables to not always import correctly
+* Fixed a bug that would cause a number above 16 to throw an invalid options error
+* Added better cleanup routines for when SET starts to remove old cached information and files
+* Fixed a bug that caused issues when deploy binaries was turned to off, would cause iterative loop for powershell and crash IE
+* Centralized more routines into set.options - this will be where all configuration options reside eventually
+* Added better stability when the Java Applet Repeater is loaded, the page will load properly then execute the applet. 
+* The site cloner has been completely redesigned to use urllib2 instead of wget, long time coming 
+* The cloner file has been cleaned up from a code perspective and efficiency
+* Added better request handling with the new urllib2 modules for the website cloning
+* Added user agent string configuration within the SET config and the new urllib2 fetching method
+* Added a pause when generating Teensy payloads
+* Added the Offensive-Security "Peensy" multi-attack vector for the Teensy attacks
+* Added the Microsoft Internet Explorer execCommand Use-After-Free Vulnerability from Metasploit into the Metasploit Browser Exploits Attack vectors
+* Fixed a bug in cleanup_routine that would cause the metasploit browser exploits to not function properly
+* Fixed a bug that caused the X10 sniffer and jammer to throw an exceptions if the folder already existed
+
+~~~~~~~~~~~~~~~~
+version 3.7.3
+~~~~~~~~~~~~~~~~
+
+* added better error handling on the java applet attack web server
+
+~~~~~~~~~~~~~~~~
+version 3.7.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue on some machines where the applet would not pop up right
+
+~~~~~~~~~~~~~~~~
+version 3.7.1
+~~~~~~~~~~~~~~~~
+
+* added the new java disableSecurity(); bypass native to the Java Applet - coded it funny, applet still pops up but if you hit cancel it executes no problem. Thought that would be more believable.
+
+~~~~~~~~~~~~~~~~
+version 3.7
+~~~~~~~~~~~~~~~~
+
+* added better xp_cmdshell restore options in the MSSQL attack vector for Fast-Track
+* minor changes to the java applet around parameter names and signing
+* added the ability to do native shellcode injection into the SET interactive shell
+* added the ability to do native injection in x86 and x64 now
+* reliability update to the shellcode injection attack
+* added better handling around corrupt stack injection in the shellcode injection
+* added AES256 support for the communication around the SET interactive shell and the new shellcode injection attack
+* added the new zero day exploit from the Metasploit Framework - Java 7 Applet Remote Code Execution
+* fixed a bug that caused the browser autopwn to not function properly when selected and would move to the java applet instead
+* bug fixes for teensy powershell downloader (thanks John Strand)
+* fixed a number of menu system bugs including moving back and forward
+* fixed a multiattack issue when using java applet and metasploit client attacks
+* added dates to all of the metasploit exploits to show how recent they are
+
+~~~~~~~~~~~~~~~~
+version 3.6
+~~~~~~~~~~~~~~~~
+
+* adds the new SCCM attack vector to the social-engineer toolkit - allows you to patch SCCM servers to deploy backdoors
+* updated the web gui interface to add updates to exploits
+* fixed a menu bug in the web interface that would repeater numbers
+* added the MSCOMCTL ActiveX Buffer Overflow (ms12-027) exploit to the web interface
+* added the shellcodeexec alphanumeric shellcode paylaod to the web interface
+* added Java Applet Field Bytecode Verifier Cache Remote Code Execution to the web interface
+* added MS12-037 Internet Explorer Same ID Property Deleted Object Handling Memory Corruption to the web interface
+* added Microsoft XML Core Services MSXML Uninitialized Memory Corruption to the web interface
+* added Adobe Flash Player Object Type Confusion to the web interface
+* fixed a menu bug that would not allow you to return to the previous menu in the java applet
+* fixed a bug that would cause the multiattack metasploit, java applet, and cred harvester to not work on the right ports and raise a exceptions
+* added background listener to credential harvester and multiattack -- allows credential harvester to continue to run even if metapsloit has been exited
+* fixed a bug that would still flag any website as cloned successfully. The new code fixes that by checking to ensure the site was properly cloned.
+* fixed a cloning web bug that would error out then continue with payload selection
+* added a cleanup routine to the web cloner for post completion on the cloner, this fixes a repetitive issue when launching multiple attacks in the menu system
+
+~~~~~~~~~~~~~~~~
+version 3.5.4
+~~~~~~~~~~~~~~~~
+
+* major bug fix for when webattak_email was specified to on, would cause the entire java applet attack to crash
+
+~~~~~~~~~~~~~~~~
+version 3.5.3
+~~~~~~~~~~~~~~~~
+
+* bug fix for multiattack to allow credential harvester and java applet to continue to run
+
+~~~~~~~~~~~~~~~~
+version 3.5.2
+~~~~~~~~~~~~~~~~
+
+* multiple bug fixes for the ettercap functionality within SET
+
+~~~~~~~~~~~~~~~~
+version 3.5.1
+~~~~~~~~~~~~~~~~
+
+* Fixed a bug in command center that would cause it to not load properly.
+* Fixed a bug in the new Java Applet Field Bytecode that would cause it to not properly select the payload
+* Added compatibility for IE10 on the Java Applet Attack Vector
+* Turned AUTO_MIGRATE=OFF to AUTO_MIGRATE=ON by default, allows sticky processes to free up when exploitation occurs
+* Added a new config option DEPLOY_BINARIES. When this is turned OFF, the Java Applet will only use the POWERSHELL_INJECTION technique and never deploy a binary. Note that you must know if the victim has POWERSHELL installed.
+* Fixed a couple typos in the credential harvester
+* Fixed a bug in the SET interactive shell that caused it to crash
+* Updated and packed the SET interactive shell for AV evasion
+
+~~~~~~~~~~~~~~~~
+version 3.5
+~~~~~~~~~~~~~~~~
+
+* redesigned Java Applet attack in order to add better obfsucation 
+* SET Interactive Shell has been encrypted, thrown into a virtual machine, and anti-debugging technology put around it
+* Shellcodeexec has been encrypted, thrown into a virtual machine, and anti-debugging technology put around it
+* Updated all of the SET_Manual documentation to be current with 3.5, under readme
+* AUTO_DETECT=ON has now been changed to AUTO_DETECT=OFF. To many questions from folks in NAT situations.
+* Dynamic parameter allocation used for Java Applet now - Should allow better obfsucation per instance on applet
+* Fixed a bug that caused shellcodeexec to not properly function under x86 vista (strange bug, but fixed)
+* Added the Java Applet Field Bytecode Verifier Cache Remote Code Execution from Metasploit
+* Added better obfuscation to a number of core SET modules for better evasive techniques against security mechanisms
+
+~~~~~~~~~~~~~~~~
+version 3.4.1
+~~~~~~~~~~~~~~~~
+
+* added a new prompt if apache is detected to be running, if your using the standard /etc/init.d/apache2 path, it will prompt you to turn off Apache as an option now instead of exiting SET
+* fixed a formatting loop when using the web attack that would cause the user to have to control out
+* minor bug fixes
+
+~~~~~~~~~~~~~~~~
+version 3.4
+~~~~~~~~~~~~~~~~
+
+ * Implemented SET debugging (turned it all on). This should allow developers and users to troubleshoot while watching SET navigate it's 'roadmap'...without setting up a third party debugger.
+ * Debugging functions streamlined down into 1 in setcore.
+ * Debugging levels increased to 6.
+ * Began implementation of user input validation-validating web site, IP, ports, yes/no responses in ratte modules first. Fixes a bug where SET attempts to continue without a required parameter.
+ * Added the ability to select a list of IP addresses for SQL servers and import them into Fast-Track versus CIDR notations or IP addresses - can do all three now
+ * Streamlined the Fast-Track MSSQL bruting through multithreading - ability to attack multiple SQL servers faster
+ * better obfuscation on SET interactive shell
+ * better obfuscation on SET HTTP shell
+ * added the ability to the Java Applet to write out a logfile that can be used for the IP address and port - this will be used lateron for multiple other attacks
+ * fixed a bug with open relays and no username and password prompt, it would issue AUTH command which is not needed - thanks Justin Alcorn! 
+ * added better obfuscation on the set interactive shell and now includes a read-in logfile so you don't need to pass parameters to it -- will be used later 
+ * recompiled the SET HTTP shell with some new functionality and features
+ * Cleaned up Translation for RATTE-Server Interface
+ * Updated Main Menu
+ * Changed ownership of SET to TrustedSec, LLC - Don't worry everyone its still free and nothing has changed AT ALL!
+ * Added the MS12-037 Internet Explorer Same ID Property Deleted Object Handling Memory Corruption exploit from Metasploit
+ * Added the Microsoft XML Core Services MSXML Uninitialized Memory Corruption exploit from Metasploit
+ * Added the MYSQL Authentication Bypass Exploit into Fast-Track
+ * Added the F5 Root Authentication Bypass exploit into Fast-Track
+ * Added the Adobe Flash Player Object Type Confusion exploit from Metasploit
+ * Fixed a bug during payload creation that could cause a list index exception.
+ * Minor performance enhancements
+
+~~~~~~~~~~~~~~~~
+version 3.3.1
+~~~~~~~~~~~~~~~~
+
+ * fixed a bug that would cause report generator to error out using the multiattack vector
+ * fixed a wording issue for credential harvester
+ * fixed a path generation issue with report generator when using different calls 
+ * bug fix for harvester when importing new debug information had to change directory to base path for import
+
+~~~~~~~~~~~~~~~~
+version 3.3
+~~~~~~~~~~~~~~~~
+
+ * added new menu powershell attack vectors -- will be used for powershell based attacks
+ * added new payload powerdump to the powershell attack vectors
+ * added new payload bind shell to the powershell attack vectors
+ * added new payload powershell shellcode injection to the powershell attack vectors
+ * new core routine added for powershell_convert(powershell_command) which will do all the proper unicode + base64 encoding needed for powershell -EncodedCommand bypass
+ * new core routine added powershell_generate_payload(payload,ipaddr,port,powershell_command). This will create the necessary alphanumeric shellcode needed through metasploit in order to successfully create the powershell injection attack
+ * added ms12-027 to the spear phishing attack vectors - MSCOMCTL ActiveX Buffer Overflow (from Metasploit)
+ * added new payload reverse shell to powershell attack vectors
+ * fixed a bug in metasploit browser exploits where the numbers were off and would not properly parse the exploit (thanks for the report Dale Pearson)
+ * added a pause when using the apache menu so it doesn't automatically exit
+ * added a pause when something is on port 80 for credential harvester to display the error message
+ * added a new phishing template provided by chap0, thanks for the contribution!
+ * fixed a wording issue within fasttrack exploit selection, it was asking for a nmap range, it should read which exploit do you want
+ * added the Solarwinds Storage Manager 5.1.0 Remote SYSTEM SQL Injection Exploit exploit by muts into Fast-Track
+ * added the RDP use after free DoS into SET in the Fast-Track custom exploits section
+ * added new subroutine for powershell conversion 
+ * added automatic convert for powershell alphanumeric shellcode to automatically encode the commands
+ * added the menu system for the new powershell menu
+ * added ability to leverage msf payloads in the alphnaumeric shellcode 
+ * added metasploit listener option for the powershell attack
+ * added a new native python socket listener for a standard reverse shell routine in setcore socket_listener(port)
+ * added powershell bind shell into the new powershell interpreter attack vector
+ * added new core routine for powershell alphanumeric injection and conversion with msfvenom
+ * added functionality through powershell.py to dynamically generate payloads and inject through powershell
+ * removed large portion of prep.py and centralized through setcore routines
+ * added powershell powerdump to the attack vectors for powershell attacks
+ * fixed a bug that would prompt twice for an IP address in the new powershell attack
+ 
+~~~~~~~~~~~~~~~~
+version 3.2.3
+~~~~~~~~~~~~~~~~
+
+ * removed the license restrictions
+
+~~~~~~~~~~~~~~~~
+version 3.2.2
+~~~~~~~~~~~~~~~~
+
+ * added license restrictions
+
+~~~~~~~~~~~~~~~~
+version 3.2.1
+~~~~~~~~~~~~~~~~
+
+ * fixed a pesky bug where in the SET interactive shell it would not show UAC-SAFE or SYSTEM due to a python global bug issues - I've written a workaround so it properly displays
+ * fixed a bug with the new menu system in payloads, selection option 15 or 14 would bomb out
+ * fixed an annoying bug that when backing out or quiting in the SET interactive shell it would not properly exit and go into a loop
+ * added better stability in the event that a connection is terminated prematurely from the SET interactive shell
+ * fixed alignment on comment code in listener, it was all off whack
+ * removed un-needed keyboardinterrupts in the listener for the setshell
+ * fixed a bug that would sprout up every so often with bypassuac which would cause an exceptions and the shell to die
+ * added the Java Atomic, adobe flash mp4, and ms12-004 exploits to the web gui
+ * added the Adobe Reader u3D memory corruption vulnerability to the infectious media webgui
+ 
+~~~~~~~~~~~~~~~~
+version 3.2
+~~~~~~~~~~~~~~~~
+
+ * added new payload to the HTTP attack vectors - the SET Reverse HTTP Shell which uses native AES encryption for tunneling commands back and forth
+ * added the new SET RevHTTP shell into the Java Applet attack vector
+ * added the Java AtomicReferenceArray Type Violation Vulnerability exploit to the Metasploit attack vectors
+ * added the Adobe Flash Player MP4 'cprt' Overflow exploit to the Metasploit attack vectors
+ * added the MS12-004 midiOutPlayNextPolyEvent Heap Overflow exploit to the Metasploit attack vectors
+ * added an exceptions in for the Java AtomicReferenceArray to select java meterpreter versus standard since its specific to exploit
+ * reintroduced the set-web shell into the main repositories, still may be buggy -- plan on rewriting soon
+ * added changes and obfuscation to the SET RevHTTP and changed the cipher key exchanges for the binary
+ * added a quit routine to the new SET RevHTTP shell -- quit and exit work
+ * recompiled the SET RevShell to be nonconsole so it will not spit any input out even if its discovered
+ * removed slim_set.py it was no longer being used and no longer needed
+ * fixed an error that would be thrown when finished with an attacker vector then go to launch another attack it would throw an attack_vector not found exceptions (thanks Vinny Troia for the report)
+
+~~~~~~~~~~~~~~~~
+version 3.1.4
+~~~~~~~~~~~~~~~~
+
+ * fixed a bug with SSL and harvester erroring out on importing ssl, changed it to setssl versus import ssl (thanks Vlad)
+ * fixed a bug in harvester SSL that would terminate SET when the SSL certificate was moved (thanks Vlad)
+ * fixed a bug where an exceptions would trigger and error would not be defined in harvester (thanks Vlad)
+
+~~~~~~~~~~~~~~~~
+version 3.1.3
+~~~~~~~~~~~~~~~~
+
+ * fixed a bug that caused APACHE_SERVER=ON to trigger in set_config
+ * added better handling around the config file to detect config options versus conflictions with wording inside text and check for comment code first
+ * fixed a major bug that would cause the java applet to not properly load a website
+ * added better routine in check_config for comment code
+ * added startswith to all checks on config file for better granularity on configuration options
+ * fixed a menu rendering issue and fixed the codename: was missing a single quote and addded Garland to the development team
+ * fixed a bug if you were importing a custom payload the parameter "freehugs" would be appended to the executable path so blah.exe freehugs would cause exceptions for backdoors that took command line arguments
+
+~~~~~~~~~~~~~~~~
+version 3.1.2
+~~~~~~~~~~~~~~~~
+
+ * added a new feature to disable the automatic listener from starting on metasploit - its under config/set_config 'AUTOMATIC_LISTENER=ON' (thanks for the recommendation Viss)
+ * fixed a bug that might cause the config/set_config to not be found in instances where os.chdir was used and path would not be found
+ * removed some old wording if apache was turned on
+ * added a exceptions handler for cleanup_routine that would error out if it couldn't shutil.copyfile for original applet
+ * added the ability if metasploit was not detected to still allow payload selection through RATTE or SEToolkit
+ * fixed a bug that would cause an exceptions on AUTOMATIC_LISTENER not defined if control-c'd out
+ * added a new config option for METASPLOIT_MODE if its enabled it will give you metasploit options, if not it will disable metasploit functionality and perform with SE Toolkit and RATTE as an option
+ * added a new feature into SET called HARVESTER_REDIRECT=ON/OFF and HARVESTER_URL=http://blah - this will allow you to specify what website harvester redirects on when the user posts to the website. before you could only have it go back to the legitimate site... (thanks Dale Pearson for the suggestion)
+ * added better description around web ports under config/set_config to include if your using APACHE_SERVER=ON
+
+~~~~~~~~~~~~~~~~
+version 3.1.1
+~~~~~~~~~~~~~~~~
+
+ * updated the path variables to be compliant with BT5 R2 and the new MSF path
+ * bug fix that would cause msf path to not be properly displayed
+ * fixed a bug that would cause an error out in multiattack (thanks Chris Barrow)
+ * added better discovery of metasploit paths if not found
+
+~~~~~~~~~~~~~~~~
+version 3.1
+~~~~~~~~~~~~~~~~
+
+ * added better error handling within harvester.py - should fix a transmission error bug when users close the browser half way through
+ * licensing has been changed to reflect 2012 and the new hug licensing agreement :) will prompt now the next time you launch set
+ * fixed a bug if you were using self signed java applets, it would throw an error that signapplet was already used - added randomized string values to it
+ * did some code cleanup on harvester and removed old code
+ * changed self_sign.py to import from setcore libraries
+ * fixed a bug that when importing own custom executable into SET would throw an exception due to shutil.copyfile not properly defining file name
+ * added a break within the custom import exe to trigger a while 1 loop to not terminate web server thread - control-c exits when finished with java applet attack 
+ * rehauled the set-web interface and is now back to being supported and included into the main libraries 
+ * fixed a spacing issue when selecting the spear phishing menu between the last two exploits
+ * added Adobe U3 exploit to the phishing site for set-web 
+ * added the Rhino Java Exploit to the webattack site for set-web
+ * rehauled most modules to change from src.core import setcore to from src.core.setcore import *
+ * fixed a bug that if you were using web templates and select SE Toolkit payload it would error out
+ * fixed a bug that caused the listener.py to not be found when using web templates
+ * added a new check routine for set.options which will be the central store for all set related options versus different files
+ * added the new check routine into spawn.py to check for custom executables, will start converting everything in next release 
+ * fixed a bug that would call nix.bin to not be found and error out
+
+~~~~~~~~~~~~~~~~
+version 3.0
+~~~~~~~~~~~~~~~~
+
+ * added the Adobe U3D memory corruption exploit from Metasploit to SET
+ * added new core library check_os for smart OS detection
+ * bug fix in Phishing using the smtp_client module (Thanks for the patch Stephen Haywood)
+ * rehauled set launcher to be windows compliant 
+ * rehauled set-proxy to be windows compliant
+ * rehauled setup.py to be windows compliant 
+ * rehauled setcore to be windows compliant
+ * added a new directory called thirdparty, this will dynamically import modules that are required versus having to install, if that fails you will have to manually download and install the depends
+ * removed the subprocess.Popen depends on src/core/set.py, this is no longer needed and covered to os.remove, os.makedirs, and shutil.copyfile instead
+ * Completely rehauled src/html/web_server.py to where it is no longer needed using pexpect. The goal is to move all depends to not require pexepct as it is not supported in Windows. All code now resides in src/html/spawn.py and is multi threading and background threaded
+ * spawn.py uses multi-threaded webserver and rehauled to be windows compliant. pexpect is no longer used for windows systems as it is not supported, had to move to os.system for now, importing the module with thread locks caused lockup issues
+ * rehauled listener.py to be compatible with windows 
+ * fixed a bug that would cause pexpect to not be found if selecting SET interactive shell (no longer needed)
+ * rehauled src/webattack/web_clone/cloner.py to be windows compliant and now supports java applet attack rewrite for wgeting websites
+ * changed set executable to cleanup program_junk but skip .svn which would cause conflicts, this works on both windows and nix based systems
+ * fixed a bug on credential harvester if it wasn't installed it should except via ImportError versus IndexError. this was changed to ImportError and allow normal execution while disabling SSL support
+ * rehauled src/webattack/harvester/scraper.py to be windows compliant
+ * rehauled src/webattack/harvester/harvester.py to be windows compliant
+ * added the ability to keep execution flow of the backdoored executable (thanks pure_hate), this is now configurable through the config/set_config but disabled by default
+ * added a new option in config/set_config to allow customized user-agent strings when doing web_cloning..some websites only support certain browser versions, this will allow you to change to whatever browser ou want
+ * changed the user agent string from mozilla firefox 3.6 to be Windows 7 IE 8, more compatibility with websites: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)
+ * removed the ability to be able to use spear phishing or wireless attack vectors on Windows for now 
+ * converted src/webattack/web_clone/cloner.py to be the standard import for setcore, it was from src.core import setcore as core, changed to from src.core.setcore import *
+ * bug fix when launching java applet attack and metasploit in 3.0 would cause the listener to not spawn properly
+ * bug fix when selecting the SET interactive shell it would not copy the proper executable to pack/obfuscate 
+ * bug fix that would cause the last exploit in spear phishing to not show a number
+ * changed some output on wget to use -O instead of standard moves to filenames, much cleaner
+ * major bug fix on how the listener and SET interactive shell handled non-encrypted communications
+ * added proper encryption/decryption routines to interactive shell and set listener
+ * added the ability to leverage partial encryption/decryption of communications to interactive shell and listener
+ * fixed a bug that would cause the shell to not work properly due to an invalid content length when parsing through payload
+ * fixed a bug that would prompt for port on SET interactive shell even after it was specified
+ * rewrote fasttrack mssql attack vector to be windows compliant - had to switch off pexpect and move to os.system with unthreaded http server modules
+ * added verbose messaging to attack vectors that are not yet supported for SET
+ * rehauled multiattack to support windows-based attacks - it also now prompts if invalid payloads are selected
+ * fixed a bug that when selecting menu 99 within multiattack, would say invalid selection. it now properly exits
+ * increased the response time for using the SET interactive shell, it now loads much quicker
+ * added a new config option to either use a staged downloader or download the SET interactive shell directory, this new feature is best for A/V detection but might be a little slower on what the user experiences. All of my testing shows that it doesn't however I'm also not testing over the Internet. The main problem is the staged downloader does a download/exec which would get flagged by AV. The SET interactive shell on the other hand is a wrapped python interpreter so its much harder to detect and flag with signatures. This new config option can be turned on to support staged configs if you aren't worried about A/V.
+ * added new options within payloadprep.py (SET Interactive Shell prep) to detect the new config change options and flag the SE Interactive Shell as the main staged downloader
+ * rewrote the Java Applet attack including the jar file to incorporate the straight staged downloader
+ * added a new attack vector that I've been promising for several months called the QRCode Generator Attack Vector.. Create a QRCode with a URL then create a SET attack vector to assist with the attack
+ * added new set menus to setcore so when you launch set theres some new ascii art... yea i got a little bored
+ * fixed a bug that would cause the new stager option to not work within the Fast-Track MSSQL bruter menu
+ * added a check to see if metasploit path was found, if not it will limit payloads only to SE Toolkit ones
+ * added better handling around metasploit path detection and trigger error message when msf path is not set
+ * added checking in set.py to detect attack vectors that require metasploit 
+ * added a new cleanup routine that circles through directories cleaning up remenants of things saved out during normal operation
+ * rewrote portions of teensy payloads to support windows
+ * fixed a bug that would cause the menu to not load properly randomly (randrang was from 1 to 8 versus 2 to 8)
+ * added permission change to executable on ratteserver so that it will always function normally if execute flag is removed
+ * fixed a path issue with RATTEServer that would cause it to not properly load and flag an issue
+ * converted RATTEServer to os.system versus pexpect child.spawn - easily more portable and less reliability on third party module
+ * added RATTEServer for Windows (Cygwin mod) to support Windows operating system
+ * added RATTEServer to payload selection list to now be supported via windows operating systems
+ * added RATTEServer to payloadprep and spawn.py to deploy RATTEServer based on operating system i.e. windows/posix
+ * added the ability to import custom binaries into windows versus linux only mode
+ * fixed a bug in RATTEServer that would flag an error when spawning RATTE on Windows
+ * added a chmod +x routine per each run of set instance if posix is detected.. will make it easier if certain permissions aren't set properly
+ * added the ability to natively copy ratteserver.binary and cygwin to program_junk to be run
+ * added payloadprep detailed error logging to the default log file being generated by SET
+ * rehauled java applet to add additional features and re-compiled and signed
+ * rewrote portions of shellcodeexec for better a/v avoidance
+ * fixed a bug that did not have __init__.py in the qrcode directory and threw an exceptions
+ * fixed a string literal bug in teensy that would cause an error (thanks for the report Rob)
+ * bug fix on time import for src/core/payloadprep.py (thanks Scott Behrens) 
+
+~~~~~~~~~~~~~~~~
+version 2.5.3
+~~~~~~~~~~~~~~~~
+
+ * fixed a bug that would not let you in the custom exploits menu within fasttrack
+ * fixed a bug that would cause _mssql not to be defined when attempting to custom connect to a SQL server
+ * fixed a bug that would cause mssql custom connect once finished to go straight into the exploit menu
+ * fixed a looping issue with the fasttrack menu
+ * bug fix when using the creeate payload and listener thanks to Scott Behrens for the submission
+
+~~~~~~~~~~~~~~~~
+version 2.5.2
+~~~~~~~~~~~~~~~~
+
+ * fixed a bug when selecting RTF within SET fileformat attack, it would state no attachments found
+ * fixed a bug when selecting yahoo or live that would cause the body to bomb out with control-c
+ * added better support for delivery of payloads with spear phishing attack
+ * added a banner to support the SEToolkit and to vote at sectools.org
+ * reworded a few to remove references of BT4 and switched to BT5
+ * added the ability to change site.template during harvester in order to allow redirect to different URL mid attack
+ * added an additional check to see if in set_config msf-path ends with a trailing forward slash, if not it will append
+ * removed the static root path from /root/ to be os.enivorn HOME path instead based on user running SET
+
+~~~~~~~~~~~~~~~~
+version 2.5.1
+~~~~~~~~~~~~~~~~
+
+ * fixed a bug on large websites that would clone and not finish properly and cause SET to error out that src/program_junk/web_clone/index.html was not found
+ * added better error granularity if index.html is not found, it will trigger a new warning message
+ * removed db_autopwn since it is no longer supported/removed in metasploit
+ * deleted the set-web interface, it is no longer maintained or kept up
+ * fixed a bug that would cause port1 not to be defined in the mssql bruter in fasttrack and not properly deliver a shell
+ * defaulted the target for the rhino exploit to be windows versus the generic java one it was set to
+ * added better error hanlding within SET, it should no longer crash SET
+
+~~~~~~~~~~~~~~~~
+version 2.5
+~~~~~~~~~~~~~~~~
+
+ * rehaul of site cloner, it now injects into body properly and leverages unc, redirection, and others properly
+ * redid a few options on repeater.database, unc.database to make more streamline
+ * fixed bugs with java repeater
+ * added more granularity around how repeater operates and functions when on different webpages
+ * added ability to inject into </body> tags first and if not found then it injects into <head> tags
+ * added ability to render even when <head> flag is being used versus </body>
+ * added more stability to the Java Applet.jar and backup routine for redirect to websites
+ * bug fix in website cloner
+ * rewrote portions of java applet to gain more stability around java repeater as a fallback
+ * added better handling around unc database and fixed a bug when in the wrong loop within cloner.py
+ * established a baseline fallback for java applet
+ * added rhino java exploit into Metasploit Browser exploits
+ * fixed a bug that would call wrong payloads getting confused for fileformat versus browser
+ * added better error handling around mssql and fasttrack
+ * added disabled message for web profiler for right now
+ * added better handling around smtp email if someone inserts something on one line and doesnt hit enter, then control-c would throw an exception
+ * bug fix that would not launch the linux or osx handlers for MSF
+ * added the option in set_config to run autorunscripts in linux meterpreter sessions separate from windows meterpreter sessions
+ * added post/osx/gather/enum_osx to autorun in the osx shell for better osx shell support
+
+~~~~~~~~~~~~~~~~
+version 2.4.2
+~~~~~~~~~~~~~~~~
+
+ * Fixed a bug in multiattack vector where specifying java applet attack and shellcode exec would not properly inject alphanumeric shellcode into applet properly
+ * Restructured multiattack vector to properly clone, prep payload delivery, then inject alphanumeric shellcode
+ * Added better handling around multiple attack vectors
+ * Fixed a bug that caused msfvenom to bomb out if path was /opt/framework3/msf3 versus /opt/framework/msf3
+ * Added better handling around multiattack
+ * Fixed a bug with self signed certificates would continue to show Microsoft versus what you sign it with
+ * Changed java applet to load and render at bottom of body versus in head. Page should now load with Java Applet appearing
+ * Fixed a bug where Java Repeater would not load properly when executed due to a incorrect loop within cloner.py
+ * Added the ability to use filename for import versus directory
+ * Added the ability to import index.html files versus just the folder on the custom import feature
+
+~~~~~~~~~~~~~~~~
+version 2.4.1
+~~~~~~~~~~~~~~~~
+
+ * Fixed a timing delay bug in port scanner for slow connections, would timeout and not recognize port
+ * Fixed a parsing error in portscanner when using single ip addresses
+ * Added optimization around mssql-bruter in Fast-Track
+ * Added new windows shell option on compromised systems as an alterantive option to debug/powershell attack
+ * Tuned mssql bruter to work better with SQL Server 2007
+ * Added automatic enable of xp_cmdshell through show advanced options in the windows shell
+ * Added better error handling through mssql bruter forcer
+ * Added error handling around xp_cmdhshell enablement 
+ * Fixed a bug that would cause mssql bruter to not stop after it successfully brute forced an account
+ * Added better stability all around to the fast-track mssql bruter
+ * Bug fix on fileformat bugs that would ask for the attachment
+
+~~~~~~~~~~~~~~~~
+version 2.4
+~~~~~~~~~~~~~~~~
+
+  * Rehauled the fake ap attack for menu style and stability
+  * Added the option for fake ap attack to use either a 10.0.0.0 or 192.168.10.0 IP ranges
+  * Added commands to properly bring up tun interface in fake ap attack
+  * Added variables to the dhcp3 launch command for stability
+  * Added some color styling to the check_length error message
+  * Fixed a minor code issue in stop_wifiattack.py
+  * Fixed a minor issue that caused the log file to error out if file was not found
+  * Added a descrpition if no MSSQL servers were identified during a scan
+  * Fixed a bug that would brute force a null IP address
+  * Fixed a bug in the man left in the middle that would cause it to error out
+  * Bug fix for the mssql bruter / port scanner. 
+  * Bug fix for sendmail that would cause an error message.
+   
+~~~~~~~~~~~~~~~~
+version 2.3
+~~~~~~~~~~~~~~~~
+
+  * fixed a bug that would not load the menus properly when loading SET (bad return placement)
+  * fixed an annoying bug that has been around for a number of versions, finally tracked down..some occasions where it would show "Moving payload to website", you couldn't control-c out to exit and would have to close the console window. This has been resolved.
+  * rewrote shellcodeexec again to evade AV
+  * added the shellcodeexec.c modified source code
+  * removed improper way to mask error messages through 1> /dev/null and 2> /dev/null, pipe information through subprocess.PIPE instead
+  * fixed a bug in fast-track with the mssql bruter where if using the SET interactive shell, it wouldn't spawn the HTTP server properly due to to site.template and attack.vector files not being found. Added better granularity on detecting files and setting defaults if its not found
+  * adjusted the repeater time to 2 seconds versus 3
+  * added additional passwords found in pentests to the wordlist
+  * removed excess code from setcore
+  * moved Signed_Update.jar that is generated through Java Applet attack it now goes through src/program_junk versus src/html
+  * rewrote large portions of SET to place cloned websites and files under src/program_junk/web_clone versus src/webattack/web_clone/site/template
+  * added new config option for OSX/LINUX payload ports and removed the automatic prompt after generating metasploit payload if you want to target OSX/Linux. It will automatically target Linux/OSX and removes another prompt in setting everything up
+  * added additional stability to powershell injection, it is now enabled by default. If powershell is injected, it will send a payload straight through memory versus touching disk. Note that you may get two shells back. This is intentional as its a failsafe if the one method fails through powershell. So regardless, if the powershell injection fails to compromise, the backup dropper will still execute
+  * bug fix in mssql.py where it would throw an error about not finding the proper payload in the fasttrack mssql bruter
+
+~~~~~~~~~~~~~~~~
+version 2.2.2
+~~~~~~~~~~~~~~~~
+
+  * Added significant stability to the java applet which caused a repeating loop of the java applet
+  * Added significant stability around the java applet when powershell might be active but still did not trigger, it will fall back into another applet
+  * Added better performance and cleaned up code around Java Applet
+  * Recompiled shellcodeexec to evade AV
+  * Turned auto_migrate to optional versus automatic, can be buggy sometimes
+  * Added the ability to see actual brute force attempts on SQL servers and notify you when you were unable to brute force a SQL server
+  * Added better detection around finding msfvenom for powershell injection incase it was not in normal path routines
+  * Removed black box when executing powershell - shellcode through the teensy device
+  * Cross compiled the binary to be compliant for x86 based systems with shellcodeexec, the latest version didn't use MT and used MD when compiling
+  * added p.stream handling to remove hangs when using the java applet stream for powershell injection (thanks leg3nd)
+
+~~~~~~~~~~~~~~~~
+version 2.2.1
+~~~~~~~~~~~~~~~~
+
+  * Added stability to the powershell attack through the java applet
+  * If powershell injection is enabled and SETSHELL/RATTE is chosen, it will disable it automatically as the two are not compatible
+  * Added a new config option to use verbose on the powershell injection, it will show you the encoded command that will be used on the victim machine
+  * Got a patch from Dale Lakes on check_mssql, does smart detection on yum/apt for automatic installation
+
+~~~~~~~~~~~~~~~~
+version 2.2
+~~~~~~~~~~~~~~~~
+
+  * Added better handling when generating your own legitimate certifcate and ensure proper import into SET
+  * Adjusted java repeater time to have a little more delay, seems to be more reliable and stable if that occurs. 
+  * Removed the check from the main launch of SET for pymssql and only added it when the fast-track menu was specified
+  * Removed the derbycon posting since it already happened. When we get closer I'll re-add it back in with detailed information
+  * Removed old files in the java applet attack that were not needed.
+  * Added better granularity checking the Java Applet attack when the shellcode exec or normal attacks were being specified.
+  * Fixed a bug that caused infectious media bomb out if shellcodeexec was specified as a payload
+  * Added a legal disclaimer for first inital use of SET that is must be used for lawful purposes only and never malicious intent
+  * Added improved stability of the java applet attack through better payload detect/selection
+  * Fixed a bug with shellcodeexec and creating a payload and listener through SET, it would throw an exception, it now exports shellcodeexec properly and exports alphanumeric shellcode
+  * Added new config check inside core.py, will return value of config, easier..will gradually replace all config checks with this
+  * Fixed an issue that would cause AUTO_REDIRECT=OFF to still continue to redirect. This was caused from a rewrite of teh applet and the same parameters not being filtered properly
+  * Added more customizing Options to RATTE. Now you can specifiy custom filename ratte uses for evading local firewalls. So you can deploy RATTE as readme.pdf.exe and it will run as iexplore.exe to bypass local firewalls. You can although specify if RATTE should be persistent or not. For testing network firewalls you won't need a persistent one. Doing a penetration test you may choose a persistent configuration.
+  * Fixed a bug in RATTE which could break connection to Server. RATTE now runs much more stable and can bypass high end network firewalls much more reliable.
+  * Added a new config option called POWERSHELL_INJECTION, this uses the technique discovered by Matthew Graeber which injects shellcode directly into memory through powershell
+  * Added a new teensy powershell attack leveraging Matthew Graeber attack vector.
+  * Rehauled the Java Applet attack to incorporate the powershell injectiont technique, its still experimental, so will remain OFF in the config by default. The applet will not detect if Powershell is installed, and if so, use the shellcode deployment method to gain memory execution without touching disk through PowerShell.
+  * Fixed a bug that would cause mssql bruter to error if powershell injection was enabled or other attack vectors
+
+~~~~~~~~~~~~~~~~
+version 2.1.1
+~~~~~~~~~~~~~~~~
+
+  * Moved how custom templates first generated payloads then cloned. Switched in order to make sure shellcodeexec is now compatible with the custom templates
+  * Cleaned up code in the creation of shellcodeexec
+  * Fixed a sendmail issue where authentication failed wouldn't properly send the right data
+  * Fixed a bug where shellcodeexec would not properly execute under certain circumstances
+  * Added a check for sendmail if it isn't installed it asks you to install it
+
+~~~~~~~~~~~~~~~~
+version 2.1
+~~~~~~~~~~~~~~~~
+
+   * Added new menu for fasttrack integration
+   * Defined new folder structure for fasttrack integration
+   * Rehauled the initial menu to slim down and break into social-engineering attacks versus Fast-Track attacks
+   * Added new core module through setcore called kill_proc 
+   * Added new core module through setcore called meta_database
+   * Added new autopwn functionality through fasttrack/autopwn.py, with the additions of fasttrack, the code is being completely redone, nothing will be the same
+   * Added a new config option called METASPLOIT_DATABASE. This will be what database type to use with metasploit, default is postgresql
+   * Restructured normal set to be a new main menu versus just a calling stager. set.py and fasttrack.py will be the two main files for the functionality behind SET
+   * Added scapy packet manipulation tool into src/core for indepth protocol creation lateron
+   * Added portscan.py into core, this is a fast port scanner that will be used versus leveraging third party modules
+   * Added new mssql module for port scanning mssql through the fasttrack menu
+   * Added validate IP in the portscan to check if a solo IP address is legitimate
+   * Added new definition scan() into the fasttrack mssql module
+   * Added _mssql module as a dependancy and updated setup.py to include it during installation
+   * Added new core module check_mssql() to ensure proper import for pymssql for Fast-Track attacks
+   * Added new definition brute() for mssql brute forcing within fasttrack
+   * Added the ability to use a mssql shell for raw queries for microsoft SQL based systems
+   * Added the ability to do either powershell or h2b attack method via windows debug to sql bruter
+   * Added new function call launch_hex2binary in the mssql module in fasttrack
+   * Fixed a bug in the interactive shell when quitting out caused a global exception for socket(AF) versus socket.socket(AF). It no longer throws an exception
+   * Added all payloads from SET including interactive shell, ratte, and others into the MSSQL Bruter in Fast-Track
+   * Added the ability to leverage powershell to deploy in Windows 7 and Server 2008 x64 bit systems where debug is removed
+   * Added the ability to use Metasploit based payloads within the mssql bruter
+   * Added a background http server nonthreaded to keep alive when SET does the mssql bruter
+   * Added a new expoits section to the fast-track menu, this will be the ultimate home for custom exploits and such
+   * Added MS08-067 to the new exploits section in the fasttrack menu
+   * Added the Mozilla Firefox 3.6.16 mChannel Object Use After Free Exploit (Win7) in the fasttrack exploits menu section
+   * Added additional spacing around the SET interactive shell to clear it up a bit when doing menu selection
+   * Added the ability to trigger the auto re-enable of the xp_cmdshell stored procedure if disabled
+   * Added the Apple QuickTime PICT PnSize Buffer Overflow from Metasploit to the Spear-Phishing attack vector
+   * Added the Mozilla Firefox 3.6.16 mChannel use after free vulnerability from Metasploit into the Metasploit Browser attack vector
+   * Added the Apple Quicktime PICT PnSize and FireFox 3.6.16 mChannel use after free to the SET-web interface
+   * Fixed the menu structure around the web gui to reflect the new menu change with 1 - being social-engineering attacks versus all on the initial screen
+   * Added the latest teensy attacks into the web gui, includes gnome wget, binary 2 teensy, sdcard teensy, and X10 arduino jammers
+   * Added an awesome new option in the java applet attack vector, it will allow you to select shellcodeexec which means the Java applet will now deploy shellcodeexec then execute alphanumeric shellcode. Meterpreter will never touch disk!
+   * Rewrote the java applet quite a bit to reflect the new changes on the java applet
+   * Added new options in payloadgen for the java applet new menu structure for shellcodeexec
+   * Added reverse meterpreter, reverse https, reverse http to the shellcodeexec attack
+   * Fixed a bug that caused the create a fileformat payload to error out when specifying certain payloads
+   * Added similar format to new menu structure to the SET interactive shell
+   * Fixed some carriage return issues within the SET interactive shell 
+   * Fixed a bug that caused java repeater to not work properly (thanks Kevin Mitnick for bug report)
+   * Added better URL handling of java repeater for post acceptance redirect
+   * Fixed a long standing bug that would randomly cause internet explorer to crash, had to do with java applet and waitfor() on bufferstreams
+   * Custom compiled shellcodeexec to not print any output and obfuscate
+   * Added randomized obfuscation on shellcodeexec to randomize each time its deployed
+   * Fixed a bug in SET interactive shell that would randomly cause bypassuac to throw an uploads exception
+   * When auto-detect is turned off, it wouldn't allow you to enter a hostname, this has been fixed
+   * Added full path variables for when generating shellcodeexec binaries for people with strange path variables
+  
+~~~~~~~~~~~~~~~~
+version 2.0.3
+~~~~~~~~~~~~~~~~
+
+   * Rehauled the entire core library to be setcore which required major recoding of most modules
+   * Added new path variable for msf4 /opt/framework/msf3
+   * Added additional color schemas to core.py including background colors
+   * Added check_length for min/max for a payload selection in core.py
+   * Fixed some bugs that was causing listener to not work properly since core was not imported right
+   * Added color to the main setprompt, its a dark cyan
+   * Fixed a socket module not callable type error in SET interactive shell listener
+   * Updated the svn update for Metasploit to call meta_path versus doing it through fileopen calls. Now incorporates new directory path in BT5
+   * Fixed the "name 'core' is not defined" bug in arp_cache.py and solo.py
+   * Fixed a bug in the IP validation check 
+   * Added better error handling around the phishing attack vector within SET and GMAIL PDF illegal detection
+   * Fixed a bug when download + execute was specified during binary2teensy attack vector, thanks Kevin Mitnick
+   * Added a check to see if sendmail was installed when using spear phishing attack
+   * Fixed a java repeater issue due to timing issues
+
+~~~~~~~~~~~~~~~~
+version 2.0.2
+~~~~~~~~~~~~~~~~
+
+   * Fixed a bug where you couldn't go back into mass mailer attack if it was previously used (bad import)
+   * Changed some flow of the smtp_client a little bit, was getting way to complex
+   * Fixed a bug in create a payload/listener where SET wouldn't properly pack msf.exe using UPX
+   * RATTEServer now uses -static compilation and works on all platforms now
+   * More major menu rehauling and how SET behaves during interactive mode
+   * Version information now pulls from core.py versus static file under src/version
+
+~~~~~~~~~~~~~~~~
+version 2.0.1
+~~~~~~~~~~~~~~~~
+
+   * Added slim_set.py in config, will slim down the SET instance
+   * Added a new config option in set_config to turn SET_Interactive shell to off which will mean you need to spare some room in SET.
+   * Changing the structure of how menus look, so when you go to phishing, you know your in the phishing menu, when your in webattack you know you're there
+   * Added core function set_check to see if interactive shell is turned on or off
+   * Added new core function to standardize menu output for option 99
+   * Added a 99 backout menu to the infectious media menu
+   * Fixed a bug that would cause updating SET or Metasploit to throw an exception. Changed to call core.update_set() versus update_set()
+   * Updated set_config with instructions to install Sendmail as it is not included by default in Backtrack5
+   * Fixed a bug in Binary2Teensy that would improperly call the Teensy payload menu  
+   * Fixed a couple bugs in smtp_client and added new menu mode into mass mailer
+
+~~~~~~~~~~~~~~~~
+version 2.0
+~~~~~~~~~~~~~~~
+
+   * Removed un-needed assignment in core around create random string
+   * Added the Binary2Teensy option in the Teensy menu, this will allow you to create a payload and inject alphanumeric shellcode through shellcodeexec in a new technique released at BSIDESLV
+   * Changed the path of metasploit to be /opt/msf3/framework3 versus /pentest/exploits/framework3
+   * Added the ability for multiple payloads in binary2teensy attack
+   * Added the ability to leverage the SDCard mounted Teensy device with payload generation without mounting the SDCard to the victim machine
+   * Fixed a bug where webattack_email turned on would not trigger based on a wrong path
+   * Updated the phishing attacks in the infectious media site and phishing site in the web GUI interface
+   * Updated the Wireless Access Point Attack to choose the monitor interface that is most recently created
+   * Changed the menu output, this is the first of many changes on how the menu interacts
+   * Added an X10 Sniffer into the Arduino based attack vectors
+   * Added an X10 Jammer into the Arduino based attack vectors
+   * Changed the menu option to reflect Arduino based attack vector versus Teensy
+   * Added a starttls check for authentication around sendmail
+   * Fixed a bug in mass mailer that would cause gmail to be set versus smtp relay
+   * Added the SD2Teensy OSX attack vector which targets OSX machines by dumping from the converts.txt storage drive on the teensy
+   * Added additional exploits into client-side attacks for the browser exploits
+   * Added additional exploits into the spear-phishing attacks
+   * Fixed a bug where SET would not properly check for running Apache servers and stale SET processes
+
+~~~~~~~~~~~~~~~~
+version 1.5.3
+~~~~~~~~~~~~~~~
+
+   * Large menu rehaul and things moved to different places and code cleaned up
+   * Fixed the logging problem that would not generate log messages for errors in src/logs/
+   * Added print_status, print_error, and print_input in the core modules, all menus should now use this from now on
+   * Added some alignment to some menus and made it flow better 
+   * Replaced linux reverse tcp shell with reverse meterpreter in the java applet attack vector (thanks dmdxs1)
+   * Changed the web_port config to work in spawn.py which houses a lot of the web servers / listeners
+
+~~~~~~~~~~~~~~~~
+version 1.5.2
+~~~~~~~~~~~~~~~~
+
+   * Fixed a bug that would trigger an invalid shell if a connection was received in the SET interactive shell (thanks Paul Hallstein)
+   * Changed interactive shell listener to not flag on invalid choice if return was hit versus an actual invalid option
+   * Added the ability to see multiple shells coming in when in the selection menu, before you had to interact with a shell to see the other connections
+   * Rewrote portions of the java applet to reflect sun java instead of microsoft as well as fix some bugs with the multi-platform shells
+   * Added better handling around chmod for OSX/Linux detection in Java Applet
+   * Cleaned up some code within the Java Applet
+   * Added better connection handling and detection including threaded menu mode
+   * Fixed a bug within the smtp mailer when webattack would be set to ON, it would throw an error, this has been resolved
+   * Starting to work on a better downloader for the SET interactive shell. Goal is to have it leverage WriteProcessMemory and allocate enough space for the SET interactive shell to place into an existing process like explorer.exe, etc.
+   * Removed custom packing of SET interactive shell, putting custom-UPX on top of PE sometimes causes corruption for some reason
+   * Fixed an issue with MLITM was trying to import the wrong module and throw an exception
+   * Moved verbose text from modules into text.py file
+   * Now drawing most of the menus dynamically
+   * Fixed a bug where spear-phishing would not properly send an email leveraging GMAIL (thanks Karthik!)
+   * Fixed another bug that was affecting sendmail via spear-phishing
+   * Fixed an issue where RATTE payloads would show up as 2 and 3 and be missing menu number one (thanks Christian Gelici)
+   * Fixed an issue with payloadgen that caused msf.exe to not properly be created due to a variable messup (thanks f3bruary)
+   * Fixed an issue where client-side exploits were not properly getting created (thanks f3bruary)
+   * Fixed a bug where the dll hijacking would not properly execute
+   * Standardized all menu returns/exits to the same number - 99
+   * Fixed a bug that caused file imports to fail thanks Lampis Alevizos!
+
+~~~~~~~~~~~~~~~~
+version 1.5.1
+~~~~~~~~~~~~~~~~
+
+   * Changed the order of ietabs exploit and aurora to be consistent 
+   * Complete rehaul of the directory structure, more to come.
+   * A large restructuring has occured that maps all the folders to actual attacks. Still a work in progress
+   * Added automatic import for jar_file.py that dynamically imports new Java.java files into the Java Applet if you want to make changes to the code
+
+~~~~~~~~~~~~~~~~
+version 1.5
+~~~~~~~~~~~~~~~~
+
+   * Added shell.py to support both Linux and OSX for the SET Interactive Shell, uses same code repository
+   * Added shell to support Linux/OSX for SET Interactive Shell
+   * Added download to support Linux/OSX for SET Interactive Shell
+   * Added upload to support Linux/OSX for SET Interactive Shell
+   * Added ps to support Linux/OSX for SET Interactive Shell
+   * Added kill to support Linux/OSX for SET Interative Shell
+   * Fixed a bug in mass mailer where TLS would execute after ehlo not before. Thanks pr1me
+   * Changed download path to replace forward and back slashes with a _ so it would not cause strange nix issues with back slashes and forward slashes in the SET Interactive Shell
+   * Added better integer handling when running listener.py by itself without specifying a port
+   * Redesignated filename shell.binary to shell.windows and shell.linux (PE vs. ELF binary)
+   * Added separate installers for shell.linux and shell.osx, to many differences between the two and needed different compiling. 
+   * Added instructions in shell.py how to compile for each flavor operating system including windows, linux, and osx
+   * Added reboot now into the SET interactive Shell
+   * Added persistence to the SET interactive shell with a completely custom written python-bytecompiled service. Essentially uploads service to victim, that calls interactive shell every 30 minutes
+   * Added name distinguishing per windows/posix systems so it will show up :POSIX :WINDOWS on interactive shell, will also show :WINDOWS:UAC-SAFE and :WINDOWS:SYSTEM.
+   * Added the MS11-050 IE mshtml!CObjectElement Use After Free exploit from Metasploit
+   * Added dynamic packing to download/upload for persistence, better AV avoidance
+   * Added MS11-050, Adobe Flash 10.2.153.1, and Cisco AnyConnect Metasploit exploits to the SET web gui
+   * Added 'clear' and 'cls' in the SET Interactive Menu to remove whats in the screen, etc.
+   * When using the java docbase exploit, removed 'Client Login' for title frame, isn't needed
+   * Added back command to the SET interactive shell to go back when in different menus
+   * Fixed a bug where it would state payloadprep not defined, it was caused to UPX not fully packing the device at time of upload, a 3 second delay has been added
+   * Fixed a bug where creating a RATTE payload in option 4 would launch the SET interactive shell in mistake versus the RATTE listener. Thanks darkther4py
+   * Fixed a bug where mass mailer would throw an indentation exceptions
+
+~~~~~~~~~~~~~~~~
+version 1.4.2
+~~~~~~~~~~~~~~~~
+
+   * Fixed the path to UPX in Back|Track 5 if installed to /usr/bin/upx
+   * Added the latest Cisco AnyConnect download and execute exploit from Metasploit
+   * Added a message prompt if Apache is not detected being running. If it isn't it will now ask if you want to start it (thanks ChrisJohnRiley)
+   * Added auto migration into the Metasploit Client-Side attacks, previously it was only for Java Applet (thanks ChrisJohnRiley)
+   * Changed the iframe width and height to be 100/100 to have better clips on Adobe PDF exploits (thanks ChrisJohnRiley)
+   * Changed dnsspoof path to be reflective of Back|Track 5
+   * Added support for Yahoo and Hotmail, you can now configure it in the set_config file at the very bottom as EMAIL_PROVIDER
+   * Changed the location of airbase-ng to be Back|Track  5 compliant
+   * Fixed a child exception error when using the mass mailer and not selecting the listener
+   * Handled mkdir commands better if directory was already there
+   * Added multi-threaded support to the spear-phishing attack vector when sending emails out
+   * Fixed a bug that caused the report generator in credential harvester to fail and not report findings accurately
+   * Fixed a bug where visit statistics were not properly showing up in the exported report
+   * Fixed a bug where using webjacking would not load index2.html properly when site had been jacked due to new logging added in the report_harvester and do_GET() handlers
+   * Fixed a bug where using webjacking and java applet attack would not load java applet because of the new do_GET() handler, it now loads properly
+   * Fixed a bug in mass mailer using sendmail, incorrect indentation
+   * Added AP_CHANNEL to set_config to allow configuration of channels for airbase-ng, it wouldn't recognize as a valid AP without properly specifiying the channel (thanks pr1me and rejectedmaniac)
+   * Fixed a bug where the sms templates were not properly loading filename extensions since moving the original templates directory (thanks dmdxs)
+   * Fixed a bug when you selected web templates in Java Applet and you hit run it would try to redirect back to the local machine and continue to prompt for java applet even after execution. It now redirects back to the proper web template site
+   * Fixed a literal 10 error message when using the SET interactive shell if you specified 'quit' before entering the interactive shell
+   * Changed python path to /usr/bin/env python instead of /usr/local/bin/python since it doesn't work on OSX however /usr/bin/env python does
+
+~~~~~~~~~~~~~~~~
+version 1.4.1
+~~~~~~~~~~~~~~~~
+
+   * Fixed a bug where the SET web port would not configure properly if a different port was specified. Accidently put the check in the do_g$
+   * Re-enabled the SET interactive shell UPX polymorphic encoder addition, was buggy before seems to be find now
+   * Added the source code for the bypassuac exploit under the set_payloads/uac_bypass/source directory
+   * Moved the templates directory to src/templates instead of being in the root directory, less clutty in the main root
+   * Cleaned up some outdated code in man left in the middle attack
+   * Added a total number of hits to successful posts/credential harvesting from the harvester attack to the html report. When you finish with the credential harvester it will let you know how many people visited the site and how many people actually fell for the attack.
+   * Added better error handling around the SET interactive shell when selecting a number to interactive with. If a string is detected it with flag the same message as if an invalid number was specified
+   * Fixed an issue where automigrate was still running when using the linux/osx payload option in the Java Applet attack (thanks pr1me)
+   * Looks like python-pefile is broke on 64-bit platforms which means the digital signature stealing is out on 64-bit. I added a check for platform architecture, if 64bit is detected it will disable digial signature stealing. If 32 bit is detected then it will run normally. This is a temporary fix until I can look at what's flagging in python-pefile and fix.
+   * Fixed the pefile issue, was using a newer checksum method which caused it to die in 64bit, downgraded disitools to 0.1 which uses the older method which works in 64bit, digital signature stealing should work on all platforms now
+   * Fixed a bug where the teensy payload menu would not properly run the Gnome Teensy HID based on a wrong-placed comment (thanks to Aaron Hine)
+   * Fixed a small bug where the email counter would not increment on mass mailer, it would say Sent e-mail: 0 and would not increase as more emails were sent. (Thanks Larry Pesce!)
+   * Fixed a bug where selecting create a payload and listener for the SET interactive shell would flag a payloadprep not defined exceptions. (Thanks Luca Grembo)
+   * Added some additional obfsucation on the SET interactive shell.
+   * Updated BeautifulSoup check for 3.2.0 instead of 3.0.8.1
+   * Reworked core module for meta_path into calls that were leveraging static metasploit_path variables. Allows me to centralize and add checks for better msf path detection.
+   * Fixed a bug in clientside attacks that was throwing a meta_path exceptions (thanks Pr1me)
+   * Fixed a bug where pre-defined templates would error out based on the path move to src/templates. Thanks macfan30! 
+
+~~~~~~~~~~~~~~~~
+version 1.4
+~~~~~~~~~~~~~~~~
+
+   * Java changed how self signed certificates work. It shows a big UNKNOWN now, modified self sign a bit. 
+   * Added the ability to purchase a code signing certificate and sign it automatically. You can either import or create a request.
+   * Fixed a bug in the wifi attack vector where it would not recognize /usr/local/sbin/dnsspoof as a valid path
+   * Fixed a bug in the new backtrack5 to recognize airmon-ng 
+   * Added the ability to import your own code signed certificate without having to generate it through SET
+   * Fixed an issue where the web templates would load two java applets on mistake, it now is correct and only loads one
+   * Fixed a bounds exception issue when using the SET interactive shell, it was using pexpect.spawn and was changed to subprocess.Popen instead
+   * Added better import detection and error handling around the python module readline. Older versions of python may not have, if it detects that python-readline is not installed it will disable tab completion
+   * Added a new menu to the main SET interface that is the new verified codesigning certificate menu
+   * Fixed a bug with the SET interactive shell that if you selected a number that was out of the range of shells listed, it would hang. It now throws a proper exception if an invalid number or non-numeric instance is given for input
+   * Added more documentation around the core modules in the SET User_Manual 
+   * Updated the SET_User manual to reflect version 1.4
+
+~~~~~~~~~~~~~~~~
+version 1.3.5
+~~~~~~~~~~~~~~~~
+
+   * Fixed a bug where create payload and listener wouldn't work for the new SET interactive shell or RATTE
+   * Updated the SET User Manual for version 1.3.5
+   * Fixed the core.log(error) core library to properly log potential errors within SET
+   * Updated the SET interactive listener to hold over nearly unlimited connections versus the 30 it was initially limited to
+   * Turned the Java Repeater off by default, still a bit buggy, feel free to turn on if you want it
+   * Added an automatic selection for the Sun Java Applet2ClassLoader Remote Code Execution to select java meterpreter since it is specific to the java meterpreter as a payload selection
+   * Fixed alignment issues in the Metasploit attack vectors
+
+~~~~~~~~~~~~~~~~
+version 1.3.4
+~~~~~~~~~~~~~~~~
+
+   * Fixed a bug where from src.core.core import    * would cause an exception
+   * Added the set-proxy addition that will allow you to configure a proxy when using SET
+   * Added additional error handling in the SET web gui
+   * Fixed an issue where set-proxy wasn't configuring the proxy on certain linux distributions
+   * Added the Adobe Flash Player 10.2.153.1 SWF Memory Corruption Vulnerability from the Metasploit Framework
+
+~~~~~~~~~~~~~~~~
+version 1.3.3
+~~~~~~~~~~~~~~~~
+   * Added keystroke_start command to the SET interactive shell
+   * Added keystroke_dump command to the SET interactive shell
+   * Fixed a bug where downloading a file wouldn't work properly
+   * Added a socket timeout and unique identifier for connecting shells. Will stop non-SET shells from connecting and drop the socket if it isn't the interactive shell
+   * Fixed a bug in keystroke_dump where interactive shell would not properly send signal back and cause a broke pipe error
+   * Added lockworkstation command to the SET interactive shell. Useful for keystroke logging
+   * Fixed a bug where the encoder was not properly handling the set interactive shell
+   * The keystroke_start does not currently work if victim locks there screen due to not being fully injected into something that can monitor keystrokes, for example explorer.exe. Process injection will be coming soon.
+   * Started converting sys.path.append core import modules to from src.core.core import    *
+   * Fixed a bug where multiattack would throw a port not defined if default was selected
+   * Fixed a bug where harvester would through an exception if multiattack was used
+   * Fixed a bug where web_server start would throw an exception if web server wasn't listening properly
+   * Big stability update on how connections are handled and during times of error on keeping the connections alive
+   * Fixed alignment on spear-phishing and client-side attack to align properly
+   * Added better quit handling in the web attack vector specifically when cloning a website or in payload generator
+   * Fixed a bug in create your own payload that would flag core not defined thanks Luca!
+   * Fixed a bug in the webgui that the update everything would cause an exceptions error
+
+~~~~~~~~~~~~~~~~
+version 1.3.2
+~~~~~~~~~~~~~~~~
+
+   * Added a new feature to the SET interactive shell, grabsystem. Will allow you to elevate permissions on victi machine. Does not work on XP SP2 and below.
+   * Fixed a bug where if grabsystem was called on with UAC bypass, the UAC-Safe shell would hang
+   * Added better error handling of sockets and addresses in the socket handlers in the interactive shell
+   * Updated the code base in the shell.binary to add the new grabsystem and add better error handling
+   * Added default handling if listener port was nothing, defaults to port 443 now
+   * Fixed a bug in how third party handlers responded to certain character sets 
+   * Slowly moving to __init__.py method as it's proper and easier than sys.path.append
+
+~~~~~~~~~~~~~~~~
+version 1.3.1
+~~~~~~~~~~~~~~~~
+
+   * Fixed a bug in the SET interactive shell that was causing it to fail if the pycrypto modules was not installed
+   * Updated RATTE to include better handling of injection
+   * Bug fix for the wireless attack vector not properly putting things in monitor mode
+   * Added changes to the wifi attack where it detects if airmon-ng is installed first and uses the path, or uses the one built into SET
+   * Added better error handling around the Python-crypto module
+   * Fixed a problem where in the SET Interactive Shell upload would throw an exception if file wasn't found
+   * Fixed a bug where upload would cause an exceptions error and not properly upload the file
+   * RATTE now runs in the background without a command prompt popping up and automatically restarts firefox or IE no longer need to close / reopen
+   * Fixed a major bug where quitting the SET interactive shell would not allow you to drop into other sessions
+   * Added bypassuac to the SET interactive shell, this allows you to bypass the user access control in Windows Vista, Windows 2008, and Windows 7 fully patched
+   * Added a ton of stability exception handling in case something goes wrong session will still be up
+   * Added tab completion for commands that are available through the SET interactive shell
+   * Added up arrow last command so you can reuse the last commands you had when you type something in
+   * Added exception handling if you type a command in wrong, it will let you know the proper syntax
+   * Fixed a bug where you would either quit or control-c during the list of shells and it would cause the victim machine's CPU to spike to 100 percent
+   * Added the ability to see    * UAC Bypassed    * in the shell window if the bypassuac was successful on the system.
+   * Added error message handling around the SET Interactive Shell commands, so for example if you type bypassuac it will prompt you for the right commands
+   * Fixed a bug where ps would display an error 'pid' not defined
+   * Fixed a bug where after executing the kill command on process, it would error out on next command saying "Confirmed Kill" base 10 error.
+   * Updated RATTE to include better descriptions around what to do when a session has been established
+   * Fixed a bug where multiattack would throw a site_cloned exceptions.
+   * Fixed a bug where the new SET payload would not properly work with the multiattack vector
+   * Fixed a bug where the new RATTE payload would not properly work with the multiattack vector
+   * Fixed a bug where using site templates instead of site cloner would throw an exception if selected
+   * Added an unrecognized command syntax for the SET interactive shell and removed accidential printing of command via the exec command
+
+~~~~~~~~~~~~~~~~
+version 1.3
+~~~~~~~~~~~~~~~~
+
+   * Updated the web-gui interface to reflect all new PDF exploits
+   * Updated the web-gui interface to reflect all new client-side exploits
+   * Added a new setup.py installer file for debian based systems only, will add manual install options later
+   * Updated all of the powershell HID attack vectors to fix bugs and support multi-language support. Thanks padzero!
+   * Added AES encryption to the socket communication, it requires Crypto.Cipher which is from the PyCrypto libraries. 
+   * Added python-crypto to the installer setup.py installation
+   * Fixed web-gui alignment on new options so they match up properly to SET-interface
+   * Added better error handling around the openssl python module if it isn't installed
+   * Added download_file capabilities into the SET interactive shell.
+   * Added upload_file capabilites into the SET interactive shell.
+   * Added shell capabilties into the SET interactive shell. 
+   * Added ssh_tunneling capabilities into the SET interactive shell. You can tunnel any port you want to over ssh
+   * Added a teensy Gnome wget payload thanks to Hugo Caron (y0ug)!
+   * Fixed a bug in a menu where teensy payload return to menu would not return properly to main menu
+   * Fixed a bug where the Mass Mailer Menu didn't properly return back to main menu when specified.
+   * Added process list in the SET interactive shell.
+   * Added process kill in the SET interactive shell.
+   * Added dsniff to set_config as an option instead of ettercap, can use either one.
+   * Added centralized logging in SET, log files will now be dumped to src/logs/set_logfile.log
+   * Added logging to main SET interface, handles main SET interactive shell errors
+   * Added logging to arp_cache.py file, handles arp cache errors
+   * Added logging to hijacking.py file, handles dll_hijacking errors
+   * Added logging to harvester.py file, handles credential harvesting errors
+   * Added logging to payloadgen.py file, handles payload generation errors
+   * Fixed a bug where if site wouldn't clone properly it would just exit SET, it now just returns back to main menu.
+   * Fixed a bug where the new addition to dnsspoof would not properly kill dnsspoof when exiting SET, it now terminates when an exception is thrown
+   * Added logging to web_server.py file, handles main SET web server errors
+   * Added logging to spawn.py file, handles main spawn handles for SET
+   * Added the ability to specify high priority during emails or not, thanks Jonathan Murray!
+   * Added new core module libary called log(error) will centralize log messages through core function calls
+   * Added the new Sun Java Applet2ClassLoader Remote Code Execution Exploit from Frederic Hoguin and jduck that was recently added to Metasploit
+   * Moved version number to src/main/ instead of src root
+   * Added the new RATTE payloads to SET that was created by Thomas Werth to circumvent firewall based restrictions. Awesome addition! 
+   * Added the new DSNIFF changes to the web gui to ensure that when the option is enabled in set_config it now gets picked up in web gui
+   * Fixed a bug in web gui where if HTML/Plain wasn't specified, it would not properly run the answer file to launch the attack
+   * Added the SET interactive shell to the Java Applet Attack Vector on the SET web-gui
+   * Fixed a mishandling of OS.Error exceptions in spawn.py which caused SET to spit out a pexpect exceptions error when using KeyBoardInterrupt exceptions handler
+   * Deleted the database directory under src, was no longer needed
+   * Added the Sun Java Applet2ClassLoader Remote Code Execution by Frederic Hoguin and jduck to the web gui interface
+   * Added RATTE to the SET Web GUI under the payload selection area, it's only to be used for the Java Applet attack.
+   * Added the Adobe Flash Player AVM Bytecode Verification Vulnerability from the Metasploit Framework to SET
+   * Added the Adobe Flash Player AVM Bytecode Verification Vulnerability to the SET web gui.
+   * Added six more spear-phishing templates that can be found under the spear-phish attack menu
+   * Added a new attack vector called the SET Wireless Attack Vector, this will create a fake access point and redirect all traffic to you
+   * Added the ability to stop all services/processes started by the SET Wireless Attack vector, it is now under the options menu
+   * Added the Thomas Werth RATTE module to third party modules as well as under the main payload section. Great example to tweak third party modules and add things.
+   * Added airbase-ng to SET in case it is not installed. Thanks to Mister-X for the approval to include it into SET!
+   * Added new wireless attack vector to the SET web gui, menus have been changed slightly
+   * Added the new templates recently added to the SET web gui, they are under the spear-phish menu
+   * Added a binary rewrite of UPX encoder stubs so that it randomizes a three character alphanumeric to remove UPX from the binary. A bit better obfsucation for A/V detection.
+   * Fixed a bug where upx encoding wasn't working properly and wouldn't encode the right binary
+   * Added a new core module called core.upx(path_to_file) which will automatically encode the file via upx and rewrite the UPX stubs with a three character alphanumeric stub
+
+~~~~~~~~~~~~~~~~
+version 1.2
+~~~~~~~~~~~~~~~~
+
+   * Rehauled a lot of manual reused code and defined them in function calls and classes in src/core. 
+   * Added the windows/fileformat/ms10_087_rtf_pfragments_bof to the Metasploit Client-Side Attack vectors.
+   * Added the windows/fileformat/ms11_xxx_createsizeddibsection to the spear-phishing attack vector
+   * Changed the default for UNC embed to OFF instead of ON, don't want SMB alarms going off on phishing attacks unless you know the port is open.
+   * Dynamically import third party modules in the modules/ folder. You can now create your own modules and have them show up in the SET "Third Party Modules" menu
+   * Added core system call meta_path() 
+   * Added core system call grab_ipaddress()
+   * Added core system call check_pexpect()
+   * Added core system call check_beautifulsoup()
+   * Added core system call cleanup_routine()
+   * Added core system call update_metasploit()
+   * Added core system call update_set()
+   * Added core system call help_menu()
+   * Added core system call date_time()
+   * Added core system call generate_random_string(low,high)
+   * Added core system call site_cloner(website)
+   * Added core system call meterpreter_reverse_tcp_exe(port)
+   * Fixed an issue where the report generator would not render the html properly
+   * Added core system call metasploit_listener_start(payload,port)
+   * Added core system call start_web_server(directory)
+   * Added core system call java_applet_attack(website,port,directory)
+   * Added core system call teensy_pde_generator(attack_method)
+   * Updated the user manual to reflect the SET v1.2 changes and add a custom module creation tutorial
+   * Fixed an issue where it would throw an exception on central. not being defined, should be core.
+   * Fixed a core error message in the spear phishing attacking vector
+   * Fixed a bug in spear phishing where it would throw meta is not defined
+   * Fixed an issue in creating your own payload/listener where a core error would not be defined
+   * Added core system call windows_root() 
+   * Changed the ms11_xxx to ms11_006 to match Metasploit's new naming scheme for the exploit
+   * Changed the ms11_xxx to ms11_006 to match Metasploit's new naming scheme for the exploit
+   * Fixed a bug with the adobe pdf nojs exploit in the spear phishing
+   * Added some changes to the Teensy WSCRIPT Payload to support Windows 7. Special thanks to Peter Osterberg 
+   * Added detection if facebook.com was entered it tries cloning https://www.login.facebook.com/login.php instead due to strange iframe issues with facebooks site (thanks Kevin)
+   * Fixed an issue when trying to create a PDF embedded exe in spear phishing, thanks Cam!
+   * Removed a large portion of code from the disitool functionality since the function calls DeleteDigitalSignature and CopyDigitalSignature are only used.
+
+~~~~~~~~~~~~~~~~
+version 1.1.1
+~~~~~~~~~~~~~~~~
+
+   * Added a new configuration option called UNC_IMBED which will embed UNC paths to the web_cloner attack method so when a victim browses to your site if 445 is open outbound, it will pass the Windows hashes to you automatically and still allow additional attacks
+   * Added a new option in the Spear-Phishing attack vector to use the UNC file path attack vector to harvest LM credentials via the <img src=unc> attack vector through the capture/smb Metasploit module.
+   * Added an ignorecase statement to the credential harvester which wouldn't properly handle capitalized method=POST's, it now accepts either
+
+~~~~~~~~~~~~~~~~
+version 1.1
+~~~~~~~~~~~~~~~~
+
+   * Added a new configuration option AUTO_REDIRECT=ON/OFF, this will turn off automatic redirects once the payload is successful. This works for Java Applet.
+   * Fixed wording on the AUTO_DETECT=OFF prompting, it was a bit confusing. 
+   * Changed the old IE exploit ms_xxx_ie_css_clip to reference the update in Metasploit to ms10_090_ie_css_clip
+   * Added a handler for stale processes when closing SET. It should now close any lingering threads or processes when exiting.
+   * Added the Internet Explorer CSS Import Use After Free exploit by JDuck from Metasploit
+   * Added the Foxit Pro PDF buffer overflow exploit from Metasploit.
+   * Added the Nuance PDF buffer overflow exploit from Metasploit.
+   * Cleaned up the smtp sending code with better definitions and function calls
+   * Optimized heavy portions of code to make SET run much faster including the web server
+   * Added the Microsoft WMI Administration Tools ActiveX Buffer Overflow exploit into the browser exploit section
+   * Added better description handlers around set-updates, set-web, set-automate, and inside the main set files
+   * Added central.py to main system files, this will be the home of the central calls and definitions through SET going forward
+   * Added a new addition to add UPX encoding if you have UPX installed somewhere within the SET_CONFIG, adds better AV evasion
+
+~~~~~~~~~~~~~~~~
+version 1.0
+~~~~~~~~~~~~~~~~
+
+   * Added the new set-automate functionality which will allow you to use SET answer files to automate setting up the toolkit
+   * Added bridge mode to Ettercap if you want to utilize that capability within Ettercap
+   * Fixed an issue where multiple meterpreter shells would spawn on a website with multiple HEAD sections in the HTML site
+   * Added the Metasploit Browser Autopwn functionality into the Metasploit Attack Vector section
+   * Fixed the dates on DerbyCon, suppose to be September 30 - Oct 2 2011 instead of Septemeber 29 - Oct 2 2011
+   * Added the ability to utilize templates or import your own websites when using credential harvester, tabnabbing, or webjacking
+   * Fixed an integer error issue with Java Applet when exiting SET
+   * Changed the timing for the wscript payload from 15 seconds to 10 seconds to minimize delay
+   * Added a custom written DLL for SET and the DLL Hijacking, user has to extract the zip file for it to work properly
+   * Redid the report templates for credential harvester to reflect the new look for secmaniac.com
+   * Removed the modified calc.exe and replaced with a modified version of putty.exe to get better AV detection
+   * Redid the dll hijacking attack to include rar and zip files, rar is better to use winzip compatible and will execute
+   * Added an additional dll hijacking dll that will be used for the main attack, uses a purely C++ native method for downloading and executing payloads
+   * Fixed the defaulting application for the Client-Side attack vector, it was defaulting to PDF when it should be an IE exploit
+   * Fixed a bug where hitting enter at the web attack vector would cause an integer base 10 error message
+   * Added the Adobe Shockwave browser exploit that I wrote for the Metasploit Framework. 
+   * Moved all of the SET menu mode source to main/set.py, the main set loader is just a small import now. More clean.
+   * Changed some spacing issues in the client-side attack vectors
+   * In spear-phishing, cleaned up excess messages being presented back to the user when PDF was created or files were moved
+   * Fixed a bug in the web cloner where certain ASPX sites wouldn't clone and register properly, thanks for the patch Craig! Added you to credits.
+   * Added the SMS attack vector which can spoof SMS messages to a victim, it will be useful in nature if you want them to click a link or go somewhere you have a malicious site. Thanks to the TB-Security.com for the addition.
+   * Added the Metasploit Sun Java Runtime New Plugin docbase Buffer Overflow universal client side attack
+   * Added the parameter for the java applet called separate_jvm, this will spawn a new jvm instance so cache does not need to be cleaned
+   * Fixed a bug where the SET Python web server would not properly shut down in certain circumstances
+   * Added a repeatitive refresh flash for the java applet, so if a user hits cancel, it will prompt over and over until run is hit. Better way of getting the user to hit run.
+   * Added the configuration option to turn off the java repeater, so if your using something like multi-attack you can specify so it doesn't keep nagging the user if you want multiple attack vectors
+   * Fixed a bug where spear phishing attack would not spawn meterpreter listener when yes was specified, this was caused by the new dll hijacking addition.
+   * Added better connection handling through the spear-phishing and gmail integration, it wasn't properly closing the connection per request
+   * Fixed bug where using infectious media and file format would prompt you to use the spear-phishing mailer option afterwards, it no longer prompts for that during infectious media creation
+   * Removed the option to include how many times to include, automatically defaults to 4, option is configurable in set_config now
+   * Added the Metasploit Adobe FlashPlayer "Button" Remote Code Execution exploit to the spear-phishing/file format attack vectors
+   * Added the ability to hit enter on yes or no payload selection default to the infectious usb method, enter would just return you to the menu, it now spawns a listener
+   * Removed the return to continue prompt in the Teensy HID USB attack vector, it wasn't needed and added additional steos
+   * Added the new SET web interface, it primarily utilizes the new set-automate functionality based on responses for a payload, will improve as time goes on
+   * Added the reverse DNS meterpreter payload to both client-side attacks as well as payload generators for things like Java Applet, Teensy, attacks, etc.
+   * Fixed an issue where the Adobe 'Button' exploit was not properly loading and exporting the PDF through Metasploit
+   * Added the Internet Explorer CSS Tags Memory Corruption exploit to the Metasploit Client-Side attack vector through web attack.
+   * Fixed a large bug within mass mailer, if you were using Google Mail with multiple targets, there was a mis-matched counter that would only send one email, not to the rest of the list. It now functions correctly
+   * Fixed a bug where if you turned sendmail to off and you used open mail relays, the email wouldn't be delivered properly. It now sends as expected
+   * Added javascript replacement of the ipaddress under name in Java Applet, this is configurable under set_config, it defaults now to Secure Java Applet instead of your IP Address (more believable)
+   * Added the ability to change the bind interface for the command center. By default its on localhost only, but you can configure to listen on all interfaces and hit the web interface remotely.
+   * Updated the SET User Manual to reflect the changes of version 1.0, it incorporates the web interface, set-automate, SMS spoofing, new configuration options, and much more.
+   * Fixed a bug where you would leave SET or still be in and a stale HTTP web server process would still be there. SET now checks to see if the process is stale and terminates it.
+   * Added the ability to toggle different shell terminal windows within the command-center. For example you can select XTERM, KONSOLE, and GNOME through the set_config. XTERM will be the default.
+   * Fixed where the repeater and java applet wouldn't properly work if you used your own template or ones built into SET
+   * Added a new set_config option for the timing around java-repeater. You can set the seconds for it to repop if you want to tune. Default is 200 (2 seconds)
+   * Added a default option in Java Applet attack, if you hit return for targetting Linux/OSX it will default to port 8080 and port 8081 for the listeners 
+   * Fixed a small menu bug within client-side attack, the menus wouldn't line up properly
+   * Added a patch from Thomas Roth to fix a bug in the java_applet pde file for the Teensy attack vector
+   * Fixed a bug where site would not clone properly or inject iframes in certain websites, it was due to lack of proper regular expression filters, this has been corrected
+   * Added better detection on site cloner to handler <head> tags with java applet that aren't standard, for example <head somethingelsehere>
+   * Fixed a pervasive bug that has been around since 0.3 which when running SET and the python web-server, if you exited you would have to wait a period of time to relaunch because of the TIME_WAIT flag on the socket. After some recoding of the web-server, the socket can be rebound with the TIME_WAIT flag still in play and still function normally
+   * Added better detection on site cloner to handler <head> tags with metasploit browser attack. There were times where the site would clone but not properly inject iframes into the head tags. This has been resolved in both single metasploit client-attack and multiattack
+   * Changed iframes to <frame> to fix bugs within MSF-based payloads. They die if iframes are utilized for some reason. Thanks Matt!
+   * Added a new configuration flag that turns autoscript migrate -f on metasploit based payloads, new flag is AUTO_MIGRATE=OFF/ON
+   * Added better error handling in the main set loader, was throwing proc errors every so often
+   * Added a new flag within the set_config called digital_signature_steal which incorporates Didier Stevens digital signature stealing tool called disitool
+   * Added an addition to the docbase exploit, if the exploit is selected, framesets are used for the attack vector because with iframes it completely bombed, this was a funky workaround
+   * Added a new configuration flag to turn persistence on with Metasploit's Meterpreter if you want it
+   * Removed persistence configuration option, it will be shortly replaced by a much more flexible configuration
+   * Added a new config option that allows you to specify a multiscript meterpreter command. In cases where you use SET and maybe your sleeping or you aren't there, you can piggy back script execution on a meterpreter session connection. For example you could run persistence, or run other scripts that help aid your effort on the penetration test.
+   * Fixed a bug where import your own payload would not properly work within the java applet
+   * Fixed a bug where meterpreter multi scripts was not properly defined within metasploit client-side attacks and would throw an exception
+   * Fixed an import error issue with base64 when sending base64 encoded emails through multiple email medians
+   * Added the ability to customize what port the metasploit browser attack runs on, by default its on 8080 however this is now customizable through the set_config
+   * Fixed a base 10 error message within SET in the Web attack menu, if you did not input an integer it would error out giving a base 10 error message, it now returns to the prior menu as expected
+   * Added better executable obfuscation on the filename when the Java Applet triggers, it use to be static to java.exe, now its a randomized executable name.
+   * Changed the client side attack to default to the docbase buffer overflow instead of the xss vulnerability, more universal in nature
+   * Added some more comments in the set_config file for confusion around the self-signed java applet functionality
+   * Fixed a bug where the Java Repeater on some systems would not properly forward off to the legitimate cloned website when run was hit, seemed to affect Windows XP in certain scenarios, this has since been corrected and properly addresses the legitimate site after run has been executed
+   * When using option 4, it would ask for two IP addresses with AUTO_DETECT=OFF, this has been changed to only flag to one question since the listener binds to 0.0.0.0 (all interfaces)
+   * Turned digitial signature stealing ON by default, it will just default back to normal if it doesn't detect the pefile import
+   * Changed wording to reflect reverse dns as a hostname not tunneling over DNS, was wrong description
+
+~~~~~~~~~~~~~~~~
+version 0.7.1
+~~~~~~~~~~~~~~~~
+
+   * Added the ability to use fileformat exploits in the USB/DVD/CD Infectious Attack Vector
+   * Fixed a couple of wording issues in the client-side attack vector payloads section
+   * Added Meterpreter SSL connection payload for client-side attacks
+   * Added Meterpreter SSL connection payload for fileformat attacks
+   * Added Meterpreter SSL connection payload for browser attack vectors
+   * Fixed an issue with the utilprint exploit in the file format attacks
+   * Added the Metasploit PDF embedded executable fileformat exploit with no javascript
+   * Fixed a bug where equal signs would throw the website off and cause an error cloning
+   * Updated the user manual to reflect the latest changes in 0.7.1
+
+~~~~~~~~~~~~~~~~
+version 0.7
+~~~~~~~~~~~~~~~~
+
+   * Fixed the NAT/Port FWD descriptions to be a little bit more descriptive
+   * Bug fixes on payload gen with x64 bit payloads in Metasploit
+   * Added new Multi-Attack Payload option to utilize multiple attack vectors
+   * Incorporated Multi-Attack into each web attack vector
+   * Added a PID management system in SET for stray processes
+   * Cleaned up payloadgen code and SET code to reflect new multiattack changes
+   * Added the web jacking attack vector by white_sheep, emgent, and the Back|Track team
+   * Fixed an issue with ARP Cache defaulting, it should now poison everyone
+   * Added better error handling within the SET menus, still needs a bit more work
+   * Cleaned up color schema and removed old code
+   * Added the Adobe CoolType SING Table 'uniqueName' Overflow zero day from Metasploit in spear phishing
+   * Added two more Teensy based payloads, thanks Garland!
+   * Added HTML support for Spear-Phishing Attack Vector
+   * Added HTML support when WEBATTACK_EMAIL=ON for web attack vector
+   * Added the Adobe Cooltype SING Table Overflow zero day for browser exploit
+   * Added the new SET User Manual to readme/. This is a big update and has updated content for 0.7
+   * Fixed a simple yes or no answer when requirements for SET were not met
+   * Removed a control-c option if multi-attack was specified for harvester
+   * Added a check for APACHE_SERVER and multi-attack. Will now throw an error since it's not supported yet
+
+~~~~~~~~~~~~~~~~
+version 0.6.1
+~~~~~~~~~~~~~~~~~
+
+   * Added the ability to utilize SSL with credential harvesting or tabnabbing attack, you can import your own PEM files or utilize self-signed (SET creates for you)
+   * Fixed the lnk exploit path since it changed within Metasploit
+   * Added -n to disable database support (not needed for SET)
+   * Added cgi.escape to filewrite output to remove a local XSS attack that could happen on credential harvester/tabnabbing attack
+   * Added -L to remove error messages when using other platforms outside of standard Linux OS (i.e. osx, ipad, iphone)
+   * Fixed reverse VNC from not properly executing with DisableCourtesyShell
+   * Fixed issue where teensy.pde would not properly write out if no handler was specified
+   * Added the latest Metasploit Hijacker DLL exploit (zero day)
+   * Bug fix in Java Applet backdoored executable, for some reason EXE was getting corrupt with latest Metasploit updates
+   * Removed the encoder option in msfconsole, no longer needed
+   * Changed numbering on Metasploit Client-Side Attack vector
+   * Fixed an issue with webdav Metasploit based exploits not deploying right when using 8080 as an alternate port
+   * Added more extenstions to the DLL Hijacking issue
+   * Removed an old print statement in cloner.py
+   * Added the download/exec payload in the Metasploit exploit attack vector, you can now download/exec payloads
+   * Added the ability to set the port on reverse through Metasploit client attacks
+   * Added Metasploit's allports payload to Metasploit exploit attack vector
+   * Added a display message for the teensy output to ensure to select usb/keyboard in tools + board in Arduino
+   * Fixed a bug with site cloner that would not properly clone a site on some operating systems
+   * Fixed a bug that would cause java applet not to work based off of a bad subversion update
+   * Added the ability to utilize SET with Port Forwarding/NAT where your IP may be different from the reverse listener, it will prompt now when AUTO_DETECT is set to OFF
+   * Added better obfuscation for the downloader, no longer needs an .EXE extension, it rewrites on the fly to the OS for better IPS/IDS evasion
+   * Added a couple changes to the Java Applet source code and added a small tool for compiling it
+   * Added method=post for detection on html for the credential harvester method
+   * Added the Apple QuickTime 7.6.7 _Marshaled_pUnk Code Execution exploit into the Metasploit Client-Side attacks
+
+~~~~~~~~~~~~~~~~~
+version 0.6
+~~~~~~~~~~~~~~~~~
+
+   * Number of bug-fixes through SET and better error handling
+   * Added the tabnabbing attack vector
+   * Added favicon pulling per site on tabnabbing
+   * Fixed dynamic import bug with reloading modules after use
+   * Added Man Left in the Middle (MLITM) from Kos
+   * Added the latest IE and Adobe exploits
+   * Rewrote the HTTP web server handler for WebDav based exploits, it will force SET to use port 8080 as the web server as MSF requires WebDav on 80.
+   * Rearranged the initial web attack vector menu, it needed to be reversed
+   * Added the ability to specify your own custom executable for MSF encoding (-x) within the config/set_config file, the new option is called 'CUSTOM_EXE'
+   * Added checks for BeautifulSoup, it is now a requirement for SET for the MLITM attack
+   * Fixed the no encoding issue with Java Applet Attack Vector, when specifying no encoding it will not prompt you to encode the payload
+   * Fixed bleed over colors when bombing out of any of the SET menus
+   * Added the ability to be able to customize MLITM web server port address in set_config, default is 80. 
+   * Fixed an issue with Java Applet attack where if WEB_PORT was changed from 80, the Windows and NIX payloads would not deploy properly based off of port change
+   * Fixed an issue where importing your own executable with the Java Applet attack would fail and not work properly
+   * Fixed where OSX and LINUX payloads would still be asked for in payloadgen if not using the Java Applet attack
+   * Added the new Teensy Arduino attack vector menu that can be used with the Teensy USB HID devices that can bypass autorun disabled for physical/social-engineering attacks
+   * Fixed issue where ettercap was not properly performing DNS_POISON attacks, should now dns poison properly
+   * Removed the IP address challenge question when importing your own exe
+   * Fixed issue where other python applications would close when exiting SET
+   * Rewrote html handler to fix stderr and stdout issues with subprocess and ettercap handlers, should close properly when exiting SET now
+   * Fixed the main bug with Linux/OSX via Java Applet and no shell being piped, should now be 100 percent operable
+   * Fixed issue where VNC courtesy shell would still be present even when disabled
+   * Thomas Werth Java Applet is now open source, can be found under src/java_applet
+   * Fixed a bug where credential harvester would clone a website twice
+   * Fixed an issue where some sites would not properly rewrite with the credential harvester
+   * Added the ability to automate the payload deployment through Teensy
+   * Added the ability to use Apache with the Teensy attach vector or the built-in SET server
+   * Fixed a bug where if an invalid response was given in PEXPECT installation, it would continue and cause issues when the requirements were not met
+   * Changed the MS10-042 to reflect the MSF changes windows/browser/ms10_042_helpctr_xss_cmd_exec
+   * Added the MS10-XXX LNK file exploit from Metasploit, is now incorporated into the Client-Side Attack vector
+   * Added defaults to the client-side attack vector, so just hitting return will default to meterpreter and the latest exploit
+   * Removed the ability to perform tabnabbing and web templates, only clone method supported
+   * Fixed when webdav is being used the HTTP 8080 server of the cloned site wouldn't run properly
+   * Fixed when client-side attack exploit windows/browser/ms10_042_helpctr_xss_cmd_exec would fail and not load properly through webdav
+   * Fixed issue where Apache and python-based web server was not properly running under Teensy USB HID attack
+   * Changed name from Infectious USB/DVD/CD to Infectious Media Generator  
+   * Fixed a bug with the Java Applet attack vector where Apache mode wasnt working properly
+   * Fixed the BeautifulSoup response to ensure it fails out if invalid responses are given
+   * Fixed an issue where BeautifulSoup and PExpect would not clean up properly after installation
+   * Changed timing on Teensy PowerShell/WSCRIPT attack method to be faster
+
+~~~~~~~~~~~~~~~~~
+version 0.5 
+~~~~~~~~~~~~~~~~~
+
+   * Added better FireFox user agent impersonation through web cloner
+   * Rehauled the entire web_server to handle multiple request types (ie POST)
+   * Removed the single host target for Ettercap and allow you to DNS poison the entire network now for a larger capability for the attack.
+   * Rehauled the Ettercap functionality to allow entire network ranges for select websites or any websites
+   * Removed the certificate check for FQDN mismatches, no need to keep them in when cloning site
+   * Added a whole new attack method through the web cloning, this will allow you to clone a website with username and password fields and automatically harvest those credentials. 
+   * Added a reporting engine to the credential harvest, looking at expanding to other attack methods.
+   * Added more description to the payload creation option within SET and moved it to the root SET directory
+   * Added the ability to utilize predefined templates within the SET web attack now, and expanded it to multiple templates
+   * Added the ability to utilize backdoored executables (-x) in MSF to better get around A/V. This option is available through all of the payload generation capabilities.
+   * Added XML based format for the report export in the website harvester, pretty simple xml format for anyone that needs it
+   * Added CD/DVD/USB infectious method, will allow you to create a simple autorun.inf you can burn and use in an se attack
+   * Fixed bug when reloading a menu after previously loaded
+   * Fixed bug where credential harvester server would not properly terminate when issuing Contorl-C
+   * Fixed bug where when cloning certain sites it would duplicate the payload and execute twice
+   * Fixed where aurora exploit was changed in MSF but not in SET
+   * Fixed iepeers description in msf and removed win32hlp exploit
+   * Added the ability to import your own PDF now in the Spear Phishing menu
+   * Moved around the changelog to reflect newest changes first in the changelog
+   * Added the MS10-018 IE Tabular ActiveX Memory Corruption Exploit
+   * Changed update_set to set-update
+   * Added robust checking for custom PDF in spear-phishing attack, if no file is found it will default.
+   * Added defaults to spear-phishing attack menus
+   * Added the ability to just use the mass mailer options by itself without having to do it through an attack vector
+   * Fixed bugged when using the payload creation, would cause corrupt executable
+   * Fixed when a server was already bound to 80 in harvester and error message was not displayed properly
+   * Fixed a major bug with the credential harvester, should POST and redirect properly now.
+   * Added automigrate to payloads so when the user closes the browser, it doesn't close the active session.
+   * Fixed bug in infectious usb method where payload was corrupt
+   * Used a non-console application for -x flag in msf, causes there to be no popup now
+   * Added better path detection for iTouch
+   * Added compatibility with iPad, iTouch, iPhone, etc. etc.
+   * Added an interface IP when AUTO_DETECT=OFF to detect both reverse IP and interface IP in scenarios where the interface IP will be different from the listener IP
+
+~~~~~~~~~~~~~~~~~~
+version 0.4.1
+~~~~~~~~~~~~~~~~~~
+
+   * Added multi-encoder options by default and option 15 in the web attack, this is much better for A/V bypassing.
+   * Added the meterpreter ALL PORTS egress attack which slowly connects to every port in order to find one that works
+   * Fixed a couple wording changes that may be confusing
+   * Fixed issue where HTTPServer was not properly closing when exiting SET
+   * Over 25 different menu bug fixes
+   * Added mass obfuscation of payload delivery in the Java Applet, should make harder for signatures to be written
+   * Fixed a bug where web server would not properly quit if you did not fully exit SET
+   * Fixed a bug where the new multi-encoder would not properly be specified when using the 15 number option on web attack
+   * Added the latest IE F1 VBScript exploit to the web attack vector
+   * Added the latest IE Insecure Scripting Misconfiguration attack to web attack vector
+   * Removed the option when creating emails to create the payload now
+   * Added a default to port 443 if null is specified during email attack
+   * Added the ability to customize the web server listening port so it isn't always listening on 80 if you dont want it to
+   * Added the ability to auto detect IP addresses for RHOST within spear phishing controlled through SET_CONFIG and AUTO_DETECT=ON/OFF
+   * Added the ability to create a one time email attack or import the template, don't always have to create a template now
+   * Added default payload if null is specified during email attack
+   * Bug fix on cloning certain websites with no .extension prefix, thanks JWYNN!
+   * Fixed where https wasn't parsed properly when cloning website
+   * Added the iepeers zero-day from MSF to SET
+   * Added the ability to use import your own site with cred harvester
+
+~~~~~~~~~~~~~~~~~~
+version 0.4
+~~~~~~~~~~~~~~~~~~
+
+   * Incorporated Thomas Werth's unpublished Java Applet attack that no longer utilizes VBS script and is multi platform including Linux, Windows, and OSX. 
+   * Allow you to now self-sign your certificates from whatever you want, will need to install openjdk-6 before using this though, edit the set_config to enable this feature.
+   * Fixed bug where newlines were not showing up properly when emailing something
+   * Fixed bug where GMAIL sometimes requires TLS, it will detect if TLS is needed and utilize this
+   * Rewrote the majority of the web server handler, now utilizes forked simplehttpserver in python and  can dynamically import anything now, much easier method for handling multiple files now.
+   * Added two payload delivery options for OSX and Linux in the Java Applet attack, you can now select if you want to create a Lin/OSX payload and have them deployed via the Java Applet. Currently only supports reverse_tcp shells.
+   * Bug fixed template creation where when it dynamically imported newlines would be messed up.
+   * Based on Hak5 and Mubix, I have changed it so that the website and listener is up and running before the emails are sent out. I simply create a child thread that interacts in the background and if the set_config option for WEBMAIL_ATTACK=ON, it will call that variable and allow you to send emails out while the listener and website runs in the background. As soon as your finished with the email, it will then interact with the child process and allow you to interact.
+   * Added Metasploit browser exploits into the website attack vector, this will allow you to utilize the web cloning or pre-defined template in SET and select either a Java Applet method, or Metasploit Browser exploits.
+   * Minor wording change in the payload gen, it said choice 1-4 where the choice was 1-8
+   * Fixed the import your own executable or payload within payloadgen
+   * Fixed the solo payload and listener option (number 5)
+   * Fixed a number of bugs on the interface, thanks to everyone for reporting
+   * Added OSX support to SET, web clone should now fully work
+   * Fixed a couple of bugs where the website wouldnt properly clone if it was php or asp
+
+~~~~~~~~~~~~~~~~~~~
+version 0.3 
+~~~~~~~~~~~~~~~~~~
+
+   * Added x64 payloads for website attack
+   * Added select your own executable for website attack
+   * Added option to clone an entire website and inject applets into them
+   * Fixed a few minor bugs with payload selection
+   * Allow you to specify "0" for encoding without erroring out
+   * Moved the SENDMAIL flag to the set_config instead of its own config file
+   * Added much more description on how to modify the set_config file in the file itself
+   * Moved CREDITS to readme instead of the credits folder
+   * Incorporated a skip for encoding if x64 based
+   * Allow you to import your own website into SET for web attack
+   * Added adobe flatdecode predictor02 integer overflow exploit from MSF
+   * Fixed a couple of menu bugs where it wouldn't properly exit
+   * Added better error handling
+   * Added the adobe newMedia zero day adobe pdf attack for emails
+   * Templates are now dynamically imported into SET, you can add your own email templates now through the templates folder in the set root or you can enter them through SET itself.
+   * Fixed a bug with ARP_Cache poisoning not working if set to ON
+   * Made Shikata_Ga_Nai the default for web attack
+   * Added x64 Meterpreter compatibility with web attack
+   * Fixed bugs in custom exe to vba via rar delivery
+   * Added more payload delivery options to email attack including x64 bind, reverse, and meterpreter
+   * Added automatic encoding options for the VBA to EXE attack via E-Mail
+   * Added a flag option in set_config for ettercap to select interface, handy if ettercap can't determine interface to use, simply change the set_config flag option ETTERCAP_INTERFACE=NONE to ETTERCAP_INTERFACE=wlan0 or whatever.
+   * Added some fun menus when you log into SET that rotate to different ASCII art
+   * Added some coloring into SET, more on this to come, this is only the beginning
+   * Added the option in config/set_config WEBATTACK_EMAIL=OFF you can send emails first then setup the fake website to help with phishing, doesn't require a payload now
+   * Added 4 count on encoding instead of 3 for web attack and payloadgen
+   * Removed the need for xterm on web attack and rely off of pexpect now, this allows you to run set from a 1 console type deal, plus there was a lot of people having issues with xterm in general.
+   * Fixed a bug with cloner that would not clone sites properly that use aspx as their homepage (thanks Emgent)

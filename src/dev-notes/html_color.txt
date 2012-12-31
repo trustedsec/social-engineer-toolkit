@@ -1,0 +1,2 @@
+0193d0
+font: century gothic

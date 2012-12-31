@@ -1,0 +1,11 @@
+* Consider adding jpeg based response triggers 
+* Add better reporting around credential harvester
+	- Add some pretty graphs or something 
+
+* Add calendar invites to spear phishing
+* Add dump sam/cache database to SET interactive shell
+* Add training modules for non exploitation scenarios
+* Add a centralized file that contains all the relevant SET data versus a number of files that are used
+
+j0fer:
+Add configuration option in set_config to specify sendmail location. Currently hard coded.

@@ -1,0 +1,9 @@
+    exploit/windows/fileformat/adobe_collectemailinfo                 Adobe Collab.collectEmailInfo() Buffer Overflow
+    exploit/windows/fileformat/adobe_geticon                          Adobe Collab.getIcon() Buffer Overflow
+    exploit/windows/fileformat/adobe_jbig2decode                      Adobe JBIG2Decode Memory Corruption Exploit
+    exploit/windows/fileformat/adobe_pdf_embedded_exe                 Adobe PDF Embedded EXE Social Engineering
+    exploit/windows/fileformat/adobe_utilprintf                       Adobe util.printf() Buffer Overflow
+    exploit/windows/fileformat/adobe_u3d_meshdecl                     Adobe U3D CLODProgressiveMeshDeclaration Array Overrun
+    exploit/windows/fileformat/adobe_flatedecode_predictor02          Adobe FlateDecode Stream Predictor 02 Integer Overflow
+    exploit/windows/fileformat/adobe_media_newplayer                  Adobe Doc.media.newPlayer Use After Free Vulnerability
+

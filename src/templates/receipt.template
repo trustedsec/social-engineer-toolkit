@@ -1,0 +1,8 @@
+# Author: Ruben Alejandro (chap0)
+#
+#
+#
+SUBJECT="Order Confirmation"
+
+BODY="Hello,\nAttached you will find your receipt for the order that you placed. Please be aware that it may take 2-3 business days for items to be shipped.\nIt has been a pleasure to have your business.\n\nThank you\n Jim Woznaky\n"
+

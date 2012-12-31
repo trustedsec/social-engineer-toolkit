@@ -1,0 +1,28 @@
+<script>
+function performAppletCode(count)
+{
+var applet = document.getElementById('IDREPLACEHERE');
+var obj = null;
+try
+{
+        obj = applet.isInitialized();
+}
+catch(e) { }
+
+        if (!obj && count > 0)
+        { setTimeout( function()
+                { performAppletCode( --count ); }, TIMEHEREPLZ );
+        }
+        else if (obj)
+        {
+        //      do on load
+        window.location = "URLHEREPLZ"
+        }
+        else
+        {
+                window.location.reload();
+        }
+}
+
+performAppletCode( 10 );
+</script>

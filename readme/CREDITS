@@ -1,0 +1,63 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Special thanks to the following people who have contributed to SET:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Infection Guide Using Java/VbScript by AnalyseR: http://www.exploit-db.com/papers/12991/
+* The Social Engineer Framework http://social-engineer.org
+* LoganWHD for his efforts on the Framework and testing out the pre-alpha of SET.
+* Elwood for his testing out and bug reporting through the release. 
+* HD Moore for Metasploit of course!
+* Special thanks to Thomas Werth and his Java Applet attack, it is amazing!!
+* Special thanks to Kyle Osborn for providing the Man Left in the Middle attack
+* Special thanks to Ernest for the SSL idea for Credential Harvesting
+* Greg Foss for reporting a local XSS vuln with credential harvester/tabnabbing
+* Kevin Mitnick for new additions, ideas, improvements, testing, and Java Repeater fix!
+* white_sheep, emgent, and the Back|Track crew for the web jacking attack vector
+* Garland for the BeEF PowerShell addon
+* Crag Balding for the patch to fix a bug in web cloner
+* Lampis Alevizos for the repeater java_applet idea
+* Thomas Roth for the patch to the java_applet.pde teensy fix
+* Didier Stevens for his disitool that does the digital signature stealing
+* Thanks to Matt for figuring out the <frame> issues with the docbase attack and help with the java repeater
+* Jim O'Gorman (elwood) for the UNC path attack idea 
+* Peter Osterberg for the wscript modifications to support Windows 7
+* Thanks for PadZero for the multi-language support in Teensy HID and bug fixes
+* Special thanks to muts for the paramiko SSH tunneling idea!!
+* Hugo Caron (y0ug) for the new gnome_wget.pde teensy addition
+* Thanks to sami8007 and Trcx for the dsniff addition to SET
+* Jonathan Murray for the email priority addition to the mass mailer and spear phishing attack modules
+* Special thanks to the TB-Security.com team for creating the SMS spoofing.
+* Thomas Werth, for his addition to SET with RATTE
+* Elwood for his idea on the wireless attack vector
+* Mister X for allowing airbase-ng to be included into SET
+* Thanks for Brandon Murphy for the report on the bug for download in the SET interactive shell and some feature ideas
+* Thanks for pr1me for bringing to my attention a couple of bugs and the fixes for them
+* Larry Pesce, Luca Grembo for bug reports
+* Chris John Riley for his list of bugs and feature requests... I'm still working on them! :)
+* RejectedManiac for the fix on the wireless access point channel specification
+* Darkther4py for finding a bug in the SET create payload/ratte issue
+* Josh Kelley (winfang98) for his awesome stuff with the teensy and help with the presentations at BSIDES and Defcon
+* To digip for the version 2.0 idea!
+* To Marc Doudiet for working on the vbs version of the teensy exe converter
+* Thanks to Jose Hernandez for the bug reports!
+* Bernardo Damele for shellcodeexec
+* Thanks to Matthew Graeber for the powershell injection technique http://www.exploit-monday.com/2011/10/exploiting-powershells-features-not.html
+* Dale Lakes for his additions into check_mssql 
+* Dale Pearson for finding all the bugs in my code :)
+* Leg3nd for some fixes on the java applet
+* f8lerror for reporting the multiattack bug
+* Thanks to Olie and his unnamed coworker for a quick patch to define users home path versus static root directory
+* Thanks to Stephen Haywood for his patch to the smtp module for bug fix
+* Thanks to Justin Elze for the idea on the QRCode Attack vector
+* Thanks to chap0 for the phishing email template added to the phishing attack vector
+* Thanks for Jeremy Miller for the DEPLOY_BINARIES idea and being able to turn them off and only use POWERSHELL_INJECTION
+* Python shellcode injection from Debasish Mandal
+* Credit to jduck for posting the pastebin of the PoC for the java applet zero day *hugs*
+* Offensive-Security's Peensy project - http://www.offensive-security.com/offsec/advanced-teensy-penetration-testing-payloads/
+
+The Social-Engineer Development Team:
+
+Dave Kennedy (ReL1K)
+JR DePre (pr1me)
+Thomas Werth
+Joey Furr (j0fer)
