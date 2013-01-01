@@ -54,6 +54,7 @@ Special thanks to the following people who have contributed to SET:
 * Python shellcode injection from Debasish Mandal
 * Credit to jduck for posting the pastebin of the PoC for the java applet zero day *hugs*
 * Offensive-Security's Peensy project - http://www.offensive-security.com/offsec/advanced-teensy-penetration-testing-payloads/
+* Thanks to Stephen Haywood (averagesecurityguy) for talking me into moving to github
 
 The Social-Engineer Development Team:
 
