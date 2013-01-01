@@ -7,9 +7,10 @@
 import subprocess
 import sys
 import os
+import platform
 
 # if nix then run installer
-if os.name == "posix":
+if platform.system() == "Linux":
     # give installer a null value
     installer=""
 
@@ -20,7 +21,7 @@ if os.name == "posix":
 
     # if index is out of range then flag options
     except IndexError:
-        print "** SET Dependancy Installer v0.1 **"
+        print "** SET Dependancy Installer v0.2 **"
         print "\nTo install: setup.py install" 
 
     # if user specified install then lets to the installation
@@ -30,12 +31,18 @@ if os.name == "posix":
         if os.path.isfile("/etc/apt/sources.list"):
         
             # force install of debian packages 
-            subprocess.Popen("apt-get --force-yes -y install subversion build-essential python-pexpect python-beautifulsoup python-pefile python-crypto python-openssl python-pymssql", shell=True).wait()
+            subprocess.Popen("apt-get --force-yes -y install build-essential python-pexpect python-beautifulsoup python-pefile python-crypto python-openssl python-pymssql", shell=True).wait()
 
         # if sources.list is not available then we're running something offset
         else:
             print "[*] Your not running a Debian variant. Installer not finished for this type of Linux distro."
             print "[*] Install subversion, python-pexpect, python-beautifulsoup, python-crypto, python-openssl, python-pefile manually for all of SET dependancies."
             sys.exit()
-else:
-    print "[!] Sorry this installer is not designed for any other system other than posix (*nix). Please install the python depends manually."
+
+if platform.system() =='Darwin':
+	subprocess.Popen("easy_install pexpect beautifulsoup pycrypto pyopenssl pefile pymssql beautifulsoup", shell=True).wait()
+	print "[!] Note that you will need to install XCODE for OSX and run 'sudo easy_install cython pymssql' to finish."
+
+if platform.system != "Linux":
+	if platform.system != "Darwin":
+		print "[!] Sorry this installer is not designed for any other system other than Linux and Mac. Please install the python depends manually."
