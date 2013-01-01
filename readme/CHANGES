@@ -4,6 +4,7 @@ version 4.3.4
 
 * converted SET over to github
 * updated update_set() core library for git
+* added an installer script for OSX in setup.py (thanks Wim Remes) 
 
 ~~~~~~~~~~~~~~~~
 version 4.3.3
