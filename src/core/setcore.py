@@ -503,7 +503,7 @@ def update_set():
 # Pull the help menu here
 #
 def help_menu():
-    fileopen = file("readme/README","r").readlines()
+    fileopen = file("README","r").readlines()
     for line in fileopen:
         line = line.rstrip()
         print line
