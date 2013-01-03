@@ -36,7 +36,7 @@ def ms_module(exploit):
     """ Receives the input given by the user from gen_payload.py """
     
     return {
-	    '1':"exploit/windows/browser/ie_cdwnbindinfo_uaf",
+	    '1':"exploit/windows/browser/ie_cbutton_uaf",
 	    '2':"exploit/multi/browser/java_jre17_exec",
 	    '3':"exploit/windows/browser/ie_execcommand_uaf",
             '4':"exploit/multi/browser/java_atomicreferencearray",

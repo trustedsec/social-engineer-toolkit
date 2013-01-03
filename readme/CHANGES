@@ -7,6 +7,7 @@ version 4.3.4
 * added an installer script for OSX in setup.py (thanks Wim Remes) 
 * fixed a bug in the menu system in powershell attack vectors. menu 99 wouldn't exit properly (thanks f8lerror)
 * fixed a new bug that was introduced when README was moved from readme/README (thanks f8lerror)
+* fixed a bug in the naming scheme for the new zero day ie
 
 ~~~~~~~~~~~~~~~~
 version 4.3.3
