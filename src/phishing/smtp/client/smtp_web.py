@@ -143,15 +143,14 @@ counter=0
 # Specify mail Option Here
 if relay == '1':
    user = raw_input(setprompt(["1"], "Your %s email address" % (email_provider)))
+   from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see: "))
    user1 = user
    pwd = getpass.getpass("Email password: ")
-   #smtp = ("smtp.gmail.com")
-   #port = ("587")
 
 # Specify Open-Relay Option Here
 if relay == '2':
    user1 = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
-
+   from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see: "))
    if sendmail==0:
       user = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
       pwd =  getpass.getpass("Password for open-relay [blank]: ")
@@ -202,7 +201,7 @@ try:
                 print "order for SET to work, you will need to specify index.php?INSERTUSERHERE. That is the"
                 print "keyword that SET uses in order to replace the base name with the URL."
                 print "\nInsert the FULL url and the " + bcolors.BOLD + "INSERTUSERHERE" + bcolors.ENDC + "on where you want to insert the base64 name.\n\nNOTE: You must have a index.php and a ? mark seperating the user. YOU MUST USE PHP!"
-
+		print "\nNote that the actual URL does NOT need to contain index.php but has to be named that for the php code in Apache to work."
     	body=raw_input(setprompt(["1"], "Enter the body of the message, hit return for a new line. Control+c when finished"))
 
 	# loop through until they are finished with the body of the subject line
@@ -233,7 +232,7 @@ except KeyboardInterrupt:
 def mail(to, subject, prioflag1, prioflag2, text):
 
 	msg = MIMEMultipart()
-        msg['From'] = user1
+        msg['From'] = from_address
         msg['To'] = to
         msg['X-Priority'] = prioflag1
         msg['X-MSMail-Priority'] = prioflag2
