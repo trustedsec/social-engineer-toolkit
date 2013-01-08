@@ -131,6 +131,12 @@ if option1 == '2':
  for example /home/relik/ihazemails.txt
 """)
    filepath = raw_input(setprompt(["1"], "Path to the file to import into SET"))
+   if not os.path.isfile(filepath):
+	while 1:
+		print "[!] File not found! Please try again and enter the FULL path to the file."
+		filepath = raw_input(setprompt(["1"], "Path to the file to import into SET"))
+		if os.path.isfile(filepath):
+			break
 
 # exit mass mailer menu
 if option1 == '99': 
@@ -143,14 +149,14 @@ counter=0
 # Specify mail Option Here
 if relay == '1':
    user = raw_input(setprompt(["1"], "Your %s email address" % (email_provider)))
-   from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see: "))
+   from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see"))
    user1 = user
    pwd = getpass.getpass("Email password: ")
 
 # Specify Open-Relay Option Here
 if relay == '2':
    user1 = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
-   from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see: "))
+   from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see"))
    if sendmail==0:
       user = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
       pwd =  getpass.getpass("Password for open-relay [blank]: ")
@@ -257,7 +263,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
  	try:
 		if user != "" or pwd != "":
 	               mailServer.login(user, pwd)
-        	       thread.start_new_thread(mailServer.sendmail,(user, to, msg.as_string()))
+        	       mailServer.sendmail(user, to, msg.as_string())
 
 	except:
 		# try logging in with base64 encoding here
@@ -272,7 +278,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
                 	return_continue()
 
 	if sendmail == 1: 
-		thread.start_new_thread(mailServer.sendmail,(user, to, msg.as_string()))    
+		mailServer.sendmail,(user, to, msg.as_string())    
 
 # if we specified a single address
 if option1 == '1':
@@ -285,6 +291,7 @@ if option1 == '1':
 	mail(to,subject,prioflag1,prioflag2,body_new)
 
 # if we specified the mass mailer for multiple users
+print option1
 if option1 == '2':
 	email_num=0
 	fileopen=file(filepath, "r").readlines()
@@ -296,6 +303,8 @@ if option1 == '2':
 	  	if track_email.lower() == "on":
 			body_new = body_new.replace("INSERTUSERHERE", base64.b64encode(to))
 		# send the actual email
+		time_delay = check_config("TIME_DELAY_EMAIL=").lower()
+		time.sleep(int(time_delay))
           	mail(to,subject,prioflag1,prioflag2,body_new)
           	email_num=email_num+1
 		# simply print the statement
