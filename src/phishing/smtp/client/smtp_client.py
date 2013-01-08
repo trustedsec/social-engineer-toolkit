@@ -273,12 +273,14 @@ counter=0
 # Specify SMTP Option Here
 if relay == '1':
     user = raw_input(setprompt(["1"], ("Your %s email address" % email_provider)))
+    from_address = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
     user1 = user
     pwd = getpass.getpass("Email password: ")
 
 # Specify Open-Relay Option Here
 if relay == '2':
     user1 = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
+    from_address = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
     if sendmail==0:
         user = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
         pwd =  getpass.getpass("Password for open-relay [blank]: ")
@@ -301,7 +303,7 @@ else:
 # Define mail send here
 def mail(to, subject, text, attach, prioflag1, prioflag2):
     msg = MIMEMultipart()
-    msg['From'] = user1
+    msg['From'] = from_address
     msg['To'] = to
     msg['X-Priority'] = prioflag1
     msg['X-MSMail-Priority'] = prioflag2

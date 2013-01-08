@@ -7,6 +7,7 @@ version 4.3.5
 * added better handling around when an email gets sent out and timeouts
 * added a timeout flag in config that allows you to specify a timeout incase its moving to fast
 * added randomness in timea swhen sending emails out to help remove spam filters from suspecting something
+* added FROM NAME field in the client attack vectors used for the phishing menus
 
 ~~~~~~~~~~~~~~~~
 version 4.3.4
