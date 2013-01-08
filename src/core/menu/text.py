@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-
+try:
+	import readline
+except:
+	pass
 from src.core.setcore import bcolors, get_version, check_os, meta_path
 
 # grab version of SET
