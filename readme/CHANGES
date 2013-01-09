@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 4.3.6
+~~~~~~~~~~~~~~~~
+
+* you can now use up arrows, down errors, history, etc. within the interactive shell (thanks lnxg33k for the change)
+* fixed a bug in OSX if README and readme were in the same folder, would throw errors (thanks mubix)
+
+~~~~~~~~~~~~~~~~
 version 4.3.5
 ~~~~~~~~~~~~~~~~
 
