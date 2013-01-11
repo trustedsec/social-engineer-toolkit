@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 4.3.7
+~~~~~~~~~~~~~~~~
+
+* Added the new Java JMX bean zero day from Metasploit (exploit/multi/browser/java_jre17_jmxbean)
+
+~~~~~~~~~~~~~~~~
 version 4.3.6
 ~~~~~~~~~~~~~~~~
 

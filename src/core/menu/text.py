@@ -347,6 +347,7 @@ create_payloads_text = """
            ********** PAYLOADS **********\n"""
 
 browser_exploits_menu = [
+'Java Applet JMX Remote Code Execution (2013-01-10)'
 'Microsoft Internet Explorer CDwnBindInfo Object Use-After-Free (2012-12-27)',
 'Java 7 Applet Remote Code Execution (2012-08-26)',
 'Microsoft Internet Explorer execCommand Use-After-Free Vulnerability (2012-09-14)',
