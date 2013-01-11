@@ -63,7 +63,6 @@ webattack_menu = ['Java Applet Attack Method',
                   'Man Left in the Middle Attack Method',
                   'Web Jacking Attack Method',
                   'Multi-Attack Web Method',
-                  'Victim Web Profiler',
                   'Create or import a CodeSigning Certificate',
                   '0D']
 

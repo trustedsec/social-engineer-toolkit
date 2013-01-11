@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 4.3.8
+~~~~~~~~~~~~~~~~
+
+* Fixed a bug when using multiattack with the harvester and metasploit exploits only. It would throw an error that index.html.new was not found. This has been fixed.
+* Removed the web victim profiler from the web attack menus, this has not been added and is not in the current roadmap for completion.
+
+~~~~~~~~~~~~~~~~
 version 4.3.7
 ~~~~~~~~~~~~~~~~
 

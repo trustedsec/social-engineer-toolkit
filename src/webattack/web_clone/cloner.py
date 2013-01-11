@@ -327,7 +327,12 @@ try:
             ## Read in newly created index.html
             if attack_vector == "multiattack":
                 if os.path.isfile("src/program_junk/web_clone/index.html"): os.remove("src/program_junk/web_clone/index.html")
-                shutil.copyfile("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/index.html")
+		# check to see if the file is there first
+		if not os.path.isfile("src/program_junk/web_clone/index.html.new"):
+			if os.path.isfile("src/program_junk/web_clone/index.html.bak"):
+				shutil.copyfile("src/program_junk/web_clone/index.html.bak", "src/program_junk/web_clone/index.html.new")
+		if os.path.isfile("src/program_junk/web_clone/index.html.new"):
+	                shutil.copyfile("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/index.html")
                 time.sleep(1)
             fileopen=file("src/program_junk/web_clone/index.html","r").readlines()
             filewrite=file("src/program_junk/web_clone/index.html.new", "w")
