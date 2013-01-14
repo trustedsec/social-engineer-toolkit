@@ -141,7 +141,7 @@ try:
                         break
 
         # Web Attack menu choice 9: Create or Import a CodeSigning Certificate
-        if attack_vector == '9':
+        if attack_vector == '8':
             sys.path.append("src/html/unsigned")
             debug_msg(me, "importing 'src.html.unsigned.verified_sign'", 1)
             try:
@@ -256,16 +256,6 @@ try:
                         # write the attack vector to file
                         filewrite.write(attack_vector)
                         filewrite.close()
-
-                # specify victim profiler
-                if attack_vector == '8':
-                        # trigger the victim profiler flag in SET
-                        attack_vector = "profiler"
-                        # write the attack vector to file
-                        filewrite.write(attack_vector)
-                        filewrite.close()
-                        debug_msg(me, "importing 'src.webattack.profiler.webprofiler'", 1)
-                        from src.webattack.profiler.webprofiler import *
 
                 # pull ip address
                 filewrite = file("src/program_junk/ipaddr.file","w")
