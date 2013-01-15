@@ -4,6 +4,7 @@ version 4.3.9
 
 * Removed a bug that would state the create and import certificate was under development. This was old from when web victim profiler was removed.
 * Fixed the new java exploit exploit/multi/browser/java_jre17_jmxbean to use java/meterpreter/reverse_tcp since it is a java exploit versus traditional payloads
+* Added auto_redirect as an option by default in the set_config
 
 ~~~~~~~~~~~~~~~~
 version 4.3.8
