@@ -45,23 +45,28 @@ for line in fileopen:
                                 line2=line2.replace("REPLACEHEREDUDE", url)
                                 filewrite.write(line2)
                                 url_xml=url.rstrip()
-                                filewrite2.write("   <url>%s" % (url_xml) + "\n")
+                                filewrite2.write("   %s" % (url_xml) + "\n")
                                 counter=1
                         match2=re.search("If this is blank, SET did not get a successful attempt on the website, sorry hoss..", line2)
                         if match2:
                                 line2=line2.replace("If this is blank, SET did not get a successful attempt on the website, sorry hoss..", "Report findings on %s<br><br>" % (url))
                                 counter=1
                                 filewrite.write(line2)
+                                opentag = True
                                 for line3 in site_template:
                                         match3=re.search("PARAM:", line3)
                                         if match3:
                                                 xml=line3.replace("PARAM: ", "")
                                                 xml=xml.rstrip()
                                                 filewrite.write(line3+"<br>")
+                                                if opentag:
+                                                    filewrite2.write(r"   <url>")
+                                                    opentag = False
                                                 filewrite2.write(r"      <param>%s</param>" % (xml) + "\n")
                                         match4=re.search("BREAKHERE", line3)
                                         if match4:
                                                 filewrite2.write("   </url>" + "\n")
+                                                opentag = True
                                                 filewrite.write("<br>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br><br>")
 
                         # look for how many people visited the website
