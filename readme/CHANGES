@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 4.3.10
+~~~~~~~~~~~~~~~~
+
+* Fixed a bug that would cause README to error out (thanks Chris Barrow).
+* Added the ability to use hostnames with payloads including pyinjector and multiinjector
+
+~~~~~~~~~~~~~~~~
 version 4.3.9
 ~~~~~~~~~~~~~~~~
 

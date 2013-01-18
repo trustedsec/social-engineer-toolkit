@@ -215,7 +215,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '4.3.9'
+    define_version = '4.3.10'
     return define_version
 
 class create_menu:
@@ -503,7 +503,7 @@ def update_set():
 # Pull the help menu here
 #
 def help_menu():
-    fileopen = file("README","r").readlines()
+    fileopen = file("README.txt","r").readlines()
     for line in fileopen:
         line = line.rstrip()
         print line
@@ -835,7 +835,7 @@ def show_banner(define_version,graphic):
         print bcolors.BLUE + """
   [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]        
   [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-  [---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
+  [---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
   [---]              Codename: '""" + bcolors.YELLOW + """Turbulence""" + bcolors.BLUE + """'              [---]
   [---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
   [---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]

