@@ -6,6 +6,7 @@ version 4.3.10
 * Added the ability to use hostnames with payloads including pyinjector and multiinjector
 * Added better handling of hostnames when not specifying an IP address 
 * Added better handling around if an IP address is typed in wrong on web cloning
+* Updated wording in setcore to reflect version 4.3.10
 
 ~~~~~~~~~~~~~~~~
 version 4.3.9
