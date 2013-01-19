@@ -4,6 +4,8 @@ version 4.3.10
 
 * Fixed a bug that would cause README to error out (thanks Chris Barrow).
 * Added the ability to use hostnames with payloads including pyinjector and multiinjector
+* Added better handling of hostnames when not specifying an IP address 
+* Added better handling around if an IP address is typed in wrong on web cloning
 
 ~~~~~~~~~~~~~~~~
 version 4.3.9
