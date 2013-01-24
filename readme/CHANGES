@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 4.4.1
+~~~~~~~~~~~~~~~~
+
+* Recompiled Java Applet to include netsh advfirewall set global StatefulFTP disable upon detection of windows operating systems (windows 7/8 specifically). This will only work if user has administrator level priv but does not trigger UAC prompt. If this is set to enabled, Metasploit payloads will directly fail on port 21.
+
+~~~~~~~~~~~~~~~~
 version 4.4
 ~~~~~~~~~~~~~~~
 
