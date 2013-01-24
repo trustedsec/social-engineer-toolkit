@@ -1,4 +1,27 @@
 ~~~~~~~~~~~~~~~~
+version 4.4
+~~~~~~~~~~~~~~~
+
+* Added new folder structure under src/webattack/java_applet - this includes again the source code of the Java Applet.
+* Added compile program for making applets in the java_applet directory.
+* Recompliled the Java Applet to add better obfsucation.
+* Edited payloadgen to utilize more base64 encoded techniques.
+* Added better stability to the multi injector payload when ports are not found
+* Added new core library that called EncryptAES which allows you to encrypt specific string data
+* Added obfsucation into the Java Applet and placed new params to pull
+* Rewrote multipyinjector for better error handling and performance
+* Added AES 256 encryption to the multi-pyinjector - before it would write out the shellcode to tmp files, instead it encrypts the entire data via 256 aes then pulls via command line and does not write out the files
+* Added ability for SET and Java Applet to handle multi-pyinjector AES encrypted payloads through the pycrypto modules 
+* Modified the payload creation to encrypt payloads on the fly with a randomized cipher key exchange - each new payload generated will be a completely different AES cipher key
+* Fixed a bug that would cause powershell to not fire properly when using multi-pyinjector. It now prompts for an additional port and appends it to the meta_config_multi_pyinjector answer file for metasploit
+* Fixed a bug that would cause pyinjector to not properly execucute when not using powershell injection
+* Updated the Java Applet to include the new multi pyinjectir cipher key addition once executed
+* New encrypted binary multi pyinjector in place
+* Added time delay between firing multiple payloads. When executing multiple instances stdapi.rb freaked out and wouldn't load. This didn't hinder the shell but you would manually need to add the lib in order to get the standard libraries within meterpreter. This has since been fixed.
+* Large redesign of multi-pyinjector which is now streamlined to be as effecient as possible
+* Added better checking for multi pyinjector when using powershell to add new detections around port.options
+
+~~~~~~~~~~~~~~~~
 version 4.3.10
 ~~~~~~~~~~~~~~~~
 

