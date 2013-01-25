@@ -1001,6 +1001,9 @@ deploy the QRCode to your victim. For example, generate a QRCode of the SET Java
 and send the QRCode via a mailer. 
 """
                         url = raw_input("Enter the URL you want the QRCode to go to: ")
+			# if the reports directory does not exist then create it
+			if not os.path.isdir("%s/reports" % (definepath)):
+				os.makedirs("%s/reports" % (definepath))
                         gen_qrcode(url)
                         pause = raw_input("QRCode generated.")
                         return_continue()
