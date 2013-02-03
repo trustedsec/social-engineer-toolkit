@@ -8,7 +8,7 @@ IFACE_FOUND="false"
 MADWIFI=0
 MAC80211=0
 USE_IW=0
-IW_SOURCE="http://wireless.kernel.org/download/iw/iw-0.9.19.tar.bz2"
+IW_SOURCE="http://wireless.kernel.org/download/iw/iw-3.8.tar.bz2"
 IW_ERROR=""
 UDEV_ISSUE=0
 
@@ -17,7 +17,7 @@ then
 	USE_IW=1
 fi
 
-if [ "x$MON_PREFIX"="x" ]
+if [ "x$MON_PREFIX" = "x" ]
 then
 MON_PREFIX="mon"
 fi
@@ -91,11 +91,25 @@ getDriver() {
    then
        DRIVER="ath9k"
    fi
+   if [ x$DRIVER = "x" ]
+   then
+	if [ -d /sys/class/net/tiwlan0/wireless ]
+	then
+		DRIVER=WiLink
+	fi
+   fi
+
 }
 
 scanProcesses() {
+    if [ -f "`which service 2>&1`" ] && [ x"$1" = "xkill" ]
+    then
+    	service network-manager stop 2>/dev/null >/dev/null
+ 	service avahi-daemon stop 2>/dev/null >/dev/null
+    fi
+
     match=`ps -A -o comm= | grep $PROCESSES | grep -v grep | wc -l`
-    if [ $match -gt 0 -a x"$1" != xkill ]
+    if [ $match -gt 0 -a x"$1" != "xkill" ]
     then
         printf "\n\n"
         echo "Found $match processes that could cause trouble."
@@ -103,13 +117,13 @@ scanProcesses() {
         echo "a short period of time, you may want to kill (some of) them!"
         echo -e "\nPID\tName"
     else
-        if [ x"$1" != xkill ]
+        if [ x"$1" != "xkill" ]
         then
             return
         fi
     fi
 
-    if [ $match -gt 0 -a x"$1" = xkill ]
+    if [ $match -gt 0 -a x"$1" = "xkill" ]
     then
         echo "Killing all those processes..."
     fi
@@ -119,7 +133,7 @@ scanProcesses() {
     do
         pid=`ps -A -o pid= -o comm= | grep $PROCESSES | grep -v grep | head -n $i | tail -n 1 | awk '{print $1}'`
         pname=`ps -A -o pid= -o comm= | grep $PROCESSES | grep -v grep | head -n $i | tail -n 1 | awk '{print $2}'`
-        if [ x"$1" != xkill ]
+        if [ x"$1" != "xkill" ]
         then
             printf "$pid\t$pname\n"
         else
@@ -130,7 +144,7 @@ scanProcesses() {
 }
 
 checkProcessesIface() {
-    if [ x"$1" = x ]
+    if [ x"$1" = "x" ]
     then
         return
     fi
@@ -149,7 +163,7 @@ checkProcessesIface() {
 }
 
 getStack() {
-    if [ x"$1" = x ]
+    if [ x"$1" = "x" ]
     then
         return
     fi
@@ -164,21 +178,46 @@ getStack() {
 
 #you need to run getDriver $iface prior to getChipset
 getChipset() {
-    if [ x"$1" = x ]
+    if [ x"$1" = "x" ]
     then
         return
     fi
 
     CHIPSET="Unknown "
 
-    if [ x$DRIVER = "xOtus" -o x$DRIVER = "xarusb_lnx" -o x$DRIVER = "xar9170usb" ]
+    if [ x$DRIVER = "xOtus" -o x$DRIVER = "xarusb_lnx" ]
     then
-	CHIPSET="AR9001U"
+		CHIPSET="AR9001U"
     fi
 
-    if [ x$DRIVER = "xzd1211rw" -o x$DRIVER = "xzd1211rw_mac80211" ]
+    if [ x$DRIVER = "xWiLink" ]
+    then
+	CHIPSET=`dmesg | grep TIWLAN | grep CHIP | tail -n 1 | awk -F\  '{ print $6 }'` 
+   	if [ x$CHIPSET = "x" ]
+	then
+		CHIPSET="Unknown"
+	else
+		CHIPSET="TI${CHIPSET}"	
+	fi 
+    fi
+    
+    if [ x$DRIVER = "xar9170usb" ]
+    then
+    	getPhy $2
+    	CHIPSET="Atheros `dmesg | grep $PHYDEV | grep "is registered as" | cut -d':' -f 2 | cut -d' ' -f 3`"
+    fi
+
+    if [ x$DRIVER = "xzd1211rw_mac80211" ]
     then
         CHIPSET="ZyDAS 1211"
+    fi
+
+	if [ x$DRIVER = "xzd1211rw" ]
+    then
+        getPhy $2
+        TEMP_USBPORT="`dmesg | grep $PHYDEV | grep zd1211rw | cut -d'w' -f 2 | cut -d' ' -f 2`"
+        TEMP_CHIPSET="`dmesg | grep "$TEMP_USBPORT" | grep chip | tail -n 1 | cut -d':' -f 3 | cut -d' ' -f 2`"
+        CHIPSET="Zydas $TEMP_CHIPSET"
     fi
 
     if [ x$DRIVER = "xacx" -o x$DRIVER = "xacx-mac80211" -o x$DRIVER = "xacx1xx" ]
@@ -199,6 +238,15 @@ getChipset() {
     if [ x$DRIVER = "xb43" -o x$DRIVER = "xb43legacy" -o x$DRIVER = "xbcm43xx" -o x$DRIVER = "xwl" ]
     then
         CHIPSET="Broadcom"
+        if [ x$DRIVER = "xb43" ]
+        then
+        	getPhy $2
+        	TEMP_CHIPSET="`dmesg | grep $PHYDEV | grep found | cut -d':' -f 2 | cut -d' ' -f 3`"
+        	if [ x$TEMP_CHIPSET = "x4318" ]
+        	then
+        		CHIPSET="$CHIPSET $TEMP_CHIPSET"
+        	fi
+        fi
     fi
 
     if [ x$DRIVER = "xprism54" -o x$DRIVER = "xp54pci" -o x$DRIVER = "xp54usb" ]
@@ -216,7 +264,25 @@ getChipset() {
         CHIPSET="RTL8180/RTL8185"
     fi
 
-    if [ x$DRIVER = "xr8187" -o x$DRIVER = "xrtl8187" ]
+    # r8187 is reporting itself as rtl8187
+    if [ x$DRIVER = "xrtl8187" ]
+    then
+        getPhy $2
+       if [ x"$PHYDEV" = "x" ]
+       then
+               CHIPSET="RTL8187 "
+       else
+               CHIPSET="`dmesg | grep $PHYDEV | grep hwaddr | cut -d',' -f 2 | cut -d' ' -f 2`"
+               if [ x$CHIPSET = "xRTL8187vB" ]
+               then
+                       CHIPSET="Realtek RTL8187L"
+               else
+                       CHIPSET="Realtek $CHIPSET"
+               fi
+       fi
+    fi
+    
+    if [ x$DRIVER = "xr8187" ]
     then
         CHIPSET="RTL8187 "
     fi
@@ -246,7 +312,13 @@ getChipset() {
         CHIPSET="Ralink 2573 USB"
     fi
 
-    if [ x$DRIVER = "xrt2800" -o x$DRIVER = "xrt2800usb" ]
+	#if [ x$DRIVER = "xrt2800usb" ]
+	#then
+	#	getPhy $2
+	#	CHIPSET="Ralink `dmesg | grep rt2800usb | grep firmware | cut -d':' -f 4 | cut -d' ' -f 3 | cut -d'.' -f 1`"
+	#fi
+	
+    if [ x$DRIVER = "xrt2800" -o x$DRIVER = "xrt2800usb" -o x$DRIVER = "xrt3070sta" ]
     then
         CHIPSET="Ralink RT2870/3070"
     fi
@@ -258,7 +330,7 @@ getChipset() {
 
     if [ x$DRIVER = "xipw2200" ]
     then
-        CHIPSET="Intel 2200BG"
+        CHIPSET="Intel 2200BG/2915ABG"
     fi
 
     if [ x$DRIVER = "xipw3945" -o x$DRIVER = "xipwraw" -o x$DRIVER = "xiwl3945" ]
@@ -271,25 +343,122 @@ getChipset() {
         CHIPSET="Intel 4965AGN"
     fi
 
-    if [ x$DRIVER = "xiwlagn" ]
+    if [ x$DRIVER = "xiwlagn" -o x$DRIVER = "xiwlwifi" ]
     then
-        CHIPSET="Intel 4965/5xxx"
+        CHIPSET="Intel 4965/5xxx/6xxx/1xxx"
+        
+        DETECTED_STR="`dmesg | grep $DRIVER | grep Detected | tail -n 1 `"
+        LINK_POS="3"
+        FOUND="0"
+        
+        if [ x"$DETECTED_STR" != "x" ]
+        then
+        	INTEL_WORD="Link"
+        	if [ "`echo "$DETECTED_STR" | grep $INTEL_WORD | wc -l`" = "0" ]
+        	then
+        		INTEL_WORD="Wireless"
+        		if [ "`echo "$DETECTED_STR" | grep $INTEL_WORD | wc -l`" = "0" ]
+			then
+				INTEL_WORD="Ultimate"
+        			if [ "`echo "$DETECTED_STR" | grep $INTEL_WORD | wc -l`" = "0" ]
+				then
+						INTEL_WORD="Advanced"
+	        		fi	
+			fi
+        	fi
+        	
+        	while [ $FOUND = "0" ]
+		do
+			FOUND=`echo "$DETECTED_STR" | cut -d' ' -f $LINK_POS | grep $INTEL_WORD | wc -l`
+			LINK_POS=$(($LINK_POS+1))
+		done
+
+		TEMP_CHIPSET=`echo "$DETECTED_STR" | cut -d' ' -f $LINK_POS`
+
+		case "x${TEMP_CHIPSET}" in
+	#               x5100AGN)
+	#                       CHIPSET="Intel $TEMP_CHIPSET"
+	#                       ;;
+			x5300)
+				TYPE_TEMP=`echo "$DETECTED_STR" | cut -d' ' -f $(($LINK_POS+1)) | awk -F, '{ print $1 }' `
+				CHIPSET="Intel ${TEMP_CHIPSET}${TYPE_TEMP}"
+				;;
+			x1000)
+				TYPE_TEMP=`echo "$DETECTED_STR" | cut -d' ' -f $[$LINK_POS+2]`
+				CHIPSET="Intel ${TEMP_CHIPSET}${TYPE_TEMP}"
+				;;
+			*)
+				CHIPSET="Intel $TEMP_CHIPSET"
+				;;
+		esac
+        fi
+
     fi
 
-    if [ x$DRIVER = "xath_pci" -o x$DRIVER = "xath5k" -o x$DRIVER = "xath9k" ]
+	if [ x$DRIVER = "xath5k" ]
+	then
+		getPhy $2
+		CHIPSET="Atheros `dmesg | grep $PHYDEV | grep "chip found" | cut -d':' -f 2 | cut -d' ' -f 3`"
+	fi
+	
+    if [ x$DRIVER = "xath_pci" ]
     then
         CHIPSET="Atheros "
+    fi
+    
+    if [ x$DRIVER = "xath9k" ]
+    then
+    	getPhy $2
+    	CHIPSET="Atheros `dmesg | grep $PHYDEV | grep Atheros | tail -n 1 | cut -d':' -f 2 | cut -d' ' -f 3`"
     fi
 
     if [ x$DRIVER = "xorinoco" ]
     then
         CHIPSET="Hermes/Prism"
     fi
+    
+    if [ x$DRIVER = "xath9k_htc" -o x$DRIVER = "xusb" ]
+    then
+        CHIPSET="AR9001/9002/9271"
+    fi
+    
+    if [ x$DRIVER = "xwl12xx" ]
+    then
+            CHIPSET="TI WL1251/WL1271"
+            IS_WL1251="`dmesg| grep firmware | grep wl1251 | wc -l`"
+            IS_WL1271="`dmesg| grep firmware | grep wl1271 | wc -l`"
+
+            if [ $IS_WL1251 != "0" ] && [ $IS_WL1271 = "0" ]
+            then
+                CHIPSET="TI WL1251"
+            fi
+            if [ $IS_WL1271 != "0" ] && [ $IS_WL1251 = "0" ]
+            then
+                CHIPSET="TI WL1271"
+            fi
+            # In any other case, we can't determine the chipset and thus give the generic: 1251/1271
+    fi
+    
+    
+    if [ x$DRIVER = "xr871x_usb_drv" ]
+    then
+            CHIPSET="Realtek 81XX"
+    fi
+    
+    if [ x$DRIVER = "xcarl9170" ]
+    then
+            getPhy $2
+            CHIPSET=`dmesg | grep usb | grep $PHYDEV | awk -F\  '{ print $3 " " $4 }'`
+	    if [ `echo $CHIPSET | grep -i atheros | wc -l` -eq 0 ]
+	    then
+		CHIPSET=`dmesg | grep usb | grep $PHYDEV | awk -F\  '{ print $5 " " $6 }'`
+	    fi
+    fi
 }
 
 getPhy() {
     PHYDEV=""
-    if [ x"$1" = x ]
+    if [ x"$1" = "x" ]
     then
         return
     fi
@@ -299,7 +468,10 @@ getPhy() {
         return
     fi
 
-    PHYDEV="`ls -l "/sys/class/net/$1/phy80211" | sed 's/^.*\/\([a-zA-Z0-9_-]*\)$/\1/'`"
+    if [ -d /sys/class/net/$1/phy80211/ ]
+    then
+	PHYDEV="`ls -l "/sys/class/net/$1/phy80211" | sed 's/^.*\/\([a-zA-Z0-9_-]*\)$/\1/'`"
+    fi
 }
 
 getNewMon() {
@@ -331,21 +503,21 @@ fi
 iwpriv > /dev/null 2> /dev/null ||
   { echo Wireless tools not found ; exit ; }
 
-if [ x"$1" = xcheck ] || [ x"$1" = xstart ]
+if [ x"$1" = "xcheck" ] || [ x"$1" = "xstart" ]
 then
     scanProcesses
-    for iface in `iwconfig 2>/dev/null | egrep '(IEEE|ESSID|802\.11|WLAN)' | sed 's/^\([a-zA-Z0-9_]*\) .*/\1/' | grep -v wifi`
+    for iface in `iwconfig 2>/dev/null | egrep '(IEEE|ESSID|802\.11|WLAN)' | sed 's/^\([a-zA-Z0-9_.]*\) .*/\1/' | grep -v wifi`
     do
 #         getModule $iface
 #         getDriver $iface
         checkProcessesIface $iface
     done
 
-    if [ x"$2" = xkill ]
+    if [ x"$2" = "xkill" ]
     then
         scanProcesses "$2"
     fi
-    if [ x"$1" = xcheck ]
+    if [ x"$1" = "xcheck" ]
     then
         exit
     fi
@@ -433,12 +605,12 @@ then
 	sleep 1s
 fi
 
-for iface in `iwconfig 2>/dev/null | egrep '(IEEE|ESSID|802\.11|WLAN)' | sed 's/^\([a-zA-Z0-9_]*\) .*/\1/' | grep -v wifi`
+for iface in `iwconfig 2>/dev/null | egrep '(IEEE|ESSID|802\.11|WLAN)' | sed 's/^\([a-zA-Z0-9_.]*\) .*/\1/' | grep -v wifi`
 do
  getModule  $iface
  getDriver  $iface
  getStack   $iface
- getChipset $DRIVER
+ getChipset $DRIVER $iface
 
 
  if [ x$MAC80211 = "x1" ]
@@ -568,6 +740,20 @@ do
     continue
  fi
 
+ if [ x$DRIVER = "xrtl819xU" ]
+ then
+ 	printf "$iface\t\tRealtek 819x\trtl819xU"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then
+        startStdIface $iface $CH
+    fi
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+    then
+        stopStdIface $iface
+    fi
+    echo
+    continue
+ fi
 
  if [ x$DRIVER = "xipw2100" ] || [ x"`iwpriv $iface 2>/dev/null | grep set_crc_check`" != "x" ]
  then
@@ -601,6 +787,22 @@ do
     echo
     continue
  fi  
+
+ if [ x$DRIVER = "xWiLink" ]
+ then
+    getChipset $iface
+    printf "$iface\t\t${CHIPSET}\t\t${DRIVER}"
+    if [ x$1 = "xstart" ] && [ x$2 = x$iface ]
+    then 
+        printf "\n\t\t\t\tMonitor mode not yet supported"
+    fi  
+    if [ x$1 = "xstop" ] && [ x$2 = x$iface ]
+    then 
+        stopStdIface $iface
+    fi  
+    echo
+    continue
+ fi
 
  if [ x$DRIVER = "xipw2200" ] || [ x"`iwpriv $iface 2>/dev/null | grep sw_reset`" != "x" ]
  then

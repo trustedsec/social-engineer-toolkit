@@ -3,6 +3,7 @@ version 4.4.2
 ~~~~~~~~~~~~~~~~
 
 * Added ability to use UNC_EMBED within any of the webattacks that use site cloner
+* Added newer version of airbase-ng and airmon-ng from the aircrack repository
 
 ~~~~~~~~~~~~~~~~
 version 4.4.1
