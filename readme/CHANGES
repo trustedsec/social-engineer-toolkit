@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 4.4.2
+~~~~~~~~~~~~~~~~
+
+* Added ability to use UNC_EMBED within any of the webattacks that use site cloner
+
+~~~~~~~~~~~~~~~~
 version 4.4.1
 ~~~~~~~~~~~~~~~~
 
