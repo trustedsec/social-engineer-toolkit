@@ -14,35 +14,6 @@ import pexpect
 import time
 from src.core.setcore import *
 from src.core.menu import text
-
-# grab configuration options here
-#fileopen=file("config/set_config", "r")
-#for line in fileopen:
-#    line=line.rstrip()
-#    # look for airbase path
-#    match=re.search("AIRBASE_NG_PATH=", line)
-#    if match: 
-#        airbase_path = line.replace("AIRBASE_NG_PATH=", "")
-#        if not os.path.isfile(airbase_path):
-#            if os.path.isfile("/usr/local/sbin/airbase-ng"): airbase_path = "/usr/local/sbin/airbase-ng"
-#
-#    # look for access point ssid
-#    match1=re.search("ACCESS_POINT_SSID=", line)
-#    if match1: access_point = line.replace("ACCESS_POINT_SSID=", "")
-#
-#    # grab access point channel
-#    match2=re.search("AP_CHANNEL=", line)
-#    # if we hit on AP_CHANNEL in set_config
-#    if match2:
-#        # replace line and define ap_channel
-#        ap_channel = line.replace("AP_CHANNEL=", "")
-#        # default if not found
-#        if ap_channel == "": ap_channel = "9"
-#
-#    # look for dnsspoof
-#    match3=re.search("DNSSPOOF_PATH=", line)
-#    if match3: dnsspoof_path = line.replace("DNSSPOOF_PATH=", "")
-
 from config.set_config import AIRBASE_NG_PATH as airbase_path
 from config.set_config import ACCESS_POINT_SSID as access_point
 from config.set_config import AP_CHANNEL as ap_channel

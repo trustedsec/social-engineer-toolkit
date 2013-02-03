@@ -440,20 +440,3 @@ fakeap_dhcp_menu = ['10.0.0.100-254',
                     '192.168.10.100-254\n']
 
 fakeap_dhcp_text = "Please choose which DHCP Config you would like to use: "
-
-banner_text = bcolors.BLUE + """
-  [---]       The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE+""")          [---]
-  [---]        Written by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
-  [---]        Development Team: """ + bcolors.RED + """Thomas Werth""" + bcolors.BLUE + """            [---]
-  [---]        Development Team: """ + bcolors.RED + """JR DePre (pr1me)""" + bcolors.BLUE + """        [---]
-  [---]        Development Team: """ + bcolors.RED + """Joey Furr (j0fer)""" + bcolors.BLUE + """       [---]
-  [---]        Development Team: """ + bcolors.RED + """Garland""" + bcolors.BLUE + """                 [---]
-  [---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
-  [---]         Codename: '""" + bcolors.YELLOW + """Convergence Edition""" + bcolors.BLUE + """'          [---]
-  [---]     Report """ + bcolors.RED +"""bugs""" + bcolors.BLUE + """ to:"""+ bcolors.GREEN + """ davek@secmaniac.com    """ + bcolors.BLUE+"""[---]
-  [---]         Follow me on Twitter: """ + bcolors.PURPLE+ """dave_rel1k""" + bcolors.BLUE+"""         [---]
-  [---]        Homepage: """ + bcolors.YELLOW + """http://www.secmaniac.com""" + bcolors.BLUE+"""        [---]
-
-""" + bcolors.GREEN + """   Welcome to the Social-Engineer Toolkit (SET). Your one
-    stop shop for all of your social-engineering needs..
-    """ + '\n' + bcolors.BLUE + """    DerbyCon 2011 Sep30-Oct02 - http://www.derbycon.com.\n""" + bcolors.ENDC      
