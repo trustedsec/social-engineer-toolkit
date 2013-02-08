@@ -23,7 +23,7 @@ try:
         from Crypto.Cipher import AES
 
 except ImportError:
-        print "[!] The python-pycrypto python module not installed. You will loose the ability t$
+        print "[!] The python-pycrypto python module not installed. You will loose the ability for encrypted communications."
         pass
 
 # used to grab the true path for current working directory
