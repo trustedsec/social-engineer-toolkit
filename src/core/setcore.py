@@ -18,6 +18,14 @@ import inspect
 import base64
 from src.core import dictionaries
 
+# check to see if we have python-pycrypto
+try:
+        from Crypto.Cipher import AES
+
+except ImportError:
+        print "[!] The python-pycrypto python module not installed. You will loose the ability t$
+        pass
+
 # used to grab the true path for current working directory
 definepath = os.getcwd()
 
