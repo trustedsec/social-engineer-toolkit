@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 4.4.3
+~~~~~~~~~~~~~~~~
+
+* Fixed a pycrypto bug that would cause SET to error out if pycrypto was not properly installed
+* Fixed a bug that would cause the alphanumeric shellcode injector to error out when selecting it through the payload menu (port.options exception)
+
+~~~~~~~~~~~~~~~~
 version 4.4.2
 ~~~~~~~~~~~~~~~~
 

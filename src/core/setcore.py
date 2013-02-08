@@ -18,14 +18,6 @@ import inspect
 import base64
 from src.core import dictionaries
 
-# check to see if we have python-pycrypto
-try:
-	from Crypto.Cipher import AES
-
-except ImportError:
-	print_error("The python-pycrypto python module not installed. You will loose the ability to use multi-pyinjector.")
-	pass
-
 # used to grab the true path for current working directory
 definepath = os.getcwd()
 
@@ -223,7 +215,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '4.4.2'
+    define_version = '4.4.3'
     return define_version
 
 class create_menu:

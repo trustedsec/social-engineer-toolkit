@@ -46,8 +46,9 @@ if powershell_menu_choice != "99":
 	    filewrite.write(x86)
 	
 	    # grab port specifications
-	    fileopen = file("src/program_junk/port.options", "r")
-	    port = fileopen.read()
+	    if os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
+		    fileopen = file("%s/src/program_junk/port.options" % (definepath), "r")
+		    port = fileopen.read()
 	
 	    choice = yesno_prompt("0","Do you want to start the listener now [yes/no]: ")
 	    if choice == 'NO':
