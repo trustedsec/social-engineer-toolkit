@@ -49,6 +49,10 @@ if powershell_menu_choice != "99":
 	    if os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
 		    fileopen = file("%s/src/program_junk/port.options" % (definepath), "r")
 		    port = fileopen.read()
+
+	    if not os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
+		    port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
+		    if port == "": port = "443"
 	
 	    choice = yesno_prompt("0","Do you want to start the listener now [yes/no]: ")
 	    if choice == 'NO':

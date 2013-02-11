@@ -43,6 +43,7 @@ if not os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (defin
 
 	if not os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
 		port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
+		if port == "": port = "443"
 
 print_status("Generating x64-based powershell injection code...")
 x64 = ""

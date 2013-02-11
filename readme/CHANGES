@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 4.4.4
+~~~~~~~~~~~~~~~~
+
+* fixed a powershell bug that would cause an error if not specifying port 443
+* added an additional prompt if generating the powershell shellcode alphanumeric injection through the menu and not through java applet
+
+~~~~~~~~~~~~~~~~
 version 4.4.3
 ~~~~~~~~~~~~~~~~
 
