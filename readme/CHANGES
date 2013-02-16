@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 4.4.5
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that would cause the reports directory to not be active
+
+~~~~~~~~~~~~~~~~
 version 4.4.4
 ~~~~~~~~~~~~~~~~
 

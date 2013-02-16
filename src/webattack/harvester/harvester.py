@@ -488,12 +488,10 @@ def ssl_server(HandlerClass = SETHandler,ServerClass = SecureHTTPServer):
 if track_email == "on": webattack_email = "on"
 # if emailer webattack, spawn email questions
 if webattack_email == "on":	
-	#try: 
-	import src.phishing.smtp.client.smtp_web
-	#except Exception, e:
-	#	print e
-#		reload(src.phishing.smtp.client.smtp_web)
-	#	pause = raw_input("TEST")
+	try: 
+		import src.phishing.smtp.client.smtp_web
+	except Exception, e:
+		reload(src.phishing.smtp.client.smtp_web)
 
 # see if we're tabnabbing or multiattack
 fileopen=file("src/program_junk/attack_vector", "r")

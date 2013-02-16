@@ -379,8 +379,6 @@ if harvester == "on" or tabnabbing == "on" or webjacking == "on":
                 except: import tabnabbing
         # if the harvester is on set the multi_harvester flag
         sys.path.append("src/webattack/harvester")
-        #try: reload(harvester)
-        #except: import harvester
         if java_applet == "on" or meta_attack == "on":
                 pexpect_flag="on"
                 a=subprocess.Popen("python src/webattack/harvester/harvester.py", shell=True)

@@ -9,6 +9,9 @@ import sys
 import shutil
 import re
 
+if not os.path.isdir("reports/"):
+	os.makedirs("reports")
+
 # check to see if we have python-pycrypto
 try:
         from Crypto.Cipher import AES

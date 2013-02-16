@@ -715,7 +715,7 @@ try:
 
                 filewrite.write("set ExitOnSession false\n")
                 if auto_migrate == "ON":
-                        filewrite.write("set AutoRunScript migrate -f\n")
+                        filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
 
                 # config option for using multiscript meterpreter
                 if meterpreter_multi == "ON":
