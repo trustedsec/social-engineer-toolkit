@@ -249,7 +249,7 @@ def web_server_start():
 					    print 'Exception happened during processing of request from',
 					    print client_address
 					    import traceback
-					    traceback.print_exc() # XXX But this goes to stderr!
+					    traceback.print_exc() # goes to stderr!
 					    print '-'*40
 					    pass
                                 pass
@@ -363,6 +363,7 @@ if os.path.isfile("src/program_junk/site.template"):
 
 # Test to see if something is running on port 80, if so throw error
 try:
+	web_port = check_config("WEB_PORT=")
         web_port=int(web_port)
         ipaddr=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         ipaddr.connect(('127.0.0.1', web_port))
@@ -434,25 +435,20 @@ except Exception, e:
         if apache == 1:
                 print_error("Error:Apache does not appear to be running.")
                 print_error("Start it or turn APACHE off in config/set_config") 
-                pause = yesno_prompt(["2"], "Start Apache? [yes|no]")
-                if pause == "YES":
-                        apache_counter = 0
-                        if os.path.isfile("/etc/init.d/apache2"):
-                                subprocess.Popen("/etc/init.d/apache2 start", shell=True).wait()
-                                apache_counter = 1
-                        if os.path.isfile("/etc/init.d/httpd"):
-                                subprocess.Popen("/etc/init.d/httpd start", shell=True).wait()
-                                apache_counter = 1
-                        if apache_counter == 0:
-                                print_error("ERROR: Unable to start Apache through SET,")
-                                print_error("ERROR: Please turn Apache off in the set_config or turn it on manually!")
-                                print_error("Exiting the Social-Engineer Toolkit...")
-                                exit_set()
-
-                else: 
-
+		print_status("Attempting to start Apache manually...")
+                apache_counter = 0
+                if os.path.isfile("/etc/init.d/apache2"):
+                	subprocess.Popen("/etc/init.d/apache2 start", shell=True).wait()
+                        apache_counter = 1
+                if os.path.isfile("/etc/init.d/httpd"):
+                	subprocess.Popen("/etc/init.d/httpd start", shell=True).wait()
+                        apache_counter = 1
+                if apache_counter == 0:
+                	print_error("ERROR: Unable to start Apache through SET,")
+                        print_error("ERROR: Please turn Apache off in the set_config or turn it on manually!")
                         print_error("Exiting the Social-Engineer Toolkit...")
                         exit_set()
+
 
 except KeyboardInterrupt:
         print_warning("KeyboardInterrupt detected, bombing out to the prior menu.")
