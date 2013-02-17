@@ -3,6 +3,11 @@ version 4.4.5
 ~~~~~~~~~~~~~~~~
 
 * fixed a bug that would cause the reports directory to not be active
+* converted migrate -f to post/windows/manage/smart_migrate
+* removed prompt when using java applet and to prompt for Apache, it will auto start if it can and its flagged
+* Bug fix for an EOFError when using track emailing
+* Fixed a bug that would cause SET to exit if Apache was in a restart mode
+* Fixed a bug that would not define web_port when using Apache mode
 
 ~~~~~~~~~~~~~~~~
 version 4.4.4
