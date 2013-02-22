@@ -70,10 +70,10 @@ if verbose.lower() == "on":
     time.sleep(3)
     print x86
 
-filewrite = file("src/program_junk/x64.powershell", "w")
+filewrite = file("%s/src/program_junk/x64.powershell" % (definepath), "w")
 filewrite.write(x64)
 filewrite.close()
-filewrite = file("src/program_junk/x86.powershell", "w")
+filewrite = file("%s/src/program_junk/x86.powershell" % (definepath), "w")
 filewrite.write(x86)
 filewrite.close()
 print_status("Finished generating powershell injection bypass.")
