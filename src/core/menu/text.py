@@ -422,9 +422,9 @@ encoder_menu = ['avoid_utf8_tolower (Normal)',
                 'Backdoored Executable (BEST)\n']
 
 encoder_text = """
-Below is a list of encodings to try and bypass AV. 
-
-Select one of the below, 'backdoored executable' is typically the best.
+Select one of the below, 'backdoored executable' is typically the best. However,
+most still get picked up by AV. You may need to do additional packing/crypting 
+in order to get around basic AV detection.
 """
 
 dll_hijacker_text = """
