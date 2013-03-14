@@ -52,26 +52,30 @@ if os.path.isfile("src/program_junk/interface"):
     fileopen = file("src/program_junk/interface", "r")
     for line in fileopen:
         ipaddr = line.rstrip()
-    if os.path.isfile("src/program_junk/ipaddr.file"):
-        fileopen = file ("src/program_junk/ipaddr.file", "r")
-        for line in fileopen:
-            webserver = line.rstrip()
 
-    if not os.path.isfile("src/program_junk/ipaddr.file"):
+
+
+        # Open the IPADDR file
+    if check_options("IPADDR=") != 0:
+    	ipaddr = check_options("IPADDR=")
+    else:
         ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on for the reverse listener"))
+	update_options("IPADDR=" + ipaddr)
+	webserver = ipaddr
 
 else:
-    if os.path.isfile("src/program_junk/ipaddr.file"):
-        fileopen = file("src/program_junk/ipaddr.file", "r")
-        for line in fileopen:
-            ipaddr = line.rstrip()
-        webserver = ipaddr
+
+    if check_options("IPADDR=") != 0:
+        ipaddr = check_options("IPADDR=")
+    else:
+        ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on for the reverse listener"))
+        update_options("IPADDR=" + ipaddr)
+    webserver = ipaddr
 
 # grab port options from payloadgen.py
-if os.path.isfile("src/program_junk/port.options"):
-    fileopen = file("src/program_junk/port.options", "r")
-    for line in fileopen: 
-        port = line.rstrip()
+if check_options("PORT=") != 0:
+	port = check_options("PORT=")
+
 else:
     port = raw_input(setcore.setprompt("0", "Port you want to use for the connection back"))
 

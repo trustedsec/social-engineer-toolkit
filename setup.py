@@ -2,8 +2,6 @@
 #
 # Python installer
 #
-# I could use others to build it for me but find I like to customize my installers.
-#
 import subprocess
 import sys
 import os

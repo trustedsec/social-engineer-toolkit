@@ -239,7 +239,6 @@ if option1 == '1' or option1 == '2':
         except KeyboardInterrupt:
             pass
 
-
 # single email
 if option1 == '1':
    to = raw_input(setprompt(["1"], "Send email to"))

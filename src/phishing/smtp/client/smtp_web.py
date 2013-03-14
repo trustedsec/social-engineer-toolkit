@@ -291,7 +291,6 @@ if option1 == '1':
 	mail(to,subject,prioflag1,prioflag2,body_new)
 
 # if we specified the mass mailer for multiple users
-print option1
 if option1 == '2':
 	email_num=0
 	fileopen=file(filepath, "r").readlines()

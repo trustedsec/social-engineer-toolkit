@@ -57,10 +57,14 @@ for line in fileopen:
 
 # if we are using ettercap then get everything ready
 if ettercapchoice== 'y':
-    fileopen=file("src/program_junk/ipaddr.file","r").readlines()
-    for line in fileopen:
-        line=line.rstrip()
-        ipaddr=line
+
+    # grab ipaddr
+    if check_options("IPADDR=") != 0:
+        ipaddr = check_options("IPADDR=")
+    else:
+        ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on: "))
+        update_options("IPADDR=" + ipaddr)
+
     if ettercapchoice == 'y':
         try:
             print """
@@ -115,10 +119,14 @@ if ettercapchoice== 'y':
 
 # if we are using dsniff
 if dsniffchoice == 'y':
-    fileopen=file("src/program_junk/ipaddr.file","r").readlines()
-    for line in fileopen:
-        line=line.rstrip()
-        ipaddr=line
+
+    # grab ipaddr
+    if check_options("IPADDR=") != 0:
+        ipaddr = check_options("IPADDR=")
+    else:
+        ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on: "))
+        update_options("IPADDR=" + ipaddr)
+
     if dsniffchoice == 'y':
         try:
             print """

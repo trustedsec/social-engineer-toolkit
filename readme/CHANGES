@@ -1,4 +1,31 @@
 ~~~~~~~~~~~~~~~~
+version 4.7
+~~~~~~~~~~~~~~~~
+
+* removed a prompt that would come up when using the powershell injection technique, port.options is now written in prep.py versus a second prompt with information that was already provided
+* began an extremely large project of centralizing the SET config file by moving all of the options to the set.options file under src/program_junk
+* moved all port.options to the central routine file set.options
+* moved all ipaddr.file to the central routine file set.options
+* changed spacing on when launching the SET web server
+* changed the wording to reflect what operating systems this was tested on versus browsers
+* removed an un-needed print option1 within smtp_web that was reflecting a message back to user
+* added the updated java bean jmx exploit that was updated in Metasploit
+* added ability to specify a username list for the SQL brute forcing, can either specify sa, other usernames, or a filename with usernames in it
+* added new feature called multi-powershell-injection - configurable in the set config options, allows you to use powershell to do multiple injection points and ports. Useful in egress situations where you don't know which port will be allowed outbound.
+* enabled multi-pyinjection through java applet attack vector, it is configured through set config
+* removed check for static powershell commands, will load regardless - if not installed user will not know regardless - better if path variables aren't the same
+* fixed a bug that would cause linux and osx payloads to be selected even when disabled
+* fixed a bug that would cause the meta_config file to be empty if selecting powershell injection
+* added automatic check for Kali Linux to detect the default moved Metasploit path
+* removed a tail comma from the new multi injector which was causing it to error out
+* added new core routine check_ports(filename, ports) which will do a compare to see if a file already contains a metasploit LPORT (removes duplicates)
+* added new check to remove duplicates into multi powershell injection
+* made the new powershell injection technique compliant with the multi pyinjector - both payloads work together now
+* added encrypted and obfsucated jar files to SET, will automatically push new repos to git everyday.
+* rewrote the java jar file to handle multiple powershell alphanumeric shellcode points injected into applet.
+* added signed and unsigned jar files to the java applet attack vector
+
+~~~~~~~~~~~~~~~~
 version 4.4.5
 ~~~~~~~~~~~~~~~~
 

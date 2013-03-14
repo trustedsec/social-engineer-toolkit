@@ -258,7 +258,7 @@ try:
                         filewrite.close()
 
                 # pull ip address
-                filewrite = file("src/program_junk/ipaddr.file","w")
+
                 if choice3 != "5":
                         fileopen = file("config/set_config", "r").readlines()
                         for line in fileopen:
@@ -270,13 +270,11 @@ try:
                                                 ipaddr.connect(('google.com', 0))
                                                 ipaddr.settimeout(2)
                                                 ipaddr = ipaddr.getsockname()[0]
-                                                filewrite.write(ipaddr)
-                                                filewrite.close()
+						update_options("IPADDR=" + ipaddr)
                                         except Exception, error:
                                                 log(error)
                                                 ipaddr = raw_input(setprompt(["2"], "Your interface IP Address"))
-                                                filewrite.write(ipaddr)
-                                                filewrite.close()
+						update_options("IPADDR=" + ipaddr)
 
                         # if AUTO_DETECT=OFF prompt for IP Address
                         for line in fileopen:
@@ -323,8 +321,7 @@ try:
                                                 print_info("This option is used for what IP the server will POST to.")
                                                 print_info("If you're using an external IP, use your external IP for this")
                                                 ipaddr = raw_input(setprompt(["2"], "IP address for the POST back in Harvester/Tabnabbing"))
-                                        filewrite.write(ipaddr)
-                                        filewrite.close()
+					update_options("IPADDR=" + ipaddr)
 
                         # if java applet attack
                         if attack_vector == "java":
@@ -728,9 +725,8 @@ try:
         # if fileformat
         if infectious_menu_choice == "1":
                 ipaddr = raw_input(setprompt(["3"], "IP address for the reverse connection (payload)"))
-                filewrite = file("src/program_junk/ipaddr.file", "w")
-                filewrite.write(ipaddr)
-                filewrite.close()
+		update_options("IPADDR=" + ipaddr)
+
         filewrite1 = file("src/program_junk/payloadgen", "w")
         filewrite1.write("payloadgen=solo")
         filewrite1.close()

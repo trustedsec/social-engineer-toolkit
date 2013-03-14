@@ -65,9 +65,9 @@ def start_listener():
 
         # handle index error
         except IndexError:
-                if os.path.isfile("src/program_junk/port.options"):
-                        fileopen = file("src/program_junk/port.options", "r")
-                        PORT = fileopen.read()
+		if check_options("PORT=") != 0:
+			PORT = check_options("PORT=")
+
                 else:
                         # port number prompt for SET listener
                         PORT = raw_input(setprompt("0", "Port to listen on [443]"))
@@ -75,6 +75,7 @@ def start_listener():
                                 # if null then default to port 443
                                 print "[*] Defaulting to port 443 for the listener."
                                 PORT = 443
+				update_config("PORT=443")
 
                 try:
                         # make the port an integer 

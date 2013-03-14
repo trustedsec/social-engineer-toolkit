@@ -5,7 +5,7 @@
 # AES Encrypted Reverse HTTP Listener by:
 #
 #        Dave Kennedy (ReL1K)
-#     http://www.secmaniac.com
+#     https://www.trustedsec.com
 #
 #
 ############################################
@@ -18,6 +18,7 @@ import base64
 from Crypto.Cipher import AES
 import sys
 import time
+from src.core.setcore import *
 
 # the block size for the cipher object; must be 16, 24, or 32 for AES
 BLOCK_SIZE = 32
@@ -98,9 +99,8 @@ class GetHandler(BaseHTTPRequestHandler):
 if __name__ == '__main__':
 
         # bind to all interfaces
-        if os.path.isfile("src/program_junk/port.options"):
-                fileopen = file("src/program_junk/port.options", "r")
-                port = fileopen.read().rstrip()
+	if check_options("PORT=") != 0:
+		port = check_options("PORT=")
 
         else:
                 port = 443
@@ -111,7 +111,7 @@ if __name__ == '__main__':
 # The Social-Engineer Toolkit (SET) HTTP RevShell
 #
 #        Dave Kennedy (ReL1K)
-#     http://www.secmaniac.com
+#     https://www.trustedsec.com
 #
 ############################################"""
         print 'Starting encrypted web shell server, use <Ctrl-C> to stop'

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 ##############################################
-#
-# Centralized classes, work in progress
-# 
+#    Centralized core modules for SET        #
 ##############################################
 import re
 import sys
@@ -282,6 +280,10 @@ def meta_path():
             # path for metasploit
             trigger = 0
             if not os.path.isdir(msf_path):
+		# specific for kali linux
+		if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
+			msf_path = "/opt/metasploit/apps/pro/msf3/"
+			trigger = 1
                 # specific for backtrack5
                 if os.path.isfile("/opt/framework3/msf3/msfconsole"):
                     msf_path = "/opt/framework3/msf3/"
@@ -590,9 +592,8 @@ def meterpreter_reverse_tcp_exe(port):
     filewrite = file("src/program_junk/ipaddr", "w")
     filewrite.write(ipaddr)
     filewrite.close()
-    filewrite = file("src/program_junk/ipaddr.file", "w")
-    filewrite.write(ipaddr)
-    filewrite.close()
+    update_options("IPADDR=" + ipaddr)
+
     # trigger a flag to be checked in payloadgen
     # if this flag is true, it will skip the questions
     filewrite = file("src/program_junk/meterpreter_reverse_tcp_exe", "w")
@@ -843,7 +844,7 @@ def show_banner(define_version,graphic):
   [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]        
   [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
   [---]                   Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
-  [---]             Codename: '""" + bcolors.YELLOW + """The Werewolf""" + bcolors.BLUE + """'             [---]
+  [---]                Codename: '""" + bcolors.YELLOW + """Headshot""" + bcolors.BLUE + """'              [---]
   [---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
   [---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]
   [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
@@ -1181,9 +1182,18 @@ def update_options(option):
                 filewrite = file("%s/src/program_junk/set.options" % (definepath), "w")
                 filewrite.write("")
                 filewrite.close()
+
+	# remove old options
+	fileopen = file("%s/src/program_junk/set.options" % (definepath), "r")
+	old_options = ""
+	for line in fileopen:
+		match = re.search(option, line)
+		if match:
+			line = ""
+		old_options = old_options + line
         # append to file
-        filewrite = file("%s/src/program_junk/set.options" % (definepath), "a")
-        filewrite.write(option + "\n")
+        filewrite = file("%s/src/program_junk/set.options" % (definepath), "w")
+        filewrite.write(old_options + "\n" + option + "\n")
         filewrite.close()
  
 # python socket listener
@@ -1399,3 +1409,13 @@ def encryptAES(secret, data):
 
 	aes = EncodeAES(cipher, data)
 	return str(aes) 
+
+# compare ports to make sure its not already in a config file for metasploit
+def check_ports(filename, port):
+	fileopen = file(filename, "r")
+	data = fileopen.read()
+	match = re.search("LPORT " + port, data)
+	if match:
+		return True
+	else:
+		return False

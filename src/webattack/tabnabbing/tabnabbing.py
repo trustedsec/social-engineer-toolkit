@@ -29,11 +29,8 @@ if os.path.isfile("src/program_junk/multi_webjacking"):
 
 # Open the IPADDR file
 ipaddr=""
-if os.path.isfile("src/program_junk/ipaddr.file"):
-    fileopen=file("src/program_junk/ipaddr.file","r")
-    for line in fileopen:
-        line=line.rstrip()
-        ipaddr=line
+if check_options("IPADDR=") != 0:
+	ipaddr = check_options("IPADDR=")
 
 # pull URL field so we can pull favicon later on
 fileopen=file("src/program_junk/site.template","r").readlines()

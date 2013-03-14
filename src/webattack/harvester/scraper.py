@@ -14,10 +14,11 @@ from src.core.setcore import *
 #
 
 # grab ipaddr
-fileopen=file("src/program_junk/ipaddr.file","r").readlines()
-for line in fileopen:
-    ipaddr=line.rstrip()
-# end ipaddr
+if check_options("IPADDR=") != 0:
+        ipaddr = check_options("IPADDR=")
+else:
+        ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on: "))
+        update_options("IPADDR=" + ipaddr)
 
 # set the multiattack tabnabbing/webjacking flag
 multi_tabnabbing="off"

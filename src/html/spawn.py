@@ -77,11 +77,11 @@ def web_server_start():
                                 if not match2:
                                         web_port=8080
 
-        # Open the IPADDR file
-        fileopen=file("src/program_junk/ipaddr.file","r").readlines()
-        for line in fileopen:
-            line=line.rstrip()
-            ipaddr=line
+        # check ip address
+	if check_options("IPADDR=") != 0:
+		ipaddr = check_options("IPADDR=")
+	else:
+		ipaddr = raw_input("Enter your ipaddress: ")
 
         # Grab custom or set defined
         if os.path.isfile("src/program_junk/site.template"):
@@ -185,7 +185,7 @@ def web_server_start():
                 # Bring our files to our directory
                 if attack_vector != 'hid': 
                         if attack_vector != 'hijacking':
-                                print "\n" + bcolors.YELLOW + "[*] Moving payload into cloned website." + bcolors.ENDC
+                                print bcolors.YELLOW + "[*] Moving payload into cloned website." + bcolors.ENDC
                                 # copy all the files needed
                                 if not os.path.isfile("%s/src/program_junk/Signed_Update.jar" % (definepath)):
                                         shutil.copyfile("%s/src/html/Signed_Update.jar.orig" % (definepath), "%s/src/program_junk/Signed_Update.jar" % (definepath))
@@ -463,7 +463,7 @@ try:
                 print (bcolors.BLUE + "\n***************************************************")
                 print (bcolors.YELLOW + "Web Server Launched. Welcome to the SET Web Attack.")
                 print (bcolors.BLUE + "***************************************************")
-                print (bcolors.PURPLE+ "\n[--] Tested on IE6, IE7, IE8, IE9, IE10, Safari, Opera, Chrome, and FireFox [--]" + bcolors.ENDC)
+                print (bcolors.PURPLE+ "\n[--] Tested on Windows, Mac, and OSX [--]" + bcolors.ENDC)
                 if apache == 1:
                         print (bcolors.GREEN+ "[--] Apache web server is currently in use for performance. [--]" + bcolors.ENDC) 
 
@@ -520,8 +520,7 @@ try:
 
                 child1.interact()
         if os.path.isfile("%s/src/program_junk/set.payload" % (definepath)):
-                fileopen=file("%s/src/program_junk/port.options" % (definepath), "r")
-                for line in fileopen: port = line.rstrip()
+		port = check_options("PORT=")
 
                 # grab configuration 
                 fileopen=file("%s/src/program_junk/set.payload" % (definepath), "r")

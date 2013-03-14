@@ -205,16 +205,21 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
                 # start a threaded webserver in the background
                 subprocess.Popen("python src/html/fasttrack_http_server.py", shell=True)
                 # grab the port options
-                if os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
-                        fileopen = file("%s/src/program_junk/port.options" % (definepath), "r")
-                        port = fileopen.read().rstrip()
+
+		if check_options("PORT=") != 0:
+			port = check_options("PORT=")
+
                 # if for some reason the port didnt get created we default to 443
-                if not os.path.isfile("%s/src/program_junk/port.options" % (definepath)): port = "443" # default 443
+		else:
+			port = "443"
+
                 # launch the python listener through pexpect
                 # need to change the directory real quick
                 os.chdir(definepath)
+
                 # now back 
-                os.chdir("src/program_junk/web_clone/")
+                os.chdir("%s/src/program_junk/web_clone/" % (definepath))
+
 	setcore.print_status("Pausing 10 seconds to let the system catch up...")
 	time.sleep(10)
         setcore.print_status("Triggering payload stager...")

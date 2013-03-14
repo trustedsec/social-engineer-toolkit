@@ -55,14 +55,11 @@ for line in fileopen:
 
 if choice != "14":
         # Open the IPADDR file
-        if os.path.isfile("src/program_junk/ipaddr.file"):
-                fileopen=file("src/program_junk/ipaddr.file","r")
-                for line in fileopen:
-                        line=line.rstrip()
-                        ipaddr=line
-
-        if not os.path.isfile("src/program_junk/ipaddr.file"):
+	if check_options("IPADDR=") != 0:
+		ipaddr = check_options("IPADDR=")
+	else:
                 ipaddr=raw_input(setprompt(["6"], "IP address to connect back on"))
+		update_options("IPADDR=" + ipaddr)
 
 if not os.path.isfile("src/program_junk/teensy"):
         print_error("FATAL:Something went wrong, the Teensy config file was not created.")

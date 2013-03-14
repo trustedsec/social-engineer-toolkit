@@ -28,7 +28,7 @@
 ##################################################################################################
 #
 ### Define the path to MetaSploit, for example: /pentest/exploits/framework3 
-METASPLOIT_PATH=/opt/metasploit/msf3
+METASPLOIT_PATH=/opt/metasploit/apps/pro/msf3
 #
 ### This will tell what database to use when using the MetaSploit functionality. Default is PostgreSQL
 METASPLOIT_DATABASE=postgresql
@@ -217,12 +217,16 @@ POWERSHELL_INJECT_PAYLOAD_X64=windows/x64/meterpreter/reverse_tcp
 POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_tcp
 #
 ### THIS OPTION WILL SPRAY MULTIPLE PORTS THROUGH POWERSHELL IN A HOPE TO GET A PORT OUTBOUND. 
-POWERSHELL_MULTI_INJECTION=OFF
+### NOTE THAT POWERSHELL INJECTION MUST BE SET TO ON.
+POWERSHELL_MULTI_INJECTION=ON
+#
+### THIS WILL CONFIGURE WHICH PORTS TO USE FOR POWERSHELL INJECTION
+POWERSHELL_MULTI_PORTS=443,21,22,25
 #
 ### THIS WILL SPECIFY WHICH PORTS TO ITERATE THROUGH TO DO THE POWERSHELL INJECTION. NOTE IF YOU ARE USING SET
 ### PORT 80 IS USED BY THE WEB SERVER. THE REST OF PORTS SHOULD BE OPEN. CONSIDER IF YOU WANT TO USE PORT 80 TO
 ### PLACE THE LISTENER ON A DIFFERENT SERVER.
-POWERSHELL_MULTI_PORTS="21,22,23,25,53,3389,443,8080"
+POWERSHELL_MULTI_PORTS=21,22,23,25,53,3389,443,8080
 #
 ### This will display the output of the powershell injection attack so you can see what is being placed on the
 ### system.
