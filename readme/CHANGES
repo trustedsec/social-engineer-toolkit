@@ -25,6 +25,10 @@ version 4.7
 * rewrote the java jar file to handle multiple powershell alphanumeric shellcode points injected into applet.
 * added signed and unsigned jar files to the java applet attack vector
 * removed create_payload.py from saving files in src/html and instead in the proper folders src/program_junk
+* fixed a payload duplication issue in create_payload.py, will now check to see if port is there
+* removed a pefile check unless backdoored executable is in use
+* turned digital signature stealing from a pefile to off in the set_config file
+* converted all src/html/msf.exe to src/program_junk/ and fixed an issue where the applet would not load properly
 
 ~~~~~~~~~~~~~~~~
 version 4.4.5
