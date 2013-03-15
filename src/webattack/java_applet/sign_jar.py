@@ -22,9 +22,9 @@ Is this correct: yes
     # grab keystore to use later
     subprocess.Popen("keytool -genkey -alias signapplet2 -keystore mykeystore -keypass mykeypass -storepass mystorepass", shell=True).wait()
     # self-sign the applet
-    subprocess.Popen("jarsigner -keystore mykeystore -storepass mystorepass -keypass mykeypass -signedjar Signed_Update.jar Java_Update.jar signapplet2", shell=True).wait()
+    subprocess.Popen("jarsigner -keystore mykeystore -storepass mystorepass -keypass mykeypass -signedjar Signed_Update.jar Java_Obf.jar signapplet2", shell=True).wait()
     # move it into our html directory
     subprocess.Popen("rm ../../html/Signed_Update.jar.orig", shell=True).wait()
     subprocess.Popen("cp Signed_Update.jar ../../html/Signed_Update.jar.orig", shell=True).wait()
-    subprocess.Popen("cp Java_Update.jar ../../html/unsigned/unsigned.jar", shell=True).wait()
+    subprocess.Popen("cp Java_Obf.jar ../../html/unsigned/unsigned.jar", shell=True).wait()
     print "[*] New java applet has been successfully imported into The Social-Engineer Toolkit (SET)"

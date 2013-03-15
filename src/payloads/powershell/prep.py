@@ -99,6 +99,7 @@ if multi_injection == "on":
 					filewrite = file("%s/src/program_junk/meta_config" % (definepath), "a")
 					filewrite.write("\nuse exploit/multi/handler\nset PAYLOAD %s\n set LHOST 0.0.0.0\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ports))
 					filewrite.close()
+
 # if its turned to off
 if multi_injection == "off":
 	print_status("Generating x64-based powershell injection code...")

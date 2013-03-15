@@ -196,15 +196,16 @@ def web_server_start():
                                 if os.path.isfile("%s/src/html/mac.bin" % (definepath)):
 					mac = check_options("MAC.BIN=")
                                         shutil.copyfile("%s/src/html/mac.bin" % (definepath), "%s/src/program_junk/web_clone/%s" % (definepath, mac))
-                                if os.path.isfile("%s/src/html/msf.exe" % (definepath)):
+                                if os.path.isfile("%s/src/program_junk/msf.exe" % (definepath)):
 					win = check_options("MSF.EXE=")
-                                        shutil.copyfile("%s/src/html/msf.exe" % (definepath), "%s/src/program_junk/web_clone/%s" % (definepath,win))
+                                        shutil.copyfile("%s/src/program_junk/msf.exe" % (definepath), "%s/src/program_junk/web_clone/%s" % (definepath,win))
+
                                 # pull random name generation
                                 print_status("The site has been moved. SET Web Server is now listening..")
 				rand_gen = check_options("MSF_EXE=")
 				if rand_gen != 0:
                                         if os.path.isfile("%s/src/program_junk/custom.exe" % (definepath)):
-                                                shutil.copyfile("src/html/msf.exe", "src/program_junk/web_clone/msf.exe")
+                                                shutil.copyfile("src/program_junk/msf.exe", "src/program_junk/web_clone/msf.exe")
                                                 print "\n[*] Website has been cloned and custom payload imported. Have someone browse your site now"
                                         shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/program_junk/web_clone/%s" % (rand_gen))        
                 os.chdir("%s/src/program_junk/web_clone" % (definepath))
@@ -300,7 +301,7 @@ def web_server_start():
                                                         break
 
         if apache == 1:
-                subprocess.Popen("cp %s/src/html/*.bin %s 1> /dev/null 2> /dev/null;cp %s/src/html/*.html %s 1> /dev/null 2> /dev/null;cp %s/src/program_junk/web_clone/* %s 1> /dev/null 2> /dev/null;cp %s/src/html/msf.exe %s 1> /dev/null 2> /dev/null;cp %s/src/program_junk/Signed* %s 1> /dev/null 2> /dev/null" % (definepath,apache_path,definepath,apache_path,definepath,apache_path,definepath,apache_path,definepath,apache_path), shell=True).wait()	
+                subprocess.Popen("cp %s/src/html/*.bin %s 1> /dev/null 2> /dev/null;cp %s/src/html/*.html %s 1> /dev/null 2> /dev/null;cp %s/src/program_junk/web_clone/* %s 1> /dev/null 2> /dev/null;cp %s/src/program_junk/msf.exe %s 1> /dev/null 2> /dev/null;cp %s/src/program_junk/Signed* %s 1> /dev/null 2> /dev/null" % (definepath,apache_path,definepath,apache_path,definepath,apache_path,definepath,apache_path,definepath,apache_path), shell=True).wait()	
 		# if we are tracking users
 		if track_email == "on":
 			now=datetime.datetime.today()
@@ -463,7 +464,7 @@ try:
                 print (bcolors.BLUE + "\n***************************************************")
                 print (bcolors.YELLOW + "Web Server Launched. Welcome to the SET Web Attack.")
                 print (bcolors.BLUE + "***************************************************")
-                print (bcolors.PURPLE+ "\n[--] Tested on Windows, Mac, and OSX [--]" + bcolors.ENDC)
+                print (bcolors.PURPLE+ "\n[--] Tested on Windows, Linux, and OSX [--]" + bcolors.ENDC)
                 if apache == 1:
                         print (bcolors.GREEN+ "[--] Apache web server is currently in use for performance. [--]" + bcolors.ENDC) 
 

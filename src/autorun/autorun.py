@@ -20,7 +20,7 @@ me = mod_name()
 trigger = 0
 if os.path.isfile("src/program_junk/standardpayload.file"):
     trigger = 1
-    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp src/html/msf.exe autorun/program.exe 1> /dev/null 2> /dev/null;cp src/program_junk/msf.exe autorun/program.exe 1> /dev/null 2>/dev/null", shell=True).wait()
+    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp src/program_junk/msf.exe autorun/program.exe 1> /dev/null 2> /dev/null;cp src/program_junk/msf.exe autorun/program.exe 1> /dev/null 2>/dev/null", shell=True).wait()
 if os.path.isfile("src/program_junk/fileformat.file"):
     trigger = 2
     subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp src/program_junk/template.pdf autorun/ 1> /dev/null 2>/dev/null", shell=True).wait()

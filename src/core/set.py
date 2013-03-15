@@ -782,8 +782,8 @@ try:
         if os.path.isfile("src/program_junk/meterpreter.alpha"):
                 print "[*] Saving alphanumeric shellcode in root directory of SET as meterpreter.alpha"
                 shutil.copyfile("src/program_junk/meterpreter.alpha", "meterpreter.alpha")
-        if os.path.isfile("src/html/msf.exe"):
-                shutil.copyfile("src/html/msf.exe", "msf.exe")
+        if os.path.isfile("src/program_junk/msf.exe"):
+                shutil.copyfile("src/program_junk/msf.exe", "msf.exe")
         
         # if we didn't select the SET interactive shell or RATTE
         if not os.path.isfile("src/program_junk/set.payload"):

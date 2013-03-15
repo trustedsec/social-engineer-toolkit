@@ -92,7 +92,7 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
         if not os.path.isfile("src/program_junk/set.payload"):
                 if operating_system == "posix":
                         web_path = ("src/program_junk")
-                        subprocess.Popen("cp src/html/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
+                        subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
                         subprocess.Popen("cp src/program_junk/msf2.exe src/program_junk/msf.exe 1> /dev/null 2> /dev/null", shell=True).wait()
         fileopen = file("%s/msf.exe" % (web_path), "rb")
         # read in the binary

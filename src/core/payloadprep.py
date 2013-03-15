@@ -129,7 +129,7 @@ if payload_selection == "SETSHELL":
     filewrite = open("src/program_junk/msf.exe" , "wb")
     filewrite.write(data.replace(str(ipaddr_count), ipaddr+"\x00", 1))
     filewrite.close()
-    shutil.copyfile("src/program_junk/msf.exe", "src/html/msf.exe")
+    #shutil.copyfile("src/program_junk/msf.exe", "src/html/msf.exe")
 
 # if we selected RATTE in our payload selection
 if payload_selection == "RATTE":
@@ -209,9 +209,9 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
                     if os.path.isfile("src/program_junk/web_clone/msf.exe"):
                         os.remove("src/program_junk/web_clone/msf.exe")
                     shutil.copyfile("src/program_junk/web_clone/x", "src/program_junk/web_clone/msf.exe")
-                    if os.path.isfile("src/html/msf.exe"):
-                        os.remove("src/html/msf.exe")
-                    shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/html/msf.exe")
+                    #if os.path.isfile("src/html/msf.exe"):
+                     #   os.remove("src/html/msf.exe")
+                    shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/program_junk/msf.exe")
                     if os.path.isfile("src/program_junk/msf.exe"):
                         os.remove("src/program_junk/msf.exe")
                     shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/program_junk/msf.exe")
@@ -231,9 +231,9 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
                     if os.path.isfile("src/program_junk/web_clone/msf.exe"):
                         os.remove("src/program_junk/web_clone/msf.exe")
                     shutil.copyfile("src/payloads/set_payloads/http_shell.binary", "src/program_junk/web_clone/msf.exe")
-                    if os.path.isfile("src/html/msf.exe"):        
-                        os.remove("src/html/msf.exe")
-                    shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/html/msf.exe")
+                #    if os.path.isfile("src/html/msf.exe"):        
+                 #       os.remove("src/html/msf.exe")
+                    shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/program_junk/msf.exe")
                     if os.path.isfile("src/program_junk/msf.exe"):
                         os.remove("src/program_junk/msf.exe")
                     shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/program_junk/msf.exe")

