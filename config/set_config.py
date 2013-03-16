@@ -9,10 +9,10 @@
 #  SET updated using the 'Update SET Configuration' menu item in      #
 #  the main menu. This file will be updated with the new settings.    #
 #                                                                     #
-#  set_config.py generated: 2013-03-16 15:08:58.338592                #
+#  set_config.py generated: 2013-03-16 15:24:03.199144                #
 #                                                                     #
 #######################################################################
-CONFIG_DATE='2013-03-16 15:08:58.338592'
+CONFIG_DATE='2013-03-16 15:24:03.199144'
 METASPLOIT_PATH="/opt/metasploit/apps/pro/msf3"
 METASPLOIT_DATABASE="postgresql"
 ENCOUNT=4
@@ -65,7 +65,7 @@ POWERSHELL_INJECTION=True
 POWERSHELL_INJECT_PAYLOAD_X64="windows/x64/meterpreter/reverse_tcp"
 POWERSHELL_INJECT_PAYLOAD_X86="windows/meterpreter/reverse_tcp"
 POWERSHELL_MULTI_INJECTION="True"
-POWERSHELL_MULTI_PORTS="22,53,443"
+POWERSHELL_MULTI_PORTS="22,53,443,21,25,8080"
 POWERSHELL_VERBOSE=False
 WEB_PROFILER=False
 DEPLOY_OSX_LINUX_PAYLOADS="False"
@@ -78,3 +78,4 @@ METASPLOIT_MODE=True
 DEPLOY_BINARIES="YES"
 CLEANUP_ENABLED_DEBUG="False"
 TRACK_EMAIL_ADDRESSES="False"
+DNS_SERVER="True"

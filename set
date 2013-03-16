@@ -42,6 +42,9 @@ if operating_system == "posix":
         # change permissions if nix
         subprocess.Popen("chmod +x set-automate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
+
+start_dns()
+
 # remove old files
 for root, dirs, files in os.walk('src/program_junk/'):
     for f in files:
@@ -182,9 +185,9 @@ except KeyboardInterrupt:
         print "\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"
 
 # handle exceptions
-#except Exception, error:
- #       log(error)
-  #      print "\n\n[!] Something went wrong, printing the error: "+ str(error)
+except Exception, error:
+        log(error)
+        print "\n\n[!] Something went wrong, printing the error: "+ str(error)
 
 # cleanup routine
 cleanup_routine()
