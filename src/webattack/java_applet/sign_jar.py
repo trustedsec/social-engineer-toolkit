@@ -4,8 +4,7 @@
 #
 import subprocess
 import os
-pause = raw_input("Sign and import the new java file into SET? [yes|no]")
-if pause == "yes" or pause == "y":
+try:
     print """
 Simply enter in the required fields, easy example below:
 
@@ -28,3 +27,5 @@ Is this correct: yes
     subprocess.Popen("cp Signed_Update.jar ../../html/Signed_Update.jar.orig", shell=True).wait()
     subprocess.Popen("cp Java_Obf.jar ../../html/unsigned/unsigned.jar", shell=True).wait()
     print "[*] New java applet has been successfully imported into The Social-Engineer Toolkit (SET)"
+except:
+	pass
