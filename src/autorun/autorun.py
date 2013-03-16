@@ -34,9 +34,9 @@ filewrite = file("autorun/autorun.inf", "w")
 # if we are using shellcodeexec
 alpha_data = ""
 if os.path.isfile("src/program_junk/meterpreter.alpha"):
-        fileopen = file("src/program_junk/meterpreter.alpha", "r")
-        alpha_data = fileopen.read().rstrip()
-        
+    fileopen = file("src/program_junk/meterpreter.alpha", "r")
+    alpha_data = fileopen.read().rstrip()
+
 
 # if using standard payloads
 if trigger == 1:

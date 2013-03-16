@@ -25,8 +25,8 @@ if choice == "YES":
 
     # if we did select the set payload as our option
     if os.path.isfile("src/program_junk/set.payload"):
-	if check_options("PORT=") != 0:
-		port = check_options("PORT=")
+        if check_options("PORT=") != 0:
+            port = check_options("PORT=")
 
         set_payload = file("src/program_junk/set.payload", "r")
 
