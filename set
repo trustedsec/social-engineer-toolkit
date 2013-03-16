@@ -57,7 +57,7 @@ for root, dirs, files in os.walk('src/program_junk/'):
 		try:
 			match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", d)
 			if not match:
-					shutil.rmtree(os.path.join(root, d))
+				shutil.rmtree(os.path.join(root, d))
 		except: pass
 
 # if windows then do some stuff
@@ -68,9 +68,9 @@ if operating_system == "posix":
 	################################################
 
 	if os.geteuid() != 0:
-			print "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)"
-			print "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n"
-			exit_set()
+		print "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)"
+		print "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n"
+		exit_set()
 
 if operating_system != "windows":
 	check_pexpect()
@@ -105,13 +105,13 @@ not authorized by the company you are performing assessments for, you are violat
 yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN
 		choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
 		if choice == "yes" or choice == "y":
-				filewrite = file("src/agreement4", "w")
-				filewrite.write("user accepted")
-				filewrite.close()
-				print bcolors.ENDC
+			filewrite = file("src/agreement4", "w")
+			filewrite.write("user accepted")
+			filewrite.close()
+			print bcolors.ENDC
 		else: 
-				print "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
-				sys.exit()
+			print "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
+			sys.exit()
 					  
 		while 1:
 			show_banner(define_version,'1')
@@ -125,57 +125,57 @@ yes (only one time), you agree to the terms of service and that you will only us
 
 			# funny
 			if main_menu_choice == "hugs":
-					print_warning("Have you given someone a hug today? Remember a hug can change the world.")
-					pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
+				print_warning("Have you given someone a hug today? Remember a hug can change the world.")
+				pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
 
 			# funny2
 			if main_menu_choice == "derbycon":
-					print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 3.0 -- September 25th through September 29th 2012" + bcolors.ENDC)
-					pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 25 - Sep 29th! Press {return} to continue." + bcolors.ENDC)
+				print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 3.0 -- September 25th through September 29th 2012" + bcolors.ENDC)
+				pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 25 - Sep 29th! Press {return} to continue." + bcolors.ENDC)
 
 			# quit out
 			if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":
-					exit_set()
-					# cleans up stale processes from SET
-					try:
-							# kill anything python running on 80
-							kill_proc("80","python")
-							# kill anything on 443 ruby which is generally a rogue listener
-							kill_proc("443", "ruby")
-					except: pass
+				exit_set()
+				# cleans up stale processes from SET
+				try:
+					# kill anything python running on 80
+					kill_proc("80","python")
+					# kill anything on 443 ruby which is generally a rogue listener
+					kill_proc("443", "ruby")
+				except: pass
 
 			# load set
 			if main_menu_choice == '1':
-					try:
-							reload(src.core.set)
-					except:
-							import src.core.set
+				try:
+					reload(src.core.set)
+				except:
+					import src.core.set
 
 			# load fasttrack
 			if main_menu_choice == '2':
-					try: reload(src.core.fasttrack)
-					except: import src.core.fasttrack
+				try: reload(src.core.fasttrack)
+				except: import src.core.fasttrack
 	
 			# third party modules
 			if main_menu_choice == '3':
-					try: reload(src.core.module_handler)
-					except: import src.core.module_handler
+				try: reload(src.core.module_handler)
+				except: import src.core.module_handler
 
 			# update metasploit
 			if main_menu_choice == '4':
-					update_metasploit()
+				update_metasploit()
 
 			# update set
 			if main_menu_choice == '5':
-					update_set()
+				update_set()
 
 			# credits
 			if main_menu_choice == '6':
-					update_config()
+				update_config()
 		   
 			# update config
 			if main_menu_choice == '7':
-					help_menu()
+				help_menu()
 
 # handle keyboard interrupts
 except KeyboardInterrupt:

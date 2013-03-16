@@ -44,46 +44,46 @@ if os.path.isfile(filename):
 		#child.delaybeforesend = 0
 		fileopen=file(filename,"r")
 		for line in fileopen:
-				line=line.rstrip()
-				# if we just use enter send default
-				if line == "": line="default"
+			line=line.rstrip()
+			# if we just use enter send default
+			if line == "": line="default"
 
-				match1=re.search("OMGPASSWORDHERE", line)
-				if match1:
-					line=line.replace(" OMGPASSWORDHERE", "")
-					password="true"
+			match1=re.search("OMGPASSWORDHERE", line)
+			if match1:
+				line=line.replace(" OMGPASSWORDHERE", "")
+				password="true"
 
-				if password == "false":
-					print "[*] Sending command %s to the interface..." % (line)
-				if password == "true":
-					print "[*] Sending command [**********] (password masked) to the interface..."
-					password="false"
+			if password == "false":
+				print "[*] Sending command %s to the interface..." % (line)
+			if password == "true":
+				print "[*] Sending command [**********] (password masked) to the interface..."
+				password="false"
 
-				if line == "default":
-					line=""
+			if line == "default":
+				line=""
 
-				if line == "CONTROL-C-HERE":
-					try:
-						print "[*] This may take a few seconds while SET catches up..."
-						child.expect("Next line of the body:")
-						time.sleep(2)
-						child.sendline("\n")
-						child.sendcontrol('c')
+			if line == "CONTROL-C-HERE":
+				try:
+					print "[*] This may take a few seconds while SET catches up..."
+					child.expect("Next line of the body:")
+					time.sleep(2)
+					child.sendline("\n")
+					child.sendcontrol('c')
 
-					# if the user is using pexpect < 2.3
-					except AttributeError:
-						print "[-] Error: You are running pexpect < 2.3 which is needed for this function"
-						choice=raw_input("Would you like to install it now yes or no: ")
-						if choice == "yes" or choice == "y":
-							subprocess.Popen("wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3;python setup.py install;cd ..;rm -rf pexpect-2*", shell=True).wait()
-							try:
-								reload(pexpect)
-								child.sendcontrol('c')
-							except: 
-								print "[*] Relaunch the Social-Engineer Toolkit for changes to apply."
-								sys.exit()
-				if line != "CONTROL-C-HERE":
-					child.sendline(line)
+				# if the user is using pexpect < 2.3
+				except AttributeError:
+					print "[-] Error: You are running pexpect < 2.3 which is needed for this function"
+					choice=raw_input("Would you like to install it now yes or no: ")
+					if choice == "yes" or choice == "y":
+						subprocess.Popen("wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3;python setup.py install;cd ..;rm -rf pexpect-2*", shell=True).wait()
+						try:
+							reload(pexpect)
+							child.sendcontrol('c')
+						except: 
+							print "[*] Relaunch the Social-Engineer Toolkit for changes to apply."
+							sys.exit()
+			if line != "CONTROL-C-HERE":
+				child.sendline(line)
 
 		print "[*] Finished sending commands, interacting with the interface.." 
 		child.interact()
