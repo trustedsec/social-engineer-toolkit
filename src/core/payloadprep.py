@@ -57,11 +57,11 @@ if os.path.isfile("src/program_junk/interface"):
 
         # Open the IPADDR file
     if check_options("IPADDR=") != 0:
-    	ipaddr = check_options("IPADDR=")
+        ipaddr = check_options("IPADDR=")
     else:
         ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on for the reverse listener"))
-	update_options("IPADDR=" + ipaddr)
-	webserver = ipaddr
+        update_options("IPADDR=" + ipaddr)
+        webserver = ipaddr
 
 else:
 
@@ -74,7 +74,7 @@ else:
 
 # grab port options from payloadgen.py
 if check_options("PORT=") != 0:
-	port = check_options("PORT=")
+    port = check_options("PORT=")
 
 else:
     port = raw_input(setcore.setprompt("0", "Port you want to use for the connection back"))
@@ -231,13 +231,13 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
                     if os.path.isfile("src/program_junk/web_clone/msf.exe"):
                         os.remove("src/program_junk/web_clone/msf.exe")
                     shutil.copyfile("src/payloads/set_payloads/http_shell.binary", "src/program_junk/web_clone/msf.exe")
-                #    if os.path.isfile("src/html/msf.exe"):        
+                #    if os.path.isfile("src/html/msf.exe"):
                  #       os.remove("src/html/msf.exe")
                     shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/program_junk/msf.exe")
                     if os.path.isfile("src/program_junk/msf.exe"):
                         os.remove("src/program_junk/msf.exe")
                     shutil.copyfile("src/program_junk/web_clone/msf.exe", "src/program_junk/msf.exe")
 
-                # catch errors, will convert to log later        
+                # catch errors, will convert to log later
                 except Exception, error:
                     setcore.log(error)

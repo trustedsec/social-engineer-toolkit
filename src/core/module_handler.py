@@ -19,10 +19,10 @@ print_info_spaces("Social-Engineer Toolkit Third Party Modules menu.")
 print_info_spaces("Please read the readme/modules.txt for information on how to create your own modules.\n")
 
 for name in glob.glob("modules/*.py"):
-    
+
     counter = counter + 1
     fileopen = file(name, "r")
-    
+
     for line in fileopen:
         line = line.rstrip()
         match = re.search("MAIN=", line)
@@ -32,7 +32,7 @@ for name in glob.glob("modules/*.py"):
             line = "  " + str(counter) + ". " + line
             print line
 
-print "\n  99. Return to the previous menu\n" 
+print "\n  99. Return to the previous menu\n"
 choice = raw_input(setprompt(["9"], ""))
 
 if choice == 'exit':
@@ -42,9 +42,9 @@ if choice == '99':
     menu_return = "true"
 
 # throw error if not integer
-try: 
+try:
     choice = int(choice)
-except: 
+except:
     print_warning("An integer was not used try again")
     choice = raw_input(setprompt(["9"], ""))
 
@@ -56,7 +56,7 @@ if menu_return == "false":
     for name in glob.glob("modules/*.py"):
 
         counter = counter+1
-        
+
         if counter == int(choice):
             # get rid of .modules extension
             name = name.replace("modules/", "")
@@ -66,9 +66,9 @@ if menu_return == "false":
             sys.path.append("modules/")
             # this will import the third party module
 
-            try: 
+            try:
                 exec("import " + name)
-            except: 
+            except:
                 pass
 
             # this will call the main() function inside the python file
@@ -76,6 +76,6 @@ if menu_return == "false":
             try:
                 exec("%s.main()" % (name))
             # handle the exception if main isn't there
-            except Exception, e: 
+            except Exception, e:
                 raw_input("   [!] There was an issue with a module: %s." % (e))
                 return_continue()

@@ -10,6 +10,7 @@ version 4.7.1
 * standardized metasploit_shellcode to a setcore library and now being used by create_payload.py and powershell/prep.py
 * added additional standard ports to the powershell_injection since its much faster to generate now.
 * added a new config option called DNS_SERVER which allows you to configure SET as a DNS server and hae all traffic route through it. Just turn it on and you have a full fledged DNS server running.
+* fixed indentiation of all python files to standard 4 spaces using reindent.py (thanks Siarc)
 
 ~~~~~~~~~~~~~~~~
 version 4.7

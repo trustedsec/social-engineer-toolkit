@@ -40,4 +40,3 @@ def test(HandlerClass = SecureHTTPRequestHandler,
 
 if __name__ == '__main__':
     test()
-

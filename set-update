@@ -16,4 +16,3 @@ except KeyboardInterrupt:
 
 # handle all other errors
 except Exception, e: print "\n[!] Something went wrong.. Printing the error: " + e
-

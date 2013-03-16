@@ -51,7 +51,7 @@ class ScapyFreqFilter(logging.Filter):
     def __init__(self):
         logging.Filter.__init__(self)
         self.warning_table = {}
-    def filter(self, record):        
+    def filter(self, record):
         wt = conf.warning_threshold
         if wt > 0:
             stk = traceback.extract_stack()
@@ -73,7 +73,7 @@ class ScapyFreqFilter(logging.Filter):
                 else:
                     return 0
             self.warning_table[caller] = (tm,nb)
-        return 1    
+        return 1
 
 log_scapy = logging.getLogger("scapy")
 console_handler = logging.StreamHandler()
@@ -132,7 +132,7 @@ if LINUX:
     DNET=PCAP=0
 else:
     DNET=PCAP=1
-    
+
 
 if PCAP:
     try:
@@ -172,8 +172,8 @@ if not PCAP:
     else:
         TCPDUMP=1
     del(f)
-        
-    
+
+
 
 try:
     from Crypto.Cipher import ARC4
@@ -228,7 +228,7 @@ class DADict:
         return val in self.__dict__
     def __getitem__(self, attr):
         return getattr(self, attr)
-    def __setitem__(self, attr, val):        
+    def __setitem__(self, attr, val):
         return setattr(self, self.fixname(attr), val)
     def __iter__(self):
         return iter(map(lambda (x,y):y,filter(lambda (x,y):x and x[0]!="_", self.__dict__.items())))
@@ -251,9 +251,9 @@ class DADict:
             if k not in self or self[k] != kargs[k]:
                 return False
         return True
-    
+
     def _find(self, *args, **kargs):
-         return self._recurs_find((), *args, **kargs)
+        return self._recurs_find((), *args, **kargs)
     def _recurs_find(self, path, *args, **kargs):
         if self in path:
             return None
@@ -280,7 +280,7 @@ class DADict:
         return r
     def keys(self):
         return filter(lambda x:x and x[0]!="_", self.__dict__.keys())
-        
+
 
 
 ############
@@ -302,14 +302,14 @@ ARPHDR_LOOPBACK = 772
 ARPHDR_TUN = 65534
 
 # From bits/ioctls.h
-SIOCGIFHWADDR  = 0x8927          # Get hardware address    
-SIOCGIFADDR    = 0x8915          # get PA address          
-SIOCGIFNETMASK = 0x891b          # get network PA mask     
-SIOCGIFNAME    = 0x8910          # get iface name          
-SIOCSIFLINK    = 0x8911          # set iface channel       
-SIOCGIFCONF    = 0x8912          # get iface list          
-SIOCGIFFLAGS   = 0x8913          # get flags               
-SIOCSIFFLAGS   = 0x8914          # set flags               
+SIOCGIFHWADDR  = 0x8927          # Get hardware address
+SIOCGIFADDR    = 0x8915          # get PA address
+SIOCGIFNETMASK = 0x891b          # get network PA mask
+SIOCGIFNAME    = 0x8910          # get iface name
+SIOCSIFLINK    = 0x8911          # set iface channel
+SIOCGIFCONF    = 0x8912          # get iface list
+SIOCGIFFLAGS   = 0x8913          # get flags
+SIOCSIFFLAGS   = 0x8914          # set flags
 SIOCGIFINDEX   = 0x8933          # name -> if_index mapping
 SIOCGIFCOUNT   = 0x8938          # get number of devices
 SIOCGSTAMP     = 0x8906          # get packet timestamp (as a timeval)
@@ -355,7 +355,7 @@ BIOCIMMEDIATE=-2147204496
 
 MTU = 1600
 
- 
+
 # file parsing to get some values :
 
 def load_protocols(filename):
@@ -453,9 +453,9 @@ class ManufDA(DADict):
         if oui in self:
             return ":".join([self[oui][0]]+ mac.split(":")[3:])
         return mac
-        
-        
-        
+
+
+
 
 def load_manuf(filename):
     try:
@@ -478,7 +478,7 @@ def load_manuf(filename):
         #log_loading.warning("Couldn't open [%s] file" % filename)
         pass
     return manufdb
-    
+
 MANUFDB = load_manuf("/usr/share/wireshark/wireshark/manuf")
 
 
@@ -548,13 +548,13 @@ def linehexdump(x, onlyasc=0, onlyhex=0):
 def chexdump(x):
     x=str(x)
     print ", ".join(map(lambda x: "%#04x"%ord(x), x))
-    
+
 def hexstr(x, onlyasc=0, onlyhex=0):
     s = []
     if not onlyasc:
         s.append(" ".join(map(lambda x:"%02x"%ord(x), x)))
     if not onlyhex:
-        s.append(sane(x)) 
+        s.append(sane(x))
     return "  ".join(s)
 
 
@@ -575,7 +575,7 @@ def hexdiff(x,y):
             d[i,j] = min( ( d[i-1,j-1][0]+SUBST*(x[i] != y[j]), (i-1,j-1) ),
                           ( d[i-1,j][0]+INSERT, (i-1,j) ),
                           ( d[i,j-1][0]+INSERT, (i,j-1) ) )
-                          
+
 
     backtrackx = []
     backtracky = []
@@ -587,13 +587,13 @@ def hexdiff(x,y):
         backtracky.append(y[j2+1:j+1])
         i,j = i2,j2
 
-        
+
 
     x = y = i = 0
     colorize = { 0: lambda x:x,
                 -1: conf.color_theme.left,
                  1: conf.color_theme.right }
-    
+
     dox=1
     doy=0
     l = len(backtrackx)
@@ -608,7 +608,7 @@ def hexdiff(x,y):
             doy = 1
         if dox and linex == liney:
             doy=1
-            
+
         if dox:
             xd = y
             j = 0
@@ -631,9 +631,9 @@ def hexdiff(x,y):
             line=liney
         else:
             print "    ",
-            
+
         print " ",
-        
+
         cl = ""
         for j in range(16):
             if i+j < l:
@@ -666,7 +666,7 @@ def hexdiff(x,y):
             else:
                 i += 16
 
-    
+
 crc32 = zlib.crc32
 
 if BIG_ENDIAN:
@@ -695,7 +695,7 @@ def mac2str(mac):
     return "".join(map(lambda x: chr(int(x,16)), mac.split(":")))
 
 def str2mac(s):
-    return ("%02x:"*6)[:-1] % tuple(map(ord, s)) 
+    return ("%02x:"*6)[:-1] % tuple(map(ord, s))
 
 def strxor(x,y):
     return "".join(map(lambda x,y:chr(ord(x)^ord(y)),x,y))
@@ -721,7 +721,7 @@ def do_graph(graph,prog=None,format="svg",target=None, type=None,string=None,opt
     target: filename or redirect. Defaults pipe to Imagemagick's display program
     prog: which graphviz program to use
     options: options to be passed to prog"""
-        
+
 
     if string:
         return graph
@@ -753,7 +753,7 @@ _TEX_TR = {
     "<":"{\\tt\\char60}",
     ">":"{\\tt\\char62}",
     }
-    
+
 def tex_escape(x):
     s = ""
     for c in x:
@@ -830,14 +830,14 @@ def save_session(fname, session=None, pickleProto=-1):
         session = scapy_session
 
     to_be_saved = session.copy()
-        
+
     if to_be_saved.has_key("__builtins__"):
         del(to_be_saved["__builtins__"])
 
     for k in to_be_saved.keys():
         if type(to_be_saved[k]) in [types.TypeType, types.ClassType, types.ModuleType]:
-             log_interactive.error("[%s] (%s) can't be saved." % (k, type(to_be_saved[k])))
-             del(to_be_saved[k])
+            log_interactive.error("[%s] (%s) can't be saved." % (k, type(to_be_saved[k])))
+            del(to_be_saved[k])
 
     try:
         os.rename(fname, fname+".bak")
@@ -902,7 +902,7 @@ class IPTools:
         t.sort()
         return t[t.index(self.ttl)+1]
     def hops(self):
-        return self.ottl()-self.ttl-1 
+        return self.ottl()-self.ttl-1
 
 
 ##############################
@@ -959,7 +959,7 @@ class Route:
         self.invalidate_cache()
         self.routes.append(self.make_route(*args,**kargs))
 
-        
+
     def delt(self,  *args, **kargs):
         """delt(host|net, gw|dev)"""
         self.invalidate_cache()
@@ -969,15 +969,15 @@ class Route:
             del(self.routes[i])
         except ValueError:
             warning("no matching route found")
-             
+
     def ifchange(self, iff, addr):
         self.invalidate_cache()
         the_addr,the_msk = (addr.split("/")+["32"])[:2]
         the_msk = itom(int(the_msk))
         the_rawaddr = atol(the_addr)
         the_net = the_rawaddr & the_msk
-        
-        
+
+
         for i in range(len(self.routes)):
             net,msk,gw,iface,addr = self.routes[i]
             if iface != iff:
@@ -988,8 +988,8 @@ class Route:
                 self.routes[i] = (net,msk,gw,iface,the_addr)
         for i in arp_cache.keys():
             del(arp_cache[i])
-        
-                
+
+
 
     def ifdel(self, iff):
         self.invalidate_cache()
@@ -998,7 +998,7 @@ class Route:
             if rt[3] != iff:
                 new_routes.append(rt)
         self.routes=new_routes
-        
+
     def ifadd(self, iff, addr):
         self.invalidate_cache()
         the_addr,the_msk = (addr.split("/")+["32"])[:2]
@@ -1015,7 +1015,7 @@ class Route:
             verbose=conf.verb
         # Transform "192.168.*.1-5" to one IP of the set
         dst = dest.split("/")[0]
-        dst = dst.replace("*","0") 
+        dst = dst.replace("*","0")
         while 1:
             l = dst.find("-")
             if l < 0:
@@ -1023,7 +1023,7 @@ class Route:
             m = (dst[l:]+".").find(".")
             dst = dst[:l]+dst[l+m:]
 
-            
+
         dst = atol(dst)
         pathes=[]
         for d,m,gw,i,a in self.routes:
@@ -1042,7 +1042,7 @@ class Route:
         ret = pathes[-1][1]
         self.cache[dest] = ret
         return ret
-            
+
     def get_if_bcast(self, iff):
         for net, msk, gw, iface, addr in self.routes:
             if (iff == iface and net != 0L):
@@ -1088,7 +1088,7 @@ if PCAP:
         warning("attach_filter() should not be called in PCAP mode")
     def set_promisc(s,iff,val=1):
         warning("set_promisc() should not be called in DNET/PCAP mode")
-    
+
 else:
     def get_if_list():
         f=open("/proc/net/dev","r")
@@ -1100,14 +1100,14 @@ else:
         return lst
     def get_working_if():
         for i in get_if_list():
-            if i == 'lo':                
+            if i == 'lo':
                 continue
             ifflags = struct.unpack("16xH14x",get_if(i,SIOCGIFFLAGS))[0]
             if ifflags & IFF_UP:
                 return i
         return "lo"
     def attach_filter(s, filter):
-        # XXX We generate the filter on the interface conf.iface 
+        # XXX We generate the filter on the interface conf.iface
         # because tcpdump open the "any" interface and ppp interfaces
         # in cooked mode. As we use them in raw mode, the filter will not
         # work... one solution could be to use "any" interface and translate
@@ -1127,13 +1127,13 @@ else:
         bpf = ""
         for l in lines[1:]:
             bpf += struct.pack("HBBI",*map(long,l.split()))
-    
+
         # XXX. Argl! We need to give the kernel a pointer on the BPF,
         # python object header seems to be 20 bytes. 36 bytes for x86 64bits arch.
         if X86_64:
             bpfh = struct.pack("HL", nb, id(bpf)+36)
         else:
-            bpfh = struct.pack("HI", nb, id(bpf)+20)  
+            bpfh = struct.pack("HI", nb, id(bpf)+20)
         s.setsockopt(SOL_SOCKET, SO_ATTACH_FILTER, bpfh)
 
     def set_promisc(s,iff,val=1):
@@ -1191,7 +1191,7 @@ if not LINUX:
                 else:
                     dest,gw,flg,ref,use,netif = l.split()[:6]
             if flg.find("Lc") >= 0:
-                continue                
+                continue
             if dest == "default":
                 dest = 0L
                 netmask = 0L
@@ -1228,7 +1228,7 @@ if not LINUX:
         i.loop(addif, ifflist)
         return ifflist
 
-            
+
 else:
 
     def read_routes():
@@ -1245,7 +1245,7 @@ else:
             routes.append((dst, msk, "0.0.0.0", "lo", ifaddr))
         else:
             warning("Interface lo: unkown address family (%i)"% addrfamily)
-    
+
         for l in f.readlines()[1:]:
             iff,dst,gw,flags,x,x,x,msk,x,x,x = l.split()
             flags = int(flags,16)
@@ -1268,7 +1268,7 @@ else:
                            socket.htonl(long(msk,16))&0xffffffffL,
                            inet_ntoa(struct.pack("I",long(gw,16))),
                            iff, ifaddr))
-        
+
         f.close()
         return routes
 
@@ -1287,10 +1287,10 @@ else:
         s,us = struct.unpack("II",ts)
         return s+us/1000000.0
 
-    
+
 def get_if_addr(iff):
     return inet_ntoa(get_if_raw_addr(iff))
-    
+
 def get_if_hwaddr(iff):
     addrfamily, mac = get_if_raw_hwaddr(iff)
     if addrfamily in [ARPHDR_ETHER,ARPHDR_LOOPBACK]:
@@ -1335,7 +1335,7 @@ else:
             return "ff:ff:ff:ff:ff:ff"
         if gw != "0.0.0.0":
             ip = gw
-    
+
         if arp_cache.has_key(ip):
             mac, timeout = arp_cache[ip]
             if not timeout or (time.time()-timeout < ARPTIMEOUT):
@@ -1353,7 +1353,7 @@ else:
             arp_cache[ip] = (mac,time.time())
             return mac
         return None
-    
+
 
 ####################
 ## Random numbers ##
@@ -1368,7 +1368,7 @@ def randseq(inf, sup, seed=None, forever=1, renewkeys=0):
     sbox_size = 256
 
     top = sup-inf+1
-    
+
     n=0
     while (1<<n) < top:
         n += 1
@@ -1391,7 +1391,7 @@ def randseq(inf, sup, seed=None, forever=1, renewkeys=0):
                 ct >>= fs
                 lsb ^= sbox[ct%sbox_size]
                 ct |= lsb << (n-fs)
-            
+
             if ct < top:
                 yield inf+ct
         if not forever:
@@ -1470,7 +1470,7 @@ class RandChoice(RandField):
         self._choice = args
     def _fix(self):
         return random.choice(self._choice)
-    
+
 class RandString(RandField):
     def __init__(self, size, chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"):
         self.chars = chars
@@ -1492,8 +1492,8 @@ class RandTermString(RandString):
         self.term = term
     def _fix(self):
         return RandString._fix(self)+self.term
-    
-    
+
+
 
 class RandIP(RandString):
     def __init__(self, iptemplate="0.0.0.0/0"):
@@ -1517,7 +1517,7 @@ class RandMAC(RandString):
             self.mac += (v,)
     def _fix(self):
         return "%02x:%02x:%02x:%02x:%02x:%02x" % self.mac
-    
+
 
 class RandOID(RandString):
     def __init__(self, fmt=None, depth=RandNumExpo(0.1), idnum=RandNumExpo(0.01)):
@@ -1550,7 +1550,7 @@ class RandOID(RandString):
                 else:
                     oid.append(i)
             return ".".join(oid)
-            
+
 
 
 class RandASN1Object(RandField):
@@ -1583,7 +1583,7 @@ class AutoTime(VolatileValue):
             self.diff = time.time()-base
     def _fix(self):
         return time.time()-self.diff
-            
+
 class IntAutoTime(AutoTime):
     def _fix(self):
         return int(time.time()-self.diff)
@@ -1629,7 +1629,7 @@ def corrupt_bits(s, p=0.01, n=None):
         s[i/8] ^= 1 << (i%8)
     return s.tostring()
 
-    
+
 class CorruptedBytes(VolatileValue):
     def __init__(self, s, p=0.01, n=None):
         self.s = s
@@ -1669,7 +1669,7 @@ class ASN1Codec(EnumElement):
         return cls._stem.safedec(s, context=context)
     def get_stem(cls):
         return cls.stem
-    
+
 
 class ASN1_Codecs_metaclass(Enum_metaclass):
     element_class = ASN1Codec
@@ -1721,7 +1721,7 @@ class ASN1_Class_metaclass(Enum_metaclass):
         rdict = {}
         for k,v in dct.iteritems():
             if type(v) is int:
-                v = ASN1Tag(k,v) 
+                v = ASN1Tag(k,v)
                 dct[k] = v
                 rdict[v] = v
             elif isinstance(v, ASN1Tag):
@@ -1730,10 +1730,10 @@ class ASN1_Class_metaclass(Enum_metaclass):
 
         cls = type.__new__(cls, name, bases, dct)
         for v in cls.__dict__.values():
-            if isinstance(v, ASN1Tag): 
+            if isinstance(v, ASN1Tag):
                 v.context = cls # overwrite ASN1Tag contexts, even cloned ones
         return cls
-            
+
 
 class ASN1_Class:
     __metaclass__ = ASN1_Class_metaclass
@@ -1860,13 +1860,13 @@ class ASN1_TIME_TICKS(ASN1_INTEGER):
 
 class ASN1_BOOLEAN(ASN1_INTEGER):
     tag = ASN1_Class_UNIVERSAL.BOOLEAN
-    
+
 class ASN1_NULL(ASN1_INTEGER):
     tag = ASN1_Class_UNIVERSAL.NULL
 
 class ASN1_COUNTER32(ASN1_INTEGER):
     tag = ASN1_Class_UNIVERSAL.COUNTER32
-    
+
 class ASN1_SEQUENCE(ASN1_Object):
     tag = ASN1_Class_UNIVERSAL.SEQUENCE
     def strshow(self, lvl=0):
@@ -1874,10 +1874,10 @@ class ASN1_SEQUENCE(ASN1_Object):
         for o in self.val:
             s += o.strshow(lvl=lvl+1)
         return s
-    
+
 class ASN1_SET(ASN1_SEQUENCE):
     tag = ASN1_Class_UNIVERSAL.SET
-    
+
 class ASN1_OID(ASN1_Object):
     tag = ASN1_Class_UNIVERSAL.OID
     def __init__(self, val):
@@ -1885,7 +1885,7 @@ class ASN1_OID(ASN1_Object):
         ASN1_Object.__init__(self, val)
     def __repr__(self):
         return "<%s[%r]>" % (self.__dict__.get("name", self.__class__.__name__), conf.mib._oidname(self.val))
-    
+
 
 
 ##################
@@ -1918,49 +1918,49 @@ class BER_BadTag_Decoding_Error(BER_Decoding_Error, ASN1_BadTag_Decoding_Error):
     pass
 
 def BER_len_enc(l, size=0):
-        if l <= 127 and size==0:
-            return chr(l)
-        s = ""
-        while l or size>0:
-            s = chr(l&0xff)+s
-            l >>= 8L
-            size -= 1
-        if len(s) > 127:
-            raise BER_Exception("BER_len_enc: Length too long (%i) to be encoded [%r]" % (len(s),s))
-        return chr(len(s)|0x80)+s
+    if l <= 127 and size==0:
+        return chr(l)
+    s = ""
+    while l or size>0:
+        s = chr(l&0xff)+s
+        l >>= 8L
+        size -= 1
+    if len(s) > 127:
+        raise BER_Exception("BER_len_enc: Length too long (%i) to be encoded [%r]" % (len(s),s))
+    return chr(len(s)|0x80)+s
 def BER_len_dec(s):
-        l = ord(s[0])
-        if not l & 0x80:
-            return l,s[1:]
-        l &= 0x7f
-        if len(s) <= l:
-            raise BER_Decoding_Error("BER_len_dec: Got %i bytes while expecting %i" % (len(s)-1, l),remaining=s)
-        ll = 0L
-        for c in s[1:l+1]:
-            ll <<= 8L
-            ll |= ord(c)
-        return ll,s[l+1:]
-        
+    l = ord(s[0])
+    if not l & 0x80:
+        return l,s[1:]
+    l &= 0x7f
+    if len(s) <= l:
+        raise BER_Decoding_Error("BER_len_dec: Got %i bytes while expecting %i" % (len(s)-1, l),remaining=s)
+    ll = 0L
+    for c in s[1:l+1]:
+        ll <<= 8L
+        ll |= ord(c)
+    return ll,s[l+1:]
+
 def BER_num_enc(l, size=1):
-        x=[]
-        while l or size>0:
-            x.insert(0, l & 0x7f)
-            if len(x) > 1:
-                x[0] |= 0x80
-            l >>= 7
-            size -= 1
-        return "".join([chr(k) for k in x])
+    x=[]
+    while l or size>0:
+        x.insert(0, l & 0x7f)
+        if len(x) > 1:
+            x[0] |= 0x80
+        l >>= 7
+        size -= 1
+    return "".join([chr(k) for k in x])
 def BER_num_dec(s):
-        x = 0
-        for i in range(len(s)):
-            c = ord(s[i])
-            x <<= 7
-            x |= c&0x7f
-            if not c&0x80:
-                break
-        if c&0x80:
-            raise BER_Decoding_Error("BER_num_dec: unfinished number description", remaining=s)
-        return x, s[i+1:]
+    x = 0
+    for i in range(len(s)):
+        c = ord(s[i])
+        x <<= 7
+        x |= c&0x7f
+        if not c&0x80:
+            break
+    if c&0x80:
+        raise BER_Decoding_Error("BER_num_dec: unfinished number description", remaining=s)
+    return x, s[i+1:]
 
 #####[ BER classes ]#####
 
@@ -1987,7 +1987,7 @@ class BERcodec_Object:
     def check_string(cls, s):
         if not s:
             raise BER_Decoding_Error("%s: Got empty object while expecting tag %r" %
-                                     (cls.__name__,cls.tag), remaining=s)        
+                                     (cls.__name__,cls.tag), remaining=s)
     @classmethod
     def check_type(cls, s):
         cls.check_string(s)
@@ -2050,7 +2050,7 @@ class BERcodec_Object:
         else:
             return BERcodec_INTEGER.enc(int(s))
 
-            
+
 
 ASN1_Codecs.BER.register_stem(BERcodec_Object)
 
@@ -2085,7 +2085,7 @@ class BERcodec_INTEGER(BERcodec_Object):
                 x <<= 8
                 x |= ord(c)
         return cls.asn1_object(x),t
-    
+
 
 class BERcodec_BOOLEAN(BERcodec_INTEGER):
     tag = ASN1_Class_UNIVERSAL.BOOLEAN
@@ -2153,7 +2153,7 @@ class BERcodec_SEQUENCE(BERcodec_Object):
                 if err.decoded is not None:
                     obj.append(err.decoded)
                 err.decoded = obj
-                raise 
+                raise
             obj.append(o)
         if len(st) < l:
             raise BER_Decoding_Error("Not enough bytes to decode sequence", decoded=obj)
@@ -2221,7 +2221,7 @@ class MIBDict(DADict):
             p -= 1
         if p != 0 or xl[p] not in self:
             return x
-        xl[p] = self[xl[p]] 
+        xl[p] = self[xl[p]]
         return ".".join(xl[p:])
     def _make_graph(self, other_keys=[], **kargs):
         nodes = [(k,self[k]) for k in self.keys()]
@@ -2278,7 +2278,7 @@ def mib_register(ident, value, the_mib, unresolved):
                 i = 0
             else:
                 i += 1
-                    
+
         return True
 
 
@@ -2322,7 +2322,7 @@ def load_mib(filenames):
 class Gen(object):
     def __iter__(self):
         return iter([])
-    
+
 class SetGen(Gen):
     def __init__(self, set, _iterpacket=1):
         self._iterpacket=_iterpacket
@@ -2376,7 +2376,7 @@ class Net(Gen):
             return a
 
         self.parsed = map(lambda x,y: parse_digit(x,y), tmp[0].split("."), map(lambda x,nm=netmask: x-nm, (8,16,24,32)))
-                                                                                               
+
     def __iter__(self):
         for d in xrange(*self.parsed[3]):
             for c in xrange(*self.parsed[2]):
@@ -2387,17 +2387,17 @@ class Net(Gen):
         ip = []
         for v in self.parsed:
             ip.append(str(random.randint(v[0],v[1]-1)))
-        return ".".join(ip) 
-                          
+        return ".".join(ip)
+
     def __repr__(self):
         return "Net(%r)" % self.repr
 
 class OID(Gen):
     name = "OID"
     def __init__(self, oid):
-        self.oid = oid        
+        self.oid = oid
         self.cmpt = []
-        fmt = []        
+        fmt = []
         for i in oid.split("."):
             if "-" in i:
                 fmt.append("%i")
@@ -2407,7 +2407,7 @@ class OID(Gen):
         self.fmt = ".".join(fmt)
     def __repr__(self):
         return "OID(%r)" % self.oid
-    def __iter__(self):        
+    def __iter__(self):
         ii = [k[0] for k in self.cmpt]
         while 1:
             yield self.fmt % tuple(ii)
@@ -2421,7 +2421,7 @@ class OID(Gen):
                 else:
                     ii[i] = self.cmpt[i][0]
                 i += 1
- 
+
 
 #############
 ## Results ##
@@ -2522,7 +2522,7 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
     def show(self, *args, **kargs):
         """Best way to display the packet list. Defaults to nsummary() method"""
         return self.nsummary(*args, **kargs)
-    
+
     def filter(self, func):
         """Returns a packet list filtered by a truth function"""
         return self.__class__(filter(func,self.res),
@@ -2580,7 +2580,7 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
 
         g.plot(*data)
         return g
-        
+
 
     def rawhexdump(self):
         """Prints an hexadecimal dump of each packet in the list"""
@@ -2636,7 +2636,7 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
                                         p.sprintf("%.time%"),
                                         self._elt2sum(self.res[i]))
                     hexdump(p.getlayer(Padding).load)
-        
+
 
     def conversations(self, getsrcdst=None,**kargs):
         """Graphes a conversations between sources and destinations and display it
@@ -2660,7 +2660,7 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
         gr = 'digraph "conv" {\n'
         for s,d in conv:
             gr += '\t "%s" -> "%s"\n' % (s,d)
-        gr += "}\n"        
+        gr += "}\n"
         return do_graph(gr, **kargs)
 
     def afterglow(self, src=None, event=None, dst=None, **kargs):
@@ -2714,7 +2714,7 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
         mins,maxs = minmax(map(lambda (x,y): x, sl.values()))
         mine,maxe = minmax(map(lambda (x,y): x, el.values()))
         mind,maxd = minmax(dl.values())
-    
+
         gr = 'digraph "afterglow" {\n\tedge [len=2.5];\n'
 
         gr += "# src nodes\n"
@@ -2733,18 +2733,18 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
         for s in sl:
             n,l = sl[s]
             for e in l:
-                gr += ' "src.%s" -> "evt.%s";\n' % (`s`,`e`) 
+                gr += ' "src.%s" -> "evt.%s";\n' % (`s`,`e`)
         for e in el:
             n,l = el[e]
             for d in l:
-                gr += ' "evt.%s" -> "dst.%s";\n' % (`e`,`d`) 
-            
+                gr += ' "evt.%s" -> "dst.%s";\n' % (`e`,`d`)
+
         gr += "}"
         open("/tmp/aze","w").write(gr)
         return do_graph(gr, **kargs)
-        
 
-        
+
+
     def timeskew_graph(self, ip, **kargs):
         """Tries to graph the timeskew between the timestamps and real time for a given ip"""
         res = map(lambda x: self._elt2pkt(x), self.res)
@@ -2762,7 +2762,7 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
         g = Gnuplot.Gnuplot()
         g.plot(Gnuplot.Data(d,**kargs))
         return g
-        
+
     def _dump_document(self, **kargs):
         d = pyx.document.document()
         l = len(self.res)
@@ -2777,8 +2777,8 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
                                        margin=1*pyx.unit.t_cm,
                                        fittosize=1))
         return d
-                     
-                 
+
+
 
     def psdump(self, filename = None, **kargs):
         """Creates a multipage poscript file with a psdump of every packet
@@ -2792,7 +2792,7 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
         else:
             d.writePSfile(filename)
         print
-        
+
     def pdfdump(self, filename = None, **kargs):
         """Creates a PDF file with a psdump of every packet
         filename: name of the file to write to. If empty, a temporary file is used and
@@ -2832,10 +2832,10 @@ lfilter: truth function to apply to each packet to decide whether it will be dis
         if multi:
             remain = filter(lambda x:not hasattr(x,"_answered"), remain)
         return SndRcvList(sr),PacketList(remain)
-        
 
 
-        
+
+
 
 
 class Dot11PacketList(PacketList):
@@ -2852,8 +2852,8 @@ class Dot11PacketList(PacketList):
             q.unwep()
             r2.append(Ether()/q.payload.payload.payload) #Dot11/LLC/SNAP/IP
         return PacketList(r2,name="Ether from %s"%self.listname)
-        
-        
+
+
 
 class SndRcvList(PacketList):
     def __init__(self, res=None, name="Results", stats=None):
@@ -2861,7 +2861,7 @@ class SndRcvList(PacketList):
     def _elt2pkt(self, elt):
         return elt[1]
     def _elt2sum(self, elt):
-        return "%s ==> %s" % (elt[0].summary(),elt[1].summary()) 
+        return "%s ==> %s" % (elt[0].summary(),elt[1].summary())
 
 
 class ARPingResult(SndRcvList):
@@ -2875,14 +2875,14 @@ class ARPingResult(SndRcvList):
 
 class AS_resolver:
     server = None
-    options = "-k" 
+    options = "-k"
     def __init__(self, server=None, port=43, options=None):
         if server is not None:
             self.server = server
         self.port = port
         if options is not None:
             self.options = options
-        
+
     def _start(self):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.connect((self.server,self.port))
@@ -2891,7 +2891,7 @@ class AS_resolver:
             self.s.recv(8192)
     def _stop(self):
         self.s.close()
-        
+
     def _parse_whois(self, txt):
         asn,desc = None,""
         for l in txt.splitlines():
@@ -2930,7 +2930,7 @@ class AS_resolver_riswhois(AS_resolver):
 class AS_resolver_radb(AS_resolver):
     server = "whois.ra.net"
     options = "-k -M"
-    
+
 
 class AS_resolver_cymru(AS_resolver):
     server = "whois.cymru.com"
@@ -2971,8 +2971,8 @@ class AS_resolver_multi(AS_resolver):
             todo = [ ip for ip in todo if ip not in resolved ]
             ret += res
         return ret
-    
-    
+
+
 
 class TracerouteResult(SndRcvList):
     def __init__(self, res=None, name="Traceroute", stats=None):
@@ -3064,7 +3064,7 @@ class TracerouteResult(SndRcvList):
                     col = visual.color.green
                 else:
                     col = visual.color.blue
-                
+
                 s = IPsphere(pos=((l-1)*visual.cos(2*i*visual.pi/l),(l-1)*visual.sin(2*i*visual.pi/l),2*t),
                              ip = r[i][0],
                              color = col)
@@ -3079,7 +3079,7 @@ class TracerouteResult(SndRcvList):
             for ip in trlst:
                 visual.cylinder(pos=start,axis=ip.pos-start,color=col,radius=0.2)
                 start = ip.pos
-        
+
         movcenter=None
         while 1:
             if visual.scene.kb.keys:
@@ -3115,8 +3115,8 @@ class TracerouteResult(SndRcvList):
             if movcenter:
                 visual.scene.center -= visual.scene.mouse.pos-movcenter
                 movcenter = visual.scene.mouse.pos
-                
-                
+
+
     def world_trace(self):
         ips = {}
         rt = {}
@@ -3203,7 +3203,7 @@ class TracerouteResult(SndRcvList):
             else:
                 trace[ttl] = r.sprintf('"%r,src%"')
             rt[trace_id] = trace
-    
+
         # Fill holes with unk%i nodes
         unknown_label = incremental_label("unk%i")
         blackholes = []
@@ -3219,23 +3219,23 @@ class TracerouteResult(SndRcvList):
                     bh = "%s %i/icmp" % (rtk[1],rtk[3])
                 elif rtk[2] == 6: #TCP
                     bh = "%s %i/tcp" % (rtk[1],rtk[3])
-                elif rtk[2] == 17: #UDP                    
+                elif rtk[2] == 17: #UDP
                     bh = '%s %i/udp' % (rtk[1],rtk[3])
                 else:
-                    bh = '%s %i/proto' % (rtk[1],rtk[2]) 
+                    bh = '%s %i/proto' % (rtk[1],rtk[2])
                 ips[bh] = None
                 bhip[rtk[1]] = bh
                 bh = '"%s"' % bh
                 trace[max(k)+1] = bh
                 blackholes.append(bh)
-    
+
         # Find AS numbers
         ASN_query_list = dict.fromkeys(map(lambda x:x.rsplit(" ",1)[0],ips)).keys()
-        if ASres is None:            
+        if ASres is None:
             ASNlist = []
         else:
-            ASNlist = ASres.resolve(*ASN_query_list)            
-    
+            ASNlist = ASres.resolve(*ASN_query_list)
+
         ASNs = {}
         ASDs = {}
         for ip,asn,desc, in ASNlist:
@@ -3250,15 +3250,15 @@ class TracerouteResult(SndRcvList):
                 iplist.append(ip)
             ASNs[asn] = iplist
             ASDs[asn] = desc
-    
-    
+
+
         backcolorlist=colgen("60","86","ba","ff")
         forecolorlist=colgen("a0","70","40","20")
-    
+
         s = "digraph trace {\n"
-    
+
         s += "\n\tnode [shape=ellipse,color=black,style=solid];\n\n"
-    
+
         s += "\n#ASN clustering\n"
         for asn in ASNs:
             s += '\tsubgraph cluster_%s {\n' % asn
@@ -3268,17 +3268,17 @@ class TracerouteResult(SndRcvList):
             s += '\t\tfontsize = 10;'
             s += '\t\tlabel = "%s\\n[%s]"\n' % (asn,ASDs[asn])
             for ip in ASNs[asn]:
-    
+
                 s += '\t\t"%s";\n'%ip
             s += "\t}\n"
-    
-    
-    
-    
+
+
+
+
         s += "#endpoints\n"
         for p in ports:
             s += '\t"%s" [shape=record,color=black,fillcolor=green,style=filled,label="%s|%s"];\n' % (p,p,"|".join(ports[p]))
-    
+
         s += "\n#Blackholes\n"
         for bh in blackholes:
             s += '\t%s [shape=octagon,color=black,fillcolor=red,style=filled];\n' % bh
@@ -3293,12 +3293,12 @@ class TracerouteResult(SndRcvList):
                         pad[rcv.src]=None
             for rcv in pad:
                 s += '\t"%s" [shape=triangle,color=black,fillcolor=red,style=filled];\n' % rcv
-    
-    
-            
+
+
+
         s += "\n\tnode [shape=ellipse,color=black,style=solid];\n\n"
-    
-    
+
+
         for rtk in rt:
             s += "#---[%s\n" % `rtk`
             s += '\t\tedge [color="#%s%s%s"];\n' % forecolorlist.next()
@@ -3307,10 +3307,10 @@ class TracerouteResult(SndRcvList):
             for n in range(min(k), max(k)):
                 s += '\t%s ->\n' % trace[n]
             s += '\t%s;\n' % trace[max(k)]
-    
+
         s += "}\n";
         self.graphdef = s
-    
+
     def graph(self, ASres=None, padding=0, **kargs):
         """x.graph(ASres=conf.AS_resolver, other args):
         ASres=None          : no AS resolver => no clustering
@@ -3330,8 +3330,8 @@ class TracerouteResult(SndRcvList):
         return do_graph(self.graphdef, **kargs)
 
 
-        
-    
+
+
 ############
 ## Fields ##
 ############
@@ -3416,7 +3416,7 @@ class Field:
             return RandBin(l)
         else:
             warning("no random class for [%s] (fmt=%s)." % (self.name, self.fmt))
-            
+
 
 
 
@@ -3430,7 +3430,7 @@ class Emph:
         return hash(self.fld)
     def __eq__(self, other):
         return self.fld == other
-    
+
 
 class ActionField:
     _fld = None
@@ -3452,13 +3452,13 @@ class ConditionalField:
         self.cond = cond
     def _evalcond(self,pkt):
         return self.cond(pkt)
-        
+
     def getfield(self, pkt, s):
         if self._evalcond(pkt):
             return self.fld.getfield(pkt,s)
         else:
             return s,None
-        
+
     def addfield(self, pkt, s, val):
         if self._evalcond(pkt):
             return self.fld.addfield(pkt,s,val)
@@ -3466,7 +3466,7 @@ class ConditionalField:
             return s
     def __getattr__(self, attr):
         return getattr(self.fld,attr)
-        
+
 
 class PadField:
     """Add bytes after the proxified field so that it ends at the specified
@@ -3480,10 +3480,10 @@ class PadField:
     def addfield(self, pkt, s, val):
         sval = self._fld.addfield(pkt, "", val)
         return s+sval+struct.pack("%is" % (-len(sval)%self._align), self._padwith)
-    
+
     def __getattr__(self, attr):
         return getattr(self._fld,attr)
-        
+
 
 class MACField(Field):
     def __init__(self, name, default):
@@ -3513,7 +3513,7 @@ class DestMACField(MACField):
         if x is None:
             dstip = None
             if isinstance(pkt.payload, IPv6):
-                dstip = pkt.payload.dst            
+                dstip = pkt.payload.dst
             elif isinstance(pkt.payload, IP):
                 dstip = pkt.payload.dst
             elif isinstance(pkt.payload, ARP):
@@ -3523,7 +3523,7 @@ class DestMACField(MACField):
             if dstip is not None:
                 if isinstance(pkt.payload, IPv6):
                     x = getmacbyip6(dstip, chainCC=1)
-                else:    
+                else:
                     x = getmacbyip(dstip, chainCC=1)
             if x is None:
                 x = "ff:ff:ff:ff:ff:ff"
@@ -3531,7 +3531,7 @@ class DestMACField(MACField):
         return MACField.i2h(self, pkt, x)
     def i2m(self, pkt, x):
         return MACField.i2m(self, pkt, self.i2h(pkt, x))
-        
+
 class SourceMACField(MACField):
     def __init__(self, name):
         MACField.__init__(self, name, None)
@@ -3560,7 +3560,7 @@ class SourceMACField(MACField):
         return MACField.i2h(self, pkt, x)
     def i2m(self, pkt, x):
         return MACField.i2m(self, pkt, self.i2h(pkt, x))
-        
+
 class ARPSourceMACField(MACField):
     def __init__(self, name):
         MACField.__init__(self, name, None)
@@ -3588,7 +3588,7 @@ class Dot11AddrMACField(MACField):
         if self.is_applicable(pkt):
             return MACField.addfield(self, pkt, s, val)
         else:
-            return s        
+            return s
     def getfield(self, pkt, s):
         if self.is_applicable(pkt):
             return MACField.getfield(self, pkt, s)
@@ -3613,7 +3613,7 @@ class Dot11Addr4MACField(Dot11AddrMACField):
             if pkt.FCfield & 0x3 == 0x3: # To-DS and From-DS are set
                 return 1
         return 0
-    
+
 class IPField(Field):
     def __init__(self, name, default):
         Field.__init__(self, name, default, "4s")
@@ -3624,7 +3624,7 @@ class IPField(Field):
             except socket.error:
                 x = Net(x)
         elif type(x) is list:
-            x = [self.h2i(pkt, n) for n in x] 
+            x = [self.h2i(pkt, n) for n in x]
         return x
     def resolve(self, x):
         if self in conf.resolve:
@@ -3670,13 +3670,13 @@ class SourceIPField(IPField):
                 iff,x,gw = conf.route.route(dst)
         return IPField.i2h(self, pkt, x)
 
-    
+
 
 
 class ByteField(Field):
     def __init__(self, name, default):
         Field.__init__(self, name, default, "B")
-        
+
 class XByteField(ByteField):
     def i2repr(self, pkt, x):
         if x is None:
@@ -3757,7 +3757,7 @@ def FIELD_LENGTH_MANAGEMENT_DEPRECATION(x):
 class StrField(Field):
     def __init__(self, name, default, fmt="H", remain=0, shift=0):
         Field.__init__(self,name,default,fmt)
-        self.remain = remain        
+        self.remain = remain
         self.shift = shift
         if shift != 0:
             FIELD_LENGTH_MANAGEMENT_DEPRECATION(self.__class__.__name__)
@@ -3794,7 +3794,7 @@ class PacketField(StrField):
             del(r.underlayer.payload)
             remain = r.load
         return remain,i
-    
+
 class PacketLenField(PacketField):
     holds_packets=1
     def __init__(self, name, default, cls, fld=None, length_from=None, shift=0):
@@ -3843,7 +3843,7 @@ class PacketListField(PacketField):
             l = self.length_from(pkt)
         elif self.count_from is not None:
             c = self.count_from(pkt)
-            
+
         lst = []
         ret = ""
         remain = s
@@ -3925,15 +3925,15 @@ class FieldListField(Field):
         if fld is not None or shift != 0:
             FIELD_LENGTH_MANAGEMENT_DEPRECATION(self.__class__.__name__)
             self.count_from = lambda pkt,fld=fld,shift=shift: getattr(pkt,fld)-shift
-            
-            
+
+
     def i2count(self, pkt, val):
         if type(val) is list:
             return len(val)
         return 1
     def i2len(self, pkt, val):
         return sum( self.field.i2len(pkt,v) for v in val )
-    
+
     def i2m(self, pkt, val):
         if val is None:
             val = []
@@ -3959,7 +3959,7 @@ class FieldListField(Field):
         ret=""
         if l is not None:
             s,ret = s[:l],s[l:]
-            
+
         while s:
             if c is not None:
                 if c <= 0:
@@ -3994,9 +3994,9 @@ ISAKMPAttributeTypes= { "Encryption":    (1, { "DES-CBC"  : 1,
                                                 "IDEA-CBC" : 2,
                                                 "Blowfish-CBC" : 3,
                                                 "RC5-R16-B64-CBC" : 4,
-                                                "3DES-CBC" : 5, 
-                                                "CAST-CBC" : 6, 
-                                                "AES-CBC" : 7, 
+                                                "3DES-CBC" : 5,
+                                                "CAST-CBC" : 6,
+                                                "AES-CBC" : 7,
                                                 "CAMELLIA-CBC" : 8, }, 0),
                          "Hash":          (2, { "MD5": 1,
                                                 "SHA": 2,
@@ -4004,7 +4004,7 @@ ISAKMPAttributeTypes= { "Encryption":    (1, { "DES-CBC"  : 1,
                                                 "SHA2-256": 4,
                                                 "SHA2-384": 5,
                                                 "SHA2-512": 6,}, 0),
-                         "Authentication":(3, { "PSK": 1, 
+                         "Authentication":(3, { "PSK": 1,
                                                 "DSS": 2,
                                                 "RSA Sig": 3,
                                                 "RSA Encryption": 4,
@@ -4027,14 +4027,14 @@ ISAKMPAttributeTypes= { "Encryption":    (1, { "DES-CBC"  : 1,
                                                 "XAUTHInitRSARevisedEncryption": 65009,
                                                 "XAUTHRespRSARevisedEncryptio": 65010, }, 0),
                          "GroupDesc":     (4, { "768MODPgr"  : 1,
-                                                "1024MODPgr" : 2, 
+                                                "1024MODPgr" : 2,
                                                 "EC2Ngr155"  : 3,
                                                 "EC2Ngr185"  : 4,
-                                                "1536MODPgr" : 5, 
-                                                "2048MODPgr" : 14, 
-                                                "3072MODPgr" : 15, 
-                                                "4096MODPgr" : 16, 
-                                                "6144MODPgr" : 17, 
+                                                "1536MODPgr" : 5,
+                                                "2048MODPgr" : 14,
+                                                "3072MODPgr" : 15,
+                                                "4096MODPgr" : 16,
+                                                "6144MODPgr" : 17,
                                                 "8192MODPgr" : 18, }, 0),
                          "GroupType":      (5,  {"MODP":       1,
                                                  "ECP":        2,
@@ -4053,8 +4053,8 @@ ISAKMPAttributeTypes= { "Encryption":    (1, { "DES-CBC"  : 1,
                          "GroupOrder":     (16, {}, 1),
                          }
 
-# the name 'ISAKMPTransformTypes' is actually a misnomer (since the table 
-# holds info for all ISAKMP Attribute types, not just transforms, but we'll 
+# the name 'ISAKMPTransformTypes' is actually a misnomer (since the table
+# holds info for all ISAKMP Attribute types, not just transforms, but we'll
 # keep it for backwards compatibility... for now at least
 ISAKMPTransformTypes = ISAKMPAttributeTypes
 
@@ -4110,7 +4110,7 @@ class ISAKMPTransformSetField(StrLenField):
             is_tlv = not (trans_type & 0x8000)
             if is_tlv:
                 # We should probably check to make sure the attribute type we
-                # are looking at is allowed to have a TLV format and issue a 
+                # are looking at is allowed to have a TLV format and issue a
                 # warning if we're given an TLV on a basic attribute.
                 value_len, = struct.unpack("!H", m[2:4])
                 if value_len+4 > len(m):
@@ -4169,7 +4169,7 @@ class BCDFloatField(Field):
 class BitField(Field):
     def __init__(self, name, default, size):
         Field.__init__(self, name, default)
-        self.rev = size < 0 
+        self.rev = size < 0
         self.size = abs(size)
     def reverse(self, val):
         if self.size == 16:
@@ -4177,7 +4177,7 @@ class BitField(Field):
         elif self.size == 32:
             val = socket.ntohl(val)
         return val
-        
+
     def addfield(self, pkt, s, val):
         val = self.i2m(pkt, val)
         if type(s) is tuple:
@@ -4272,12 +4272,12 @@ class EnumField(Field):
         if self not in conf.noenum and not isinstance(x,VolatileValue) and x in self.i2s:
             return self.i2s[x]
         return repr(x)
-    
+
     def any2i(self, pkt, x):
         if type(x) is list:
             return map(lambda z,pkt=pkt:self.any2i_one(pkt,z), x)
         else:
-            return self.any2i_one(pkt,x)        
+            return self.any2i_one(pkt,x)
     def i2repr(self, pkt, x):
         if type(x) is list:
             return map(lambda z,pkt=pkt:self.i2repr_one(pkt,z), x)
@@ -4382,7 +4382,7 @@ class FlagsField(BitField):
             r = "+".join(r)
         return r
 
-            
+
 
 
 
@@ -4459,7 +4459,7 @@ class TCPOptionsField(StrField):
                 opt.append((onum, oval))
             x = x[olen:]
         return opt
-    
+
     def i2m(self, pkt, x):
         opt = ""
         for oname,oval in x:
@@ -4491,7 +4491,7 @@ class TCPOptionsField(StrField):
         return opt+"\x00"*(3-((len(opt)+3)%4))
     def randval(self):
         return [] # XXX
-    
+
 
 class DNSStrField(StrField):
     def i2m(self, pkt, x):
@@ -4528,7 +4528,7 @@ class DNSRRCountField(ShortField):
             x = x.payload
             i += 1
         return i
-        
+
     def i2m(self, pkt, x):
         if x is None:
             x = self._countRR(pkt)
@@ -4537,7 +4537,7 @@ class DNSRRCountField(ShortField):
         if x is None:
             x = self._countRR(pkt)
         return x
-    
+
 
 def DNSgetstr(s,p):
     name = ""
@@ -4569,7 +4569,7 @@ def DNSgetstr(s,p):
     if q:
         p = q
     return name,p
-        
+
 
 class DNSRRField(StrField):
     holds_packets=1
@@ -4589,9 +4589,9 @@ class DNSRRField(StrField):
         if rr.type in [2, 3, 4, 5]:
             rr.rdata = DNSgetstr(s,p)[0]
         del(rr.rdlen)
-        
+
         p += rdlen
-        
+
         rr.rrname = name
         return rr,p
     def getfield(self, pkt, s):
@@ -4616,8 +4616,8 @@ class DNSRRField(StrField):
             return (s,p),ret
         else:
             return s[p:],ret
-            
-            
+
+
 class DNSQRField(DNSRRField):
     holds_packets=1
     def decodeRR(self, name, s, p):
@@ -4626,8 +4626,8 @@ class DNSQRField(DNSRRField):
         rr = DNSQR("\x00"+ret)
         rr.qname = name
         return rr,p
-        
-        
+
+
 
 class RDataField(StrLenField):
     def m2i(self, pkt, s):
@@ -4638,7 +4638,7 @@ class RDataField(StrLenField):
             family = socket.AF_INET6
         elif pkt.type == 12:
             s = DNSgetstr(s, 0)[0]
-        if family is not None:    
+        if family is not None:
             s = inet_ntop(family, s)
         return s
     def i2m(self, pkt, s):
@@ -4667,7 +4667,7 @@ class RDLenField(Field):
             rdataf = pkt.get_field("rdata")
             x = len(rdataf.i2m(pkt, pkt.rdata))
         return x
-    
+
 # seconds between 01-01-1900 and 01-01-1970
 ntp_basetime = 2208988800
 
@@ -4684,12 +4684,12 @@ class TimeStampField(BitField):
             #  + last 32 bits  : fraction part
             timestamp >>= 32
             timestamp -= ntp_basetime
-            
+
             from time import gmtime, strftime
             b = strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime(timestamp))
         else:
             b = 'None'
-        
+
         return s, b
     def addfield(self, pkt, s, val):
         t = -1
@@ -4708,13 +4708,13 @@ class TimeStampField(BitField):
 class FloatField(BitField):
     def getfield(self, pkt, s):
         s,b = BitField.getfield(self, pkt, s)
-        
+
         # fraction point between bits 15 and 16.
         sec = b >> 16
         frac = b & (1L << (32+1)) - 1
         frac /= 65536.0
         b = sec+frac
-        return s,b    
+        return s,b
 
 class Dot11SCField(LEShortField):
     def is_applicable(self, pkt):
@@ -4745,7 +4745,7 @@ class ASN1F_field(ASN1F_element):
     islist=0
 
     ASN1_tag = ASN1_Class_UNIVERSAL.ANY
-    
+
     def __init__(self, name, default):
         self.name = name
         self.default = default
@@ -4790,7 +4790,7 @@ class ASN1F_field(ASN1F_element):
 
     def set_val(self, pkt, val):
         setattr(pkt, self.name, val)
-    
+
     def dissect(self, pkt, s):
         v,s = self.m2i(pkt, s)
         self.set_val(pkt, v)
@@ -4836,12 +4836,12 @@ class ASN1F_enum_INTEGER(ASN1F_INTEGER):
         return x
     def i2repr_one(self, pkt, x):
         return self.i2s.get(x, repr(x))
-    
+
     def any2i(self, pkt, x):
         if type(x) is list:
             return map(lambda z,pkt=pkt:self.any2i_one(pkt,z), x)
         else:
-            return self.any2i_one(pkt,x)        
+            return self.any2i_one(pkt,x)
     def i2repr(self, pkt, x):
         if type(x) is list:
             return map(lambda z,pkt=pkt:self.i2repr_one(pkt,z), x)
@@ -4959,15 +4959,15 @@ class ASN1F_CHOICE(ASN1F_PACKET):
             return Raw(),""
             raise ASN1_Error("ASN1F_CHOICE: got empty string")
         if ord(x[0]) not in self.choice:
-            return Raw(x),"" # XXX return RawASN1 packet ? Raise error 
+            return Raw(x),"" # XXX return RawASN1 packet ? Raise error
             raise ASN1_Error("Decoding Error: choice [%i] not found in %r" % (ord(x[0]), self.choice.keys()))
 
         z = ASN1F_PACKET.extract_packet(self, self.choice[ord(x[0])], x)
         return z
     def randval(self):
         return RandChoice(*map(lambda x:fuzz(x()), self.choice.values()))
-            
-    
+
+
 
 ###########################
 ## Packet abstract class ##
@@ -4989,11 +4989,11 @@ class NewDefaultValues(Packet_metaclass):
     """NewDefaultValues metaclass. Example usage:
     class MyPacket(Packet):
         fields_desc = [ StrField("my_field", "my default value"),  ]
-        
+
     class MyPacket_variant(MyPacket):
         __metaclass__ = NewDefaultValues
         my_field = "my new default value"
-    """    
+    """
     def __new__(cls, name, bases, dct):
         fields = None
         for b in bases:
@@ -5080,12 +5080,12 @@ class Packet(Gen):
             self.fieldtype[f.name] = f
             if f.holds_packets:
                 self.packetfields.append(f)
-            
+
     def dissection_done(self,pkt):
         """DEV: will be called after a dissection is completed"""
         self.post_dissection(pkt)
         self.payload.dissection_done(pkt)
-        
+
     def post_dissection(self, pkt):
         """DEV: is called after the dissection of the whole packet"""
         pass
@@ -5093,7 +5093,7 @@ class Packet(Gen):
     def get_field(self, fld):
         """DEV: returns the field instance from the name of the field"""
         return self.fieldtype[fld]
-        
+
     def add_payload(self, payload):
         if payload is None:
             return
@@ -5143,7 +5143,7 @@ class Packet(Gen):
         if attr in self.default_fields:
             return self.default_fields[attr]
         return self.payload.getfieldval(attr)
-    
+
     def getfield_and_val(self, attr):
         if attr in self.fields:
             return self.get_field(attr),self.fields[attr]
@@ -5152,7 +5152,7 @@ class Packet(Gen):
         if attr in self.default_fields:
             return self.get_field(attr),self.default_fields[attr]
         return self.payload.getfield_and_val(attr)
-    
+
     def __getattr__(self, attr):
         if self.initialized:
             fld,v = self.getfield_and_val(attr)
@@ -5193,7 +5193,7 @@ class Packet(Gen):
             del(self.__dict__[attr])
         else:
             raise AttributeError(attr)
-            
+
     def __repr__(self):
         s = ""
         ct = conf.color_theme
@@ -5211,7 +5211,7 @@ class Packet(Gen):
                 ncol = ct.field_name
                 vcol = ct.field_value
 
-                
+
             s += " %s%s%s" % (ncol(f.name),
                               ct.punct("="),
                               vcol(val))
@@ -5245,7 +5245,7 @@ class Packet(Gen):
             raise TypeError
     def __rmul__(self,other):
         return self.__mul__(other)
-    
+
     def __nonzero__(self):
         return True
     def __len__(self):
@@ -5255,7 +5255,7 @@ class Packet(Gen):
         for f in self.fields_desc:
             p = f.addfield(self, p, self.getfieldval(f.name))
         return p
-    
+
     def post_build(self, pkt, pay):
         """DEV: called right after the current layer is build."""
         return pkt+pay
@@ -5276,8 +5276,8 @@ class Packet(Gen):
             log_runtime.error("API changed! post_build() now takes 2 arguments. Compatibility is only assured for a short transition time")
             p = self.post_build(pkt+pay)
         if not internal:
-            pad = self.payload.getlayer(Padding) 
-            if pad: 
+            pad = self.payload.getlayer(Padding)
+            if pad:
                 p += pad.build()
             p = self.build_done(p)
         return p
@@ -5297,13 +5297,13 @@ class Packet(Gen):
             else:
                 r = ""
             pl.append( (f, f.i2repr(self,self.getfieldval(f.name)), r) )
-            
+
         pkt,lst = self.payload.build_ps(internal=1)
         p += pkt
         lst.append( (self, pl) )
-        
+
         return p,lst
-    
+
     def build_ps(self,internal=0):
         p,lst = self.do_build_ps()
 #        if not internal:
@@ -5338,7 +5338,7 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
         else:
             canvas.writePDFfile(filename)
 
-        
+
     def canvas_dump(self, layer_shift=0, rebuild=1):
         canvas = pyx.canvas.canvas()
         if rebuild:
@@ -5355,22 +5355,22 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
         XDSTART = 10
         y = 0.0
         yd = 0.0
-        xd = 0 
+        xd = 0
         XMUL= 0.55
         YMUL = 0.4
-    
+
         backcolor=colgen(0.6, 0.8, 1.0, trans=pyx.color.rgb)
         forecolor=colgen(0.2, 0.5, 0.8, trans=pyx.color.rgb)
 #        backcolor=makecol(0.376, 0.729, 0.525, 1.0)
-        
-        
+
+
         def hexstr(x):
             s = []
             for c in x:
                 s.append("%02x" % ord(c))
             return " ".join(s)
 
-                
+
         def make_dump_txt(x,y,txt):
             return pyx.text.text(XDSTART+x*XMUL, (YDUMP-y)*YMUL, r"\tt{%s}"%hexstr(txt), [pyx.text.size.Large])
 
@@ -5413,7 +5413,7 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
                                          pyx.path.lineto(lb.left(), gb.top()),
                                          pyx.path.lineto(fb.left(), gb.top()),
                                          pyx.path.closepath(),)
-                                         
+
 
         def make_dump(s, shift=0, y=0, col=None, bkcol=None, larg=16):
             c = pyx.canvas.canvas()
@@ -5434,7 +5434,7 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
             for txt in tlist:
                 c.insert(txt)
             return c, tlist[-1].bbox(), shift, y
-                            
+
 
         last_shift,last_y=0,0.0
         while t:
@@ -5475,13 +5475,13 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
                         pass
                     else:
                         canvas.stroke(cnx,[pyx.style.linewidth.thin,pyx.deco.earrow.small,col])
-                        
+
                     canvas.insert(dt)
-                
+
                 canvas.insert(ft)
                 canvas.insert(vt)
             last_y += layer_shift
-    
+
         return canvas
 
 
@@ -5505,7 +5505,7 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
             f = flist.pop()
             s,fval = f.getfield(self, s)
             self.fields[f.name] = fval
-            
+
         return s
 
     def do_dissect_payload(self, s):
@@ -5532,7 +5532,7 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
         s = self.do_dissect(s)
 
         s = self.post_dissect(s)
-            
+
         payl,pad = self.extract_padding(s)
         self.do_dissect_payload(payl)
         if pad and conf.padding:
@@ -5551,7 +5551,7 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
                 if ok:
                     return cls
         return self.default_payload_class(payload)
-    
+
     def default_payload_class(self, payload):
         """DEV: Returns the default payload class if nothing has been found by the guess_payload_class() method."""
         return Raw
@@ -5563,7 +5563,7 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
                 if self.default_fields[k] == self.fields[k]:
                     del(self.fields[k])
         self.payload.hide_defaults()
-            
+
 
     def __iter__(self):
         def loop(todo, done, self=self):
@@ -5705,12 +5705,12 @@ Creates an EPS file describing a packet. If filename is not provided a temporary
             return ret
         else:
             return self.getlayer(cls)
-        
+
     def __contains__(self, cls):
         """"cls in self" returns true if self has a layer which is an instance of cls."""
         return self.haslayer(cls)
-        
-    
+
+
 
     def display(self,*args,**kargs):  # Deprecated. Use show()
         """Deprecated. Use show() method."""
@@ -5774,7 +5774,7 @@ A side effect is that, to obtain "{" and "}" characters, you must use
                    ")": "}" }
 
 
-        # Evaluate conditions 
+        # Evaluate conditions
         while "{" in fmt:
             i = fmt.rindex("{")
             j = fmt[i+1:].index("}")
@@ -5846,7 +5846,7 @@ A side effect is that, to obtain "{" and "}" characters, you must use
                     val = self.payload.sprintf("%%%s%%" % sfclsfld, relax)
                     f = "s"
                 s += ("%"+f) % val
-            
+
         s += fmt
         return s
 
@@ -5877,7 +5877,7 @@ A side effect is that, to obtain "{" and "}" characters, you must use
             return found,ret,needed
         else:
             return ret
-    
+
     def lastlayer(self,layer=None):
         """Returns the uppest layer of the packet"""
         return self.payload.lastlayer(self)
@@ -5917,21 +5917,21 @@ A side effect is that, to obtain "{" and "}" characters, you must use
         pc = self.payload.command()
         if pc:
             c += "/"+pc
-        return c                    
+        return c
 
 
 class ASN1_Packet(Packet):
     ASN1_root = None
-    ASN1_codec = None    
+    ASN1_codec = None
     def init_fields(self):
         flist = self.ASN1_root.get_fields_list()
         self.do_init_fields(flist)
-        self.fields_desc = flist    
+        self.fields_desc = flist
     def do_build(self):
-        return self.ASN1_root.build(self)    
+        return self.ASN1_root.build(self)
     def do_dissect(self, x):
         return self.ASN1_root.dissect(self, x)
-        
+
 
 class NoPayload(Packet,object):
     def __new__(cls, *args, **kargs):
@@ -5961,7 +5961,7 @@ class NoPayload(Packet,object):
     def __nonzero__(self):
         return False
     def build(self, internal=0):
-        return ""    
+        return ""
     def build_done(self, p):
         return p
     def build_ps(self, internal=0):
@@ -6008,13 +6008,13 @@ class NoPayload(Packet,object):
         return layer
     def command(self):
         return ""
-    
+
 
 ####################
 ## packet classes ##
 ####################
-    
-            
+
+
 class Raw(Packet):
     name = "Raw"
     fields_desc = [ StrField("load", "") ]
@@ -6024,7 +6024,7 @@ class Raw(Packet):
 #        t = self.load
 #        l = min(len(s), len(t))
 #        return  s[:l] == t[:l]
-        
+
 class Padding(Raw):
     name = "Padding"
     def build(self, internal=0):
@@ -6102,8 +6102,8 @@ class CookedLinux(Packet):
                     ShortField("lladdrlen",0),
                     StrFixedLenField("src","",8),
                     XShortEnumField("proto",0x800,ETHER_TYPES) ]
-                    
-                                   
+
+
 
 class SNAP(Packet):
     name = "SNAP"
@@ -6140,7 +6140,7 @@ class Dot1Q(Packet):
         else:
             return self.sprintf("802.1q (%Dot1Q.type%) vlan %Dot1Q.vlan%")
 
-            
+
 
 
 class RadioTap(Packet):
@@ -6178,7 +6178,7 @@ class EAPOL(Packet):
     fields_desc = [ ByteField("version", 1),
                     ByteEnumField("type", 0, ["EAP_PACKET", "START", "LOGOFF", "KEY", "ASF"]),
                     LenField("len", None, "H") ]
-    
+
     EAP_PACKET= 0
     START = 1
     LOGOFF = 2
@@ -6197,7 +6197,7 @@ class EAPOL(Packet):
         return 0
     def mysummary(self):
         return self.sprintf("EAPOL %EAPOL.type%")
-             
+
 
 class EAP(Packet):
     name = "EAP"
@@ -6207,7 +6207,7 @@ class EAP(Packet):
                     ConditionalField(ByteEnumField("type",0, {1:"ID",4:"MD5"}), lambda pkt:pkt.code not in [EAP.SUCCESS, EAP.FAILURE])
 
                                      ]
-    
+
     REQUEST = 1
     RESPONSE = 2
     SUCCESS = 3
@@ -6225,13 +6225,13 @@ class EAP(Packet):
             elif other.code == self.RESPONSE:
                 return 1
         return 0
-    
+
     def post_build(self, p, pay):
         if self.len is None:
             l = len(p)+len(pay)
             p = p[:2]+chr((l>>8)&0xff)+chr(l&0xff)+p[4:]
         return p+pay
-             
+
 
 class ARP(Packet):
     name = "ARP"
@@ -6262,7 +6262,7 @@ class ARP(Packet):
             return "ARP who has %s says %s" % (self.pdst, self.psrc)
         else:
             return "ARP %ARP.op% %ARP.psrc% > %ARP.pdst%"
-                 
+
 
 class IP(Packet, IPTools):
     name = "IP"
@@ -6336,8 +6336,8 @@ class IP(Packet, IPTools):
         if self.frag:
             s += " frag:%i" % self.frag
         return s
-                 
-    
+
+
 
 class TCP(Packet):
     name = "TCP"
@@ -6449,7 +6449,7 @@ class UDP(Packet):
         elif isinstance(self.underlayer, IPv6):
             return self.underlayer.sprintf("UDP %IPv6.src%:%UDP.sport% > %IPv6.dst%:%UDP.dport%")
         else:
-            return self.sprintf("UDP %UDP.sport% > %UDP.dport%")    
+            return self.sprintf("UDP %UDP.sport% > %UDP.dport%")
 
 icmptypes = { 0 : "echo-reply",
               3 : "dest-unreach",
@@ -6480,7 +6480,7 @@ class ICMP(Packet):
             ck = checksum(p)
             p = p[:2]+chr(ck>>8)+chr(ck&0xff)+p[4:]
         return p
-    
+
     def hashret(self):
         return struct.pack("HH",self.id,self.seq)+self.payload.hashret()
     def answers(self, other):
@@ -6502,8 +6502,8 @@ class ICMP(Packet):
             return self.underlayer.sprintf("ICMP %IP.src% > %IP.dst% %ICMP.type% %ICMP.code%")
         else:
             return self.sprintf("ICMP %ICMP.type% %ICMP.code%")
-    
-        
+
+
 
 
 
@@ -6558,7 +6558,7 @@ class UDPerror(UDP):
     def mysummary(self):
         return Packet.mysummary(self)
 
-                    
+
 
 class ICMPerror(ICMP):
     name = "ICMP in ICMP"
@@ -6581,12 +6581,12 @@ class ICMPerror(ICMP):
 
 class IPv6(Packet):
     """See http://namabiiru.hongo.wide.ad.jp/scapy6"""
-    name = "IPv6 not implemented here." 
+    name = "IPv6 not implemented here."
     def __init__(self, *args, **kargs):
         log_interactive.error(self.name)
     def __repr__(self):
         return "<IPv6: ERROR not implemented>"
-    
+
 class _IPv6OptionHeader(Packet):
     """See http://namabiiru.hongo.wide.ad.jp/scapy6"""
     name = "IPv6 not implemented here."
@@ -6594,13 +6594,13 @@ class _IPv6OptionHeader(Packet):
         log_interactive.error(self.name)
     def __repr__(self):
         return "<IPv6: ERROR not implemented>"
-                
+
 class PPP(Packet):
     name = "PPP Link Layer"
     fields_desc = [ ShortEnumField("proto", 0x0021, {0x0021: "IP",
                                                      0xc021: "LCP"} ) ]
-            
-        
+
+
 class DNS(Packet):
     name = "DNS"
     fields_desc = [ ShortField("id",0),
@@ -6625,7 +6625,7 @@ class DNS(Packet):
                 and self.id == other.id
                 and self.qr == 1
                 and other.qr == 0)
-        
+
     def mysummary(self):
         type = ["Qry","Ans"][self.qr]
         name = ""
@@ -6655,8 +6655,8 @@ class DNSQR(Packet):
     fields_desc = [ DNSStrField("qname",""),
                     ShortEnumField("qtype", 1, dnsqtypes),
                     ShortEnumField("qclass", 1, dnsclasses) ]
-                    
-                    
+
+
 
 class DNSRR(Packet):
     name = "DNS Resource Record"
@@ -6769,7 +6769,7 @@ DHCPOptions = {
     59: IntField("rebinding_time", 37800),
     60: "vendor_class_id",
     61: "client_id",
-    
+
     64: "NISplus_domain",
     65: IPField("NISplus_server","0.0.0.0"),
     69: IPField("SMTP_server","0.0.0.0"),
@@ -6798,8 +6798,8 @@ for k,v in DHCPOptions.iteritems():
 del(n)
 del(v)
 del(k)
-    
-    
+
+
 
 
 
@@ -6818,7 +6818,7 @@ class DHCPOptionsField(StrField):
             else:
                 s.append(str(v))
         return "[%s]" % (" ".join(s))
-        
+
     def getfield(self, pkt, s):
         return "", self.m2i(pkt, s)
     def m2i(self, pkt, x):
@@ -6869,7 +6869,7 @@ class DHCPOptionsField(StrField):
                     else:
 #                        oval = f.addfield(pkt,"",f.i2m(pkt,f.any2i(pkt,val)))
                         oval = f.addfield(pkt,"",f.any2i(pkt,val))
-                        
+
                 else:
                     warning("Unknown field option %s" % name)
                     continue
@@ -6878,7 +6878,7 @@ class DHCPOptionsField(StrField):
                 s += chr(len(oval))
                 s += oval
 
-            elif (type(o) is str and DHCPRevOptions.has_key(o) and 
+            elif (type(o) is str and DHCPRevOptions.has_key(o) and
                   DHCPRevOptions[o][1] == None):
                 s += chr(DHCPRevOptions[o][0])
             elif type(o) is int:
@@ -6905,7 +6905,7 @@ class Dot11(Packet):
                     Dot11Addr2MACField("addr2", ETHER_ANY),
                     Dot11Addr3MACField("addr3", ETHER_ANY),
                     Dot11SCField("SC", 0),
-                    Dot11Addr4MACField("addr4", ETHER_ANY) 
+                    Dot11Addr4MACField("addr4", ETHER_ANY)
                     ]
     def mysummary(self):
         return self.sprintf("802.11 %Dot11.type% %Dot11.subtype% %Dot11.addr2% > %Dot11.addr1%")
@@ -6983,7 +6983,7 @@ class Dot11Beacon(Packet):
     fields_desc = [ LELongField("timestamp", 0),
                     LEShortField("beacon_interval", 0x0064),
                     FlagsField("cap", 0, 16, capability_list) ]
-    
+
 
 class Dot11Elt(Packet):
     name = "802.11 Information Element"
@@ -7028,13 +7028,13 @@ class Dot11ReassoResp(Dot11AssoResp):
 
 class Dot11ProbeReq(Packet):
     name = "802.11 Probe Request"
-    
+
 class Dot11ProbeResp(Packet):
     name = "802.11 Probe Response"
     fields_desc = [ LELongField("timestamp", 0),
                     LEShortField("beacon_interval", 0x0064),
                     FlagsField("cap", 0, 16, capability_list) ]
-    
+
 class Dot11Auth(Packet):
     name = "802.11 Authentication"
     fields_desc = [ LEShortEnumField("algo", 0, ["open", "sharedkey"]),
@@ -7082,7 +7082,7 @@ class Dot11WEP(Packet):
             else:
                 warning("No WEP key set (conf.wepkey).. strange results expected..")
         return p
-            
+
 
     def decrypt(self,key=None):
         if key is None:
@@ -7090,7 +7090,7 @@ class Dot11WEP(Packet):
         if key:
             c = ARC4.new(self.iv+key)
             self.add_payload(LLC(c.decrypt(self.wepdata)))
-                    
+
 
 
 class PrismHeader(Packet):
@@ -7161,17 +7161,17 @@ class HSRP(Packet):
         ByteField("reserved", 0),
         StrFixedLenField("auth","cisco",8),
         IPField("virtualIP","192.168.1.1") ]
-        
 
 
-        
-        
+
+
+
 
 
 class NTP(Packet):
     # RFC 1769
     name = "NTP"
-    fields_desc = [ 
+    fields_desc = [
          BitEnumField('leap', 0, 2,
                       { 0: 'nowarning',
                         1: 'longminute',
@@ -7196,7 +7196,7 @@ class NTP(Packet):
          TimeStampField('ref', 0, 64),
          TimeStampField('orig', -1, 64),  # -1 means current time
          TimeStampField('recv', 0, 64),
-         TimeStampField('sent', -1, 64) 
+         TimeStampField('sent', -1, 64)
          ]
     def mysummary(self):
         return self.sprintf("NTP v%ir,NTP.version%, %NTP.mode%")
@@ -7217,7 +7217,7 @@ class GRE(Packet):
             c = checksum(p)
             p = p[:4]+chr((c>>8)&0xff)+chr(c&0xff)+p[6:]
         return p
-            
+
 
 class Radius(Packet):
     name = "Radius"
@@ -7292,7 +7292,7 @@ class RIPEntry(Packet):
         IPField("nextHop","0.0.0.0"),
         IntEnumField("metric",1,{16:"Unreach"}),
         ]
-        
+
 
 
 
@@ -7343,7 +7343,7 @@ class ISAKMP(ISAKMP_class): # rfc2408
         if self.length is None:
             p = p[:24]+struct.pack("!I",len(p))+p[28:]
         return p
-       
+
 
 
 
@@ -7372,10 +7372,10 @@ class ISAKMP_payload_Transform(ISAKMP_class):
             p = p[:2]+chr((l>>8)&0xff)+chr(l&0xff)+p[4:]
         p += pay
         return p
-            
 
 
-        
+
+
 class ISAKMP_payload_Proposal(ISAKMP_class):
     name = "IKE proposal"
 #    ISAKMP_payload_type = 0
@@ -7483,12 +7483,12 @@ del(name)
 ISAKMP_class.overload_fields = ISAKMP_payload_type_overload.copy()
 
 
-        
+
 
 # Cisco Skinny protocol
 
 # shamelessly ripped from Ethereal dissector
-skinny_messages = { 
+skinny_messages = {
 # Station -> Callmanager
   0x0000: "KeepAliveMessage",
   0x0001: "RegisterMessage",
@@ -7626,7 +7626,7 @@ skinny_messages = {
   }
 
 
-        
+
 class Skinny(Packet):
     name="Skinny"
     fields_desc = [ LEIntField("len",0),
@@ -7660,7 +7660,7 @@ class RTP(Packet):
                     IntField('timestamp', 0),
                     IntField('sourcesync', 0),
                     FieldListField('sync', [], IntField("id",0), count_from=lambda pkt:pkt.numsync) ]
-    
+
 ### SEBEK
 
 
@@ -7760,8 +7760,8 @@ class MGCP(Packet):
                     StrStopField("version","MGCP 1.0 NCS 1.0","\x0a", -1),
                     StrFixedLenField("sep4","\x0a",1),
                     ]
-                    
-    
+
+
 #class MGCP(Packet):
 #    name = "MGCP"
 #    longname = "Media Gateway Control Protocol"
@@ -7801,21 +7801,21 @@ class HCI_ACL_Hdr(Packet):
             l = len(p)-4
             p = p[:2]+chr(l&0xff)+chr((l>>8)&0xff)+p[4:]
         return p
-                    
+
 
 class L2CAP_Hdr(Packet):
     name = "L2CAP header"
     fields_desc = [ LEShortField("len",None),
                     LEShortEnumField("cid",0,{1:"control"}),]
-    
+
     def post_build(self, p, pay):
         p += pay
         if self.len is None:
             l = len(p)-4
             p = p[:2]+chr(l&0xff)+chr((l>>8)&0xff)+p[4:]
         return p
-                    
-                
+
+
 
 class L2CAP_CmdHdr(Packet):
     name = "L2CAP command header"
@@ -7863,7 +7863,7 @@ class L2CAP_CmdRej(Packet):
     name = "L2CAP Command Rej"
     fields_desc = [ LEShortField("reason",0),
                     ]
-    
+
 
 class L2CAP_ConfReq(Packet):
     name = "L2CAP Conf Req"
@@ -7893,7 +7893,7 @@ class L2CAP_DisconnResp(Packet):
     def answers(self, other):
         return self.scid == other.scid
 
-    
+
 
 class L2CAP_InfoReq(Packet):
     name = "L2CAP Info Req"
@@ -7932,7 +7932,7 @@ class NetBIOS_DS(Packet):
             l = len(p)-14
             p = p[:10]+struct.pack("!H", l)+p[12:]
         return p
-        
+
 #        ShortField("length",0),
 #        ShortField("Delimitor",0),
 #        ByteField("command",0),
@@ -7942,7 +7942,7 @@ class NetBIOS_DS(Packet):
 #        ShortField("RSPCor",0),
 #        StrFixedLenField("dest","",16),
 #        StrFixedLenField("source","",16),
-#        
+#
 #        ]
 #
 
@@ -8041,7 +8041,7 @@ class NBNSQueryResponse(Packet):
 # Name Release Response
 class NBNSQueryResponseNegative(Packet):
     name="NBNS query response (negative)"
-    fields_desc = [ShortField("NAME_TRN_ID",0), 
+    fields_desc = [ShortField("NAME_TRN_ID",0),
                    ShortField("FLAGS", 0x8506),
                    ShortField("QDCOUNT",0),
                    ShortField("ANCOUNT",1),
@@ -8058,11 +8058,11 @@ class NBNSQueryResponseNegative(Packet):
                    BitEnumField("OWNER NODE TYPE",00,2,{00:"B node",01:"P node",02:"M node",03:"H node"}),
                    BitEnumField("UNUSED",0,13,{0:"Unused"}),
                    IPField("NB_ADDRESS", "127.0.0.1")]
-    
+
 # Node Status Response
 class NBNSNodeStatusResponse(Packet):
     name="NBNS Node Status Response"
-    fields_desc = [ShortField("NAME_TRN_ID",0), 
+    fields_desc = [ShortField("NAME_TRN_ID",0),
                    ShortField("FLAGS", 0x8500),
                    ShortField("QDCOUNT",0),
                    ShortField("ANCOUNT",1),
@@ -8124,7 +8124,7 @@ class NBTDatagram(Packet):
                   NetBIOSNameField("DestinationName","windows"),
                   ShortEnumField("SUFFIX2",0x4141,{0x4141:"workstation",0x4141+0x03:"messenger service",0x4141+0x200:"file server service",0x4141+0x10b:"domain master browser",0x4141+0x10c:"domain controller", 0x4141+0x10e:"browser election service"}),
                   ByteField("NULL",0)]
-    
+
 
 class NBTSession(Packet):
     name="NBT Session Packet"
@@ -8220,7 +8220,7 @@ class SMBNetlogon_Protocol_Response_Tail_SAM(Packet):
                    ShortField("Data38", 0x0),
                    ShortField("Data39", 0x0d00),
                    ShortField("Data40", 0x0),
-                   ShortField("Data41", 0xffff)]                   
+                   ShortField("Data41", 0xffff)]
 
 # SMB NetLogon Protocol Response Tail LM2.0
 class SMBNetlogon_Protocol_Response_Tail_LM20(Packet):
@@ -8338,7 +8338,7 @@ class SMBNegociate_Protocol_Response_No_Security(Packet):
                    BitField("EncryptionKey",0,64),
                    StrNullField("DomainName","WORKGROUP"),
                    StrNullField("ServerName","RMFF1")]
-    
+
 # SMBNegociate Protocol Response No Security No Key
 class SMBNegociate_Protocol_Response_No_Security_No_Key(Packet):
     namez="SMBNegociate Protocol Response No Security No Key"
@@ -8378,7 +8378,7 @@ class SMBNegociate_Protocol_Response_No_Security_No_Key(Packet):
                    LEShortField("ByteCount",16),
                    StrNullField("DomainName","WORKGROUP"),
                    StrNullField("ServerName","RMFF1")]
-    
+
 # Session Setup AndX Request
 class SMBSession_Setup_AndX_Request(Packet):
     name="Session Setup AndX Request"
@@ -8496,7 +8496,7 @@ class MobileIPTunnelData(Packet):
 class NetflowHeader(Packet):
     name = "Netflow Header"
     fields_desc = [ ShortField("version", 1) ]
-    
+
 class NetflowHeaderV1(Packet):
     name = "Netflow Header V1"
     fields_desc = [ ShortField("count", 0),
@@ -8531,7 +8531,7 @@ TFTP_operations = { 1:"RRQ",2:"WRQ",3:"DATA",4:"ACK",5:"ERROR",6:"OACK" }
 class TFTP(Packet):
     name = "TFTP opcode"
     fields_desc = [ ShortEnumField("op", 1, TFTP_operations), ]
-    
+
 
 
 class TFTP_RRQ(Packet):
@@ -8542,7 +8542,7 @@ class TFTP_RRQ(Packet):
         return 0
     def mysummary(self):
         return self.sprintf("RRQ %filename%"),[UDP]
-        
+
 
 class TFTP_WRQ(Packet):
     name = "TFTP Write Request"
@@ -8570,7 +8570,7 @@ class TFTP_Option(Packet):
 class TFTP_Options(Packet):
     fields_desc = [ PacketListField("options", [], TFTP_Option, length_from=lambda x:None) ]
 
-    
+
 class TFTP_ACK(Packet):
     name = "TFTP Ack"
     fields_desc = [ ShortField("block", 0) ]
@@ -8593,7 +8593,7 @@ TFTP_Error_Codes = {  0: "Not defined",
                       7: "No such user",
                       8: "Terminate transfer due to option negotiation",
                       }
-    
+
 class TFTP_ERROR(Packet):
     name = "TFTP Error"
     fields_desc = [ ShortEnumField("errorcode", 0, TFTP_Error_Codes),
@@ -8601,7 +8601,7 @@ class TFTP_ERROR(Packet):
     def answers(self, other):
         return (isinstance(other, TFTP_DATA) or
                 isinstance(other, TFTP_RRQ) or
-                isinstance(other, TFTP_WRQ) or 
+                isinstance(other, TFTP_WRQ) or
                 isinstance(other, TFTP_ACK))
     def mysummary(self):
         return self.sprintf("ERROR %errorcode%: %errormsg%"),[UDP]
@@ -8783,7 +8783,7 @@ class SNMPset(ASN1_Packet):
                                     ASN1F_INTEGER("error_index",0),
                                     ASN1F_SEQUENCE_OF("varbindlist", [], SNMPvarbind)
                                     )
-    
+
 class SNMPtrapv1(ASN1_Packet):
     ASN1_codec = ASN1_Codecs.BER
     ASN1_root = ASN1F_SNMP_PDU_TRAPv1( ASN1F_INTEGER("id",0),
@@ -8802,7 +8802,7 @@ class SNMPbulk(ASN1_Packet):
                                      ASN1F_INTEGER("max_repetitions",0),
                                      ASN1F_SEQUENCE_OF("varbindlist", [], SNMPvarbind)
                                      )
-    
+
 class SNMPinform(ASN1_Packet):
     ASN1_codec = ASN1_Codecs.BER
     ASN1_root = ASN1F_SNMP_PDU_INFORM( ASN1F_INTEGER("id",0),
@@ -8810,7 +8810,7 @@ class SNMPinform(ASN1_Packet):
                                        ASN1F_INTEGER("error_index",0),
                                        ASN1F_SEQUENCE_OF("varbindlist", [], SNMPvarbind)
                                        )
-    
+
 class SNMPtrapv2(ASN1_Packet):
     ASN1_codec = ASN1_Codecs.BER
     ASN1_root = ASN1F_SNMP_PDU_TRAPv2( ASN1F_INTEGER("id",0),
@@ -8818,7 +8818,7 @@ class SNMPtrapv2(ASN1_Packet):
                                        ASN1F_INTEGER("error_index",0),
                                        ASN1F_SEQUENCE_OF("varbindlist", [], SNMPvarbind)
                                        )
-    
+
 
 class SNMP(ASN1_Packet):
     ASN1_codec = ASN1_Codecs.BER
@@ -8848,14 +8848,14 @@ def bind_bottom_up(lower, upper, __fval=None, **fval):
         fval.update(__fval)
     lower.payload_guess = lower.payload_guess[:]
     lower.payload_guess.append((fval, upper))
-    
+
 
 def bind_top_down(lower, upper, __fval=None, **fval):
     if __fval is not None:
         fval.update(__fval)
     upper.overload_fields = upper.overload_fields.copy()
     upper.overload_fields[lower] = fval
-    
+
 def bind_layers(lower, upper, __fval=None, **fval):
     if __fval is not None:
         fval.update(__fval)
@@ -8873,7 +8873,7 @@ def split_bottom_up(lower, upper, __fval=None, **fval):
                 return True
         return False
     lower.payload_guess = filter(do_filter, lower.payload_guess)
-        
+
 def split_top_down(lower, upper, __fval=None, **fval):
     if __fval is not None:
         fval.update(__fval)
@@ -9054,7 +9054,7 @@ def fragment(pkt, fragsize=1480):
     for p in pkt:
         s = str(p[IP].payload)
         nb = (len(s)+fragsize-1)/fragsize
-        for i in range(nb):            
+        for i in range(nb):
             q = p.copy()
             del(q[IP].payload)
             del(q[IP].chksum)
@@ -9062,7 +9062,7 @@ def fragment(pkt, fragsize=1480):
             if i == nb-1:
                 q[IP].flags &= ~1
             else:
-                q[IP].flags |= 1 
+                q[IP].flags |= 1
             q[IP].frag = i*fragsize/8
             r = Raw(load=s[i*fragsize:(i+1)*fragsize])
             r.overload_fields = p[IP].payload.overload_fields.copy()
@@ -9130,7 +9130,7 @@ def defrag(plist):
             if Padding in q:
                 del(q[Padding].underlayer.payload)
             txt.add_payload(q[IP].payload.copy())
-            
+
         if txt is None:
             continue
 
@@ -9143,7 +9143,7 @@ def defrag(plist):
     for p in defrag:
         defrag2.append(p.__class__(str(p)))
     return nofrag,defrag2,missfrag
-            
+
 def defragment(plist):
     """defrag(plist) -> plist defragmented as much as possible """
     frags = {}
@@ -9196,7 +9196,7 @@ def defragment(plist):
             if Padding in q:
                 del(q[Padding].underlayer.payload)
             txt.add_payload(q[IP].payload.copy())
-            
+
         if txt is None:
             continue
 
@@ -9221,13 +9221,13 @@ def defragment(plist):
         name = "Defragmented %s" % plist.listname
     else:
         name = "Defragmented"
-        
-    
+
+
     return PacketList(final, name=name)
-            
-            
-        
-    
+
+
+
+
 
 
 ###################
@@ -9329,7 +9329,7 @@ class L3RawSocket(SuperSocket):
             self.outs.sendto(sx,(x.dst,0))
         except socket.error,msg:
             log_runtime.error(msg)
-        
+
 
 
 class L3PacketSocket(SuperSocket):
@@ -9395,11 +9395,11 @@ class L3PacketSocket(SuperSocket):
             pkt = Raw(pkt)
         if lvl == 2:
             pkt = pkt.payload
-            
+
         if pkt is not None:
             pkt.time = get_last_packet_timestamp(self.ins)
         return pkt
-    
+
     def send(self, x):
         if isinstance(x, IPv6):
             iff,a,gw = conf.route6.route(x.dst)
@@ -9426,7 +9426,7 @@ class L3PacketSocket(SuperSocket):
                     self.outs.sendto(str(ll(p)), sdto)
             else:
                 raise
-                    
+
 
 
 
@@ -9437,7 +9437,7 @@ class L2Socket(SuperSocket):
         self.ins = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.htons(type))
         self.ins.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 0)
         flush_fd(self.ins)
-        if not nofilter: 
+        if not nofilter:
             if conf.except_filter:
                 if filter:
                     filter = "(%s) and not (%s)" % (filter, conf.except_filter)
@@ -9457,7 +9457,7 @@ class L2Socket(SuperSocket):
         else:
             warning("Unable to guess type (interface=%s protocol=%#x family=%i). Using Ethernet" % (sa_ll[0],sa_ll[1],sa_ll[3]))
             self.LL = Ether
-            
+
     def recv(self, x):
         pkt, sa_ll = self.ins.recvfrom(x)
         if sa_ll[2] == socket.PACKET_OUTGOING:
@@ -9531,7 +9531,7 @@ class L2ListenSocket(SuperSocket):
             pkt = Raw(pkt)
         pkt.time = get_last_packet_timestamp(self.ins)
         return pkt
-    
+
     def send(self, x):
         raise Scapy_Exception("Can't send anything with L2ListenSocket")
 
@@ -9660,7 +9660,7 @@ class L2dnetSocket(SuperSocket):
             l,pkt,ts = pkt
         if pkt is None:
             return
-        
+
         try:
             pkt = cls(pkt)
         except KeyboardInterrupt:
@@ -9683,9 +9683,9 @@ class L2dnetSocket(SuperSocket):
             del(self.ins)
         if hasattr(self, "outs"):
             del(self.outs)
-    
-    
-    
+
+
+
 
 
 class L2pcapListenSocket(SuperSocket):
@@ -9715,7 +9715,7 @@ class L2pcapListenSocket(SuperSocket):
 
     def close(self):
         del(self.ins)
-        
+
     def recv(self, x):
         ll = self.ins.datalink()
         if LLTypes.has_key(ll):
@@ -9729,7 +9729,7 @@ class L2pcapListenSocket(SuperSocket):
             pkt = self.ins.next()
             if pkt is not None:
                 l,pkt,ts = pkt
-        
+
         try:
             pkt = cls(pkt)
         except KeyboardInterrupt:
@@ -9755,7 +9755,7 @@ class StreamSocket(SimpleSocket):
     def __init__(self, sock, basecls=Raw):
         SimpleSocket.__init__(self, sock)
         self.basecls = basecls
-        
+
     def recv(self, x=MTU):
         pkt = self.ins.recv(x, socket.MSG_PEEK)
         x = len(pkt)
@@ -9768,19 +9768,19 @@ class StreamSocket(SimpleSocket):
             pad = pad.payload
         self.ins.recv(x)
         return pkt
-        
-        
+
+
 class BluetoothL2CAPSocket(SuperSocket):
     def __init__(self, peer):
         s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_RAW,
                           socket.BTPROTO_L2CAP)
         s.connect((peer,0))
-        
+
         self.ins = self.outs = s
 
     def recv(self, x):
         return L2CAP_CmdHdr(self.ins.recv(x))
-    
+
 
 class BluetoothHCISocket(SuperSocket):
     def __init__(self, iface=0x10000, type=None):
@@ -9791,11 +9791,11 @@ class BluetoothHCISocket(SuperSocket):
         s.bind((iface,))
         self.ins = self.outs = s
 #        s.connect((peer,0))
-        
+
 
     def recv(self, x):
         return HCI_Hdr(self.ins.recv(x))
-    
+
 
 
 ####################
@@ -9808,7 +9808,7 @@ class BluetoothHCISocket(SuperSocket):
 def sndrcv(pks, pkt, timeout = 2, inter = 0, verbose=None, chainCC=0, retry=0, multi=0):
     if not isinstance(pkt, Gen):
         pkt = SetGen(pkt)
-        
+
     if verbose is None:
         verbose = conf.verb
     debug.recv = PacketList([],"Unanswered")
@@ -9836,10 +9836,10 @@ def sndrcv(pks, pkt, timeout = 2, inter = 0, verbose=None, chainCC=0, retry=0, m
 
     while retry >= 0:
         found=0
-    
+
         if timeout < 0:
             timeout = None
-            
+
         rdpipe,wrpipe = os.pipe()
         rdpipe=os.fdopen(rdpipe)
         wrpipe=os.fdopen(wrpipe,"w")
@@ -9916,7 +9916,7 @@ def sndrcv(pks, pkt, timeout = 2, inter = 0, verbose=None, chainCC=0, retry=0, m
                                         ans.append((hlst[i],r))
                                         if verbose > 1:
                                             os.write(1, "*")
-                                        ok = 1                                
+                                        ok = 1
                                         if not multi:
                                             del(hlst[i])
                                             notans -= 1;
@@ -9953,15 +9953,15 @@ def sndrcv(pks, pkt, timeout = 2, inter = 0, verbose=None, chainCC=0, retry=0, m
         remain = reduce(list.__add__, hsent.values(), [])
         if multi:
             remain = filter(lambda p: not hasattr(p, '_answered'), remain);
-            
+
         if autostop and len(remain) > 0 and len(remain) != len(tobesent):
             retry = autostop
-            
+
         tobesent = remain
         if len(tobesent) == 0:
             break
         retry -= 1
-        
+
     if conf.debug_match:
         debug.sent=PacketList(remain[:],"Sent")
         debug.match=SndRcvList(ans[:])
@@ -9971,7 +9971,7 @@ def sndrcv(pks, pkt, timeout = 2, inter = 0, verbose=None, chainCC=0, retry=0, m
         for s,r in ans:
             if hasattr(s, '_answered'):
                 del(s._answered)
-    
+
     if verbose:
         print "\nReceived %i packets, got %i answers, remaining %i packets" % (nbrecv+len(ans), len(ans), notans)
     return SndRcvList(ans),PacketList(remain,"Unanswered"),debug.recv
@@ -10048,10 +10048,10 @@ def sendpfast(x, pps=None, mbps=None, realtime=None, loop=0, iface=None):
     finally:
         os.unlink(f)
 
-        
 
-        
-    
+
+
+
 def sr(x,filter=None, iface=None, nofilter=0, *args,**kargs):
     """Send and receive packets at layer 3
 nofilter: put 1 to avoid use of bpf filters
@@ -10168,7 +10168,7 @@ def __sr_loop(srfunc, pkts, prn=lambda x:x[1].summary(), prnfail=lambda x:x.summ
                 time.sleep(inter+start-end)
     except KeyboardInterrupt:
         pass
- 
+
     if n>0:
         print "%s\nSent %i packets, received %i packets. %3.1f%% hits." % (Color.normal,n,r,100.0*r/n)
 
@@ -10214,7 +10214,7 @@ def sndrcvflood(pks, pkt, prn=lambda (s,r):r.summary(), chainCC=0, store=1, uniq
             readyr,readys,_ = select([rsock],[ssock],[])
             if ssock in readys:
                 pks.send(packets_to_send.next())
-                
+
             if rsock in readyr:
                 p = pks.recv(MTU)
                 if p is None:
@@ -10242,7 +10242,7 @@ def srflood(x,filter=None, iface=None, nofilter=None, *args,**kargs):
     """Flood and receive packets at layer 3
 prn:      function applied to packets received. Ret val is printed if not None
 store:    if 1 (default), store answers and return them
-unique:   only consider packets whose print 
+unique:   only consider packets whose print
 nofilter: put 1 to avoid use of bpf filters
 filter:   provide a BPF filter
 iface:    listen answers only on the given interface"""
@@ -10255,18 +10255,18 @@ def srpflood(x,filter=None, iface=None, iface_hint=None, nofilter=None, *args,**
     """Flood and receive packets at layer 2
 prn:      function applied to packets received. Ret val is printed if not None
 store:    if 1 (default), store answers and return them
-unique:   only consider packets whose print 
+unique:   only consider packets whose print
 nofilter: put 1 to avoid use of bpf filters
 filter:   provide a BPF filter
 iface:    listen answers only on the given interface"""
     if iface is None and iface_hint is not None:
-        iface = conf.route.route(iface_hint)[0]    
+        iface = conf.route.route(iface_hint)[0]
     s = conf.L2socket(filter=filter, iface=iface, nofilter=nofilter)
     r=sndrcvflood(s,x,*args,**kargs)
     s.close()
     return r
 
-           
+
 ## Bluetooth
 
 
@@ -10280,8 +10280,8 @@ def srbt1(peer, pkts, *args, **kargs):
     a,b = srbt(peer, pkts, *args, **kargs)
     if len(a) > 0:
         return a[0][1]
-        
-    
+
+
 
 
 
@@ -10303,7 +10303,7 @@ count: read only <count> packets"""
 
 class PcapReader:
     """A stateful pcap reader
-    
+
     Based entirely on scapy.rdpcap(), this class allows for packets
     to be dispatched without having to be loaded into memory all at
     once
@@ -10346,7 +10346,7 @@ class PcapReader:
 
     def read_packet(self):
         """return a single packet read from the file
-        
+
         returns None when no more packets are available
         """
         hdr = self.f.read(16)
@@ -10367,9 +10367,9 @@ class PcapReader:
 
     def dispatch(self, callback):
         """call the specified callback routine for each packet read
-        
+
         This is just a convienience function for the main loop
-        that allows for easy launching of packet processing in a 
+        that allows for easy launching of packet processing in a
         thread.
         """
         p = self.read_packet()
@@ -10396,12 +10396,12 @@ class PcapReader:
 
     def fileno(self):
         return self.f.fileno()
-        
+
 
 
 class PcapWriter:
     """A pcap writer with more control than wrpcap()
-    
+
     This routine is based entirely on scapy.wrpcap(), but adds capability
     of writing one packet at a time in a streaming manner.
     """
@@ -10421,7 +10421,7 @@ class PcapWriter:
         """accepts a either a single packet or a list of packets
         to be written to the dumpfile
         """
-        
+
         if self.header_done == 0:
             if self.linktype == None:
                 if isinstance(pkt,Packet):
@@ -10460,13 +10460,13 @@ def import_hexcap():
                 continue
     except EOFError:
         pass
-    
+
     p = p.replace(" ","")
     p2=""
     for i in range(len(p)/2):
         p2 += chr(int(p[2*i:2*i+2],16))
     return p2
-        
+
 
 
 def wireshark(pktlist):
@@ -10509,7 +10509,7 @@ class KnowledgeBase:
         if self.base is None:
             self.lazy_init()
         return self.base
-    
+
 
 
 ##########################
@@ -10541,11 +10541,11 @@ class CountryLocKnowledgeBase(KnowledgeBase):
             if len(l) != 3:
                 continue
             c,lat,long = l
-            
+
             self.base[c] = (float(long),float(lat))
         f.close()
-            
-        
+
+
 
 
 def locate_ip(ip):
@@ -10568,7 +10568,7 @@ def locate_ip(ip):
         return cloc.get(c,None)
 
 
-    
+
 
 ###############
 ## p0f stuff ##
@@ -10580,7 +10580,7 @@ def locate_ip(ip):
 #
 # wwww    - window size
 # ttt     - initial TTL
-# D       - don't fragment bit  (0=unset, 1=set) 
+# D       - don't fragment bit  (0=unset, 1=set)
 # ss      - overall SYN packet size
 # OOO     - option value and order specification
 # QQ      - quirks list
@@ -10629,7 +10629,7 @@ def packet2p0f(pkt):
         raise TypeError("Not a TCP/IP packet")
     if pkt.payload.flags & 0x13 != 0x02: #S,!A,!F
         raise TypeError("Not a syn packet")
-    
+
     #t = p0f_kdb.ttl_range[:]
     #t += [pkt.ttl]
     #t.sort()
@@ -10766,7 +10766,7 @@ p0f(packet) -> accuracy, [list of guesses]
         if d == max:
             r.append((b[6], b[7], b[1] - pkt[IP].ttl))
     return r
-            
+
 
 def prnp0f(pkt):
     try:
@@ -10860,10 +10860,10 @@ class QuesoKnowledgeBase(KnowledgeBase):
             self.base = None
             warning("Can't load queso base [%s]", self.filename)
         f.close()
-            
-        
 
-    
+
+
+
 def queso_sig(target, dport=80, timeout=3):
     p = queso_kdb.get_base()
     ret = []
@@ -10885,7 +10885,7 @@ def queso_sig(target, dport=80, timeout=3):
             rs += " %x" % r.payload.flags
         ret.append(rs)
     return ret
-            
+
 def queso_search(sig):
     p = queso_kdb.get_base()
     sig.reverse()
@@ -10899,7 +10899,7 @@ def queso_search(sig):
     except KeyError:
         pass
     return ret
-        
+
 
 def queso(*args,**kargs):
     """Queso OS fingerprinting
@@ -10953,7 +10953,7 @@ class NmapKnowledgeBase(KnowledgeBase):
             self.base = None
             warning("Can't read nmap database [%s](new nmap version ?)" % self.filename)
         f.close()
-        
+
 def TCPflags2str(f):
     fl="FSRPAUEC"
     s=""
@@ -10992,7 +10992,7 @@ def nmap_udppacket_sig(S,T):
         r["ULEN"] = "%X" % T.getlayer(UDPerror).len
         r["DAT"] = T.getlayer(Raw) is None and "E" or S.getlayer(Raw).load == T.getlayer(Raw).load and "E" or "F"
     return r
-    
+
 
 
 def nmap_match_one_sig(seen, ref):
@@ -11005,8 +11005,8 @@ def nmap_match_one_sig(seen, ref):
         return 0.7
     else:
         return 1.0*c/len(seen.keys())
-        
-        
+
+
 
 def nmap_sig(target, oport=80, cport=81, ucport=1):
     res = {}
@@ -11048,7 +11048,7 @@ def nmap_probes2sig(tests):
     for k in tests:
         res[k] = nmap_tcppacket_sig(tests[k])
     return res
-        
+
 
 def nmap_search(sigs):
     guess = 0,[]
@@ -11063,15 +11063,15 @@ def nmap_search(sigs):
         elif c == guess[0]:
             guess[1].append(os)
     return guess
-    
-    
+
+
 def nmap_fp(target, oport=80, cport=81):
     """nmap fingerprinting
 nmap_fp(target, [oport=80,] [cport=81,]) -> list of best guesses with accuracy
 """
     sigs = nmap_sig(target, oport, cport)
     return nmap_search(sigs)
-        
+
 
 def nmap_sig2txt(sig):
     torder = ["TSeq","T1","T2","T3","T4","T5","T6","T7","PU"]
@@ -11094,8 +11094,8 @@ def nmap_sig2txt(sig):
             s.append("%s=%s"%(k,v))
         txt.append("%s(%s)" % (t, "%".join(s)))
     return "\n".join(txt)
-            
-        
+
+
 
 
 
@@ -11233,9 +11233,9 @@ RFC2136
         return r.getlayer(DNS).rcode
     else:
         return -1
-    
-    
-    
+
+
+
 
 def dyndns_del(nameserver, name, type="ALL", ttl=10):
     """Send a DNS delete message to a nameserver for "name"
@@ -11254,7 +11254,7 @@ RFC2136
         return r.getlayer(DNS).rcode
     else:
         return -1
-    
+
 
 def is_promisc(ip, fake_bcast="ff:ff:00:00:00:00",**kargs):
     """Try to guess if target is in Promisc mode. The target is provided by its ip."""
@@ -11299,7 +11299,7 @@ def snmpwalk(dst, oid="1", community="public"):
                 break
             print "%-40s: %r" % (r[SNMPvarbind].oid.val,r[SNMPvarbind].value)
             oid = r[SNMPvarbind].oid
-            
+
     except KeyboardInterrupt:
         pass
 
@@ -11331,8 +11331,8 @@ report_ports(target, ports) -> string"""
 
 
 def __make_table(yfmtfunc, fmtfunc, endline, list, fxyz, sortx=None, sorty=None, seplinefunc=None):
-    vx = {} 
-    vy = {} 
+    vx = {}
+    vy = {}
     vz = {}
     vxf = {}
     vyf = {}
@@ -11390,7 +11390,7 @@ def __make_table(yfmtfunc, fmtfunc, endline, list, fxyz, sortx=None, sorty=None,
 
 def make_table(*args, **kargs):
     __make_table(lambda l:"%%-%is" % l, lambda l:"%%-%is" % l, "", *args, **kargs)
-    
+
 def make_lined_table(*args, **kargs):
     __make_table(lambda l:"%%-%is |" % l, lambda l:"%%-%is |" % l, "",
                  seplinefunc=lambda a,x:"+".join(map(lambda y:"-"*(y+2), [a-1]+x+[-2])),
@@ -11398,7 +11398,7 @@ def make_lined_table(*args, **kargs):
 
 def make_tex_table(*args, **kargs):
     __make_table(lambda l: "%s", lambda l: "& %s", "\\\\", seplinefunc=lambda a,x:"\\hline", *args, **kargs)
-    
+
 
 ######################
 ## Online doc stuff ##
@@ -11412,7 +11412,7 @@ def lsc(cmd=None):
             doc = "No doc. available"
             if c.__doc__:
                 doc = c.__doc__.split("\n")[0]
-            
+
             print "%-16s : %s" % (c.__name__, doc)
     else:
         print cmd.__doc__
@@ -11437,13 +11437,13 @@ def ls(obj=None):
             if not isinstance(obj.payload, NoPayload):
                 print "--"
                 ls(obj.payload)
-                
+
 
         else:
             print "Not a packet class. Type 'ls()' to list packet classes."
 
 
-    
+
 
 
 user_commands = [ sr, sr1, srp, srp1, srloop, srploop, sniff, p0f, arpcachepoison, send, sendp, traceroute, arping, ls, lsc, queso, nmap_fp, report_ports, dyndns_add, dyndns_del, is_promisc, promiscping ]
@@ -11559,7 +11559,7 @@ class Automaton_metaclass(type):
 
         decorated = [v for v in members.itervalues()
                      if type(v) is types.FunctionType and hasattr(v, "atmt_type")]
-        
+
         for m in decorated:
             if m.atmt_type == ATMT.STATE:
                 s = m.atmt_state
@@ -11571,7 +11571,7 @@ class Automaton_metaclass(type):
                     cls.initial_states.append(m)
             elif m.atmt_type in [ATMT.CONDITION, ATMT.RECV, ATMT.TIMEOUT]:
                 cls.actions[m.atmt_condname] = []
-    
+
         for m in decorated:
             if m.atmt_type == ATMT.CONDITION:
                 cls.conditions[m.atmt_state].append(m)
@@ -11582,7 +11582,7 @@ class Automaton_metaclass(type):
             elif m.atmt_type == ATMT.ACTION:
                 for c in m.atmt_cond:
                     cls.actions[c].append(m)
-            
+
 
         for v in cls.timeout.itervalues():
             v.sort(lambda (t1,f1),(t2,f2): cmp(t1,t2))
@@ -11595,10 +11595,10 @@ class Automaton_metaclass(type):
 
         return cls
 
-        
+
     def graph(self, **kargs):
         s = 'digraph "%s" {\n'  % self.__class__.__name__
-        
+
         se = "" # Keep initial nodes at the begining for better rendering
         for st in self.states.itervalues():
             if st.atmt_initial:
@@ -11613,7 +11613,7 @@ class Automaton_metaclass(type):
             for n in st.atmt_origfunc.func_code.co_names+st.atmt_origfunc.func_code.co_consts:
                 if n in self.states:
                     s += '\t"%s" -> "%s" [ color=green ];\n' % (st.atmt_state,n)
-            
+
 
         for c,k,v in [("purple",k,v) for k,v in self.conditions.items()]+[("red",k,v) for k,v in self.recv_conditions.items()]:
             for f in v:
@@ -11629,13 +11629,13 @@ class Automaton_metaclass(type):
                     continue
                 for n in f.func_code.co_names+f.func_code.co_consts:
                     if n in self.states:
-                        l = "%s/%.1fs" % (f.atmt_condname,t)                        
+                        l = "%s/%.1fs" % (f.atmt_condname,t)
                         for x in self.actions[f.atmt_condname]:
                             l += "\\l>[%s]" % x.func_name
                         s += '\t"%s" -> "%s" [label="%s",color=blue];\n' % (k,n,l)
         s += "}\n"
         return do_graph(s, **kargs)
-        
+
 
 
 class Automaton:
@@ -11650,7 +11650,7 @@ class Automaton:
     def debug(self, lvl, msg):
         if self.debug_level >= lvl:
             log_interactive.debug(msg)
-            
+
 
 
 
@@ -11665,7 +11665,7 @@ class Automaton:
         self.debug_level=debug
         self.socket_kargs = kargs
         self.store_packets = store
-        
+
 
     def master_filter(self, pkt):
         return True
@@ -11683,7 +11683,7 @@ class Automaton:
             raise
         else:
             self.debug(2, "%s [%s] not taken" % (cond.atmt_type, cond.atmt_condname))
-            
+
 
     def run(self, *args, **kargs):
         # Update default parameters
@@ -11712,7 +11712,7 @@ class Automaton:
                     state_output = ()
                 elif type(state_output) is not list:
                     state_output = state_output,
-                
+
                 # Then check immediate conditions
                 for cond in self.conditions[self.state.state]:
                     self.run_condition(cond, *state_output)
@@ -11726,7 +11726,7 @@ class Automaton:
                 expirations = iter(self.timeout[self.state.state])
                 next_timeout,timeout_func = expirations.next()
                 t0 = time.time()
-                
+
                 while 1:
                     t = time.time()-t0
                     if next_timeout is not None:
@@ -11737,7 +11737,7 @@ class Automaton:
                         remain = None
                     else:
                         remain = next_timeout-t
-    
+
                     r,_,_ = select([l],[],[],remain)
                     if l in r:
                         pkt = l.recv(MTU)
@@ -11765,9 +11765,9 @@ class Automaton:
         self.packets.append(pkt.copy())
 
 
-        
 
-    
+
+
 
 class TFTP_read(Automaton):
     def parse_args(self, filename, server, sport = None, port=69, **kargs):
@@ -11782,7 +11782,7 @@ class TFTP_read(Automaton):
         return ( IP in pkt and pkt[IP].src == self.server and UDP in pkt
                  and pkt[UDP].dport == self.my_tid
                  and (self.server_tid is None or pkt[UDP].sport == self.server_tid) )
-        
+
     # BEGIN
     @ATMT.state(initial=1)
     def BEGIN(self):
@@ -11796,9 +11796,9 @@ class TFTP_read(Automaton):
         self.last_packet = self.l3/TFTP_RRQ(filename=self.filename, mode="octet")
         self.send(self.last_packet)
         self.awaiting=1
-        
+
         raise self.WAITING()
-        
+
     # WAITING
     @ATMT.state()
     def WAITING(self):
@@ -11817,8 +11817,8 @@ class TFTP_read(Automaton):
     def receive_error(self, pkt):
         if TFTP_ERROR in pkt:
             raise self.ERROR(pkt)
-    
-        
+
+
     @ATMT.timeout(WAITING, 3)
     def timeout_waiting(self):
         raise self.WAITING()
@@ -11831,7 +11831,7 @@ class TFTP_read(Automaton):
     def send_ack(self):
         self.last_packet = self.l3 / TFTP_ACK(block = self.awaiting)
         self.send(self.last_packet)
-    
+
 
     # RECEIVED
     @ATMT.state()
@@ -11851,7 +11851,7 @@ class TFTP_read(Automaton):
     def ERROR(self,pkt):
         split_bottom_up(UDP, TFTP, dport=self.my_tid)
         return pkt[TFTP_ERROR].summary()
-    
+
     #END
     @ATMT.state(final=1)
     def END(self):
@@ -11875,17 +11875,17 @@ class TFTP_write(Automaton):
         return ( IP in pkt and pkt[IP].src == self.server and UDP in pkt
                  and pkt[UDP].dport == self.my_tid
                  and (self.server_tid is None or pkt[UDP].sport == self.server_tid) )
-        
+
 
     # BEGIN
     @ATMT.state(initial=1)
     def BEGIN(self):
         self.data = [ self.origdata[i*self.blocksize:(i+1)*self.blocksize]
-                      for i in range( len(self.origdata)/self.blocksize+1) ] 
+                      for i in range( len(self.origdata)/self.blocksize+1) ]
         self.my_tid = self.sport or RandShort()._fix()
         bind_bottom_up(UDP, TFTP, dport=self.my_tid)
         self.server_tid = None
-        
+
         self.l3 = IP(dst=self.server)/UDP(sport=self.my_tid, dport=self.port)/TFTP()
         self.last_packet = self.l3/TFTP_WRQ(filename=self.filename, mode="octet")
         self.send(self.last_packet)
@@ -11893,13 +11893,13 @@ class TFTP_write(Automaton):
         self.awaiting=0
 
         raise self.WAITING_ACK()
-        
+
     # WAITING_ACK
     @ATMT.state()
     def WAITING_ACK(self):
         pass
 
-    @ATMT.receive_condition(WAITING_ACK)    
+    @ATMT.receive_condition(WAITING_ACK)
     def received_ack(self,pkt):
         if TFTP_ACK in pkt and pkt[TFTP_ACK].block == self.awaiting:
             if self.server_tid is None:
@@ -11918,7 +11918,7 @@ class TFTP_write(Automaton):
     @ATMT.action(timeout_waiting)
     def retransmit_last_packet(self):
         self.send(self.last_packet)
-    
+
     # SEND_DATA
     @ATMT.state()
     def SEND_DATA(self):
@@ -11928,7 +11928,7 @@ class TFTP_write(Automaton):
         if self.data:
             raise self.WAITING_ACK()
         raise self.END()
-    
+
 
     # ERROR
     @ATMT.state(error=1)
@@ -11964,7 +11964,7 @@ class TFTP_WRQ_server(Automaton):
     def receive_WRQ(self,pkt):
         if TFTP_WRQ in pkt:
             raise self.WAIT_DATA().action_parameters(pkt)
-        
+
     @ATMT.action(receive_WRQ)
     def ack_WRQ(self, pkt):
         ip = pkt[IP]
@@ -11992,7 +11992,7 @@ class TFTP_WRQ_server(Automaton):
     def resend_ack(self):
         self.send(self.last_packet)
         raise self.WAIT_DATA()
-        
+
     @ATMT.receive_condition(WAIT_DATA)
     def receive_data(self, pkt):
         if TFTP_DATA in pkt:
@@ -12017,7 +12017,7 @@ class TFTP_WRQ_server(Automaton):
     def END(self):
         return self.filename,self.filedata
         split_bottom_up(UDP, TFTP, dport=self.my_tid)
-        
+
 
 class TFTP_RRQ_server(Automaton):
     def parse_args(self, store=None, joker=None, dir=None, ip=None, sport=None, serve_one=False, **kargs):
@@ -12035,7 +12035,7 @@ class TFTP_RRQ_server(Automaton):
         self.serve_one = serve_one
         self.my_tid = self.sport or random.randint(10000,65500)
         bind_bottom_up(UDP, TFTP, dport=self.my_tid)
-        
+
     def master_filter(self, pkt):
         return TFTP in pkt and (not self.ip or pkt[IP].dst == self.ip)
 
@@ -12077,9 +12077,9 @@ class TFTP_RRQ_server(Automaton):
                 self.debug(2,"Negotiated new blksize at %i" % self.blksize)
             self.last_packet = self.l3/TFTP_OACK()/TFTP_Options(options=opt)
             self.send(self.last_packet)
-                
 
-            
+
+
 
     @ATMT.condition(RECEIVED_RRQ)
     def file_in_store(self):
@@ -12098,11 +12098,11 @@ class TFTP_RRQ_server(Automaton):
     @ATMT.state()
     def SEND_FILE(self):
         self.send(self.l3/TFTP_DATA(block=self.blk)/self.data[(self.blk-1)*self.blksize:self.blk*self.blksize])
-        
+
     @ATMT.timeout(SEND_FILE, 3)
     def timeout_waiting_ack(self):
         raise self.SEND_FILE()
-            
+
     @ATMT.receive_condition(SEND_FILE)
     def received_ack(self, pkt):
         if TFTP_ACK in pkt and pkt[TFTP_ACK].block == self.blk:
@@ -12124,9 +12124,9 @@ class TFTP_RRQ_server(Automaton):
     @ATMT.state(final=1)
     def END(self):
         split_bottom_up(UDP, TFTP, dport=self.my_tid)
-    
 
-        
+
+
 
 ########################
 ## Answering machines ##
@@ -12149,8 +12149,8 @@ class AnsweringMachine(object):
     send_options = { "verbose":0 }
     send_options_list = ["iface", "inter", "loop", "verbose"]
     send_function = staticmethod(send)
-    
-    
+
+
     def __init__(self, **kargs):
         self.mode = 0
         if self.filter:
@@ -12171,7 +12171,7 @@ class AnsweringMachine(object):
             if attr in d:
                 return d[attr]
         raise AttributeError,attr
-                
+
     def __setattr__(self, attr, val):
         mode = self.__dict__.get("mode",0)
         if mode == 0:
@@ -12185,7 +12185,7 @@ class AnsweringMachine(object):
     def parse_all_options(self, mode, kargs):
         sniffopt = {}
         sendopt = {}
-        for k in kargs.keys():            
+        for k in kargs.keys():
             if k in self.sniff_options_list:
                 sniffopt[k] = kargs[k]
             if k in self.send_options_list:
@@ -12199,7 +12199,7 @@ class AnsweringMachine(object):
                 k = self.optam0.copy()
                 k.update(kargs)
                 self.parse_options(**k)
-                kargs = k 
+                kargs = k
             omode = self.__dict__.get("mode",0)
             self.__dict__["mode"] = mode
             self.parse_options(**kargs)
@@ -12241,7 +12241,7 @@ class AnsweringMachine(object):
             self.sniff()
         except KeyboardInterrupt:
             print "Interrupted by user"
-        
+
     def sniff(self):
         sniff(**self.optsniff)
 
@@ -12281,7 +12281,7 @@ class BOOTP_am(AnsweringMachine):
     def print_reply(self, req, reply):
         print "Reply %s to %s" % (reply.getlayer(IP).dst,reply.dst)
 
-    def make_reply(self, req):        
+    def make_reply(self, req):
         mac = req.src
         if type(self.pool) is list:
             if not self.leases.has_key(mac):
@@ -12289,7 +12289,7 @@ class BOOTP_am(AnsweringMachine):
             ip = self.leases[mac]
         else:
             ip = self.pool
-            
+
         repb = req.getlayer(BOOTP).copy()
         repb.op="BOOTREPLY"
         repb.yiaddr = ip
@@ -12318,7 +12318,7 @@ class DHCP_am(BOOTP_am):
                              ]
             resp /= DHCP(options=dhcp_options)
         return resp
-    
+
 
 
 class DNS_am(AnsweringMachine):
@@ -12334,7 +12334,7 @@ class DNS_am(AnsweringMachine):
 
     def is_request(self, req):
         return req.haslayer(DNS) and req.getlayer(DNS).qr == 0
-    
+
     def make_reply(self, req):
         ip = req.getlayer(IP)
         dns = req.getlayer(DNS)
@@ -12364,13 +12364,13 @@ iwconfig wlan0 mode managed
 """
     function_name = "airpwn"
     filter = None
-    
+
     def parse_options(iffrom, ifto, replace, pattern="", ignorepattern=""):
         self.iffrom = iffrom
         self.ifto = ifto
         ptrn = re.compile(pattern)
         iptrn = re.compile(ignorepattern)
-        
+
     def is_request(self, pkt):
         if not isinstance(pkt,Dot11):
             return 0
@@ -12403,7 +12403,7 @@ iwconfig wlan0 mode managed
         q.getlayer(TCP).flags="RA"
         q.getlayer(TCP).seq+=len(replace)
         return [p,q]
-    
+
     def print_reply(self):
         print p.sprintf("Sent %IP.src%:%IP.sport% > %IP.dst%:%TCP.dport%")
 
@@ -12429,7 +12429,7 @@ class ARP_am(AnsweringMachine):
         return (req.haslayer(ARP) and
                 req.getlayer(ARP).op == 1 and
                 (self.IP_addr == None or self.IP_addr == req.getlayer(ARP).pdst))
-    
+
     def make_reply(self, req):
         ether = req.getlayer(Ether)
         arp = req.getlayer(ARP)
@@ -12497,23 +12497,23 @@ def voip_play(s1,list=None,**kargs):
     FIFO="/tmp/conv1.%i.%%i" % os.getpid()
     FIFO1=FIFO % 1
     FIFO2=FIFO % 2
-    
+
     os.mkfifo(FIFO1)
     os.mkfifo(FIFO2)
     try:
         os.system("soxmix -t .ul %s -t .ul %s -t ossdsp /dev/dsp &" % (FIFO1,FIFO2))
-        
+
         c1=open(FIFO1,"w", 4096)
         c2=open(FIFO2,"w", 4096)
         fcntl.fcntl(c1.fileno(),fcntl.F_SETFL, os.O_NONBLOCK)
         fcntl.fcntl(c2.fileno(),fcntl.F_SETFL, os.O_NONBLOCK)
-    
+
     #    dsp,rd = os.popen2("sox -t .ul -c 2 - -t ossdsp /dev/dsp")
         def play(pkt,last=[]):
             if not pkt:
-                return 
+                return
             if not pkt.haslayer(UDP):
-                return 
+                return
             ip=pkt.getlayer(IP)
             if s1 in [ip.src, ip.dst]:
                 if not last:
@@ -12530,7 +12530,7 @@ def voip_play(s1,list=None,**kargs):
     #                x2 = pkt.load[:12]
                     c2.write(pkt.load[12:])
     #            dsp.write(merge(x1,x2))
-    
+
         if list is None:
             sniff(store=0, prn=play, **kargs)
         else:
@@ -12544,13 +12544,13 @@ def voip_play(s1,list=None,**kargs):
 
 def voip_play1(s1,list=None,**kargs):
 
-    
+
     dsp,rd = os.popen2("sox -t .ul - -t ossdsp /dev/dsp")
     def play(pkt):
         if not pkt:
-            return 
+            return
         if not pkt.haslayer(UDP):
-            return 
+            return
         ip=pkt.getlayer(IP)
         if s1 in [ip.src, ip.dst]:
             dsp.write(pkt.getlayer(Raw).load[12:])
@@ -12568,9 +12568,9 @@ def voip_play2(s1,**kargs):
     dsp,rd = os.popen2("sox -t .ul -c 2 - -t ossdsp /dev/dsp")
     def play(pkt,last=[]):
         if not pkt:
-            return 
+            return
         if not pkt.haslayer(UDP):
-            return 
+            return
         ip=pkt.getlayer(IP)
         if s1 in [ip.src, ip.dst]:
             if not last:
@@ -12587,7 +12587,7 @@ def voip_play2(s1,**kargs):
                 x2 = pkt.load[:12]
 #                c2.write(pkt.load[12:])
             dsp.write(merge(x1,x2))
-            
+
     sniff(store=0, prn=play, **kargs)
 
 def voip_play3(lst=None,**kargs):
@@ -12618,10 +12618,10 @@ def IPID_count(lst, funcID=lambda x:x[1].id, funcpres=lambda x:x[1].summary()):
     print "Probably %i classes:" % len(classes), classes
     for id,pr in lst:
         print "%5i" % id, pr
-    
-    
-    
-            
+
+
+
+
 
 last=None
 
@@ -12667,9 +12667,9 @@ def fragleak(target,sport=123, dport=123, timeout=0.2, onlyasc=0):
                 if not ans.haslayer(Padding):
                     continue
 
-                
+
 #                print repr(ans.payload.payload.payload.payload)
-                
+
 #                if not isinstance(ans.payload.payload.payload.payload, Raw):
 #                    continue
 #                leak = ans.payload.payload.payload.payload.load[len(load):]
@@ -12698,7 +12698,7 @@ def fragleak2(target, timeout=0.4, onlyasc=0):
                     linehexdump(leak,onlyasc=onlyasc)
     except:
         pass
-    
+
 
 
 plst=[]
@@ -12717,9 +12717,9 @@ def get_toDS():
 #        print "iwpriv %s hostapd 1" % ifto
 #        os.system("iwpriv %s hostapd 1" % ifto)
 #        ifto += "ap"
-#        
+#
 #    os.system("iwconfig %s mode monitor" % iffrom)
-#    
+#
 
 def airpwn(iffrom, ifto, replace, pattern="", ignorepattern=""):
     """Before using this, initialize "iffrom" and "ifto" interfaces:
@@ -12738,7 +12738,7 @@ iwconfig wlan0 channel 11
 iwconfig wlan0 essid dontexist
 iwconfig wlan0 mode managed
 """
-    
+
     ptrn = re.compile(pattern)
     iptrn = re.compile(ignorepattern)
     def do_airpwn(p, ifto=ifto, replace=replace, ptrn=ptrn, iptrn=iptrn):
@@ -12771,17 +12771,17 @@ iwconfig wlan0 mode managed
         q.ID += 1
         q.getlayer(TCP).flags="RA"
         q.getlayer(TCP).seq+=len(replace)
-        
+
         sendp([p,q], iface=ifto, verbose=0)
-#        print "send",repr(p)        
+#        print "send",repr(p)
 #        print "send",repr(q)
         print p.sprintf("Sent %IP.src%:%IP.sport% > %IP.dst%:%TCP.dport%")
 
     sniff(iface=iffrom,prn=do_airpwn)
 
-            
-        
-    
+
+
+
 ##################
 ## Color themes ##
 ##################
@@ -12801,14 +12801,14 @@ class Color:
     uline = "\033[4m"
     blink = "\033[5m"
     invert = "\033[7m"
-        
+
 
 class ColorTheme:
     def __repr__(self):
         return "<%s>" % self.__class__.__name__
     def __getattr__(self, attr):
         return lambda x:x
-        
+
 
 class NoTheme(ColorTheme):
     pass
@@ -12818,7 +12818,7 @@ class AnsiColorTheme(ColorTheme):
     def __getattr__(self, attr):
         if attr.startswith("__"):
             raise AttributeError(attr)
-        s = "style_%s" % attr 
+        s = "style_%s" % attr
         if s in self.__class__.__dict__:
             before = getattr(self, s)
             after = self.style_normal
@@ -12833,8 +12833,8 @@ class AnsiColorTheme(ColorTheme):
                 val = fmt % val
             return before+val+after
         return do_style
-        
-        
+
+
     style_normal = ""
     style_prompt = ""
     style_punct = ""
@@ -12884,7 +12884,7 @@ class DefaultTheme(AnsiColorTheme):
     style_closed = Color.grey
     style_left = Color.blue+Color.invert
     style_right = Color.red+Color.invert
-    
+
 class BrightTheme(AnsiColorTheme):
     style_normal = Color.normal
     style_punct = Color.normal
@@ -12940,7 +12940,7 @@ class FormatTheme(ColorTheme):
                 val = fmt % val
             return col % val
         return do_style
-        
+
 
 class LatexTheme(FormatTheme):
     style_prompt = r"\textcolor{blue}{%s}"
@@ -12966,8 +12966,8 @@ class LatexTheme2(FormatTheme):
     style_layer_name = r"@`@textcolor@[@red@]@@[@@`@bfseries@[@@]@%s@]@"
     style_field_name = r"@`@textcolor@[@blue@]@@[@%s@]@"
     style_field_value = r"@`@textcolor@[@purple@]@@[@%s@]@"
-    style_emph_field_name = r"@`@textcolor@[@blue@]@@[@@`@underline@[@%s@]@@]@" 
-    style_emph_field_value = r"@`@textcolor@[@purple@]@@[@@`@underline@[@%s@]@@]@" 
+    style_emph_field_name = r"@`@textcolor@[@blue@]@@[@@`@underline@[@%s@]@@]@"
+    style_emph_field_value = r"@`@textcolor@[@purple@]@@[@@`@underline@[@%s@]@@]@"
     style_packetlist_name = r"@`@textcolor@[@red@]@@[@@`@bfseries@[@@]@%s@]@"
     style_packetlist_proto = r"@`@textcolor@[@blue@]@@[@%s@]@"
     style_packetlist_value = r"@`@textcolor@[@purple@]@@[@%s@]@"
@@ -13047,7 +13047,7 @@ class ConfClass:
             if i[0] != "_":
                 s += "%-10s = %s\n" % (i, repr(getattr(self, i)))
         return s[:-1]
-    
+
 class ProgPath(ConfClass):
     pdfreader = "acroread"
     psreader = "gv"
@@ -13057,7 +13057,7 @@ class ProgPath(ConfClass):
     tcpreplay = "tcpreplay"
     hexedit = "hexer"
     wireshark = "wireshark"
-    
+
 class Resolve:
     def __init__(self):
         self.fields = {}
@@ -13072,8 +13072,8 @@ class Resolve:
         return elt in self.fields
     def __repr__(self):
         return "<Resolve [%s]>" %  " ".join(str(x) for x in self.fields)
-    
-        
+
+
 
 
 class Conf(ConfClass):
@@ -13102,7 +13102,7 @@ resolve   : holds list of fields for which resolution should be done
 noenum    : holds list of enum fields for which conversion to string should NOT be done
 AS_resolver: choose the AS resolver class to use
 """
-    session = ""  
+    session = ""
     stealth = "not implemented"
     iface = get_working_if()
     checkIPID = 0
@@ -13143,8 +13143,8 @@ AS_resolver: choose the AS resolver class to use
     services_tcp = TCP_SERVICES
     services_udp = UDP_SERVICES
     manufdb = MANUFDB
-    AS_resolver = AS_resolver_multi() 
-        
+    AS_resolver = AS_resolver_multi()
+
 
 conf=Conf()
 
@@ -13202,7 +13202,7 @@ def autorun_commands(cmds,my_globals=None,verb=0):
                 sys.stderr.write(sys.__dict__.get("ps2","... "))
             else:
                 sys.stderr.write(str(sys.__dict__.get("ps1",ColorPrompt())))
-                
+
             l = cmds.pop()
             print l
             cmd += "\n"+l
@@ -13223,7 +13223,7 @@ def autorun_get_interactive_session(cmds, **kargs):
             self.s = ""
         def write(self, x):
             self.s += x
-            
+
     sw = StringWriter()
     sstdout,sstderr = sys.stdout,sys.stderr
     try:
@@ -13258,7 +13258,7 @@ def autorun_get_html_interactive_session(cmds, **kargs):
         s,res = autorun_get_interactive_session(cmds, **kargs)
     finally:
         conf.color_theme = ct
-    
+
     s = s.replace("<","&lt;").replace(">","&gt;").replace("#[#","<").replace("#]#",">")
     return s,res
 
@@ -13313,8 +13313,8 @@ def interact(mydict=None,argv=None,mybanner=None,loglevel=1):
 #            scapy_module = scapy_module[:-3]
 #
 #    scapy=imp.load_module("scapy",*imp.find_module(scapy_module))
-    
-    
+
+
     import __builtin__
 #    __builtin__.__dict__.update(scapy.__dict__)
     __builtin__.__dict__.update(globals())
@@ -13339,8 +13339,8 @@ def interact(mydict=None,argv=None,mybanner=None,loglevel=1):
                         if word[:n] == text and word != "__builtins__":
                             matches.append(word)
                 return matches
-        
-    
+
+
             def attr_matches(self, text):
                 m = re.match(r"(\w+(\.\w+)*)\.(\w*)", text)
                 if not m:
@@ -13363,12 +13363,12 @@ def interact(mydict=None,argv=None,mybanner=None,loglevel=1):
                     if word[:n] == attr and word != "__builtins__":
                         matches.append("%s.%s" % (expr, word))
                 return matches
-    
+
         readline.set_completer(ScapyCompleter().complete)
         readline.parse_and_bind("C-o: operate-and-get-next")
         readline.parse_and_bind("tab: complete")
-    
-    
+
+
     session=None
     session_name=""
     CONFIG_FILE = DEFAULT_CONFIG_FILE
@@ -13385,7 +13385,7 @@ def interact(mydict=None,argv=None,mybanner=None,loglevel=1):
                 CONFIG_FILE = parm
             elif opt == "-C":
                 CONFIG_FILE = None
-        
+
         if len(opts[1]) > 0:
             raise getopt.GetoptError("Too many parameters : [%s]" % string.join(opts[1]),None)
 
@@ -13397,7 +13397,7 @@ def interact(mydict=None,argv=None,mybanner=None,loglevel=1):
 
     if CONFIG_FILE:
         read_config_file(CONFIG_FILE)
-        
+
     if session_name:
         try:
             os.stat(session_name)
@@ -13422,7 +13422,7 @@ def interact(mydict=None,argv=None,mybanner=None,loglevel=1):
         else:
             conf.session = session_name
             session={"conf":conf}
-            
+
     else:
         session={"conf": conf}
 
@@ -13436,13 +13436,13 @@ def interact(mydict=None,argv=None,mybanner=None,loglevel=1):
             except IOError:
                 pass
         atexit.register(scapy_write_history_file,readline)
-    
+
     sys.ps1 = ColorPrompt()
     code.interact(banner = the_banner % (VERSION), local=session)
 
     if conf.session:
         save_session(conf.session, session)
-    
+
     sys.exit()
 
 
@@ -13453,7 +13453,7 @@ def read_config_file(configfile):
         log_loading.warning("Cannot read config file [%s] [%s]" % (configfile,e))
     except Exception,e:
         log_loading.exception("Error during evaluation of config file [%s]" % configfile)
-        
+
 
 if __name__ == "__main__":
     interact()

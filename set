@@ -10,15 +10,15 @@ import shutil
 import re
 
 if not os.path.isdir("reports/"):
-	os.makedirs("reports")
+    os.makedirs("reports")
 
 # check to see if we have python-pycrypto
 try:
-        from Crypto.Cipher import AES
+    from Crypto.Cipher import AES
 
 except ImportError:
-        print "[!] The python-pycrypto python module not installed. You will loose the ability to use multi-pyinjector."
-        pass
+    print "[!] The python-pycrypto python module not installed. You will loose the ability to use multi-pyinjector."
+    pass
 
 
 #########################################
@@ -39,8 +39,8 @@ update_config()
 
 # chmod routine
 if operating_system == "posix":
-        # change permissions if nix
-        subprocess.Popen("chmod +x set-automate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    # change permissions if nix
+    subprocess.Popen("chmod +x set-automate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 
 start_dns()
@@ -49,18 +49,18 @@ start_dns()
 for root, dirs, files in os.walk('src/program_junk/'):
     for f in files:
         try:
-                match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", f)
-                if not match:
-                        os.unlink(os.path.join(root, f))
+            match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", f)
+            if not match:
+                os.unlink(os.path.join(root, f))
 
         # if they are being used then ignore
         except: pass
     # loop through all the directories
     for d in dirs:
         try:
-                match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", d)
-                if not match:
-                        shutil.rmtree(os.path.join(root, d))
+            match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", d)
+            if not match:
+                shutil.rmtree(os.path.join(root, d))
         except: pass
 
 # if windows then do some stuff
@@ -70,13 +70,13 @@ if operating_system == "posix":
         # ROOT CHECK
         ################################################
 
-        if os.geteuid() != 0:
-                print "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)"
-                print "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n"
-                exit_set()
+    if os.geteuid() != 0:
+        print "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)"
+        print "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n"
+        exit_set()
 
 if operating_system != "windows":
-        check_pexpect()
+    check_pexpect()
 
 # if there isn't a set_config.py file yet, create one
 if not os.path.isfile("config/set_config.py"):
@@ -92,102 +92,102 @@ filewrite.write("{This is the main SET configuration file for all options used i
 filewrite.close()
 
 try:
-        # Remove old Signed_Updates
-        if os.path.isfile("src/program_junk/Signed_Update.jar"):
-                os.remove("src/program_junk/Signed_Update.jar")
+    # Remove old Signed_Updates
+    if os.path.isfile("src/program_junk/Signed_Update.jar"):
+        os.remove("src/program_junk/Signed_Update.jar")
 
-        # intitial user menu
-        if not os.path.isfile("src/agreement4"):
-                fileopen = file("readme/LICENSE", "r")
-                for line in fileopen:
-                        print line.rstrip()
+    # intitial user menu
+    if not os.path.isfile("src/agreement4"):
+        fileopen = file("readme/LICENSE", "r")
+        for line in fileopen:
+            print line.rstrip()
 
-                print bcolors.RED + """
-The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are 
-not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting 
+        print bcolors.RED + """
+The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are
+not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting
 yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN
-                choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
-                if choice == "yes" or choice == "y":
-                        filewrite = file("src/agreement4", "w")
-                        filewrite.write("user accepted")
-                        filewrite.close()
-                        print bcolors.ENDC
-                else: 
-                        print "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
-                        sys.exit()
-                      
-        while 1:
-                show_banner(define_version,'1')
-                show_main_menu = create_menu(text.main_text, text.main_menu)
+        choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
+        if choice == "yes" or choice == "y":
+            filewrite = file("src/agreement4", "w")
+            filewrite.write("user accepted")
+            filewrite.close()
+            print bcolors.ENDC
+        else:
+            print "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
+            sys.exit()
 
-                # special case of list item 99
-                print '\n  99) Exit the Social-Engineer Toolkit\n'
+    while 1:
+        show_banner(define_version,'1')
+        show_main_menu = create_menu(text.main_text, text.main_menu)
 
-                # mainc ore menu
-                main_menu_choice = (raw_input(setprompt("0", "")))
+        # special case of list item 99
+        print '\n  99) Exit the Social-Engineer Toolkit\n'
 
-                # funny
-                if main_menu_choice == "hugs":
-                        print_warning("Have you given someone a hug today? Remember a hug can change the world.")
-                        pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
+        # mainc ore menu
+        main_menu_choice = (raw_input(setprompt("0", "")))
 
-                # funny2
-                if main_menu_choice == "derbycon":
-                        print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 3.0 -- September 25th through September 29th 2012" + bcolors.ENDC)
-                        pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 25 - Sep 29th! Press {return} to continue." + bcolors.ENDC)
+        # funny
+        if main_menu_choice == "hugs":
+            print_warning("Have you given someone a hug today? Remember a hug can change the world.")
+            pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
 
-                # quit out
-                if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":
-                        exit_set()
-                        # cleans up stale processes from SET
-                        try:
-                                # kill anything python running on 80
-                                kill_proc("80","python")
-                                # kill anything on 443 ruby which is generally a rogue listener
-                                kill_proc("443", "ruby")
-                        except: pass
+        # funny2
+        if main_menu_choice == "derbycon":
+            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 3.0 -- September 25th through September 29th 2012" + bcolors.ENDC)
+            pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 25 - Sep 29th! Press {return} to continue." + bcolors.ENDC)
 
-                # load set
-                if main_menu_choice == '1':
-                        try:
-                                reload(src.core.set)
-                        except:
-                                import src.core.set
+        # quit out
+        if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":
+            exit_set()
+            # cleans up stale processes from SET
+            try:
+                # kill anything python running on 80
+                kill_proc("80","python")
+                # kill anything on 443 ruby which is generally a rogue listener
+                kill_proc("443", "ruby")
+            except: pass
 
-                # load fasttrack
-                if main_menu_choice == '2':
-                        try: reload(src.core.fasttrack)
-                        except: import src.core.fasttrack
-        
-                # third party modules
-                if main_menu_choice == '3':
-                        try: reload(src.core.module_handler)
-                        except: import src.core.module_handler
+        # load set
+        if main_menu_choice == '1':
+            try:
+                reload(src.core.set)
+            except:
+                import src.core.set
 
-                # update metasploit
-                if main_menu_choice == '4':
-                        update_metasploit()
+        # load fasttrack
+        if main_menu_choice == '2':
+            try: reload(src.core.fasttrack)
+            except: import src.core.fasttrack
 
-                # update set
-                if main_menu_choice == '5':
-                        update_set()
+        # third party modules
+        if main_menu_choice == '3':
+            try: reload(src.core.module_handler)
+            except: import src.core.module_handler
 
-                # credits
-                if main_menu_choice == '6':
-                        update_config()
-               
-                # update config
-                if main_menu_choice == '7':
-                        help_menu()
+        # update metasploit
+        if main_menu_choice == '4':
+            update_metasploit()
+
+        # update set
+        if main_menu_choice == '5':
+            update_set()
+
+        # credits
+        if main_menu_choice == '6':
+            update_config()
+
+        # update config
+        if main_menu_choice == '7':
+            help_menu()
 
 # handle keyboard interrupts
 except KeyboardInterrupt:
-        print "\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"
+    print "\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"
 
 # handle exceptions
 except Exception, error:
-        log(error)
-        print "\n\n[!] Something went wrong, printing the error: "+ str(error)
+    log(error)
+    print "\n\n[!] Something went wrong, printing the error: "+ str(error)
 
 # cleanup routine
 cleanup_routine()

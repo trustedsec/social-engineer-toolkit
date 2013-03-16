@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 """ Python lists used for quick conversion of user input
-    to strings used by the toolkit 
-    
+    to strings used by the toolkit
+
     """
-    
+
 def encoder_type(encode):
-    """ 
+    """
     Takes the value sent from the user encoding menu and returns
-    the actual value to be used. 
-    
+    the actual value to be used.
+
     """
 
     return {
@@ -34,15 +34,15 @@ def encoder_type(encode):
 
 def ms_module(exploit):
     """ Receives the input given by the user from gen_payload.py """
-    
+
     return {
-	    '1':"exploit/multi/browser/java_jre17_jmxbean_2",
-	    '2':"exploit/multi/browser/java_jre17_jmxbean",
-	    '3':"exploit/windows/browser/ie_cbutton_uaf",
-	    '4':"exploit/multi/browser/java_jre17_exec",
-	    '5':"exploit/windows/browser/ie_execcommand_uaf",
+            '1':"exploit/multi/browser/java_jre17_jmxbean_2",
+            '2':"exploit/multi/browser/java_jre17_jmxbean",
+            '3':"exploit/windows/browser/ie_cbutton_uaf",
+            '4':"exploit/multi/browser/java_jre17_exec",
+            '5':"exploit/windows/browser/ie_execcommand_uaf",
             '6':"exploit/multi/browser/java_atomicreferencearray",
-	    '7':"exploit/multi/browser/java_verifier_field_access",
+            '7':"exploit/multi/browser/java_verifier_field_access",
             '8':"exploit/windows/browser/ms12_037_same_id",
             '9':"exploit/windows/browser/msxml_get_definition_code_exec",
             '10':"exploit/windows/browser/adobe_flash_rtmp",
@@ -75,17 +75,17 @@ def ms_module(exploit):
             '37':"windows/browser/mozilla_mchannel",
             '38':"auxiliary/server/browser_autopwn",
            }.get(exploit,"ERROR")
-           
+
 
 # called from gen_payload.py
 # uses payload_menu_2
 def ms_payload(payload):
     """
-    Receives the input given by the user from create_payload.py 
-    and create_payloads.py 
+    Receives the input given by the user from create_payload.py
+    and create_payloads.py
 
     """
-    
+
     return {
             '1':"windows/shell_reverse_tcp",
             '2':"windows/meterpreter/reverse_tcp",
@@ -99,12 +99,12 @@ def ms_payload(payload):
             '10':"windows/meterpreter/reverse_tcp_dns",
             '11':"windows/download_exec",
             }.get(payload,"ERROR")
-            
+
 # called from create_payloads.py
 
 def ms_payload_2(payload):
     """ Receives the input given by the user from create_payloadS.py """
-    
+
     return {
             '1':"windows/shell_reverse_tcp",
             '2':"windows/meterpreter/reverse_tcp",
@@ -120,13 +120,13 @@ def ms_payload_2(payload):
             '12':"set/reverse_shell",
             '13':"set/reverse_shell",
             '14':"shellcode/alphanum",
-	    '15':"shellcode/pyinject",
-	    '16':"shellcode/multipyinject",
+            '15':"shellcode/pyinject",
+            '16':"shellcode/multipyinject",
             }.get(payload,"ERROR")
-            
+
 def ms_payload_3(payload):
     """ Receives the input given by the user from create_payloadS.py """
-    
+
     return {
             '1':"windows/shell_reverse_tcp",
             '2':"windows/meterpreter/reverse_tcp",
@@ -141,7 +141,7 @@ def ms_payload_3(payload):
 # uses create_payloads_menu
 def ms_attacks(exploit):
     """ Receives the input given by the user from create_payload.py """
-    
+
     return {
             '1':"dll_hijacking",
             '2':"unc_embed",
@@ -164,7 +164,7 @@ def ms_attacks(exploit):
             '19':"exploit/windows/fileformat/adobe_reader_u3d",
             '20':"exploit/windows/fileformat/ms12_027_mscomctl_bof",
             }.get(exploit,"INVALID")
-            
+
 def teensy_config(choice):
     """ Receives the input given by the user from set.py """
 
@@ -176,10 +176,10 @@ def teensy_config(choice):
             '5':"java_applet.pde",
             '6':"gnome_wget.pde"
             }.get(choice,"ERROR")
-            
+
 def webattack_vector(attack_vector):
     """ Receives the input given by the user from set.py """
-    
+
     return {
             '1':"java",
             '2':"browser",
@@ -189,12 +189,12 @@ def webattack_vector(attack_vector):
             '6':"webjacking",
             '7':"multiattack"
             }.get(attack_vector,"ERROR")
-            
+
 
 def category(category):
-    """ 
+    """
     Takes the value sent from the user encoding menu and returns
-    the actual value to be used. 
+    the actual value to be used.
 
     """
 
@@ -229,7 +229,6 @@ def category(category):
             '27':"set",
             '28':"teensy2powershell",
             '29':"powershell",
-	    '30':"delldrac",
-	    '31':"ridenum"
+            '30':"delldrac",
+            '31':"ridenum"
            }.get(category,"ERROR")
-
