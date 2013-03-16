@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 4.7.1
+~~~~~~~~~~~~~~~~
+
+* added rid_enum into the fasttrack menu - no modifications needed to the file itself and built into SET logic (will always maintain most recent git version)
+
+~~~~~~~~~~~~~~~~
 version 4.7
 ~~~~~~~~~~~~~~~~
 

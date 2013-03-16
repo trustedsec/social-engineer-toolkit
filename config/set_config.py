@@ -9,10 +9,10 @@
 #  SET updated using the 'Update SET Configuration' menu item in      #
 #  the main menu. This file will be updated with the new settings.    #
 #                                                                     #
-#  set_config.py generated: 2013-03-15 11:13:36.564372                #
+#  set_config.py generated: 2013-03-16 12:14:25.755490                #
 #                                                                     #
 #######################################################################
-CONFIG_DATE='2013-03-15 11:13:36.564372'
+CONFIG_DATE='2013-03-16 12:14:25.755490'
 METASPLOIT_PATH="/opt/metasploit/apps/pro/msf3"
 METASPLOIT_DATABASE="postgresql"
 ENCOUNT=4

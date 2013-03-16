@@ -229,6 +229,7 @@ def category(category):
             '27':"set",
             '28':"teensy2powershell",
             '29':"powershell",
-	    '30':"delldrac"
+	    '30':"delldrac",
+	    '31':"ridenum"
            }.get(category,"ERROR")
 

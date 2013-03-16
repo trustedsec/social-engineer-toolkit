@@ -221,7 +221,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '4.7'
+    define_version = '4.7.1'
     return define_version
 
 class create_menu:
@@ -843,7 +843,7 @@ def show_banner(define_version,graphic):
         print bcolors.BLUE + """
   [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]        
   [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-  [---]                   Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
+  [---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                  [---]
   [---]               Codename: '""" + bcolors.YELLOW + """Headshot""" + bcolors.BLUE + """'               [---]
   [---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
   [---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]

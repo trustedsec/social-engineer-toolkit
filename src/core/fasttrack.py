@@ -289,6 +289,61 @@ try:
 			# load drac menu
 			subprocess.Popen("python %s/src/fasttrack/delldrac.py" % (definepath), shell=True).wait()
 
+
+                ##################################
+                ##################################
+                # RID ENUM USER ENUMERATION
+                ##################################
+                ##################################
+                if attack_vector == "5":
+			print (""".______       __   _______         _______ .__   __.  __    __  .___  ___.
+|   _  \     |  | |       \       |   ____||  \ |  | |  |  |  | |   \/   |
+|  |_)  |    |  | |  .--.  |      |  |__   |   \|  | |  |  |  | |  \  /  |
+|      /     |  | |  |  |  |      |   __|  |  . `  | |  |  |  | |  |\/|  |
+|  |\  \----.|  | |  '--'  |      |  |____ |  |\   | |  `--'  | |  |  |  |
+| _| `._____||__| |_______/  _____|_______||__| \__|  \______/  |__|  |__|
+                            |______|
+""")
+			print "\nRID_ENUM is a tool that will enumerate user accounts through a rid cycling attack through null sessions. In\norder for this to work, the remote server will need to have null sessions enabled. In most cases, you would use\nthis against a domain controller on an internal penetration test. You do not need to provide credentials, it will\nattempt to enumerate the base RID address and then cycle through 500 (Administrator) to whatever RID you want."
+			print "\n"
+        	        ipaddr = raw_input(setprompt(["31"], "Enter the IP address of server (or quit to exit)"))
+        	        if ipaddr == "99" or ipaddr == "quit" or ipaddr == "exit":
+                	        break
+			print_status("Next you can automatically brute force the user accounts. If you do not want to brute force, type no at the next prompt")
+			dict = raw_input(setprompt(["31"], "Enter path to dictionary file to brute force [enter for built in]"))
+			# if we are using the built in one
+			if dict == "":
+				# write out a file
+				filewrite = file("src/program_junk/dictionary.txt", "w")
+				filewrite.write("\nPassword1")
+				# specify the path
+				dict = "src/program_junk/dictionary.txt"
+
+			# if we are not brute forcing
+			if dict.lower() == "no":
+				print_status("No problem, not brute forcing user accounts")
+				dict = ""
+
+			if dict != "":
+				print_warning("You are about to brute force user accounts, be careful for lockouts.")
+				choice = raw_input(setprompt(["31"], "Are you sure you want to brute force [yes/no]"))
+				if choice.lower() == "n" or choice.lower() == "no":
+					print_status("Okay. Not brute forcing user accounts *phew*.")
+					dict = ""
+
+			# next we see what rid we want to start
+			start_rid = raw_input(setprompt(["31"], "What RID do you want to start at [500]"))
+			if start_rid == "": start_rid = "500"
+			# stop rid
+			stop_rid = raw_input(setprompt(["31"], "What RID do you want to stop at [15000]"))
+			if stop_rid == "": stop_rid = "15000"
+			print_status("Launching RID_ENUM to start enumerating user accounts...")
+			subprocess.Popen("python src/fasttrack/rid_enum.py %s %s %s %s" % (ipaddr,start_rid,stop_rid,dict), shell=True).wait()
+
+			# once we are finished, prompt.
+			print_status("Everything is finished!")
+			pause = raw_input("Press {return} to go back to the main menu.)
+
 # handle keyboard exceptions
 except KeyboardInterrupt: 
         pass
