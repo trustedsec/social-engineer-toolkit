@@ -3,7 +3,7 @@ import random
 from src.core import setcore as core
 
 try:
-    print ("\n         [****]  Custom Template Generator [****]\n") 
+    print ("\n         [****]  Custom Template Generator [****]\n")
     author=raw_input(core.setprompt(["7"], "Name of the author"))
     filename=randomgen=random.randrange(1,99999999999999999999)
     filename=str(filename)+(".template")

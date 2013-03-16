@@ -4,7 +4,7 @@
 #
 #                               Social-Engineer Toolkit Persistence Service
 #
-# Right now this is a pretty lame attempt at a service but will grow over time. The text file it reads in from isn't 
+# Right now this is a pretty lame attempt at a service but will grow over time. The text file it reads in from isn't
 # really a good idea, but it's a start.
 #
 #####################################################################################################################
@@ -47,16 +47,16 @@ class aservice(win32serviceutil.ServiceFramework):
     def SvcDoRun(self):
         import servicemanager
         # wait for beeing stopped ...
-        self.timeout=1000  # In milliseconds (update every second) 
+        self.timeout=1000  # In milliseconds (update every second)
         while self.isAlive:
             # wait for service stop signal, if timeout, loop again
-            rc=win32event.WaitForSingleObject(self.hWaitStop, self.timeout) 
+            rc=win32event.WaitForSingleObject(self.hWaitStop, self.timeout)
             # expand the filesystem path
             windir=os.environ['WINDIR']
             # grab homepath
             homedir_path = os.getenv("SystemDrive")
             homedir_path = homedir_path + "\\Program Files\\Common Files\\"
-            # pull the windows operating system version number            
+            # pull the windows operating system version number
             windows_version = sys.getwindowsversion()[2]
             # pull integer of version number
             windows_version = int(windows_version)

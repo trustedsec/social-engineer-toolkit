@@ -9,7 +9,7 @@ while 1:
     print """
    SMS Attack Menu
 
-   There are diferent attacks you can launch in the context of SMS spoofing, 
+   There are diferent attacks you can launch in the context of SMS spoofing,
    select your own.
 
     1.  SMS Attack Single Phone Number
@@ -21,7 +21,7 @@ while 1:
 
     if attack_option == 'exit':
         core.exit_set()
-    # exit 
+    # exit
     if attack_option == '1':
         print("\nSingle SMS Attack")
         to = raw_input(core.setprompt(["7"], "Send sms to"))
@@ -29,7 +29,7 @@ while 1:
         phones.append(to)
         sys.path.append("src/sms/client/")
         try:
-            # ugly but "compliant" with SET architecture 
+            # ugly but "compliant" with SET architecture
             debug_msg(me,"importing 'src.sms.client.sms_launch'",1)
             reload(sms_launch)
             sms_launch.phones = phones
@@ -37,7 +37,7 @@ while 1:
         except:
             import sms_launch
             sms_launch.phones = phones
-            sms_launch.launch() 
+            sms_launch.launch()
         break
     if attack_option == '2':
         # TO DO: MASS SMS ATTACK
@@ -55,15 +55,15 @@ while 1:
             break
         sys.path.append("src/sms/client/")
         try:
-            # ugly but "compliant" with SET architecture 
+            # ugly but "compliant" with SET architecture
             debug_msg(me,"importing 'src.sms.client.sms_launch'",1)
             reload(sms_launch)
             sms_launch.phones = phones
             sms_launch.launch()
         except:
-            import sms_launch 
+            import sms_launch
             sms_launch.phones = phones
             sms_launch.launch()
         break
-    if attack_option == '99': 
+    if attack_option == '99':
         break

@@ -20,12 +20,12 @@ from config.set_config import AP_CHANNEL as ap_channel
 from config.set_config import DNSSPOOF_PATH as dnsspoof_path
 
 if not os.path.isfile(dnsspoof_path):
-   print_warning("DNSSpoof was not found. Please install or correct path in set_config. Exiting....")
-   exit_set()
+    print_warning("DNSSpoof was not found. Please install or correct path in set_config. Exiting....")
+    exit_set()
 
 if not os.path.isfile(airbase_path):
     airbase_path = "src/wireless/airbase-ng"
-    print_info("using SET's local airbase-ng binary") 
+    print_info("using SET's local airbase-ng binary")
 
 print_info("For this attack to work properly, we must edit the dhcp3-server file to include our wireless interface.")
 print_info("""This will allow dhcp3 to properly assign IPs. (INTERFACES="at0")""")
@@ -72,7 +72,7 @@ if fakeap_dhcp_menu_choice != "":
     fakeap_dhcp_menu_choice = check_length(fakeap_dhcp_menu_choice,2)
     # convert it to a string
     fakeap_dhcp_menu_choice = str(fakeap_dhcp_menu_choice)
-    
+
 if fakeap_dhcp_menu_choice == "":
     fakeap_dhcp_menu_choice = "1"
 

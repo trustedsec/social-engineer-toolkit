@@ -24,7 +24,7 @@ for line in fileopen:
     # strip any garbage trailing characters
     line=line.rstrip()
     # grab anything without comments on it
-    if line[0:1] != "#": 
+    if line[0:1] != "#":
         line=line.split("=")
         html_form(line[0],line[1])
         counter=counter+1

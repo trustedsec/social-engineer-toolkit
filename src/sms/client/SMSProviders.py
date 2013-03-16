@@ -11,8 +11,8 @@ def send_sohoos_sms(to, origin, text):
         conn = httplib.HTTPConnection('sohoos.com')
         conn.request('POST', '/crm/managekit/widget/submitsms', params, headers)
         response = conn.getresponse()
-        if (response.status == 302 and 
-            response.reason == "Found" and 
+        if (response.status == 302 and
+            response.reason == "Found" and
             response.getheader("location") == "/crm/managekit/widget/thankssms"):
             print "\nSMS sent\n"
         else:
@@ -35,7 +35,7 @@ def send_smsgang_sms(to, origin, text, pincode):
         conn = httplib.HTTPConnection('www.smsgang.com')
         conn.request('POST', '/sendsms.php?langfile=en', params, headers)
         response = conn.getresponse()
-        if (response.status == 200 and 
+        if (response.status == 200 and
                 re.search("Your SMS was sent", response.read())):
             print "\nSMS sent\n"
         else:
@@ -52,7 +52,7 @@ def send_lleidanet_sms(to, origin, text, user, password, email):
         conn = httplib.HTTPConnection('sms.lleida.net')
         conn.request('POST', '/xmlapi/smsgw.cgi', params, headers)
         response = conn.getresponse()
-        if (response.status == 200 and 
+        if (response.status == 200 and
             re.search("<status>100</status>", response.read())):
             print "\nSMS sent\n"
         else:
@@ -76,4 +76,3 @@ def send_android_emu_sms(origin, text):
             print "Try: http://developer.android.com/guide/developing/tools/emulator.html"
     except:
         print "\nError sending SMS"
-

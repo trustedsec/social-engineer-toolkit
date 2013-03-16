@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 try:
-	import readline
+    import readline
 except:
-	pass
+    pass
 from src.core.setcore import bcolors, get_version, check_os, meta_path
 
 # grab version of SET
@@ -68,15 +68,15 @@ webattack_menu = ['Java Applet Attack Method',
 
 fasttrack_menu = ['Microsoft SQL Bruter',
                  'Custom Exploits',
-		 'SCCM Attack Vector',
-		 'Dell DRAC/Chassis Default Checker',
+                 'SCCM Attack Vector',
+                 'Dell DRAC/Chassis Default Checker',
                  '0D']
 
 fasttrack_text = ("""
 Welcome to the Social-Engineer Toolkit - """ + bcolors.BOLD + """Fast-Track Penetration Testing platform""" + bcolors.ENDC + """. These attack vectors
 have a series of exploits and automation aspects to assist in the art of penetration testing. SET
-now incorporates the attack vectors leveraged in Fast-Track. All of these attack vectors have been 
-completely rewritten and customized from scratch as to improve functionality and capabilities. 
+now incorporates the attack vectors leveraged in Fast-Track. All of these attack vectors have been
+completely rewritten and customized from scratch as to improve functionality and capabilities.
 """)
 
 fasttrack_exploits_menu1 = ['MS08-067 (Win2000, Win2k3, WinXP)',
@@ -88,7 +88,7 @@ fasttrack_exploits_menu1 = ['MS08-067 (Win2000, Win2k3, WinXP)',
                            '0D']
 
 fasttrack_exploits_text1 = ("""
-Welcome to the Social-Engineer Toolkit - Fast-Track Penetration Testing """ + bcolors.BOLD + """Exploits Section""" + bcolors.ENDC + """. This 
+Welcome to the Social-Engineer Toolkit - Fast-Track Penetration Testing """ + bcolors.BOLD + """Exploits Section""" + bcolors.ENDC + """. This
 menu has obscure exploits and ones that are primarily python driven. This will continue to grow over time.
 """)
 
@@ -99,7 +99,7 @@ fasttrack_mssql_menu1 = ['Scan and Attack MSSQL',
 fasttrack_mssql_text1 = ("""
 Welcome to the Social-Engineer Toolkit - Fast-Track Penetration Testing """ + bcolors.BOLD + """Microsoft SQL Brute Forcer""" + bcolors.ENDC + """. This
 attack vector will attempt to identify live MSSQL servers and brute force the weak account passwords that
-may be found. If that occurs, SET will then compromise the affected system by deploying a binary to 
+may be found. If that occurs, SET will then compromise the affected system by deploying a binary to
 hexadecimal attack vector which will take a raw binary, convert it to hexadecimal and use a staged approach
 in deploying the hexadecimal form of the binary onto the underlying system. At this point, a trigger will occur
 to convert the payload back to a binary for us.
@@ -109,7 +109,7 @@ webattack_text = ("""
  The Web Attack module is  a unique way of utilizing multiple web-based attacks
  in order to compromise the intended victim.
 
- The """ + bcolors.BOLD + """Java Applet Attack""" + bcolors.ENDC + """ method will spoof a Java Certificate and deliver a 
+ The """ + bcolors.BOLD + """Java Applet Attack""" + bcolors.ENDC + """ method will spoof a Java Certificate and deliver a
  metasploit based payload. Uses a customized java applet created by Thomas
  Werth to deliver the payload.
 
@@ -117,21 +117,21 @@ webattack_text = ("""
  browser exploits through an iframe and deliver a Metasploit payload.
 
  The """ + bcolors.BOLD + """Credential Harvester""" + bcolors.ENDC + """ method will utilize web cloning of a web-
- site that has a username and password field and harvest all the 
+ site that has a username and password field and harvest all the
  information posted to the website.
 
  The """ + bcolors.BOLD + """TabNabbing""" + bcolors.ENDC + """ method will wait for a user to move to a different
  tab, then refresh the page to something different.
 
- The """ + bcolors.BOLD + """Man Left in the Middle Attack""" + bcolors.ENDC + """ method was introduced by Kos and 
- utilizes HTTP REFERER's in order to intercept fields and harvest 
+ The """ + bcolors.BOLD + """Man Left in the Middle Attack""" + bcolors.ENDC + """ method was introduced by Kos and
+ utilizes HTTP REFERER's in order to intercept fields and harvest
  data from them. You need to have an already vulnerable site and in-
  corporate <script src="http://YOURIP/">. This could either be from a
  compromised site or through XSS.
 
- The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, Emgent 
- and the Back|Track team. This method utilizes iframe replacements to 
- make the highlighted URL link to appear legitimate however when clicked 
+ The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, Emgent
+ and the Back|Track team. This method utilizes iframe replacements to
+ make the highlighted URL link to appear legitimate however when clicked
  a window pops up then is replaced with the malicious link. You can edit
  the link replacement settings in the set_config if its too slow/fast.
 
@@ -142,12 +142,12 @@ webattack_text = ("""
 """)
 
 webattack_vectors_menu = ['Web Templates',
-                          'Site Cloner', 
+                          'Site Cloner',
                           'Custom Import\n',
                           ]
 
 webattack_vectors_text = ("""
- The first method will allow SET to import a list of pre-defined web 
+ The first method will allow SET to import a list of pre-defined web
  applications that it can utilize within the attack.
 
  The second method will completely clone a website of your choosing
@@ -171,7 +171,7 @@ teensy_menu = ['Powershell HTTP GET MSF Payload',
                'X10 Arduino Sniffer PDE and Libraries',
                'X10 Arduino Jammer PDE and Libraries',
                'Powershell Direct ShellCode Teensy Attack',
-	       'Peensy Multi Attack Dip Switch + SDCard Attack',
+               'Peensy Multi Attack Dip Switch + SDCard Attack',
                '0D']
 
 teensy_text = ("""
@@ -188,7 +188,7 @@ teensy_text = ("""
 
  This attack vector will create the .pde files necessary to import
  into Arduino (the IDE used for programming the Teensy). The attack
- vectors range from Powershell based downloaders, wscript attacks, 
+ vectors range from Powershell based downloaders, wscript attacks,
  and other methods.
 
  For more information on specifications and good tutorials visit:
@@ -204,17 +204,17 @@ teensy_text = ("""
  Select a payload to create the pde file to import into Arduino:
 """)
 
-sms_attack_menu = ['Perform a SMS Spoofing Attack', 
+sms_attack_menu = ['Perform a SMS Spoofing Attack',
                    'Create a Social-Engineering Template',
                    '0D']
 
 sms_attack_text = ("""
  The """ + bcolors.BOLD + """SMS""" + bcolors.ENDC + """ module allows you to specially craft SMS messages and send them
- to a person. You can spoof the SMS source. 
+ to a person. You can spoof the SMS source.
 
  This module was created by the team at TB-Security.com.
 
- You can use a predefined template, create your own template or specify 
+ You can use a predefined template, create your own template or specify
  an arbitrary message. The main method for this would be to get a user to
  click or coax them on a link in their browser and steal credentials or
  perform other attack vectors.
@@ -230,7 +230,7 @@ wireless_attack_text = """
  wireless card and redirect all DNS queries to you. The concept is fairly
  simple, SET will create a wireless access point, dhcp server, and spoof
  DNS to redirect traffic to the attacker machine. It will then exit out
- of that menu with everything running as a child process. 
+ of that menu with everything running as a child process.
 
  You can then launch any SET attack vector you want, for example the Java
  Applet attack and when a victim joins your access point and tries going to
@@ -240,7 +240,7 @@ wireless_attack_text = """
 
 """
 
-infectious_menu = ['File-Format Exploits', 
+infectious_menu = ['File-Format Exploits',
                    'Standard Metasploit Executable',
                    '0D']
 
@@ -252,12 +252,12 @@ infectious_text = """
 
  Pick the attack vector you wish to use: fileformat bugs or a straight executable.
 """
-   
+
 
 # used in create_payloads.py
 if operating_system != "windows":
     if msf_path != False:
-            payload_menu_1 = [
+        payload_menu_1 = [
 'Windows Shell Reverse_TCP               Spawn a command shell on victim and send back to attacker',
 'Windows Reverse_TCP Meterpreter         Spawn a meterpreter shell on victim and send back to attacker',
 'Windows Reverse_TCP VNC DLL             Spawn a VNC server on victim and send back to attacker',
@@ -336,7 +336,7 @@ create_payloads_menu = [
 'Adobe PDF Embedded EXE Social Engineering (NOJS)',
 'Foxit PDF Reader v4.1.1 Title Stack Buffer Overflow',
 'Apple QuickTime PICT PnSize Buffer Overflow',
-'Nuance PDF Reader v6.0 Launch Stack Buffer Overflow', 
+'Nuance PDF Reader v6.0 Launch Stack Buffer Overflow',
 'Adobe Reader u3D Memory Corruption Vulnerability',
 'MSCOMCTL ActiveX Buffer Overflow (ms12-027)\n']
 
@@ -397,9 +397,9 @@ powershell_menu = ['Powershell Alphanumeric Shellcode Injector',
                   '0D']
 
 powershell_text = ("""
-The """ + bcolors.BOLD + """Powershell Attack Vector""" + bcolors.ENDC + """ module allows you to create PowerShell specific attacks. These attacks will allow 
-you to use PowerShell which is available by default in all operating systems Windows Vista and above. PowerShell 
-provides a fruitful  landscape for deploying payloads and performing functions that  do not get triggered by 
+The """ + bcolors.BOLD + """Powershell Attack Vector""" + bcolors.ENDC + """ module allows you to create PowerShell specific attacks. These attacks will allow
+you to use PowerShell which is available by default in all operating systems Windows Vista and above. PowerShell
+provides a fruitful  landscape for deploying payloads and performing functions that  do not get triggered by
 preventative technologies.
 """)
 
@@ -423,13 +423,13 @@ encoder_menu = ['avoid_utf8_tolower (Normal)',
 
 encoder_text = """
 Select one of the below, 'backdoored executable' is typically the best. However,
-most still get picked up by AV. You may need to do additional packing/crypting 
+most still get picked up by AV. You may need to do additional packing/crypting
 in order to get around basic AV detection.
 """
 
 dll_hijacker_text = """
- The DLL Hijacker vulnerability will allow normal file extenstions to 
- call local (or remote) .dll files that can then call your payload or 
+ The DLL Hijacker vulnerability will allow normal file extenstions to
+ call local (or remote) .dll files that can then call your payload or
  executable. In this scenario it will compact the attack in a zip file
  and when the user opens the file extension, will trigger the dll then
  ultimately our payload. During the time of this release, all of these

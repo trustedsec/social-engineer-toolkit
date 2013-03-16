@@ -19,7 +19,7 @@ Set Results = objSMS.ExecQuery _
    ("SELECT * From SMS_ProviderLocation WHERE ProviderForLocalSite = true")
  For each Loc in Results
    If Loc.ProviderForLocalSite = True Then
-     Set objSMS2 = objLoc.ConnectServer(Loc.Machine, "root\sms\site_"& _ 
+     Set objSMS2 = objLoc.ConnectServer(Loc.Machine, "root\sms\site_"& _
         Loc.SiteCode)
      strSMSSiteCode = Loc.SiteCode
    end if
@@ -28,7 +28,7 @@ Set Results = objSMS.ExecQuery _
 Set objPkgs = objSMS2.ExecQuery("select * from SMS_Package where PackageID = '" & strPackageID & "'")
 for each objPkg in objPkgs
 objPkg.RefreshPkgSource(0)
-Next 
+Next
 ''' % (sms_server, package_id)
 
 # write out the file to reports

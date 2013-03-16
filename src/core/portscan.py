@@ -60,19 +60,19 @@ def scan(host, start, stop):
             results[(nhost, nport)] = nstatus
         status = results[(host, port)]
         if status <> 'CLOSED':
-                port_open = '%s:%d %s' % (host, port, status)
-                print_status(port_open)
-                host_list = host_list + "," + port_open               
-                host_down = 1
+            port_open = '%s:%d %s' % (host, port, status)
+            print_status(port_open)
+            host_list = host_list + "," + port_open
+            host_down = 1
 
     # if no hosts were up then report host down
     if host_down == 0:
-                return False
+        return False
     # else host is up and return those hosts
     if host_down == 1:
-                time.sleep(1)
-                #host_list = str(host_list[1:])
-                return host_list
+        time.sleep(1)
+        #host_list = str(host_list[1:])
+        return host_list
 
 # Copyright (c) 2007 Brandon Sterne
 # Licensed under the MIT license.
@@ -158,19 +158,18 @@ def validateCIDRBlock(b):
     # passed all checks -> return True
     return True
 
-# start the actual stuff to grab cidr and port scan    
+# start the actual stuff to grab cidr and port scan
 def launch(cidrBlock,lowport,highport):
-        print_status("SET is now scanning the IPs specified... please be patient.")    
-        if not validateCIDRBlock(cidrBlock):
+    print_status("SET is now scanning the IPs specified... please be patient.")
+    if not validateCIDRBlock(cidrBlock):
                 # validate its really an ip address if solo
-                ip_check = is_valid_ip(cidrBlock)
-                if ip_check != False:
-                        print_status("CIDR notation not specified. Trying single IP address.")
-                        scan(cidrBlock, int(lowport), int(highport))
-                        return host_list
-                else:
-                        print_warning("Invalid IP Address, try again.")
+        ip_check = is_valid_ip(cidrBlock)
+        if ip_check != False:
+            print_status("CIDR notation not specified. Trying single IP address.")
+            scan(cidrBlock, int(lowport), int(highport))
+            return host_list
         else:
-                printCIDR(cidrBlock,lowport,highport)
-                return host_list
-
+            print_warning("Invalid IP Address, try again.")
+    else:
+        printCIDR(cidrBlock,lowport,highport)
+        return host_list

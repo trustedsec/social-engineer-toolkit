@@ -16,14 +16,14 @@ definepath=os.getcwd()
 config=file("config/set_config", "r").readlines()
 # grab our default directory
 cwd=os.getcwd()
-# set a variable as default to n or no 
+# set a variable as default to n or no
 ettercapchoice= 'n'
 # add dsniffchoice
 dsniffchoice = 'n'
 for line in config:
     # check for ettercap choice here
     match1=re.search("ETTERCAP=ON",line)
-    if match1: 
+    if match1:
         setcore.print_info("ARP Cache Poisoning is set to " + setcore.bcolors.GREEN + "ON" + setcore.bcolors.ENDC)
         ettercapchoice='y'
 
@@ -52,8 +52,8 @@ for line in fileopen:
         line=line.rstrip()
         path=line.replace("ETTERCAP_PATH=", "")
 
-	if not os.path.isfile(path):
-		path = ("/usr/local/share/ettercap")
+        if not os.path.isfile(path):
+            path = ("/usr/local/share/ettercap")
 
 # if we are using ettercap then get everything ready
 if ettercapchoice== 'y':
@@ -73,7 +73,7 @@ if ettercapchoice== 'y':
   will want to trigger the DNS redirect on. A simple example of this is if you
   wanted to trigger everyone on your subnet to connect to you when they go to
   browse to www.google.com, the victim would then be redirected to your malicious
-  site. You can alternatively poison everyone and everysite by using the wildcard 
+  site. You can alternatively poison everyone and everysite by using the wildcard
   '*' flag.
 
   IF YOU WANT TO POISON ALL DNS ENTRIES (DEFAULT) JUST HIT ENTER OR *
@@ -83,7 +83,7 @@ if ettercapchoice== 'y':
             os.chdir(path)
             # small fix for default
             if dns_spoof == "":
-                # set default to * (everything)
+            # set default to * (everything)
                 dns_spoof="*"
             # remove old stale files
             subprocess.Popen("rm etter.dns 1> /dev/null 2> /dev/null", shell=True).wait()
@@ -112,10 +112,10 @@ if ettercapchoice== 'y':
             filewrite.close()
             os.chdir(cwd)
         except Exception, error:
-            os.chdir(cwd) 
+            os.chdir(cwd)
             #log(error)
             setcore.print_error("ERROR:An error has occured:")
-            print "ERROR:" +str(error) 
+            print "ERROR:" +str(error)
 
 # if we are using dsniff
 if dsniffchoice == 'y':
@@ -135,7 +135,7 @@ if dsniffchoice == 'y':
   will want to trigger the DNS redirect on. A simple example of this is if you
   wanted to trigger everyone on your subnet to connect to you when they go to
   browse to www.google.com, the victim would then be redirected to your malicious
-  site. You can alternatively poison everyone and everysite by using the wildcard 
+  site. You can alternatively poison everyone and everysite by using the wildcard
   '*' flag.
 
   IF YOU WANT TO POISON ALL DNS ENTRIES (DEFAULT) JUST HIT ENTER OR *
@@ -167,10 +167,8 @@ if dsniffchoice == 'y':
             # this is needed to keep it similar to format above for web gui mode
             pause=raw_input("Press <return> to begin dsniff.")
         except Exception, error:
-            os.chdir(cwd) 
+            os.chdir(cwd)
             #log(error)
             # print error message
             setcore.print_error("ERROR:An error has occurred:")
             print setcore.bcolors.RED + "ERROR" + str(error) + setcore.bcolors.ENDC
-
-

@@ -19,7 +19,7 @@ for line in fileopen:
 # grab attack_vector specification
 fileopen=file("src/program_junk/attack_vector", "r")
 for line in fileopen:
-        attack_vector=line.rstrip()
+    attack_vector=line.rstrip()
 
 # need to see if we created file to trigger multi attack webjacking
 multi_webjacking="off"
@@ -30,7 +30,7 @@ if os.path.isfile("src/program_junk/multi_webjacking"):
 # Open the IPADDR file
 ipaddr=""
 if check_options("IPADDR=") != 0:
-	ipaddr = check_options("IPADDR=")
+    ipaddr = check_options("IPADDR=")
 
 # pull URL field so we can pull favicon later on
 fileopen=file("src/program_junk/site.template","r").readlines()
