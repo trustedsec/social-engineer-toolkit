@@ -170,7 +170,7 @@ TERMINAL=SOLO
 ### Digital signature stealing method must have the pefile Python modules loaded
 ### from http://code.google.com/p/pefile/. Be sure to install this before turning
 ### this flag on!!! This flag gives much better AV detection
-DIGITAL_SIGNATURE_STEAL=ON
+DIGITAL_SIGNATURE_STEAL=OFF
 #
 ### These two options will turn the upx packer to on and automatically attempt
 ### to pack the executable which may evade anti-virus a little better.
@@ -220,13 +220,10 @@ POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_tcp
 ### NOTE THAT POWERSHELL INJECTION MUST BE SET TO ON.
 POWERSHELL_MULTI_INJECTION=ON
 #
-### THIS WILL CONFIGURE WHICH PORTS TO USE FOR POWERSHELL INJECTION
-POWERSHELL_MULTI_PORTS=443,21,22,25
-#
 ### THIS WILL SPECIFY WHICH PORTS TO ITERATE THROUGH TO DO THE POWERSHELL INJECTION. NOTE IF YOU ARE USING SET
 ### PORT 80 IS USED BY THE WEB SERVER. THE REST OF PORTS SHOULD BE OPEN. CONSIDER IF YOU WANT TO USE PORT 80 TO
 ### PLACE THE LISTENER ON A DIFFERENT SERVER.
-POWERSHELL_MULTI_PORTS=21,22,23,25,53,3389,443,8080
+POWERSHELL_MULTI_PORTS=22,53,443
 #
 ### This will display the output of the powershell injection attack so you can see what is being placed on the
 ### system.
