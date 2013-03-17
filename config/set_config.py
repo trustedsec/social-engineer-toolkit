@@ -9,10 +9,10 @@
 #  SET updated using the 'Update SET Configuration' menu item in      #
 #  the main menu. This file will be updated with the new settings.    #
 #                                                                     #
-#  set_config.py generated: 2013-03-16 15:46:18.978776                #
+#  set_config.py generated: 2013-03-17 18:00:06.885097                #
 #                                                                     #
 #######################################################################
-CONFIG_DATE='2013-03-16 15:46:18.978776'
+CONFIG_DATE='2013-03-17 18:00:06.885097'
 METASPLOIT_PATH="/opt/metasploit/apps/pro/msf3"
 METASPLOIT_DATABASE="postgresql"
 ENCOUNT=4
@@ -51,7 +51,7 @@ COMMAND_CENTER_PORT=44444
 SET_INTERACTIVE_SHELL=True
 TERMINAL="SOLO"
 DIGITAL_SIGNATURE_STEAL=False
-UPX_ENCODE=True
+UPX_ENCODE=False
 UPX_PATH="/usr/bin/upx"
 AUTO_REDIRECT=True
 HARVESTER_REDIRECT=False

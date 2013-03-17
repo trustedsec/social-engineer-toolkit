@@ -222,7 +222,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '4.7.1'
+    define_version = '4.7.2'
     return define_version
 
 class create_menu:
@@ -351,7 +351,8 @@ def grab_ipaddress():
                             rhost = raw_input("[!] Invalid ip address try again: ")
                         if ip_check == True: break
                     return rhost
-            # if AUTO_DETECT=OFF prompt for IP Address
+    
+        # if AUTO_DETECT=OFF prompt for IP Address
             match1 = re.search("AUTO_DETECT=OFF", line)
             if match1:
                 rhost = raw_input(setprompt("0", "IP address for the payload listener"))

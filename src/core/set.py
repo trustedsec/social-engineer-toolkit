@@ -770,8 +770,11 @@ try:
                     reload(solo)
                 except:
                     import solo
-
+        #
+        #
         # Main Menu choice 4: Create a Payload and Listener
+        #
+        #
         if main_menu_choice == '4':
             filewrite = file("src/program_junk/payloadgen", "w")
             filewrite.write("payloadgen=solo")
@@ -787,7 +790,9 @@ try:
 
             # if we didn't select the SET interactive shell or RATTE
             if not os.path.isfile("src/program_junk/set.payload"):
-                upx("msf.exe")
+                upx_check = check_config("UPX_ENCODE=")
+                if upx_check.lower() == "on":
+	                upx("msf.exe")
 
             # if the set payload is there
             if os.path.isfile("src/program_junk/set.payload"):

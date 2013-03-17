@@ -1,4 +1,15 @@
 ~~~~~~~~~~~~~~~~
+version 4.7.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue where UPX would trigger even if not properly installed
+* fixed an issue that would cause a shellcode_ports exception to be found on multi-pyinjector - should have read shellcode_port
+* added an additional check in for upx coding when generating binaries
+* fixed an issue where creating a single payload without an attack would not found the proper rc file within SET
+* fixed an issue where selecting multi pyinjector would not find the proper meta_config rc file 
+* turned upx to off by default on the set configuration file
+
+~~~~~~~~~~~~~~~~
 version 4.7.1
 ~~~~~~~~~~~~~~~~
 

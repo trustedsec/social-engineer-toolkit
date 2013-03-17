@@ -174,7 +174,7 @@ DIGITAL_SIGNATURE_STEAL=OFF
 #
 ### These two options will turn the upx packer to on and automatically attempt
 ### to pack the executable which may evade anti-virus a little better.
-UPX_ENCODE=ON
+UPX_ENCODE=OFF
 UPX_PATH=/usr/bin/upx
 #
 ### This feature will turn on or off the automatic redirection. By default for example in multi-attack
