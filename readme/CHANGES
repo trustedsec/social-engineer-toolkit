@@ -8,6 +8,7 @@ version 4.7.2
 * fixed an issue where creating a single payload without an attack would not found the proper rc file within SET
 * fixed an issue where selecting multi pyinjector would not find the proper meta_config rc file 
 * turned upx to off by default on the set configuration file
+* incorporated a change to remove several lines of code by removing a loop and inserting null bytes by using utf_16_le as the return. Thanks ethack for the post.
 
 ~~~~~~~~~~~~~~~~
 version 4.7.1

