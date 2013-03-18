@@ -1,7 +1,6 @@
 rel1k:
 
- - add rid_enum to fast-track
- - add fake dns as a module for attack vectors (config option) 
+ - add ability to read in port number and IP address (ie. ip:1433)
 
 j0fer:
 Add configuration option in set_config to specify sendmail location. Currently hard coded.
