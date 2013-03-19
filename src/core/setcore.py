@@ -16,6 +16,8 @@ import inspect
 import base64
 from src.core import dictionaries
 import multiprocessing
+import thread
+from multiprocessing import Process
 
 # check to see if we have python-pycrypto
 try:
@@ -635,7 +637,7 @@ def metasploit_listener_start(payload,port):
 def start_web_server(directory):
     try:
         # import the threading, socketserver, and simplehttpserver
-        import thread, SocketServer, SimpleHTTPServer
+        import SocketServer, SimpleHTTPServer
         # create the httpd handler for the simplehttpserver
         # we set the allow_reuse_address incase something hangs can still bind to port
         class ReusableTCPServer(SocketServer.TCPServer): allow_reuse_address=True
@@ -1435,24 +1437,23 @@ class DNSQuery:
 
 # main dns routine
 def dns():
-    print_status("Started DNS Server for The Social-Engineer Toolkit..")
     udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udps.bind(('',53))
-    #ip = grab_ipaddress()
     try:
         while 1:
             data, addr = udps.recvfrom(1024)
             p=DNSQuery(data)
             udps.sendto(p.respuesta(ip), addr)
-            print 'Response: %s -> %s' % (p.dominio, ip)
 
     except KeyboardInterrupt:
-        print "Exiting the DNS Server.."
-        udps.close()
+		print "Exiting the DNS Server.."
+		sys.exit()
+		udps.close()
 
 # start dns with multiprocessing
 def start_dns():
     dns_check = check_config("DNS_SERVER=")
     if dns_check.lower() == "on":
-        p = multiprocessing.Process(target=dns)
-        p.start()
+		thread.start_new_thread(dns,())
+
+

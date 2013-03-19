@@ -269,6 +269,6 @@ CLEANUP_ENABLED_DEBUG=OFF
 TRACK_EMAIL_ADDRESSES=OFF
 #
 ### THIS ALLOWS YOU TO TURN A DNS SERVER ON IN SET. ALL RESPONSES WILL REDIRECT TO THE SET INSTANCE WHICH CAN LAUNCH ATTACK VECTORS
-DNS_SERVER=ON
+DNS_SERVER=OFF
 #
 #######################################################################################################################################
