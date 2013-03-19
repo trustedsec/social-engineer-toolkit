@@ -342,7 +342,7 @@ try:
 
             # once we are finished, prompt.
             print_status("Everything is finished!")
-            pause = raw_input("Press {return} to go back to the main menu.)
+            pause = raw_input("Press {return} to go back to the main menu.")
 
 # handle keyboard exceptions
 except KeyboardInterrupt:
