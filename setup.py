@@ -29,12 +29,12 @@ if platform.system() == "Linux":
         if os.path.isfile("/etc/apt/sources.list"):
 
             # force install of debian packages
-            subprocess.Popen("apt-get --force-yes -y install build-essential python-pexpect python-beautifulsoup python-pefile python-crypto python-openssl python-pymssql", shell=True).wait()
+            subprocess.Popen("apt-get --force-yes -y install git build-essential python-pexpect python-beautifulsoup python-pefile python-crypto python-openssl python-pymssql", shell=True).wait()
 
         # if sources.list is not available then we're running something offset
         else:
             print "[*] Your not running a Debian variant. Installer not finished for this type of Linux distro."
-            print "[*] Install subversion, python-pexpect, python-beautifulsoup, python-crypto, python-openssl, python-pefile manually for all of SET dependancies."
+            print "[*] Install git, python-pexpect, python-beautifulsoup, python-crypto, python-openssl, python-pefile manually for all of SET dependancies."
             sys.exit()
 
 if platform.system() =='Darwin':
