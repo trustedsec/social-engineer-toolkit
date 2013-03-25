@@ -3,6 +3,7 @@ import subprocess
 import re
 import urllib2
 import os
+from src.core.setcore import *
 #
 # TabNabbing Source here
 #
