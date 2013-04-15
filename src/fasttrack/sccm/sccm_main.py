@@ -32,10 +32,10 @@ Next
 ''' % (sms_server, package_id)
 
 # write out the file to reports
-filewrite = file("reports/sccm_configuration.txt", "w")
+filewrite = file(setdir + "/reports/sccm_configuration.txt", "w")
 filewrite.write(configuration)
 filewrite.close()
 print_status("The SCCM configuration script has been successfully created.")
 print_status("You need to copy the script to the startup folder of the server.")
-print_status("Report has been exported to reports/sccm_configuration.txt")
+print_status("Report has been exported to %s/reports/sccm_configuration.txt" % (definepath))
 pause = raw_input("Press " + bcolors.RED + "{return} " + bcolors.ENDC + "to exit this menu.")

@@ -42,12 +42,12 @@ def flag_off(vector):
 
 # filewriting
 def write_file(filename,results):
-    filewrite=file("src/program_junk/%s" % (filename), "w")
+    filewrite=file(setdir + "/%s" % (filename), "w")
     filewrite.write(results)
     filewrite.close()
 
 # specify attackvector
-filewrite=file("src/program_junk/attack_vector","w")
+filewrite=file(setdir + "/attack_vector","w")
 filewrite.write("multiattack")
 filewrite.close()
 
@@ -70,14 +70,14 @@ webdav_enable="OFF"
 
 # see if we are running a custom cloned website
 clonedurl = 0
-fileopen = file("%s/src/program_junk/site.template" % (definepath), "r")
+fileopen = file(setdir + "/site.template", "r")
 data = fileopen.read()
 if "TEMPLATE=SELF" in data:
     clonedurl = 1
 
 # clean up cloner directory
 if clonedurl == 0:
-    subprocess.Popen("rm -rf src/program_junk/web_clone;mkdir src/program_junk/web_clone/", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    subprocess.Popen("rm -rf %s/web_clone;mkdir %s/web_clone/" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 # set a quick loop to see what the user wants
 a=1
@@ -363,7 +363,7 @@ if meta_attack == "on":
     import gen_payload
 
     # this checks to see if the MSF payload uses webdav, if so we have to force port 80
-    if os.path.isfile("src/program_junk/webdav_enabled"):
+    if os.path.isfile(setdir + "/webdav_enabled"):
         webdav_enabled="on"
 
 # set this incase msf attack, java applet, and harvester is needed

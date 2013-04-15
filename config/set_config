@@ -1,29 +1,29 @@
 ##################################################################################################
 ##################################################################################################
-##												##
-## The following config file will allow you to customize settings within			##
-## the Social Engineer Toolkit. The lines that do not have comment code				##
-## ("#") are the fields you want to toy with. They are pretty easy to				##
-## understand.											##
-##												##
-## The Metasploit path is the default path for where Metasploit is located.			##
-## Metasploit is required for SET to function properly.						##
-##												##
-## The ETTERCAP function specifies if you want to use ARP Cache poisoning in			##
-## conjunction with the web attacks, note that ARP Cache poisoning is only			##
-## for internal subnets only and does not work against people on the internet.			##
-##												##
-## The SENDMAIL option allows you to spoof source IP addresses utilizing an			##
-## application called SendMail. Sendmail is NOT installed by default on BackTrack5.		##
-## To spoof email addresses when performing the mass email attacks, you must 			## 
-## install Sendmail manually using: apt-get install sendmail					##
-##												##
-## Note that ETTERCAP and SENDMAIL flags only accept ON or OFF switches.			##
-##												##
-## Note that the Metasploit_PATH cannot have a / after the folder name.				##
-##												##
-## There are additional options, read the comments for additional descriptions.		        ##
-##											        ##
+##					                                                							##
+## The following config file will allow you to customize settings within            			##
+## the Social Engineer Toolkit. The lines that do not have comment code				            ##
+## ("#") are the fields you want to toy with. They are pretty easy to			            	##
+## understand.											                                        ##
+##												                                                ##
+## The Metasploit path is the default path for where Metasploit is located.			            ##
+## Metasploit is required for SET to function properly.						                    ##
+##												                                                ##
+## The ETTERCAP function specifies if you want to use ARP Cache poisoning in			        ##
+## conjunction with the web attacks, note that ARP Cache poisoning is only			            ##
+## for internal subnets only and does not work against people on the internet.			        ##
+##												                                                ##
+## The SENDMAIL option allows you to spoof source IP addresses utilizing an			            ##
+## application called SendMail. Sendmail is NOT installed by default on BackTrack5.		        ##
+## To spoof email addresses when performing the mass email attacks, you must 			        ## 
+## install Sendmail manually using: apt-get install sendmail					                ##
+##												                                                ##
+## Note that ETTERCAP and SENDMAIL flags only accept ON or OFF switches.			            ##
+##												                                                ##
+## Note that the Metasploit_PATH cannot have a / after the folder name.				            ##
+##												                                                ##
+## There are additional options, read the comments for additional descriptions.		            ##
+##											                                                    ##
 ##################################################################################################
 ##################################################################################################
 #
@@ -125,7 +125,7 @@ JAVA_ID_PARAM=Trusted Java Applet (VERIFIED SAFE)
 ### Java applet repeater option will continue to prompt the user with the java applet if
 ### the user hits cancel. This means it will be non stop until run is executed. This gives
 ### a better success rate for the Java applet attack
-JAVA_REPEATER=OFF
+JAVA_REPEATER=ON
 #
 ### Java repeater timing which is the delay it takes between the user hitting cancel to
 ### when the next Java applet runs. Be careful setting to low as it will spawn them over
@@ -180,7 +180,7 @@ UPX_PATH=/usr/bin/upx
 ### This feature will turn on or off the automatic redirection. By default for example in multi-attack
 ### the site will redirect once one successful attack is used. Some people may want to use Java applet
 ### and credential harvester for example.
-AUTO_REDIRECT=ON
+AUTO_REDIRECT=OFF
 #
 ### This will redirect the harvester victim to this website once executed and not to the original website.
 ### For example if you clone abcompany.com and below it says blahblahcompany.com, it will redirect there instead.

@@ -37,7 +37,7 @@ if operating_system == "posix":
     if username == "":
         proxy_string = "export http_proxy='http://%s'" % (proxy)
 
-    filewrite = file("src/program_junk/proxy.config", "w")
+    filewrite = file(setdir + "/proxy.config", "w")
     filewrite.write(proxy_string)
     filewrite.close()
 

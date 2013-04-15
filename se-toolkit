@@ -2,11 +2,13 @@
 import os
 import sys
 
-# check where we are
+# check where we are and load default directory
 if os.path.isdir("/usr/share/setoolkit"):
 	if not os.path.isfile("se-toolkit"):
 		os.chdir("/usr/share/setoolkit")
+        sys.path.append("/usr/share/setoolkit")
 
+# if we can't see our config then something didn't go good..
 if not os.path.isfile("config/set_config"):
 	print_error("Cannot locate SET executable. Try running from the local directory.")
 	print_error("If this does not work, please run the setup.py install file.")
@@ -19,31 +21,17 @@ import subprocess
 import shutil
 import re
 
-if not os.path.isfile("src/logs/set_logfile.log"):
-    filewrite = file("src/logs/set_logfile.log", "w")
-    filewrite.write("")
-    filewrite.close()
-
 if not os.path.isdir(setdir + "/reports/"):
     os.makedirs(setdir + "/reports")
 
-print """
-IMPORTANT NOTICE! The Social-Engineer Toolkit has made some significant 
-changes due to the folder structure of Kali and FSH (Linux). 
+# grab the operating system
+operating_system = check_os()
 
-All SET dynamic information will now be saved in the ~/.set directory not 
-in src/program_junk.
-"""
-try:
-    print_warning("Please note that you should use se-toolkit from now on.")
-    print_warning("Launching set by typing 'set' is going away soon...")
-    print_warning("If on Kali Linux, just type 'se-toolkit' anywhere...")
-    print_warning("If not on Kali, run python setup.py install and you can use se-toolkit anywhere...")
-    pause = raw_input("Press {return} to continue into SET.")
-
-except KeyboardInterrupt:
-    print "\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"
-    sys.exit()
+# use ~/.set
+if operating_system == "posix":
+    if not os.path.isdir(setdir):
+        # create the set variables
+        os.makedirs(setdir)
 
 # check to see if we have python-pycrypto
 try:
@@ -63,9 +51,6 @@ except ImportError:
 
 # main menu
 
-# grab the operating system
-operating_system = check_os()
-
 # update the main config per load
 update_config()
 
@@ -74,13 +59,11 @@ if operating_system == "posix":
     # change permissions if nix
     subprocess.Popen("chmod +x set-automate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
-# check if we want DNS started
-dns_check = check_config("DNS_SERVER=").lower()
-if dns_check == "on":
-    start_dns()
+
+start_dns()
 
 # remove old files
-for root, dirs, files in os.walk(str(setdir)):
+for root, dirs, files in os.walk(setdir):
     for f in files:
         try:
             match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", f)
@@ -117,7 +100,7 @@ define_version = get_version()
 cleanup_routine()
 
 # create the set.options routine
-filewrite = file(str(setdir) + "/set.options", "w")
+filewrite = file(setdir + "/set.options", "w")
 filewrite.write("{This is the main SET configuration file for all options used in SET}\n")
 filewrite.close()
 
@@ -153,7 +136,7 @@ yes (only one time), you agree to the terms of service and that you will only us
         # special case of list item 99
         print '\n  99) Exit the Social-Engineer Toolkit\n'
 
-        # mainc ore menu
+        # main core menu
         main_menu_choice = (raw_input(setprompt("0", "")))
 
         # funny
@@ -163,7 +146,7 @@ yes (only one time), you agree to the terms of service and that you will only us
 
         # funny2
         if main_menu_choice == "derbycon":
-            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 3.0 -- September 25th through September 29th 2012" + bcolors.ENDC)
+            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 3.0 -- September 25th through September 29th 2013" + bcolors.ENDC)
             pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 25 - Sep 29th! Press {return} to continue." + bcolors.ENDC)
 
         # quit out

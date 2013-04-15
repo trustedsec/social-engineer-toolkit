@@ -18,7 +18,7 @@ from src.core import setcore as core
 # to get around that you can purchase your own digital certificate through verisign/thawte
 
 # grab current path
-definepath = os.getcwd()
+definepath = definepath()
 
 # print warning message that we need to install sun-java or openjdk
 print """
@@ -123,6 +123,6 @@ if os.path.isfile(cert_path):
     # sign the applet with the imported certificate
     subprocess.Popen("jarsigner -signedjar Signed_Update.jar %s/src/html/unsigned/unsigned.jar MyCert" % (definepath), shell=True).wait()
     # move it into our html directory
-    subprocess.Popen("mv Signed_Update.jar %s/src/program_junk/Signed_Update.jar.orig" % (definepath), shell=True).wait()
+    subprocess.Popen("mv Signed_Update.jar %s/Signed_Update.jar.orig" % (setdir), shell=True).wait()
     # move back to original directory
     core.print_status("Java Applet is now signed and will be imported into the java applet website attack from now on...")

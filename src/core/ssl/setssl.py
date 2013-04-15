@@ -4,9 +4,10 @@
 #
 # Used if you want to create self signed
 
+from src.core.setcore import *
 import subprocess,os
 definepath=os.getcwd()
-os.chdir("src/program_junk")
+os.chdir(setdir)
 # create the directories for us
 subprocess.Popen("mkdir CA;cd CA;mkdir newcerts private", shell=True).wait()
 # move into CA directory

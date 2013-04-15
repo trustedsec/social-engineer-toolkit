@@ -19,7 +19,7 @@ def launch():
         if template_choice == '1':
             # set path for
             path = 'src/templates/sms/'
-            filewrite=file("src/program_junk/sms.templates", "w")
+            filewrite=file(setdir + "/sms.templates", "w")
             counter=0
             # Pull all files in the templates directory
             for infile in glob.glob(os.path.join(path, '*.template')):
@@ -32,7 +32,7 @@ def launch():
             # close the file
             filewrite.close()
             # read in formatted filenames
-            fileread=file("src/program_junk/sms.templates","r").readlines()
+            fileread=file(setdir + "/sms.templates","r").readlines()
             print "Below is a list of available templates:\n"
             for line in fileread:
                 line=line.rstrip()

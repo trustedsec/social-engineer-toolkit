@@ -19,22 +19,22 @@ choice = yesno_prompt("0", "Start the listener now? [yes|no]")
 # j0fer 06-27-2012 # if choice == "yes" or choice == "y":
 if choice == "YES":
     # if we didn't select the SET interactive shell as our payload
-    if not os.path.isfile("src/program_junk/set.payload"):
+    if not os.path.isfile(setdir + "/set.payload"):
         print_info("Please wait while the Metasploit listener is loaded...")
-        if os.path.isfile("%s/src/program_junk/meta_config" % (definepath)):
-            listen_path = ("%s/src/program_junk/meta_config" % (definepath))
+        if os.path.isfile(setdir + "/meta_config"):
+            listen_path = (setdir + "/meta_config")
 
-        if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
-            listen_path = ("%s/src/program_junk/meta_config_multipyinjector" % (definepath))
+        if os.path.isfile(setdir + "/meta_config_multipyinjector"):
+            listen_path = (setdir + "/meta_config_multipyinjector")
 
         subprocess.Popen("ruby %s/msfconsole -L -n -r %s" % (meta_path,listen_path), shell=True).wait()
 
     # if we did select the set payload as our option
-    if os.path.isfile("src/program_junk/set.payload"):
+    if os.path.isfile(setdir + "/set.payload"):
         if check_options("PORT=") != 0:
             port = check_options("PORT=")
 
-        set_payload = file("src/program_junk/set.payload", "r")
+        set_payload = file(setdir + "/set.payload", "r")
 
         set_payload = set_payload.read().rstrip()
         if set_payload == "SETSHELL":

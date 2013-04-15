@@ -28,7 +28,7 @@ Here's a snippet of the python code from SET:
 fileopen=open("src/dll_hijacking/hijacking.dll" , "rb")
 data=fileopen.read()
 
-filewrite=open("src/program_junk/dll/%s" % (dll), "wb")
+filewrite=open("~/.set/dll/%s" % (dll), "wb")
 
 host=int(len(ipaddr)+1) * "X"
 

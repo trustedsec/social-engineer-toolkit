@@ -23,13 +23,13 @@ else:
 # set the multiattack tabnabbing/webjacking flag
 multi_tabnabbing="off"
 multi_webjacking="off"
-if os.path.isfile("src/program_junk/multi_tabnabbing"):
+if os.path.isfile(setdir + "/multi_tabnabbing"):
     multi_tabnabbing="on"
-if os.path.isfile("src/program_junk/multi_webjacking"):
+if os.path.isfile(setdir + "/multi_webjacking"):
     multi_webjacking="on"
 
 # see if we're tabnabbing
-fileopen=file("src/program_junk/attack_vector", "r")
+fileopen=file(setdir + "/attack_vector", "r")
 for line in fileopen:
     line=line.rstrip()
     if line == 'tabnabbing' or multi_tabnabbing == "on" or line == 'webjacking' or multi_webjacking == "on":
@@ -56,8 +56,8 @@ apache_rewrite = ""
 if apache_mode == "on": apache_rewrite = "post.php"
 
 # start the scraping process
-fileopen=file("src/program_junk/web_clone/%s" % (site),"r").readlines()
-filewrite=file("src/program_junk/web_clone/index.html.new","w")
+fileopen=file(setdir + "/web_clone/%s" % (site),"r").readlines()
+filewrite=file(setdir + "/web_clone/index.html.new","w")
 for line in fileopen:
 
     # specify if it found post params
@@ -89,5 +89,5 @@ for line in fileopen:
 filewrite.close()
 
 # move our newly created website with our post stuff to our cloned area
-if os.path.isfile("src/program_junk/web_clone/index.html.new"):
-    shutil.move("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/%s" % (site))
+if os.path.isfile(setdir + "/web_clone/index.html.new"):
+    shutil.move(setdir + "/web_clone/index.html.new", setdir + "/web_clone/%s" % (site))

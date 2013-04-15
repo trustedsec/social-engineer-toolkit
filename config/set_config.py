@@ -9,10 +9,10 @@
 #  SET updated using the 'Update SET Configuration' menu item in      #
 #  the main menu. This file will be updated with the new settings.    #
 #                                                                     #
-#  set_config.py generated: 2013-03-17 18:00:06.885097                #
+#  set_config.py generated: 2013-04-15 10:21:41.959025                #
 #                                                                     #
 #######################################################################
-CONFIG_DATE='2013-03-17 18:00:06.885097'
+CONFIG_DATE='2013-04-15 10:21:41.959025'
 METASPLOIT_PATH="/opt/metasploit/apps/pro/msf3"
 METASPLOIT_DATABASE="postgresql"
 ENCOUNT=4
@@ -39,7 +39,7 @@ APACHE_DIRECTORY="/var/www"
 WEB_PORT=80
 SELF_SIGNED_APPLET=False
 JAVA_ID_PARAM="Trusted Java Applet (VERIFIED SAFE)"
-JAVA_REPEATER=False
+JAVA_REPEATER=True
 JAVA_TIME="200"
 WEBATTACK_SSL=False
 SELF_SIGNED_CERT=False
@@ -53,7 +53,7 @@ TERMINAL="SOLO"
 DIGITAL_SIGNATURE_STEAL=False
 UPX_ENCODE=False
 UPX_PATH="/usr/bin/upx"
-AUTO_REDIRECT=True
+AUTO_REDIRECT=False
 HARVESTER_REDIRECT=False
 HARVESTER_URL="http://thishasnotbeenset"
 UNC_EMBED=False
@@ -78,4 +78,4 @@ METASPLOIT_MODE=True
 DEPLOY_BINARIES="YES"
 CLEANUP_ENABLED_DEBUG="False"
 TRACK_EMAIL_ADDRESSES="False"
-DNS_SERVER="True"
+DNS_SERVER="False"

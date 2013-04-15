@@ -1,9 +1,22 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 #
 # simple svn update for set pulling from core modules
 #
-
+import os
 import sys
+
+# check where we are and load default directory
+if os.path.isdir("/usr/share/setoolkit"):
+    if not os.path.isfile("se-toolkit"):
+        os.chdir("/usr/share/setoolkit")
+        sys.path.append("/usr/share/setoolkit")
+
+# if we can't see our config then something didn't go good..
+if not os.path.isfile("config/set_config"):
+    print_error("Cannot locate SET executable. Try running from the local directory.")
+    print_error("If this does not work, please run the setup.py install file.")
+    sys.exit()
+
 from src.core.setcore import *
 
 try:

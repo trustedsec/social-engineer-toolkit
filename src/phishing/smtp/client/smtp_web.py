@@ -30,10 +30,6 @@ definepath = os.getcwd()
 # DEFINE SENDMAIL CONFIG and WEB ATTACK
 sendmail=0
 
-# need to do this if we aren't in the SET root
-if "program_junk" in definepath:
-    definepath = definepath.replace("src/program_junk/web_clone", "")
-
 sendmail_file=file("%s/config/set_config" % (definepath),"r").readlines()
 for line in sendmail_file:
     # strip carriage returns
@@ -52,7 +48,7 @@ for line in sendmail_file:
                 if os.path.isfile("/etc/init.d/sendmail"):
                     subprocess.Popen("/etc/init.d/sendmail start", shell=True).wait()
                 if not os.path.isfile("/etc/init.d/sendmail"):
-                    pause = raw_input("[!] Sendmail was not found. Try again and restart.")
+                    pause = raw_input("[!] Sendmail was not found. Try again and restart. (For Kali - apt-get install sendmail-bin)")
                     sys.exit()
                 smtp = ("localhost")
                 port = ("25")
@@ -208,14 +204,19 @@ try:
         print "keyword that SET uses in order to replace the base name with the URL."
         print "\nInsert the FULL url and the " + bcolors.BOLD + "INSERTUSERHERE" + bcolors.ENDC + "on where you want to insert the base64 name.\n\nNOTE: You must have a index.php and a ? mark seperating the user. YOU MUST USE PHP!"
         print "\nNote that the actual URL does NOT need to contain index.php but has to be named that for the php code in Apache to work."
-    body=raw_input(setprompt(["1"], "Enter the body of the message, hit return for a new line. Control+c when finished"))
+    print_warning("IMPORTANT: When finished, type END (all capital) then hit {return} on a new line.")
+    body=raw_input(setprompt(["1"], "Enter the body of the message, type END (capitals) when finished"))
 
     # loop through until they are finished with the body of the subject line
     while body != 'exit':
         try:
 
             body+=("\n")
-            body+=raw_input("Next line of the body: ")
+            body_1 =raw_input("Next line of the body: ")
+            if body_1 == "END":
+                break
+            else:
+                body_1 = body + body_1
 
         # except KeyboardInterrupts (control-c) and pass through.
         except KeyboardInterrupt:

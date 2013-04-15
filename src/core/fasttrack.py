@@ -167,7 +167,7 @@ try:
                                     # if 99 then break
                                     if option == "99": break
                                     # specify we are using the fasttrack option, this disables some features
-                                    filewrite = file("src/program_junk/fasttrack.options", "w")
+                                    filewrite = file(setdir + "/fasttrack.options", "w")
                                     filewrite.write("none")
                                     filewrite.close()
                                     # import fasttrack
@@ -314,10 +314,10 @@ try:
             # if we are using the built in one
             if dict == "":
                 # write out a file
-                filewrite = file("src/program_junk/dictionary.txt", "w")
+                filewrite = file(setdir + "/dictionary.txt", "w")
                 filewrite.write("\nPassword1")
                 # specify the path
-                dict = "src/program_junk/dictionary.txt"
+                dict = setdir + "/dictionary.txt"
 
             # if we are not brute forcing
             if dict.lower() == "no":

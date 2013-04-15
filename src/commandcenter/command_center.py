@@ -15,7 +15,6 @@ from BaseHTTPServer import HTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
 
 from src.core.setcore import *
-
 definepath=os.getcwd()
 
 # grab port for command center
@@ -220,16 +219,16 @@ class myRequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(line)
 
         if self.path == "/results":
-            if os.path.isfile("src/program_junk/cc_harvester_hit"):
+            if os.path.isfile(setdir + "/cc_harvester_hit"):
 
                 # define file to extract URL of site
-                if os.path.isfile("src/program_junk/full_query"):
-                    post_site=file("src/program_junk/post_site", "r")
+                if os.path.isfile(setdir + "/full_query"):
+                    post_site=file(setdir + "/post_site", "r")
                     for line in post_site:
                         line=line.rstrip()
                         print line
 
-                indexopen=file("src/program_junk/site.template","r").readlines()
+                indexopen=file(setdir + "/site.template","r").readlines()
                 for line in indexopen:
                     line=line.rstrip()
                     self.wfile.write(line)
@@ -539,7 +538,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
         if self.path == "/wireless_post":
             counter=1
             post_load("post.site")
-            filewrite=file("%s/src/program_junk/answer.txt" % (definepath), "w")
+            filewrite=file("%s/answer.txt" % (setdir), "w")
             for s in url:
                 match1=re.search("wireless=", s)
                 if match1:
@@ -559,7 +558,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
         if self.path == "/teensy_post":
             counter=1
             post_load("post.site")
-            filewrite=file("%s/src/program_junk/answer.txt" % (definepath), "w")
+            filewrite=file(setdir + "/answer.txt", "w")
             for s in url:
                 match1=re.search("attack=", s)
                 if match1:
@@ -614,7 +613,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
             port_hit=0
             dll_hijacking=0
             counter=0
-            filewrite=file("%s/src/program_junk/answer.txt" % (definepath), "w")
+            filewrite=file(setdir + "/answer.txt", "w")
             for s in url:
                 # if we are performing file format exploits
                 if s == "attack=1":
@@ -693,7 +692,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
         if self.path == "/mass_mailer_post":
             post_load("post.site")
             counter=1
-            filewrite=file("%s/src/program_junk/answer.txt" % (definepath), "w")
+            filewrite=file(setdir + "/answer.txt", "w")
             relay="off"
             # if sendmail is on
             if sendmail == "on":
@@ -788,7 +787,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
             dll_hijacking=0
             predefined=0
             sendmail_counter=0
-            filewrite=file("%s/src/program_junk/answer.txt" % (definepath), "w")
+            filewrite=file(setdir + "/answer.txt", "w")
             counter=1
             port_hit=0
             for s in url:
@@ -1010,7 +1009,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
             post_load("post.site")
             counter=0
             osxcounter=0
-            filewrite=file("%s/src/program_junk/answer.txt" % (definepath), "w")
+            filewrite=file(setdir + "/answer.txt", "w")
 
             # recycle config flags in multi attack vectors with a definition
             # specify the harvester flag to off
@@ -1586,19 +1585,19 @@ class myRequestHandler(BaseHTTPRequestHandler):
                     match=re.search("TERMINAL=", line)
                     if match: terminal=line.replace("TERMINAL=","")
                 if terminal == "XTERM" or terminal == "xterm" or terminal == "":
-                    proc = subprocess.Popen("xterm -geometry 90x30 -bg black -fg white -fn *-fixed-*-*-*-20-* -T 'The Social-Engineer Toolkit (SET)' -e 'python set-automate src/program_junk/answer.txt' &", shell=True)
+                    proc = subprocess.Popen("xterm -geometry 90x30 -bg black -fg white -fn *-fixed-*-*-*-20-* -T 'The Social-Engineer Toolkit (SET)' -e 'python set-automate %s/answer.txt' &" % (setdir), shell=True)
 
                 if terminal == "KONSOLE" or terminal == "konsole":
-                    proc = subprocess.Popen("konsole -T 'The Social-Engineer Toolkit (SET)' -e sh -c '%s/set-automate src/program_junk/answer.txt' &" % (definepath), shell=True)
+                    proc = subprocess.Popen("konsole -T 'The Social-Engineer Toolkit (SET)' -e sh -c '%s/set-automate %s/answer.txt' &" % (definepath),setdir, shell=True)
 
                 if terminal == "GNOME" or terminal == "gnome":
-                    proc = subprocess.Popen("gnome-terminal -t 'The Social-Engineer Toolkit (SET)' -x sh -c '%s/set-automate src/program_junk/answer.txt' &" % (definepath), shell=True)
+                    proc = subprocess.Popen("gnome-terminal -t 'The Social-Engineer Toolkit (SET)' -x sh -c '%s/set-automate %s/answer.txt' &" % (setdir), shell=True)
 
                 # if they jacked up the config here
                 if terminal != "XTERM":
                     if terminal != "KONSOLE":
                         if terminal != "GNOME":
-                            proc = subprocess.Popen("python set-automate src/program_junk/answer.txt", shell=True)
+                            proc = subprocess.Popen("python set-automate %s/answer.txt" % (setdir), shell=True)
 
                 os.chdir("src/commandcenter")
             except Exception:

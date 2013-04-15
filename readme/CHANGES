@@ -1,4 +1,61 @@
 ~~~~~~~~~~~~~~~~
+version 5.0
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that would cause tabnabbing to throw an exceptions around check_options
+* added setcore modules into tabnabbing to allow centralized routines
+* fixed a bug that would cause webjacking to throw an exeptions around check_options
+* added git clean -fd prior to set update, this will force a clean when pulling the latest files
+* fixed a bug that would cause a system not setup properly when installing in setup.py
+* fixed a bug on start_dns() upon launch will cause errors on certain systems
+* added installation script for putting SET into /usr/bin and /usr/share for FSH compliant installer
+* added set-update to the installation path, can type that anywhere now
+* added set-automate to the list to be typed in anywhere
+* fixed a bug that would cause the java applet method to not work a second time in use (reload)
+* rewrote MASSIVE amounts of code to no longer use src/program_junk for storage of applications, its now all under ~./set
+* fixed a os.chdir issue when using it to spawn a web server during java applet, moved to multi processing instead of threading.thread
+* fixed a bug that caused credential harvester to throw an exceptions with the new ~./.set directory structure
+* centralized setdir into the main repository to handle it through there and to call the ~/.set directory
+* added additional passwords to wordlist.txt used for fast-track mssql brute forcing
+* fixed a mssql access bug that would cause fast-track to error out if unspecified IP was added
+* removed the pymssql check from the initial SET start and onto Fast-Track since it's only used there
+* turned java repeater to ON by default, much better success rate in SE pentesting
+* rewrote large portions of payloadgen to incorporate the changes to the new ~/.set path variables
+* added a new file structure to launch set called se-toolkit. The set executable is now depricated and should no longer be used - to launch set just type ./se-toolkit
+* updated the setup.py installation to be more robust when performing installations (windows, etc.)
+* moved all of the reporting structures within SET to the new ~/.set directory
+* added a checkup routine in set and se-toolkit to check for the reports directory
+* fixed a bug that would cause multi powershell injection to trigger even when using the powershell menu, it will just generate one now
+* fixed an issue that could cause powershell injection to not work properly using the fast patch method
+* fixed an issue that would cause definepath to not be specified when using the SE Toolkit Interactive shell
+* fixed relative path issues in sccm_main and powershell teensy vectors to point to new .set directory
+* fixed an issue that would cause the SE toolkit to hang on a weird bug when importing binascii - moved binascii to main import above and no longer hung
+* fixed a before assignment error when using the windows debug conversion in the fast-track mssql menu (meta_path reference)
+* changed reports directory within the teensy side to move to ~/.set/reports
+* moved the report_generator in harvester to pull and report on the new ~/.set reports structure
+* fixed an issue where webjacking would not post properly on certain websites (index2.html conflict issue)
+* added the Metasploit MS13-009-IE SLayoutrun Use After Free Exploit to the Metasploit Brwoser Exploit attacks
+* fixed a parsing issue with the JMX bean exploit in the SET menu text from appearing to be on one line
+* added a new description on setting up sendmail for Kali Linux
+* added a check for multi powershell injection and check for solo instances through powershell teensy and not to generate a ton
+* changed the email handler from control-c to END instead. Control-C will break multiprocessing within src.html.spawn and this is the proper way to do it
+* cleaned up setcore with old code and optimized other areas of the code base
+* reduced the description of the allports payload when selecting in web attack method
+* added a completely new and redesigned multi threaded and multiprocessing web server - should be significantly faster with less bugs and crashing when handling non-rfc compliant HTTP requests
+* optimized applet load time to be much more efficent when being loaded into the web attack vector (about 4 seconds improvement) 
+* rewrote exceptions handler for the new web server to check to see if anything is running on port 80 when starting
+* turned java repeater to on by default - more stable and tested on multiple platforms
+* fixed an issue that would cause the java applet web cloner to fail upon running it twice - added reload(module) option to fix the bug
+* fixed an issue that caused powershell.prep to not load if used twice 
+* fixed an import error when using powershell injection through the main menu
+* changed initial set menu in powershell to be the standard setprompt
+* changed the default port to 443 on powershell delivery in the set option number 10
+* fixed an issue that would cause the powershell injection to spawn on port 22 versus 443 as specified
+* removed the man left in the middle attack - no longer in use, outdated and not maintained 
+* removed beautifulsoup as a dependancy for SET due to the removal of man left in the middle
+* added the ability to call the web server and stop it based on stop_server()
+
+~~~~~~~~~~~~~~~~
 version 4.7.2
 ~~~~~~~~~~~~~~~~
 

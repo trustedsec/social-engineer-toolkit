@@ -187,7 +187,7 @@ try:
                 try:
                     # write our attack vector to file to be called later
                     os.chdir(definepath)
-                    filewrite = file("src/program_junk/attack_vector","w")
+                    filewrite = file(setdir + "/attack_vector","w")
 
                     # webjacking and web templates are not allowed
                     if attack_vector == "6" and choice3 == "1":
@@ -236,21 +236,15 @@ try:
                         filewrite.write(attack_vector)
                         filewrite.close()
 
-                    # specify man left int he middle attack vector
-                    if attack_vector == '5':
-                        attack_vector = "mlitm"
-                        filewrite.write(attack_vector)
-                        filewrite.close()
-
                     # specify webjacking attack vector
-                    if attack_vector == "6":
+                    if attack_vector == "5":
                         attack_vector = "webjacking"
                         filewrite.write(attack_vector)
                         filewrite.close()
 
                     # specify Multi-Attack Vector
                     attack_vector_multi = ""
-                    if attack_vector == '7':
+                    if attack_vector == '6':
                         # trigger the multiattack flag in SET
                         attack_vector = "multiattack"
                         # write the attack vector to file
@@ -258,8 +252,7 @@ try:
                         filewrite.close()
 
                     # pull ip address
-
-                    if choice3 != "5":
+                    if choice3 != "-1":
                         fileopen = file("config/set_config", "r").readlines()
                         for line in fileopen:
                             line = line.rstrip()
@@ -292,7 +285,7 @@ try:
                                             if nat_or_fwd == "YES":
                                                 ipquestion = raw_input(setprompt(["2"], "IP address to SET web server (this could be your external IP or hostname)"))
 
-                                                filewrite2 = file("src/program_junk/interface", "w")
+                                                filewrite2 = file(setdir + "/interface", "w")
                                                 filewrite2.write(ipquestion)
                                                 filewrite2.close()
                                                 # is your payload/listener on a different IP?
@@ -368,23 +361,21 @@ try:
                         # web_server.py is main core
                         sys.path.append("src/html/")
                         # clean up stale file
-                        if os.path.isfile("src/program_junk/cloner.failed"):
-                            os.remove("src/program_junk/cloner.failed")
+                        if os.path.isfile(setdir + "/cloner.failed"):
+                            os.remove(setdir + "/cloner.failed")
 
                         site_cloned = True
                         debug_msg(me, "line 375: importing 'src.webattack.web_clone.cloner'", 1)
-                        import src.webattack.web_clone.cloner
-                        #sys.path.append("src/webattack/web_clone/")
-                        #try: reload(cloner)
-                        #except: import cloner
-
+                        try: reload(src.webattack.web_clone.cloner)
+                        except: import src.webattack.web_clone.cloner
 
                         # grab java applet attack
                         if attack_vector == "java":
                             debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
-                            import src.core.payloadgen.create_payloads
+                            try: reload(src.core.payloadgen.create_payloads)
+                            except: import src.core.payloadgen.create_payloads
 
-                        if os.path.isfile("src/program_junk/cloner.failed"):
+                        if os.path.isfile(setdir + "/cloner.failed"):
                             site_cloned = False
 
                         if site_cloned == True:
@@ -437,9 +428,9 @@ try:
                     if choice3 == '2':
                         # flag that we want a custom website
                         sys.path.append("src/webattack/web_clone/")
-                        if os.path.isfile("src/program_junk/site.template"):
-                            os.remove("src/program_junk/site.template")
-                        filewrite = file("src/program_junk/site.template", "w")
+                        if os.path.isfile(setdir + "/site.template"):
+                            os.remove(setdir + "/site.template")
+                        filewrite = file(setdir + "/site.template", "w")
                         filewrite.write("TEMPLATE=CUSTOM")
                         print_info("SET supports both HTTP and HTTPS")
                         # specify the site to clone
@@ -476,9 +467,12 @@ try:
 
                             site_cloned = True
                             debug_msg(me, "importing 'src.webattack.web_clone.cloner'", 1)
-                            import src.webattack.web_clone.cloner
+                            try:
+                                reload(src.webattack.web_clone.cloner)
+                            except:
+                                import src.webattack.web_clone.cloner
 
-                            if os.path.isfile("src/program_junk/cloner.failed"):
+                            if os.path.isfile(setdir + "/cloner.failed"):
                                 site_cloned = False
 
                         if site_cloned == True:
@@ -486,7 +480,10 @@ try:
                             if attack_vector == "java":
                                 # import our payload generator
                                 debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
-                                import src.core.payloadgen.create_payloads
+                                try:
+                                    reload(src.core.payloadgen.create_payloads)
+                                except: 
+                                    import src.core.payloadgen.create_payloads
 
                             # arp cache if applicable
                             sys.path.append("src/core/arp_cache")
@@ -537,13 +534,13 @@ try:
                     if choice3 == '3':
 
                         sys.path.append("src/webattack/web_clone/")
-                        if os.path.isfile("src/program_junk/site.template"):
-                            os.remove("src/program_junk/site.template")
-                        filewrite = file("src/program_junk/site.template", "w")
+                        if os.path.isfile(setdir + "/site.template"):
+                            os.remove(setdir + "/site.template")
+                        filewrite = file(setdir + "/site.template", "w")
                         filewrite.write("TEMPLATE=SELF")
                         # specify the site to clone
-                        if not os.path.isdir("src/program_junk/web_clone"):
-                            os.makedirs("src/program_junk/web_clone")
+                        if not os.path.isdir(setdir + "/web_clone"):
+                            os.makedirs(setdir + "/web_clone")
                         print_warning("Example: /home/website/ (make sure you end with /)")
                         print_warning("Also note that there MUST be an index.html in the folder you point to.")
                         URL = raw_input(setprompt(["2"], "Path to the website to be cloned"))
@@ -552,10 +549,10 @@ try:
                                 URL = URL + "/"
                         if not os.path.isfile(URL+"index.html"):
                             if os.path.isfile(URL):
-                                shutil.copyfile("%s" % (URL), "src/program_junk/web_clone/index.html")
+                                shutil.copyfile("%s" % (URL), setdir + "/web_clone/index.html")
                             if not os.path.isfile(URL):
                                 if URL.endswith("index.html"):
-                                    shutil.copyfile(URL, "%s/src/program_junk/web_clone/index.html" % (definepath))
+                                    shutil.copyfile(URL, "%s/web_clone/index.html" % (setdir))
                                 else:
                                     print_error("ERROR:index.html not found!!")
                                     print_error("ERROR:Did you just put the path in, not file?")
@@ -566,17 +563,17 @@ try:
                             print_status("Index.html found. Do you want to copy the entire folder or just index.html?")
                             choice = raw_input("\n1. Copy just the index.html\n2. Copy the entire folder\n\nEnter choice [1/2]: ")
                             if choice == "1" or choice == "":
-                                if os.path.isfile("%s/src/program_junk/web_clone/index.html" % (definepath)):
-                                    os.remove("%s/src/program_junk/web_clone/index.html" % (definepath))
-                                shutil.copyfile(URL + "index.html", "%s/src/program_junk/web_clone/" % (definepath))
+                                if os.path.isfile("%s/web_clone/index.html" % (setdir)):
+                                    os.remove("%s/web_clone/index.html" % (setdir))
+                                shutil.copyfile(URL + "index.html", "%s/web_clone/" % (setdir))
                             if choice == "2":
-                                if os.path.isdir("%s/src/program_junk" % (URL)):
+                                if os.path.isdir(URL + "src/webattack"):
                                     print_error("You cannot specify a folder in the default SET path. This goes into a loop Try something different.")
                                     URL = raw_input("Enter the folder to import into SET, this CANNOT be the SET directory: ")
-                                    if os.path.isdir("%s/src/program_junk" % (URL)):
+                                    if os.path.isdir(URL + "src/webattack" % (URL)):
                                         print_error("You tried the same thing. Exiting now.")
                                         sys.exit()
-                                copyfolder(URL, "%s/src/program_junk/web_clone/" % (definepath))
+                                copyfolder(URL, "%s/web_clone/" % setdir)
 
                         filewrite.write("\nURL=%s" % (URL))
                         filewrite.close()
@@ -632,7 +629,7 @@ try:
                             if not match:
                                 if not match1:
                                     URL = ("http://"+URL)
-                            filewrite = file("src/program_junk/site.template","w")
+                            filewrite = file(setdir + "/site.template","w")
                             filewrite.write("\nURL=%s" % (URL))
                             filewrite.close()
 
@@ -654,7 +651,7 @@ try:
                             if not match:
                                 if not match1:
                                     URL = ("http://"+URL)
-                            filewrite = file("src/program_junk/site.template","w")
+                            filewrite = file(setdir + "/site.template","w")
                             filewrite.write("\nURL=%s" % (URL))
                             filewrite.close()
                             # start tabnabbing here
@@ -727,13 +724,13 @@ try:
                 ipaddr = raw_input(setprompt(["3"], "IP address for the reverse connection (payload)"))
                 update_options("IPADDR=" + ipaddr)
 
-            filewrite1 = file("src/program_junk/payloadgen", "w")
+            filewrite1 = file(setdir + "/payloadgen", "w")
             filewrite1.write("payloadgen=solo")
             filewrite1.close()
 
             # if choice is file-format
             if infectious_menu_choice == "1":
-                filewrite = file("src/program_junk/fileformat.file","w")
+                filewrite = file(setdir + "/fileformat.file","w")
                 filewrite.write("fileformat=on")
                 filewrite.close()
                 sys.path.append("src/core/msf_attacks/")
@@ -745,7 +742,7 @@ try:
 
             # if choice is standard payload
             if infectious_menu_choice == "2":
-                filewrite = file("src/program_junk/standardpayload.file", "w")
+                filewrite = file(setdir + "/standardpayload.file", "w")
                 filewrite.write("standardpayload=on")
                 filewrite.close()
                 #sys.path.append("src/core/payloadgen/")
@@ -776,27 +773,27 @@ try:
         #
         #
         if main_menu_choice == '4':
-            filewrite = file("src/program_junk/payloadgen", "w")
+            filewrite = file(setdir + "/payloadgen", "w")
             filewrite.write("payloadgen=solo")
             filewrite.close()
             debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
             import src.core.payloadgen.create_payloads
             print_status("Your payload is now in the root directory of SET as msf.exe")
-            if os.path.isfile("src/program_junk/meterpreter.alpha"):
+            if os.path.isfile(setdir + "/meterpreter.alpha"):
                 print "[*] Saving alphanumeric shellcode in root directory of SET as meterpreter.alpha"
-                shutil.copyfile("src/program_junk/meterpreter.alpha", "meterpreter.alpha")
-            if os.path.isfile("src/program_junk/msf.exe"):
-                shutil.copyfile("src/program_junk/msf.exe", "msf.exe")
+                shutil.copyfile(setdir + "/meterpreter.alpha", "meterpreter.alpha")
+            if os.path.isfile(setdir + "/msf.exe"):
+                shutil.copyfile(setdir + "/msf.exe", "msf.exe")
 
             # if we didn't select the SET interactive shell or RATTE
-            if not os.path.isfile("src/program_junk/set.payload"):
+            if not os.path.isfile(setdir + "/set.payload"):
                 upx_check = check_config("UPX_ENCODE=")
                 if upx_check.lower() == "on":
 	                upx("msf.exe")
 
             # if the set payload is there
-            if os.path.isfile("src/program_junk/set.payload"):
-                shutil.copyfile("src/program_junk/msf.exe", "msf.exe")
+            if os.path.isfile(setdir + "/set.payload"):
+                shutil.copyfile(setdir + "/msf.exe", "msf.exe")
 
             sys.path.append("src/core/payloadgen/")
             debug_msg(me, "importing 'src.core.payloadgen.solo'", 1)
@@ -833,7 +830,7 @@ try:
 
             if teensy_menu_choice != "99":
                 # set our teensy info file in program junk
-                filewrite = file("src/program_junk/teensy", "w")
+                filewrite = file(setdir + "/teensy", "w")
                 filewrite.write(teensy_menu_choice+"\n")
                 if teensy_menu_choice != "3" and teensy_menu_choice != "7" and teensy_menu_choice !="8" and teensy_menu_choice !="9" and teensy_menu_choice !="10" and teensy_menu_choice != "11" and teensy_menu_choice != "12" and teensy_menu_choice != "13":
                     yes_or_no = yesno_prompt("0","Do you want to create a payload and listener [yes|no]: ")
@@ -850,10 +847,10 @@ try:
                 if yes_or_no == "NO":
                     filewrite.close()
                 # need these default files for web server load
-                filewrite = file("src/program_junk/site.template", "w")
+                filewrite = file(setdir + "/site.template", "w")
                 filewrite.write("TEMPLATE=CUSTOM")
                 filewrite.close()
-                filewrite = file("src/program_junk/attack_vector", "w")
+                filewrite = file(setdir + "/attack_vector", "w")
                 filewrite.write("hid")
                 filewrite.close()
                 # if we are doing binary2teensy
@@ -875,28 +872,28 @@ try:
                 # if we are doing the sd2teensy osx attack
                 if teensy_menu_choice == "9":
                     print_status("Generating the SD2Teensy OSX pde file for you...")
-                    shutil.copyfile("src/teensy/osx_sd2teensy.pde reports/")
-                    print_status("File has been exported to reports/osx_sd2teensy.pde")
+                    shutil.copyfile("src/teensy/osx_sd2teensy.pde %s/reports/" % (setdir))
+                    print_status("File has been exported to ~/.set/reports/osx_sd2teensy.pde")
                     return_continue()
 
                 # if we are doing the X10 Arduino Sniffer
                 if teensy_menu_choice == "10":
                     print_status("Generating the Arduino sniffer and libraries pde..")
-                    if not os.path.isdir("reports/arduino_sniffers"):
-                        os.makedirs("reports/arduino_sniffers")
-                    shutil.copyfile("src/teensy/x10/x10_sniffer.pde", "reports/arduino_sniffer")
-                    shutil.copyfile("src/teensy/x10/libraries.zip", "reports/arduino_sniffer/")
-                    print_status("Arduino sniffer files and libraries exported to reports/arduino_sniffer")
+                    if not os.path.isdir(setdir + "/reports/arduino_sniffers"):
+                        os.makedirs(setdir + "/reports/arduino_sniffers")
+                    shutil.copyfile("src/teensy/x10/x10_sniffer.pde", setdir + "/reports/arduino_sniffer")
+                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "reports/arduino_sniffer/")
+                    print_status("Arduino sniffer files and libraries exported to ~/.set/reports/arduino_sniffer")
                     return_continue()
 
                 # if we are doing the X10 Jammer
                 if teensy_menu_choice == "11":
                     print_status("Generating the Arduino jammer pde and libraries...")
-                    if not os.path.isdir("reports/arduino_jammer"):
-                        os.makedirs("reports/arduino_jammer")
-                    shutil.copyfile("src/teensy/x10/x10_blackout.pde", "reports/arduino_jammer")
-                    shutil.copyfile("src/teensy/x10/libraries.zip", "reports/arduino_hammer")
-                    print_status("Arduino jammer files and libraries exported to reports/arduino_jammer")
+                    if not os.path.isdir(setdir + "/reports/arduino_jammer"):
+                        os.makedirs(setdir + "/reports/arduino_jammer")
+                    shutil.copyfile("src/teensy/x10/x10_blackout.pde", setdir + "/reports/arduino_jammer")
+                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "/reports/arduino_hammer")
+                    print_status("Arduino jammer files and libraries exported to ~/.set/reports/arduino_jammer")
                     return_continue()
 
                 # powershell shellcode injection
@@ -1003,8 +1000,8 @@ and send the QRCode via a mailer.
 """
                 url = raw_input("Enter the URL you want the QRCode to go to: ")
                 # if the reports directory does not exist then create it
-                if not os.path.isdir("%s/reports" % (definepath)):
-                    os.makedirs("%s/reports" % (definepath))
+                if not os.path.isdir("%s/reports" % (setdir)):
+                    os.makedirs("%s/reports" % (setdir))
                 gen_qrcode(url)
                 pause = raw_input("QRCode generated.")
                 return_continue()

