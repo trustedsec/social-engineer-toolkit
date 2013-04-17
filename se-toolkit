@@ -21,8 +21,12 @@ import subprocess
 import shutil
 import re
 
-if not os.path.isdir(setdir + "/reports/"):
-    os.makedirs(setdir + "/reports")
+# check set logfile
+if not os.path.isfile("src/logs/set_logfile.log"):
+    # create new log
+    filewrite = file("src/logs/set_logfile.log", "w")
+    filewrite.write("")
+    filewrite.close()
 
 # grab the operating system
 operating_system = check_os()
@@ -32,6 +36,14 @@ if operating_system == "posix":
     if not os.path.isdir(setdir):
         # create the set variables
         os.makedirs(setdir)
+        # if for some reason it failed to pull the path
+        if not os.path.isdir("~/.set/"):
+            os.makedirs("~/.set/")
+
+
+if not os.path.isdir(setdir + "/reports/"):
+    os.makedirs(setdir + "/reports")
+
 
 # check to see if we have python-pycrypto
 try:
