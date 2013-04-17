@@ -96,8 +96,8 @@ class GetHandler(BaseHTTPRequestHandler):
         # display the command back decrypted
         print message
 
-if __name__ == '__main__':
-
+#if __name__ == '__main__':
+try:
     # bind to all interfaces
     if check_options("PORT=") != 0:
         port = check_options("PORT=")
@@ -122,3 +122,5 @@ if __name__ == '__main__':
     # handle keyboard interrupts
     except KeyboardInterrupt:
         print "[!] Exiting the encrypted webserver shell.. hack the gibson."
+except Exception, e:
+    print "Something went wrong, printing error: " + e
