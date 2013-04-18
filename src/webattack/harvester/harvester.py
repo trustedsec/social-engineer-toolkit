@@ -67,7 +67,7 @@ fields are available. Regardless, this captures all POSTs on a website.""" + bco
 # scrape cloned website
 sys.path.append("src/harvester/")
 debug_msg(me,"importing 'src.webattack.harvester.scraper'",1)
-try: reload("import scraper")
+try: reload(scraper)
 except: import scraper
 
 homepath=os.getcwd()
@@ -351,8 +351,10 @@ def run():
 
             except: pass
             if attack_vector != 'multiattack':
-                sys.path.append("src/harvester")
-                import report_generator
+                try: reload(src.webattack.harvester.report_generator)
+                except: import src.webattack.harvester.report_generator
+                #sys.path.append("src/harvester")
+                #import report_generator
             if attack_vector != 'multiattack':
                 return_continue()
             os.chdir(homepath)

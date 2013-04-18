@@ -6,6 +6,10 @@ import os
 import datetime
 from src.core.setcore import *
 
+# make sure the reports directory is created
+if not os.path.isdir(setdir + "/reports/"):
+    os.makedirs(setdir + "/reports/")
+
 #
 # Quick report generation script
 #

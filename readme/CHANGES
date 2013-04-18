@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.2
+~~~~~~~~~~~~~~~~
+
+* fixed an import bug within the credential harvester where scraper would not reload on entrance of credential harvester for the second time
+* fixed a bug that would cause the reports to not properly export on the credential harvester
+
+~~~~~~~~~~~~~~~~
 version 5.0.1
 ~~~~~~~~~~~~~~~~
 
