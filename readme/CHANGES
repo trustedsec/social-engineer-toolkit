@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.3
+~~~~~~~~~~~~~~~~
+
+* added set EnableStageEncoding true to default to encode the second stage with Shikata Ga Nai
+* fixed an issue that would cause webjacking to go back to the mlitm
+
+~~~~~~~~~~~~~~~~
 version 5.0.2
 ~~~~~~~~~~~~~~~~
 

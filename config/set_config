@@ -180,7 +180,7 @@ UPX_PATH=/usr/bin/upx
 ### This feature will turn on or off the automatic redirection. By default for example in multi-attack
 ### the site will redirect once one successful attack is used. Some people may want to use Java applet
 ### and credential harvester for example.
-AUTO_REDIRECT=OFF
+AUTO_REDIRECT=ON
 #
 ### This will redirect the harvester victim to this website once executed and not to the original website.
 ### For example if you clone abcompany.com and below it says blahblahcompany.com, it will redirect there instead.

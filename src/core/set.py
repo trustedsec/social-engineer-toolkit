@@ -161,10 +161,8 @@ try:
                     return_continue()
                     break
 
-                # Web Attack menu choice 5: Man Left in the Middle Attack Method
-                if attack_vector == "5":
-                    choice3 = '0'
-                if attack_vector != "5":
+                # Removed to delete MLITM
+                if attack_vector != "99999":
 
                     ###################################################
                     #     USER INPUT: SHOW WEB ATTACK VECTORS MENU    #
@@ -383,17 +381,16 @@ try:
                             # cred harvester for auto site here
                             if attack_vector == "harvester" or attack_vector == "tabnabbing" or attack_vector == "webjacking":
                                 if attack_vector == "tabnabbing" or attack_vector == "webjacking":
-                                    sys.path.append("src/webattack/tabnabbing")
                                     debug_msg(me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
-                                    try:reload(tabnabbing)
-                                    except: import tabnabbing
+                                    try:reload(src.webattack.tabnabbing)
+                                    except: import src.webattack.tabnabbing
                                 # start web cred harvester here
                                 sys.path.append("src/webattack/harvester")
                                 debug_msg(me, "importing 'src.webattack.harvester.harvester'", 1)
                                 try:
-                                    reload(harvester)
+                                    reload(src.webattack.harvester)
                                 except:
-                                    import harvester
+                                    import src.webattack.harvester
 
                             # if we are using profiler lets prep everything to get ready
                             if attack_vector == "profiler":
@@ -681,15 +678,6 @@ try:
                             debug_msg(me, "importing 'src.webattack.multi_attack.multiattack'", 1)
                             import src.webattack.multi_attack.multiattack
 
-
-                    # option for thebiz man left in the middle attack vector
-                    if choice3 == '0':
-                        sys.path.append("src/webattack/mlitm")
-                        debug_msg(me, "importing 'src.webattack.mlitm.thebiz'", 1)
-                        try:
-                            reload(thebiz)
-                        except:
-                            import thebiz
 
                     # Return to main menu
                     if choice3 == '4':
