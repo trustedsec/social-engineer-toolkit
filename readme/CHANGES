@@ -6,6 +6,7 @@ version 5.0.1
 * added a create for the set logfile when launching se-toolkit
 * fixed a bug that would cause ratte to not properly load when executing
 * fixed a bug that would cause the SET HTTP server to not work properly
+* added default path for the pwnie express folks for /opt/metasploit-framework
 
 ~~~~~~~~~~~~~~~~
 version 5.0

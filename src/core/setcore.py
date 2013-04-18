@@ -305,6 +305,11 @@ def meta_path():
                 if os.path.isfile("/usr/bin/msfconsole"):
                     msf_path = ""
                     trigger = 1
+                # specific for pwnpad and pwnplug (pwnie express)
+                if os.path.isfile("/opt/metasploit-framework/msfconsole"):
+                    msf_path = "/opt/metasploit-framework"
+                    trigger = 1
+
                 if trigger == 0:
                     if check_os() != "windows":
                         check_metasploit = check_config("METASPLOIT_MODE=").lower()
