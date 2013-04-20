@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.4
+~~~~~~~~~~~~~~~~
+
+* disable the java repeater based on the new java update that prompts unsafe signed and unsigned code from being populated
+* disabled the ability for the DNS server to start unless config option was specified
+
+~~~~~~~~~~~~~~~~
 version 5.0.3
 ~~~~~~~~~~~~~~~~
 

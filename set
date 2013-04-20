@@ -95,8 +95,8 @@ if operating_system == "posix":
     subprocess.Popen("chmod +x set-automate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 # check if we want DNS started
-dns_check = check_config("DNS_SERVER=").lower()
-if dns_check == "on":
+dns_check = check_config("DNS_SERVER=")
+if dns_check == "on" or dns_check == "ON":
     start_dns()
 
 # remove old files

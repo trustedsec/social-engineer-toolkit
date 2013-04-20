@@ -229,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.0.3'
+    define_version = '5.0.4'
     return define_version
 
 class create_menu:
@@ -1397,18 +1397,18 @@ class DNSQuery:
 
 # main dns routine
 def dns():
-    udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udps.bind(('',53))
-    try:
-        while 1:
-            data, addr = udps.recvfrom(1024)
-            p=DNSQuery(data)
-            udps.sendto(p.respuesta(ip), addr)
+        udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        udps.bind(('',53))
+        try:
+            while 1:
+                data, addr = udps.recvfrom(1024)
+                p=DNSQuery(data)
+                udps.sendto(p.respuesta(ip), addr)
 
-    except KeyboardInterrupt:
-		print "Exiting the DNS Server.."
-		sys.exit()
-		udps.close()
+        except KeyboardInterrupt:
+            print "Exiting the DNS Server.."
+            sys.exit()
+            udps.close()
 
 # start dns with multiprocessing
 def start_dns():

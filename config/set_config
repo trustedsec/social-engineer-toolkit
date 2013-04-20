@@ -103,7 +103,7 @@ MLITM_PORT=80
 #
 ### Use Apache instead of the standard Python web server. This will increase the speed
 ### of the attack vector.
-APACHE_SERVER=OFF
+APACHE_SERVER=ON
 #
 ### Path to the Apache web root
 APACHE_DIRECTORY=/var/www
@@ -125,7 +125,7 @@ JAVA_ID_PARAM=Trusted Java Applet (VERIFIED SAFE)
 ### Java applet repeater option will continue to prompt the user with the java applet if
 ### the user hits cancel. This means it will be non stop until run is executed. This gives
 ### a better success rate for the Java applet attack
-JAVA_REPEATER=ON
+JAVA_REPEATER=OFF
 #
 ### Java repeater timing which is the delay it takes between the user hitting cancel to
 ### when the next Java applet runs. Be careful setting to low as it will spawn them over
