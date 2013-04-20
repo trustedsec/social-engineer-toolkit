@@ -264,7 +264,7 @@ try:
                 repeater_database = repeater_database.replace("IDREPLACEHERE", java_id)
                 repeater_database = repeater_database.replace("TIMEHEREPLZ", java_time)
                 repeater_database = repeater_database.replace("URLHEREPLZ", url)
-
+                repeater_database = repeater_database.replace("RANDOMFUNCTION", generate_random_string(5,15), 3)
 
             ## do a quick sanity check and make sure body is standard
             index_database = re.sub("</BODY.*?>", "</body>", index_database)
