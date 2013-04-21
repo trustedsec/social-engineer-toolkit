@@ -229,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.0.4'
+    define_version = '5.0.5'
     return define_version
 
 class create_menu:

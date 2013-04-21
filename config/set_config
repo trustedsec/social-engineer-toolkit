@@ -103,7 +103,7 @@ MLITM_PORT=80
 #
 ### Use Apache instead of the standard Python web server. This will increase the speed
 ### of the attack vector.
-APACHE_SERVER=ON
+APACHE_SERVER=OFF
 #
 ### Path to the Apache web root
 APACHE_DIRECTORY=/var/www

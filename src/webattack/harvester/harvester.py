@@ -518,8 +518,12 @@ if ssl_flag == 'true':
 os.chdir(setdir + "/web_clone/")
 
 if attack_vector != "multiattack":
-    print bcolors.BLUE+"[*] Social-Engineer Toolkit Credential Harvester Attack\r\n[*] Credential Harvester is running on port "+web_port+"\r"
-    print "[*] Information will be displayed to you as it arrives below:\r" + bcolors.ENDC
+    if apache_check == "OFF" or apache_check == "off":
+        print bcolors.BLUE+"[*] The Social-Engineer Toolkit Credential Harvester Attack\r\n[*] Credential Harvester is running on port "+web_port+"\r"
+        print "[*] Information will be displayed to you as it arrives below:\r" + bcolors.ENDC
+    else:
+        print bcolors.BLUE+"[*] Apache is set to ON - everything will be placed in your web root directory of apache."
+        print bcolors.BLUE+"[*] Files will be written out to the root directory of apache."
 
 # catch all
 try:

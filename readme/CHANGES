@@ -1,9 +1,17 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.5
+~~~~~~~~~~~~~~~~
+
+* added more verbose handling to credential harvester if apache mode was set to on
+* turned apache server to off by default
+
+~~~~~~~~~~~~~~~~
 version 5.0.4
 ~~~~~~~~~~~~~~~~
 
-* disable the java repeater based on the new java update that prompts unsafe signed and unsigned code from being populated
+* disabled the java repeater for now - causes an insecure warning when running the applet - does not impact code execution though
 * disabled the ability for the DNS server to start unless config option was specified
+* added dynamic function naming in the repeater code - each time a new function will be named to remove any signature detection
 
 ~~~~~~~~~~~~~~~~
 version 5.0.3
