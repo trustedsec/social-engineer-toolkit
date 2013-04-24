@@ -15,9 +15,7 @@ import string
 import inspect
 import base64
 from src.core import dictionaries
-import multiprocessing
 import thread
-from multiprocessing import Process
 
 # check to see if we have python-pycrypto
 try:
@@ -229,7 +227,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.0.5'
+    define_version = '5.0.6'
     return define_version
 
 class create_menu:
@@ -1410,7 +1408,7 @@ def dns():
             sys.exit()
             udps.close()
 
-# start dns with multiprocessing
+# start dns 
 def start_dns():
 		thread.start_new_thread(dns,())
 

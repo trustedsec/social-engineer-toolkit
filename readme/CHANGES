@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.6
+~~~~~~~~~~~~~~~~
+
+* added ability for multiprocessing to not be used on the webattack vector for older use of python 2.6 and below
+
+~~~~~~~~~~~~~~~~
 version 5.0.5
 ~~~~~~~~~~~~~~~~
 

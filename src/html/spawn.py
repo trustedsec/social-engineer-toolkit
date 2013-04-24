@@ -236,8 +236,13 @@ def web_server_start():
                 import src.core.webserver as webserver                
                 # specify the path for the SET web directories for the applet attack
                 path = (setdir + "/web_clone/")
-                p = multiprocessing.Process(target=webserver.start_server, args=(web_port,path))
-                p.start()
+                try:
+                    import multiprocessing
+                    p = multiprocessing.Process(target=webserver.start_server, args=(web_port,path))
+                    p.start()
+                except Exception:
+                    import thread
+                    thread.start_new_thread(webserver.start_server, (web_port,path))
 
             # Handle KeyboardInterrupt
             except KeyboardInterrupt:
@@ -522,8 +527,8 @@ try:
 
             # prep ratte if its posix
             if operating_system == "posix":
-                subprocess.Popen("chmod +x ../../payloads/ratte/ratteserver", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-                os.system("../../payloads/ratte/ratteserver %s" % (port))
+                subprocess.Popen("chmod +x src/payloads/ratte/ratteserver", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+                os.system("src/payloads/ratte/ratteserver %s" % (port))
 
             # if not then run it in windows
             if operating_system == "windows":
