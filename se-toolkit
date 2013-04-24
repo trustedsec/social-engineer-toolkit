@@ -8,6 +8,12 @@ if os.path.isdir("/usr/share/setoolkit"):
 		os.chdir("/usr/share/setoolkit")
         sys.path.append("/usr/share/setoolkit")
 
+# check where we are and load default directory
+if os.path.isdir("/usr/share/set"):
+    if not os.path.isfile("se-toolkit"):
+        os.chdir("/usr/share/set")
+        sys.path.append("/usr/share/set")
+
 # if we can't see our config then something didn't go good..
 if not os.path.isfile("config/set_config"):
 	print_error("Cannot locate SET executable. Try running from the local directory.")
