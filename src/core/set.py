@@ -867,7 +867,7 @@ try:
                     if not os.path.isdir(setdir + "/reports/arduino_sniffers"):
                         os.makedirs(setdir + "/reports/arduino_sniffers")
                     shutil.copyfile("src/teensy/x10/x10_sniffer.pde", setdir + "/reports/arduino_sniffer")
-                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "reports/arduino_sniffer/")
+                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "/reports/arduino_sniffer/")
                     print_status("Arduino sniffer files and libraries exported to ~/.set/reports/arduino_sniffer")
                     return_continue()
 

@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.9
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that would cause the X10 paths to go to the wrong folder ~/.setreports vs. ~/.set/reports
+* added a create reports directory upon entering the Powershell attack vectors
+
+~~~~~~~~~~~~~~~~
 version 5.0.8
 ~~~~~~~~~~~~~~~~
 
