@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.8
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that caused harvester to bomb out upon entering templates (thanks Dale)
+* little fixes in coding in set.py
+
+~~~~~~~~~~~~~~~~
 version 5.0.7
 ~~~~~~~~~~~~~~~~
 

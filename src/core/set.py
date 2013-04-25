@@ -3,7 +3,6 @@
 #
 # The Social-Engineer Toolkit
 # Written by: David Kennedy (ReL1K)
-# Email: davek@secmaniac.com
 #
 ###############################################
 import shutil
@@ -385,12 +384,10 @@ try:
                                     try:reload(src.webattack.tabnabbing)
                                     except: import src.webattack.tabnabbing
                                 # start web cred harvester here
-                                sys.path.append("src/webattack/harvester")
+                                # sys.path.append("src/webattack/harvester")
                                 debug_msg(me, "importing 'src.webattack.harvester.harvester'", 1)
-                                try:
-                                    reload(src.webattack.harvester)
-                                except:
-                                    import src.webattack.harvester
+                                try: reload(src.webattack.harvester.harvester)
+                                except: import src.webattack.harvester.harvester
 
                             # if we are using profiler lets prep everything to get ready
                             if attack_vector == "profiler":
