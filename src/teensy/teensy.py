@@ -19,6 +19,10 @@ operating_system = check_os()
 now=datetime.datetime.today()
 if operating_system != "windows": import pexpect
 
+# check to see if setdir is created
+if not os.path.isdir(setdir + "/reports/"):
+    os.makedirs(setdir + "/reports/")
+
 definepath=os.getcwd()
 # define if use apache or not
 apache=0
