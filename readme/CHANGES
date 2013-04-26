@@ -4,6 +4,7 @@ version 5.0.9
 
 * fixed a bug that would cause the X10 paths to go to the wrong folder ~/.setreports vs. ~/.set/reports
 * added a create reports directory upon entering the Powershell attack vectors
+* fixed an issue that would cause mass mailer to not exit properly when specifying option 99
 
 ~~~~~~~~~~~~~~~~
 version 5.0.8

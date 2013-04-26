@@ -790,12 +790,9 @@ try:
 
         # Main Menu choice 5: Mass Mailer Attack
         if main_menu_choice == '5':
-            sys.path.append("src/phishing/smtp/client")
             debug_msg(me, "importing 'src.phishing.smtp.client.smtp_web'", 1)
-            try:
-                reload(smtp_web)
-            except:
-                import smtp_web
+            try: reload(src.phishing.smtp.client.smtp_web)
+            except: import src.phishing.smtp.client.smtp_web
 
         # Main Menu choice 6: Teensy USB HID Attack Vector
         if main_menu_choice == '6':
