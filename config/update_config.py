@@ -69,6 +69,7 @@ def value_type(value):
             'AUTO_REDIRECT':False,
             'HARVESTER_REDIRECT':False,
             'HARVESTER_URL':True,
+            'HARVESTER_LOG':True,
             'UNC_EMBED':False,
             'ACCESS_POINT_SSID':True,
             'AIRBASE_NG_PATH':True,
