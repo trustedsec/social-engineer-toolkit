@@ -342,6 +342,7 @@ def run():
     # check if we are not running apache mode
     if apache_check == False:
         try:
+
             server = ThreadedHTTPServer(('', int(web_port)), SETHandler)
             server.serve_forever()
 
@@ -363,7 +364,6 @@ def run():
 
         # handle the rest
         except Exception, e:
-            log(e)
             print bcolors.RED + "[*] Looks like the web_server can't bind to 80. Are you running Apache?" + bcolors.ENDC
             apache_stop = raw_input("Do you want to attempt to disable Apache? [y/n]: ")
             apache_counter = 0

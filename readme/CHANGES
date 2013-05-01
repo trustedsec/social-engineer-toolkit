@@ -8,6 +8,7 @@ version 5.0.10
 * added a new config option called HARVESTER_LOG. This will allow you to specify a log path if APACHE_SERVER is set to ON (thanks for suggestion JirkaV)
 * fixed a bug that would cause harvester to not work if apache mode was specified to on
 * fixed a bug that if you used the harvester twice - it would duplicate the harvester.txt path and file and cause an error if using apache mode
+* fixed an issue that would cause harvester to not properly shut down something if apache server was specified to on and not error out
 
 ~~~~~~~~~~~~~~~~
 version 5.0.9
