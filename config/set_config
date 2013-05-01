@@ -189,6 +189,10 @@ AUTO_REDIRECT=ON
 ### TO CHANGE.
 HARVESTER_REDIRECT=OFF
 HARVESTER_URL=http://thishasnotbeenset
+### This sets destination for the harvester log file if Apache is used. If left empty, it savest log to
+### timestamped log next to generated post.php file. If you change this, make sure that Apache user
+### (typically "www-data") has permissions to write to this file!
+HARVESTER_LOG=
 #
 ### This feature will auto embed a img src tag to a unc path of your attack machine.
 ### Useful if you want to intercept the half lm keys with rainbowtables. What will happen

