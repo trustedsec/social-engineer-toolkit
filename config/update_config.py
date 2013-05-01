@@ -82,7 +82,9 @@ def value_type(value):
             'USER_AGENT_STRING':True,
             'SET_SHELL_STAGER':False,
             'AUTOMATIC_LISTENER':False,
-            'METASPLOIT_MODE':False
+            'METASPLOIT_MODE':False,
+            'HARVESTER_LOG':True,
+            'TRACK_EMAIL_ADDRESSES':False
            }.get(value,"ERROR")
 
 def update_config():

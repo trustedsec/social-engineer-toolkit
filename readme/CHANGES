@@ -1,4 +1,15 @@
 ~~~~~~~~~~~~~~~~
+version 5.0.10
+~~~~~~~~~~~~~~~~
+
+* added .gitignore file in order ot not make mistakes
+* bug fix that would cause apache_server to fail if specified to on with the credential harvester
+* cleaned up code in harvester
+* added a new config option called HARVESTER_LOG. This will allow you to specify a log path if APACHE_SERVER is set to ON (thanks for suggestion JirkaV)
+* fixed a bug that would cause harvester to not work if apache mode was specified to on
+* fixed a bug that if you used the harvester twice - it would duplicate the harvester.txt path and file and cause an error if using apache mode
+
+~~~~~~~~~~~~~~~~
 version 5.0.9
 ~~~~~~~~~~~~~~~~
 
