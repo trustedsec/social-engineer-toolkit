@@ -31,7 +31,7 @@ if platform.system() == "Linux":
         if os.path.isfile("/etc/apt/sources.list"):
 
             # force install of debian packages
-            subprocess.Popen("apt-get --force-yes -y install git build-essential python-pexpect python-pefile python-crypto python-openssl python-pymssql", shell=True).wait()
+            subprocess.Popen("apt-get --force-yes -y install git build-essential python-pexpect python-pefile python-crypto python-openssl", shell=True).wait()
 
         # if sources.list is not available then we're running something offset
         else:
@@ -54,11 +54,14 @@ if platform.system() == "Linux":
         subprocess.Popen("cp /usr/share/setoolkit/se-toolkit /usr/bin", shell=True).wait()
         subprocess.Popen("cp /usr/share/setoolkit/set-update /usr/bin/", shell=True).wait()
         subprocess.Popen("chmod +x /usr/bin/se-toolkit", shell=True).wait()
+        print "[*] Note you will manually need to install Core Security 'Impacket'"
+        print "[*] Download link: http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Impacket"
+        # https://impacket.googlecode.com/files/impacket-0.9.10.tar.gz
+        print "[*] Once downloaded, tar -zxvf impacket*, go to the directory and run python setup.py install."
         print "[*] We are no finished! To run SET, type se-toolkit..."
 
 if platform.system() =='Darwin':
-    subprocess.Popen("easy_install pexpect pycrypto pyopenssl pefile pymssql", shell=True).wait()
-    print "[!] Note that you will need to install XCODE for OSX and run 'sudo easy_install cython pymssql' to finish."
+    subprocess.Popen("easy_install pexpect pycrypto pyopenssl pefile", shell=True).wait()
 
 if platform.system() != "Linux":
     if platform.system != "Darwin":
