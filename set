@@ -33,6 +33,9 @@ if not os.path.isfile("src/logs/set_logfile.log"):
 # grab the operating system
 operating_system = check_os()
 
+if not os.path.isdir("src/logs/"):
+    os.makedirs("src/logs/")
+
 # check set logfile
 if not os.path.isfile("src/logs/set_logfile.log"):
     # create new log
