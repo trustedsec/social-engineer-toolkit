@@ -20,8 +20,11 @@ from config.set_config import AP_CHANNEL as ap_channel
 from config.set_config import DNSSPOOF_PATH as dnsspoof_path
 
 if not os.path.isfile(dnsspoof_path):
-    print_warning("DNSSpoof was not found. Please install or correct path in set_config. Exiting....")
-    exit_set()
+    if os.path.isfile("/usr/sbin/dnsspoof"):
+        dnsspoof_path = "/usr/sbin/dnsspoof"
+    else:
+        print_warning("DNSSpoof was not found. Please install or correct path in set_config. Exiting....")
+        exit_set()
 
 if not os.path.isfile(airbase_path):
     airbase_path = "src/wireless/airbase-ng"

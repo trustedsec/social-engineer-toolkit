@@ -6,6 +6,13 @@ Password1!
 P@ssw0rd
 password12
 Password12
+security
+security1
+security3
+secuirty3
+complex1
+complex2
+complex3
 sqlserver
 sql
 sqlsql

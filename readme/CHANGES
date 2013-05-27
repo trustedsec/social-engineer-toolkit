@@ -1,4 +1,31 @@
 ~~~~~~~~~~~~~~~~
+version 5.1
+~~~~~~~~~~~~~~~~
+
+* when specifying a custom wordlist in SET - added the ability for ports to be specified ipaddr:portnum for example 192.168.5.5:2052 just in case a SQL server is not listening on 1433
+* incorporated udp port 1434 enumeration instead of portscanning - much more faster and efficent - also finds ports that are not on port 1433 (thanks Larry Spohn)
+* removed the src/core/portscan.py it is no longer needed 
+* added impacket as a dependacy - will be used for psexec command execution and TDS connections via mssql
+* fixed an issue that would cause the import modules to not load properly when relaunching the MSSQL Brute attack
+* improved the speed of the MSSQL brute attack on initial brute force
+* completely rewrote MSSQL Brute to incorporate impacket - SET no longer uses the _mssql module - highly buggy in the latest versions
+* improved udp 1434 detection capability by piping through the printCIDR function which will utilize CIDR notations when scanning
+* incorporated new function called capture which will take stdout from function calls and present them as a string - important when doing regex in impacket
+* streamlined the MSSQL bruter to automatically profile the system to determine if Powershell is installed, if so it will automatically do powershell injection, if not it will fall back to the Windows debug method for payload delivery
+* rewrote the entire powershell deployment module - it now ties in to standard powershell shell payload delivery system
+* added dynamic shellcode patching to the MSSQL bruter - now generates shellcode automatically, cast it unicode, then base64 encoding for EncodedCommand powershell bypass technique
+* rewrote the hex2binary deployment method to support the new impacket method - it will now automatically deliver a binary based on the attack vector that you want to use
+* shrunk the powershell injection code to fit properly within MSSQL xp_cmdshell one call
+* added one line for xp_cmdshell disable which works on later versions of Windows
+* removed the portscan functionality completely out of the MSSQL payload
+* rewrote all portions of the MSSQL bruter to be fully impacket and removed the dependacy for _mssql from fast-track
+* added new attack vector within the Fast-Track menu "PSEXEC Powershell Injection" which will allow you to specify psexec_command and compromise via direct memory injection
+* added ability to set threads within the new PSEXEC PowerShell Injection technique 
+* added quick dynamic patching for the powershell injection technique for payloads
+* added a new trustedsec intro ascii art that has the TS logo on it
+* updated rid_enum to the latest github version inside SET
+
+~~~~~~~~~~~~~~~~
 version 5.0.10
 ~~~~~~~~~~~~~~~~
 

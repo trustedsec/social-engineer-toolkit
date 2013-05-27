@@ -70,6 +70,7 @@ fasttrack_menu = ['Microsoft SQL Bruter',
                  'SCCM Attack Vector',
                  'Dell DRAC/Chassis Default Checker',
                  'RID_ENUM - User Enumeration Attack',
+                 'PSEXEC Powershell Injection',
                  '0D']
 
 fasttrack_text = ("""

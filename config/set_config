@@ -120,7 +120,7 @@ SELF_SIGNED_APPLET=OFF
 #
 ### This flag will set the java id flag within the java applet to something different.
 ### This could be to make it look more believable or for better obfuscation
-JAVA_ID_PARAM=Trusted Java Applet (VERIFIED SAFE)
+JAVA_ID_PARAM=Verified and Trusted (SECURE AND SAFE)
 #
 ### Java applet repeater option will continue to prompt the user with the java applet if
 ### the user hits cancel. This means it will be non stop until run is executed. This gives

@@ -9,10 +9,10 @@
 #  SET updated using the 'Update SET Configuration' menu item in      #
 #  the main menu. This file will be updated with the new settings.    #
 #                                                                     #
-#  set_config.py generated: 2013-04-15 10:21:41.959025                #
+#  set_config.py generated: 2013-05-24 19:14:36.946250                #
 #                                                                     #
 #######################################################################
-CONFIG_DATE='2013-04-15 10:21:41.959025'
+CONFIG_DATE='2013-05-24 19:14:36.946250'
 METASPLOIT_PATH="/opt/metasploit/apps/pro/msf3"
 METASPLOIT_DATABASE="postgresql"
 ENCOUNT=4
@@ -38,8 +38,8 @@ APACHE_SERVER=False
 APACHE_DIRECTORY="/var/www"
 WEB_PORT=80
 SELF_SIGNED_APPLET=False
-JAVA_ID_PARAM="Trusted Java Applet (VERIFIED SAFE)"
-JAVA_REPEATER=True
+JAVA_ID_PARAM="Verified and Trusted (SECURE AND SAFE)"
+JAVA_REPEATER=False
 JAVA_TIME="200"
 WEBATTACK_SSL=False
 SELF_SIGNED_CERT=False
@@ -53,9 +53,10 @@ TERMINAL="SOLO"
 DIGITAL_SIGNATURE_STEAL=False
 UPX_ENCODE=False
 UPX_PATH="/usr/bin/upx"
-AUTO_REDIRECT=False
+AUTO_REDIRECT=True
 HARVESTER_REDIRECT=False
 HARVESTER_URL="http://thishasnotbeenset"
+HARVESTER_LOG="/var/www"
 UNC_EMBED=False
 ACCESS_POINT_SSID="linksys"
 AIRBASE_NG_PATH="/usr/local/sbin/airbase-ng"
@@ -77,5 +78,5 @@ AUTOMATIC_LISTENER=True
 METASPLOIT_MODE=True
 DEPLOY_BINARIES="YES"
 CLEANUP_ENABLED_DEBUG="False"
-TRACK_EMAIL_ADDRESSES="False"
+TRACK_EMAIL_ADDRESSES=False
 DNS_SERVER="False"

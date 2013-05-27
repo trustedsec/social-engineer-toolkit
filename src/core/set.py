@@ -921,7 +921,10 @@ try:
                         airbase_path = "/usr/local/sbin/airbase-ng"
 
                 if not os.path.isfile(dnsspoof_path):
-                    if os.path.isfile("/usr/local/sbin/dnsspoof"): dnsspoof_path = "/usr/local/sbin/dnsspoof"
+                    if os.path.isfile("/usr/local/sbin/dnsspoof"): 
+                        dnsspoof_path = "/usr/local/sbin/dnsspoof"
+                    if os.path.isfile("/usr/sbin/dnsspoof"):
+                        dnsspoof_path = "/usr/sbin/dnsspoof"
 
                 # if we can find airbase-ng
                 if os.path.isfile(airbase_path):

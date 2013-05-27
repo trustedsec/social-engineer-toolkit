@@ -231,5 +231,6 @@ def category(category):
             '28':"teensy2powershell",
             '29':"powershell",
             '30':"delldrac",
-            '31':"ridenum"
+            '31':"ridenum",
+            '32':"psexec",
            }.get(category,"ERROR")

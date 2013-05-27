@@ -16,6 +16,8 @@ import inspect
 import base64
 from src.core import dictionaries
 import thread
+import cStringIO
+import trace
 
 # check to see if we have python-pycrypto
 try:
@@ -227,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.0.10'
+    define_version = '5.1'
     return define_version
 
 class create_menu:
@@ -271,21 +273,11 @@ def validate_ip(address):
 #
 def meta_path():
     # DEFINE METASPLOIT PATH
-    meta_path = file("%s/config/set_config" % (definepath()),"r").readlines()
-    for line in meta_path:
-        line = line.rstrip()
-        match = re.search("METASPLOIT_PATH=", line)
-        if match:
-            line = line.replace("METASPLOIT_PATH=","")
-            msf_path = line.rstrip()
-            # if it doesn't end with a forward slash
-            if msf_path.endswith("/"):
-                pass
-            else:
-                msf_path = msf_path + "/"
-            # path for metasploit
-            trigger = 0
-            if not os.path.isdir(msf_path):
+    msf_path = check_config("METASPLOIT_PATH=")
+    if msf_path.endswith("/"): pass
+    else: msf_path = msf_path + "/"
+    trigger = 0
+    if not os.path.isdir(msf_path):
                 # specific for kali linux
                 if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
                     msf_path = "/opt/metasploit/apps/pro/msf3/"
@@ -319,10 +311,11 @@ def meta_path():
                     if check_os() == "windows":
                         print_warning("Metasploit payloads are not currently supported. This is coming soon.")
                         msf_path = ""
-            # this is an option if we don't want to use Metasploit period
-            check_metasploit = check_config("METASPLOIT_MODE=").lower()
-            if check_metasploit != "on": msf_path = False
-            return msf_path
+
+    # this is an option if we don't want to use Metasploit period
+    check_metasploit = check_config("METASPLOIT_MODE=").lower()
+    if check_metasploit != "on": msf_path = False
+    return msf_path
 
 #
 # grab the metaspoit path
@@ -798,8 +791,8 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                  [---]
-[---]            Codename: '""" + bcolors.YELLOW + """The Wild West""" + bcolors.BLUE + """'             [---]
+[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                     [---]
+[---]          Codename: '""" + bcolors.YELLOW + """Name of the Doctor""" + bcolors.BLUE + """'          [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""         [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
@@ -811,7 +804,7 @@ def show_banner(define_version,graphic):
     print bcolors.BOLD + """  The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
 def show_graphic():
-    menu = random.randrange(2,10)
+    menu = random.randrange(2,11)
     if menu == 2:
         print bcolors.YELLOW + r"""
                  .--.  .--. .-----.
@@ -892,7 +885,7 @@ def show_graphic():
        /ooooooooooooooooooooooo/ /
       /C=_____________________/_/''' + bcolors.ENDC
 
-
+    
     if menu == 9:
         print bcolors.YELLOW + """
      01011001011011110111010100100000011100
@@ -916,6 +909,33 @@ def show_graphic():
      11110110111101101100011010110110100101
      11010000100000001010100110100001110101
      011001110111001100101010""" + bcolors.ENDC
+
+
+    if menu == 10:
+        print bcolors.GREEN + """
+                          .  ..                             
+                       MMMMMNMNMMMM=                        
+                   .DMM.           .MM$                     
+                 .MM.                 MM,.                  
+                 MN.                    MM.                 
+               .M.                       MM                 
+              .M   .....................  NM                
+              MM   .8888888888888888888.   M7               
+             .M    88888888888888888888.   ,M               
+             MM       ..888.MMMMM    .     .M.              
+             MM         888.MMMMMMMMMMM     M               
+             MM         888.MMMMMMMMMMM.    M               
+             MM         888.      NMMMM.   .M               
+              M.        888.MMMMMMMMMMM.   ZM               
+              NM.       888.MMMMMMMMMMM    M:               
+              .M+      .....              MM.               
+               .MM.                     .MD                 
+                 MM .                  .MM                  
+                  $MM                .MM.                   
+                    ,MM?          .MMM                      
+                       ,MMMMMMMMMMM 
+                     
+                https://www.trustedsec.com""" + bcolors.ENDC
 
 #
 # identify if set interactive shells are disabled
@@ -1420,3 +1440,128 @@ def setdir():
         return "src/program_junk/"
 # set the main directory for SET 
 setdir = setdir()
+
+# Copyright (c) 2007 Brandon Sterne
+# Licensed under the MIT license.
+# http://brandon.sternefamily.net/files/mit-license.txt
+# CIDR Block Converter - 2007
+
+# convert an IP address from its dotted-quad format to its
+# 32 binary digit representation
+def ip2bin(ip):
+    b = ""
+    inQuads = ip.split(".")
+    outQuads = 4
+    for q in inQuads:
+        if q != "":
+            b += dec2bin(int(q),8)
+            outQuads -= 1
+    while outQuads > 0:
+        b += "00000000"
+        outQuads -= 1
+    return b
+
+# convert a decimal number to binary representation
+# if d is specified, left-pad the binary number with 0s to that length
+def dec2bin(n,d=None):
+    s = ""
+    while n>0:
+        if n&1:
+            s = "1"+s
+        else:
+            s = "0"+s
+        n >>= 1
+    if d is not None:
+        while len(s)<d:
+            s = "0"+s
+    if s == "": s = "0"
+    return s
+
+# convert a binary string into an IP address
+def bin2ip(b):
+    ip = ""
+    for i in range(0,len(b),8):
+        ip += str(int(b[i:i+8],2))+"."
+    return ip[:-1]
+
+# print a list of IP addresses based on the CIDR block specified
+def printCIDR(c):
+        parts = c.split("/")
+        baseIP = ip2bin(parts[0])
+        subnet = int(parts[1])
+        # Python string-slicing weirdness:
+        # if a subnet of 32 was specified simply print the single IP
+        if subnet == 32:
+            ipaddr = bin2ip(baseIP)
+        # for any other size subnet, print a list of IP addresses by concatenating
+        # the prefix with each of the suffixes in the subnet
+        else:
+            ipPrefix = baseIP[:-(32-subnet)]
+            breakdown = ''
+            for i in range(2**(32-subnet)):
+                ipaddr = bin2ip(ipPrefix+dec2bin(i, (32-subnet)))
+                ip_check = is_valid_ip(ipaddr)
+                if ip_check != False:
+                    #return str(ipaddr)
+                    breakdown = breakdown + str(ipaddr) + ","
+            return breakdown
+
+# input validation routine for the CIDR block specified
+def validateCIDRBlock(b):
+    # appropriate format for CIDR block ($prefix/$subnet)
+    p = re.compile("^([0-9]{1,3}\.){0,3}[0-9]{1,3}(/[0-9]{1,2}){1}$")
+    if not p.match(b):
+        return False
+    # extract prefix and subnet size
+    prefix, subnet = b.split("/")
+    # each quad has an appropriate value (1-255)
+    quads = prefix.split(".")
+    for q in quads:
+        if (int(q) < 0) or (int(q) > 255):
+            #print "Error: quad "+str(q)+" wrong size."
+            return False
+    # subnet is an appropriate value (1-32)
+    if (int(subnet) < 1) or (int(subnet) > 32):
+        print "Error: subnet "+str(subnet)+" wrong size."
+        return False
+    # passed all checks -> return True
+    return True
+
+# Queries a remote host on UDP:1434 and returns MSSQL running port
+# Written by Larry Spohn (spoonman) @ TrustedSec
+def get_sql_port(host):
+
+    # Build the socket with a .1 second timeout
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.settimeout(.1)
+
+    # Attempt to query UDP:1434 and return MSSQL running port
+    try:
+        port = 1434;
+        msg = "\x02\x41\x41\x41\x41"
+        s.sendto(msg, (host, port))
+        d = s.recvfrom(1024)
+
+        sql_port = d[0].split(";")[9]
+        return sql_port
+    except:
+        pass
+
+# capture output from a function
+def capture(func, *args, **kwargs):
+    """Capture the output of func when called with the given arguments.
+
+    The function output includes any exception raised. capture returns
+    a tuple of (function result, standard output, standard error).
+    """
+    stdout, stderr = sys.stdout, sys.stderr
+    sys.stdout = c1 = cStringIO.StringIO()
+    sys.stderr = c2 = cStringIO.StringIO()
+    result = None
+    try:
+        result = func(*args, **kwargs)
+    except:
+        traceback.print_exc()
+    sys.stdout = stdout
+    sys.stderr = stderr
+    return (result, c1.getvalue(), c2.getvalue())

