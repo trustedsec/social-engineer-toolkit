@@ -482,8 +482,12 @@ class SecureHTTPServer(HTTPServer):
         # activate the interface
         self.server_activate()
 
+    def shutdown_request(self,request): request.shutdown()
+
+
 def ssl_server(HandlerClass = SETHandler,ServerClass = SecureHTTPServer):
         # bind to all interfaces on 443
+    import src.core.patched.socket 
     server_address = ('', 443) # (address, port)
     # setup the httpd server
     httpd = ServerClass(server_address, HandlerClass)

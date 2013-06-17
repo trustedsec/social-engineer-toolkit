@@ -75,7 +75,7 @@ if attack_vector == "tabnabbing":
     filewrite1.write("</body>\n")
     filewrite1.close()
 
-# define webjackign or multi webjacking here
+# define webjacking or multi webjacking here
 if attack_vector == "webjacking" or multi_webjacking == "on":
     filewrite1=file(setdir + "/web_clone/index.html", "w")
     filewrite1.write("<script>\n")
