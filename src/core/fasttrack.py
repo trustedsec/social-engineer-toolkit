@@ -88,8 +88,11 @@ try:
                             if sqlport != None:
                                 sql_servers = sql_servers + host + ":" + sqlport + ","
                     else:
+                        # use udp discovery to get the SQL server IDP through 1434
                         sqlport = get_sql_port(range)
-                        sql_servers = range + ":" + sqlport
+                        # UDP could be closed - defaulting to 1433
+                        if sqlport != None:
+                            sql_servers = range + ":" + sqlport
 
                 # specify choice 2
                 if choice == "2":
