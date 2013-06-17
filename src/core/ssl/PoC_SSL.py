@@ -21,6 +21,7 @@ class SecureHTTPServer(HTTPServer):
         self.server_bind()
         self.server_activate()
 
+    def shutdown_request(self,request): request.shutdown()
 
 class SecureHTTPRequestHandler(SimpleHTTPRequestHandler):
     def setup(self):
@@ -29,14 +30,12 @@ class SecureHTTPRequestHandler(SimpleHTTPRequestHandler):
         self.wfile = socket._fileobject(self.request, "wb", self.wbufsize)
 
 
-def test(HandlerClass = SecureHTTPRequestHandler,
+def main_server(HandlerClass = SecureHTTPRequestHandler,
          ServerClass = SecureHTTPServer):
     server_address = ('', 443) # (address, port)
     httpd = ServerClass(server_address, HandlerClass)
     sa = httpd.socket.getsockname()
     print "Serving HTTPS on", sa[0], "port", sa[1], "..."
-    httpd.serve_forever()
-
 
 if __name__ == '__main__':
-    test()
+    main_server()
