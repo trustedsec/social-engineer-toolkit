@@ -120,7 +120,7 @@ SELF_SIGNED_APPLET=OFF
 #
 ### This flag will set the java id flag within the java applet to something different.
 ### This could be to make it look more believable or for better obfuscation
-JAVA_ID_PARAM=Verified and Trusted (SECURE AND SAFE)
+JAVA_ID_PARAM=Applet verified as safe. (TRUSTED)
 #
 ### Java applet repeater option will continue to prompt the user with the java applet if
 ### the user hits cancel. This means it will be non stop until run is executed. This gives
@@ -216,8 +216,7 @@ POWERSHELL_INJECTION=ON
 #
 ### This will allow you to change the Metasploit payload to whatever you want based on the powershell alphanumeric
 ### injection attack. Specify this if POWERSHELL INJECTION is set to ON and you want to change it from the standard
-### reverse_tcp attack. NOTE: payloads need to be specific to operating system i.e. x64 and x86
-POWERSHELL_INJECT_PAYLOAD_X64=windows/x64/meterpreter/reverse_tcp
+### reverse_tcp attack. NOTE: All payloads use x86 - process will automatically downgrade to 32 bit.
 POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_tcp
 #
 ### THIS OPTION WILL SPRAY MULTIPLE PORTS THROUGH POWERSHELL IN A HOPE TO GET A PORT OUTBOUND. 
