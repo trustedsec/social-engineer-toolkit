@@ -182,7 +182,6 @@ visits = file(setdir + "/visits.file", "a")
 bites = file(setdir + "/bites.file", "a")
 
 # SET Handler for handling POST requests and general setup through SSL
-#class SETHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 class SETHandler(BaseHTTPRequestHandler):
     def setup(self):
         # added a try except block in case of transmission errors
@@ -375,6 +374,7 @@ def run():
                     subprocess.Popen("/etc/init.d/httpd stop", shell=True).wait()
                     apache_counter = 1
             if apache_counter == 1:
+
                 # check if we are running apache mode
                 print_status("Successfully stopped Apache. Starting the credential harvester.")
                 print_status("Harvester is ready, have victim browse to your site.")
@@ -487,12 +487,13 @@ class SecureHTTPServer(HTTPServer):
 
 def ssl_server(HandlerClass = SETHandler,ServerClass = SecureHTTPServer):
         # bind to all interfaces on 443
-    import src.core.patched.socket 
+
     server_address = ('', 443) # (address, port)
     # setup the httpd server
     httpd = ServerClass(server_address, HandlerClass)
     # serve the httpd server until exit
     httpd.serve_forever()
+
 if track_email == True: webattack_email = True
 # if emailer webattack, spawn email questions
 if webattack_email == True:
@@ -518,9 +519,12 @@ if ssl_flag == 'true':
     if not os.path.isfile(setdir + "/newcert.pem"):
         print "PEM files not detected. SSL will not work properly."
     # copy over our PEM files
-    #if self_signed =="true":
     subprocess.Popen("cp %s/*.pem %s/web_clone/" % (setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-
+    # copy patched socket over to web clone
+    definepath = os.getcwd()
+    # we need to move a modified version of socket to handle SSL
+    shutil.copyfile("%s/src/core/patched/socket.py" % (definepath) , "%s/socket.py" % (definepath)) 
+   
 # head over to cloned dir
 if apache_check == False:
     os.chdir(setdir + "/web_clone/")
@@ -545,4 +549,10 @@ try:
     if ssl_flag == 'false':
         run()
 except:
+    # cleanup modified socket
+    if ssl_flag == "true":
+        if os.path.isfile(definepath + "/socket.py"):
+            os.remove(definepath + "/socket.py")
+        if os.path.isfile(definepath + "/socket.pyc"):
+            os.remove(definepath + "/socket.pyc")
     pass
