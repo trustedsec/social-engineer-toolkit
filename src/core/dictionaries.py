@@ -13,22 +13,10 @@ def encoder_type(encode):
 
     return {
             '0':"",
-            '1':"avoid_utf8_tolower",
-            '2':"shikata_ga_nai",
-            '3':"alpha_mixed",
-            '4':"alpha_upper",
-            '5':"call4_dword_xor",
-            '6':"countdown",
-            '7':"fnstenv_mov",
-            '8':"jmp_call_additive",
-            '9':"nonalpha",
-            '10':"nonupper",
-            '11':"unicode_mixed",
-            '12':"unicode_upper",
-            '13':"alpha2",
-            '14':"",
-            '15':"MULTIENCODE",
-            '16':"BACKDOOR",
+            '1':"shikata_ga_nai",
+            '2':"",
+            '3':"MULTIENCODE",
+            '4':"BACKDOOR",
             }.get(encode,"ERROR")
 
 

@@ -402,22 +402,10 @@ powershell_text = ("""
 The """ + bcolors.BOLD + """Powershell Attack Vector""" + bcolors.ENDC + """ module allows you to create PowerShell specific attacks. These attacks will allow you to use PowerShell which is available by default in all operating systems Windows Vista and above. PowerShell provides a fruitful  landscape for deploying payloads and performing functions that  do not get triggered by preventative technologies.\n""")
 
 
-encoder_menu = ['avoid_utf8_tolower (Normal)',
-                'shikata_ga_nai (Very Good)',
-                'alpha_mixed (Normal)',
-                'alpha_upper (Normal)',
-                'call4_dword_xor (Normal)',
-                'countdown (Normal)',
-                'fnstenv_mov (Normal)',
-                'jmp_call_additive (Normal)',
-                'nonalpha (Normal)',
-                'nonupper (Normal)',
-                'unicode_mixed (Normal)',
-                'unicode_upper (Normal)',
-                'alpha2 (Normal)',
-                'No Encoding (None)',
-                'Multi-Encoder (Excellent)',
-                'Backdoored Executable (BEST)\n']
+encoder_menu = ['shikata_ga_nai',
+                'No Encoding',
+                'Multi-Encoder',
+                'Backdoored Executable\n']
 
 encoder_text = """
 Select one of the below, 'backdoored executable' is typically the best. However,
