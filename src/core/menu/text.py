@@ -107,39 +107,19 @@ to convert the payload back to a binary for us.
 """)
 
 webattack_text = ("""
- The Web Attack module is  a unique way of utilizing multiple web-based attacks
- in order to compromise the intended victim.
+The Web Attack module is  a unique way of utilizing multiple web-based attacks in order to compromise the intended victim.
 
- The """ + bcolors.BOLD + """Java Applet Attack""" + bcolors.ENDC + """ method will spoof a Java Certificate and deliver a
- metasploit based payload. Uses a customized java applet created by Thomas
- Werth to deliver the payload.
+The """ + bcolors.BOLD + """Java Applet Attack""" + bcolors.ENDC + """ method will spoof a Java Certificate and deliver a metasploit based payload. Uses a customized java applet created by Thomas Werth to deliver the payload.
 
- The """ + bcolors.BOLD + """Metasploit Browser Exploit""" + bcolors.ENDC + """ method will utilize select Metasploit
- browser exploits through an iframe and deliver a Metasploit payload.
+The """ + bcolors.BOLD + """Metasploit Browser Exploit""" + bcolors.ENDC + """ method will utilize select Metasploit browser exploits through an iframe and deliver a Metasploit payload.
 
- The """ + bcolors.BOLD + """Credential Harvester""" + bcolors.ENDC + """ method will utilize web cloning of a web-
- site that has a username and password field and harvest all the
- information posted to the website.
+The """ + bcolors.BOLD + """Credential Harvester""" + bcolors.ENDC + """ method will utilize web cloning of a web- site that has a username and password field and harvest all the information posted to the website.
 
- The """ + bcolors.BOLD + """TabNabbing""" + bcolors.ENDC + """ method will wait for a user to move to a different
- tab, then refresh the page to something different.
+The """ + bcolors.BOLD + """TabNabbing""" + bcolors.ENDC + """ method will wait for a user to move to a different tab, then refresh the page to something different.
 
- The """ + bcolors.BOLD + """Man Left in the Middle Attack""" + bcolors.ENDC + """ method was introduced by Kos and
- utilizes HTTP REFERER's in order to intercept fields and harvest
- data from them. You need to have an already vulnerable site and in-
- corporate <script src="http://YOURIP/">. This could either be from a
- compromised site or through XSS.
+The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, Emgent and the Back|Track team. This method utilizes iframe replacements to make the highlighted URL link to appear legitimate however when clicked a window pops up then is replaced with the malicious link. You can edit the link replacement settings in the set_config if its too slow/fast.
 
- The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, Emgent
- and the Back|Track team. This method utilizes iframe replacements to
- make the highlighted URL link to appear legitimate however when clicked
- a window pops up then is replaced with the malicious link. You can edit
- the link replacement settings in the set_config if its too slow/fast.
-
- The """ + bcolors.BOLD + """Multi-Attack""" + bcolors.ENDC + """ method will add a combination of attacks through the web attack
- menu. For example you can utilize the Java Applet, Metasploit Browser,
- Credential Harvester/Tabnabbing, and the Man Left in the Middle attack
- all at once to see which is successful.
+The """ + bcolors.BOLD + """Multi-Attack""" + bcolors.ENDC + """ method will add a combination of attacks through the web attack menu. For example you can utilize the Java Applet, Metasploit Browser, Credential Harvester/Tabnabbing, and the Man Left in the Middle attack all at once to see which is successful.
 """)
 
 webattack_vectors_menu = ['Web Templates',
