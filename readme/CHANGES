@@ -1,4 +1,35 @@
 ~~~~~~~~~~~~~~~~
+version 5.2
+~~~~~~~~~~~~~~~~
+
+* incorporated the new x86 PowerShell downgrade attack. This will automatically use x86 shellcode regardless of operating system. (https://www.trustedsec.com/may-2013/native-powershell-x86-shellcode-injection-on-64-bit-platforms/)
+* changed platform detection from if($env:PROCESSOR_ARCHITECTURE -eq "AMD64") to [IntPtr]::Size -eq 6
+* rewrote payload generator in powershell menu to use new process downgrade attack
+* rewrote java applet to use the new process downgrade attack
+* rewrote powershell generation within setcore to use the powershell downgrade attack
+* changed the default Java Applet wording to "Applet verified as safe (TRUSTED)". 
+* fixed a bug that would cause SQL bruter to error out when specifying a single host and the host was not alive
+* fixed a bug that would allow you use web templates with webjacking and tabnabbing which it should not have
+* removed old encoding methods when using standard metasploit executables
+* fixed an issue that would not allow SSL and harvester to work correctly - this required manually patching socket.py and keeping a patched version in the root directory upon launch. This is due to a bug in pyopenssl and unhandled packet handling within socket.py
+* added more stability to the SSL harvester when using pem certificate files 
+* added powershell downgrade attack to psexec powershell attack
+* added ExitOnSession to false when using psexec command
+* added set EnableStageEncoding true when using psexec command for stager encoding with shikata
+* added better stability to the powershell injection attacks with multiple detection points
+* fixed an issue that would cause an error message when reusing credential harvester
+* added proper cleanup on new socket.py - has to be in SET root - weird issue when os.chdir or sys.path.append - doesn't recognize 
+* removed man left in the middle from the web attacks menu
+* streched the text on the menu to be full line versus manual splitting
+* added new code and binary for pyinjector to evade AV
+* added new code and binary for multipyinjector to evade AV
+* officially removed the "set" command and moved to se-toolkit, set was a linux command and conflicted - use se-toolkit from here on out
+* simplified the replace code for the shellcode powershell injection technique in setcore
+* improved string encryption on the java applet attack
+* added -noprofile flag option to powershell injection for x86 downgrade attack
+* slimmed down the code used for the powershell injection attacks, allows more space for shellcode 
+
+~~~~~~~~~~~~~~~~
 version 5.1
 ~~~~~~~~~~~~~~~~
 
@@ -795,7 +826,7 @@ version 3.1.3
  * fixed a major bug that would cause the java applet to not properly load a website
  * added better routine in check_config for comment code
  * added startswith to all checks on config file for better granularity on configuration options
- * fixed a menu rendering issue and fixed the codename: was missing a single quote and addded Garland to the development team
+ * fixed a menu rendering issue and fixed the codename: was missing a single quote
  * fixed a bug if you were importing a custom payload the parameter "freehugs" would be appended to the executable path so blah.exe freehugs would cause exceptions for backdoors that took command line arguments
 
 ~~~~~~~~~~~~~~~~
