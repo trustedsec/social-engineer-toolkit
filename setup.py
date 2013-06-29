@@ -64,7 +64,7 @@ if platform.system() =='Darwin':
     subprocess.Popen("easy_install pexpect pycrypto pyopenssl pefile", shell=True).wait()
 
 if platform.system() != "Linux":
-    if platform.system != "Darwin":
+    if platform.system() != "Darwin":
         print "[!] Sorry this installer is not designed for any other system other than Linux and Mac. Please install the python depends manually."
 
 
