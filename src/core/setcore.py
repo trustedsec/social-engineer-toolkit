@@ -229,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.2'
+    define_version = '5.2.1'
     return define_version
 
 class create_menu:
@@ -375,44 +375,6 @@ def grab_ipaddress():
         print bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC
 
 
-# mssql check
-def check_mssql():
-    try:
-        import _mssql
-    except:
-        print_error("ERROR:pymssql is required in order to fully run SET")
-        print_warning("Please download and install pymssql: http://code.google.com/p/pymssql/downloads/list")
-        if check_os() == "posix":
-            answer = raw_input(setprompt("0", "Would you like SET to attempt to install it for you? [yes|no]"))
-            #answer = raw_input(setprompt("0", "Would you like SET to attempt to install it for you? [yes|no]"))
-            answer = yesno_prompt("0", "Would you like SET to attempt to install it for you? [yes|no]")
-            if answer == "YES":
-                print_info("Installing pymssql")
-                if os.path.isfile("/usr/bin/yum"):
-                    subprocess.Popen("yum install pymssql", shell=True).wait()
-                    print_status("Finished... Relaunch SET, if it doesn't work for you, install manually.")
-                    try:
-                        sys.exit(0)
-                    except SystemExit:
-                        pass
-                elif os.path.isfile("/usr/bin/apt-get"):
-                    subprocess.Popen("apt-get install python-pymssql", shell=True).wait()
-                    print_status("Finished... Relaunch SET, if it doesn't work for you, install manually.")
-                    try:
-                        sys.exit(0)
-                    except SystemExit:
-                        pass
-                else:
-                    print "No luck identifying an installer. Please install pymssql manually."
-                    try:
-                        sys.exit(0)
-                    except SystemExit:
-                        pass
-            elif answer == "NO":
-                sys.exit(1)
-            else:
-                print_error("ERROR:Invalid response, exiting the Social-Engineer Toolkit...")
-                sys.exit(1)
 #
 # cleanup old or stale files
 #
@@ -791,7 +753,7 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                     [---]
+[---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
 [---]            Codename: '""" + bcolors.YELLOW + """Urban Camping""" + bcolors.BLUE + """'             [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""         [---]

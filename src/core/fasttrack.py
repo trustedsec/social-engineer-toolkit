@@ -5,21 +5,11 @@ import subprocess
 
 definepath = os.getcwd()
 
-try:
-    import _mssql
-except ImportError:
-    print_error("PYMSSQL is not installed. MSSQL attacks will not work!")
-    operating_system = check_os()
-    if operating_system == "windows":
-        print_status("You can download PYMSSQL executables from here: http://www.lfd.uci.edu/~gohlke/pythonlibs/")
-    raw_input("Press {return} to continue.")
-    pass
 #
 #
 # Fast-Track Main options and interface menus
 #
 #
-check_mssql()
 try:
     while 1:
         ###################################################
