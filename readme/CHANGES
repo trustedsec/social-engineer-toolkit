@@ -2,6 +2,8 @@
 version 5.2.1
 ~~~~~~~~~~~~~~~~
 
+* Removed mentions to PYMSSQL and old checks - no longer needed due to impacket
+
 ~~~~~~~~~~~~~~~~
 version 5.2
 ~~~~~~~~~~~~~~~~
