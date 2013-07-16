@@ -35,7 +35,7 @@ if powershell_menu_choice != "99":
         # here we format everything for us
         x86 = file(setdir + "/x86.powershell", "r")
         x86 = x86.read()
-        x86 = "powershell -noprofile -windowstyle hidden -noninteractive -EncodedCommand " + x86
+        x86 = "powershell -nop -windows hidden -noni -enc " + x86
         print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
         filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
         filewrite.write(x86)
