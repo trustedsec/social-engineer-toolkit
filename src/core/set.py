@@ -476,7 +476,7 @@ try:
                                 debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
                                 try:
                                     reload(src.core.payloadgen.create_payloads)
-                                except: 
+                                except:
                                     import src.core.payloadgen.create_payloads
 
                             # arp cache if applicable
@@ -854,8 +854,10 @@ try:
                 # if we are doing the sd2teensy osx attack
                 if teensy_menu_choice == "9":
                     print_status("Generating the SD2Teensy OSX pde file for you...")
-                    shutil.copyfile("src/teensy/osx_sd2teensy.pde %s/reports/" % (setdir))
-                    print_status("File has been exported to ~/.set/reports/osx_sd2teensy.pde")
+                    if not os.path.isdir(setdir + "/reports/osx_sd2teensy"):
+                        os.makedirs(setdir + "/reports/osx_sd2teensy")
+                    shutil.copyfile("src/teensy/osx_sd2teensy.pde", "%s/reports/osx_sd2teensy/osx_sd2teensy.pde" % (setdir))
+                    print_status("File has been exported to ~/.set/reports/osx_sd2teensy/osx_sd2teensy.pde")
                     return_continue()
 
                 # if we are doing the X10 Arduino Sniffer
@@ -863,8 +865,8 @@ try:
                     print_status("Generating the Arduino sniffer and libraries pde..")
                     if not os.path.isdir(setdir + "/reports/arduino_sniffers"):
                         os.makedirs(setdir + "/reports/arduino_sniffers")
-                    shutil.copyfile("src/teensy/x10/x10_sniffer.pde", setdir + "/reports/arduino_sniffer")
-                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "/reports/arduino_sniffer/")
+                    shutil.copyfile("src/teensy/x10/x10_sniffer.pde", setdir + "/reports/arduino_sniffer/x10_sniffer.pde")
+                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "/reports/arduino_sniffer/libraries.zip")
                     print_status("Arduino sniffer files and libraries exported to ~/.set/reports/arduino_sniffer")
                     return_continue()
 
@@ -873,8 +875,8 @@ try:
                     print_status("Generating the Arduino jammer pde and libraries...")
                     if not os.path.isdir(setdir + "/reports/arduino_jammer"):
                         os.makedirs(setdir + "/reports/arduino_jammer")
-                    shutil.copyfile("src/teensy/x10/x10_blackout.pde", setdir + "/reports/arduino_jammer")
-                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "/reports/arduino_hammer")
+                    shutil.copyfile("src/teensy/x10/x10_blackout.pde", setdir + "/reports/arduino_jammer/x10_blackout.pde")
+                    shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "/reports/arduino_hammer/libraries.zip")
                     print_status("Arduino jammer files and libraries exported to ~/.set/reports/arduino_jammer")
                     return_continue()
 
@@ -921,7 +923,7 @@ try:
                         airbase_path = "/usr/local/sbin/airbase-ng"
 
                 if not os.path.isfile(dnsspoof_path):
-                    if os.path.isfile("/usr/local/sbin/dnsspoof"): 
+                    if os.path.isfile("/usr/local/sbin/dnsspoof"):
                         dnsspoof_path = "/usr/local/sbin/dnsspoof"
                     if os.path.isfile("/usr/sbin/dnsspoof"):
                         dnsspoof_path = "/usr/sbin/dnsspoof"
