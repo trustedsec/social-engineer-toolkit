@@ -17,6 +17,7 @@ print """
   3. Google
   4. Facebook
   5. Twitter
+  6. Yahoo
 """
 choice=raw_input(setprompt(["2"],"Select a template"))
 
@@ -58,6 +59,13 @@ if choice == "5":
     if os.path.isfile("src/html/index.template"): os.remove("src/html/index.template")
     shutil.copyfile("src/html/templates/twitter/index.template", "src/html/index.template")
     URL="http://www.twitter.com"
+
+# if yahoo
+if choice =="6":
+    if os.path.isfile("src/html/index.template"): os.remove("src/html/index.template")
+    shutil.copyfile("src/html/templates/yahoo/index.template", "src/html/index.template")
+    URL="http://mail.yahoo.com"
+
 if not os.path.isdir(setdir + "/web_clone"):
     os.makedirs(setdir + "/web_clone/")
 if os.path.isfile(setdir + "/web_clone/index.html"): os.remove(setdir + "/web_clone/index.html")
