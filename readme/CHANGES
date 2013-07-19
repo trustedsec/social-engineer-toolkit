@@ -1,4 +1,13 @@
 ~~~~~~~~~~~~~~~~
+version 5.2.2
+~~~~~~~~~~~~~~~~
+
+* Shortened the length of the powershell injection code when using the standpoint powershell injection
+* Fixed an issue causing a port error when using the SQL brute force on a single IP address
+* Fixed an issue causing msf.exe to not show up properly when generating a payload
+* Fairly large change that puts LHOST from 0.0.0.0 (all interfaces) to your LHOST/IP address
+
+~~~~~~~~~~~~~~~~
 version 5.2.1
 ~~~~~~~~~~~~~~~~
 

