@@ -40,9 +40,6 @@ if operating_system == "posix":
 
 define_version = get_version()
 
-# remove old stale files and restore java applet to original applet
-# cleanup_routine()
-
 try:
     while 1:
         show_banner(define_version, '1')
@@ -762,13 +759,12 @@ try:
             filewrite.write("payloadgen=solo")
             filewrite.close()
             debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
-            import src.core.payloadgen.create_payloads
-            print_status("Your payload is now in the root directory of SET as msf.exe")
+            try: import src.core.payloadgen.create_payloads
+            except: reload(src.core.payloadgen.create_payloads)
+            print_status("Your payload is now in the root directory of SET as payload.exe")
             if os.path.isfile(setdir + "/meterpreter.alpha"):
                 print "[*] Saving alphanumeric shellcode in root directory of SET as meterpreter.alpha"
-                shutil.copyfile(setdir + "/meterpreter.alpha", "meterpreter.alpha")
-            if os.path.isfile(setdir + "/msf.exe"):
-                shutil.copyfile(setdir + "/msf.exe", "msf.exe")
+                shutil.copyfile(setdir + "/meterpreter.alpha", definepath + "/meterpreter.alpha")
 
             # if we didn't select the SET interactive shell or RATTE
             if not os.path.isfile(setdir + "/set.payload"):
@@ -777,8 +773,8 @@ try:
 	                upx("msf.exe")
 
             # if the set payload is there
-            if os.path.isfile(setdir + "/set.payload"):
-                shutil.copyfile(setdir + "/msf.exe", "msf.exe")
+            if os.path.isfile(setdir + "/msf.exe"):
+                shutil.copyfile(setdir + "/msf.exe", "payload.exe")
 
             sys.path.append("src/core/payloadgen/")
             debug_msg(me, "importing 'src.core.payloadgen.solo'", 1)
