@@ -51,14 +51,14 @@ if platform.system() == "Linux":
         print "[*] Installing SET into the /usr/share/setoolkit folder through git..."		
         subprocess.Popen("git clone https://github.com/trustedsec/social-engineer-toolkit /usr/share/setoolkit", shell=True).wait()
         print "[*] Installing setoolkit installer to /usr/bin/setoolkit..."
-        subprocess.Popen("cp /usr/share/setoolkit/se-toolkit /usr/bin", shell=True).wait()
+        subprocess.Popen("cp /usr/share/setoolkit/setoolkit /usr/bin", shell=True).wait()
         subprocess.Popen("cp /usr/share/setoolkit/set-update /usr/bin/", shell=True).wait()
-        subprocess.Popen("chmod +x /usr/bin/se-toolkit", shell=True).wait()
+        subprocess.Popen("chmod +x /usr/bin/setoolkit", shell=True).wait()
         print "[*] Note you will manually need to install Core Security 'Impacket'"
         print "[*] Download link: http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Impacket"
         # https://impacket.googlecode.com/files/impacket-0.9.10.tar.gz
         print "[*] Once downloaded, tar -zxvf impacket*, go to the directory and run python setup.py install."
-        print "[*] We are no finished! To run SET, type se-toolkit..."
+        print "[*] We are no finished! To run SET, type setoolkit..."
 
 if platform.system() =='Darwin':
     subprocess.Popen("easy_install pexpect pycrypto pyopenssl pefile", shell=True).wait()
