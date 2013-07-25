@@ -1,16 +1,17 @@
 #!/usr/bin/python
 import os
 import sys
+import subprocess
 
 # check where we are and load default directory
 if os.path.isdir("/usr/share/setoolkit"):
-	if not os.path.isfile("se-toolkit"):
+	if not os.path.isfile("setoolkit"):
 		os.chdir("/usr/share/setoolkit")
         sys.path.append("/usr/share/setoolkit")
 
 # check where we are and load default directory
 if os.path.isdir("/usr/share/set"):
-    if not os.path.isfile("se-toolkit"):
+    if not os.path.isfile("setoolkit"):
         os.chdir("/usr/share/set")
         sys.path.append("/usr/share/set")
 
@@ -20,4 +21,4 @@ if not os.path.isfile("config/set_config"):
 	print_error("If this does not work, please run the setup.py install file.")
 	sys.exit()
 
-subprocess.Popen("python setoolkit", shell=True)
+subprocess.Popen("python setoolkit", shell=True).wait()
