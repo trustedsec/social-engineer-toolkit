@@ -54,8 +54,7 @@ password="false"
 if os.path.isfile(filename):
     try:
         print "[*] Spawning SET in a threaded process..."
-        child=pexpect.spawn("python set")
-        #child.delaybeforesend = 0
+        child=pexpect.spawn("python setoolkit")
         fileopen=file(filename,"r")
         for line in fileopen:
             line=line.rstrip()
