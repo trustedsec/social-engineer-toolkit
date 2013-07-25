@@ -11,6 +11,7 @@ from src.core.setcore import *
 from src.core.menu.text import *
 from src.core.dictionaries import *
 
+ipaddr = ""
 me = mod_name()
 listener="notdefined"
 definepath=os.getcwd()
@@ -418,6 +419,9 @@ try:
                                 # here we prep our meta config to listen on all the ports we want - free hugs all around
                                 filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
+                                if ipaddr == "":
+                                    # grab ipaddr if not defined
+                                    ipaddr = check_options("IPADDR=")
                                 if port_check == False:
                                     filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, ipaddr, shellcode_port))
                                     filewrite.close()
