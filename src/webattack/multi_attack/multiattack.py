@@ -103,10 +103,9 @@ while a==1:
     print "   2. Metasploit Browser Exploit Method" + toggleflag_meta
     print "   3. Credential Harvester Attack Method" + toggleflag_harv
     print "   4. Tabnabbing Attack Method" + toggleflag_tabnab
-    print "   5. Man Left in the Middle Attack Method" + toggleflag_mlitm
-    print "   6. Web Jacking Attack Method" + toggleflag_webjacking
-    print "   7. Use them all - A.K.A. 'Tactical Nuke'"
-    print "   8. I'm finished and want to proceed with the attack"
+    print "   5. Web Jacking Attack Method" + toggleflag_webjacking
+    print "   6. Use them all - A.K.A. 'Tactical Nuke'"
+    print "   7. I'm finished and want to proceed with the attack"
     print "\n  99. Return to Main Menu\n"
 
 
@@ -131,7 +130,7 @@ while a==1:
         raw_input("\nInvalid option..")
         return_continue()
 
-    if profile == "7":
+    if profile == "6":
         if operating_system == "windows":
             print_warning("Sorry this option is not available in Windows")
             return_continue()
@@ -156,7 +155,7 @@ while a==1:
             harvester="on"
             break
 
-    if profile == "8":
+    if profile == "7":
         break
 
     # java applet on/off
@@ -248,34 +247,8 @@ while a==1:
                 # toggle flags here
                 toggleflag_tabnab=(bcolors.RED+" (OFF)" + bcolors.ENDC)
 
-    # turn man left in the middle to on
-    if profile== "5":
-
-        if mlitm == "off":
-            flag_on("Man Left in the Middle")
-            mlitm="on"
-            return_menu()
-            trigger=1
-            if harvester == "on" or tabnabbing == "on":
-                print "[*] You cannot use MLITM and Harvester/Tabnabbing in the same attack!"
-                print "[*] Disabling Harvesting and/or Tabnabbing"
-                harvester="off"
-                tabnabbing="off"
-                # toggle flags here
-                toggleflag_mlitm=(bcolors.GREEN+" (ON)"+ bcolors.ENDC)
-                toggleflag_tabnab=(bcolors.RED+" (OFF)" + bcolors.ENDC)
-                toggleflag_harv=(bcolors.RED+" (OFF)" + bcolors.ENDC)
-
-        if mlitm == "on":
-            if trigger != 1:
-                flag_off("Man Left in the Middle")
-                return_menu()
-                mlitm="off"
-                # toggle flags here
-                toggleflag_mlitm=(bcolors.RED+" (OFF)" + bcolors.ENDC)
-
     # turn webjacking on
-    if profile== "6":
+    if profile== "5":
 
         if webjacking == "off":
             flag_on("Web Jacking")
