@@ -63,7 +63,6 @@ def check_user_lsa(ip):
     else:
         return stdout_value
 
-
 # attempt to lookup an account via rpcclient
 def check_user(ip, account):
     proc = subprocess.Popen('rpcclient -U "" %s -N -c "lookupnames %s"' % (ip, account), stdout=subprocess.PIPE,
@@ -99,6 +98,9 @@ def sids_to_names(ip, sid, start, stop):
         proc = subprocess.Popen(command, stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE, shell=True)
         stdout_value = proc.communicate()[0]
+        if "NT_STATUS_ACCESS_DENIED" in stdout_value: 
+            print "[![ Server sent NT_STATUS_ACCESS DENIED, unable to extract users."
+            break
         for line in stdout_value.rstrip().split('\n'):
             if not "*unknown*" in line:
                 rid_account = line.split(" ", 1)[1]
@@ -153,7 +155,8 @@ try:
         sid = check_user_lsa(ip)
         # if lsa enumeration was successful then don't do
         if sid:
-            print "[*] Successfully enumerated base domain SID.. Moving on to extract via RID"
+            print "[*] Successfully enumerated base domain SID. Printing information: \n" + sid.rstrip()
+            print "[*] Moving on to extract via RID cycling attack.. "
             # format it properly
             sid = sid.rstrip()
             sid = sid.split(" ")
@@ -206,7 +209,7 @@ try:
                 filewrite.write(name + "\n")
         # close the file
         filewrite.close()
-        print "[*] Finished enumerating user accounts... Seemed to be successful."
+        print "[*] RID_ENUM has finished enumerating user accounts..."
 
     # if we specified a password list
     if passwords:
