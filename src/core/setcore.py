@@ -30,10 +30,10 @@ except ImportError:
 # get the main SET path
 def definepath():
     if check_os() == "posix":
-        if os.path.isfile("/usr/share/setoolkit/se-toolkit"):
+        if os.path.isfile("setoolkit"):
+            return os.getcwd()
+        else:
             return "/usr/share/setoolkit/"
-
-        else: return os.getcwd()
 
     else:
         return os.getcwd()            
@@ -1068,9 +1068,7 @@ def check_config(param):
                 line = line.split("=")
                 return line[1]
 
-
-
-# copy files from directory
+# copy an entire folder function
 def copyfolder(sourcePath, destPath):
     for root, dirs, files in os.walk(sourcePath):
 
