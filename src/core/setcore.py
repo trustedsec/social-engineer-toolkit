@@ -229,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.2.2'
+    define_version = '5.3'
     return define_version
 
 class create_menu:
@@ -753,17 +753,17 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
-[---]            Codename: '""" + bcolors.YELLOW + """Urban Camping""" + bcolors.BLUE + """'             [---]
-[---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@trustedsec""" + bcolors.BLUE+"""         [---]
-[---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@dave_rel1k""" + bcolors.BLUE+"""         [---]
+[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                     [---]
+[---]           Codename: '""" + bcolors.YELLOW + """NextGen Unicorn""" + bcolors.BLUE + """'            [---]
+[---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
+[---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@Dave_ReL1K""" + bcolors.BLUE+"""         [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
 
-""" + bcolors.GREEN+"""     Welcome to the Social-Engineer Toolkit (SET). The one
-  stop shop for all of your social-engineering needs.
+""" + bcolors.GREEN+"""        Welcome to the Social-Engineer Toolkit (SET). 
+         The one stop shop for all of your SE needs.
 """
     print bcolors.BLUE + """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC
-    print bcolors.BOLD + """  The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
+    print bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
 def show_graphic():
     menu = random.randrange(2,11)
