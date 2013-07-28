@@ -252,7 +252,7 @@ try:
             applet_database = applet_database.replace("ipaddrhere", ipaddr + ":" + str(web_port))
 
             ## set the java field
-            applet_database = applet_database.replace("IDREPLACEHERE", java_id)
+            applet_database = applet_database.replace("IDREPLACEHERE", java_id, 2)
 
             ## set up everything for the unc path
             if unc_embed == True:
@@ -261,7 +261,7 @@ try:
 
             ## set up the java repeater
             if java_repeater == True:
-                repeater_database = repeater_database.replace("IDREPLACEHERE", java_id)
+                repeater_database = repeater_database.replace("IDREPLACEHERE", java_id, 2)
                 repeater_database = repeater_database.replace("TIMEHEREPLZ", java_time)
                 repeater_database = repeater_database.replace("URLHEREPLZ", url)
                 repeater_database = repeater_database.replace("RANDOMFUNCTION", generate_random_string(5,15), 3)

