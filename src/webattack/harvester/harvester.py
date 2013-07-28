@@ -66,14 +66,10 @@ fields are available. Regardless, this captures all POSTs on a website.""" + bco
 
 homepath=os.getcwd()
 
-# remove old files if there
-if os.path.isfile(setdir + "/web_clone/index.html.bak"):
-    os.remove(setdir + "/web_clone/index.html")
-    shutil.copyfile(setdir + "/web_clone/index.html.bak", setdir + "/web_clone/index.html")
-
 # pull scraper
 try: reload(src.webattack.harvester.scraper)
 except: import src.webattack.harvester.scraper
+
 
 # GRAB DEFAULT PORT FOR WEB SERVER AND CHECK FOR COMMAND CENTER
 command_center="off"
