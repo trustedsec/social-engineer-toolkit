@@ -1,24 +1,17 @@
 #!/usr/bin/python
-import os
-import sys
 import subprocess
+try:
+    print "[!] SET is changing to just ./setoolkit instead"
+    print "[!] se-toolkit is going away, beware."
+    print "[!] Use: ./setoolkit from now on."
+    raw_input("Press {return} to continue.")
+    subprocess.Popen("./setoolkit", shell=True).wait()
 
-# check where we are and load default directory
-if os.path.isdir("/usr/share/setoolkit"):
-	if not os.path.isfile("setoolkit"):
-		os.chdir("/usr/share/setoolkit")
-        sys.path.append("/usr/share/setoolkit")
+# handle keyboard interrupts
+except KeyboardInterrupt:
+    print "\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"
 
-# check where we are and load default directory
-if os.path.isdir("/usr/share/set"):
-    if not os.path.isfile("setoolkit"):
-        os.chdir("/usr/share/set")
-        sys.path.append("/usr/share/set")
-
-# if we can't see our config then something didn't go good..
-if not os.path.isfile("config/set_config"):
-	print_error("Cannot locate SET executable. Try running from the local directory.")
-	print_error("If this does not work, please run the setup.py install file.")
-	sys.exit()
-
-subprocess.Popen("python setoolkit", shell=True).wait()
+# handle exceptions
+except Exception, error:
+    log(error)
+    print "\n\n[!] Something went wrong, printing the error: "+ str(error)
