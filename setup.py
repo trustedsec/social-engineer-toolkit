@@ -19,7 +19,7 @@ if platform.system() == "Linux":
 
     # if index is out of range then flag options
     except IndexError:
-        print "** SET Dependancy Installer v1.0 **"
+        print "** SET Dependancy Installer **"
         print "** Written by: Dave Kennedy (ReL1K) **"
         print "** Visit: https://www.trustedsec.com **"
         print "\nTo install: setup.py install"
