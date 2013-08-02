@@ -645,6 +645,7 @@ try:
                 # if we are using the multiattack, there will be port conflicts, need to scoot it to 8082
                 if attack_vector == "multiattack":
                     port1 = "8082"
+                # deploy nix and linux binaries
                 if check_config("DEPLOY_OSX_LINUX_PAYLOADS=").lower() == "on":
                     port2=check_config("LINUX_REVERSE_PORT=")
                     print_status("Generating OSX payloads through Metasploit...")
