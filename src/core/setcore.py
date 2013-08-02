@@ -1324,7 +1324,6 @@ def encryptAES(secret, data):
     EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
     DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
 
-    #secret = os.urandom(BLOCK_SIZE)
     cipher = AES.new(secret)
 
     aes = EncodeAES(cipher, data)
