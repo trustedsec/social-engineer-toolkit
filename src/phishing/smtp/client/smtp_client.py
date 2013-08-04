@@ -230,7 +230,7 @@ if option1 == '1' or option1 == '2':
                 message_flag="html"
             body = ""
             body=raw_input(setprompt(["1"], "Enter the body of the message, hit return for a new line. Control+c when finished"))
-            while body != 'sdfsdfihdsfsodhdsofh':
+            while 1:
                 try:
                     body+=("\n")
                     body+=raw_input("Next line of the body: ")
@@ -365,7 +365,10 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
         thread.start_new_thread(mailServer.sendmail,(user1, to, msg.as_string()))
 
 if option1 == '1':
-    mail("%s" % (to), subject, body, "%s" % (file_format), prioflag1, prioflag2)
+    try:
+        mail("%s" % (to), subject, body, "%s" % (file_format), prioflag1, prioflag2)
+    except socket.error:
+        print_status("Unable to connect to mail server. Try again (Internet issues?)")
 
 if option1 == '2':
     counter=0

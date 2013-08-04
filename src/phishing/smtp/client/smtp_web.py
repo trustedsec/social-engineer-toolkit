@@ -290,7 +290,17 @@ if option1 == '1':
     if track_email.lower() == "on":
         body_new = body_new.replace("INSERTUSERHERE", base64.b64encode(to))
     # call the function to send email
-    mail(to,subject,prioflag1,prioflag2,body_new)
+    try:
+        mail(to,subject,prioflag1,prioflag2,body_new)
+    except socket.error:
+        print_error("Unable to establish a connection with the SMTP server. Try again.")
+        sys.exit()
+    except KeyboardInterrupt:
+        print_error("Control-C detected, exiting out of SET.")
+        sys.exit()
+    except Exception:
+        print_error("Something went wrong.. Try again")
+        sys.exit()
 
 # if we specified the mass mailer for multiple users
 if option1 == '2':

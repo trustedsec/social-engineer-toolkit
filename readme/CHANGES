@@ -1,4 +1,40 @@
 ~~~~~~~~~~~~~~~~
+version 5.3
+~~~~~~~~~~~~~~~~
+
+* Fixed an issue that would cause ipaddr to not be defined when using multi-pyinjector
+* Changed se-toolkit for launch to setoolkit - easier to type when typing set
+* Fixed an issue that would cause set-automate to not properly work due to old set launcher
+* Added set EnableStageEncoding true to default on Multipyinjector
+* Added fixed ID param name name="" to applet tags to show up properly in Firefox, Chrome, etc.
+* Converted payloads for shikata second stage encoding for all SET payloads
+* Fixed a exceptions error when inside modules and control-c out of them
+* Removed old wording in setup.py installer
+* Added new conversion for setup.py to change se-toolkit to install with setoolkit
+* Slimmed the teensy powershell code down significantly
+* Modified the teensy powershell attack to support the x86 downgrade attack
+* Slimmed down the mssql powershell attack vector significantly
+* Slimmed down the psexec powershell attack vector significantly
+* Updated rid_enum to the latest version within Fast-Track
+* Realigned initial banner message when entering into SET
+* Fixed a large bug in webjacking and tabnabbing where it would not load the index.html properly do to a os.remove on index.html instead of os.remove on site variable (index or index2.html)
+* Removed old man left in the middle from the toolkit under multi-attack was no longer used and code removed
+* Fixed an issue that would cause credential harvester and applet in multiattack to not properly work
+* Fixed a bug that would cause APACHE to flag if it was run in a different directory 
+* Changed applet tag slightly to be more descriptive to coax users into clicking
+* Fixed a backup issue when using java applet first then harvester second
+* Fixed a large bug in multi-pyinjector that was causing the binary to not call back properly
+* Fixed multiple other bugs with multi-pyinjector and also fixing freeze.support issues with multiprocessing
+* Fixed a bug that would cause an IP to not assign when using pyinjector
+* Added better stability to pyinjector regular and also virtualized the pe
+* Fixed an issue causing linux and OSX binaries to not properly deploy
+* Added faster load time on OSX and Linux creation of binaries when linux / osx mode added
+* Changed how payload delivery is handled and loads faster within the applet
+* Added better error handling if webattack email is set to on
+* Fixed some old code from when you are in a loop
+* Added a port options check when specifying multipyinjector and pyinjector to warn if port 80 is selected
+
+~~~~~~~~~~~~~~~~
 version 5.2.2
 ~~~~~~~~~~~~~~~~
 

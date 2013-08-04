@@ -325,6 +325,16 @@ try:
         if choice3 == "":
             if choice1 != "shellcode/multipyinject":
                 choice3=raw_input(setprompt(["4"], "PORT of the listener [443]"))
+
+        # here we check if the user really wants to use port 80
+        if choice3 == "80":
+            print_warning("WARNING: SET Web Server requires port 80 to listen.")
+            print_warning("WARNING: Are you sure you want to proceed with port 80?")
+            port_choice_option = raw_input("\nDo you want to keep port 80? [y/n]")
+            if port_choice_option == "n":
+                # reprompt it
+                choice3=raw_input(setprompt(["4"], "PORT of listener [443]"))
+
         if choice3 == '': choice3 = '443'
         # this is needed for the set_payload
         update_options("PORT=" + choice3)
