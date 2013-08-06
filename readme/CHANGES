@@ -33,6 +33,7 @@ version 5.3
 * Added better error handling if webattack email is set to on
 * Fixed some old code from when you are in a loop
 * Added a port options check when specifying multipyinjector and pyinjector to warn if port 80 is selected
+* Added a check if number isn't specified in MSSQL bruter, it will default to option 1 (choice 1)
 
 ~~~~~~~~~~~~~~~~
 version 5.2.2
