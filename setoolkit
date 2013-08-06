@@ -23,9 +23,12 @@ if not os.path.isfile("config/set_config"):
 from src.core.setcore import *
 from src.core.menu import text
 from config.update_config import update_config
-import subprocess
-import shutil
-import re
+try: import subprocess
+except: reload(subprocess)
+try: import shutil
+except: reload(shutil)
+try: import re
+except: reload(re)
 
 # check directory and make it
 if not os.path.isdir("src/logs/"):
@@ -66,7 +69,6 @@ except ImportError:
 #########################################
 # The Social-Engineer Toolkit (SET)     #
 # Written by: David Kennedy (ReL1K)     #
-#										#
 #########################################
 #
 # this is the main menu structure for SET
