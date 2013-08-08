@@ -2,10 +2,10 @@
 version 5.3
 ~~~~~~~~~~~~~~~~
 
-* Fixed an issue that would cause ipaddr to not be defined when using multi-pyinjector
-* Changed se-toolkit for launch to setoolkit - easier to type when typing set
-* Fixed an issue that would cause set-automate to not properly work due to old set launcher
-* Added set EnableStageEncoding true to default on Multipyinjector
+* Fixed an issue that would cause ipaddr to not be defined when using multi-pyinjector.
+* Changed se-toolkit for launch to setoolkit - easier to type when typing set.
+* Fixed an issue that would cause set-automate to not properly work due to old set launcher.
+* Added set EnableStageEncoding true to default on Multipyinjector.
 * Added fixed ID param name name="" to applet tags to show up properly in Firefox, Chrome, etc.
 * Converted payloads for shikata second stage encoding for all SET payloads
 * Fixed a exceptions error when inside modules and control-c out of them
