@@ -10,11 +10,11 @@ version 5.3
 * Converted payloads for shikata second stage encoding for all SET payloads
 * Fixed a exceptions error when inside modules and control-c out of them
 * Removed old wording in setup.py installer
-* Added new conversion for setup.py to change se-toolkit to install with setoolkit
+* Added new conversion for setup.py to change se-toolkit to install with setoolkit.
 * Slimmed the teensy powershell code down significantly
-* Modified the teensy powershell attack to support the x86 downgrade attack
-* Slimmed down the mssql powershell attack vector significantly
-* Slimmed down the psexec powershell attack vector significantly
+* Modified the teensy powershell attack to support the x86 downgrade attack.
+* Slimmed down the mssql powershell attack vector significantly.
+* Slimmed down the psexec powershell attack vector significantly.
 * Updated rid_enum to the latest version within Fast-Track
 * Realigned initial banner message when entering into SET
 * Fixed a large bug in webjacking and tabnabbing where it would not load the index.html properly do to a os.remove on index.html instead of os.remove on site variable (index or index2.html)
