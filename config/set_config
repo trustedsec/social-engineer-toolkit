@@ -245,7 +245,7 @@ OSX_PAYLOAD_DELIVERY=osx/x86/shell_reverse_tcp
 LINUX_PAYLOAD_DELIVERY=linux/x86/meterpreter/reverse_tcp
 #
 ### DO YOU WANT TO USE A CUSTOM OSX AND LINUX PAYLOAD
-CUSTOM_LINUX_OSX_PAYLOAD=NO
+CUSTOM_LINUX_OSX_PAYLOAD=OFF
 #
 ### User agent string for when using anything that clones the website, this user agent will be used
 USER_AGENT_STRING=Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)

