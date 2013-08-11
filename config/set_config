@@ -226,7 +226,7 @@ POWERSHELL_MULTI_INJECTION=ON
 ### THIS WILL SPECIFY WHICH PORTS TO ITERATE THROUGH TO DO THE POWERSHELL INJECTION. NOTE IF YOU ARE USING SET
 ### PORT 80 IS USED BY THE WEB SERVER. THE REST OF PORTS SHOULD BE OPEN. CONSIDER IF YOU WANT TO USE PORT 80 TO
 ### PLACE THE LISTENER ON A DIFFERENT SERVER.
-POWERSHELL_MULTI_PORTS=22,53,443,21,25,8080
+POWERSHELL_MULTI_PORTS=22,53,443,21,25
 #
 ### This will display the output of the powershell injection attack so you can see what is being placed on the
 ### system.
@@ -236,10 +236,16 @@ POWERSHELL_VERBOSE=OFF
 ### note this is currently disabled. Development is underway on this feature
 WEB_PROFILER=OFF
 #
-### Port numbers for the java applet attack linux/osx attacks, reverse payloads
-DEPLOY_OSX_LINUX_PAYLOADS=OFF
+### Port numbers for the java applet attack linux/osx attacks, reverse payloads also allows you to specify
+### what payload you want
+DEPLOY_OSX_LINUX_PAYLOADS=ON
 OSX_REVERSE_PORT=8080
 LINUX_REVERSE_PORT=8081
+OSX_PAYLOAD_DELIVERY=osx/x86/shell_reverse_tcp
+LINUX_PAYLOAD_DELIVERY=linux/x86/meterpreter/reverse_tcp
+#
+### DO YOU WANT TO USE A CUSTOM OSX AND LINUX PAYLOAD
+CUSTOM_LINUX_OSX_PAYLOAD=NO
 #
 ### User agent string for when using anything that clones the website, this user agent will be used
 USER_AGENT_STRING=Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)
