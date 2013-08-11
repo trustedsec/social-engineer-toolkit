@@ -238,7 +238,7 @@ WEB_PROFILER=OFF
 #
 ### Port numbers for the java applet attack linux/osx attacks, reverse payloads also allows you to specify
 ### what payload you want
-DEPLOY_OSX_LINUX_PAYLOADS=ON
+DEPLOY_OSX_LINUX_PAYLOADS=OFF
 OSX_REVERSE_PORT=8080
 LINUX_REVERSE_PORT=8081
 OSX_PAYLOAD_DELIVERY=osx/x86/shell_reverse_tcp
