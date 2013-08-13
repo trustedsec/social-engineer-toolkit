@@ -2,7 +2,7 @@
 version 5.3.1
 ~~~~~~~~~~~~~~~~
 
-* Fixed an issue that was causing the Metasploit payloads for OSX/Linux to not generate properly
+* Fixed an issue that was causing the Metasploit payloads for OSX/Linux to not generate properly.
 * Added new configuration options in set_config to allow selectable Linux/OSX payloads
 * Added new configuration option to allow you to add a custom payload for OSX/Linux
 * Changed PowerShell injection from using port 8080, this is still configurable
