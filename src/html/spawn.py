@@ -355,27 +355,14 @@ try:
     if ipaddr:
     # if apache isnt running and something is on 80, throw error
         if apache== 0:
-            print_error("ERROR:Something is running on port %s. Seeing if it's a stale SET process..." % (web_port))
+            print_error("ERROR:Something is running on port %s. Attempting to see if we can stop Apache..." % (web_port))
             # if we are running windows then flag error (probably IIS or tomcat or something like that)
             if operating_system == "nt":
                 exit_set()
+
             # if we are running posix then check to see what the process is first
             if operating_system == "posix":
-                proc=subprocess.Popen("netstat -antp |grep LISTEN |grep '%s'" % (web_port), shell=True, stdout=subprocess.PIPE)
-                stdout_value=proc.communicate()[0]
-                a=re.search("\d+/python", stdout_value)
-                if a:
-                    b=a.group()
-                    b=b.replace("/python","")
-                    print_status("Stale process identified, attempting to kill process %s...." % str(b))
-                    subprocess.Popen("kill -9 %s" % (b), shell=True).wait()
-                    ipaddr.connect(('localhost', web_port))
-                    if ipaddr:
-                        print_error("Sorry hoss, couldn't kill it, check whats running on 80 and restart SET!")
-                        exit_set()
-                    if not ipaddr:
-                        print_status("Success, the stale process has been terminated and SET is running normally...")
-                else:
+
                     # if we detect an apache installation
                     if os.path.isfile("/etc/init.d/apache2"):
                         apache_stop = raw_input("[!] Apache may be running, do you want SET to stop the process? [y/n]: ")
@@ -406,12 +393,16 @@ try:
         # if apache is set to run let the user know we are good to go
         if operating_system == "posix":
             if apache == 1:
-                proc=subprocess.Popen("netstat -antp |grep LISTEN |grep '%s'" % (web_port), shell=True, stdout=subprocess.PIPE)
-                stdout_value=proc.communicate()[0]
-                a=re.search("\d+/apache2", stdout_value)
-                if a:
-                    print_status("Apache appears to be running, moving files into Apache's home")
-                else:
+                try:
+                    web_port = check_config("WEB_PORT=")
+                    web_port=int(web_port)
+                    ipaddr=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    ipaddr.connect(('127.0.0.1', web_port))
+                    ipaddr.settimeout(2)
+                    if ipaddr:
+                        print_status("Apache appears to be running, moving files into Apache's home")
+
+                except:
                     print_error("Exit whatever is listening and restart SET")
                     exit_set()
 
