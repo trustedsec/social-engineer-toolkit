@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 5.3.2
+~~~~~~~~~~~~~~~~
+
+* Fixed an issue that would cause netstat to not report back the correct information on OSX (git bug report)
+
+~~~~~~~~~~~~~~~~
 version 5.3.1
 ~~~~~~~~~~~~~~~~
 
