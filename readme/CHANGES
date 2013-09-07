@@ -1,4 +1,14 @@
 ~~~~~~~~~~~~~~~~
+version 5.3.4
+~~~~~~~~~~~~~~~~
+
+* added better handling when exporting autorun configuration using payload selection options
+* fixed a typo in the SET setup.py file "We are no finished" to "We are now finished" 
+* added new configuration option called HARVESTER_LOG_PASSWORDS, you can turn this off if you do not want to capture credentials
+* fixed cannot import src.core.setcore when launching set interactive shell in solo mode
+* rehauled large portion of the powershell injection so that when multipyinjector or pyinjector is specified, it will take the same attributes and payloads and overwrite the config options. This means that when you select say 10 payloads from multipyinjector, the powershell injection will match the exact same ports and payloads. This allows you to customize each of the payloads to what you want
+
+~~~~~~~~~~~~~~~~
 version 5.3.3
 ~~~~~~~~~~~~~~~~
 
