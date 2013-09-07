@@ -120,7 +120,7 @@ SELF_SIGNED_APPLET=OFF
 #
 ### This flag will set the java id flag within the java applet to something different.
 ### This could be to make it look more believable or for better obfuscation
-JAVA_ID_PARAM=Amazon Store Checkout (VERIFIED)
+JAVA_ID_PARAM=Verified Trusted and Secure (SECURE)
 #
 ### Java applet repeater option will continue to prompt the user with the java applet if
 ### the user hits cancel. This means it will be non stop until run is executed. This gives
@@ -274,7 +274,7 @@ AUTOMATIC_LISTENER=ON
 METASPLOIT_MODE=ON
 #
 ### THIS WILL TURN OFF DEPLOYMENT OF BINARIES FOR THE JAVA APPLET ATTACK AND ONLY USE THE POWERSHELL METHOD. 
-### NOTE THAT POWERSHELL_INJECTION MUST BE SET TO ON
+### NOTE THAT POWERSHELL_INJECTION MUST BE SET TO YES OR NO
 DEPLOY_BINARIES=YES
 #
 ### THIS IS FOR DEBUG PURPOSES ONLY. THIS WILL REMOVE THE CLEANUP FUNCTIONALITY WITHIN SET TO DEBUG FILE STATES
