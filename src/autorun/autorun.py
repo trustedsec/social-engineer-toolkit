@@ -54,6 +54,7 @@ open=%s
 icon=autorun.ico""" % (payload))
 filewrite.close()
 print_status("Your attack has been created in the SET home directory folder 'autorun'")
+print_status("Note a backup copy of template.pdf is also in /root/.set/template.pdf if needed.")
 print_info("Copy the contents of the folder to a CD/DVD/USB to autorun")
 
 # if we are doing the custom pdf

