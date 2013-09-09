@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.3.5
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause an integer error when using pyinjector
+* fixed a print option that was no longer needed
+
+~~~~~~~~~~~~~~~~
 version 5.3.4
 ~~~~~~~~~~~~~~~~
 

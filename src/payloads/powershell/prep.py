@@ -145,7 +145,6 @@ if pyinjection == "on":
         port = payload[1]        
         print_status("Generating x86-based powershell injection code...")
         multi_injection_x86 = multi_injection_x86 + "," + generate_powershell_alphanumeric_payload(powershell_inject_x86, ipaddr, port, x86)
-        print port
 
 # if its turned to off
 if multi_injection == "off":

@@ -457,7 +457,9 @@ try:
                                 portnum = "LPORT=1"
 
                             # fix port num
-                            portnum = shellcode_port
+                            if choice1 == "multipyinject":
+                                portnum = shellcode_port
+                            else: portnum = portnum.replace("LPORT=", "")
 
                             # meterpreter reverse_tcp
                             if choice9 == "windows/meterpreter/reverse_tcp": 
