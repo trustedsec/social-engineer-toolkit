@@ -213,11 +213,11 @@ if option1 != "99":
             try:
     
                 body+=("\n")
-                body_1 =raw_input("Next line of the body: ")
+                body_1 = raw_input("Next line of the body: ")
                 if body_1 == "END":
                     break
                 else:
-                    body_1 = body + body_1
+                    body = body + body_1
 
             # except KeyboardInterrupts (control-c) and pass through.
             except KeyboardInterrupt:

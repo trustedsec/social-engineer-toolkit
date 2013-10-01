@@ -11,7 +11,12 @@ from src.core.setcore import *
 from src.core.menu.text import *
 from src.core.dictionaries import *
 
-ipaddr = ""
+if len(check_options("IPADDR=")) > 2:
+    ipaddr = check_options("IPADDR=")
+else:
+    ipaddr = ""
+
+
 me = mod_name()
 listener="notdefined"
 definepath=os.getcwd()
@@ -107,7 +112,8 @@ ipquestion=""
 # grab ipaddr if it hasn't been identified yet
 ####################################################################################################################################
 
-if check_options("IPADDR=") == 0:
+
+if check_options("IPADDR=") == False:
     fileopen=file("config/set_config", "r")
     data = fileopen.read()
     match = re.search("AUTO_DETECT=ON", line)
