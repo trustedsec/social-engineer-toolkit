@@ -5,6 +5,7 @@ version 5.3.6
 * Added the Micorosft Internet Explorer SetMouseCapture Use-After-Free exploit in Metasploit released today.
 * Fixed a bug that would cause LHOST to not be set when using other payloads than pyInjector and Multi-Pyinjector.
 * Fixed an issue that would cause emails to only accept the first line of the email (thanks for the submission from Vladmir)
+* Fixed an issue when URLs had special characters or spaces in the URL
 
 ~~~~~~~~~~~~~~~~
 version 5.3.5
