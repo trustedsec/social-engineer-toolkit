@@ -229,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.3.6'
+    define_version = '5.3.8'
     return define_version
 
 class create_menu:
@@ -756,7 +756,7 @@ def show_banner(define_version,graphic):
 [---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
 [---]           Codename: '""" + bcolors.YELLOW + """NextGen Unicorn""" + bcolors.BLUE + """'            [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
-[---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@Dave_ReL1K""" + bcolors.BLUE+"""         [---]
+[---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
 
 """ + bcolors.GREEN+"""        Welcome to the Social-Engineer Toolkit (SET). 

@@ -1,4 +1,17 @@
 ~~~~~~~~~~~~~~~~
+version 5.3.8
+~~~~~~~~~~~~~~~~
+
+* updated RID_ENUM to the latest version
+* Changed twitter handle from dave_rel1k to @hackingdave
+
+~~~~~~~~~~~~~~~~
+version 5.3.7
+~~~~~~~~~~~~~~~~
+
+* Fixed an issue that would cause connecting directly to an MSSQL server to fail based on an undefined module _mssql
+
+~~~~~~~~~~~~~~~~
 version 5.3.6
 ~~~~~~~~~~~~~~~~
 

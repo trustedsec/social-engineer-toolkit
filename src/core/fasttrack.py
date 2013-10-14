@@ -209,6 +209,7 @@ try:
                 # establish base counter for connection
                 counter = 0
                 try:
+                    import _mssql
                     conn = _mssql.connect(sql_server + ":" + str(sql_port), sql_username, sql_password)
                     counter = 1
                 except Exception, e:

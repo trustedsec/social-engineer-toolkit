@@ -9,7 +9,7 @@ from src.core.menu.text import *
 #                               BSIDES LV EXE to Teensy Creator
 #
 #                                by Josh Kelley (@winfang98)
-#                                Dave Kennedy (@dave_rel1k)
+#                                Dave Kennedy (@hackingdave)
 #
 ################################################################################################
 
@@ -56,7 +56,7 @@ print """
         BSIDES Las Vegas ----  EXE to Teensy Creator
 ********************************************************************
 
-Written by: Josh Kelley (@winfang98) and Dave Kennedy (ReL1K, @dave_rel1k)
+Written by: Josh Kelley (@winfang98) and Dave Kennedy (ReL1K, @hackingdave)
 
 This program will take shellexeccode which is converted to hexadecimal and
 place it onto a victim machine through hex to binary conversion via powershell.

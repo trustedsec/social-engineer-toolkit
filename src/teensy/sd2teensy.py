@@ -9,7 +9,7 @@ from src.core.menu.text import *
 #                            BSIDES LV SDCARD to Teensy Creator
 #
 #                                by Josh Kelley (@winfang98)
-#                                Dave Kennedy (@dave_rel1k)
+#                                Dave Kennedy (@hackingdave)
 #
 ################################################################################################
 
@@ -22,7 +22,7 @@ print """
         BSIDES Las Vegas ----  SDCard to Teensy Creator
 ********************************************************************
 
-Written by: Josh Kelley (@winfang98) and Dave Kennedy (ReL1K, @dave_rel1k)
+Written by: Josh Kelley (@winfang98) and Dave Kennedy (ReL1K, @hackingdave)
 
 This tool will read in a file from the Teensy SDCard, not mount it via
 Windows and perform a hex to binary conversion via Powershell. It requires
