@@ -327,6 +327,8 @@ create_payloads_text = """
            ********** PAYLOADS **********\n"""
 
 browser_exploits_menu = [
+'Internet Explorer CDisplayPointer Use-After-Free (10/13/2013)',
+'Micorosft Internet Explorer SetMouseCapture Use-After-Free (09/17/2013)',
 'Java Applet JMX Remote Code Execution (UPDATED 2013-01-19)',
 'Java Applet JMX Remote Code Execution (2013-01-10)',
 'MS13-009 Microsoft Internet Explorer SLayoutRun Use-AFter-Free (2013-02-13)',

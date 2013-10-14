@@ -4,6 +4,7 @@ version 5.3.8
 
 * updated RID_ENUM to the latest version
 * Changed twitter handle from dave_rel1k to @hackingdave
+* Added the MS13-080 exploit from Metasploit
 
 ~~~~~~~~~~~~~~~~
 version 5.3.7
