@@ -511,9 +511,11 @@ try:
                         filewrite = file("%s/meterpreter.alpha_decoded" % (setdir), "w")
                         filewrite.write(shellcode)
                         filewrite.close()
+                    if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     
-                    # close the pyinjector file for ports and payload
-                    payload_options.close()
+
+                        # close the pyinjector file for ports and payload
+                        payload_options.close()
 
                     # here we are going to encode the payload via base64
                     fileopen = file("%s/meterpreter.alpha_decoded" % (setdir), "r")

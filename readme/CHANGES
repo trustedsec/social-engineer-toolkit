@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 5.3.9
+~~~~~~~~~~~~~~~
+
+* small bug fix that caused shellcodeexec to error out
+
+~~~~~~~~~~~~~~~~
 version 5.3.8
 ~~~~~~~~~~~~~~~~
 
