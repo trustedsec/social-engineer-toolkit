@@ -177,6 +177,9 @@ DIGITAL_SIGNATURE_STEAL=OFF
 UPX_ENCODE=OFF
 UPX_PATH=/usr/bin/upx
 #
+### This will configure whether to use EnableStageEncoding to true or false within Metasploit payloads
+STAGE_ENCODING=TRUE
+#
 ### This feature will turn on or off the automatic redirection. By default for example in multi-attack
 ### the site will redirect once one successful attack is used. Some people may want to use Java applet
 ### and credential harvester for example.
