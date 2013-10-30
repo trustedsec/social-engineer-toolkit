@@ -17,6 +17,8 @@ version 5.4
 * added STAGE_ENCODING to update_config.py options for dynamic importing
 * fixed an issue that would cause powershell option for alphanumeric shellcode to error out by not finding appropriate file structure - fixed by creating file prior to calling payload.powershell.prep
 * fixed a bug that would cause standalone payload generation to error out on option 4 due to length parameter exceptions
+* added better manifest handling and build tools for development
+* added better unsigned.jar obfuscation upon creating the applet
 
 ~~~~~~~~~~~~~~~~
 version 5.3.9
