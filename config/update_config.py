@@ -84,6 +84,7 @@ def value_type(value):
             'AUTOMATIC_LISTENER':False,
             'METASPLOIT_MODE':False,
             'HARVESTER_LOG':True,
+            'STAGE_ENCODING':False,
             'TRACK_EMAIL_ADDRESSES':False
            }.get(value,"ERROR")
 

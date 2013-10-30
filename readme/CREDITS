@@ -56,6 +56,7 @@ Special thanks to the following people who have contributed to SET:
 * Offensive-Security's Peensy project - http://www.offensive-security.com/offsec/advanced-teensy-penetration-testing-payloads/
 * Thanks to Stephen Haywood (averagesecurityguy) for talking me into moving to github
 * Thanks to Larry Spohn (spoonman) for the python udp 1434 sql discovery code
+* Persistence on OSX - http://patrickmosca.com/root-a-mac-in-10-seconds-or-less/
 
 The Social-Engineer Development Team:
 

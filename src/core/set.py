@@ -495,6 +495,7 @@ try:
                                         import tabnabbing
                                 sys.path.append("src/webattack/harvester")
                                 debug_msg(me, "importing 'src.webattack.harvester.harvester'", 1)
+
                                 try:
                                     reload(harvester)
                                 except:

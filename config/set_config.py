@@ -9,10 +9,10 @@
 #  SET updated using the 'Update SET Configuration' menu item in      #
 #  the main menu. This file will be updated with the new settings.    #
 #                                                                     #
-#  set_config.py generated: 2013-05-24 19:14:36.946250                #
+#  set_config.py generated: 2013-10-30 04:29:41.749820                #
 #                                                                     #
 #######################################################################
-CONFIG_DATE='2013-05-24 19:14:36.946250'
+CONFIG_DATE='2013-10-30 04:29:41.749820'
 METASPLOIT_PATH="/opt/metasploit/apps/pro/msf3"
 METASPLOIT_DATABASE="postgresql"
 ENCOUNT=4
@@ -38,7 +38,7 @@ APACHE_SERVER=False
 APACHE_DIRECTORY="/var/www"
 WEB_PORT=80
 SELF_SIGNED_APPLET=False
-JAVA_ID_PARAM="Verified and Trusted (SECURE AND SAFE)"
+JAVA_ID_PARAM="Verified Trusted and Secure (VERIFIED)"
 JAVA_REPEATER=False
 JAVA_TIME="200"
 WEBATTACK_SSL=False
@@ -53,25 +53,30 @@ TERMINAL="SOLO"
 DIGITAL_SIGNATURE_STEAL=False
 UPX_ENCODE=False
 UPX_PATH="/usr/bin/upx"
+STAGE_ENCODING=True
 AUTO_REDIRECT=True
 HARVESTER_REDIRECT=False
-HARVESTER_URL="http://thishasnotbeenset"
+HARVESTER_URL="http://thisisasite"
 HARVESTER_LOG="/var/www"
+HARVESTER_LOG_PASSWORDS="True"
 UNC_EMBED=False
 ACCESS_POINT_SSID="linksys"
 AIRBASE_NG_PATH="/usr/local/sbin/airbase-ng"
 DNSSPOOF_PATH="/usr/local/sbin/dnsspoof"
 AP_CHANNEL=9
 POWERSHELL_INJECTION=True
-POWERSHELL_INJECT_PAYLOAD_X64="windows/x64/meterpreter/reverse_tcp"
 POWERSHELL_INJECT_PAYLOAD_X86="windows/meterpreter/reverse_tcp"
 POWERSHELL_MULTI_INJECTION="True"
-POWERSHELL_MULTI_PORTS="22,53,443,21,25,8080"
+POWERSHELL_MULTI_PORTS="22,53,443,21,25"
 POWERSHELL_VERBOSE=False
 WEB_PROFILER=False
 DEPLOY_OSX_LINUX_PAYLOADS="False"
 OSX_REVERSE_PORT=8080
 LINUX_REVERSE_PORT=8081
+OSX_PAYLOAD_DELIVERY="osx/x86/shell_reverse_tcp"
+LINUX_PAYLOAD_DELIVERY="linux/x86/meterpreter/reverse_tcp"
+CUSTOM_LINUX_OSX_PAYLOAD="False"
+ENABLE_PERSISTENCE_OSX="False"
 USER_AGENT_STRING="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)"
 SET_SHELL_STAGER=False
 AUTOMATIC_LISTENER=True

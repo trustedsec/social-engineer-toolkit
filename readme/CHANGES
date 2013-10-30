@@ -1,4 +1,24 @@
 ~~~~~~~~~~~~~~~~
+version 5.4
+~~~~~~~~~~~~~~~~
+
+* added new config option to add STAGE_ENCODING as a false/true flag in case you want to turn it off or on
+* added STAGE_ENCODING options to payload generation
+* added STAGE_ENCODING options to psexec commands powershell injection
+* added STAGE_ENCODING options to the powershell injectiont technique
+* fixed a bug that would cause psexec powershell injection to not generate the proper base64 encoding
+* added obfuscation to the pyinjection binary
+* added obfuscation to the multipyinjection binary
+* added proper permissions for manifest files within SET and Java Applet - removes warning message in applets
+* officially removed se-toolkit - use setoolkit from now on to launch SET
+* fixed a bug that would cause SET to not function properly if running from a different directory and /usr/share/setoolkit was present
+* fixed SET to no longer use se-toolkit in the launcher
+* fixed an issue that would cause STAGE_ENCODING to report None type instead of on/off
+* added STAGE_ENCODING to update_config.py options for dynamic importing
+* fixed an issue that would cause powershell option for alphanumeric shellcode to error out by not finding appropriate file structure - fixed by creating file prior to calling payload.powershell.prep
+* fixed a bug that would cause standalone payload generation to error out on option 4 due to length parameter exceptions
+
+~~~~~~~~~~~~~~~~
 version 5.3.9
 ~~~~~~~~~~~~~~~
 
