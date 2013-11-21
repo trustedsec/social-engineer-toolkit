@@ -437,6 +437,10 @@ try:
                         if match2:
                             URL = ("https://login.facebook.com/login.php")
 
+                        # changed based on new landing page for gmail.com
+                        match3 = re.search("gmail.com", URL)
+                        if match3: URL = ("https://accounts.google.com")
+
                         filewrite.write("\nURL=%s" % (URL))
                         filewrite.close()
 
