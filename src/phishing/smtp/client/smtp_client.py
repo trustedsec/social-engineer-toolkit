@@ -112,10 +112,16 @@ if not os.path.isfile(setdir + "/template.pdf"):
                         print "No previous payload created."
                         file_format=raw_input(setprompt(["1"], "Enter the file to use as an attachment"))
                         if not os.path.isfile("%s" % (file_format)):
-                            print_error("ERROR:FILE NOT FOUND. Try Again.")
-                            file_format=raw_input(setprompt(["1"], "Enter the file to use as an attachment"))
-                            print_error("ERROR:Sorry hoss, that was twice, check the filepath and try again. Exiting...")
-                            exit_set()
+                            while 1:
+                                print_error("ERROR:FILE NOT FOUND. Try Again.")
+                                file_format=raw_input(setprompt(["1"], "Enter the file to use as an attachment"))
+                                if os.path.isfile(file_format):
+                                    break
+
+# if not found exit out
+if not os.path.isfile(file_format):
+    exit_set()
+
 print """
    Right now the attachment will be imported with filename of 'template.whatever'
 
