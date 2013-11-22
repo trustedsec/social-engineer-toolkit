@@ -1,4 +1,15 @@
 ~~~~~~~~~~~~~~~~
+version 5.4.1
+~~~~~~~~~~~~~~~~
+
+* Fixed an issue that would exit SET completely when using file format custom PDF's
+* Fixed text wrapping in menus where it didnt fit right, this was due to tab completion, have since disabled
+* Changed manifest name to "Applet is verified (SECURE)" for the Java Applet attack
+* Added error handling in main setoolkit launcher
+* Removed set-web set-automate set-update and set-proxy and moved naming scheme to seweb seautomate seupdate and seproxy
+* Added redirect handling for gmail since the splash page no longer contains username/passwords
+
+~~~~~~~~~~~~~~~~
 version 5.4
 ~~~~~~~~~~~~~~~~
 
