@@ -14,4 +14,4 @@ def gen_qrcode(url):
     # save the image out
     im.save(setdir + "/reports/qrcode_attack.png", format='png')
     # print that its been successful
-    print_status("[*] QRCode has been generated under %s/reports/qrcode_attack.png!" % (setdir))
+    print_status("QRCode has been generated under %s/reports/qrcode_attack.png!" % (setdir))
