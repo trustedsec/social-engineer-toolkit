@@ -1,4 +1,15 @@
 ~~~~~~~~~~~~~~~~
+version 5.4.2
+~~~~~~~~~~~~~~~~
+
+* Fixed issue that would enable stage encoding even when turned off
+* Removed duplication bug on enable stage encoding when generating Metasploit answer files
+* Fixed a port duplication issue where it would automatically assign port 443 when specifying multipyinjector
+* Removed reference to set-automate to seautomate
+* Fixed the self signed certificate issue where it was looking for the old program_junk folder, rewrote it to include proper .set directory path structure (thanks bostonlink)
+* Fixed dhcp3 to isc-dhcp-server conversion to the new format, make sure you install apt-get install isc-dhcp-server - it will warn you regardless
+
+~~~~~~~~~~~~~~~~
 version 5.4.1
 ~~~~~~~~~~~~~~~~
 

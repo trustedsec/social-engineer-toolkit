@@ -85,7 +85,7 @@ update_config()
 # chmod routine
 if operating_system == "posix":
     # change permissions if nix
-    subprocess.Popen("chmod +x set-automate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    subprocess.Popen("chmod +x seautomate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 dns = check_config("DNS_SERVER=")
 if dns == "ON" or dns == "on": start_dns()

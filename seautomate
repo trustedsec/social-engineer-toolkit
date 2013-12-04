@@ -28,7 +28,7 @@ try: import pexpect
 # if pexpect fails
 except ImportError:
     print "\n[*] PEXPECT is required, please download and install before running this..."
-    print "[*] Exiting SET-AUTOMATE mode..."
+    print "[*] Exiting SEAUTOMATE mode..."
     sys.exit()
 
 # try to define filename through argument specified during command line mode
@@ -41,7 +41,7 @@ except IndexError:
     print "\nSimply create a file that has each option you want from menu mode."
     print "For example your file should look something like this:"
     print "\n2\n2\n2\nhttps://gmail.com\n2\n2\n443\netc.\n"
-    print "Usage: ./set-automate <filename>"
+    print "Usage: ./seautomate <filename>"
     sys.exit()
 
 # if the filename doesnt exist throw an error

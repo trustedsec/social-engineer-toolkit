@@ -988,7 +988,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
                 if sendmail == "off":
                     match14=re.search("password=", s)
                     if match14:
-                        # did this to mask passwords on write using set-automate, but will still show up unfortnately when answering file
+                        # did this to mask passwords on write using seautomate, but will still show up unfortnately when answering file
                         s=s.replace("password=","")
                         filewrite.write(s+" OMGPASSWORDHERE"+"\n"+"yes\n")
 
@@ -1585,19 +1585,19 @@ class myRequestHandler(BaseHTTPRequestHandler):
                     match=re.search("TERMINAL=", line)
                     if match: terminal=line.replace("TERMINAL=","")
                 if terminal == "XTERM" or terminal == "xterm" or terminal == "":
-                    proc = subprocess.Popen("xterm -geometry 90x30 -bg black -fg white -fn *-fixed-*-*-*-20-* -T 'The Social-Engineer Toolkit (SET)' -e 'python set-automate %s/answer.txt' &" % (setdir), shell=True)
+                    proc = subprocess.Popen("xterm -geometry 90x30 -bg black -fg white -fn *-fixed-*-*-*-20-* -T 'The Social-Engineer Toolkit (SET)' -e 'python seautomate %s/answer.txt' &" % (setdir), shell=True)
 
                 if terminal == "KONSOLE" or terminal == "konsole":
-                    proc = subprocess.Popen("konsole -T 'The Social-Engineer Toolkit (SET)' -e sh -c '%s/set-automate %s/answer.txt' &" % (definepath),setdir, shell=True)
+                    proc = subprocess.Popen("konsole -T 'The Social-Engineer Toolkit (SET)' -e sh -c '%s/seautomate %s/answer.txt' &" % (definepath),setdir, shell=True)
 
                 if terminal == "GNOME" or terminal == "gnome":
-                    proc = subprocess.Popen("gnome-terminal -t 'The Social-Engineer Toolkit (SET)' -x sh -c '%s/set-automate %s/answer.txt' &" % (setdir), shell=True)
+                    proc = subprocess.Popen("gnome-terminal -t 'The Social-Engineer Toolkit (SET)' -x sh -c '%s/seautomate %s/answer.txt' &" % (setdir), shell=True)
 
                 # if they jacked up the config here
                 if terminal != "XTERM":
                     if terminal != "KONSOLE":
                         if terminal != "GNOME":
-                            proc = subprocess.Popen("python set-automate %s/answer.txt" % (setdir), shell=True)
+                            proc = subprocess.Popen("python seautomate %s/answer.txt" % (setdir), shell=True)
 
                 os.chdir("src/commandcenter")
             except Exception:
