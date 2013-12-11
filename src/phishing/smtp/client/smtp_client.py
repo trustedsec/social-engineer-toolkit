@@ -398,7 +398,7 @@ if not os.path.isfile(setdir + "/template.zip"):
                 if not os.path.isfile(setdir + "/unc_config"):
                     print_error("Sorry, you did not generate your payload through SET, this option is not supported.")
         if os.path.isfile(setdir + "/unc_config"):
-            child=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/unc_config" % (meta_path,setdir))
+            child=pexpect.spawn("ruby %s/msfconsole -L -r %s/unc_config" % (meta_path,setdir))
             try: child.interact()
             except Exception: child.close()
 
@@ -418,7 +418,7 @@ if not os.path.isfile(setdir + "/template.zip"):
             filewrite.write("set ExitOnSession false\n")
             filewrite.write("exploit -j\n\n")
             filewrite.close()
-            child=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/meta_config" % (meta_path,setdir))
+            child=pexpect.spawn("ruby %s/msfconsole -L -r %s/meta_config" % (meta_path,setdir))
             try:
                 child.interact()
             except Exception:

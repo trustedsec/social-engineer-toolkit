@@ -73,7 +73,7 @@ if trigger == 2 or trigger == 3:
             filewrite.write("set lport " + line[2] + "\n")
             filewrite.write("exploit -j")
             filewrite.close()
-        subprocess.Popen("ruby %s/msfconsole -L -n -r %s/meta_config" % (msf_path, setdir), shell=True).wait()
+        subprocess.Popen("ruby %s/msfconsole -L -r %s/meta_config" % (msf_path, setdir), shell=True).wait()
     else:
         print_warning("cancelling...")
         sleep (2)

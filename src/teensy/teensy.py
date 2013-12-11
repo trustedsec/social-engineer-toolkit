@@ -133,7 +133,7 @@ if payload_counter == 1:
         print bcolors.BLUE + "[*] This may take a few to load MSF..." + bcolors.ENDC
         try:
             if operating_system != "windows":
-                child1=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/meta_config" % (msf_path,setdir))
+                child1=pexpect.spawn("ruby %s/msfconsole -L -r %s/meta_config" % (msf_path,setdir))
                 child1.interact()
         except:
             if operating_system != "windows":

@@ -256,7 +256,7 @@ if exploit == "dll_hijacking":
         if not os.path.isfile(setdir + "/fileformat.file" % (setdir)):
             print_info("This may take a few to load MSF...")
             try:
-                child1=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/meta_config" % (meta_path,setdir))
+                child1=pexpect.spawn("ruby %s/msfconsole -L -r %s/meta_config" % (meta_path,setdir))
             except:
                 try:
                     child1.close()

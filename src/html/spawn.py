@@ -486,7 +486,7 @@ try:
             meta_config = "meta_config"
             if os.path.isfile(setdir + "/meta_config_multipyinjector"):
                 meta_config = "meta_config_multipyinjector"
-            child1=pexpect.spawn("ruby %s/msfconsole -L -n -r %s/%s" % (msf_path,setdir,meta_config))
+            child1=pexpect.spawn("ruby %s/msfconsole -L -r %s/%s" % (msf_path,setdir,meta_config))
         # check if we want to deliver emails or track users that click the link
         webattack_email = check_config("WEBATTACK_EMAIL=").lower()
         if webattack_email == "on" or track_email == "on":

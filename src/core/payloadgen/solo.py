@@ -27,7 +27,7 @@ if choice == "YES":
         if os.path.isfile(setdir + "/meta_config_multipyinjector"):
             listen_path = (setdir + "/meta_config_multipyinjector")
 
-        subprocess.Popen("ruby %s/msfconsole -L -n -r %s" % (meta_path,listen_path), shell=True).wait()
+        subprocess.Popen("ruby %s/msfconsole -L -r %s" % (meta_path,listen_path), shell=True).wait()
 
     # if we did select the set payload as our option
     if os.path.isfile(setdir + "/set.payload"):
