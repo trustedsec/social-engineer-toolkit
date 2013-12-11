@@ -991,7 +991,6 @@ and send the QRCode via a mailer.
                 if not os.path.isdir("%s/reports" % (setdir)):
                     os.makedirs("%s/reports" % (setdir))
                 gen_qrcode(url)
-                pause = raw_input("QRCode generated.")
                 return_continue()
 
             except ImportError:
