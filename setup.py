@@ -10,7 +10,7 @@ import platform
 # if nix then run installer
 if platform.system() == "Linux":
     # give installer a null value
-    installer=""
+    installer = False
 
     try:
         # if our command option is true then install stuff
@@ -25,7 +25,7 @@ if platform.system() == "Linux":
         print "\nTo install: setup.py install"
 
     # if user specified install then lets to the installation
-    if installer == True:
+    if installer is True:
 
         # if we trigger on sources.list then we know its ubuntu
         if os.path.isfile("/etc/apt/sources.list"):
