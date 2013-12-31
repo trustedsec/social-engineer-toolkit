@@ -1,5 +1,5 @@
-#!/usr/bin/python
-import pexpect
+#!/usr/bin/env python
+
 import sys
 import os
 import time
@@ -24,7 +24,8 @@ if not os.path.isfile("config/set_config"):
 #
 #
 # try to import pexpect
-try: import pexpect
+try:
+    import pexpect
 # if pexpect fails
 except ImportError:
     print "\n[*] PEXPECT is required, please download and install before running this..."
@@ -33,7 +34,7 @@ except ImportError:
 
 # try to define filename through argument specified during command line mode
 try:
-    filename=sys.argv[1]
+    filename = sys.argv[1]
 
 # if we through an exception spit out the command line syntax
 except IndexError:
@@ -44,36 +45,37 @@ except IndexError:
     print "Usage: ./seautomate <filename>"
     sys.exit()
 
-# if the filename doesnt exist throw an error
+# if the filename doesnt exist, throw an error
 if not os.path.isfile(filename):
     print "\n[*] Sorry hoss, unable to locate that filename, try again.\n"
     sys.exit()
 
-password="false"
+password = False
 # if the path is around
 if os.path.isfile(filename):
     try:
         print "[*] Spawning SET in a threaded process..."
-        child=pexpect.spawn("python setoolkit")
-        fileopen=file(filename,"r")
+        child = pexpect.spawn("python setoolkit")
+        fileopen = open(filename, "r")
         for line in fileopen:
-            line=line.rstrip()
+            line = line.rstrip()
             # if we just use enter send default
-            if line == "": line="default"
+            if line == "":
+                line = "default"
 
-            match1=re.search("OMGPASSWORDHERE", line)
+            match1 = re.search("OMGPASSWORDHERE", line)
             if match1:
-                line=line.replace(" OMGPASSWORDHERE", "")
-                password="true"
+                line = line.replace("OMGPASSWORDHERE", "")
+                password = True
 
-            if password == "false":
-                print "[*] Sending command %s to the interface..." % (line)
-            if password == "true":
+            if password is False:
+                print "[*] Sending command {0} to the interface...".format(line)
+            if password is True:
                 print "[*] Sending command [**********] (password masked) to the interface..."
-                password="false"
+                password = False
 
             if line == "default":
-                line=""
+                line = ""
 
             if line == "CONTROL-C-HERE":
                 try:
@@ -86,7 +88,7 @@ if os.path.isfile(filename):
                 # if the user is using pexpect < 2.3
                 except AttributeError:
                     print "[-] Error: You are running pexpect < 2.3 which is needed for this function"
-                    choice=raw_input("Would you like to install it now yes or no: ")
+                    choice = raw_input("Would you like to install it now yes or no: ")
                     if choice == "yes" or choice == "y":
                         subprocess.Popen("wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3;python setup.py install;cd ..;rm -rf pexpect-2*", shell=True).wait()
                         try:
@@ -111,4 +113,5 @@ if os.path.isfile(filename):
         sys.exit()
 
     # handle everything else
-    except Exception,e: print "[*] Something went wrong, printing error: %s" % str(e)
+    except Exception as e:
+        print "[*] Something went wrong, printing error: ", e

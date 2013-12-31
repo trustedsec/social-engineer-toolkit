@@ -425,7 +425,7 @@ def update_set():
 # Pull the help menu here
 #
 def help_menu():
-    fileopen = file("README.txt","r").readlines()
+    fileopen = file("README.md", "r").readlines()
     for line in fileopen:
         line = line.rstrip()
         print line

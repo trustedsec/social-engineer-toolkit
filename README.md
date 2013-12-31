@@ -1,8 +1,10 @@
-The Social-Engineer Toolkit (SET)
+#The Social-Engineer Toolkit (SET)
 Copyright 2013 The Social-Engineer Toolkit (SET)
 
 Written by: David Kennedy (ReL1K)
-Company: https://www.trustedsec.com
+
+Company: [TrustedSec](https://www.trustedsec.com)
+
 Development Team: Thomas Werth, Joey Furr (j0fer), JR DePre (pr1me)
 
 DISCLAIMER: This is only for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes period.
