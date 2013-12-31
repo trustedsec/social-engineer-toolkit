@@ -153,6 +153,7 @@ if option1 != "99":
     # Specify Open-Relay Option Here    
     if relay == '2':
         user1 = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
+        user = user1
         from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see"))
         if sendmail==0:
             user = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
