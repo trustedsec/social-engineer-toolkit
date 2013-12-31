@@ -1,5 +1,5 @@
 ~~~~~~~~~~~~~~~~
-version 5.4.3
+version 5.4.4
 ~~~~~~~~~~~~~~~~
 
 * Fixed a from address bug when sending emails through an open relay
