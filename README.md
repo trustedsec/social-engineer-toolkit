@@ -1,5 +1,5 @@
 #The Social-Engineer Toolkit (SET)
-Copyright 2013 The Social-Engineer Toolkit (SET)
+Copyright 2014 The Social-Engineer Toolkit (SET)
 
 Written by: David Kennedy (ReL1K)
 

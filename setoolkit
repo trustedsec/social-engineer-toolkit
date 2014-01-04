@@ -174,8 +174,8 @@ yes (only one time), you agree to the terms of service and that you will only us
 
         # funny2
         if main_menu_choice == "derbycon":
-            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 3.0 -- September 25th through September 29th 2013" + bcolors.ENDC)
-            pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 25 - Sep 29th! Press {return} to continue." + bcolors.ENDC)
+            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 4.0 -- September 24th - 28th 2014" + bcolors.ENDC)
+            pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 24 - Sep 28th! Press {return} to continue." + bcolors.ENDC)
 
         # quit out
         if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":
