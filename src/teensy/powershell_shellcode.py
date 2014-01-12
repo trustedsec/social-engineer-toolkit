@@ -1,7 +1,6 @@
 #!/usr/bin/python
 import pexpect
-from src.core.setcore import yesno_prompt
-from src.core import *
+from src.core.setcore import *
 
 print """
 The powershell - shellcode injection leverages powershell to send a meterpreter session straight into memory without ever touching disk.

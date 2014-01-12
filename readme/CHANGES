@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.4.5
+~~~~~~~~~~~~~~~~
+
+* fixed a bug in generating Arduino powershell injection would cause setdir to not be defined (bug ticket #44) 
+* fixed a bug in generating x10 Arduino blackout devices
+
+~~~~~~~~~~~~~~~~
 version 5.4.4
 ~~~~~~~~~~~~~~~~
 

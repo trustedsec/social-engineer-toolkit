@@ -864,8 +864,8 @@ try:
                 # if we are doing the X10 Arduino Sniffer
                 if teensy_menu_choice == "10":
                     print_status("Generating the Arduino sniffer and libraries pde..")
-                    if not os.path.isdir(setdir + "/reports/arduino_sniffers"):
-                        os.makedirs(setdir + "/reports/arduino_sniffers")
+                    if not os.path.isdir(setdir + "/reports/arduino_sniffer"):
+                        os.makedirs(setdir + "/reports/arduino_sniffer")
                     shutil.copyfile("src/teensy/x10/x10_sniffer.pde", setdir + "/reports/arduino_sniffer/x10_sniffer.pde")
                     shutil.copyfile("src/teensy/x10/libraries.zip", setdir + "/reports/arduino_sniffer/libraries.zip")
                     print_status("Arduino sniffer files and libraries exported to ~/.set/reports/arduino_sniffer")
