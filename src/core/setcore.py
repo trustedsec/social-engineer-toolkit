@@ -1386,7 +1386,7 @@ def start_dns():
 # the main ~./set path for SET 
 def setdir():
     if check_os() == "posix":
-        return os.getenv("HOME") + "/.set"
+        return os.path.join(os.path.expanduser('~'), '.set')
     if check_os() == "windows":
         return "src/program_junk/"
 # set the main directory for SET 
