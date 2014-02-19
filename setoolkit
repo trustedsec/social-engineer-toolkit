@@ -54,8 +54,9 @@ if operating_system == "posix":
         # create the set variables
         os.makedirs(setdir)
         # if for some reason it failed to pull the path
-        if not os.path.isdir("~/.set/"):
-            os.makedirs("~/.set/")
+        userdir = os.path.join(os.path.expanduser('~'), '.set')
+        if not os.path.isdir(userdir):
+            os.makedirs(userdir)
 
 
 if not os.path.isdir(setdir + "/reports/"):
