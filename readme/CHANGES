@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.4.6
+~~~~~~~~~~~~~~~~
+
+* fixed OSX compatibility (pull request)
+* fixed an issue with Teensy Shellcode generation - would throw path error
+
+~~~~~~~~~~~~~~~~
 version 5.4.5
 ~~~~~~~~~~~~~~~~
 

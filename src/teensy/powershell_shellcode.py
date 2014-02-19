@@ -18,7 +18,7 @@ filewrite.close()
 
 import src.payloads.powershell.prep
 
-fileopen = file(path, "r")
+fileopen = file(setdir + "/x86.powershell", "r")
 #payload_encoded = fileopen.read()
 
 # read in x amount of bytes
@@ -134,6 +134,8 @@ Keyboard.send_now();
 }
 """)
 print "[*] Payload has been extracted. Copying file to %s/reports/teensy.pde" % (setdir)
+if not os.path.isfile(setdir + "/reports/"):
+    os.makedirs(setdir + "/reports/")
 filewrite = file(setdir + "/reports/teensy.pde", "w")
 filewrite.write(teensy)
 filewrite.close()
