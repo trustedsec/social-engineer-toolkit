@@ -4,7 +4,7 @@ from SMSProviders import *
 import re
 import glob
 import os
-from src.core import setcore as core
+from src.core.setcore import *
 
 def launch():
     while 1:
@@ -14,7 +14,7 @@ def launch():
 
 99. Cancel and return to SMS Spoofing Menu
 """)
-        template_choice = raw_input(core.setprompt(["7"], "Use a predefined template or craft a one time SMS?"))
+        template_choice = raw_input(setprompt(["7"], "Use a predefined template or craft a one time SMS?"))
         # if predefined template go here
         if template_choice == '1':
             # set path for
@@ -52,7 +52,7 @@ def launch():
                         print line[1]+": "+line2
 
             # allow user to select template
-            choice=raw_input(core.setprompt(["7"], "Select template"))
+            choice=raw_input(setprompt(["7"], "Select template"))
             for line in fileread:
                 # split based off of space
                 line=line.split(" ")
@@ -82,8 +82,8 @@ def launch():
             break;
         if template_choice == '2':
             try:
-                origin = raw_input(core.setprompt(["7"], "Source number phone"))
-                body = raw_input(core.setprompt(["7"], "Body of the message, hit return for a new line. Control+c when finished"))
+                origin = raw_input(setprompt(["7"], "Source number phone"))
+                body = raw_input(setprompt(["7"], "Body of the message, hit return for a new line. Control+c when finished"))
                 while body != 'sdfsdfihdsfsodhdsofh':
                     try:
                         body+=("\n")
@@ -110,7 +110,7 @@ your own.
 
 99. Cancel and return to SMS Spoofing Menu
 """)
-            service_option = raw_input(core.setprompt(["7"], ""))
+            service_option = raw_input(setprompt(["7"], ""))
             # exit
             if service_option == '1':
                 break
@@ -129,33 +129,33 @@ your own.
             for to in phones:
                 send_sohoos_sms(to.rstrip(), origin.rstrip(), body.rstrip())
             # Finish here then return to main menu
-            core.print_status("SET has completed!")
-            core.return_continue()
+            print_status("SET has completed!")
+            return_continue()
 
         #Lleida.net service
         if service_option == '2':
-            user = raw_input(core.setprompt(["7"], "Your Lleida.net user"))
-            password = raw_input(core.setprompt(["7"], "Your Lleida.net password"))
-            email = raw_input(core.setprompt(["7"], "Email for the receipt (optional)"))
+            user = raw_input(setprompt(["7"], "Your Lleida.net user"))
+            password = raw_input(setprompt(["7"], "Your Lleida.net password"))
+            email = raw_input(setprompt(["7"], "Email for the receipt (optional)"))
             for to in phones:
                 send_lleidanet_sms(to.rstrip(), origin.rstrip(), body.rstrip(), user, password, email)
             # Finish here then return to main menu
-            core.print_status("SET has completed!")
-            core.return_continue()
+            print_status("SET has completed!")
+            return_continue()
 
         #SMSGANG service
         if service_option == '3':
-            pincode = raw_input(core.setprompt(["7"], "Your SMSGANG pincode"))
+            pincode = raw_input(setprompt(["7"], "Your SMSGANG pincode"))
             for to in phones:
                 send_smsgang_sms(to.rstrip(), origin.rstrip(), body.rstrip(), pincode)
             # Finish here then return to main menu
-            core.print_status("SET has completed!")
-            core.return_continue()
+            print_status("SET has completed!")
+            return_continue()
 
         #Andriod Emulator service
         if service_option == '4':
             for to in phones:
                 send_android_emu_sms(origin.rstrip(), body.rstrip())
             # Finish here then return to main menu
-            core.print_status("SET has completed!")
-            core.return_continue()
+            print_status("SET has completed!")
+            return_continue()

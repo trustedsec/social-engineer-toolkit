@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 5.4.8
+~~~~~~~~~~~~~~~~
+
+* fixed setdir not defined in SMS spoofing
+* fixed an issue that would cause powershell injection to assign port of false under some circumstances
+
+~~~~~~~~~~~~~~~~
 version 5.4.7
 ~~~~~~~~~~~~~~~~
 
