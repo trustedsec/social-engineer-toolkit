@@ -2,9 +2,11 @@
 import subprocess
 import os
 import shutil
+import glob
 from src.core.setcore import *
 
 me = mod_name()
+dest = "src/html/"
 
 debug_msg(me,"entering src.html.templates.template'",1)
 
@@ -13,11 +15,11 @@ debug_msg(me,"entering src.html.templates.template'",1)
 #
 print """
   1. Java Required
-  2. Gmail
-  3. Google
-  4. Facebook
-  5. Twitter
-  6. Yahoo
+  2. Google
+  3. Facebook
+  4. Twitter
+  5. Yahoo
+  6. Paypal
 """
 choice=raw_input(setprompt(["2"],"Select a template"))
 
@@ -36,27 +38,22 @@ if choice == "1":
     shutil.copyfile("src/html/templates/java/index.template", "src/html/index.template")
     URL=""
 
-# if gmail
-if choice == "2":
-    if os.path.isfile("src/html/index.template"): os.remove("src/html/index.template")
-    shutil.copyfile("src/html/templates/gmail/index.template", "src/html/index.template")
-    URL="https://gmail.com"
-
 # if google
-if choice == "3":
+if choice == "2":
     if os.path.isfile("src/html/index.template"): os.remove("src/html/index.template")
     shutil.copyfile("src/html/templates/google/index.template", "src/html/index.template")
     URL="http://www.google.com"
 
 # if facebook
-if choice == "4":
+if choice == "3":
     if os.path.isfile("src/html/index.template"): os.remove("src/html/index.template")
-    shutil.copyfile("src/html/templates/facebook/index.template", "src/html/index.template")
+    for files in glob.glob('src/html/templates/facebook/*.*'): shutil.copy(files, "src/html/")
     URL="http://www.facebook.com"
 
 # if twitter
 if choice == "5":
-    if os.path.isfile("src/html/index.template"): os.remove("src/html/index.template")
+    if os.path.isfile("src/html/index.template"): 
+      os.remove("src/html/index.template")
     shutil.copyfile("src/html/templates/twitter/index.template", "src/html/index.template")
     URL="http://www.twitter.com"
 
