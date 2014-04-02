@@ -1,276 +1,816 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<!--[if IE 8]><html class="lt-ie10 ie8" lang="en data-scribe-reduced-action-queue="true""><![endif]-->
+<!--[if IE 9]><html class="lt-ie10 ie9" lang="en data-scribe-reduced-action-queue="true""><![endif]-->
+<!--[if gt IE 9]><!--><html lang="en" data-scribe-reduced-action-queue="true"><!--<![endif]-->
   <head>
-        <script type="text/javascript">
-//<![CDATA[
-var page={};var onCondition=function(D,C,A,B){D=D;A=A?Math.min(A,5):5;B=B||100;if(D()){C()}else{if(A>1){setTimeout(function(){onCondition(D,C,A-1,B)},B)}}};
-//]]>
-</script>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<meta content="en-us" http-equiv="Content-Language" />
-<meta content="Twitter is without a doubt the best way to share and discover what is happening right now." name="description" />
-<meta content="no" http-equiv="imagetoolbar" />
-<meta content="width = 780" name="viewport" />
-<meta content="4FTTxY4uvo0RZTMQqIyhh18HsepyJOctQ+XTOu1zsfE=" name="verify-v1" />
-<meta content="" name="page" />
-<meta content="NOODP" name="robots" />
-<meta content="n" name="session-loggedin" />
-    <title id="page_title">Twitter</title>
-    <link href="http://a1.twimg.com/a/1270236195/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-<link href="http://a1.twimg.com/a/1270236195/images/twitter_57.png" rel="apple-touch-icon" />
-    
-    <link href="http://a0.twimg.com/a/1270236195/stylesheets/twitter.css?1270236852" media="screen" rel="stylesheet" type="text/css" />
-<link href="http://a0.twimg.com/a/1270236195/stylesheets/geo.css?1270236852" media="screen" rel="stylesheet" type="text/css" />
-<link href="http://a0.twimg.com/a/1270236195/stylesheets/buttons_new.css?1270236852" media="screen" rel="stylesheet" type="text/css" />
-        <style type="text/css">
-      
-        body { background: #C0DEED url('http://a3.twimg.com/a/1270236195/images/bg-clouds.png') repeat-x; }
-      
-      
-      
-    </style>
-    
+
+
+
+
+
+
+
+    <meta charset="utf-8">
+
+
+  <script id="swift_action_queue">
+    (function(){function m(a){a||(a=window.event);if(!a)return!1;a.timestamp=(new Date).getTime();!a.target&&a.srcElement&&(a.target=a.srcElement);if(document.documentElement.getAttribute("data-scribe-reduced-action-queue")){var b=a.target;while(b&&b!=document
+.body){if(b.tagName=="A")return;b=b.parentNode}}r("all",s(a));if(!q(a)){r("direct",a);return!0}document.addEventListener||(a=s(a));a.preventDefault=a.stopPropagation=a.stopImmediatePropagation=function(){};if(i){f.push(a);r("captured",a)}else r("ignored",a
+);return!1}function n($){p();for(var a=0,b;b=f[a];a++){var d=$(b.target),e=d.closest("a")[0];if(b.type=="click"&&e){var g=$.data(e,"events"),i=g&&g.click,j=!e.hostname.match(c)||!e.href.match(/#$/);if(!i&&j){window.location=e.href;continue}}d.trigger(b)}window
+.swiftActionQueue.wasFlushed=!0}function o(){for(var a in j){if(a=="all")continue;var b=j[a];for(var c=0;c<b.length;c++)console.log("actionQueue",u(b[c]))}}function p(){clearTimeout(g);for(var a=0,b;b=e[a];a++)document["on"+b]=null}function q(a){if(!a.target
+)return!1;var b=a.target,e=(b.tagName||"").toLowerCase();if(a.metaKey)return!1;if(a.shiftKey&&e=="a")return!1;if(b.hostname&&!b.hostname.match(c))return!1;if(a.type.match(d)&&w(b))return!1;if(e=="label"){var f=b.getAttribute("for");if(f){var g=document.getElementById
+(f);if(g&&v(g))return!1}else for(var i=0,j;j=b.childNodes[i];i++)if(v(j))return!1}return!0}function r(a,b){b.bucket=a;j[a].push(b)}function s(a){var b={};for(var c in a)b[c]=a[c];return b}function t(a){while(a&&a!=document.body){if(a.tagName=="A")return a;
+a=a.parentNode}}function u(b){var c=[];b.bucket&&c.push("["+b.bucket+"]");c.push(b.type);var d=b.target,e=t(d),f="",g,i,j=b.timestamp&&b.timestamp-a;if(b.type==="click"&&e){g=e.className.trim().replace(/\s+/g,".");i=e.id.trim();f=/[^#]$/.test(e.href)?" ("+
+e.href+")":"";d='"'+e.innerText.replace(/\n+/g," ").trim()+'"'}else{g=d.className.trim().replace(/\s+/g,".");i=d.id.trim();d=d.tagName.toLowerCase();b.keyCode&&(d=String.fromCharCode(b.keyCode)+" : "+d)}c.push(d+f+(i&&"#"+i)+(!i&&g?"."+g:""));j&&c.push(j);
+return c.join(" ")}function v(a){var b=(a.tagName||"").toLowerCase();return b=="input"&&a.getAttribute("type")=="checkbox"}function w(a){var b=(a.tagName||"").toLowerCase();return b=="textarea"||b=="input"&&a.getAttribute("type")=="text"||a.getAttribute("contenteditable"
+)=="true"}var a=(new Date).getTime(),b=1e4,c=/^([^\.]+\.)*twitter\.com$/,d=/^key/,e=["click","keydown","keypress","keyup"],f=[],g=null,i=!0,j={captured:[],ignored:[],direct:[],all:[]};for(var k=0,l;l=e[k];k++)document["on"+l]=m;g=setTimeout(function(){i=!1
+},b);window.swiftActionQueue={buckets:j,flush:n,logActions:o,wasFlushed:!1}})();
+  </script>
+
+
+        <link rel="stylesheet" href="https://abs.twimg.com/a/1396298729/css/t1/rosetta_core.bundle.css">
+
+    <link rel="stylesheet" href="https://abs.twimg.com/a/1396298729/css/t1/rosetta_logged_out.bundle.css">
+
+
+      <title>Sign in to Twitter</title>
+
+  <meta name="description" content="Sign in to Twitter. Welcome back!">
+
+
+
+<meta name="msapplication-TileImage" content="//abs.twimg.com/favicons/win8-tile-144.png"/>
+<meta name="msapplication-TileColor" content="#00aced"/>
+
+  <link href="//abs.twimg.com/favicons/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+  <meta name="swift-page-name" id="swift-page-name" content="login">
+
+    <link rel="canonical" href="https://twitter.com/login">
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Twitter">
+
+          <link rel="stylesheet" href="https://abs.twimg.com/a/1396298729/css/t1/rosetta_more.bundle.css">
+
   </head>
-
-  <body class="sessions firefox" id="new">    
-    <script type="text/javascript">
-//<![CDATA[
-if (window.top !== window.self) {document.write = "";window.top.location = window.self.location; setTimeout(function(){document.body.innerHTML='';},1);window.self.onload=function(evt){document.body.innerHTML='';};}
-//]]>
-</script>
-    
-    
-    <div id="dim-screen"></div>
-    <ul id="accessibility" class="offscreen">
-  <li><a href="login#content" accesskey="0">Skip past navigation</a></li>
-  <li>On a mobile phone? Check out <a href="http://m.twitter.com/">m.twitter.com</a>!</li>
-  <li><a href="login#footer" accesskey="2">Skip to navigation</a></li>
-    <li><a href="login#signin">Skip to sign in form</a></li>
-</ul>
-
-    
-    
-
-    <div id="container" class="subpage">
-            <span id="loader" style="display:none"><img alt="Loader" src="http://a0.twimg.com/a/1270236195/images/loader.gif" /></span>
-      <div class="clearfix" id="header">
-  <a href="http://twitter.com/" title="Twitter / Home" accesskey="1" id="logo">
-          <img alt="Twitter.com" height="36" src="http://a0.twimg.com/a/1270236195/images/twitter_logo_header.png" width="155" />    
-  </a>
-            <form method="post" id="sign_out_form" action="http://twitter.com/sessions/destroy" style="display:none;">
-        <input name="authenticity_token" value="c76eede7eca50f4867ae41ecef71230f18a96787" type="hidden"/>
-      </form>
-
-              
-  <ul class="top-navigation round">
-    <li><a href="login" accesskey="l">Login</a></li>
-    <li class="signup-link"><a href="http://twitter.com/signup">Join Twitter!</a></li>
-  </ul>
-
-
-            </div>
-
-
-
-      
-
-      
-        <div class="content-bubble-arrow"></div>
-      
-      
-      
-      
-        <table cellspacing="0" class="columns">
-          <tbody>
-            <tr>
-              <td id="content" class="round-left column">
-                                <div class="wrapper">
-                  
-                  <h2>Sign in to Twitter</h2>
-
-<p>
-  If you&rsquo;ve been using Twitter from your phone, <a href="http://twitter.com/account/complete">click here</a> and we&rsquo;ll get you signed up on the web.</p>
-
-<form action="https://twitter.com/sessions" class="signin" method="post"><div style="margin:0;padding:0"><input name="authenticity_token" type="hidden" value="c76eede7eca50f4867ae41ecef71230f18a96787" /></div>  <input id="authenticity_token" name="authenticity_token" type="hidden" value="c76eede7eca50f4867ae41ecef71230f18a96787" />  <fieldset class="common-form standard-form">
-    <table cellspacing="0">
-      <tr>
-        <th><label for="username_or_email">Username or email</label></th>
-        <td><input id="username_or_email" name="session[username_or_email]" type="text" value="" /></td>
-      </tr>
-      <tr>
-        <th><label for="password">Password</label></th>
-        <td><input id="password" name="session[password]" type="password" value="" /> <small><a href="http://twitter.com/account/resend_password">Forgot?</a></small></td>
-      </tr>
-      <tr>
-        <th></th>
-        <td><input id="remember_me" name="remember_me" type="checkbox" value="1" /> <label for="remember_me" class="inline">Remember me</label></td>
-      </tr>
-      
-      <tr>
-        <th></th>
-        <td><input id="signin_submit" name="commit" type="submit" value="Sign In" /></td>
-      </tr>
-    </table>
-  </fieldset>
-</form>
-
-
-
-
-
-                </div>
-                              </td>
-              
-                <td id="side_base" class="column round-right">
-                                  
-                  <div id="side">
-                      <div class="section">
-  <div class="section-header">
-    <h1>Create Your Account</h1>
+  <body class="t1 logged-out"
+data-fouc-class-names="swift-loading"
+ dir="ltr">
+      <script id="swift_loading_indicator">
+        document.body.className=document.body.className+" "+document.body.getAttribute("data-fouc-class-names");
+      </script>
+    <div id="doc" class="route-login login-responsive">
+        <div class="topbar js-topbar">
+  <div id="banners" class="js-banners">
   </div>
-  <div class="join">
-    <form name="account_signup_form" id="account_signup_form" action="http://twitter.com/signup">
-      <input id="join" name="commit" type="submit" value="Join!" />
+  <div class="global-nav" data-section-term="top_nav">
+    <div class="global-nav-inner">
+      <div class="container">
+
+
+         <ul class="nav js-global-actions"> <li class="home" data-global-action="t1home">  <a class="nav-logo-link" href="/" data-nav="front"> <span class="Icon Icon--bird"><span class="visuallyhidden">Twitter</span></span> </a>   </li> </ul>  <div class="pull-right">  <ul class="nav secondary-nav language-dropdown"> <li class="dropdown js-language-dropdown"> <a href="#supported_languages" class="dropdown-toggle js-dropdown-toggle"> <small>Language:</small> <span class="js-current-language">English</span> <b class="caret"></b> </a> <div class="dropdown-menu"> <div class="dropdown-caret right"> <span class="caret-outer"> </span> <span class="caret-inner"></span> </div> <ul id="supported_languages">  <li><a href="?lang=id" data-lang-code="id" title="Indonesian" class="js-language-link js-tooltip">Bahasa Indonesia</a></li>  <li><a href="?lang=msa" data-lang-code="msa" title="Malay" class="js-language-link js-tooltip">Bahasa Melayu</a></li>  <li><a href="?lang=da" data-lang-code="da" title="Danish" class="js-language-link js-tooltip">Dansk</a></li>  <li><a href="?lang=de" data-lang-code="de" title="German" class="js-language-link js-tooltip">Deutsch</a></li>  <li><a href="?lang=en-gb" data-lang-code="en-gb" title="English UK" class="js-language-link js-tooltip">EnglishUK</a></li>  <li><a href="?lang=es" data-lang-code="es" title="Spanish" class="js-language-link js-tooltip">Español</a></li>  <li><a href="?lang=eu" data-lang-code="eu" title="Basque" class="js-language-link js-tooltip">Euskara</a></li>  <li><a href="?lang=fil" data-lang-code="fil" title="Filipino" class="js-language-link js-tooltip">Filipino</a></li>  <li><a href="?lang=gl" data-lang-code="gl" title="Galician" class="js-language-link js-tooltip">Galego</a></li>  <li><a href="?lang=it" data-lang-code="it" title="Italian" class="js-language-link js-tooltip">Italiano</a></li>  <li><a href="?lang=xx-lc" data-lang-code="xx-lc" title="Lolcat" class="js-language-link js-tooltip">LOLCATZ</a></li>  <li><a href="?lang=hu" data-lang-code="hu" title="Hungarian" class="js-language-link js-tooltip">Magyar</a></li>  <li><a href="?lang=nl" data-lang-code="nl" title="Dutch" class="js-language-link js-tooltip">Nederlands</a></li>  <li><a href="?lang=no" data-lang-code="no" title="Norwegian" class="js-language-link js-tooltip">Norsk</a></li>  <li><a href="?lang=pl" data-lang-code="pl" title="Polish" class="js-language-link js-tooltip">Polski</a></li>  <li><a href="?lang=pt" data-lang-code="pt" title="Portuguese" class="js-language-link js-tooltip">Português</a></li>  <li><a href="?lang=fi" data-lang-code="fi" title="Finnish" class="js-language-link js-tooltip">Suomi</a></li>  <li><a href="?lang=sv" data-lang-code="sv" title="Swedish" class="js-language-link js-tooltip">Svenska</a></li>  <li><a href="?lang=tr" data-lang-code="tr" title="Turkish" class="js-language-link js-tooltip">Türkçe</a></li>  <li><a href="?lang=ca" data-lang-code="ca" title="Catalan" class="js-language-link js-tooltip">català</a></li>  <li><a href="?lang=fr" data-lang-code="fr" title="French" class="js-language-link js-tooltip">français</a></li>  <li><a href="?lang=ro" data-lang-code="ro" title="Romanian" class="js-language-link js-tooltip">română</a></li>  <li><a href="?lang=cs" data-lang-code="cs" title="Czech" class="js-language-link js-tooltip">Čeština</a></li>  <li><a href="?lang=el" data-lang-code="el" title="Greek" class="js-language-link js-tooltip">Ελληνικά</a></li>  <li><a href="?lang=ru" data-lang-code="ru" title="Russian" class="js-language-link js-tooltip">Русский</a></li>  <li><a href="?lang=uk" data-lang-code="uk" title="Ukrainian" class="js-language-link js-tooltip">Українська мова</a></li>  <li><a href="?lang=he" data-lang-code="he" title="Hebrew" class="js-language-link js-tooltip">עִבְרִית</a></li>  <li><a href="?lang=ur" data-lang-code="ur" title="Urdu" class="js-language-link js-tooltip">اردو</a></li>  <li><a href="?lang=ar" data-lang-code="ar" title="Arabic" class="js-language-link js-tooltip">العربية</a></li>  <li><a href="?lang=fa" data-lang-code="fa" title="Farsi" class="js-language-link js-tooltip">فارسی</a></li>  <li><a href="?lang=hi" data-lang-code="hi" title="Hindi" class="js-language-link js-tooltip">हिन्दी</a></li>  <li><a href="?lang=th" data-lang-code="th" title="Thai" class="js-language-link js-tooltip">ภาษาไทย</a></li>  <li><a href="?lang=ja" data-lang-code="ja" title="Japanese" class="js-language-link js-tooltip">日本語</a></li>  <li><a href="?lang=zh-cn" data-lang-code="zh-cn" title="Simplified Chinese" class="js-language-link js-tooltip">简体中文</a></li>  <li><a href="?lang=zh-tw" data-lang-code="zh-tw" title="Traditional Chinese" class="js-language-link js-tooltip">繁體中文</a></li>  <li><a href="?lang=ko" data-lang-code="ko" title="Korean" class="js-language-link js-tooltip">한국어</a></li>  </ul> </div> <div class="js-front-language"> <form action="/sessions/change_locale" class="language" method="POST"> <input type="hidden" name="lang"> <input type="hidden" name="redirect"> <input type="hidden" name="authenticity_token" value="dba33c0b2bfdd8e6dcb14a7ab4bd121f38177d52"> </form> </div> </li> </ul>   </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+        <div id="page-outer">
+          <div id="page-container" class="wrapper wrapper-login white">
+
+
+
+
+
+
+            <div class="page-canvas">
+
+  <div class="signin-wrapper" data-login-message="">
+    <h1>Sign in to Twitter</h1>
+    <form action="https://twitter.com/sessions" class="clearfix signin js-signin" method="post">
+      <fieldset>
+
+  <legend class="visuallyhidden">Sign In</legend>
+
+  <div class="clearfix field">
+    <input class="js-username-field email-input js-initial-focus" type="text" name="session[username_or_email]" autocomplete="on" value="" placeholder="Username or email">
+  </div>
+
+  <div class="clearfix field">
+    <input class="js-password-field" type="password" name="session[password]" placeholder="Password">
+  </div>
+
+  <input type="hidden" value="dba33c0b2bfdd8e6dcb14a7ab4bd121f38177d52" name="authenticity_token"/>
+
+</fieldset>
+
+      <div class="captcha js-captcha">
+      </div>
+      <div class="clearfix">
+
+  <input type="hidden" name="scribe_log">
+  <input type="hidden" name="redirect_after_login" value="">
+  <input type="hidden" value="dba33c0b2bfdd8e6dcb14a7ab4bd121f38177d52" name="authenticity_token"/>
+  <button type="submit" class="submit btn primary-btn">Sign in</button>
+
+  <div class="subchck">
+    <label class="remember">
+      <input type="checkbox" value="1" name="remember_me" >
+      Remember me
+      <span class="separator">·</span>
+      <a class="forgot" href="/account/resend_password">Forgot password?</a>
+    </label>
+  </div>
+</div>
+
     </form>
-    <p class="complete">
-      Already using Twitter<br /> from your phone?
-      <a href="http://twitter.com/account/complete">Click here</a>.
+  </div>
+
+  <div class="clearfix mobile has-sms">
+    <p class="signup-helper">
+      New to Twitter?
+      <a id="login-signup-link" href="https://twitter.com/signup">Sign up now&#32;&raquo;</a>
+    </p>
+    <p class="sms-helper">
+      Already using Twitter via text message?
+      <a href="/account/complete">Activate your account&#32;&raquo;</a>
     </p>
   </div>
-</div>
-<div class="section">
-  <div id="lang-select"><form action="http://twitter.com/sessions/change_locale" id="lf" method="post" style="margin-top:2px"><div style="margin:0;padding:0"><input name="authenticity_token" type="hidden" value="c76eede7eca50f4867ae41ecef71230f18a96787" /></div>
-  <select name="lang" onchange="document.getElementById('lf').submit();">
-    <option value="" selected="selected">Select Language ...&nbsp;</option>
-  <option value="it">Italian - Italiano</option>
-  <option value="es">Spanish - Español</option>
-  <option value="en">English</option>
-  <option value="fr">French - français</option>
-  <option value="de">German - Deutsch</option>
-  <option value="ja">Japanese - 日本語</option>
 
-  </select>
-</form>
-</div>
 </div>
 
+          </div>
+        </div>
 
-                  </div>
-                                </td>
-              
-            </tr>
-          </tbody>
-        </table>
-      
+    </div>
+    <div class="alert-messages hidden" id="message-drawer">
+    <div class="message ">
+  <div class="message-inside">
+    <span class="message-text"></span>
+      <a role="button" class="Icon Icon--close Icon--medium dismiss" href="#">
+        <span class="visuallyhidden">Dismiss</span>
+      </a>
+  </div>
+</div>
+</div>
 
-      
-  <div id="footer" class="round">
-      <h3 class="offscreen">Footer</h3>
-      
-      
-      <ul class="footer-nav">
-          <li class="first">&copy; 2010 Twitter</li>
-          <li><a href="http://twitter.com/about">About Us</a></li>
-          <li><a href="http://twitter.com/about/contact">Contact</a></li>
-          <li><a href="http://blog.twitter.com">Blog</a></li>
-          <li><a href="http://status.twitter.com">Status</a></li>
-                      <li><a href="http://twitter.com/goodies">Goodies</a></li>
-                    <li><a href="http://apiwiki.twitter.com/">API</a></li>
-                      <li><a href="http://business.twitter.com/twitter101">Business</a></li>
-                    <li><a href="http://twitter.com/help/start">Help</a></li>
-          <li><a href="http://twitter.com/jobs">Jobs</a></li>
-          <li><a href="http://twitter.com/tos">Terms</a></li>
-          <li><a href="http://twitter.com/privacy">Privacy</a></li>
-      </ul>
+
+
+<div class="gallery-overlay"></div>
+<div class="Gallery Gallery--new">
+  <div class="Gallery-closeTarget"></div>
+  <div class="Gallery-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--large">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+    <div class="Gallery-media"></div>
+    <div class="GalleryNav GalleryNav--prev">
+      <span class="GalleryNav-handle GalleryNav-handle--prev">
+          <span class="Icon Icon--caretLeft Icon--large">
+            <span class="u-isHiddenVisually">
+              Previous
+            </span>
+          </span>
+      </span>
+    </div>
+    <div class="GalleryNav GalleryNav--next">
+      <span class="GalleryNav-handle GalleryNav-handle--next">
+          <span class="Icon Icon--caretRight Icon--large">
+            <span class="u-isHiddenVisually">
+              Next
+            </span>
+          </span>
+      </span>
+    </div>
+    <div class="GalleryTweet GalleryTweet--new"></div>
+  </div>
+</div>
+
+
+
+<div class="modal-overlay"></div>
+
+
+
+
+<div id="goto-user-dialog" class="modal-container">
+  <div class="modal modal-small draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+
+      <div class="modal-header">
+        <h3 class="modal-title">Go to a person's profile</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-inner">
+          <form class="goto-user-form">
+            <input class="input-block username-input" type="text" placeholder="Start typing a name to jump to a profile" aria-label="User">
+
+
+
+<div role="listbox" aria-hidden="true" class="dropdown-menu typeahead">
+  <div aria-hidden="true" class="dropdown-caret">
+    <div class="caret-outer"></div>
+    <div class="caret-inner"></div>
+  </div>
+  <div role="presentation" class="dropdown-inner js-typeahead-results">
+    <div role="presentation" class="typeahead-saved-searches">
+  <h3 id="saved-searches-heading" class="typeahead-category-title saved-searches-title">Saved searches</h3>
+  <ul role="presentation" class="typeahead-items saved-searches-list">
+
+    <li role="presentation" class="typeahead-item typeahead-saved-search-item">
+      <span class="icon close" aria-hidden="true"><span class="visuallyhidden">Remove</span></span>
+      <a role="option" aria-describedby="saved-searches-heading" class="js-nav" href="" data-search-query="" data-query-source="" data-ds="saved_search" tabindex="-1"></a>
+    </li>
+  </ul>
+</div>
+
+    <ul role="presentation" class="typeahead-items typeahead-topics">
+
+  <li role="presentation" class="typeahead-item typeahead-topic-item">
+    <a role="option" class="js-nav" href="" data-search-query="" data-query-source="typeahead_click" data-ds="topics" tabindex="-1">
+    </a>
+  </li>
+</ul>
+
+
+
+
+
+<ul role="presentation" class="typeahead-items typeahead-accounts js-typeahead-accounts">
+
+  <li role="presentation" data-user-id="" data-user-screenname="" data-remote="true" data-score="" class="typeahead-item typeahead-account-item js-selectable">
+
+    <a role="option" class="js-nav" data-query-source="typeahead_click" data-search-query="" data-ds="account">
+      <img class="avatar size24" alt="">
+      <span class="typeahead-user-item-info">
+        <span class="fullname"></span>
+        <span class="js-verified hidden"><span class="icon verified"><span class="visuallyhidden">Verified account</span></span></span>
+        <span class="username"><s>@</s><b></b></span>
+      </span>
+    </a>
+  </li>
+  <li role="presentation" class="js-selectable typeahead-accounts-shortcut js-shortcut"><a role="option" class="js-nav" href="" data-search-query="" data-query-source="typeahead_click" data-shortcut="true" data-ds="account_search"></a></li>
+</ul>
+
+    <ul role="presentation" class="typeahead-items typeahead-trend-locations-list">
+
+  <li role="presentation" class="typeahead-item typeahead-trend-locations-item"><a role="option" class="js-nav" href="" data-ds="trend_location" data-search-query="" tabindex="-1"></a></li>
+</ul>
+    <ul role="presentation" class="typeahead-items typeahead-context-list">
+
+  <li role="presentation" class="typeahead-item typeahead-context-item"><a role="option" class="js-nav" href="" data-ds="context_helper" data-search-query="" tabindex="-1"></a></li>
+</ul>
+  </div>
+</div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <div id="retweet-tweet-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+
+      <div class="modal-header">
+        <h3 class="modal-title">Retweet this to your followers?</h3>
+      </div>
+
+      <div class="tweet-loading">
+  <div class="spinner-bigger"></div>
+</div>
+
+      <div class="modal-body modal-tweet"></div>
+
+      <div class="modal-footer">
+        <button class="btn cancel-action js-close">Cancel</button>
+        <button class="btn primary-btn retweet-action">Retweet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div id="delete-tweet-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+
+      <div class="modal-header">
+        <h3 class="modal-title">Are you sure you want to delete this Tweet?</h3>
+      </div>
+
+      <div class="tweet-loading">
+  <div class="spinner-bigger"></div>
+</div>
+
+      <div class="modal-body modal-tweet"></div>
+
+      <div class="modal-footer">
+        <button class="btn cancel-action js-close">Cancel</button>
+        <button class="btn primary-btn delete-action">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="block-user-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+
+      <div class="modal-header">
+        <h3 class="modal-title">Block</h3>
+      </div>
+
+      <div class="tweet-loading">
+  <div class="spinner-bigger"></div>
+</div>
+
+      <div class="modal-body modal-tweet"></div>
+
+      <div class="modal-footer">
+        <button class="btn cancel-action js-close">Cancel</button>
+        <button class="btn primary-btn block-action">Block</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+     <div id="geo-disabled-dropdown">
+      <div class="dropdown-menu" tabindex="-1">
+  <div class="dropdown-caret">
+    <span class="caret-outer"></span>
+    <span class="caret-inner"></span>
+  </div>
+  <ul>
+    <li class="geo-not-enabled-yet">
+      <h2>Add a location to your Tweets</h2>
+      <p>
+        When you tweet with a location, Twitter stores that location.&#32;
+        You can switch location on/off before each Tweet and always have the option to delete your location history.
+        <a href="http://support.twitter.com/forums/26810/entries/78525" target="_blank">Learn more</a>
+      </p>
+      <div>
+        <button type="button" class="geo-turn-on btn primary-btn">Turn location on</button>
+        <button type="button" class="geo-not-now btn-link">Not now</button>
+      </div>
+    </li>
+  </ul>
+</div>
+    </div>
+
+  <div id="geo-enabled-dropdown">
+    <div class="dropdown-menu" tabindex="-1">
+  <div class="dropdown-caret">
+    <span class="caret-outer"></span>
+    <span class="caret-inner"></span>
+  </div>
+  <ul>
+    <li class="geo-query-location">
+      <input type="text" autocomplete="off" placeholder="Search for a neighborhood or city">
+      <span class="icon generic-search"></span>
+    </li>
+    <li class="geo-dropdown-status"></li>
+    <li class="dropdown-link geo-turn-off-item geo-focusable">
+      <span class="icon close"></span>Turn off location
+    </li>
+  </ul>
+</div>
   </div>
 
 
+  <div id="profile_popup" class="modal-container ProfilePopupContainer">
+  <div class="close-modal-background-target"></div>
+  <div class="modal modal-small draggable">
+    <div class="modal-content clearfix">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
 
-      <hr />
+      <div class="modal-header">
+        <h3 class="modal-title">Profile summary</h3>
+      </div>
 
+      <div class="modal-body profile-modal">
+
+      </div>
+
+      <div class="loading">
+        <span class="spinner-bigger"></span>
+      </div>
     </div>
+  </div>
+</div>
 
-    
-    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js" type="text/javascript"></script>
-<script src="http://a2.twimg.com/a/1270236195/javascripts/twitter.js?1270236852" type="text/javascript"></script>
-<script src="http://a1.twimg.com/a/1270236195/javascripts/lib/jquery.tipsy.min.js?1270236852" type="text/javascript"></script>
+  <div id="list-membership-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal modal-small draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
 
-  <!--[if lte IE 7]>
-  <script type="text/javascript">
-    $(function() {
-      $(document).bind("signinMenu.show", function() {
-        $("#lang-select").css({visibility: "hidden"});
-      }).bind("signinMenu.hide", function() {
-        $("#lang-select").css({visibility: "visible"});
-      });
-    });
-  </script>
-  <![endif]-->
+      <div class="modal-header">
+        <h3 class="modal-title">Your lists</h3>
+      </div>
+      <div class="modal-body">
+        <div class="list-membership-content"></div>
+        <span class="spinner lists-spinner" title="Loading&hellip;"></span>
+      </div>
+    </div>
+  </div>
+</div>
+  <div id="list-operations-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal modal-medium draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
 
-<script type="text/javascript">
-//<![CDATA[
-      page.controller_name = 'SessionsController';
-      page.action_name = 'new';
-      twttr.form_authenticity_token = 'c76eede7eca50f4867ae41ecef71230f18a96787';
-      $.ajaxSetup({ data: { authenticity_token: 'c76eede7eca50f4867ae41ecef71230f18a96787' } });
+      <div class="modal-header">
+        <h3 class="modal-title">Create a new list</h3>
+      </div>
+      <div class="modal-body">
 
-      // FIXME: Reconcile with the kinds on the Status model.
-      twttr.statusKinds = {
-        UPDATE: 1,
-        SHARE: 2
-      };
-      twttr.ListPerUserLimit = 20;
-      
-    
-//]]>
-</script>
-<script type="text/javascript">
-//<![CDATA[
+<div class="list-editor">
+  <div class="field">
+    <label for="list-name">List name</label>
+    <input id="list-name" type="text" class="text" name="name" value="" />
+  </div>
+  <hr/>
 
-      $( function () {
-          if(document.activeElement.id != 'password') {
-    $('#username_or_email').focus();
-  }
+  <div class="field">
+    <label for="list-description">Description</label>
+    <textarea id="list-description" name="description"></textarea>
+    <span class="help-text">Under 100 characters, optional</span>
+  </div>
+  <hr/>
 
-      });
-    
-//]]>
-</script>
+  <fieldset class="field">
+    <legend>Privacy</legend>
+    <div class="options">
+      <label for="list-public-radio">
+        <input class="radio" type="radio" name="mode" id="list-public-radio" value="public" checked="checked"  />
+        <b>Public</b> &middot; Anyone can follow this list
+      </label>
+      <label for="list-private-radio">
+        <input class="radio" type="radio" name="mode" id="list-private-radio" value="private"  />
+        <b>Private</b> &middot; Only you can access this list
+      </label>
+    </div>
+  </fieldset>
+  <hr/>
 
-        <!-- BEGIN google analytics -->
+  <div class="list-editor-save">
+    <button type="button" class="btn btn-primary update-list-button" data-list-id="">Save list</button>
+  </div>
 
-  <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-  </script>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <script type="text/javascript">
-
-    try {
-      var pageTracker = _gat._getTracker("UA-30775-6");
-      pageTracker._setDomainName("twitter.com");
-            pageTracker._setVar('Not Logged In');
-            pageTracker._setVar('lang: en');
-            pageTracker._initData();
-                              pageTracker._trackPageview();
-                  } catch(err) { }
-
-  </script>
-
-  <!-- END google analytics -->
-
-
-
-
-
-    <div id="notifications"></div>
+  <div id="activity-popup-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal draggable">
+    <div class="modal-content clearfix">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
 
 
-    
+      <div class="modal-header">
+        <h3 class="modal-title"></h3>
+      </div>
 
-    
+      <div class="modal-body">
+        <div class="tweet-loading">
+  <div class="spinner-bigger"></div>
+</div>
 
+        <div class="activity-tweet modal-tweet clearfix"></div>
+        <div class="loading">
+          <span class="spinner-bigger"></span>
+        </div>
+        <div class="activity-content clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <div id="embed-tweet-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal modal-medium draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+      <div class="modal-header">
+        <h3 class="modal-title">Embed this Tweet</h3>
+      </div>
+      <div class="modal-body">
+        <div class="embed-code-container">
+  <p>Add this Tweet to your website by copying the code below. <a href="//dev.twitter.com/docs/embedded-tweets">Learn more</a></p>
+  <form>
+
+    <div class="embed-destination-wrapper">
+      <div class="embed-overlay embed-overlay-spinner"><div class="embed-overlay-content"></div></div>
+      <div class="embed-overlay embed-overlay-error">
+        <p class="embed-overlay-content">Hmm, there was a problem reaching the server. <button type="button" class="btn-link retry-embed">Try again?</button></p>
+      </div>
+      <textarea class="embed-destination js-initial-focus"></textarea>
+      <div class="embed-options">
+        <div class="embed-include-parent-tweet">
+          <label for="include-parent-tweet">
+            <input type="checkbox" id="include-parent-tweet" class="include-parent-tweet" checked>
+            Include parent Tweet
+          </label>
+        </div>
+        <div class="embed-include-card">
+          <label for="include-card">
+            <input type="checkbox" id="include-card" class="include-card" checked>
+            Include media
+          </label>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="embed-preview">
+    <h3>Preview</h3>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+  <div id="signin-or-signup-dialog">
+    <div id="signin-or-signup" class="modal-container">
+      <div class="close-modal-background-target"></div>
+      <div class="modal modal-medium draggable">
+        <div class="modal-content">
+          <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+          <div class="modal-header">
+            <h3 class="modal-title modal-long-title signup-only">Sign up for Twitter &amp; follow @<span></span></h3>
+            <h3 class="modal-title not-signup-only">Sign in to Twitter</h3>
+          </div>
+          <div class="modal-body signup-only">
+            <form action="https://twitter.com/signup" class="clearfix signup" method="post">
+  <div class="field name">
+    <input type="text" autocomplete="off" name="user[name]" maxlength="20" class="js-initial-focus" placeholder="Full name">
+  </div>
+  <div class="field email">
+    <input class="email-input" type="text" autocomplete="off" name="user[email]" placeholder="Email">
+  </div>
+  <div class="field password">
+    <input type="password" name="user[user_password]" placeholder="Password">
+  </div>
+  <input type="hidden" value="" name="context">
+  <input type="hidden" value="dba33c0b2bfdd8e6dcb14a7ab4bd121f38177d52" name="authenticity_token"/>
+  <input name="follows" type="hidden" value="">
+  <input type="submit" class="btn signup-btn js-submit js-signup-btn" value="Sign up">
+</form>
+
+          </div>
+          <div class="modal-body not-signup-only">
+            <form action="https://twitter.com/sessions" class="signin" method="post">
+  <fieldset>
+
+  <legend class="visuallyhidden">Sign In</legend>
+
+  <div class="clearfix field">
+    <input class="js-username-field email-input js-initial-focus" type="text" name="session[username_or_email]" autocomplete="on" value="" placeholder="Username or email">
+  </div>
+
+  <div class="clearfix field">
+    <input class="js-password-field" type="password" name="session[password]" placeholder="Password">
+  </div>
+
+  <input type="hidden" value="dba33c0b2bfdd8e6dcb14a7ab4bd121f38177d52" name="authenticity_token"/>
+
+</fieldset>
+
+  <div class="clearfix">
+
+  <input type="hidden" name="scribe_log">
+  <input type="hidden" name="redirect_after_login" value="">
+  <input type="hidden" value="dba33c0b2bfdd8e6dcb14a7ab4bd121f38177d52" name="authenticity_token"/>
+  <button type="submit" class="submit btn primary-btn">Sign in</button>
+
+  <div class="subchck">
+    <label class="remember">
+      <input type="checkbox" value="1" name="remember_me" >
+      Remember me
+      <span class="separator">·</span>
+      <a class="forgot" href="/account/resend_password">Forgot password?</a>
+    </label>
+  </div>
+</div>
+
+  <div class="divider"></div>
+  <p>
+    <a class="forgot" href="/account/resend_password">Forgot password?</a><br />
+    <a class="mobile has-sms" href="/account/complete">Already using Twitter via text message?</a>
+  </p>
+</form>
+
+            <div class="signup">
+              <h2>Not on Twitter? Sign up, tune into the things you care about, and get updates as they happen.</h2>
+              <form action="https://twitter.com/signup" class="signup" method="get">
+  <button class="btn promotional signup-btn" type="submit">Sign up &raquo;</button>
+</form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sms-codes-dialog" class="modal-container">
+  <div class="close-modal-background-target"></div>
+  <div class="modal modal-medium draggable">
+    <div class="modal-content">
+      <button type="button" class="modal-btn modal-close js-close">
+  <span class="Icon Icon--close Icon--medium">
+    <span class="visuallyhidden">Close</span>
+  </span>
+</button>
+
+      <div class="modal-header">
+        <h3 class="modal-title">Two-way (sending and receiving) short codes:</h3>
+      </div>
+      <div class="modal-body">
+
+<table id="sms_codes" cellpadding="0" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>Code</th>
+      <th>For customers of</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>United States</td>
+      <td>40404</td>
+      <td>(any)</td>
+    </tr>
+    <tr>
+      <td>Canada</td>
+      <td>21212</td>
+      <td>(any)</td>
+    </tr>
+    <tr>
+      <td>United Kingdom</td>
+      <td>86444</td>
+      <td>Vodafone, Orange, 3, O2</td>
+    </tr>
+    <tr>
+      <td>Brazil</td>
+      <td>40404</td>
+      <td>Nextel, TIM</td>
+    </tr>
+    <tr>
+      <td>Haiti</td>
+      <td>40404</td>
+      <td>Digicel, Voila</td>
+    </tr>
+    <tr>
+      <td>Ireland</td>
+      <td>51210</td>
+      <td>Vodafone, O2</td>
+    </tr>
+    <tr>
+      <td>India</td>
+      <td>53000</td>
+      <td>Bharti Airtel, Videocon, Reliance</td>
+    </tr>
+    <tr>
+      <td>Indonesia</td>
+      <td>89887</td>
+      <td>AXIS, 3, Telkomsel, Indosat, XL Axiata</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Italy</td>
+      <td>4880804</td>
+      <td>Wind</td>
+    </tr>
+    <tr>
+      <td>3424486444</td>
+      <td>Vodafone</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+        &raquo; <a class="js-initial-focus" target="_blank" href="http://support.twitter.com/articles/14226-how-to-find-your-twitter-short-code-or-long-code">See SMS short codes for other countries</a>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="create-custom-timeline-dialog" class="modal-container"></div>
+<div id="edit-custom-timeline-dialog" class="modal-container"></div>
+<div id="curate-dialog" class="modal-container"></div>
+
+
+    <div class="hidden">
+  <iframe aria-hidden="true" class="tweet-post-iframe" name="tweet-post-iframe"></iframe>
+
+</div>
+
+    <div id="spoonbill-outer"></div>
   </body>
-
 </html>
+
+
+
+    <input type="hidden" class="swift-boot-module" value="app/pages/login">
+  <input type="hidden" id="swift-module-path" value="https://abs.twimg.com/c/swift/en">
+
+
+    <script src="https://abs.twimg.com/c/swift/en/init.ed8ccd43f44e391684b50a0fc3a107c9edab3a3c.js" async></script>
+

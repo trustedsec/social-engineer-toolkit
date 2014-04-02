@@ -19,7 +19,6 @@ print """
   3. Facebook
   4. Twitter
   5. Yahoo
-  6. Paypal
 """
 choice=raw_input(setprompt(["2"],"Select a template"))
 
