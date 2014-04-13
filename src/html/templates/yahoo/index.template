@@ -1,19 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Sign in to Yahoo!</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0053)https://login.yahoo.com/config/mail?&.src=ym&.intl=us -->
+<html class="yui3-js-enabled" style="overflow: hidden;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<title>Sign in to Yahoo</title>
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<script type='text/javascript'>
-var startTime = new Date().getTime();
-var loadTime = null;
-</script>
-
+<meta name="viewport" content="width=800px, minimum-scale=0.9, maximum-scale=1.1">
 <link rel="stylesheet" type="text/css" href="https://s.yimg.com/lq/i/reg/css/yregbase_sec_ui_1_9.css">
 <style type="text/css">
 .clear{clear:both}
+.primaryCta {background:none; background-color: #6E329D; background-image: -moz-linear-gradient(left center , #6E329D 0%, #6E329D 100%); border: 1px solid #522675; border-radius: 2px 2px 2px 2px; color:#fff;}
 #yreglg select, #yreglg input, #yreglg p, #yreglgtb td, #yreglgtb th{font-size:93%}
 div.yregdsilu h2.yregdnt, div.yregdsilu p.yregsueasy{width:110px}
 /*popup template css */
@@ -30,7 +26,6 @@ div.yregdsilu h2.yregdnt, div.yregdsilu p.yregsueasy{width:110px}
 #yregtgen #yregtxt li h3, #yregtpopup #yregtxt li h3{font:bold 114%/122% arial}
 #yregtgen #yregtxt p, #yregtpopup #yregtxt p{margin:0 0 0.8em;line-height:129%}
 #yregtgen #yregtxt .yregbpt li, #yregtpopup #yregtxt .yregbpt li{margin:0 0 10px 4px;padding:0 0 10px 22px;background:url(https://s.yimg.com/lq/i/reg/purple_arrow.gif) no-repeat 1px 4px}
-
 #yregtgen.yregab #yregtxt{width:auto;}
 #yregtgen.yregab #yreghtxt{margin-right:60px;}
 #yregtpopup.yregab #yregtxt{width:180px}
@@ -51,7 +46,6 @@ input#persistent {margin-bottom: -0em;}
 #yregtgen fieldset {margin-bottom:2.5em}
 p#sigcopys {text-align: left; font-size: 85%; padding: .4em; margin: .6em .0em 1em 0; border-bottom: 1px dotted #9D9C9D; border-top: 1px dotted #9D9C9D;}
 #sigcopys label{display:block; margin:-1.5em 0 0 2em;}
-
 
 #yregtgen #yregct {margin-right: 0px;}
 #yregtgen #yregtxt { margin-left: 5px; margin-right: 255px;}
@@ -247,10 +241,148 @@ p.close{margin:5px 0 0;font-size:77%;line-height:100%;position:absolute;top:2px;
 .v5bd{overflow-x:hidden;overflow-y:auto;}
 #uncheck span{font-weight:bold; background-color: #f99; padding: 0 2px;}
 #uncheck a{color: #1243A0;text-decoration: none;} 
-</style>
+
+/*
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.8.2r1
+*/
+.yui-overlay,.yui-panel-container{visibility:hidden;position:absolute;z-index:2;}.yui-panel{position:relative;}.yui-panel-container form{margin:0;}.mask{z-index:1;display:none;position:absolute;top:0;left:0;right:0;bottom:0;}.mask.block-scrollbars{overflow:auto;}.masked select,.drag select,.hide-select select{_visibility:hidden;}.yui-panel-container select{_visibility:inherit;}.hide-scrollbars,.hide-scrollbars *{overflow:hidden;}.hide-scrollbars select{display:none;}.show-scrollbars{overflow:auto;}.yui-panel-container.show-scrollbars,.yui-tt.show-scrollbars{overflow:visible;}.yui-panel-container.show-scrollbars .underlay,.yui-tt.show-scrollbars .yui-tt-shadow{overflow:auto;}.yui-panel-container.shadow .underlay.yui-force-redraw{padding-bottom:1px;}.yui-effect-fade .underlay,.yui-effect-fade .yui-tt-shadow{display:none;}.yui-tt-shadow{position:absolute;}.yui-override-padding{padding:0!important;}.yui-panel-container .container-close{overflow:hidden;text-indent:-10000em;text-decoration:none;}.yui-overlay.yui-force-redraw,.yui-panel-container.yui-force-redraw{margin-bottom:1px;}.yui-skin-sam .mask{background-color:#000;opacity:.25;filter:alpha(opacity=25);}.yui-skin-sam .yui-panel-container{padding:0 1px;*padding:2px;}.yui-skin-sam .yui-panel{position:relative;left:0;top:0;border-style:solid;border-width:1px 0;border-color:#808080;z-index:1;*border-width:1px;*zoom:1;_zoom:normal;}.yui-skin-sam .yui-panel .hd,.yui-skin-sam .yui-panel .bd,.yui-skin-sam .yui-panel .ft{border-style:solid;border-width:0 1px;border-color:#808080;margin:0 -1px;*margin:0;*border:0;}.yui-skin-sam .yui-panel .hd{border-bottom:solid 1px #ccc;}.yui-skin-sam .yui-panel .bd,.yui-skin-sam .yui-panel .ft{background-color:#F2F2F2;}.yui-skin-sam .yui-panel .hd{padding:0 10px;font-size:93%;line-height:2;*line-height:1.9;font-weight:bold;color:#000;background:url(https://s.yimg.com/lq/i/reg/assets_skins_sam_sprite_2.9.0.png) repeat-x 0 -200px;}.yui-skin-sam .yui-panel .bd{padding:10px;}.yui-skin-sam .yui-panel .ft{border-top:solid 1px #808080;padding:5px 10px;font-size:77%;}.yui-skin-sam .container-close{position:absolute;top:5px;right:6px;width:25px;height:15px;background:url(https://s.yimg.com/lq/i/reg/assets_skins_sam_sprite_2.9.0.png) no-repeat 0 -300px;cursor:pointer;}.yui-skin-sam .yui-panel-container .underlay{right:-1px;left:-1px;}.yui-skin-sam .yui-panel-container.matte{padding:9px 10px;background-color:#fff;}.yui-skin-sam .yui-panel-container.shadow{_padding:2px 4px 0 2px;}.yui-skin-sam .yui-panel-container.shadow .underlay{position:absolute;top:2px;left:-3px;right:-3px;bottom:-3px;*top:4px;*left:-1px;*right:-1px;*bottom:-1px;_top:0;_left:0;_right:0;_bottom:0;_margin-top:3px;_margin-left:-1px;background-color:#000;opacity:.12;filter:alpha(opacity=12);}.yui-skin-sam .yui-dialog .ft{border-top:none;padding:0 10px 10px 10px;font-size:100%;}.yui-skin-sam .yui-dialog .ft .button-group{display:block;text-align:right;}.yui-skin-sam .yui-dialog .ft button.default{font-weight:bold;}.yui-skin-sam .yui-dialog .ft span.default{border-color:#304369;background-position:0 -1400px;}.yui-skin-sam .yui-dialog .ft span.default .first-child{border-color:#304369;}.yui-skin-sam .yui-dialog .ft span.default button{color:#fff;}.yui-skin-sam .yui-dialog .ft span.yui-button-disabled{background-position:0 -1500px;border-color:#ccc;}.yui-skin-sam .yui-dialog .ft span.yui-button-disabled .first-child{border-color:#ccc;}.yui-skin-sam .yui-dialog .ft span.yui-button-disabled button{color:#a6a6a6;}.yui-skin-sam .yui-simple-dialog .bd .yui-icon{background:url(https://s.yimg.com/lq/i/reg/assets_skins_sam_sprite_2.9.0.png) no-repeat 0 0;width:16px;height:16px;margin-right:10px;float:left;}.yui-skin-sam .yui-simple-dialog .bd span.blckicon{background-position:0 -1100px;}.yui-skin-sam .yui-simple-dialog .bd span.alrticon{background-position:0 -1050px;}.yui-skin-sam .yui-simple-dialog .bd span.hlpicon{background-position:0 -1150px;}.yui-skin-sam .yui-simple-dialog .bd span.infoicon{background-position:0 -1200px;}.yui-skin-sam .yui-simple-dialog .bd span.warnicon{background-position:0 -1900px;}.yui-skin-sam .yui-simple-dialog .bd span.tipicon{background-position:0 -1250px;}.yui-skin-sam .yui-tt .bd{position:relative;top:0;left:0;z-index:1;color:#000;padding:2px 5px;border-color:#D4C237 #A6982B #A6982B #A6982B;border-width:1px;border-style:solid;background-color:#FFEE69;}.yui-skin-sam .yui-tt.show-scrollbars .bd{overflow:auto;}.yui-skin-sam .yui-tt-shadow{top:2px;right:-3px;left:-3px;bottom:-3px;background-color:#000;}.yui-skin-sam .yui-tt-shadow-visible{opacity:.12;filter:alpha(opacity=12);}
+
+body{font:13px arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}table{font-size:inherit;font:100%;}select,input,textarea{font:99% arial,helvetica,clean,sans-serif;}pre,code{font:115% monospace;*font-size:100%;}body *{line-height:1.22em;}p,form,fieldset,h1,h2,h3,h4,h5,h6{margin:0;padding:0;}fieldset{padding:10px 0;}img,fieldset{border:0;}legend{display:none;}label{font-weight:normal;cursor:pointer;cursor:hand;}.concatid{cursor:help;}a{color:#053799;text-decoration:none;}a:hover{text-decoration:underline;}.yregclb:after{content:".";display:block;font-size:0;line-height:0;height:0;clear:both;visibility:hidden;}body{text-align:center;color:#333;margin:5px 0 0;padding:0;}#yregwp{text-align:left;margin:0 auto;width:750px;}#yregmst{position:relative;width:750px;margin:0 0 12px;}#yregmst .yregmstl{position:absolute;top:0;right:0;}#yregct{padding:0 0 10px;}#yreglg{float:right;width:240px;margin:0 0 20px;}#yregtxt{margin:0 270px 0 20px;}#yregtctx #yregtxt{width:490px;margin:0 0 10px;}#yregft{text-align:center;font-size:77%;padding:10px 0 0;border-top:1px solid #777;}.yregbx{border:1px solid #656565;margin:0 0 10px;background-color:#f9f9f9;}.yregbxi{margin:11px;}.top .yregbxi{margin-top:20px;}#yregtxt .yregbx{background-color:#e9f2d7;border-color:#87bb69;}#yregtxt .yregbx h2{font-size:109%;}#yreglg h1,#yreglg h2,#yreglg h3{font-size:114%;color:#333;}#yreglg h3{margin:0 0 4px;}#yreglg select,#yreglg input,#yreglg p,#yreglgtb td,#yreglgtb th{font-size:92%;}#yreglg p.yreglgsb input{font-size:107%;}#yreglg .yregnewssl,#yreglg .yreglgmd{font:77%/114% verdana;}#yreglg .yregnewssl{margin:-4px 0 10px;}#yreglg .yregnewssl span{color:#c00;}#yreglgtb,#yreglgtb td,#yreglgtb th,#yreglg .yreglgmd,.yreglgsu,.yreglgsb,.yreglgsut,.yregnewssl{text-align:right;}#yreglgtb{margin:0 0 8px;padding:0;width:215px;}#yreglgtb td,#yreglgtb th{width:215px;}#yreglgtb td select{width:124px;}#yreglgtb td{width:130px;}#yreglgtb td input{width:120px;}.yreglgsb{margin:12px 0 0;}.yreglgsut{margin:0 0 3px;}.yreglgsub{margin:15px 0 0 30px;}.yreglgsu a,.yreglgsut a{color:#039;font:bold 114%/114% arial;text-decoration:underline;}.yreglgsut a{font-size:122%;}h2.yregdnt{margin:14px 0 0;}.yregdsilu{border-bottom:1px solid #999;margin:0 0 15px;padding:0 0 8px;}.yregdlisu,.yreglvpnu{border-top:1px solid #999;margin:15px 0 0;padding:14px 0 10px;}#yreglg .second h3{font:bold 100% Arial;color:#333;}#yreglg .second p{font:77%/140% verdana;}#yregtxt ul{margin:0 0 10px;padding:0;}#yregtxt li{margin:18px 0 0;padding:0;list-style:none;}#yregtxt li h3{font:normal 122%/152% verdana;color:#496e03;}#yregtxt li cite{font-style:normal;line-height:129%;}.frontpage #yregtxt li{margin-top:15px;}.frontpage #yregtxt li h3{color:#666;}#yregtgen #yregct{margin-right:15px;}#yreglgtb td.yregyid{text-align:left;font-size:100%;}.yreglgdu{margin:0 0 5px;}.yreglgdu a{font:bold 107%/136% verdana;color:#039;text-decoration:underline;}#yregtgen #yregtxt h2,#yregpmtxt h3{font:bold 152%/152% arial;color:#333;margin:0;}#yregpmtxt h3{margin:0 0 10px;}#yregptxt{padding:12px 0 0;}#yregtgen #yregtxt p.yregpti{color:#666;margin:0 0 2px;font:bold 100%/100% arial;}#yregptxt ul{margin:15px 0 0;padding:0;}#yregptxt li{margin:0 0 1em 18px;list-style-type:disc;font:normal 100%/122% arial;}#yregpmtxt{margin:25px 0 0;padding:20px 0 0;border-top:1px solid #ccc;}#yregtgen #yregtxt{margin-bottom:20px;}#yregtgen #yregtxt #yreghtxt h3{margin:0;font:bold 107%/114% arial;color:#8c57a1;}#yregtgen #yregtxt li h3{font:bold 114%/122% arial;}#yregtgen #yregtxt p{margin:0 0 .8em;line-height:129%;}#yregtgen #yregtxt .yregbpt li{margin:0 0 10px 4px;padding:0 0 10px 22px;background:url(https://s.yimg.com/lq/i/reg/purple_arrow.gif) no-repeat 1px 4px;}.yregertxt{margin:15px 0 5px;}.yregertxt,#yreglg .yregertxt h2{color:#c00;}#yreglg .yregertxt h2{font-size:107%;}.yregertxt p{font:normal 92%/107% arial;}.yregab #yreglg{width:320px;}.yregab #yreglgtb{width:auto;}html>body #yreglgtb th{width:180px;}.yregab #yregabimg{padding:10px 0 0;}.yregab .yregrid{text-align:right;}#yregtgen.yregab #yregtxt{width:380px;}#yregtgen #yregtxt #yreghtxt h2{color:#7a067f;}.yregertxt{margin:15px 0 5px;}.yregertxt,#yreglg .yregertxt h2{color:#c00;}#yreglg .yregertxt h2{font-size:107%;}.yregertxt p{font:normal 92%/107% arial;}.yreglvpnu p{font:normal 92%/136% arial;}.yreglvpnu p a{font:bold 107%/139% arial;text-decoration:underline;}#yreglgtb td.yreglvid{text-align:left;}#yregfl{margin:0 20px 20px;}#yregfl h1{font-size:136%;line-height:167%;}#yregfl h2{font-size:107%;}#yregfl p{margin:0 0 1em;}#yregfl li{margin-bottom:10px;}.appuser #yregtxt h2{font:normal 122%/122% verdana,sans-serif;color:#5b9b0f;margin-top:10px;}.appuser #yregtxt li{padding:0 20px 0;}.appuser #yregtxt h3{font-weight:bold;font-size:92%;}.appuser #yregtxt li.greenarrow h3{color:#548f0d;}.appuser #yregtxt li.grayarrow h3{color:#969696;}.appuser #yregtxt li.greenarrow{background:url(https://s.yimg.com/lq/i/reg/green_arrow.gif) no-repeat 0 2px;}.appuser #yregtxt li.grayarrow{background:url(https://s.yimg.com/lq/i/reg/gray_arrow.gif) no-repeat 0 2px;}.appuser #yregtxt ul li cite{color:#666;}#yregtgen #yregtxt #promoImg{float:right;margin:20px 10px 0;}#yregtgen #yregtxt #promoFooterTxt{font-size:85%;}.yregbx{background-color:#fbfafb;border:1px solid #d6d6d6;text-align:left;}#yreglg .yregbx h1{font-size:16px;font-weight:bold;color:#454545;margin:30px 0;}#yreglg .yregbx h2{font-size:16px;font-weight:bold;color:#454545;margin:8px 0 13px 0;}#ap{padding-top:4px;padding-bottom:3px;background-color:#f7f1fd;border:1px solid #c7cfd6;line-height:17px;margin-bottom:25px;min-height:54px;}#ap a{color:#454545;}#ap a:hover{color:#454545;text-decoration:none;}#ap #q{font-size:13px;color:#454545;font-weight:bold;padding-top:9px;}#ap #apKeyOverlay{float:left;}#ap #apInfo{background-image:url(https://s.yimg.com/lq/i/reg/login/loginsprite_2_18_2010.png);background-position:right -179px;background-repeat:no-repeat;padding-right:20px;}#ap #protect{font-size:12px;font-weight:normal;padding-bottom:11px;}#ap #protect a{text-decoration:none;color:#1243a0;}#inputs{padding-top:10px;padding-bottom:18px;}#inputs label,#inputs h3{display:block;font-weight:normal;font-size:15px;color:#454545;margin-bottom:2px;line-height:1;}#inputs input{width:208px;line-height:1.5;}#inputs p#username{color:#252525;font-weight:bold;font-size:14px;padding-top:0;padding-bottom:18px;}#inputs #ex{font-size:11px;color:#454545;padding-bottom:13px;padding-top:2px;}#persistency{font-size:12px;color:#000;padding-bottom:18px;}#persistency p{font-size:12px;margin-left:20px;padding-top:2px;}#persistency #uncheck{font-size:11px;}#persistency #persistent{margin-left:0;float:left;}#submit{padding-bottom:20px;font-family:arial;}#submit button{font-size:13px;}.primaryCta{border:1px solid #f6b22b;background-color:#fbe26e;background-image:url('https://s.yimg.com/lq/i/reg/login/loginsprite_2_18_2010.png');background-repeat:repeat-x;background-position:top left;font-family:arial;font-weight:bold;text-decoration:none;font-size:13px;color:#000;padding-top:2px;padding-bottom:2px;padding-left:6px;padding-right:6px;}button.secondaryCta{background-color:#E5E6E1;background-image:url("https://s.yimg.com/lq/i/reg/login/loginsprite_2_18_2010.png");background-position:0 -90px;background-repeat:repeat-x;border:1px solid #BDBDBD;color:#000000;font-family:arial;font-size:12px;font-weight:bold;line-height:100%;padding:3px 8px;text-decoration:none;}.secondaryCta{border:1px solid #bdbdbd;background-color:#e5e6e1;background-image:url('https://s.yimg.com/lq/i/reg/login/loginsprite_2_18_2010.png');background-repeat:repeat-x;background-position:0 -90px;font-family:arial;font-weight:bold;text-decoration:none;font-size:12px;color:#000;padding-top:3px;padding-bottom:3px;padding-left:8px;padding-right:8px;line-height:200%;}#help{font-size:12px;padding-bottom:7px;}#help a{color:#1243a0;text-decoration:none;}#lisu{border-top:1px solid #d6d6d6;padding-top:14px;padding-bottom:8px;}#lisu a{text-decoration:none;}#lisu a:hover{text-decoration:none;}#lisu h3{font-weight:normal;color:#454545;font-size:14px;padding-bottom:7px;}#other{border-top:1px solid #d6d6d6;padding-top:14px;padding-bottom:8px;}#other h3{font-weight:normal;color:#454545;font-size:14px;padding-bottom:7px;}#other a{text-decoration:none;}#other a:hover{text-decoration:none;}#yregdsilu{padding-bottom:24px;border-bottom:1px solid #d6d6d6;}#yregdsilu h3{font-weight:bold;font-size:16px;color:#454545;margin-top:20px;margin-bottom:8px;}#yregdsilu a{display:block;padding-top:6px;padding-bottom:6px;text-align:center;font-size:15px;font-weight:bold;}.fcue-outer *{overflow:visible;}.fcue-outer * p{font-family:Verdana;font-size:85%;color:#333;}.fcue-outer{max-width:558px;margin-left:22px;background:transparent;border:none;position:relative;overflow:visible;text-align:left;}.fcue-yellow .fcue-small .fcue-inner,.fcue-yellow .fcue-small * .fcue-t,.fcue-yellow .fcue-small .fcue-b,.fcue-yellow .fcue-small .fcue-b div{background:transparent url(https://s.yimg.com/lq/i/reg/fcue-sprite.png) no-repeat -350px 0;_background-image:url(https://s.yimg.com/lq/i/reg/fcue-sprite8.png);}.fcue-outer .fcue-inner{position:relative;zoom:1;_overflow-y:hidden;padding:0 22px 0 0;}.fcue-outer .fcue-inner .fcue-content{overflow:hidden;}.yui-panel-container .fcue-outer * .fcue-t{position:absolute;left:0;top:0;width:22px;margin-left:-22px;height:100%;_height:1600px;background-position:top left;}.yui-panel-container .fcue-outer .fcue-b{position:relative;width:100%;background-position:bottom right;}.yui-panel-container .fcue-outer .fcue-b,.yui-panel-container .fcue-outer .fcue-b div{height:21px;font-size:1px;background-position:-350px -157px;}.yui-panel-container .fcue-outer .fcue-b div{position:relative;width:22px;margin-left:-22px;background-position:bottom left;}.fcue-outer * .hd{background:transparent;border:none;padding:22px 5px 0;white-space:normal;font-weight:bold;}.fcue-outer * .bd{position:relative;padding:0 5px 5px;}.fcue-outer * .bd p{margin:0;font-size:77%;}.fcue-outer * .ft{text-align:right;padding:0 5px 15px 8px;position:relative;_position:static;_padding-bottom:47px;}.fcue-outer * .ft .l{width:49%;float:left;text-align:left;padding-top:5px;}.fcue-outer * .ft .r{width:49%;float:right;*padding-right:12px;*width:47%;text-align:right;}.fcue-yellow .fcue-pnt{width:48px;height:48px;background:transparent url(https://s.yimg.com/lq/i/reg/fcue-sprite.png) no-repeat -578px 0;_background-image:url(https://s.yimg.com/lq/i/reg/fcue-sprite8.png);position:absolute;left:209px;top:15px;_top:25px;}.fcue-outer .fcue-pnt-l{background-position:-54px -54px;top:12px;left:-61px;}#fc1 #fcue-bd,#fc2 #fcue-bd{font-size:93%;line-height:118%;}#fc1,#fc2{position:absolute;visibility:hidden;}#fc1{width:250px;}#fc2{width:250px;}#fc2 p{font-size:11px;}#fc2 .fcue-pnt{top:25px;_top:40px;}#fc2 ul{list-style-type:none;padding-left:0;font-size:11px;margin-left:0;margin-bottom:0;padding-bottom:0;}#fc2 ul a{text-decoration:underline;}body#yregtgen fieldset{margin-bottom:0;padding-bottom:0;}#yreglg{width:240px;}#yregmain{width:auto;}#yreghtxt ul.yregbpt{padding-top:15px;}#fun{font-size:11px;padding-bottom:0;}#yreglg .yregbx{border:1px solid #d6d6d6;}#yregct{padding-top:15px;}#fsLogin{padding-top:0;}#fsLogin .yregertxt{background-image:url(https://s.yimg.com/lq/i/reg/login/loginsprite_2_18_2010.png);background-position:left -197px;background-repeat:no-repeat;color:#e10707;margin-top:4px;margin-bottom:10px;padding-left:24px;}#antiImg{width:212px;height:85px;border:1px solid #c1c1c1;background-color:#fff;margin-top:3px;}#yregmain{background-position:right top;background-repeat:no-repeat;margin-right:-10px;margin-top:0;padding-top:19px;width:225px;}#yregmain #antiphishlnk{float:right;margin-top:-15px;padding-right:7px;}
+
+
+        <style type="text/css">
+        #captcha, #captcha_c, #captchaDiv {z-index:6;top: -60px;}
+        #captcha #captchaV5Header {overflow:hidden;}
+        #captchaErr {font-size:11px;color:#E10707;background:url("https://s.yimg.com/lq/i/reg/login/loginsprite_2_18_2010.png") left -199px no-repeat;padding-left:25px;height: 15px;}
+        .yui-skin-sam .yui-panel-container.shadow .underlay {position:fixed;}
+        #submitC .primaryCta {width: auto;}
+        .pwqaContent .primaryCta {padding-bottom:5px;}
+        #submitC #cdiv {position:absolute;bottom:13px;right:13px;}
+        html body div#captcha_mask {display:none !important}
+        .yui-skin-sam .yui-panel .bd {padding-top:13px}
+        .yui-skin-sam #captcha .hd,.yui-skin-sam #captcha .bd {background:none}
+        .yui-skin-sam #captcha .bd{height:320px !important;}
+        /*.yui-skin-sam #captcha {background-color: #F0F4F8;}*/
+        .yui-skin-sam #captcha .bd, .yui-skin-sam #captcha .hd {}
+         .yui-skin-sam #captcha .hd{border-bottom: 1px solid #D5D5D5;font-size:13px;color:#5B7EA1;}
+         #captchaV5{margin-left:72px}
+        .yui-skin-sam .yui-panel{border-style:none;}
+        /*#captcha_c #captcha {border: 10px solid #8DA6B9;}*/
+
+            /* New css for panel*/
+
+    .yui-skin-sam #captcha {background-color:#777777;border:0px;border-radius:5px;box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.6);color:#3f3f3f;padding-bottom:1px;}
+    .yui-skin-sam #captcha .hd {padding-right:30px;border:0px; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#999999', endColorstr='#777777');
+    background: -webkit-gradient(linear, left top, left bottom, from(#999999), to(#777777));
+    background: -moz-linear-gradient(top,  #999999,  #777777);
+    border-radius:5px;
+    overflow:auto;
+    padding-top:3px;
+    padding-bottom:3px;
+    color:#FFFFFF;
+    text-shadow:1px 1px 1px rgba(0, 0, 0, 0.25);
+    }
+    .yui-skin-sam .container-close {background: url("https://s.yimg.com/lq/i/reg/icn_sprite_close-_6_21_11.gif") no-repeat scroll -2px 0 transparent;right:0px;top:15px;}
+    .yui-skin-sam #captcha .bd {border:0px;background-color: #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-bottom:40px;
+    }
+
+    .lockedPage, .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .VoiceSMSHeader .VoiceSMSInstruction, .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .VoiceSMSHeader .VoiceSMSPrompt, .aeaEmailVerify, .aeaContent,.pwqaContent {font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#454545;}
+    .sec-chal-popup {position:absolute;width:440px;right:10px;margin-top:5px;z-index:9999;}
+    .sec-chal-popup p {margin-bottom:5px;}
+    .sec-chal-popup .clspopup {background: url("https://s.yimg.com/lq/i/reg/sprite_pg_20100719_ltr.png") no-repeat scroll left -689px transparent; cursor: pointer; display: block; height: 16px; padding: 0; position: absolute; right: 6px; top: 6px; width: 13px;}
+    .hide-offscreen {position: absolute;top: -999em}
+    .nodisp {display:none;}
+    .sec-chal-popup .pointer-up {background-image: url("https://s.yimg.com/lq/i/reg/sprite_pg_slate_20100809_ltr.png");background-position: left -3583px;background-repeat: no-repeat;display: block;height: 8px;position: absolute;top: -6px;width: 10px;}
+    #learn_more_content p, #pwqa-popup .sec-chal-content p {font-size:12px;padding-right:8px;}
+    .sec-chal-popup .sec-chal-content {background-color:#EFF3F5;border:1px solid #333333;padding:10px;position:relative;}
+
+    .aeaContent .sec-chal-popup #learn_more_content .pointer-up {left: 135px;}
+    .pwqaContent .pwqa-question {padding-top:10px;padding-left:0px;}
+    .pwqaContent .pwqa-question span {display: block; float: left; padding-right: 10px; text-align: right; width: 190px;}
+    .pwqaContent .pwqa-question span .small {font-size:85%;}
+    .aeaPhoneVerify #submitC #cdiv, .aeaContent #submitC #cdiv {margin-top:20px;width:100%;text-align:right;}
+    .pwqaContent #verifybtn {margin-top:5px;text-align:center;}
+    .aeaPhoneVerify #submitC #cdiv .primaryCta, .aeaEmailVerify #submitC #cdiv .primaryCta, .aeaContent #submitC #cdiv .primaryCta, .pwqaContent #submitC #cdiv .primaryCta {width:auto;margin-right:10px;overflow:visible;}
+    .aeaPhoneVerify #submitC #cdiv .secondaryCta, .aeaEmailVerify #submitC #cdiv .secondaryCta, .aeaContent #submitC #cdiv .secondaryCta, .pwqaContent #submitC #cdiv .secondaryCta {padding-top:5px;}
+
+    .pwqaContent .pwqa-aea-text {padding-top:10px;}
+    .pwqaContent .pwqa-aea-text #receivebtn {margin-top:20px;text-align:center;}
+    .pwqaContent .pwqa-aea-text .center {padding-bottom: 15px; padding-top: 20px;text-align:center;}
+    .pwqaContent .pwqa-aea-text .center .lthru {text-decoration: line-through; color:#B1B1B1;}
+    .pwqaContent .pwqa-aea-text .center .or {font-weight:bold;font-size:14px;}
+    .aeaContent .mobileList {margin-top:15px;}
+    .aeaContent .adjust-margin {margin-top:15px;}
+    .aeaContent .aeaList {margin-top:20px;margin-bottom:10px;}
+    .aeaContent .aeaList, .aeaContent .mobileList {padding-left:60px;}
+    .aeaContent .aeaList .be, .aeaContent .mobileList .bm {float:left;width:100px;}
+    .aeaContent ul {margin-top:5px;margin-left:0px;padding-left:100px;}
+    .aeaContent ul li{list-style-type:none;padding-bottom:5px;}
+    .aeaContent ul li input {margin-right:10px;margin-bottom:5px !important;height:13px !important;border:0 !important;outline-style:none !important;*vertical-align:top !important;}
+    #pwqa-popup {margin-top: 18px;}
+    #pwqa-popup #pwqa_popup_content .pointer-up {left: 365px;}
+    #pwqa-popup #pwqa_popup_content ul {padding-left:20px;margin-top:0px;margin-left:0px;}
+    #pwqa-popup #pwqa_popup_content ul li {padding-bottom:5px;list-style-type:disc;}
+    .aeaContent .charges {font-size:85%;}
+    .pwqaContent .next-line {display:block;}
+    .aeaContent .strong, .pwqaContent .strong, .aeaEmailVerify .strong, .aeaContent ul li .strong{font-weight:bold;}
+    .aeaContent .strong a, .pwqaContent .strong a, .aeaEmailVerify .strong a, .aeaContent ul li .strong a{font-weight:normal;}
+    .aeaEmailVerify .spacer, .aeaContent .spacer, .aeaContent ul li .strong span{padding:0 5px;}
+    .aeaEmailVerify .aeaEnterCode {margin-top:20%;margin-left:60px;}
+    .aeaEmailVerify .aeaEnterCode #aeaEmailCode {width:100px;}
+
+    .aeaPhoneVerify #captchaV5 {margin-left:0px;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .VoiceSMSHeader {padding-left:0px;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .VoiceSMSInputBox {padding-top:40px; padding-left:0px;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .VoiceSMSInputBox #captchaV5CodePrompt {float:left;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .VoiceSMSHelp {float:none; font-size:14px;}
+    .aeaPhoneVerify #submitC #cdiv {width:100%;}
+    .error2 {background-image:url("https://s.yimg.com/lq/i/reg/login/loginsprite_2_18_2010.png");background-position:left -197px;background-repeat:no-repeat;padding-left:24px;padding-bottom:5px; color:#E10707; font-size:12px; font-weight:bold;padding-top:3px;}
+    #lockedErr {margin-top:5px;}
+	#lockedValidationErr {visibility: hidden;}
+    .lockedContent {padding-top:10px;}
+    #inputs .aeaPhoneVerify label {font-size:13px;display:inline;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .OOBHelp, .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .OOBHeader .OOBInstruction, .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .captchaNoOutsidePadding .captchaCodeSent, .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .OOBHeader .OOBPrompt {font-size:13px;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .captchaNoOutsidePadding .OOBFooter{position:absolute;bottom:0px;left:15px;overflow:hidden;z-index:999}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha {width:440px;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .captchaDisplayRL {width:430px;}
+    .aeaPhoneVerify .yAbuseVoiceSMSCaptcha .captchaNoOutsidePadding .OOBContent {width:440px;}
+    .cpwcCaptcha #captchaV5VoiceSMSCaptchaDestInput #captchaV5PhoneNum, .cpwcCaptcha #captchaV5OOBAnswerBox #captchaV5Answer {width:120px;}
+    .cpwcCaptcha {font-size:120%;}
+    .cpwcCaptcha #captchaV5CodePrompt {display:inline;}
+    .cpwcCaptcha #submitC #cdiv {position:absolute;right:180px;}
+    #submitC #cdiv .marginb {margin-left:10px; margin-right:10px;}
+    .OOBButtons button {background:none !important; background-color: #6E329D !important; background-image: -moz-linear-gradient(left center , #6E329D 0%, #6E329D 100%) !important; border: 1px solid #522675 !important; border-radius: 2px 2px 2px 2px !important; color:#fff !important;padding:4px !important;}
+    .lockedContent2 .next-line {display:block;padding:1em 0;font-size:100%;}
+    .lockedContent2 .ref-num {font-size:110%;font-weight:bold;}
+    .yAbuseCaptcha .vertical .captchaAnswerBox {width: 280px !important;}
+        </style>
+        <!--[if lt IE 7]>
+        <style type="text/css">
+        .yui-skin-sam .yui-panel-container.shadow .underlay {display:none;}
+        .yui-skin-sam #captchaDiv .yui-overlay-iframe#captcha_f{width:1000px !important;height:1000px !important; top:0px !important;right:0px ;}
+        </style>
+        <![endif]-->
+        <!--[if lte IE 7]>
+        <style type="text/css">
+        /*.aeaContent #submitC #cdiv {width:54%;}
+        .aeaPhoneVerify #submitC #cdiv {width:54%;}
+        .aeaEmailVerify #submitC #cdiv {width:54%;}
+        .yAbuseVoiceSMSCaptcha .VoiceSMSPrompt button {margin-left:5px;}
+        */
+        .aeaContent .sec-chal-popup #learn_more_content .pointer-up {left: 70px;}
+        </style>
+        <![endif]-->
+
 
 <style type="text/css">
-
 
 .top {position:relative}
 #antiphish{position:absolute;right:5px;top:5px;}  
@@ -274,7 +406,6 @@ img.picture {border:2px solid}
 <![endif]-->
 
 
-
 <style type="text/css">
   
 #yreglgtb, #yreglgtb th {text-align: left; width: 100%;}
@@ -282,7 +413,6 @@ img.picture {border:2px solid}
 #yreglgtb td input{ width:179px  } 
 .dbidTip {padding: 3px 0 0 0;  font-size:85%}  
 </style>
-
 
 
 
@@ -301,7 +431,6 @@ input#persistent {margin-bottom: -0em;}
 /* #yregft p.yregfb { font-size:120%; padding-bottom: 5px; padding-up: 5px} */
 </style>
 <style type="text/css">
-
 
 .top {position:relative}
 #antiphish{position:absolute;right:5px;top:5px;}  
@@ -361,6 +490,19 @@ p#sigcopys {margin-right:0.2em}
 <![endif]-->
 
 
+<style type="text/css">
+    #yregtxt {width:66%; overflow:hidden}
+    #yregbnr {padding-top:0}
+    #yregbnr #yregbnrti #yregbnrtii {width:240px}
+    #yregiclst {padding-right:0}
+</style>
+<!--[if lte IE 7]>
+<style type="text/css">
+    #yregbnr #yregbnrti {margin-top:-160px}
+    #yregtxt {height:auto}
+</style>
+<![endif]-->
+
 
 <style type="text/css">
   
@@ -373,14 +515,15 @@ p#sigcopys {margin-right:0.2em}
 
 
 
-<style type='text/css'>
+<style type="text/css">
 html,body{text-align:center;width:100%;}
 #adFrame{position:static;visibility:hidden;}
-#mainBox{position:relative;top:0;width:100%;height:960px;min-height:680px;margin:0 auto;background-color:transparent;text-align:left;}
-#iframeHolder{height:1024px;width:1920px;margin:0 auto 0 -960px;position:absolute;top:50px;left:50%;overflow:visible;}
-#loginHolder{height:100%;width:800px;margin:0 auto;position:relative;}
+#mainBox{position:relative;top:11px;width:100%;height:960px;min-height:680px;margin:0 auto;background-color:transparent;text-align:left;}
+#iframeHolder{height:1024px;width:1920px;margin:0 auto 0 -960px;position:absolute;top:61px;left:50%;overflow:visible;direction:ltr;z-index:0;}
+#loginHolder{height:100%;min-width:262px;max-width:840px;margin:0 auto;position:relative;}
+/*#loginHolder{height:100%;width:800px;margin:0 auto;position:relative;}*/
 /* #hdBg{background:transparent url(https://s.yimg.com/lq/lib/uh/15/uh_sprites_1.5-1.0.3.png) repeat-x;height:61px;} */
-#hdBg {height:61px;}
+#hdBg {min-height:61px;height:auto !important; height:61px; max-width:1440px; width:auto !important; width:970px;margin:0 auto}
 #hdBg #mem_hd{width:800px;margin:0 auto;position:relative;z-index:5;}
 #hdBg #mem_hd #ygmaheader .sp{height:40px;padding-bottom:0;}
 #hdBg #ygma .bd{background-image:none;width:782px;margin:0 auto;}
@@ -389,15 +532,14 @@ html,body{text-align:center;width:100%;}
 #footer #feedback{font-size:10px;}
 #footer #mem_ft{margin-top:0;}
 #leftContent{position:absolute;left:0;}
-#loginBox{height:600px;width:240px;margin-left:580px;}
+/*#loginBox{height:600px;width:240px;margin-left:580px;}*/
+#loginBox{height:600px;}
 #loginBox #yreglg .yregbx{border:3px solid rgba(153,153,153,0.75);-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
 #yregmain{background-position:56px 0px;}
 #yreghtxt{margin-top:1em;}
-
 #lisu{margin-left:11px;}
 .yregbxi #lisu{margin-left:0;}
 #static {width:525px;}
-
 #ylbpix{background:transparent url(https://login.yahoo.com/i/reg/cs.gif) no-repeat}</style>
 
 <!--[if IE 6]>
@@ -449,13 +591,18 @@ html,body{text-align:center;width:100%;}
 	width: 138px;
 	height: 30px;
 	text-align: center;
-	margin: 10px 0px 27px 41px;
+	margin: 10px 0px 27px 40px;
 	background-position: 0px -4px;
 	position: relative;
 }
-.mm-lgbx .lgbx-seal-logo{
-	background-position: -5px -72px;
-	margin-left: 0px;
+.mm-lgbx .lgbx-seal-logo {
+        margin-left: 0px;
+        background-position: -5px -72px;
+        margin-bottom: 43px;
+        top: 11px;
+}
+.mm-lgbx .lgbx-seal-new-logo {
+	margin-left: -15px;
 	margin-bottom: 43px;
 	top: 11px;
 }
@@ -499,7 +646,7 @@ html,body{text-align:center;width:100%;}
     -o-border-radius: 2x;
 	background-color: #6E329D;
 	background-image: linear-gradient(center, #6E329D 0%, #6E329D 100%);
-	background-image: -moz-linear-gradient(center , #6E329D 0%, #6E329D 100%);
+	background-image: -moz-linear-gradient(left center , #6E329D 0%, #6E329D 100%);
 	background-image: -o-linear-gradient(center, #6E329D 0%, #6E329D 100%);
 	background-image: -webkit-linear-gradient(center, #6E329D 0%, #6E329D 100%);
 	background-image: -ms-linear-gradient(center, #6E329D 0%, #6E329D 100%);
@@ -513,15 +660,21 @@ html,body{text-align:center;width:100%;}
 .mm-lgbx #persistency label {
 	padding-left: 10px;
 }
+.mm-lgbx .idp-string { 
+    text-align: center; 
+    padding-top: 15px; 
+    border-top: 1px solid #DFDFDF;
+}
 .mm-lgbx .lgbx-signup {
 	border-top: 1px solid #dfdfdf;
 	margin-top: 10px;
-	padding-top: 15px	
+	padding-top: 20px;
+    position: relative;
 }
 .mm-lgbx .blue-bg {
 	background-color: #0b70be;
 	background-image: linear-gradient(center, #0b70be 0%, #0b70be 100%);
-	background-image: -moz-linear-gradient(center, #0b70be 0%, #0b70be 100%);
+	background-image: -moz-linear-gradient(left center, #0b70be 0%, #0b70be 100%);
 	background-image: -o-linear-gradient(center, #0b70be 0%, #0b70be 100%);
 	background-image: -webkit-linear-gradient(center, #0b70be 0%, #0b70be 100%);
 	background-image: -ms-linear-gradient(center, #0b70be 0%, #0b70be 100%);
@@ -669,32 +822,1251 @@ html,body{text-align:center;width:100%;}
 .mm-lgbx .lgbx-ltr {
     direction: ltr;
 }
+
+
+
+#yucs {
+    margin: 0 auto;
+    width: 100% !important;
+}
+#yucs .yucs-avatar {
+    height: 22px;
+    width: 22px;
+}
+#yucs #yucs-profile_text .yuhead-name-greeting {
+    display: none;
+}
+#yucs #yucs-profile_text .yuhead-name {
+    max-width: 65px;
+    top: 0;
+}
+#yucs-profile_text {
+    max-width: 65px;
+}
+.yucs-hide {
+    display: none !important;
+}
+#yucs #yucs-help_link {
+    color: #1D1DA3;
+    font-size: 13px;
+    text-decoration: none;
+    text-indent: 0;
+    text-shadow: 1px 1px 1px #FFFFFF;
+}
+#yucs #yucs-help {
+    margin-right: 10px;
+    margin-top: 13px;
+}
+#yucs #yucs-help_link:hover {
+    text-decoration: underline;
+}
+#yucs-profile a#yucs-menu_link_profile {
+    width: 100%;
+}
+#yucs-profile_text {
+}
+#yucs .yucs-signout {
+}
+
+
+
+#yucs-help .yucs-sys-stat {
+    margin-top: 5px;
+}
+#yucs-help .yucs-sys-stat-ico {
+    float: right;
+    height: 13px;
+    margin-top: 6px;
+    width: 13px;
+}
+#yucs-help .yucs-sys-stat-txt {
+    display: block;
+    margin-left: 0;
+    white-space: nowrap;
+}
+#yucs {
+    clear: both;
+    font: 16px "Helvetica Neue",Helvetica,Arial,sans-serif;
+    height: 53px;
+    left: 0;
+    padding: 4px 0;
+    position: static;
+    top: 0;
+    width: 970px;
+    z-index: 10000;
+}
+#yog-hd.yog-grid #yucs {
+    padding: 4px 10px !important;
+    width: 950px !important;
+}
+#yucs ul, #yucs li {
+    list-style-type: none;
+}
+#yucs button {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+}
+#yucs table {
+    border-collapse: collapse;
+}
+#yucsHead a, #yucsHead span, #yucsHead button, #yucsHead a div {
+}
+.yucs-mc {
+    background-color: #FFFFFF;
+}
+#yucs-logo, #yucs-ylogo {
+    height: 31px;
+    margin-top: 11px;
+    width: 206px;
+}
+#yucs #yucs-logo, #yucs #yucs-ylogo {
+    float: left;
+    margin-left: 15px;
+}
+#yucs-logo div, #yucs-logo h2, #yucs-ylogo h2 {
+    background-repeat: no-repeat;
+    margin: 0;
+    position: relative;
+    text-indent: -9999em;
+}
+#yucs-ylogo h2 {
+    background-position: 0 4px;
+}
+#yucs .sp {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("https://s1.yimg.com/kx/yucs/uh3/uh/images/659/uh_sprite.png");
+    background-repeat: no-repeat;
+}
+@media not all, only screen and (min--moz-device-pixel-ratio: 2), not all, not all, only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+#yucs .sp {
+    background-image: url("https://s1.yimg.com/kx/yucs/uh3/uh/images/659/uh_sprite_x2.png");
+    background-size: 24px 4844px;
+}
+}
+#yucs .sp.read {
+    background-image: none !important;
+}
+#yucs .yucs-visuallyHidden {
+    color: rgba(0, 0, 0, 0);
+    font: 0px/0 a !important;
+    letter-spacing: -1em;
+}
+button#yucs-prop_search_button_wrapper {
+    background-image: none;
+}
+#yucs .yucs-visuallyHidden {
+    color: rgba(0, 0, 0, 0);
+    font: 0px/0 a !important;
+    letter-spacing: -1em;
+}
+.yucs-menu {
+    background-color: #FFFFFF;
+    border: 1px solid #777777;
+    border-radius: 3px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    color: #333333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    outline: medium none;
+    width: auto;
+}
+.yucs-menu li {
+    margin: 0;
+}
+#yucs .yucs-menu ul {
+    padding: 10px 0;
+}
+#yucs-help .yucs-menu ul {
+    padding: 10px 0 !important;
+}
+#yucs .yucs-menu {
+    z-index: 10000;
+}
+#yucs .yucs-menu .yui3-menu-content {
+    background-color: #FFFFFF;
+    border-radius: 3px;
+}
+.yucs-menu a, .yucs-menu a:link, .yucs-menu a:visited, .yucs-menu a:hover {
+    color: #333333;
+    text-align: left;
+    text-decoration: none;
+}
+.yucs-dock {
+    background-position: 0 -4169px;
+    display: inline-block;
+    height: 10px;
+    left: 12px;
+    position: absolute;
+    top: -8px;
+    width: 15px;
+    z-index: -1;
+}
+#yucs-help_inner .yucs-yql_loading, #yucs-nav .yucs-yql_loading {
+    background-position: 50% 50%;
+    height: 50px;
+    width: 150px;
+}
+#yucs-nav .yucs-yql_loading ul {
+    display: none;
+}
+#yucs-nav_outer {
+    display: block;
+    min-height: 17px;
+    position: absolute;
+    top: 17px;
+}
+#yucs-nav a#yucs-nav_button {
+    background-position: 0 -2569px;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    text-indent: -9999em;
+    width: 22px;
+}
+#yucs-nav_button .yucs-menu_anchor {
+    background-color: rgba(0, 0, 0, 0);
+    display: block;
+    height: 20px;
+    width: 22px;
+}
+#yucs-nav .yucs-loading {
+    display: none;
+}
+#yucs-nav, #yucs-nav li, #yucs-nav a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+}
+#yucs-nav {
+    height: 50px;
+    margin-left: 0;
+    position: relative;
+    width: 22px;
+}
+#yucs-nav .yui3-menu-content, #yucs-nav .yui3-menu .yui3-menu .yui3-menu-content {
+    border: 0 none;
+    padding: 0;
+}
+#yucs-nav .yui3-menu-content {
+    border: 0 none;
+}
+#yucs-nav .yucs-menu ul li a, #yucs-help .yucs-menu ul li a {
+    line-height: 24px;
+    padding: 0 10px 0 45px;
+    text-decoration: none;
+}
+#yucs-help .yucs-menu ul li a {
+    display: block;
+    padding: 0 15px;
+}
+#yucs-nav .yucs-menu ul li.yucs-pnav_site a {
+    padding-left: 15px;
+}
+#yucs-nav .yucs-menu ul li a:hover, #yucs-help .yucs-menu ul li a:hover {
+    outline: 0 none;
+    text-decoration: underline;
+}
+#yucs-nav .yucs-site_home a {
+    background-position: 15px -2308px;
+}
+#yucs-nav .yucs-site_my a {
+    background-position: 17px -2372px;
+}
+#yucs-nav .yucs-site_news a {
+    background-position: 16px -1988px;
+}
+#yucs-nav .yucs-site_sports a {
+    background-position: 16px -2052px;
+}
+#yucs-nav .yucs-nonus .yucs-site_sports a {
+    background-position: 16px -2435px;
+}
+#yucs-nav .yucs-site_finance a {
+    background-position: 16px -2118px;
+}
+#yucs-nav .yucs-site_omg a {
+    background-position: 18px -2182px;
+}
+#yucs-nav .yucs-site_shine a {
+    background-position: 22px -2248px;
+}
+#yucs-nav .yucs-menu ul li.yucs-site_eyc a {
+    padding-left: 23px;
+}
+#yucs-nav .yucs-pnav_site a:hover, #yucs-nav .yucs-nav_site a:hover, #yucs-nav .yucs-site_eyc a:hover {
+    background-color: #E0E0E0;
+    outline: 0 none;
+}
+#yucs-nav a:hover {
+    cursor: pointer;
+}
+.yucs-fl-right {
+    float: right;
+    margin-left: -100px;
+    margin-top: 4px;
+}
+.yucs-fl-left {
+    float: left;
+    margin-right: -500px;
+    width: 900px;
+}
+.yucs-menu_nav, #yucs-nav_outer, #yucs-ylogo, #yucs-search, #yucs-profile, .yucs-mail_link, #yucs-search_button_wrapper, #yucs-satray {
+    float: left;
+    margin-left: 20px;
+    z-index: 10000;
+}
+.yucs-wrapper_right {
+    width: 200px;
+}
+a#yucs-menu_link-notif {
+    background-position: 0 -311px;
+    display: block;
+    min-height: 32px;
+    overflow: visible;
+    width: 14px;
+}
+.yucs-notifications, #yucs-help {
+    margin-top: 10px;
+}
+#yucs-nav_outer, #yucs-search_button_wrapper, .yucs-mail_link, #yucs-satray, #yucs-signUp_txt, #yucs-profile_text {
+    margin-left: 0;
+}
+.yucs-mail_link {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+#yucs-profile {
+}
+a#yucs-mail_link_id {
+    background-position: 5px -4352px;
+    display: block;
+    font-size: 13px;
+    height: 22px;
+    overflow: visible;
+    padding-left: 35px;
+    padding-top: 6px;
+    position: relative;
+    text-decoration: none;
+}
+#yucs #yucs-help_button {
+    background-position: 0 -4088px;
+    display: block;
+    height: 24px;
+    overflow: hidden;
+    text-indent: -9999em;
+    width: 24px;
+}
+#yucs-help_button .yucs-menu_anchor {
+    display: block;
+    height: 24px;
+    width: 20px;
+}
+#yucs-profile {
+    margin-top: 10px;
+    position: relative;
+    text-align: left;
+}
+#yucs-profile_inner {
+    width: auto !important;
+}
+#yucs .yucs-signedout {
+    margin-top: 11px;
+    white-space: nowrap;
+}
+#yucs div, #yucs ul, #yucs li, #yucs span {
+}
+#yucs-profile .yui3-menu-label {
+    margin-bottom: 1px;
+    max-height: 35px;
+    min-height: 28px;
+    overflow: hidden;
+    padding: 0;
+}
+span.yucs-avatar {
+    display: inline-block;
+    height: 22px;
+    margin: 2px 7px 9px 0;
+    width: 22px;
+}
+img.yucs-avatar {
+    border: medium none !important;
+    height: 22px;
+    position: relative;
+    width: 22px;
+}
+a#yucs-menu_link_profile_signed_out, a#yucs-menu_link_profile {
+    display: inline-block;
+    height: auto;
+    overflow: visible;
+    width: auto;
+}
+a#yucs-menu_link_profile_signed_out {
+    height: 25px;
+    width: 22px;
+}
+a#yucs-menu_link_profile_signed_out {
+    background-position: -1px -4547px;
+    margin-right: 2px;
+}
+a#yucs-menu_link_profile {
+    background: none repeat scroll 0 center rgba(0, 0, 0, 0);
+}
+#yucs-profile #yucs-profile_text {
+    display: inline-block;
+}
+#yucs-profile .yucs-menu {
+}
+.yucs-signedout #yucs-profile_text {
+    line-height: 1.231;
+    margin-top: 0;
+    padding-top: 2px;
+    vertical-align: top;
+}
+.yucs-signedout #yucs-profile_text, .yucs-signedout #yucs-profile_text a {
+}
+#yucs-profile_text {
+    display: inline-block;
+    margin-top: 6px;
+    max-width: 65px;
+}
+#yucs-menu_link_profile, #yucs-profile_text {
+}
+#yucs-profile {
+    max-width: 95px;
+}
+#yucs-profile_text .yuhead-name, #yucs-profile_text .yuhead-name-greeting {
+    display: block;
+    float: left;
+    font-size: 13px;
+    line-height: 1.2;
+    max-height: 2.4em;
+    max-width: 65px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#yucs #yucs-profile_text .yuhead-name-greeting {
+    display: none;
+}
+@media not all {
+#yucs[data-lang="te-in"] #yucs-profile_text .yuhead-name, #yucs[data-lang="te-in"] #yucs-profile_text .yuhead-name-greeting {
+    padding-top: 3px;
+}
+}
+#yucs-profile_text {
+}
+#yucs-profile_text a.yucs-signout {
+}
+#yucs-profile div.yucs-fc {
+    margin-top: 0;
+}
+#yucs .yucs-fc {
+    color: #1D1DA3;
+    text-shadow: 1px 1px 1px #FFFFFF;
+}
+.lt .yucs-fc {
+    color: #FFFFFF !important;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5) !important;
+}
+.lt #yucs-nav a#yucs-nav_button {
+    background-position: 0 -2503px;
+}
+.lt #yucs-help a#yucs-help_button {
+    background-position: 0 -1723px;
+}
+.lt .yucs-notifications a#yucs-menu_link-notif {
+    background-position: 0 -1261px;
+}
+.lt #yucs-network_link a#yucs-home_link {
+    background-position: 0 -2907px;
+}
+.lt #yucs-logo div {
+    background-position: 100% center;
+}
+.lt #yucs-logo h2 {
+    background-position: 0 -55px;
+}
+.lt a#yucs-menu_link_profile_signed_out {
+    background-position: -1px -4612px;
+}
+.lt a#yucs-mail_link_id {
+    background-position: 5px -4417px;
+}
+.lt a#yucs-menu_link_profile_signed_out {
+    height: 23px;
+    margin-right: 2px;
+    margin-top: 0;
+    width: 22px;
+}
+#yucs-profile_text a {
+    text-decoration: none;
+}
+a.yucs-signout:hover, a#yucs-login_signIn:hover, #yucs-login_signUp:hover, #yucs-profile_text a:hover, #yucs-menu_link_profile:hover .yuhead-name, #yucs-mail_link_id:hover {
+    text-decoration: underline;
+}
+#yucs-profile_text a:hover {
+    cursor: pointer;
+}
+#yucs-login_signUp, .yucs-no_menu a.yucs-signout, a#yucs-login_signIn, #yucs-signUp_txt {
+    font-size: 9px;
+    text-shadow: 1px 1px 1px #FFFFFF;
+}
+#yucs-profile_text #yucs-login_signIn {
+    font-size: 13px;
+}
+#yucs-login_signUp {
+    font-weight: bold;
+}
+.yucs-signedout #yucs-signUp_txt {
+    font-weight: normal;
+    text-decoration: none;
+}
+.yucs-forceZIndex {
+    z-index: 10000 !important;
+}
+#yucs .yucs-hide, #yucs .sa-hidden, #yucs .yui3-menu-hidden {
+    left: -1000px !important;
+    position: absolute;
+    top: -1000px !important;
+    visibility: hidden !important;
+}
+#yucs .yucs-hide {
+    display: none !important;
+}
+.yucs-profile-items-panel a:hover {
+    outline: 0 none;
+    text-decoration: underline;
+}
+.yucs-profile-items-panel li:first-child:hover {
+    background: none repeat scroll 0 center rgba(0, 0, 0, 0);
+}
+.yucs-profile-items-panel {
+    outline: 0 none;
+}
+.yucs-profile-items-panel .yucs-signed_in_as {
+    padding: 5px 15px 5px 20px;
+    white-space: nowrap;
+}
+.yucs-profile-items-panel li a {
+    display: block;
+    line-height: 24px;
+    padding-left: 20px;
+    padding-right: 15px;
+    text-decoration: none;
+}
+#yucs-profile-cont .yucs-profile-items-panel li {
+}
+.minty-um-item div a {
+    word-break: break-all;
+}
+.yucs-profile-items-panel .yuhead-yid {
+    display: block;
+    font-weight: bold;
+    margin-top: 4px;
+    max-height: 2.5em;
+    min-height: 0;
+    overflow: hidden;
+    width: 100px;
+}
+.yuhead-clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    width: 0;
+}
+.yucs-alert-count-con {
+    left: -10px;
+    position: absolute;
+    text-shadow: none;
+    top: -3px;
+    vertical-align: middle;
+}
+.yucs-alert-count {
+    background: -moz-linear-gradient(center top , #F22914, #AB0B07) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #890405;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px #666666;
+    color: #FFFFFF;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: 5px;
+    min-width: 20px;
+    text-align: center;
+    text-indent: 0;
+}
+#yucs-mail_link_id:hover .yucs-alert-count {
+    text-decoration: none;
+}
+.yucs-yql_loading, #yucs-nav .mnp-yql_loading {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("https://s1.yimg.com/ok/u/assets/img/spinner-24x24-anim.gif");
+    background-repeat: no-repeat;
+}
+.yucs-separator {
+    border-bottom: 1px solid #CCCCCC;
+    display: block;
+    margin-bottom: 9px;
+    padding-bottom: 8px;
+}
+.yucs-profile-items-panel .yucs-separator {
+    border-bottom: 1px solid #E5E5E5;
+}
+#yucs #yucs-network_link {
+    margin-top: 10px;
+}
+#yucs a#yucs-home_link {
+    background-position: 0 -3296px;
+    display: block;
+    min-height: 22px;
+    overflow: hidden;
+    text-indent: -9999em;
+    width: 20px;
+}
+#yuhead-help-panel .debug-item em {
+    float: right;
+    font-weight: bold;
+    margin-left: 15em;
+    text-align: right;
+}
+.yog-page #mediasearchform_2 {
+    display: block;
+}
+.yog-page #mediasearchform, .yom-searchform, #searchQuotes .ft a {
+    display: none;
+}
+#yog-hd .yom-bar .yom-primary {
+}
+#searchQuotes .search {
+    text-indent: -9999em;
+}
+.market-time {
+    margin-bottom: 10px;
+}
+a.yuhead-ico-mail {
+    display: inline-block;
+    vertical-align: top;
+}
+.yucs-mailpreview-ancestor {
+}
+.yucs-mail-preview-panel .yucs-mail-preview-title {
+    float: left;
+}
+.yucs-mail-preview-panel .yucs-preview-body .yucs-preview-mailcount {
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 10px 10px 20px;
+    text-align: center;
+}
+#yucs .yucs-preview-viewall {
+    font-size: 12px;
+    font-weight: bold;
+    outline: 0 none;
+    padding: 15px;
+    text-align: center;
+}
+.yucs-mail-preview-panel .yucs-preview-body a.yucs-preview-viewall:hover {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+.yucs-mail-preview-panel .yucs-mail-loading {
+    background: url("https://s1.yimg.com/ok/u/assets/img/spinner-24x24-anim.gif") no-repeat scroll 50% 6px rgba(0, 0, 0, 0);
+    padding: 20px;
+    text-indent: -9999px;
+}
+.yucs-mail-preview-panel {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    border-radius: 3px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    left: 0;
+    outline: 0 none;
+    position: absolute;
+    top: 14px;
+    width: 248px;
+    z-index: 1000;
+}
+#yucs .yucs-mail-preview-panel .yucs-preview-body {
+    max-height: 410px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 3px 0 0;
+}
+.yucs-mail-preview-panel .yucs-preview-body li:hover {
+    background-color: #F1F1F1;
+}
+.yucs-mail-preview-panel.forceZIndex {
+    z-index: 10000;
+}
+.yucs-mail-preview-panel .yucs-preview-body li {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: -moz-use-text-color -moz-use-text-color #CCCCCC;
+    border-image: none;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.yucs-mail-preview-panel .yucs-preview-body li.read {
+    background: none repeat scroll 0 0 #F9F9F9;
+}
+.yucs-mail-preview-panel li a {
+    display: block;
+    margin: 0;
+    padding: 12px 12px 12px 24px;
+    text-decoration: none;
+}
+.yucs-mail-preview-panel li a, .yucs-mail-preview-panel li span, .yucs-mail-preview-panel li div {
+}
+.yucs-mail-preview-panel li a div {
+    padding: 0.06em 0;
+}
+.yucs-mail-preview-panel li .yucs-mailpreview-from {
+    color: #3F3F3F;
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    width: 75%;
+}
+.yucs-mail-preview-panel li .yucs-mailpreview-subject {
+    color: #3F3F3F;
+    font-weight: normal;
+    margin-top: 4px;
+}
+.yucs-mail-preview-panel li.read .yucs-mailpreview-subject {
+    color: #666666;
+}
+.yucs-mail-preview-panel li span.yucs-mailpreview-timestamp {
+    color: #AFAFAF;
+    float: right;
+    font-size: 10px;
+    font-weight: normal;
+    margin-top: -15px;
+}
+.yucs-mail-preview-panel li.read span.yucs-mailpreview-timestamp {
+    color: #666666;
+}
+.yucs-mail-preview-panel li.yucs-selected-message {
+    background-color: #F9F9F9;
+}
+.yucs-mail-preview-panel .yucs-preview-body li.yucs-preview-view, .yucs-mail-preview-panel .yucs-preview-body li.yucs-preview-view:hover {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.yucs-preview-body a.unread {
+    background-position: 7px -3560px;
+}
+.preview-from {
+    float: left;
+}
+.ellipses {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.yucs-mail_link a.yucs-newmail {
+    width: 28px;
+}
+.yucs-mail_link a.yucs-lgnewmail {
+    width: 36px;
+}
+.yucs-mail-preview-panel .yucs-mailpreview-ico {
+    background-position: 0 1px;
+    border: 0 none;
+    float: right;
+    height: 15px;
+    margin-right: -15px;
+    width: 20px;
+}
+.yucs-mail-preview-panel .yucs-preview-body li {
+    border-bottom: 1px solid #CCCCCC;
+}
+.yucs-mail-preview-panel .yucs-preview-body li:last-child {
+    border-bottom: 0 none;
+}
+.yucs-no_menu .yucs-signout {
+}
+.yucs-profile-items-panel .yucs-signout, .yuhead-help-panel .yucs-acct-link {
+}
+.yui3-menu-content, .yui3-menu-label {
+}
+#yucs-profile_inner, #yucs-help_inner {
+    position: absolute;
+}
+#yucs-top-bar ul .yucs-has-focus {
+    outline: thin dotted;
+}
+#yucs-top-menu ul .yucs-has-focus {
+    background-color: #F0F0F6;
+    outline: 0 none;
+}
+.yucs-avatar.yucs-menu_anchor {
+    float: left;
+}
+#yucs-profile #yucs-profile_text {
+}
+#yucs-menu_link_profile {
+    text-decoration: none;
+}
+#yuhead-help-panel, .yucs-profile-items-panel, .yucs-preview-body {
+    margin: 0;
+}
+#yucs.yucs-b1 .yucs-avatar, #yucs.yucs-b2 .yucs-avatar {
+    height: 22px;
+    width: 22px;
+}
+#yucs.yucs-b1 #yucs-profile_text .yuhead-name, #yucs.yucs-b2 #yucs-profile_text .yuhead-name {
+    max-width: 65px;
+    top: 0;
+}
+#yucs.yucs-b1 #yucs-profile_text, #yucs.yucs-b2 #yucs-profile_text {
+    max-width: 65px;
+}
+#yucs.yucs-b2 {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    margin: 0 auto;
+    width: 970px;
+}
+.yog-hd.yog-hd-border {
+    border-bottom: 1px solid #490F76 !important;
+    box-shadow: 0 0 9px 0 #490F76 !important;
+}
+#yucs[data-lang="zh-hant-tw"] #yucs-profile .yui3-menu-content ul {
+    margin: 0;
+    padding: 0;
+}
+#yucs[data-lang="zh-hant-tw"] #yucs-profile .yui3-menu-content a#yucs-menu_link_profile {
+    margin-right: 0;
+}
+#yucs[data-lang="zh-hant-tw"] #yucs-profile .yui3-menu-content #yucs-profile_text {
+    margin-right: 8px;
+}
+#yucs[data-lang="zh-Hant-HK"] #yucs-profile .yui3-menu-content ul {
+    margin: 0;
+    padding: 0;
+}
+#yucs[data-lang="zh-Hant-HK"] #yucs-profile .yui3-menu-content a#yucs-menu_link_profile {
+    margin-right: 0;
+}
+#yucs[data-lang="zh-Hant-HK"] #yucs-profile .yui3-menu-content #yucs-profile_text {
+    margin-right: 8px;
+}
+#header {
+    z-index: 214748364 !important;
+}
+#yucsHead {
+    background-color: #FFFFFF;
+}
+html.yucs-fixed .page-has-scrolled #yucsHead {
+    border: 0 none !important;
+    box-shadow: none !important;
+}
+.yucs-el-gr #yucs-search_button {
+    width: 157px;
+}
+#yucs-profile_inner.yucs-nv3 {
+    background-color: #FFFFFF;
+    width: 256px !important;
+}
+#yucs-profile_inner.yucs-nv3 .yucs-profile-items-panel {
+    background-color: #FFFFFF;
+    overflow: hidden;
+    padding: 0;
+}
+.yucs-nv3 .yucs-profile-items-panel .yuhead-yid {
+    border-right: 1px solid #5F5F5F;
+    color: #5F5F5F;
+    display: inline-block;
+    max-width: 100px;
+    padding: 0 7px 0 1px;
+    vertical-align: top;
+    width: auto;
+}
+.yucs-nv3 .yucs-profile-items-panel .yucs-signed_in_as {
+    color: #AFAFAF;
+    padding: 8px 15px 8px 12px;
+    white-space: nowrap;
+}
+.yucs-nv3 .yucs-profile-items-panel .yucs-signout {
+    color: #333333;
+    display: inline;
+    padding-left: 5px;
+    vertical-align: top;
+}
+.yucs-nv3 .yucs-profile-items-panel .yucs-separator {
+    border-bottom: 1px solid #E6E6E6;
+    margin-bottom: 0;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+}
+.yucs-nv3 .yucs-profile-items-panel li a {
+    padding: 8px 15px 8px 12px;
+}
+.yucs-nv3 .yucs-vert-separator {
+    border-right: 1px solid #5F5F5F;
+    display: inline;
+    font-weight: normal;
+    height: 12px;
+    padding: 0 5px;
+}
+.yucs-notif-panel {
+    background-color: #FFFFFF;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    outline: medium none;
+    z-index: 1000;
+}
+.yucs-notif-text {
+    display: inline-block;
+    padding: 8px 5px 8px 12px;
+    width: 175px;
+}
+ul.yucs-notif-items-panel li .dot {
+    float: left;
+    height: 11px;
+    margin-left: 4px;
+    margin-top: 6px;
+    visibility: hidden;
+    width: 11px;
+}
+#yucs .yucs-notif-items-panel .yucs-notif-icon, #yucs .yucs-notif-items-panel .yucs-notif-thumb {
+    float: right;
+    height: 64px;
+    padding: 0;
+    width: 64px;
+}
+.yucs-notif-items-panel .yucs-notif-ft {
+    line-height: 12px;
+}
+#yucs .yucs-notif-by-time .ynotif-timestamp {
+    color: #000000;
+    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    opacity: 0.5;
+}
+#yucs .yucs-notif-panel .yucs-notif-items-panel a:hover span.ynotif-timestamp {
+    opacity: 0.6;
+}
+#yucs .yucs-notif-items-panel .yucs-notif-read span.ynotif-timestamp {
+    opacity: 0.4;
+}
+#yucs .yucs-notif-panel .yucs-notif-bd {
+    color: #000000;
+    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 14px;
+    max-height: 28px;
+    opacity: 0.9;
+    overflow: hidden;
+    text-align: left;
+    text-rendering: optimizelegibility;
+    word-wrap: break-word;
+}
+#yucs .yucs-notif-panel .yucs-notif-items-panel a:hover .yucs-notif-bd {
+    opacity: 1;
+}
+#yucs .yucs-notif-panel .yucs-notif-read .yucs-notif-bd {
+    opacity: 0.8;
+}
+#yucs .yucs-LineClamp {
+    overflow: hidden;
+}
+#yucs .yucs-notif-items-panel .yucs-notif-cta-btn, .yucs-notif-items-panel .yucs-notif-cta-link {
+    display: inline-block;
+    font-size: 12px;
+    padding-left: 12px;
+    padding-right: 0;
+}
+#yucs .yucs-notif-prop-thumb {
+    background-repeat: no-repeat;
+    background-size: 64px 64px;
+    display: inline-block;
+    height: 64px;
+    opacity: 0.9;
+    width: 64px;
+}
+#yucs .yucs-notif-prop-icon {
+    background-repeat: no-repeat;
+    background-size: 64px 64px;
+    display: inline-block;
+    height: 64px;
+    width: 64px;
+}
+.ynotif-unavail, .yucs-notif-loading {
+    background-color: #FFFFFF;
+    cursor: text;
+    padding: 10px 15px;
+    text-align: left;
+}
+.yucs-notif-title-bar {
+    padding-left: 12px;
+    padding-top: 4px;
+}
+#yucs .yucs-notif-title-bar .yucs-notif-tools, .yucs-notif-items-panel a.yucs-notif-util-action {
+    color: #333333;
+    font-size: 12px;
+    text-decoration: none;
+}
+.yucs-notif-items-panel a.yucs-notif-util-action {
+    color: #333333;
+    text-align: left;
+}
+.yucs-notif-items-panel div.yucs-middleauth-message {
+    line-height: 120%;
+}
+#yucs .yucs-notif-items-panel .yucs-verify-password {
+    line-height: 15px;
+}
+.yucs-notif-items-panel .yucs-try-items {
+    background-color: #F5F5F5;
+}
+.yucs-notif-items-panel .yucs-try-items {
+    border-bottom: 1px solid #CCCCCC;
+}
+#yucs .yucs-notif-items-panel .yucs-no-items, #yucs .yucs-notif-items-panel .yucs-signedout-message, #yucs .ynotif-unavail, #yucs .yucs-middleauth-message {
+    color: #333333;
+    font-size: 13px;
+    font-weight: bold;
+}
+.yucs-signedout-message, .yucs-signedout-cta-message, .yucs-signin-btn, .yucs-no-items, .yucs-get-items, .yucs-try-items, .yucs-notif-view-more {
+    border: 0 none;
+    padding: 8px 15px 8px 12px;
+    text-align: left;
+}
+.yucs-notif-panel .yucs-notif-loading {
+    background: url("https://s1.yimg.com/ok/u/assets/img/spinner-24x24-anim.gif") no-repeat scroll 50% 6px #F5F5F5;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+.yucs-notif-items-panel .yucs-get-items, .yucs-notif-items-panel .yucs-signedout-cta-message {
+    color: #333333;
+    font-size: 11px;
+}
+#yucs #yucs-notifications .yucs-notif-items-panel {
+    color: #454545;
+    padding: 0;
+}
+.yucs-signin-btn a.yucs-notif-util-action {
+    display: inline-block;
+    padding: 0 10px;
+}
+#yucs .yucs-notif-items-panel .yucs-notif-bd a {
+    display: inline;
+    font-size: 13px;
+    padding: 0;
+    text-decoration: none;
+}
+.yucs-profile-items-panel .yucs-notif-bd a {
+    line-height: 16px;
+}
+.yucs-profile-items-panel .yucs-notif-cta-con a {
+    line-height: 23px;
+    margin: 5px 0;
+}
+.yucs-notif-cta-con {
+    padding-left: 20px;
+}
+.yucs-notif-alert-count-con {
+    left: -15px;
+}
+.yucs-notif-alert-count {
+    margin-left: 0;
+}
+#yucs .yucs-notif-items-panel .yucs-notif-anchor {
+    background-color: #F4F6F9;
+}
+#yucs .yucs-notif-items-panel .yucs-notif-cta-item {
+    display: block;
+    height: 64px;
+    outline: 0 none;
+    padding: 0;
+}
+#yucs .yucs-notif-items-panel .yucs-has-focus a, #yucs #yucs-profile_inner.yucs-nv3 .yucs-notif-items-panel a:hover {
+    background-color: #F4F6FD;
+    color: #000000;
+    text-decoration: none;
+}
+#yucs .yucs-notif-items-panel .yucs-notif-view-all a:hover {
+    background-color: #FFFFFF;
+    text-decoration: underline;
+}
+#yucs .yucs-notif-title {
+    line-height: 14px;
+}
+#yucs .ynotif-title {
+    color: #000000;
+    font-size: 13px;
+    font-weight: bold;
+    opacity: 0.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-rendering: optimizelegibility;
+    width: 175px;
+}
+#yucs .yucs-notif-items-panel a:hover .ynotif-title {
+    opacity: 1;
+}
+#yucs .yucs-notif-read .ynotif-title {
+    opacity: 0.7;
+}
+#yucs .yucs-notif-panel-title {
+    font-size: 11px;
+}
+#yucs .yucs-notif-read {
+    background-color: #F2F2F2;
+}
+#yucs-help .yucs-sys-stat {
+    margin-top: 5px;
+}
+#yucs-help .yucs-sys-stat-ico {
+    float: right;
+    height: 13px;
+    margin-top: 6px;
+    width: 13px;
+}
+#yucs-help .yucs-sys-stat-txt {
+    display: block;
+    margin-left: 0;
+    white-space: nowrap;
+}
+#yucs-top-bar .sp, #yucs .sp, a#yucs-menu_link_menu, #yucs-search_type_wrapper, a#yucs-menu_link_profile_signed_out, a#yucs-menu_link-notif, a#yucs-help_button, #yucs-nav_outer, .yucs-bullets, #yucs-nav .yucs-nav_site a, a#yucs-home_link, .yucs-dock, #yucs-more-link .yucs-top-ico, .yucs-preview-body a.unread {
+    background-image: url("https://s1.yimg.com/kx/yucs/uh3/uh/images/659/uh_sprite.png");
+}
+@media not all, only screen and (min--moz-device-pixel-ratio: 2), not all, not all, only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+#yucs-top-bar .sp, #yucs .sp, #yucs-menu_link_menu, #yucs-search_type_wrapper, a#yucs-menu_link_profile_signed_out, a#yucs-menu_link-notif, a#yucs-help_button, #yucs-nav_outer, .yucs-bullets, #yucs-nav .yucs-nav_site a, a#yucs-home_link, .yucs-dock, #yucs-more-link .yucs-top-ico, .yucs-preview-body a.unread {
+    background-image: url("https://s1.yimg.com/kx/yucs/uh3/uh/images/659/uh_sprite_x2.png");
+    background-size: 24px 4844px;
+}
+}
+.yucs-yql_loading, #yucs-nav .mnp-yql_loading {
+    background-image: url("https://s1.yimg.com/ok/u/assets/img/spinner-24x24-anim.gif") !important;
+}
+.yucs-mail-preview-panel .yucs-mail-loading, .yucs-notif-items-panel .yucs-notif-loading {
+    background: url("https://s1.yimg.com/ok/u/assets/img/spinner-24x24-anim.gif") no-repeat scroll 50% 6px rgba(0, 0, 0, 0) !important;
+}
+#yucs-meta {
+    display: none;
+}
+
+
+html, #fc_align {
+    background-color: #FFFFFF;
+}
+body, div, p, a {
+    margin: 0;
+    padding: 0;
+}
+#fc_align {
+    background-color: #FFFFFF;
+}
+#richad * {
+    -moz-user-select: none;
+    outline: medium none;
+}
+.offscrn {
+    clip: rect(0px, 0px, 0px, 0px);
+    font-size: 0.1em;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+}
+#adlinks {
+    font: 11px arial;
+    margin: 0 auto;
+    position: relative;
+    width: 400px;
+    z-index: 100;
+}
+#adlinks p {
+    position: absolute;
+    right: 90px;
+    text-align: right;
+    top: 15px;
+}
+#adlinks, #adlinks a {
+    color: #FFFFFF;
+}
+#adlinks a {
+    margin: 0 5px;
+    text-decoration: none;
+}
+.can_ad_slug {
+    background: url("https://s.yimg.com/lq/lib/can_interstitial/icons/adchoices_1.4b.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    padding: 0 15px 0 0;
+}
+#richad {
+    background-position: center top;
+    background-repeat: no-repeat;
+    height: 1024px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    width: 1440px;
+}
+.hotspot {
+    display: block;
+    outline: medium none;
+    position: absolute;
+    z-index: 10;
+}
+.hotspot img {
+    display: block;
+}
+#hotspot5 {
+    left: 558px;
+    top: 488px;
+}
+#hotspot_main {
+    margin: 0 auto;
+    position: relative;
+    width: 400px;
+    z-index: 9;
+}
+#hotspot_main .hotspot {
+    position: absolute;
+    right: 95px;
+    top: 40px;
+}
+
+
+
+
 </style>
 
 
 
 
-</head>
-<body id="mnbd">
+    <style type="text/css">
+        #footer {position:absolute;bottom:0;}
+    </style>
+    <style type="text/css" media="all and (orientation:landscape)">
+        #footer {position:absolute;top:1200px;}
+    </style> 
+    </head>
+<body id="mnbd" style="overflow: hidden; width: 983px;">
+
+
+<!-- ads: 150002527 INT.OFFSET: 0 -->
 
 
 
-<!-- ads: 150002534 INT.OFFSET: 0 -->
-
-
-
-
-  <div id='hdBg'>
-  
-<link type='text/css' rel='stylesheet' href='https://s.yimg.com/zz/combo?kx/ucs/uh/css/291/yunivhead-min.css&kx/ucs/uh/css/221/logo-min.css&kx/ucs/uh/css/288/yunivhead_https-min.css'/><!-- intl = us, locale = en-US, spaceid = 150002534 offset = 0 Header 2.0 -->
-<style>#yUnivHead{background:none repeat scroll 0 0 transparent;}</style><style>/*hacks for no doctype*/
-#yuhead-bd #yuhead-search #yuhead-sform-cont {
-      *background-color: #dfdfe0;
-    }
-    #yuhead-bd #yuhead-search #yuhead-sform-cont form .yucs-sweb-btn {
-      *background-color: #f8d44c;
-    }
-img.yucs-avatar{width:16px;height:16px;}</style><div id="yUnivHead" class="yucs-en-us yucs-slim" data-lang="en-us" data-property="login" data-flight="1372165414" data-uhvc="/">        <a href="#yuhead-search" class="yucs-skipto-search yucs-activate">Skip to search.</a>        <div id="yuhead-hd" class="yuhead-clearfix">        <div id="yuhead-mepanel-cont">        </div>        <div id="yuhead-promo"></div>        <div id="yuhead-com-links-cont">            <ul id="yuhead-com-links" class="yucs-toolbar yucs-activate" aria-label="Yahoo! Services">                                <style>#yUnivHead #yuhead-hd #yuhead-mepanel-cont {display:none;}#yUnivHead #yuhead-hd #yuhead-promo {display:none;}#yUnivHead #yuhead-bd #yuhead-search {display:none;}#yUnivHead #yuhead-pbar {display:none;}#yUnivHead #yuhead-bd {padding-bottom:0;_clear:none;_margin-top:-25px;}    #yUnivHead #yuhead-bd .yuhead-logo {margin-top:-25px;_margin-top:0;}    #yuhead-hd #yuhead-com-links-cont #yuhead-com-links li.yuhead-me{border-right:none;}</style><style>    #yUnivHead #yuhead-hd ul li.yucs-menu ul li.last-child {border-top:none;}    #yuhead-hd #yuhead-com-links-cont #yuhead-com-links li.last-child {margin-right:10px;}</style><li id="yuhead-username" class="yucs-menu yuhead-nodivide yuhead-nopad yucs-activate">    <a class="yuhead-firstname yltasis" aria-haspopup="true" rel="nofollow"     target="_top"    href="http://profile.yahoo.com/">                            <span class="yuhead-hi">Hi,&nbsp;</span>        Cristina        <span class="yucs-menu-access sp yuhead-bullet-down"></span>    </a>    <ul id="yuhead-useroptions" class="yucs-menu-left hide">        <li class="last-child">        You are signed in as: <span class="yuhead-yid">crisa_jb</span>        </li>    </ul></li><li><a href="http://login.yahoo.com/config/login?logout=1&.direct=2&.done=http://www.yahoo.com&amp;.src=ymbr&amp;.intl=us&amp;.lang=en-US" target="_top" rel="nofollow">    Sign Out</a>    </li><li class="yuhead-me"><a href="http://help.yahoo.com/l/en-us/yahoo/edit/" rel="nofollow" target="_top">Help</a></li>                                            </ul>        </div>    </div>    <div id="yuhead-bd" class="yuhead-clearfix">        <div class="yuhead-logo">   <style>      .yuhead-logo h2{        width:141px;        height:30px;        background-image:url(https://s.yimg.com/rz/uh/logo/newpurple/PNGs-optimized/login-us-3470.png);        _background-image:url(https://s.yimg.com/rz/uh/logo/newpurple/compositeGIFs-optimized/login-us-3470.gif);      }      .yuhead-logo a{        width:141px;        height:30px;      }      .yuhead-logo div.yuhead-comarketing {       width:141px;      }         </style>   <h2 class="yuhead-login yuhead-standard">      <a href="https://www.yahoo.com/"       target="_top" tabindex="-1">         Yahoo!      </a>   </h2>   <!-- comarketing component --></div>            </div>                        </div><style>#yuhead-mepanel {width: 150%;}</style>                <script>
+  <div id="hdBg">
+  <link type="text/css" rel="stylesheet" href="./Sign in to Yahoo_files/combo(2)"><!-- intl = us, locale = en-US, spaceid = 150002527 offset = 0 Header 2.0 -->
+<style>#yUnivHead{background:none repeat scroll 0 0 transparent;}</style><style>#yucs{margin:0 auto;width:100% !important}#yucs .yucs-avatar{height:22px;width:22px}#yucs #yucs-profile_text .yuhead-name-greeting{display:none}#yucs #yucs-profile_text .yuhead-name{top:0;max-width:65px;_width:65px}#yucs-profile_text{max-width:65px}.yucs-hide{display:none !important}#yucs #yucs-help_link{font-size:13px;color:#1d1da3;text-shadow:1px 1px 1px #fff;-ms-text-shadow:1px 1px 1px #FFF;text-indent:0;text-decoration:none}#yucs #yucs-help{margin-top:13px;margin-right:10px;*margin-top:19px}#yucs #yucs-help_link:hover{text-decoration:underline}#yucs-profile a#yucs-menu_link_profile{width:100%;_width:100px}#yucs-profile_text{_margin-top:10px}#yucs .yucs-signout{_margin-top:-5px}</style><div id="yucsHead" class="yucs-login yucs-en-us" style="width: 983px;"><div id="yucs" class="yucs-mc  login_mailflow" data-lang="en-us" data-property="login" data-flight="1395540210" data-linktarget="_top" data-uhvc="/">        <div class="yucs-fl-left yog-cp">         <div id="yucs-logo">    <style>        #yucs #yucs-logo {width:120px ;padding-top: 11px !important;margin-top: 0 !important;}         #yucs #yucs-logo div {            display:block;            width:120px !important;margin: 0 auto !important;            height:34px ;            background-image:url(https://s1.yimg.com/rz/l/yahoo_mail_en-US_f_pw_119x34.png) ;            _background-image:url(https://s1.yimg.com/rz/l/yahoo_mail_en-US_f_pw_119x34.gif) ;        }        #yucs #yucs-logo a {          display:block ;          width:120px ;          height:34px;          overflow: hidden;        }        @media        only screen and (-webkit-min-device-pixel-ratio: 2),        only screen and ( min--moz-device-pixel-ratio: 2),        only screen and ( -o-min-device-pixel-ratio: 2/1),        only screen and ( min-device-pixel-ratio: 2),        only screen and ( min-resolution: 192dpi),        only screen and ( min-resolution: 2dppx) {            #yucs #yucs-logo div {                background-image: url(https://s1.yimg.com/rz/l/yahoo_mail_en-US_f_pw_119x34_2x.png) !important;                background-size: 240px 34px;            }        }    </style>    <div>        <a id="yucs-logo_link" href="https://mail.yahoo.com/" target="_top">          Yahoo Mail        </a>    </div></div>     </div><div class="yucs-fl-right">  <div id="yucs-profile" class="yucs-profile yucs-signedout">    <a id="yucs-menu_link_profile_signed_out" href="https://login.yahoo.com/config/login?.src=ymbr&.intl=us&.lang=en-US&.done=https://login.yahoo.com/config/mail%3f%26.src=ym%26.intl=us" target="_top" rel="nofollow" class="sp yucs-fc" aria-label="Profile">    </a>    <div id="yucs-profile_text" class="yucs-fc">        <a id="yucs-login_signIn" href="https://login.yahoo.com/config/login?.src=ymbr&.intl=us&.lang=en-US&.done=https://login.yahoo.com/config/mail%3f%26.src=ym%26.intl=us" target="_top" rel="nofollow" class="yucs-fc">            Sign In        </a>    </div></div>       <div id="yucs-help" class="yucs-activate yucs-help yucs-menu_nav">    <a id="yucs-help_link" href="http://help.yahoo.com/kb/index?locale=en_US&page=product&y=PROD_ACCT" aria-label="Help" rel="nofollow">        Help    </a></div>                              </div>             </div><!-- contextual_shortcuts --><!-- /contextual_shortcuts --><!-- property: login | languagetag: en-us | status: active | spaceid:  | cobrand: standard | markup: empty --><div id="yUnivHead" class="yucs-hide"><!-- empty --></div></div><style>#yuhead-mepanel {width: 150%;}</style>                <script>
                 window.onload = function() {
                     var seedfile = 'https://s.yimg.com/lq/lib/yui-ssl/3.4.1/build/yui/yui-min.js';
                     var yui3 = document.createElement('script');
@@ -718,44 +2090,35 @@ img.yucs-avatar{width:16px;height:16px;}</style><div id="yUnivHead" class="yucs-
                                 combine:true,
                                 comboBase: 'https://s.yimg.com/lq/combo?',
                                 root: 'yui-ssl/3.4.1/build/'
-                        }).use('node','event','event-mouseenter','substitute','oop','node-focusmanager', function(Y) {});
+                        }).use('node','node-focusmanager','oop','node','event-custom','cookie','substitute','classnamemanager','querystring-stringify', function(Y) {});
                         var hdJS= document.createElement('script');
                         hdJS.type = 'text/javascript';
-                        hdJS.src = 'https://s.yimg.com/zz/combo?kx/ucs/sts/js/442/skip-min.js&kx/ucs/uh/js/279/timestamp_library-min.js&kx/ucs/menu_utils/js/164/menu_utils_v2-min.js&kx/ucs/uh/js/267/aria_toolbar-min.js&kx/ucs/username/js/43/user_menu-min.js&kx/ucs/help/js/41/help_menu-min.js&kx/ucs/utility_link/js/20/utility_menu-min.js&kx/ucs/uh/js/262/logo_debug-min.js';
+                        hdJS.src = 'https://s.yimg.com/zz/combo?kx/yucs/uh3/uh/js/871/uh-min.js&kx/yucs/uh3/uh/js/102/gallery-jsonp-min.js&kx/yucs/uh3/uh/js/966/menu_utils_v3-min.js&kx/yucs/uh3/uh/js/822/timestamp_library-min.js&kx/yucs/uh3/uh/js/836/logo_debug-min.js&kx/yucs/uh3/help/js/55/help_menu_v3-min.js';
                         head.appendChild(hdJS);
                     }
                 };
                 </script>
   </div>
 
-
-
-
-
     <!--[if IE]>
     <div id='iframeHolder'>
                 <div id='adFrame'></div>
             </div>
     <![endif]-->
-    <div id='mainBox'>
-      <div id='loginHolder'>
+    <div id="mainBox">
+      <div id="loginHolder">
 
 
-        <div id='leftContent'>
-  
-  
-          <div id='static'>
-              
-              <script type="text/javascript">
+        <div id="leftContent">
+              <div id="static" style="display: none;">
+                            <script type="text/javascript">
                   var av = true;
                   if (av) {
-                     document.getElementById("static").style.display = "none";
+                    document.getElementById("static").style.display = "none"; 
                   }
               </script>
               
-
-              
-<style type="text/css">
+              <style type="text/css">
 html{background-color:#fff;}
 body,div,p{margin:0;padding:0;}
 .lofb_wrap{font:20px arial;color:#000;width:800px;margin:130px auto 0;font-family:Gotham,verdana,sans-serif;line-height:1.5em;}
@@ -766,66 +2129,132 @@ body,div,p{margin:0;padding:0;}
 </style>
 <div class="lofb_wrap">
 <div class="lofb">
-<h3>Yahoo! makes it easy to enjoy what matters most in your world.</h3>
-<p>Best in class Yahoo! Mail, breaking local, national and global news, finance, sports, music, movies and  more. You get more out of the web, you get more out of life.</p>
+<h3>Yahoo makes it easy to enjoy what matters most in your world.</h3>
+<p>Best in class Yahoo Mail, breaking local, national and global news, finance, sports, music, movies and  more. You get more out of the web, you get more out of life.</p>
 </div>
 </div>
 
           </div>
-  
-        </div>
-        <div id='loginBox'>
-          <div id='yreglg'>
+          </div>
+        <div id="loginBox">
+          <div id="yreglg">
 
-  
-    
-<div class="top mm-lgbx">
+      <div class="top mm-lgbx">
 	<div class="lgbx lisu">
-			<script type='text/javascript'>
+			<script type="text/javascript">
 if(top == self){
   document.write("<div class=' badge'></div>");
 }
-</script>
-		
-<div class="lgbx-ltr"><div class="lgbx-logo lg-sprite "></div></div>
-<fieldset id="fsLogin" style="position:relative">
+</script><div class=" badge"></div>
+		<div class="lgbx-ltr">
+        <div class="lgbx-logo ">
+        	<img src="./Sign in to Yahoo_files/yahoo_en-US_f_p_bestfit.png">
+                </div>
+</div>
+<fieldset id="fsLogin" class="clear">
 	<legend>Login Form</legend>
 	
-	<form method="post" action="https://login.yahoo.com/config/login_verify2?" autocomplete="" name="login_form" onsubmit="return hash2(this)">
-	<div id='inputs'>
-	<h3>Username</h3>
-	<p id='username'>crisa_jb</p>
-	<input name='passwd' id='passwd' type='password' maxlength='64' tabindex='2' aria-required="true" placeholder="Password" autocorrect="off" autocomplete="off" value="">
-	</div>
-	<div id='submit'>
-		<button type="submit" id=".save" name=".save" class="lgbx-btn purple-bg" tabindex="3">Sign In</button>
-	</div>
-</form>
-</fieldset>
-
+	<form method="post" action="https://login.yahoo.com/config/login?" autocomplete="" name="login_form" id="login_form" onsubmit="return hash2(this)">
+	<input type="hidden" name=".tries" value="1">
+	<input type="hidden" name=".src" value="ym">
+	<input type="hidden" name=".md5" value="">
+	<input type="hidden" name=".hash" value="">
+	<input type="hidden" name=".js" value="">
+	<input type="hidden" name=".last" value="">
+	<input type="hidden" name="promo" value="">
+	<input type="hidden" name=".intl" value="us">
+	<input type="hidden" name=".lang" value="en-US">
+	<input type="hidden" name=".bypass" value="">
+	<input type="hidden" name=".partner" value="">
+	<input type="hidden" name=".u" value="8muq0o59isg7i">
+	<input type="hidden" name=".v" value="0">
+	<input type="hidden" name=".challenge" value="xOLZdgtX3K2Wsu4ReZgYu.v2UK4G">
+	<input type="hidden" name=".yplus" value="">
+	<input type="hidden" name=".emailCode" value="">
+	<input type="hidden" name="pkg" value="">
+	<input type="hidden" name="stepid" value="">
+	<input type="hidden" name=".ev" value="">
+	<input type="hidden" name="hasMsgr" value="0">
+	<input type="hidden" name=".chkP" value="Y">
+	<input type="hidden" name=".done" value="http://mail.yahoo.com">
+	<input type="hidden" name=".pd" value="ym_ver=0&amp;c=&amp;ivt=&amp;sg=">
+	<input type="hidden" name=".ws" id=".ws" value="0">
+	<input type="hidden" name=".cp" id=".cp" value="0">		
+	<input type="hidden" name="nr" value="0">
+		<input type="hidden" name="pad" id="pad" value="6">
+	<input type="hidden" name="aad" id="aad" value="6">
 		
-	<div class="help-links">
-		<a id="forgotLnk" href="https://edit.europe.yahoo.com/config/eval_forgot_pw?new=1&.done=https%3A//edit.yahoo.com/config/eval_profile%3F.scrumb=0&.src=&partner=&.intl=us&.lang=en-US&pkg=&stepid=&.pd=_ver%3d0%26c=&.ab=&.last=" tabindex="5">I can't access my account</a>
-		<br /><a id="helpLnk" href= "https://login.yahoo.com/config/login?.src=&.intl=us&.lang=en-US&.help=1&.v=0&.u=3k0ou618sj596&.last=&.last=&promo=&.bypass=&.partner=&pkg=&stepid=&.pd=_ver%253D0%2526c%253D%2526ivt%253D%2526sg%253D&.ab=&.done=https%3A//edit.yahoo.com/config/eval_profile%3F.scrumb=0" tabindex="6">Help</a>
+	<div id="inputs" class="yui-skin-sam">
+					<input name="login" id="username" type="text" maxlength="96" tabindex="1" aria-required="true" placeholder="Yahoo ID" autocorrect="off" autocomplete="off" value="">
+					<input name="passwd" id="passwd" type="password" maxlength="64" tabindex="2" aria-required="true" placeholder="Password" autocorrect="off" autocomplete="off" value="">
+					<div id="captchaDiv"></div>
+			</div>
+		<script src="https://s.yimg.com/rq/darla/2-7-4/js/g-r-min.js"></script>
+
+<script> src="https://s.yimg.com/lq/lib/yui-ssl/3.4.1/build/yui/yui-min.js"></script>
+<script>
+var yahoo_util_event = YAHOO.util.Event;
+function mmCheckTheBox (e) {
+	var yahoo_util_dom = YAHOO.util.Dom;
+
+	// don't check/uncheck when "esc" is pressed
+	if (yahoo_util_event.getCharCode(e) != 9) {
+		yahoo_util_event.preventDefault(e);
+		if (yahoo_util_dom.get("persistent").value == "y") {
+			yahoo_util_dom.get("persistent").value = "";
+			yahoo_util_dom.removeClass('pLabelC','checked');
+		} else {
+			yahoo_util_dom.get("persistent").value = "y";
+			yahoo_util_dom.addClass('pLabelC','checked');
+		}
+	}
+}
+yahoo_util_event.addListener("pLabel", "click", mmCheckTheBox);
+yahoo_util_event.addListener("pLabel", "keypress", mmCheckTheBox);
+</script>
+
+
+		<div id="persistency">
+	<input type="hidden" name=".persistent" id="persistent" value="">
+	<span id="pLabel" for="persistent" tabindex="3"><span id="pLabelC" class="checkbox lg-sprite ">&nbsp;</span><span class="labeltxt">Keep me signed in</span></span>
+	</div>
+	<div id="submit">
+		<button type="submit" id=".save" name=".save" class="lgbx-btn purple-bg" tabindex="4">
+		  Sign In
+		</button>
+	</div>
+</form></fieldset>
+
+			<div class="help-links">
+		<a id="forgotLnk" href="https://edit.yahoo.com/config/eval_forgot_pw?new=1&.done=http%3A//mail.yahoo.com&.src=ym&partner=&.intl=us&.lang=en-US&pkg=&stepid=&.pd=ym_ver%3d0%26c=&.ab=&.last=" tabindex="5">I can't access my account</a>
+		<br><a id="helpLnk" href="https://login.yahoo.com/config/login?.src=ym&.intl=us&.lang=en-US&.help=1&.v=0&.u=8muq0o59isg7i&.last=&.last=&promo=&.bypass=&.partner=&pkg=&stepid=&.pd=ym_ver%253D0%2526c%253D%2526ivt%253D%2526sg%253D&.ab=&.done=http%3A//mail.yahoo.com" tabindex="6">Help</a>
 		</div>
 
-		
+					
+<div class="lgbx-signup">
+    <span class="mm-or">OR</span>
+		<a id="signUpBtn" tabindex="9" class="lgbx-btn blue-bg" href="https://edit.yahoo.com/config/eval_register?.intl=us&.lang=en-US&.pd=ym_ver%253D0%2526c%253D%2526ivt%253D%2526sg%253D&new=1&.done=http%3A//mail.yahoo.com&.src=ym&.v=0&.u=8muq0o59isg7i&partner=&.partner=&pkg=&stepid=&.p=&promo=&.last=">Create New Account</a>
+	</div>
+
+		        <style type="text/css">
+		        </style>
+        <div id="idp">
+			<div id="idpBtns">
+										<div class="idp-string">
+					Sign in with <a id="fbLink" href="https://open.login.yahoo.com/openid/yrp/signin?idp=facebook&ts=1395540210&.intl=us&.lang=en-US&.done=http%3A%2F%2Fmail.yahoo.com&rpcrumb=qb3F8jLPvyi&.src=ym" target="_blank" tabindex="7">Facebook</a> or <a id="ggLink" href="https://open.login.yahoo.com/openid/yrp/signin?idp=google&ts=1395540210&.intl=us&.lang=en-US&.done=http%3A%2F%2Fmail.yahoo.com&rpcrumb=qb3F8jLPvyi&.src=ym" target="_blank" tabindex="8">Google</a>				</div>
+						</div>   
+			<div class="clear"></div>
+        </div>
+        <script>
+        var fbSigninLnk = "https://open.login.yahoo.com/openid/yrp/signin?idp=facebook&ts=1395540210&.intl=us&.lang=en-US&.done=http%3A%2F%2Fmail.yahoo.com&rpcrumb=qb3F8jLPvyi&.src=ym";
+        var googSigninLnk = "https://open.login.yahoo.com/openid/yrp/signin?idp=google&ts=1395540210&.intl=us&.lang=en-US&.done=http%3A%2F%2Fmail.yahoo.com&rpcrumb=qb3F8jLPvyi&.src=ym"; 
+        </script>
 
 
-		
-<div id='other'>
-  <h3>
-    Not crisa_jb?
-  </h3>
-  <a class='lgbx-btn blue-bg' href='https://login.yahoo.com/config/login?logout=1&.intl=us&.lang=en-US&.src=&.pd=_ver%253D0%2526c%253D%2526ivt%253D%2526sg%253D&.partner=&pkg=&stepid=&.direct=1&.done=https%3A//login.yahoo.com/config/login%3f.intl=us%26.lang=en-US%26.partner=%26.last=%26.src=%26.pd=_ver%253D0%2526c%253D%2526ivt%253D%2526sg%253D%26pkg=%26stepid=%26.done=https%253a//edit.yahoo.com/config/eval_profile%253f.scrumb=0' tabindex="5">Sign in as a different user.</a>
-</div>
-
-
-		</div>
+			</div>
 </div>
 
     
-
           </div>
         </div>
 
@@ -833,19 +2262,29 @@ if(top == self){
     </div><!-- end mainBox -->
 
 
+    <!--[if !IE]-->
+    <div id="iframeHolder" style="visibility: inherit; overflow: hidden; width: 1451.5px;">
+                <div id="sb_rel_adFrame" class="darla" style="position: relative; z-index: 9; width: 1920px; height: 1024px; visibility: inherit; display: inline-block;">
+<div id="darla_xmsgfb_proxy_box" style="display:none"></div>
+<div id="fc_align" class="darla" style="position:absolute;top:0px;left:0px">
 
 
-    <![if !IE]>
-    <div id='iframeHolder'>
-                <div id='adFrame'></div>
+<h1 class="offscrn">ADVERTISEMENT: Discover - Rocket Science</h1>
+<div id="richad" style="background-image: url('https://s.yimg.com/cv/ae/us/audience/140325/1440x1024u4ici8o4n.jpg');">
+
+</div>
+
+
+                </div>
             </div>
-    <![endif]>
+
+            
 
 
 
-    <div id="footer">
-        
-<!-- intl = us, spaceid = 150002534 offset = 0 position = FOOT -->
+
+    <div id="footer" style="width: 983px;">
+        <!-- intl = us, spaceid = 150002527 offset = 0 position = FOOT -->
 <!-- static compact footer --> 
 	
 	<style type="text/css">
@@ -857,12 +2296,12 @@ if(top == self){
 	#mem_ft p {margin:0.25em 0 0 0;}
 	</style>
 	<![endif]--><div id="mem_ft">
-    <p> Copyright © 2013 Yahoo! Inc. All rights reserved.</p>
+    <!--<p> Copyright Â© 2014 Yahoo! Inc. All rights reserved.</p>-->
     <p>
-        <a href="https://legalredirect.yahoo.com/copyright?intl=us" target='_blank'>Copyright/IP Policy</a> | 
-        <a href="https://legalredirect.yahoo.com/utos?intl=us" target='_blank'>Terms of Service</a> | 
-        <a href="http://security.yahoo.com" target="_blank">Guide to Online Security</a> |
-        <a href="https://legalredirect.yahoo.com/privacy?intl=us" target="_blank">Privacy Policy</a>     </p>
+        <!--<a href="https://legalredirect.yahoo.com/copyright?intl=us&lang=en-US" target='_blank'>Copyright/IP Policy</a> | -->
+        <a href="https://legalredirect.yahoo.com/utos?intl=us&lang=en-US" target="_blank">Terms</a> | 
+        <!-- <a href="http://security.yahoo.com" target="_blank">Guide to Online Security</a> | -->
+        <a href="https://legalredirect.yahoo.com/privacy?intl=us&lang=en-US" target="_blank">Privacy</a>     </p>
 </div>
     </div>
 
@@ -871,29 +2310,1404 @@ if(top == self){
 var ps3 = false;
 var bb = false;
 </script>
-<script type="text/javascript" src="https://s.yimg.com/zz/combo?yui:2.8.2/build/yahoo-dom-event/yahoo-dom-event.js&yui:2.8.2/build/animation/animation-min.js&yui:2.8.2/build/connection/connection_core-min.js&sf/l/2.6.66/j/centerIframe-min.js&sf/l/2.6.65/j/capslock_ui-min.js&sf/l/2.6.65/j/login_md5-min.js"></script>
+<script type="text/javascript" src="./Sign in to Yahoo_files/combo(4)"></script>
+	<script src="https://s.yimg.com/lq/lib/reg/js/yahoo_container-min_json-min_connection_main-min-new.js"></script>		
+	 <script type="text/javascript">
+	var isIE = false;
+	errClNm = "nodisp";
+	var aeaJson = {};
+	var pwqaJson = {};
+	var verifyJson, selEmail, pwqaPresent=0, aeaPresent=0, captchaData= new Array();
+	var s_result = new Array();
+	var locked_cpwc2 = false;
+	var locked_mobile_captcha = false;
 
+	function setFocusOnCaptcha(){
+		var cp = document.getElementById('captchaV5Answer');
+		cp.focus();
+	}
+	YAHOO.util.Event.onAvailable('captchaV5Answer', setFocusOnCaptcha);
+	function adipcl(e){
+			YAHOO.util.Dom.addClass("inputs", 'yui-skin-sam');
+		}
+		YAHOO.util.Event.onAvailable("inputs",this.adipcl,this);
+		function adbdcl(e){
+			YAHOO.util.Dom.addClass("mnbd", 'masked v5bd yui-skin-sam');
+		}
+		//YAHOO.util.Event.onAvailable("mnbd",this.adbdcl,this);
+	cPanel = new YAHOO.widget.Panel("captcha", {
+	    width: "460px",
+        //height: "380px",
+	    fixedcenter: true,
+	    close: true,
+	    visible: false,
+	    draggable: true,
+	    modal: true,
+	    zIndex:100,
+	    constraintoviewport: true		
+	});
+    cPanel.beforeHideEvent.subscribe(function(){
+        cPanel.setBody('');
+    });
+    var cpwcFlag = '';
+	YAHOO.util.Event.addListener("login_form", "submit", sbmCp);	
+			var callback = {
+				success:function(o) {
+				if(o.responseText !== undefined){ 
+				 var resp = YAHOO.lang.JSON.parse(o.responseText);
+				 var erstr = "";
+						if(resp.status == "redirect"){
+							window.location = resp.url;
+						}else if(resp.status == "error"){	
+							if(resp.code != '1213' && resp.code != '1214' && resp.code != '2213'){
+								cPanel.hide();                           				
+							}else {
+								YAHOO.membership.clearError();								
+							}
+							switch(resp.code){					
+								case '1212':
+									erstr += "<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.";
+									if(resp.populateYId=="1"){
+								
+										YAHOO.membership.showXhrErrWYid(erstr);
+									}else{
+
+										YAHOO.membership.showXhrErr(erstr);
+									}
+								break;							
+								case '1213':								
+								case '1214':
+                                    cpwcFlag = cpwcFlag || resp.ep;
+									if(resp.captchaSubmitted == "1"){
+										errClNm = "showdisp"; 
+									} else {
+										errClNm = "nodisp"; 
+									}
+									var yid = resp.login || "";
+									getCv5(cpwcFlag, yid);							
+								break;
+								case '1219':
+									erstr += "<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.";
+									YAHOO.membership.showXhrErr(erstr);
+								break;
+								case '1235':
+									erstr += '<strong>This ID is not yet taken.</strong><br>Are you trying to <a href="https://edit.yahoo.com/config/eval_register?login=&.intl=us&.lang=en-US&.done=http%3A//mail.yahoo.com&.src=ym&.v=0&.u=8muq0o59isg7i&partner=&.p=&promo=&.last=&.testid=sprads_tst"> register</a> for a new account?';
+									YAHOO.membership.showXhrErr(erstr);
+								break;
+								case '1236':
+									erstr += "<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.";
+									YAHOO.membership.showXhrErr(erstr);
+								break;
+								case '1250':
+									erstr += "The browser you're using refuses to sign in. (cookies rejected)";
+									YAHOO.membership.showXhrErr(erstr);
+								break;
+                                case '2213':
+                                    YAHOO.util.Dom.removeClass("captchaErr", "nodisp");
+                                    YAHOO.util.Dom.addClass("captchaErr", "showdisp");
+                                break;
+                                case '9999':
+                                    if (typeof resp.locked_cpwc2 !== "undefined") {
+                                        locked_cpwc2 = true;
+                                    }
+                                    if (typeof resp.locked_mobile_captcha !== "undefined") {
+                                        locked_mobile_captcha= true;
+                                    }
+                                    showSecondChallenge(resp);
+                                    break;
+                                    case '9998':
+                                    if (typeof resp.locked_cpwc2 !== "undefined") {
+                                        locked_cpwc2 = true;
+                                    }
+                                    if (typeof resp.locked_mobile_captcha !== "undefined") {
+                                        locked_mobile_captcha= true;
+                                    }
+                                    showUserLocked();
+                                break;
+								default:
+								break;
+							}							
+						}
+					 } else {
+						var erstr = "<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.";
+                                                YAHOO.membership.showError(erstr);
+					 }
+			 		},					
+					failure:function(o) {						
+						var erstr = "<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.";
+						YAHOO.membership.showError(erstr);
+					}									
+				};		 	 		
+		var callback1 = {
+			cache:false,
+			success: function(o) {
+				if(o.responseText.indexOf("Captcha") < 0){
+					alert("Sorry, service is temporarily unavailable. Please try again later.");
+					return;
+				}
+				cPanel.setHeader("Verification: Type The Code Shown Below");
+                var html = '<div id="captchaErr" class="'+errClNm+'">Invalid code: try again</div>';
+                cpwcFlag = (o.responseText.indexOf("captchaAnswer") > 0 ) ? "" : "cpwc";
+                if(cpwcFlag != "cpwc") {
+                    html += '<div id="captchaV5"></div>';
+                    html += '<div id="submitC"><div id="cdiv"><button id=".saveC" type="submit" name=".saveC" class="primaryCta" tabindex="5">Continue</button></div>';
+                } else {
+                    html += '<div id="captchaV5" class="cpwcCaptcha" style="margin-left:0px;"></div><input type="hidden" name=".ep" id=".ep" value="' + cpwcFlag + '">';
+                }
+			 	var respXML = getXmlDomObj(o.responseText);                
+                cPanel.setBody(html);	
+                cPanel.render("captchaDiv");
+                if(cpwcFlag == "cpwc") {
+                    var bdDiv = YAHOO.util.Dom.getElementsByClassName("bd", "div", "captchaDiv");
+                    bdDiv[0].setAttribute("style", "height:auto!important");
+                    bdDiv[0].style.cssText = 'height:auto !important'; //For IE
+                }
+				var scriptNode = respXML.getElementsByTagName("CaptchaScript")[0];
+	 			if (scriptNode) {
+	     			var scriptText = isIE ? scriptNode.text : scriptNode.textContent; 
+	     			eval(scriptText);
+	     			YAHOO.CAPTCHA.wrapper.execute(o.responseText);
+				}                           				
+                //YAHOO.util.Dom.getElementsByClassName("captchaButToSecondary")[0].tabIndex = "0";
+                YAHOO.util.Dom.getElementsByClassName("container-close")[0].tabIndex = "0";
+                //YAHOO.util.Dom.getElementsByClassName("captchaButTry")[0].tabIndex = "1";
+                //document.getElementById(".saveC").tabIndex = "0";
+                //YAHOO.util.Dom.getElementsByClassName("captchaAnswerBox")[0].tabIndex = "0";
+                YAHOO.util.Event.onAvailable('captchaV5Answer', setFocusOnCaptcha);
+                cPanel.showMask();                
+                cPanel.show();
+                cPanel.setFirstLastFocusable();
+			 },
+			 failure : function(o) {			 		
+					var erstr = "<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.";
+					YAHOO.membership.showError(erstr);			 
+			 }				 			 	
+		};
+		function getXmlDomObj(sourceXml) {
+			var xmlDoc;
+			if (window.ActiveXObject) {			                                                                                            
+			    if (typeof(xmlDoc) == 'undefined') {
+				xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+				xmlDoc.async="false";
+				isIE=true;
+			    }
+			    xmlDoc.loadXML(sourceXml);
+			} else {			                                                                                            
+			    var parser=new DOMParser();
+			    xmlDoc=parser.parseFromString(sourceXml,"text/xml");
+			    isIE=false;
+			}
+			return xmlDoc;
+		}
+
+		//Static strings for second challenge
+		var secChalStr = {
+		    pwqa_content : "You are logging in from a device we don't recognize. <a href='' id='pwqa_why_popup'>Learn why</a>",
+		    pwqa_content_txt : "You are logging in from a device we don't recognize. <a href='' id='pwqa_why_popup'>Learn why</a>",
+		    pwqa_content_confirm_id : "Please choose how to confirm your identity for account security.",
+		    pwqa_content_next_line : "For your account safety, please answer your security question below.",
+		    pwqa_content_aea_text : "We can send a verification code to your listed phone number or alternate email address.",
+		    sec_chal_header : "Confirm your identity: ",
+            pwqa_header : "answer security question",
+		    pwqa_wrong_answer : "The answer you entered is incorrect. Please try again.",
+		    pwqa_verify_answer : "Verify answer",
+		    sec_chal_continue : "Continue",
+		    sec_chal_back : "Back",
+		    sec_chal_close : "Close",
+		    pwqa_show_verification_cta : "Receive code",
+		    aea_header : "receive verification code",
+		    aea_content : "For your account safety, please choose either a listed phone number (carrier charges may apply) or email address below to receive a verification code.",
+		    aea_learn_more : "Learn more",
+		    aea_sms_text : "SMS",
+		    aea_voice : "Voice",
+		    aea_by_phone : "By phone",
+		    aea_by_email : "By email",
+		    aea_receive_code : "Receive code",
+		    aea_err_temp_not_delivered : "We cannot deliver the verification code to your selected phone number or email at this time. Please choose another one or try later again.",
+		    aea_err_not_delivered : "We cannot deliver the verification code to your selected phone number or email. Please choose another one.",
+		    aea_err_not_selected : "Please select either a phone number or an email address listed below to receive your login verification code.",
+		    aea_verify_header : "enter verification code",
+		    aea_email_verify_content : "A verification code has been sent to <span class='strong'>{email}</span>",
+		    aea_email_idetification_code : "Verification code",
+		    sec_chal_enter_code : "Verify code",
+		    sec_chal_err_no_answer : "No answer provided. Please try again.",
+		    sec_chal_err_empty_verification : "Please enter the verification code to continue",
+		    locked_header : "Account locked temporarily",
+		    locked_cc_msg : "To access your account, please provide your contact info below so that Yahoo Customer Care can assist you.",
+		    locked_cc_err_msg : "Please enter a valid Mobile number or Email address that you currently have access to.",
+		    locked_cc_invalid_email_err_msg : "Please enter a valid non-Yahoo Email address that you currently have access to.",
+		    locked_cc_invalid_mobile_err_msg : "Please enter a valid US mobile number that you currently have access to.",
+		    locked_cc_mobile_number : "Mobile number",
+		    locked_cc_email_address : "Non-Yahoo! email address",
+            locked_cc_btn_next : "Next",
+            		    locked_content : "This account is temporarily locked for 12 hours because of security concerns. Please try signing in later. For additional help, please contact <a href='{lock_link}' target='_blank'>Yahoo Customer Care</a> online{cc_online}.",
+		    locked_content_cc_online : " or at 1-800-250-1701",
+		    locked_content_cc_ref: "Refer incident number {REFNUM} and your ID {YID} when contacting Customer Care",
+
+		    locked_title_account_locked: "Account locked",
+		    locked_title_contact_cc: "Contact customer care",
+
+            locked_content_cc_locked_msg0: "Your account is locked. To recover your account now please <a href='http://help.yahoo.com/l/us/yahoo/edit/cctop10/online_help.html' target='_blank'>contact customer care</a>",
+            locked_content_cc_locked_msg1: "Your account is locked for 12 hours.",
+            locked_content_cc_locked_msg2: "To recover your account now please call",
+            locked_content_cc_locked_msg3: "Please refer to your Yahoo ID ({YID}) and the following incident number:",
+            locked_content_cc_locked_msg4: "Please refer to your Yahoo ID ({YID}).",
+
+		    aea_err_pwqa_locked : "You failed to answer your security question correctly multiple times. Please continue to confirm your identity by selecting another verification method below.",
+		    why_recognize : "Why don't we recognize your device?",
+		    why_point_one : "You are using a device or browser you haven't previously used.",
+		    why_point_two : "You may have deleted your browser cookies or your browser is set to clear cookies whenever it closes.",
+		    why_point_three : "You are using &quot;Private Browsing&quot; mode.",
+		    sec_chal_or : "OR",
+		    aea_learn_more_content_para_one : "To help prevent unauthorized person from accessing your account, we need to verify your identity with a one-time verification code sent to your account's mobile phone or alternate non-Yahoo email address.",
+		    aea_learn_more_content_para_two : "How does Yahoo use the telephone number?",
+		    aea_learn_more_content_para_three : "We and TeleSign Corporation, our partner who helps provide this service, shall use the phone number to send a validation code. We also track each number to make sure it isn't used too many times. We will not use the number to send you promotional or other unwanted messages, unless you've given us permission elsewhere. We do not share the number with any other company or organization except TeleSign Corporation, which retains the number no longer than 90 days. Learn more about <a href='{learn_link}' target='_blank'>Yahoo's privacy practices.</a>",
+		    aea_invalid_code : "The code you entered is invalid. Please try again.",
+            lock_link : "http://help.yahoo.com/l/us/yahoo/edit/general-01.html",
+            learn_more_link : "http://info.yahoo.com/privacy/us/yahoo/details.html",
+            aea_locked_msg : "You did not confirm your identity via the login code verification method. Please confirm your identity again by answering the security question below.",
+            aea_enter_code : "Enter the code received",
+            added_date_format : "Added {month} {day}, {year}",
+		locked_warning : "Warning",
+		svc_unavilable : "Error: service temporarily unavailable."
+		}
+                 function closeCaptchaWindow(){
+
+                        cPanel.hide();
+                }
+
+		function removeVoiceCaptchaJS() {
+			var head = document.getElementsByTagName("head")[0];
+			var scripts = head.getElementsByTagName("script");
+			var styles = head.getElementsByTagName("link");
+
+            var voiceCaptchaJSFile = 'VoiceSMSCaptcha.js';
+            var imageCaptchaJSFile = 'Captcha_AudioCaptcha.js';
+			var captchaCSSFile = 'VoiceSMSCaptchaSecure.css';
+
+			
+			for (var i = 0; i < scripts.length; i++) {
+				if (scripts[i].src.indexOf(voiceCaptchaJSFile) > 0 || scripts[i].src.indexOf(imageCaptchaJSFile) > 0) {
+					head.removeChild(scripts[i]);
+				}
+			}
+		}
+
+		function showUserLocked() {
+            if ( locked_mobile_captcha ) {
+                showUserLockedVerify();
+                return;
+            }
+
+            //cPanel.cfg.setProperty("height", "380px");
+            cPanel.setHeader(secChalStr.locked_warning);
+            var lck_cnt = secChalStr.locked_content;
+            lck_cnt = lck_cnt.replace('{lock_link}', secChalStr.lock_link);
+            var verify2 = false;
+            if(secChalStr.locked_content_cc_online !== '') { // us intl
+                lck_cnt = lck_cnt.replace('{cc_online}', '');
+                verify2 = true;
+            }
+
+		    var panelBody = '<div class="lockedPage"><div id="lockedErr" class="error2">'+secChalStr.locked_header+'</div><div id="lockedErrBdy" class="lockedContent">'+lck_cnt+'</div><div id="submitC"><div id="cdiv"><button id="closeLocked" type="button" name="closeLocked" class="primaryCta" tabindex="5">'+secChalStr.sec_chal_close+'</button></div></div></div>'; 
+		    cPanel.setBody(panelBody);
+            cPanel.render("captchaDiv");
+		    cPanel.showMask();                
+		    cPanel.show(); 
+		    YAHOO.util.Event.addListener('closeLocked', 'click', function(e) {
+			    cPanel.hide();
+		    });
+            if (verify2  && locked_cpwc2) {
+                var objLink = document.getElementById("lockedErrBdy").getElementsByTagName('a')[0];
+                YAHOO.util.Event.addListener(objLink, 'click', function(e) {
+                    if (e.stopPropagation) e.stopPropagation();
+                    YAHOO.util.Event.preventDefault(e);
+                    showUserLockedVerify();
+                });
+            }
+		}
+
+        function showUserLockedVerify() {
+		    cPanel.setHeader(secChalStr.locked_title_account_locked);
+            var panelBody = '<div class="lockedPage"><div id="lockedErr" class="error2">'+secChalStr.locked_header+'</div><div id="lockedErrBdy" class="lockedContent">';
+            panelBody += secChalStr.locked_cc_msg;
+            panelBody += '<div class="center pwqaContent">';
+            panelBody += '<p style="text-align:center;">';
+            panelBody += '<span class="next-line">&nbsp;&nbsp;</span>';
+			panelBody += '<span class="next-line error2" id="lockedValidationErr">' + secChalStr.locked_cc_err_msg + '</span>';
+            panelBody += '<span class="next-line">&nbsp;&nbsp;</span>';
+            panelBody += '<span class="next-line"><span>' + secChalStr.locked_cc_mobile_number + '</span> <span><input type="text" name=".2lcpn" id=".2lcpn" autocomplete="off" style="width:200px;"></span>';
+            panelBody += '<span class="next-line or">&nbsp;'+secChalStr.sec_chal_or+'&nbsp;</span>';
+            panelBody += '<span class="next-line">&nbsp;&nbsp;</span>';
+            panelBody += '<span class="next-line"><span>' + secChalStr.locked_cc_email_address  + '</span> <span><input type="text" name=".2lcea" id=".2lcea" autocomplete="off" style="width:200px;"></span>';
+            panelBody += '</p></div>';
+
+            panelBody +='</div><div id="submitC"><div id="cdiv"><button id="nextLocked" type="button" name="nextLocked" class="primaryCta" tabindex="5">' + secChalStr.locked_cc_btn_next + '</button></div></div></div>';
+            cPanel.setBody(panelBody);
+            cPanel.render("captchaDiv");
+            cPanel.showMask();
+            cPanel.show();
+			YAHOO.util.Event.addListener(['.2lcpn', '.2lcea'], 'focus', function(e) {
+				YAHOO.util.Dom.setStyle('lockedValidationErr', "visibility", "hidden");
+			});
+
+            YAHOO.util.Event.addListener('nextLocked', 'click', function(e) {
+               if (e.stopPropagation) e.stopPropagation();
+               YAHOO.util.Event.preventDefault(e);
+               var pn = document.getElementById('.2lcpn');
+               var ea = document.getElementById('.2lcea');
+               if ( pn.value === '' && ea.value === '') {
+                    if ( locked_mobile_captcha ) {
+                        showUserLocked3();
+                    } else {
+                        YAHOO.util.Dom.get('lockedValidationErr').innerHTML = secChalStr.locked_cc_err_msg;
+                        YAHOO.util.Dom.setStyle('lockedValidationErr', "visibility", "visible");
+                    }
+                    return; 
+               }
+
+               // TODO: CALL API
+                var uri = '/ylc';
+                var login = document.getElementById("username").value;
+                var params = "?login="+login+"&lang=en-US";
+                YAHOO.util.Connect.asyncRequest('POST', uri + params, {
+                    cache:false,
+                    success : function(o) {
+                        var resp = YAHOO.lang.JSON.parse(o.responseText);
+						if (resp.err == 2) {
+							YAHOO.util.Dom.get('lockedValidationErr').innerHTML = secChalStr.locked_cc_invalid_email_err_msg;
+							YAHOO.util.Dom.setStyle('lockedValidationErr', "visibility", "visible");
+						} else if (resp.err == 3) {
+							YAHOO.util.Dom.get('lockedValidationErr').innerHTML = secChalStr.locked_cc_invalid_mobile_err_msg;
+							YAHOO.util.Dom.setStyle('lockedValidationErr', "visibility", "visible");
+						} else {
+                            if ( locked_mobile_captcha ) {
+							    showUserLocked3(resp.i_id);
+                            } else {
+							    showUserLocked2(resp.i_id);
+                            }
+						}
+                    },
+                    failure : function(o) {
+                    }
+				}, "oj=1&optCC=showCC&yccMobile=" + pn.value + "&yccEmail=" + ea.value);
+            });
+        }
+
+		function showUserLocked2(refnum) { 
+            cPanel.setHeader(secChalStr.locked_title_contact_cc);
+            var login = '<b>' + document.getElementById("username").value + '</b>';
+		    var panelBody = '<div class="lockedPage"><div id="lockedErr" class="error2">'+secChalStr.locked_title_contact_cc+'</div><div id="lockedErrBdy" class="lockedContent2">';
+            panelBody += '<p class="lockedMsg"><span class="next-line">' + secChalStr.locked_content_cc_locked_msg1 + '</span>';
+            panelBody += '<span class="next-line">' + secChalStr.locked_content_cc_locked_msg2 + '</span>';
+            panelBody += '<span class="next-line ref-num">1-800-250-1701</span>';
+            panelBody += '<span class="next-line">'+ secChalStr.locked_content_cc_locked_msg3.replace('{YID}',login) +'</span>';
+            panelBody += '<span class="next-line ref-num">'+ refnum.replace('-', ' ') +'</span>';
+            panelBody += '</p></div><div id="submitC"><div id="cdiv"><button id="closeLocked" type="button" name="closeLocked" class="primaryCta" tabindex="5">'+secChalStr.sec_chal_close+'</button></div></div></div>'; 
+		    cPanel.setBody(panelBody);
+            cPanel.render("captchaDiv");
+		    cPanel.showMask();                
+		    cPanel.show(); 
+		    YAHOO.util.Event.addListener('closeLocked', 'click', function(e) {
+			    cPanel.hide();
+		    });
+		}
+
+		function showUserLocked3(refnum) { 
+            cPanel.setHeader(secChalStr.locked_title_contact_cc);
+            var login = '<b>' + document.getElementById("username").value + '</b>';
+		    var panelBody = '<div class="lockedPage"><div id="lockedErr" class="error2">'+secChalStr.locked_title_contact_cc+'</div><div id="lockedErrBdy" class="lockedContent2">';
+            panelBody += '<p class="lockedMsg"><span class="next-line">' + secChalStr.locked_content_cc_locked_msg0 + '</span>';
+            if ( typeof refnum === 'string' && refnum.length > 0 ) {
+                panelBody += '<span class="next-line">'+ secChalStr.locked_content_cc_locked_msg3.replace('{YID}',login) +'</span>';
+                panelBody += '<span class="next-line ref-num">'+ refnum.replace('-', ' ') +'</span>';
+            } else {
+                panelBody += '<span class="next-line">'+ secChalStr.locked_content_cc_locked_msg4.replace('{YID}',login) +'</span>';
+            }
+            panelBody += '</p></div><div id="submitC"><div id="cdiv"><button id="closeLocked" type="button" name="closeLocked" class="primaryCta" tabindex="5">'+secChalStr.sec_chal_close+'</button></div></div></div>'; 
+		    cPanel.setBody(panelBody);
+            cPanel.render("captchaDiv");
+		    cPanel.showMask();                
+		    cPanel.show(); 
+		    YAHOO.util.Event.addListener('closeLocked', 'click', function(e) {
+			    cPanel.hide();
+		    });
+		}
+
+		function showSecChalPopup(id) {
+		    if(YAHOO.util.Dom.hasClass(id, "nodisp")){
+                YAHOO.util.Dom.removeClass(id, "nodisp");
+                YAHOO.util.Dom.addClass(id, "showdisp");
+		    } else {
+                YAHOO.util.Dom.removeClass(id,"showdisp");
+                YAHOO.util.Dom.addClass(id,"nodisp");
+		    }
+		}
+
+		function hideSecChalPopup(e, id) {
+		    if(YAHOO.util.Dom.hasClass(id,'showdisp')){
+                YAHOO.util.Dom.removeClass(id,'showdisp');
+                YAHOO.util.Dom.addClass(id,'nodisp'); 
+		    }
+		}
+        YAHOO.membership = YAHOO.membership || {};
+        YAHOO.membership.cpcwToggle = function (context) {
+            if(context.reason == "postcreate") {
+                var mainDiv = document.createElement("div");
+                mainDiv.id = "submitC";
+
+                if (document.getElementById('captchaV5ErrorMessage') != null) {
+                    cPanel.setHeader(secChalStr.svc_unavilable);
+                    mainDiv.innerHTML = '<div id="cdiv"><button id="cpwcVerifyCode" type="submit" name="cpwcVerifyCode" class="primaryCta" onclick="closeCaptchaWindow()" tabindex="5">'+secChalStr.sec_chal_close+'</button></div>';
+                } else {
+                    mainDiv.innerHTML = '<div id="cdiv"><button id="cpwcVerifyCode" type="submit" name="cpwcVerifyCode" class="primaryCta" tabindex="5">'+secChalStr.sec_chal_enter_code+'</button></div>';
+                }
+
+                var captchaDiv = YAHOO.util.Dom.get("captchaV5");
+                captchaDiv.appendChild(mainDiv);
+            }
+        }
+
+        function showSecondChallenge(jsonResult) {
+            result =  YAHOO.lang.JSON.parse(jsonResult.challenge_data);
+            var zValue = result.z;
+            var sub_code = (jsonResult.sub_code != null) ? jsonResult.sub_code : null;
+            pwqaPresent=0; aeaPresent = 0;
+            secChalStr.pwqa_content_txt = (result.reason === 'MANUAL_TRAP' ) ? secChalStr.pwqa_content_confirm_id : secChalStr.pwqa_content;
+
+            for(var i=0;i<result.challenges.length;i++) {
+                s_result[i] = result.challenges[i];
+                if (s_result[i].type == 1) {
+                    pwqaPresent = 1;
+                } else if (s_result[i].type == 3 || s_result[i].type == 4 || s_result[i].type == 5) {
+                    aeaPresent = 1;
+                }
+            }
+            //Sort by priority                                        
+            for(i=0;i<s_result.length;i++) {
+                imin = i;
+                for(j=i+1;j<s_result.length;j++) {
+                    if(s_result[j].priority < s_result[imin].priority) {
+                        imin = j;       
+                    }
+                }
+                tmp = s_result[i];
+                s_result[i] = s_result[imin];
+                s_result[imin] = tmp;
+            }
+            //Based on 'type' field display PWQA or AEA first
+            secondChalJson = s_result;
+            if(sub_code !== null) {
+                switch(sub_code) {
+                    //PWQA wrong answer
+                    case '9997':
+                        if(s_result[0].type === 1 && pwqaPresent == 1) { 
+                            showPWQA(s_result[0], zValue, 1, "9997"); 
+                        } else if(aeaPresent == 1) {
+                            showAEA(s_result, zValue, 0, "9997");
+                        } else {
+                            showUserLocked();
+                        }
+                    break;
+                    //Email wrong verification code
+                    case '9996':
+                        if(aeaPresent == 1) {
+                            showVerify("EMAIL", zValue, verifyJson, selEmail, "9996");
+                        } else if(pwqaPresent == 1) {
+                            showPWQA(s_result[0], zValue, 0, "9995");
+                        } else {
+                            showUserLocked();
+                        }
+                    break;
+                    //Phone wrong verification code
+                    case '9995':
+                        if(aeaPresent == 1) {
+                            showVerify("PHONE", zValue, verifyJson, '', "9995");
+                        } else if(pwqaPresent == 1) {
+                            showPWQA(s_result[0], zValue, 0, "9995");
+                        } else {
+                            showUserLocked();
+                        }
+                    break;
+                    //Phone communication error - temporary
+                    case '9994':
+                        showAEA(s_result, zValue, 0, "9994");
+                    break;
+                    default:
+                        if(s_result[0].type == 4 || s_result[0].type == 3) {
+                            showAEA(s_result, zValue, 1);                
+                        } else if(s_result[0].type == 1) {
+                            showPWQA(s_result[0], zValue, 1);
+                        }
+                    break;
+                }
+            }
+        }
+        
+        function digitToMonth(date) {            
+            if(date) {                
+                switch(date) {                    
+                    case 1:                        
+                        return 'January'; 
+                    break;
+                    case 2: 
+                        return 'February';
+                    break;
+                    case 3:
+                        return 'March';
+                    break;
+                    case 4:
+                        return 'April';
+                    break;
+                    case 5:
+                        return 'May';
+                    break;
+                    case 6:
+                        return 'June';
+                    break;
+                    case 7:
+                        return 'July';
+                    break;
+                    case 8:
+                        return 'August';
+                    break;
+                    case 9:
+                        return 'September';
+                    break;
+                    case 10:
+                        return 'October';
+                    break;
+                    case 11:
+                        return 'November';
+                    break;
+                    case 12:
+                        return 'December';
+                    break;
+                    default:
+                        return null; 
+                }
+            } else {
+                return null;
+            }
+        } 
+
+        function showPWQA(resJson, zValue, showAEABtn, error) {
+            res = resJson.data;
+            question = res[0];
+            addedDateTs = new Date(resJson.ts*1000);
+            addedDate = secChalStr.added_date_format;
+            addedDate = addedDate.replace("{month}",digitToMonth(addedDateTs.getMonth()+1));
+            addedDate = addedDate.replace("{day}", addedDateTs.getDate());
+            addedDate = addedDate.replace("{year}", addedDateTs.getFullYear());
+
+            //cPanel.cfg.setProperty("height", "380px");
+            cPanel.setHeader(secChalStr.sec_chal_header+secChalStr.pwqa_header);
+            panelBody = '<div id="pwqaErr" class="error2"></div><div class="pwqaContent" id="pwqaContent"><div class="sec-chal-popup nodisp" id="pwqa-popup"><div id="pwqa_popup_content" class="sec-chal-content"><span class="pointer-up"></span><a class="clspopup"><span class="hide-offscreen">'+secChalStr.sec_chal_close+'</span></a><p><span class="strong">'+secChalStr.why_recognize+'</span></p><p><ul><li>'+secChalStr.why_point_one+'</li><li>'+secChalStr.why_point_two+'</li><li>'+secChalStr.why_point_three+'</li></ul></p></div></div><span class="strong">'+secChalStr.pwqa_content_txt+'</span>';
+
+            if(showAEABtn == 1 && aeaPresent == 1) {
+                panelBody += '<div class="pwqa-aea-text">' +secChalStr.pwqa_content_aea_text+'<div id="receivebtn">';
+                panelBody += '<button id=".sendVC" name=".sendVC" class="primaryCta" tabindex="6" type="button" onclick="showAEA(s_result, \''+zValue+'\', 0)">'+secChalStr.pwqa_show_verification_cta+'</button>';
+                panelBody +='<div class="center"><span class="lthru">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="or">&nbsp; '+secChalStr.sec_chal_or+'&nbsp; </span><span class="lthru">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>';
+            }
+
+            panelBody += '<span class="next-line">'+secChalStr.pwqa_content_next_line+'</span><div class="pwqa-question"><span style="font-size:85%;">'+question+'<br><span class="small">'+addedDate+'</span></span><input type="input" name=".2ndChallenge_pwqa_ans_in" id=".2ndChallenge_pwqa_ans_in" autocomplete="off" style="width:135px;height:14px;line-height:100%;"></div><input type="hidden" name=".z" id=".z" value='+zValue+'><input type="hidden" name=".2ndChallenge_type_in" id=".2ndChallenge_type_in" value="1"><input type="hidden" id=".2ndChallenge_pwqa_quest_in" name=".2ndChallenge_pwqa_quest_in" value="'+question+'"><div id="verifybtn"><button id=".savePWQA" type="submit" name=".savePWQA" class="primaryCta" tabindex="5">'+secChalStr.pwqa_verify_answer+'</button></div>';
+            for(i=0;i<secondChalJson.length;i++) {
+                if(secondChalJson[i].type === "3") {
+                    aeaJson = secondChalJson[i];
+                }
+                if(secondChalJson[i].type === "2") {
+                    pwqaJsoe = secondChalJson[i].data;                                        
+                }
+            }       
+            if(showAEABtn == 1) {
+/*
+                if(aeaPresent == 1) {
+                    panelBody += '<div class="pwqa-aea-text"><div class="center"><span class="lthru">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="or">&nbsp; '+secChalStr.sec_chal_or+'&nbsp; </span><span class="lthru">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>'+secChalStr.pwqa_content_aea_text+'<div id="receivebtn">';
+                    panelBody += '<button id=".sendVC" name=".sendVC" class="primaryCta" tabindex="6" type="button" onclick="showAEA(s_result, \''+zValue+'\', 0)">'+secChalStr.pwqa_show_verification_cta+'</button>';
+                }
+*/
+            } else if(aeaPresent == 1) {
+                panelBody += '<button id=".backVC" name=".backVC" class="primaryCta" tabindex="7" type="button" onclick="showAEA(s_result, \''+zValue+'\', 1)">'+secChalStr.sec_chal_back+'</button>';
+            }       
+            panelBody += '</div></div></div>';
+            cPanel.setBody(panelBody);
+            cPanel.render("captchaDiv");
+            document.getElementById('pwqaErr').style.display = 'none';
+            if(error !== null) {
+                switch(error) {
+                    case "9997": 
+                        document.getElementById('pwqaErr').innerHTML = secChalStr.pwqa_wrong_answer;
+                        document.getElementById('pwqaErr').style.display = '';
+                    break;
+                    case "9995":
+                        document.getElementById('pwqaErr').innerHTML = secChalStr.aea_locked_msg;
+                        document.getElementById('pwqaErr').style.display = '';
+                    break;
+                }
+            }
+            YAHOO.util.Event.addListener(document, "click", hideSecChalPopup, "pwqa-popup");            
+            YAHOO.util.Event.addListener("pwqa_why_popup", "click", function(e){                
+                e.cancelBubble = true;
+            if (e.stopPropagation) e.stopPropagation();                
+                YAHOO.util.Event.preventDefault(e);
+                showSecChalPopup("pwqa-popup");
+                YAHOO.util.Event.addListener(YAHOO.util.Dom.getElementsByClassName("clspopup"), "click", hideSecChalPopup, "pwqa-popup"); 
+            });
+            cPanel.showMask();                
+            cPanel.show();
+            var answerBox = document.getElementById('.2ndChallenge_pwqa_ans_in');
+            answerBox.focus();
+            answerBox.select();
+            answerBox.tabIndex = 0;
+            document.getElementById('.savePWQA').tabIndex = 0;
+            if(document.getElementById('.sendVC') != null) {
+                document.getElementById('.sendVC').tabIndex = 0;
+            }
+            cPanel.setFirstLastFocusable();
+        }      
+
+        function showAEA(resJson, zValue, showPWQABtn, error) {
+            cPanel.setHeader(secChalStr.sec_chal_header+secChalStr.aea_header); 
+            //cPanel.cfg.setProperty("height", "380px");
+            var validPWQA = 0;
+            for(i=0;i<resJson.length;i++){
+                if (resJson[i].type == 1) {
+                    validPWQA = 1;
+                }
+                if (resJson[i].type == 4) {
+                    var aea = resJson[i].data;
+                } else if (resJson[i].type == 3) {
+                    var mobile = resJson[i].data;
+                } else if (resJson[i].type == 5) {
+                    var phone = resJson[i].data;
+                }
+            }
+            var lrn_three_txt = secChalStr.aea_learn_more_content_para_three;
+            if(navigator.userAgent.indexOf('Firefox/6') > 0) {
+                style = '';            
+            } else {
+                style = "left:70px;";            
+            }
+            lrn_three_txt = lrn_three_txt.replace('{learn_link}',secChalStr.learn_more_link);
+            var panelBody = '<div id="aeaErr" class="error2"></div><div class="aeaContent"><div class="sec-chal-popup nodisp" id="pwqa-popup"><div id="pwqa_popup_content" class="sec-chal-content"><span class="pointer-up"></span><a class="clspopup"><span class="hide-offscreen">'+secChalStr.sec_chal_close+'</span></a><p><span class="strong">'+secChalStr.why_recognize+'</span></p><p><ul><li>'+secChalStr.why_point_one+'</li><li>'+secChalStr.why_point_two+'</li><li>'+secChalStr.why_point_three+'</li></ul></p></div></div><span class="strong">'+secChalStr.pwqa_content_txt+'</span><span class="aea-next-line" style="display:block;">'+secChalStr.aea_content+' <a href="" id="aea-learn-more">'+secChalStr.aea_learn_more+'</a></span><div class="sec-chal-popup nodisp" id="learn-more-popup"><div id="learn_more_content" class="sec-chal-content"><span class="pointer-up" style='+style+'></span><a class="clspopup"><span class="hide-offscreen">close</span></a><p>'+secChalStr.aea_learn_more_content_para_one+'</p><p class="strong">'+secChalStr.aea_learn_more_content_para_two+'</p><p>'+lrn_three_txt+'</p></div></div>';
+            if(mobile !== undefined) {
+                if(mobile.length > 0) {
+                    panelBody += '<div class="mobileList"><div class="bm">'+secChalStr.aea_by_phone+'</div><ul>';
+                    for(var i=0; i<mobile.length; i++) {
+                        mnumber = mobile[i][i];
+                        stl = '';
+                        if(YAHOO.env.ua.ie == 6 && i==0) {
+                                stl = ' style="margin-left:-3px;"';
+                        }
+                        mobileMarkup = '<li' + stl + ' style="white-space: nowrap;"><input name="aeaSelect" type="radio" id="aeaSelectSMS'+i+'" style="width:15px;" class="aeaSelect" rel="3|'+i+'|'+mnumber+'|SMS">'+secChalStr.aea_sms_text+' <span class="spacer"></span><input name="aeaSelect" type="radio" id="aeaSelectVoice'+i+'" style="width:15px;" rel="3|'+i+'|'+mnumber+'|CALL">'+secChalStr.aea_voice+' <span class="strong"><span>&nbsp;</span> '+mnumber+'</span></li>';
+                        panelBody += mobileMarkup;
+                        if(i>=2){
+                            break;
+                        }
+                    }
+		    if (typeof phone === "undefined") {
+                    panelBody += '</ul></div>';
+                    }
+                }
+            }
+
+	   if(phone !== undefined) {
+                if(phone.length > 0) {
+                    if (typeof mobile === "undefined") {
+                    panelBody += '<div class="mobileList"><div class="bm">'+secChalStr.aea_by_phone+'</div><ul>';
+                    } else {
+                    panelBody += '<li style="border-top: 1px solid #e3e3e3; margin-left: 5px; padding-bottom: 14px; width: 250px;"></li>';
+                    }
+                    for(var i=0; i<phone.length; i++) {
+                        mnumber = phone[i][i];
+                        stl = '';
+                        if(YAHOO.env.ua.ie == 6 && i==0) {
+                                stl = ' style="margin-left:-3px;"';
+                        }
+                        phoneMarkup = '<li' + stl + ' style="white-space: nowrap;"><input name="aeaSelect" type="radio" id="aeaSelectVoice'+i+'" style="width:15px;" rel="5|'+i+'|'+mnumber+'|CALL">'+secChalStr.aea_voice+' <span class="strong"><span>&nbsp;</span> '+mnumber+'</span></li>';
+                        panelBody += phoneMarkup;
+                        if(i>=2){
+                            break;
+                        }
+                    }
+                    panelBody += '</ul></div>';
+                }
+            }
+
+            if(aea !== undefined) { 
+                if(aea.length > 0) {
+                    panelBody += '<div class="aeaList"><div class="be">'+secChalStr.aea_by_email+'</div><ul>';
+                    for(var i=0; i<aea.length; i++) {
+                        email = aea[i][i];
+                        stl = '';
+                        if(YAHOO.env.ua.ie == 6 && i==0) {
+                                stl = ' style="margin-left:-3px;"';
+                        }
+                        emailMarkup = '<li' + stl + ' style="white-space: nowrap;"><input name="aeaSelect" id="aeaSelectEmail'+i+'" type="radio" style="width:15px;" class="aeaSelect" rel="4|'+i+'|'+email+'|EMAIL">'+email+'</li>';
+                        panelBody += emailMarkup;
+                        if(i>=2){
+                            break;
+                        }
+                    }
+                    panelBody += '</ul></div>';
+                }
+            }
+            panelBody += '<div id="submitC"><input type="hidden" name=".z" id=".z" value='+zValue+'><div id="cdiv"><button id=".sendAEA" type="button" name=".sendAEA" class="primaryCta" tabindex="5">'+secChalStr.aea_receive_code+'</button>';
+            for(i=0;i<secondChalJson.length;i++) {
+                if(secondChalJson[i].type == 1) {
+                    pwqaJson = secondChalJson[i];
+                }                                        
+                if(secondChalJson[i].type == 3) {
+                    aeaJson = secondChalJson[i];
+                }                                        
+            } 
+            if(showPWQABtn == 1) {
+                if(!pwqaJson) {
+                    panelBody += '<button id="showPWQABtn" name="showPWQABtn" class="secondaryCta" tabindex="6" type="button" onclick="showPWQA(pwqaJson, \''+zValue+'\', 0)">Show PWQA</button>';
+                }
+            } else {
+                if(validPWQA) {
+                    panelBody += '<button id=".backPWQA" name=".backPWQA" class="secondaryCta" tabindex="6" type="button" onclick="showPWQA(pwqaJson, \''+zValue+'\', 1)">'+secChalStr.sec_chal_back+'</button>';
+                }
+            }
+            panelBody += '</div></div></div>';            
+            cPanel.setBody(panelBody);
+            cPanel.render("captchaDiv");
+            cPanel.showMask();                
+            cPanel.show();
+
+            YAHOO.util.Event.addListener(document, "click", hideSecChalPopup, "pwqa-popup");
+            YAHOO.util.Event.addListener("pwqa_why_popup", "click", function(e){            
+                e.cancelBubble = true;                                
+                if (e.stopPropagation) e.stopPropagation();
+                YAHOO.util.Event.preventDefault(e);
+                showSecChalPopup("pwqa-popup");
+                YAHOO.util.Event.addListener(YAHOO.util.Dom.getElementsByClassName("clspopup"), "click", hideSecChalPopup, "pwqa-popup");
+                hideSecChalPopup(null, "learn-more-popup");
+            });
+
+            YAHOO.util.Event.addListener(document, "click", hideSecChalPopup, "learn-more-popup");
+            YAHOO.util.Event.addListener("aea-learn-more", "click", function(e){
+                e.cancelBubble = true;
+                if (e.stopPropagation) e.stopPropagation();
+                YAHOO.util.Event.preventDefault(e);
+                showSecChalPopup("learn-more-popup");
+                YAHOO.util.Event.addListener(YAHOO.util.Dom.getElementsByClassName("clspopup"), "click", hideSecChalPopup, "learn-more-popup"); 
+            });
+
+            document.getElementById('aeaErr').style.display = "none";
+            var adjust = YAHOO.util.Dom.getElementsByClassName("mobileList")[0];
+
+            if(error) {
+                switch(error) {
+                    case '9997':
+                        document.getElementById('aeaErr').innerHTML = secChalStr.aea_err_pwqa_locked;
+                        break;
+                    case '9994':
+                        document.getElementById('aeaErr').innerHTML = secChalStr.aea_err_not_delivered;
+                        break;
+                    default:
+                        document.getElementById('aeaErr').innerHTML = secChalStr.aea_err_not_delivered;
+                        break;
+                }
+                document.getElementById('aeaErr').style.display = "";
+                YAHOO.util.Dom.addClass(adjust, "adjust-margin");
+            } else {
+                YAHOO.util.Dom.removeClass(adjust, "adjust-margin");
+            }
+            YAHOO.util.Event.addListener('.sendAEA', 'click', function(){
+                createAEA();
+            });
+            var select = YAHOO.util.Dom.getElementsByClassName('aeaSelect')[0];
+            select.focus();
+            select.select();
+            if(mobile !== undefined) {
+                for(var i=0; i<mobile.length; i++) {  
+                    document.getElementById("aeaSelectVoice"+i).tabIndex = 0;
+                    document.getElementById("aeaSelectSMS"+i).tabIndex = 0;
+                } 
+            }
+            if(aea !== undefined) {
+                for(var i=0; i<aea.length; i++) {
+                    document.getElementById("aeaSelectEmail"+i).tabIndex = 0;
+                }
+            }
+            document.getElementById('.sendAEA').tabIndex = 0;
+            if(document.getElementById('.backPWQA') !== null) {
+                document.getElementById('.backPWQA').tabIndex = 0;
+            }
+            cPanel.setFirstLastFocusable();
+        }
+
+        function createAEA() {
+            var uri = '/config/login_unlock';
+            var zValue = document.getElementById(".z").value;
+            var params = "?z="+zValue, val=null;
+            if(document.login_form.aeaSelect.length === undefined) {
+                if(document.login_form.aeaSelect.checked) {
+                    rel = document.login_form.aeaSelect.getAttribute('rel');
+                    sp = rel.split('|');
+                    params += "&c_type="+sp[0];
+                    params += "&c_idx="+sp[1];
+                    val = sp[2];
+                    params += "&c_stype="+sp[3];
+                }       
+            } else {
+                for(var i = 0; i < document.login_form.aeaSelect.length; i++) {
+                    if(document.login_form.aeaSelect[i].checked) {
+                        rel = document.login_form.aeaSelect[i].getAttribute('rel');
+                        sp = rel.split('|');
+                        params += "&c_type="+sp[0];
+                        params += "&c_idx="+sp[1];
+                        val = sp[2];
+                        params += "&c_stype="+sp[3];
+                    }       
+                }
+            }
+            var adjust = YAHOO.util.Dom.getElementsByClassName("mobileList")[0];
+
+            if(val === null) {
+                document.getElementById('aeaErr').innerHTML = secChalStr.aea_err_not_selected;
+                document.getElementById('aeaErr').style.display = "";
+                YAHOO.util.Dom.addClass(adjust, "adjust-margin");
+            } else {
+                var c_type = 3;
+                var match = params.match(/c_type=([^&]+)/);
+                if (match != null) { c_type = match[1]; }
+
+                YAHOO.util.Dom.removeClass(adjust, "adjust-margin");
+                document.getElementById('aeaErr').style.display = "none";
+                var login = document.getElementById("username").value;
+                params += "&login="+login+"&_lang=en-US&_intl=us";
+                YAHOO.util.Connect.asyncRequest('GET', uri+params, {
+                    cache:false,
+                    success : function(o) {         
+                        //cPanel.cfg.setProperty("height", "380px");
+                        cPanel.setHeader(secChalStr.sec_chal_header+secChalStr.aea_verify_header);
+                        var zValue = document.getElementById(".z").value;
+                        var resp = YAHOO.lang.JSON.parse(o.responseText); 
+                        verifyJson = resp; selEmail = val;
+                        showVerify(sp[3], zValue, resp, val);
+                        document.getElementById(".2ndChallenge_type_in").value = c_type;
+                    },
+                    failure : function(o) {
+
+                    }
+                });
+            }
+
+        }
+
+        function showVerify(type, zValue, resp, selEmail, error) {
+            var parentError = 0;
+            if(type == "EMAIL") {
+                if(resp.unlock_status == "Z_EXPIRED" || resp.unlock_status == "UDB_FAILURE" || resp.unlock_status == "JSON_PARSE_FAILED") {
+                    location = window.location;
+                    window.location = location;
+                    redirect = 1;
+                } else if(resp.unlock_status == "EMAIL_OK") {  
+                    var email = secChalStr.aea_email_verify_content;
+                    email = email.replace('{email}',selEmail);
+                    panelBody = '<div id="aeaVerifyErr" class="error2"></div><div class="aeaEmailVerify"><span class="strong">'+email+'</span><br>'+secChalStr.aea_enter_code+'<div class="aeaEnterCode">'+secChalStr.aea_email_idetification_code+' <span class="spacer"></span><input type="input" name=".2ndChallenge_email_code" id=".2ndChallenge_email_code" style="width:150px;" autocomplete="off"></div><div id="submitC"><input type="hidden" name=".2ndChallenge_type_in" id=".2ndChallenge_type_in" value="4"><input type="hidden" name=".z" id=".z" value='+zValue+'><div id="cdiv"><button id=".sendEmailCode" type="submit" name=".sendEmailCode" class="primaryCta" tabindex="5">'+secChalStr.sec_chal_enter_code+'</button><button id=".aeaBack" name=".aeaBack" class="secondaryCta" tabindex="6" type="button" onclick="showAEA(s_result, \''+zValue+'\', 0)">'+secChalStr.sec_chal_back+'</button></div></div>';
+                    redirect = 0;
+                } else {
+                    parentError = 1;
+                    redirect = 0;
+                }
+            } else {
+                if(resp.unlock_status == "Z_EXPIRED" || resp.unlock_status == "UDB_FAILURE" || resp.unlock_status == "JSON_PARSE_FAILED") {
+                    location = window.location;
+                    window.location = location;
+                    redirect = 1;
+                } else if(resp.voice_sms_turnkey != null) {
+                    var respXML = getXmlDomObj(resp.voice_sms_turnkey); 
+                    rootNode = respXML.getElementsByTagName("createResponse")[0];
+                    turnKey = isIE ? rootNode.childNodes[1].childNodes[0].text : rootNode.childNodes[3].childNodes[1].textContent;
+                    var split = turnKey.split('<script');
+                    var script = '<script '+split[1];
+                    var html = split[0]+'</div>';
+                    html = html.replace('<div id="captchaV5VoiceSMSContent"','<div id="captchaV5VoiceSMSContent" style="padding-top:0px;width:400px"');
+                    html = html.replace('<div id="captchaV5VoiceSMSHelp"', '<div id="captchaV5VoiceSMSHelp" style="position:absolute;right:14px;top:40px;"');
+                    html = html.replace('<input class="VoiceSMSAnswer" id="captchaV5VoiceSMSAnswer"', '<input class="VoiceSMSAnswer" id="captchaV5VoiceSMSAnswer" tabindex="0"');
+                    script = script.split('</div>')[0]; 
+                    script = script.replace('<script  type="text/javascript">', "");
+                    script = script.replace("<\/script>", "");
+                    panelBody = '<div id="aeaVerifyErr" class="error2"></div><div class="aeaPhoneVerify">'+html+'<div id="submitC"><input type="hidden" name=".2ndChallenge_type_in" id=".2ndChallenge_type_in" value="3"><input type="hidden" name=".z" id=".z" value='+zValue+'><div id="cdiv"><button id="verifyCodeBtn" type="submit" name="verifyCodeBtn" class="primaryCta" tabindex="5">'+secChalStr.sec_chal_enter_code+'</button><button id=".aeaBack" name=".aeaBack" class="secondaryCta" tabindex="6" type="button" onclick="showAEA(s_result, \''+zValue+'\', 0)">'+secChalStr.sec_chal_back+'</button></div></div></div>';
+                    redirect = 0;
+                } else {
+                    parentError = 1;
+                    redirect = 0;
+                }
+            }
+            if(parentError) {
+                showAEA(s_result, zValue, 0, 'error');
+            } else if(redirect == 0) {
+                cPanel.setBody(panelBody);
+                cPanel.render("captchaDiv");
+                cPanel.showMask();                
+                cPanel.show();
+                YAHOO.util.Event.addListener('captcha', "click",function(e){
+                    tg = isIE ? e.srcElement : e.target;
+                    if(tg.getAttribute("type") == "button" && tg.getAttribute("name") == "VoiceSMSRetry") {
+                        setTimeout(function() {
+                            document.getElementById("captchaV5VoiceSMSContent").setAttribute("style", "padding-top:0px"); 
+                            document.getElementById("captchaV5VoiceSMSHelp").setAttribute("style", "position:absolute;right:14px;top:40px;"); 
+                        },2000);
+                    }
+                });
+                if(error) {
+                    switch(error) {
+                        case '9996':
+                        case '9995':
+                            document.getElementById('aeaVerifyErr').innerHTML = secChalStr.aea_invalid_code;
+                            for(i=0;i<captchaData.length;i++) {
+                                if(document.getElementById(captchaData[i].id) != null) {
+                                    document.getElementById(captchaData[i].id).value = captchaData[i].value;        
+                                }
+                            }
+                            break;
+                        default:
+                            document.getElementById('aeaVerifyErr').style.display = "none";
+                    }
+                } else {
+                    document.getElementById('aeaVerifyErr').style.display = "none";
+                }
+                if(type !== "EMAIL") {
+                    removeVoiceCaptchaJS();
+                    eval(script);
+                    document.getElementById('verifyCodeBtn').tabIndex = 0;
+                    document.getElementById('.aeaBack').tabIndex = 0;
+               } else {
+                    document.getElementById('.2ndChallenge_email_code').focus();
+                    document.getElementById('.2ndChallenge_email_code').select();
+                    document.getElementById('.2ndChallenge_email_code').tabIndex = 0;
+                    document.getElementById('.sendEmailCode').tabIndex = 0;
+                    document.getElementById('.aeaBack').tabIndex = 0;
+               } 
+            }
+            cPanel.setFirstLastFocusable();
+       }     
+        
+
+		function getCv5( ep, yid ) {
+		    var epParam = "";
+		    if( ep ){
+			epParam = "&ep=" + ep;
+		    }
+		    // yid should not be empty
+		    var loginParam = "";
+		    if( yid !== "" ) {
+			loginParam = "&login="+yid;
+		    }
+																		
+						YAHOO.util.Connect.asyncRequest('GET', "/captcha/CaptchaWSProxyService.php?action=createlazy&initial_view=&.intl=us&.lang=en-US"+epParam+loginParam, callback1);						
+					}
+
+        function removeDuplicatePassRaw() {
+            if(YAHOO.env.ua.ie > 0) {
+                var frmObj = document.getElementById('login_form');
+                var inputs = frmObj.getElementsByTagName("input");
+                var passwd_raw_fld = new Array();
+
+                for(i = 0, cnt = 0; i < inputs.length; i++) {
+                    nm = inputs[i].getAttribute("name");
+                    if(nm == "passwd_raw") {
+                            passwd_raw_fld[cnt] = inputs[i];
+                            cnt++;
+                    }
+                }
+                if(cnt >= 1) {
+                    var el = passwd_raw_fld[0];
+                    el.parentNode.removeChild(el);
+                }
+            } else {
+                var obj = document.getElementsByName("passwd_raw");
+                obj[0].parentNode.removeChild(obj[0]);
+            }
+        }
+
+		function makerequest() {												
+            document.getElementById(".ws").value="1";                       
+            var frmObj = document.getElementById('login_form');
+            if(document.getElementById('.2ndChallenge_pwqa_ans_in')) {
+                if(document.getElementById('.2ndChallenge_pwqa_ans_in').value) {
+                    YAHOO.util.Connect.setForm(frmObj);                                             
+                    removeDuplicatePassRaw();
+                    YAHOO.util.Connect.asyncRequest('POST', "/config/login", callback);
+                    document.getElementById("pwqaErr").style.display = "none";
+                } else {
+                    document.getElementById("pwqaErr").innerHTML = secChalStr.sec_chal_err_no_answer;
+                    document.getElementById("pwqaErr").style.display = "";
+                }
+            } else if(document.getElementById('.2ndChallenge_email_code')) {
+                if(document.getElementById('.2ndChallenge_email_code').value) {
+                    YAHOO.util.Connect.setForm(frmObj);                                             
+                    removeDuplicatePassRaw();
+                    YAHOO.util.Connect.asyncRequest('POST', "/config/login", callback);
+                    document.getElementById("aeaVerifyErr").style.display = "none";
+                } else {
+                    document.getElementById("aeaVerifyErr").innerHTML = secChalStr.sec_chal_err_empty_verification;
+                    document.getElementById("aeaVerifyErr").style.display = "";
+                }
+            } else if(document.getElementById('verifyCodeBtn')) {
+                //if(document.getElementById('captchaV5VoiceSMSAnswer').value) {
+                    /* copy the captcha hidden values */
+                    var root = document.getElementById("captchaV5");
+                    var captchaInputs = root.getElementsByTagName("input");
+                    var cnt = 0; 
+                    for(i=0;i<captchaInputs.length;i++) {
+                        name = captchaInputs[i].getAttribute("name");
+                        id = captchaInputs[i].getAttribute("id");
+                        if(name.indexOf("captcha") >= 0) {
+                                if(name != "captchaAnswer") { 
+                                        captchaData[cnt] = {"id":id, "value":captchaInputs[i].value};
+                                        cnt++;
+                                }
+                        }
+                    }
+                    document.getElementById(".cp").value = 0;
+                    YAHOO.util.Connect.setForm(frmObj);                                             
+                    removeDuplicatePassRaw();
+                    YAHOO.util.Connect.asyncRequest('POST', "/config/login", callback);
+                    document.getElementById("aeaVerifyErr").style.display = "none";
+                /*} else {
+                    document.getElementById("aeaVerifyErr").innerHTML = secChalStr.sec_chal_err_empty_verification; 
+                    document.getElementById("aeaVerifyErr").style.display = "";
+                }*/
+            } else if(document.getElementById('.sendAEA')) {
+                createAEA();
+            } else {
+                YAHOO.util.Connect.setForm(frmObj);                                             
+                removeDuplicatePassRaw();
+                YAHOO.util.Connect.asyncRequest('POST', "/config/login", callback);
+            }
+		}
+
+		function sbmCp(e){
+			YAHOO.util.Event.preventDefault(e);
+			                YAHOO.membership.checkInputsUI(e,{'username':'username', 'password':'passwd'});
+							
+		}
+		cPanel.showEvent.subscribe(function () {
+			document.getElementById(".cp").value="1";
+		});
+		cPanel.hideEvent.subscribe(function (){
+			document.getElementById(".cp").value="0";
+		});										 
+
+</script>
+<!--[if lte IE 8]>
+<script type="text/javascript">
+        function chkkey(e){
+          if(window.event.keyCode == '13'){
+				sbmCp(e);
+			}
+        }
+        var unm= "username";
+var ids = [unm, "passwd"];
+YAHOO.util.Event.addListener(ids, "keypress",chkkey);
+</script>
+<![endif]-->
 
         <script type="text/javascript">
         if (top != self) top.location.href = location.href;
 
         </script>
         <script type="text/javascript">
-var perceivedAd = 5;
+var perceivedAd = 6;
 var actualAd = perceivedAd;
 var timeoutLimit = 4000;
-var crumb = "abUkRSpIzJR";
-var verify = 1;
+var crumb = "brjagTfztnR";
+var verify = 0;
 var partner = "";
-var src = "";
+var src = "ym";
 var intl = "us";
 YAHOO.ads.adWidth = 1920;
 
 //BUG #5775722
-var perceivedAd2 = "5";
-var actualAd2 = "5";
-var baseSpaceID = "150002534";
-var intlSpaceID = "150002534";
+var perceivedAd2 = "1";
+var actualAd2 = "1";
+var baseSpaceID = "150002527";
+var intlSpaceID = "150002527";
+</script>
+
+<script type="text/javascript">
+browser_string = navigator.appVersion + " " + navigator.userAgent;
+if ( browser_string.indexOf("MSIE") < 0 ) {
+	if (navigator.mimeTypes) {
+		for (i = 0 ; i < navigator.mimeTypes.length ; i++) {
+			if (navigator.mimeTypes[i].suffixes.indexOf("yps") > -1) {
+				 doGotIt();
+			}
+		}
+	} else {
+		dontGotIt();
+	}
+} else {
+	if (browser_string.indexOf("Windows")>=0) {
+		doGotIt();
+		document.write('<object classid="clsid:41695A8E-6414-11D4-8FB3-00D0B7730277" CODEBASE="javascript:dontGotIt();" ID="Ymsgr" width="1" height="1">');
+		document.write('</object>');
+	}
+}
+hasMsgr = 0;
+function dontGotIt(){
+  hasMsgr = 0;
+  document.login_form.hasMsgr.value=0;
+}
+function doGotIt(){
+  hasMsgr = 1;
+  document.login_form.hasMsgr.value=1;
+}
+YAHOO.namespace("membership");
+YAHOO.membership.setFocus = function(){
+    var p, u = document.getElementById("username");
+    if (u && u.tagName.toLowerCase() == "input") {
+        u.focus();
+    } else if (p = document.getElementById("passwd")) {
+        p.focus();
+    }
+}
+YAHOO.util.Event.onDOMReady(YAHOO.membership.setFocus);
+
+if(typeof YAHOO=="undefined"){YAHOO={};}
+YAHOO.namespace("membership");
+YAHOO.membership.showError = function(toShowText){
+    YAHOO.membership.clearError();
+    var fs = document.getElementById('fsLogin');
+    var errMsg = document.createElement('div');
+    errMsg.innerHTML = toShowText;
+    errMsg.className = 'yregertxt';
+    fs.insertBefore(errMsg, fs.firstChild);
+}
+
+YAHOO.membership.showXhrErr = function(toShowText){
+    YAHOO.membership.clearError();
+			YAHOO.membership.clearYP({'username':'username', 'password':'passwd'});
+	    var fs = document.getElementById('fsLogin');
+    var errMsg = document.createElement('div');
+    errMsg.innerHTML = toShowText;
+    errMsg.className = 'yregertxt';
+    fs.insertBefore(errMsg, fs.firstChild);
+}
+
+YAHOO.membership.showXhrErrWYid = function(toShowText){
+    YAHOO.membership.clearError();
+			YAHOO.membership.clearYP({'password':'passwd'});
+	    var fs = document.getElementById('fsLogin');
+    var errMsg = document.createElement('div');
+    errMsg.innerHTML = toShowText;
+    errMsg.className = 'yregertxt';
+    fs.insertBefore(errMsg, fs.firstChild);
+}
+YAHOO.membership.clearError = function(){
+    var errs = YAHOO.util.Dom.getElementsByClassName('yregertxt');
+    for(var i=0; i<errs.length; i++){
+    errs[i].parentNode.removeChild(errs[i]);
+    }
+}
+
+YAHOO.membership.clearYP = function(toCheck){
+    var id = document.getElementById(toCheck['username']);
+    var pw = document.getElementById(toCheck['password']);
+	pw.value='';
+	YAHOO.util.Dom.setStyle(pw, 'background-color', '');
+	if(id!=null && id.type!="hidden"){
+		id.value='';
+		YAHOO.util.Dom.setStyle(id, 'background-color', '');
+		id.focus();
+	} else {
+		pw.focus();
+	}
+}
+
+YAHOO.membership.checkInputs = function(e, toCheck){
+    var id = document.getElementById(toCheck['username']);
+    var pw = document.getElementById(toCheck['password']);
+    var pwVal = pw.value;
+    if (!id) {
+        if (pwVal == '') {
+             YAHOO.util.Event.preventDefault(e);
+             pw.focus();
+             YAHOO.util.Dom.setStyle(id, 'background-color', '#ffefef');
+             YAHOO.membership.showError('<strong>Please enter your password</strong>');
+        }
+    } else {
+        var idVal = id.value;
+        if (pwVal == '' && idVal == ''){
+            YAHOO.util.Event.preventDefault(e);
+            YAHOO.util.Dom.setStyle(pw, 'background-color', '#ffefef');
+            YAHOO.util.Dom.setStyle(id, 'background-color', '#ffefef');
+            YAHOO.membership.showError('<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.');
+            id.focus();
+          }else if(pwVal == '' && idVal != ''){
+            YAHOO.util.Event.preventDefault(e);
+            pw.focus();
+            YAHOO.util.Dom.setStyle(id, 'background-color', '');
+            YAHOO.util.Dom.setStyle(pw, 'background-color', '#ffefef');
+            YAHOO.membership.showError('<strong>Please enter your password</strong>');
+          }else if(pwVal != '' && idVal == ''){
+            YAHOO.util.Event.preventDefault(e);
+            id.focus();
+            YAHOO.util.Dom.setStyle(id, 'background-color', '#ffefef');
+            YAHOO.util.Dom.setStyle(pw, 'background-color', '');
+            YAHOO.membership.showError('<strong>Please verify your Yahoo ID</strong>');
+          }
+    }
+}
+
+YAHOO.membership.checkInputsUI = function(e, toCheck){
+    var id = document.getElementById(toCheck['username']);
+    var pw = document.getElementById(toCheck['password']);
+    var pwVal = pw.value;
+    if (!id) {
+        if (pwVal == '') {
+             YAHOO.util.Event.preventDefault(e);
+             pw.focus();
+             YAHOO.util.Dom.setStyle(id, 'background-color', '#ffefef');
+             YAHOO.membership.showError('<strong>Please enter your password</strong>');
+        }
+    } else {
+        if (id.value === "e.g. john_smith1656") {
+            id.value = "";
+        }
+        var idVal = id.value;
+        if (pwVal == '' && idVal == ''){
+            YAHOO.util.Event.preventDefault(e);
+            YAHOO.util.Dom.setStyle(pw, 'background-color', '#ffefef');
+            YAHOO.util.Dom.setStyle(id, 'background-color', '#ffefef');
+            YAHOO.membership.showError('<strong>Invalid ID or password.</strong><br/> Please try again using your full Yahoo ID.');
+            id.focus();
+          }else if(pwVal == '' && idVal != ''){
+            YAHOO.util.Event.preventDefault(e);
+            pw.focus();
+            YAHOO.util.Dom.setStyle(id, 'background-color', '');
+            YAHOO.util.Dom.setStyle(pw, 'background-color', '#ffefef');
+            YAHOO.membership.showError('<strong>Please enter your password</strong>');
+          }else if(pwVal != '' && idVal == ''){
+            YAHOO.util.Event.preventDefault(e);
+            id.focus();
+            YAHOO.util.Dom.setStyle(id, 'background-color', '#ffefef');
+            YAHOO.util.Dom.setStyle(pw, 'background-color', '');
+            YAHOO.membership.showError('<strong>Please verify your Yahoo ID</strong>');
+          } else {
+		    			makerequest();
+		    		  }
+    }
+}
+
+/**
+ * 3PA - General Manual Bind Screen - "No, thanks" CTA
+ */
+YAHOO.membership.noThanks = function (e) {
+    YAHOO.util.Event.preventDefault(e);
+    window.location.href = "";
+};
+
+/**
+ * 3PA - General Manual Bind Screen - "Recover your Id" & "Recover your password" CTA
+ */
+YAHOO.membership.recoverPwd = function (e) {
+    YAHOO.util.Event.preventDefault(e);
+    document.domain = "yahoo.com";
+    if (typeof window.opener != 'undefined') {
+        window.opener.location.href = "";
+    } else {
+        window.location.href = "";
+    }
+};
+
+/**
+ * 3PA - General Manual Bind Screen - default username manipulation when user clicks
+ */
+YAHOO.membership.removeUsername = function (e) {
+    if (this.value === "e.g. john_smith1656") {
+        YAHOO.util.Dom.setStyle(this.id, "color", "#666666");
+        this.value = "";
+    }
+ };      
+ 
+YAHOO.membership.blurUsername = function (e) {
+    if (this.value === "") {
+        this.value = "e.g. john_smith1656";
+        YAHOO.util.Dom.setStyle(this.id, "color", "#cccccc");
+    }
+    else if (this.value !== "e.g. john_smith1656") {
+        YAHOO.util.Dom.setStyle(this.id, "color", "#666666");
+    }
+};
+
+
+		YAHOO.util.Event.addListener('.save', 'click', YAHOO.membership.checkInputs, {'username':'username', 'password':'passwd'});
+if(typeof YAHOO=="undefined"){YAHOO={};}
+var Y = YAHOO;
+Y.doUpgradeCheck = function(){
+  var plugin, activex, version, params = [];
+
+  if (navigator.plugins && navigator.plugins.length > 0) {
+      plugin = navigator.plugins['Shockwave Flash 2.0'] ||
+               navigator.plugins['Shockwave Flash'];
+
+      if (plugin && plugin.description) {
+          version = plugin.description.replace(/([a-zA-Z]|\s)+/, '').replace(/(\s+r|\s+b[0-9]+)/, '.').split('.');
+      }
+  } else {
+      try {
+          activex = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.7');
+          version = activex.GetVariable('\$version').split(' ')[1].split(',');
+      } catch (e1) {
+          try {
+              activex = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
+              version = [6, 0, 21];
+              activex.AllowScriptAccess = 'always';
+              version = activex.GetVariable('\$version').split(' ')[1].split(',');
+          } catch (e2) {}
+      }
+  }
+
+  if(version){
+      var major = parseInt(version[0], 10);
+      var minorA = parseInt(version[1], 10);
+      var minorB = parseInt(version[2], 10);
+      var strVersion = major + "." + minorA + "." + minorB;
+
+      if(major >= 10){
+        //ok
+      }else if(major == 9){
+        if(minorA == 0 && minorB < 28){
+          Y.showUpgradeCTA(strVersion);
+        }
+      }else if(major == 8){
+        if(minorA == 0 && minorB < 34){
+          Y.showUpgradeCTA(strVersion);
+        }
+      }else if(major == 7){
+        if(minorA == 0 && minorB < 69){
+          Y.showUpgradeCTA(strVersion);
+        }
+      }else{
+        Y.showUpgradeCTA(strVersion);
+      }
+    }
+
+}
+Y.showUpgradeCTA = function(version){
+  try{
+    var fun = document.getElementById('fun');
+    var imgUrl = "https://s.yimg.com/lq/i/nt/ic/ut/bsc/cautionmetro16_1.gif";
+    var beaconUrl = 'https://login.yahoo.com/i/flashUp/ft.gif' + '?v=' + version + '&intl=' + 'us';
+    fun.innerHTML = "<img id='caution' src='" + imgUrl + "'><span class='b'>Security Alert:</span> <span class='n'><a href='http://help.yahoo.com/l/us/yahoo/security/account_security/adobe-flash.html' tabindex='999' target='_blank'>Protect</a> your account. <a href='http://get.adobe.com/flashplayer/' tabindex='999' target='_blank'>Upgrade your Adobe Flash Player.</a><img src='" + beaconUrl + "' height='1' width='1'></span>";
+    fun.style.paddingBottom = '12px';
+    fun.style.display = 'block';
+  }catch(e){}
+}
+
+if(window.addEventListener){
+window.addEventListener("load", Y.doUpgradeCheck, false);
+}else{
+window.attachEvent("onload", Y.doUpgradeCheck);
+}
+
 </script>
 
 <!--[if IE 6]>
@@ -909,46 +3723,59 @@ window.setInterval(YAHOO.ads.positionFooter, 500);
 <![endif]-->
 
 
-
 <script>
 
-
 document.domain = "yahoo.com";
+var isIE11 = (!!navigator.userAgent.match(/Trident\/7.0/) && !!navigator.userAgent.match(/.NET4.0E/));
+
 if (!window.opener) {
     var Dom = YAHOO.util.Dom;
     var Event = YAHOO.util.Event;
     var winProps = "menubar=0,location=1,resizable=1,scrollbars=1,status=1,toolbar=0,width=650,height=500";
     Event.on("fBtn","click", function(t) {
+        var idName = isIE11 ? '_self' : 'fb';
         Event.preventDefault(t);
-        window.open(fbSigninLnk, "fb", winProps);   
+        window.open(fbSigninLnk, idName, winProps);   
     });
     Event.on("gBtn","click", function(t) {
+        var idName = isIE11 ? '_self' : 'go';
         Event.preventDefault(t);
-        window.open(googSigninLnk, "go", winProps);
+        window.open(googSigninLnk, idName, winProps);
     });   
+    Event.on("fbLink","click", function(t) {
+        var idName = isIE11 ? '_self' : 'fb';
+        Event.preventDefault(t);
+        window.open(fbSigninLnk, idName, winProps);   
+    });
+    Event.on("ggLink","click", function(t) {
+        var idName = isIE11 ? '_self' : 'go';
+        Event.preventDefault(t);
+        window.open(googSigninLnk, idName, winProps);
+    });  
+} else {
 }
 </script>
 
 
 
                 <div style="display:none">
-                    <script type='text/javascript' src='https://s.yimg.com/rq/darla/2-4-4/js/darla-secure-pre-min.js'></script>
-                    <script type="text/plain" id="fc" _ver="2-4-4">{ positions: [ { html: "<!--Property fallback ad--> \n<!--Vendor: Yahoo, Format: Login Ad - Static, Name: Login Ad-->\n<style>\nhtml {background-color:#ffffff;}\nbody,div,p,a {margin:0;padding:0;outline:none;user-select:none;-moz-user-select:none;-khtml-user-select:none;}\n.offscrn{clip:rect(0 0 0 0);position:absolute;top:0;left:0;margin:0;padding:0;font-size:.1em;}\n\n#adlinks {position:relative;width:400px;margin:0 auto;font:11px arial;z-index:100;}\n#adlinks p {position:absolute;text-align:right;right:90px;top:15px;}\n#adlinks,#adlinks a {color:#999;}\n#adlinks a {margin:0 5px;text-decoration:none;}\n.can_ad_slug{padding:0px 15px 0px 0px;background:url('https://s.yimg.com/lq/lib/can_interstitial/icons/adchoice_1.4.png') no-repeat right;}\n\n#richad{height:1024px;width:1440px;overflow:hidden;position:relative;margin:0 auto;background-repeat:no-repeat;background-position:center top;}\n.hotspot{position:absolute;display:block;z-index:10;outline:none;}\n.hotspot img {display:block;}\n\n#hotspot1{left:338px;top:351px;}	\n#hotspot2{left:375px;top:401px;}	\n#hotspot3{left:494px;top:351px;}	\n#hotspot4{left:530px;top:399px;}	\n#hotspot5{left:651px;top:350px;}	\n#hotspot6{left:685px;top:400px;}	\n\n#hotspot_main{z-index:9;width:400px;margin:0 auto;position:relative;}\n#hotspot_main .hotspot{position:absolute;right:95px;top:40px;}\n\n</style>\n<h1 class=\"offscrn\">ADVERTISEMENT: Yahoo! Mail - Yahoo! Mail</h1>\n\n<div id=\"richad\">\n\n<a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2YmRsZWt2dShnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkMCxpZCRob3RzcG90MSxyZCQxODA5bmRpZDYpKQ/2/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=0/X=6/id=hotspot1/SIG=10mufqiml/*http://bit.ly/TR4V10\" target=\"_blank\" class=\"hotspot\" id=\"hotspot1\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"42\" width=\"136\" border=\"0\" alt=\"Click For: Yahoo! Mail\" /></a>\n<a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2Ym90NDlxYShnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkMSxpZCRob3RzcG90MixyZCQxODBhN3UxMWMpKQ/2/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=1/X=6/id=hotspot2/SIG=10m94nckv/*http://bit.ly/SUooPO\" target=\"_blank\" class=\"hotspot\" id=\"hotspot2\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"18\" width=\"63\" border=\"0\" alt=\"Click For: Yahoo! Mail\" /></a>\n<a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2YmVndmw1cShnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkMixpZCRob3RzcG90MyxyZCQxODA3NGtmNzYpKQ/2/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=2/X=6/id=hotspot3/SIG=10mfn43ja/*http://bit.ly/UHL4ju\" target=\"_blank\" class=\"hotspot\" id=\"hotspot3\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"42\" width=\"136\" border=\"0\" alt=\"Click For: Yahoo! Mail\" /></a>\n<a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2YnF2dnJxcyhnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkMyxpZCRob3RzcG90NCxyZCQxODBzNmNibGIpKQ/2/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=3/X=6/id=hotspot4/SIG=10mqqied0/*http://bit.ly/TXY5Ko\" target=\"_blank\" class=\"hotspot\" id=\"hotspot4\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"18\" width=\"67\" border=\"0\" alt=\"Click For: Yahoo! Mail\" /></a>\n<a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2YnB0MW9pOChnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkNCxpZCRob3RzcG90NSxyZCQxODA3YWJmNDgpKQ/2/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=4/X=6/id=hotspot5/SIG=10mrcep92/*http://bit.ly/SjWujd\" target=\"_blank\" class=\"hotspot\" id=\"hotspot5\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"42\" width=\"136\" border=\"0\" alt=\"Click For: Yahoo! Mail\" /></a>\n<a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2YmU1cW91NyhnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkNSxpZCRob3RzcG90NixyZCQxODBpamd0MTYpKQ/2/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=5/X=6/id=hotspot6/SIG=10ml2nohp/*http://bit.ly/QXiAqi\" target=\"_blank\" class=\"hotspot\" id=\"hotspot6\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"15\" width=\"65\" border=\"0\" alt=\"Click For: Yahoo! Mail\" /></a>\n\n\n<div id=\"hotspot_main\"><a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2Zm4wbWxnZihnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkNixpZCR3cF9tYWluNDUwYmcscmQkMTg1aHVpMGNwKSk/1/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=6/X=6/id=wp_main450bg/SIG=10n3hdabf/*http://bit.ly/12bqbou\" target=\"_blank\" class=\"hotspot\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"450\" width=\"450\" border=\"0\" alt=\"\" /></a></div>\n\n<div id=\"adlinks\"><p><a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE2Yzg5aXZ2ZShnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHckMSxpZCRhZGNob2ljZXMscmQkMTEyc2o3YXNnKSk/1/*http://info.yahoo.com/relevantads/\" class=\"can_ad_slug\" target=\"_blank\">AdChoices</a></p></div>\n</div>\n\n<scr"+"ipt>\nfunction addEvent(obj,axn,fxn){if(window.attachEvent)obj.attachEvent(\"on\"+axn,fxn);else obj.addEventListener(axn,fxn,0);}\nfunction adTRK(t){if(t){var i=new Image;i.onload=function(){};i.src=t;}}\nfunction ad_init() {\n	document.getElementById(\"richad\").style.backgroundImage = \"url(https://s.yimg.com/cv/ae/uns/audience/121213/1440x1024l2gr9wftl.jpg)\"; \n		}\naddEvent(window,\"load\", function(){setTimeout(ad_init,1);});\n</scr"+"ipt>\n<!-- https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE1dnZ0dGdhNihnaWQkWkRDdFk5bVN1M3ZNQW9DR1VYalNad0RDMUhzUVkxSEpsU1lBQXpzbyxzdCQxMzcyMTY1NDE0MjI2NjE5LHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTM0LGNyJDM0Mjg1MzYwNTEsdiQyLjAsYWlkJG1Nb2tmd3JJRW5vLSxjdCQyNSx5YngkQTJ3aXJrMXhIbnlOZnEyYmFVRGpPZyxiaSQxNzU4Njg0NTUxLHIkNyxyZCQxNmkyb2hsZDIpKQ/2/*http://global.ard.yahoo.com/SIG=15k46pjq6/M=999999.999999.999999.999999/D=yahoo/S=150002534:RICH/Y=YAHOO/EXP=1372172614/L=ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso/B=mMokfwrIEno-/J=1372165414256267/K=XrWKfswckIHCruOFBOHIbQ/A=7390094895121013975/R=7/X=6/* --><!--QYZ 1758684551,3428536051,10.200.18.83;;RICH;150002534;1;-->", id: "RICH", meta: { y: { cscHTML: "", behavior: "non_exp", adID: "7390094895121013975", matchID: "999999.999999.999999.999999", err: "", hasExternal: 0, size: "1440x1024", bookID: "1758684551", serveType: "-1", slotID: "2" } } } ], meta: { y: { pageEndHTML: "", pos_list: [ "FOOT","FOOT9","RICH" ], spaceID: "150002534", host: "login.yahoo.com", lookupTime: "41", k2_uri: "", fac_rt: "37499" } } } </script><script language=javascript>
+                    <script type="text/javascript" src="./Sign in to Yahoo_files/g-r-min.js"></script>
+                    <script type="text/plain" id="processed_fc_1_1395540210855_43" _ver="2-7-4">{ "positions": [ { "html": "<!-- APT Vendor: Yahoo, Format: Standard Graphical -->\n<!--Static sales ad--> \n<style>\nhtml,#fc_align {background-color:#fff;}\nbody,div,p,a {margin:0;padding:0;}\n#fc_align{background-color:#fff;}\n#richad *{outline:none;user-select:none;-moz-user-select:none;-khtml-user-select:none;}\n.offscrn{clip:rect(0 0 0 0);position:absolute;top:0;left:0;margin:0;padding:0;font-size:.1em;}\n\n#adlinks {position:relative;width:400px;margin:0 auto;font:11px arial;z-index:100;}\n#adlinks p {position:absolute;text-align:right;right:90px;top:15px;}\n#adlinks,#adlinks a {color:#000;}\n#adlinks a {margin:0 5px;text-decoration:none;}\n.can_ad_slug{padding:0px 15px 0px 0px;background:url('https://s.yimg.com/lq/lib/can_interstitial/icons/adchoices_1.4_blue.png') no-repeat right;}\n\n#richad{height:1024px;width:1440px;overflow:hidden;position:relative;margin:0 auto;background-repeat:no-repeat;background-position:center top;}\n.hotspot{position:absolute;display:block;z-index:10;outline:none;}\n.hotspot img {display:block;}\n\n#hotspot5{left:393px;top:491px;}	\n\n#hotspot_main{z-index:9;width:400px;margin:0 auto;position:relative;}\n#hotspot_main .hotspot{position:absolute;right:95px;top:40px;}\n\n</style>\n<h1 class=\"offscrn\">ADVERTISEMENT: Progressive - Find Low Rates</h1>\n\n<div id=\"richad\">\n\n\n<a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE4MDE0ZTF2ZyhnaWQkWFpJTDNEazRMakhtSmwzNFV0UUh2UUJKTnpVdU5WTXVRUExfNjFMbyxzdCQxMzk1NTQwMjEwNzk1MDczLHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTI3LGNyJDM5NzA1MzE1NTEsdiQyLjAsYWlkJDRJT0R6R0tLSjVRLSxjdCQyNSx5YngkUHJlVkNqellzQmZJT0gwY09hUlo5dyxiaSQyMDI0Mjc5NTUxLG1tZSQ4NTE2MTc3MzM4MDc0Nzg0NTkwLHIkMCxpZCRob3RzcG90NSxyZCQxMjJiZTVucmgseW9vJDEsYWdwJDMwNzA3MTQwNTEsYXAkUklDSCkp/0/*https://ad.doubleclick.net/clk;278531217;105608494;i;pc=YHO3MAJ06V\" target=\"_blank\" class=\"hotspot\" id=\"hotspot5\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"28\" width=\"121\" border=\"0\" alt=\"\" /></a>\n\n\n<div id=\"hotspot_main\"><a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE4NGplYWRqOShnaWQkWFpJTDNEazRMakhtSmwzNFV0UUh2UUJKTnpVdU5WTXVRUExfNjFMbyxzdCQxMzk1NTQwMjEwNzk1MDczLHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTI3LGNyJDM5NzA1MzE1NTEsdiQyLjAsYWlkJDRJT0R6R0tLSjVRLSxjdCQyNSx5YngkUHJlVkNqellzQmZJT0gwY09hUlo5dyxiaSQyMDI0Mjc5NTUxLG1tZSQ4NTE2MTc3MzM4MDc0Nzg0NTkwLHIkMSxpZCR3cF9tYWluNDUwYmcscmQkMTIyYmU1bnJoLHlvbyQxLGFncCQzMDcwNzE0MDUxLGFwJFJJQ0gpKQ/2/*https://ad.doubleclick.net/clk;278531217;105608494;i;pc=YHO3MAJ06V\" target=\"_blank\" class=\"hotspot\"><img src=\"https://s.yimg.com/lq/i/ww/eyc/p.gif\" height=\"450\" width=\"450\" border=\"0\" alt=\"Progressive\" /></a></div>\n\n<div id=\"adlinks\"><p><a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE4MWo4N2k3bShnaWQkWFpJTDNEazRMakhtSmwzNFV0UUh2UUJKTnpVdU5WTXVRUExfNjFMbyxzdCQxMzk1NTQwMjEwNzk1MDczLHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTI3LGNyJDM5NzA1MzE1NTEsdiQyLjAsYWlkJDRJT0R6R0tLSjVRLSxjdCQyNSx5YngkUHJlVkNqellzQmZJT0gwY09hUlo5dyxiaSQyMDI0Mjc5NTUxLG1tZSQ4NTE2MTc3MzM4MDc0Nzg0NTkwLHckMSxpZCRhZGNob2ljZXMscmQkMTEyc2o3YXNnLHlvbyQxLGFncCQzMDcwNzE0MDUxLGFwJFJJQ0gpKQ/2/*http://info.yahoo.com/relevantads/\" class=\"can_ad_slug\" target=\"_blank\">AdChoices</a> | <a href=\"https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE3dW1pYnR2ayhnaWQkWFpJTDNEazRMakhtSmwzNFV0UUh2UUJKTnpVdU5WTXVRUExfNjFMbyxzdCQxMzk1NTQwMjEwNzk1MDczLHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTI3LGNyJDM5NzA1MzE1NTEsdiQyLjAsYWlkJDRJT0R6R0tLSjVRLSxjdCQyNSx5YngkUHJlVkNqellzQmZJT0gwY09hUlo5dyxiaSQyMDI0Mjc5NTUxLG1tZSQ4NTE2MTc3MzM4MDc0Nzg0NTkwLHckMixpZCRzdXJ2ZXkscmQkMTM3bHNkbHZrLHlvbyQxLGFncCQzMDcwNzE0MDUxLGFwJFJJQ0gpKQ/2/*http://surveylink.yahoo.com/wix/p8702792.aspx?source=Progressive_2014012_612074051_3070714051_992989551\" target=\"_blank\">Ad Feedback</a></p></div>\n</div>\n\n<scr"+"ipt>\nfunction addEvent(obj,axn,fxn){if(window.attachEvent)obj.attachEvent(\"on\"+axn,fxn);else obj.addEventListener(axn,fxn,0);}\nfunction adTRK(t){if(t){var i=new Image;i.onload=function(){};i.src=t;}}\nfunction ad_init() {\n	document.getElementById(\"richad\").style.backgroundImage = \"url(https://s.yimg.com/cv/ae/us/audience/140102/1440x1024uznfvs7om.jpg)\"; \n	adTRK(\"https://ad.doubleclick.net/ad/N4492.Yahoo/B7962940.4;sz=1x1;ord=1395540210.824596?\");	}\naddEvent(window,\"load\", function(){setTimeout(ad_init,1);});\n</scr"+"ipt>\n<!-- https://clicks.beap.bc.yahoo.com/yc/YnY9MS4wLjAmYnM9KDE3NzFhcHQ5OChnaWQkWFpJTDNEazRMakhtSmwzNFV0UUh2UUJKTnpVdU5WTXVRUExfNjFMbyxzdCQxMzk1NTQwMjEwNzk1MDczLHNpJDQ0NjU1NTEsc3AkMTUwMDAyNTI3LGNyJDM5NzA1MzE1NTEsdiQyLjAsYWlkJDRJT0R6R0tLSjVRLSxjdCQyNSx5YngkUHJlVkNqellzQmZJT0gwY09hUlo5dyxiaSQyMDI0Mjc5NTUxLG1tZSQ4NTE2MTc3MzM4MDc0Nzg0NTkwLHIkMix5b28kMSxhZ3AkMzA3MDcxNDA1MSxhcCRSSUNIKSk/1/* --><!--QYZ 2024279551,3970531551,98.138.43.170;;RICH;150002527;1;-->", "id": "RICH", "meta": { "y": { "cscHTML": "", "cscURI": "https://csc.beap.bc.yahoo.com/yi?bv=1.0.0&bs=(135ucq8gg(gid$XZIL3Dk4LjHmJl34UtQHvQBJNzUuNVMuQPL_61Lo,st$1395540210795073,si$4465551,sp$150002527,pv$1,v$2.0))&t=J_3-D_3&al=(as$12rakbefm,aid$4IODzGKKJ5Q-,bi$2024279551,cr$3970531551,ct$25,at$H,eob$gd1_match_id=-1:ypos=RICH)", "impID": "4IODzGKKJ5Q-", "supp_ugc": "0", "creativeID": "3970531551", "serveTime": "1395540210795073", "behavior": "non_exp", "adID": "8516177338074784590", "matchID": "999999.999999.999999.999999", "err": "", "hasExternal": 0, "size": "1440x1024", "bookID": "2024279551", "serveType": "-1", "slotID": "2" } } } ], "meta": { "y": { "pageEndHTML": "", "pos_list": [ "FOOT","FOOT9","RICH" ], "spaceID": "150002527", "host": "login.yahoo.com", "lookupTime": "40", "k2_uri": "", "fac_rt": "34966", "serveTime":"1395540210795073", "pvid": "XZIL3Dk4LjHmJl34UtQHvQBJNzUuNVMuQPL_61Lo", "tID": "darla_prefetch_1395540210793_555180384_1", "npv": "0" } } } </script><script language="javascript">
 if(window.xzq_d==null)window.xzq_d=new Object();
-window.xzq_d['mMokfwrIEno-']='(as$12r4ol7bj,aid$mMokfwrIEno-,bi$1758684551,cr$3428536051,ct$25,at$H,eob$-1)';
-</script><noscript><img width=1 height=1 alt="" src="https://csc.beap.bc.yahoo.com/yi?bv=1.0.0&bs=(1357g12p2(gid$ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso,st$1372165414226619,si$4465551,sp$150002534,pv$1,v$2.0))&t=J_3-D_3&al=(as$12r4ol7bj,aid$mMokfwrIEno-,bi$1758684551,cr$3428536051,ct$25,at$H,eob$-1)"></noscript><script language=javascript>
+window.xzq_d['4IODzGKKJ5Q-']='(as$12rakbefm,aid$4IODzGKKJ5Q-,bi$2024279551,cr$3970531551,ct$25,at$H,eob$gd1_match_id=-1:ypos=RICH)';
+</script><noscript>&lt;img width=1 height=1 alt="" src="https://csc.beap.bc.yahoo.com/yi?bv=1.0.0&amp;bs=(135ucq8gg(gid$XZIL3Dk4LjHmJl34UtQHvQBJNzUuNVMuQPL_61Lo,st$1395540210795073,si$4465551,sp$150002527,pv$1,v$2.0))&amp;t=J_3-D_3&amp;al=(as$12rakbefm,aid$4IODzGKKJ5Q-,bi$2024279551,cr$3970531551,ct$25,at$H,eob$gd1_match_id=-1:ypos=RICH)"&gt;</noscript><script language="javascript">
 if(window.xzq_d==null)window.xzq_d=new Object();
-window.xzq_d['YLYkfwrIEno-']='(as$1254hrogn,aid$YLYkfwrIEno-,cr$-1,ct$25,at$H,eob$-1)';
-</script><noscript><img width=1 height=1 alt="" src="https://csc.beap.bc.yahoo.com/yi?bv=1.0.0&bs=(1357g12p2(gid$ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso,st$1372165414226619,si$4465551,sp$150002534,pv$1,v$2.0))&t=J_3-D_3&al=(as$1254hrogn,aid$YLYkfwrIEno-,cr$-1,ct$25,at$H,eob$-1)"></noscript><script language=javascript>
+window.xzq_d['AKGDzGKKJ5Q-']='(as$12ro1r9if,aid$AKGDzGKKJ5Q-,bi$1690611551,cr$3264536551,ct$25,at$H,eob$gd1_match_id=-1:ypos=PP.FOOT-FOOTC)';
+</script><noscript>&lt;img width=1 height=1 alt="" src="https://csc.beap.bc.yahoo.com/yi?bv=1.0.0&amp;bs=(135ucq8gg(gid$XZIL3Dk4LjHmJl34UtQHvQBJNzUuNVMuQPL_61Lo,st$1395540210795073,si$4465551,sp$150002527,pv$1,v$2.0))&amp;t=J_3-D_3&amp;al=(as$12ro1r9if,aid$AKGDzGKKJ5Q-,bi$1690611551,cr$3264536551,ct$25,at$H,eob$gd1_match_id=-1:ypos=PP.FOOT-FOOTC)"&gt;</noscript><script language="javascript">
 (function(){window.xzq_p=function(R){M=R};window.xzq_svr=function(R){J=R};function F(S){var T=document;if(T.xzq_i==null){T.xzq_i=new Array();T.xzq_i.c=0}var R=T.xzq_i;R[++R.c]=new Image();R[R.c].src=S}window.xzq_sr=function(){var S=window;var Y=S.xzq_d;if(Y==null){return }if(J==null){return }var T=J+M;if(T.length>P){C();return }var X="";var U=0;var W=Math.random();var V=(Y.hasOwnProperty!=null);var R;for(R in Y){if(typeof Y[R]=="string"){if(V&&!Y.hasOwnProperty(R)){continue}if(T.length+X.length+Y[R].length<=P){X+=Y[R]}else{if(T.length+Y[R].length>P){}else{U++;N(T,X,U,W);X=Y[R]}}}}if(U){U++}N(T,X,U,W);C()};function N(R,U,S,T){if(U.length>0){R+="&al="}F(R+U+"&s="+S+"&r="+T)}function C(){window.xzq_d=null;M=null;J=null}function K(R){xzq_sr()}function B(R){xzq_sr()}function L(U,V,W){if(W){var R=W.toString();var T=U;var Y=R.match(new RegExp("\\\\(([^\\\\)]*)\\\\)"));Y=(Y[1].length>0?Y[1]:"e");T=T.replace(new RegExp("\\\\([^\\\\)]*\\\\)","g"),"("+Y+")");if(R.indexOf(T)<0){var X=R.indexOf("{");if(X>0){R=R.substring(X,R.length)}else{return W}R=R.replace(new RegExp("([^a-zA-Z0-9$_])this([^a-zA-Z0-9$_])","g"),"$1xzq_this$2");var Z=T+";var rv = f( "+Y+",this);";var S="{var a0 = '"+Y+"';var ofb = '"+escape(R)+"' ;var f = new Function( a0, 'xzq_this', unescape(ofb));"+Z+"return rv;}";return new Function(Y,S)}else{return W}}return V}window.xzq_eh=function(){if(E||I){this.onload=L("xzq_onload(e)",K,this.onload,0);if(E&&typeof (this.onbeforeunload)!=O){this.onbeforeunload=L("xzq_dobeforeunload(e)",B,this.onbeforeunload,0)}}};window.xzq_s=function(){setTimeout("xzq_sr()",1)};var J=null;var M=null;var Q=navigator.appName;var H=navigator.appVersion;var G=navigator.userAgent;var A=parseInt(H);var D=Q.indexOf("Microsoft");var E=D!=-1&&A>=4;var I=(Q.indexOf("Netscape")!=-1||Q.indexOf("Opera")!=-1)&&A>=4;var O="undefined";var P=2000})();
-</script><script language=javascript>
+</script><script language="javascript">
 if(window.xzq_svr)xzq_svr('https://csc.beap.bc.yahoo.com/');
-if(window.xzq_p)xzq_p('yi?bv=1.0.0&bs=(1357g12p2(gid$ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso,st$1372165414226619,si$4465551,sp$150002534,pv$1,v$2.0))&t=J_3-D_3');
+if(window.xzq_p)xzq_p('yi?bv=1.0.0&bs=(135ucq8gg(gid$XZIL3Dk4LjHmJl34UtQHvQBJNzUuNVMuQPL_61Lo,st$1395540210795073,si$4465551,sp$150002527,pv$1,v$2.0))&t=J_3-D_3');
 if(window.xzq_s)xzq_s();
-</script><noscript><img width=1 height=1 alt="" src="https://csc.beap.bc.yahoo.com/yi?bv=1.0.0&bs=(1357g12p2(gid$ZDCtY9mSu3vMAoCGUXjSZwDC1HsQY1HJlSYAAzso,st$1372165414226619,si$4465551,sp$150002534,pv$1,v$2.0))&t=J_3-D_3"></noscript>
+</script><noscript>&lt;img width=1 height=1 alt="" src="https://csc.beap.bc.yahoo.com/yi?bv=1.0.0&amp;bs=(135ucq8gg(gid$XZIL3Dk4LjHmJl34UtQHvQBJNzUuNVMuQPL_61Lo,st$1395540210795073,si$4465551,sp$150002527,pv$1,v$2.0))&amp;t=J_3-D_3"&gt;</noscript>
                 </div>
                 <script type="text/javascript">
-                    var DARLA_CONFIG = {servicePath:'https://login.yahoo.com/darla/php/fc.php', beaconPath:'https://login.yahoo.com/darla/php/b.php', renderPath:'https://login.yahoo.com/darla/2-4-4/html/ext-render.html', srenderPath:'https://s.yimg.com/rq/darla/2-4-4/html/ext-render-secure.html', sfbrenderPath:'https://s.yimg.com/rq/darla/2-4-4/html/ext-render-fb-secure.html', msgPath:'https://login.yahoo.com/darla/2-4-4/html/ext-msg.html',	cscPath:'https://s.yimg.com/rq/darla/2-4-4/html/csc-render.html',	version:'2-4-4', root:'darla', edgeRoot:'http://l.yimg.com/rq/darla/2-4-4', sedgeRoot:'https://s.yimg.com/rq/darla/2-4-4', tpbURI:''};;
+                    var DARLA_CONFIG = {"useYAC":0,"servicePath":"https:\/\/login.yahoo.com\/sdarla\/php\/fc.php","xservicePath":"","beaconPath":"https:\/\/login.yahoo.com\/sdarla\/php\/b.php","renderPath":"","allowFiF":false,"srenderPath":"https:\/\/s.yimg.com\/rq\/darla\/2-7-4\/html\/r-sf.html","renderFile":"https:\/\/s.yimg.com\/rq\/darla\/2-7-4\/html\/r-sf.html","sfbrenderPath":"https:\/\/s.yimg.com\/rq\/darla\/2-7-4\/html\/r-sf.html","msgPath":"https:\/\/login.yahoo.com\/sdarla\/2-7-4\/html\/msg.html","cscPath":"https:\/\/s.yimg.com\/rq\/darla\/2-7-4\/html\/r-csc.html","root":"sdarla","edgeRoot":"http:\/\/l.yimg.com\/rq\/darla\/2-7-4","sedgeRoot":"https:\/\/s.yimg.com\/rq\/darla\/2-7-4","version":"2-7-4","tpbURI":"","hostFile":"https:\/\/s.yimg.com\/rq\/darla\/2-7-4\/js\/g-r-min.js","beaconsDisabled":true,"rotationTimingDisabled":true,"positions":{"FOOT":{"w":1,"h":1},"FOOT9":[],"RICH":{"w":1440,"h":1024}}};
 
                     function handle_render_timeout()
                     {
@@ -1041,6 +3868,73 @@ function checkBrowser(){
 
 
 function flashCacheReady (initialized){ //invoked directly by Flash
+    var inCache = false;
+ 
+  // Get the info from flash
+  var o={};
+  o=(document.getElementById("flashCache")).getCache(o);
+  if(o != null) inCache = true; 
+  else return;
+
+  if(o.YL != 'null' && o.YL != null) {
+    document.cookie = o.YL + ";expires=Thu, 15 Apr 2037 20:00:00 GMT;domain=login.yahoo.com;path=/";
+  }
+
+  if(o.F != 'null' && o.F != null) {
+    document.cookie = o.F + ";expires=Thu, 15 Apr 2037 20:00:00 GMT;domain=.yahoo.com;path=/";
+  }
+
+  if(o.YLS != 'null' && o.YLS != null) {
+    if((o.YLS.match("n=0")) != null) {
+      o.YLS = o.YLS.replace("n=0", "n=9");
+    } else {
+      o.YLS = o.YLS.concat("&n=9");
+    }
+    document.cookie = o.YLS + ";expires=Thu, 15 Apr 2037 20:00:00 GMT;domain=.yahoo.com;path=/";
+  }
+
+  if(((o.YL != 'null') && (o.YL != null)) || ((o.F != 'null') && (o.F != null)) && (document.cookie.length > 0)) {
+    location.replace (document.location + "&rl=1"); 
+  }
+
+  // If the browser is IE, get from the xml cache as well.
+ 
+if((checkBrowser() != -1)) {
+  function getXML(cookieName,header,spanName)
+  {
+      var span = document.getElementById("cache");
+      span.style.behavior = "url('#default#userData')";
+      span.load(spanName);
+  
+      var ckyDate = new Date;
+      ckyDate.setDate(ckyDate.getDate( ) + 7);
+ 
+      var saved = span.getAttribute("saved"+cookieName);
+
+      if((saved == null ) || (saved == "")) return -1;
+      var cookieStr = saved;
+      if(cookieName == "YLS") {
+        if((cookieStr.match("n=0")) != null) {
+          cookieStr = cookieStr.replace("n=0", "n=9");
+        } else {
+          cookieStr = cookieStr.concat("&n=9");
+        }
+      }
+      if (header != ""){
+          cookieStr = cookieStr + ';' + header;
+      }
+      document.cookie = cookieStr;
+      return 0;
+  }
+
+  var ylRes = getXML("YL", "expires = Thu, 15 Apr 2037 20:00:00 GMT; domain=login.yahoo.com; path=/", "YL");
+  var fRes = getXML("F", "expires = Thu, 15 Apr 2037 20:00:00 GMT; domain=.yahoo.com; path=/", "YL");
+  var ylsRes = getXML("YLS", "expires = Thu, 15 Apr 2037 20:00:00 GMT; domain=.yahoo.com; path=/", "YL");
+
+  if(ylRes == 0 || fRes == 0 && (document.cookie.length > 0)) {
+    location.replace (document.location + "&rl=1");
+  }
+}
     }
 </script>
 
@@ -1048,14 +3942,83 @@ function flashCacheReady (initialized){ //invoked directly by Flash
 
 
 
-<!-- spaceid: 150002534 INT.OFFSET: 0 --><!-- SpaceID=150002534 loc=FOOT9 noad --><!-- fac-gd2-noad --><!-- gd2-status-2 --><!--QYZ CMS_NONE_AVAIL,,10.200.18.83;;FOOT9;150002534;2;--><!-- login.yahoo.com Tue Jun 25 6:03:34 PDT 2013 --><!-- Begin comScore Tag -->
+<script type="text/javascript">
+
+function FlashDetector_Detect(targetVersion)
+{
+  var pObj = null;
+  var tokens, len, curr_tok;
+  var hasVersion = -1;
+  var playable = false;
+  if(navigator.mimeTypes && navigator.mimeTypes['application/x-shockwave-flash'])
+  {
+     pObj = navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin;
+  }
+  if(pObj != null)
+  {
+     tokens = navigator.plugins['Shockwave Flash'].description.split(' ');
+     len = tokens.length;
+     while(len--)
+     {
+	curr_tok = parseInt( tokens[len] );
+
+        if(!isNaN( curr_tok) )
+        {
+           hasVersion = curr_tok;
+           FlashDetector_Version = curr_tok;
+           break;
+        }
+     }
+     if(hasVersion >= targetVersion)
+     {
+        playable = true;
+     }
+     else
+     {
+        playable = false;
+     }
+  }
+  return playable;
+}
+
+var flashDetector_Playable = false;
+var flashDetector_targetVersion = '8'; 
+
+var isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
+var isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
+var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
+  
+if (isIE && isWin && !isOpera) {
+    document.write('<scr' + 'ipt language="VBScript"\> \n');
+    document.write('on error resume next \n');
+    document.write('flashDetector_Playable = ( IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash." & flashDetector_targetVersion)))\n');
+    document.write('</scr' + 'ipt\> \n');
+  } else {
+      flashDetector_Playable = FlashDetector_Detect(flashDetector_targetVersion);
+  }
+
+  var flashCode = '';
+
+  if(flashDetector_Playable) {
+ 
+    var ts = (new Date()).getTime( );
+
+    flashCode = '<object type="application/x-shockwave-flash" data="https://login.yahoo.com/login/dataCache.swf" width="0" height="0" id="flashCache"> <param name="allowScriptAccess" value="sameDomain" /> <param name="movie" value="https://login.yahoo.com/login/dataCache.swf?' + ts + '" /> <param name="bgColor" value="#fff" /> </object> ';
+
+  }
+  document.write(flashCode);
+
+</script><object type="application/x-shockwave-flash" data="https://login.yahoo.com/login/dataCache.swf" width="0" height="0" id="flashCache"> <param name="allowScriptAccess" value="sameDomain"> <param name="movie" value="https://login.yahoo.com/login/dataCache.swf?1395540210834"> <param name="bgColor" value="#fff"> </object> 
+
+
+<!-- spaceid: 150002527 INT.OFFSET: 0 --><!-- SpaceID=150002527 loc=FOOT9 noad --><!-- fac-gd2-noad --><!-- gd2-status-2 --><!--QYZ CMS_NONE_AVAIL,,98.138.43.170;;FOOT9;150002527;2;--><!-- login.yahoo.com Sat Mar 22 19:03:30 PDT 2014 --><!-- Begin comScore Tag -->
 <script>
   var _comscore = _comscore || [];
   _comscore.push({
     c1: "2",
     c2: "7241469",
-    c5: "150002534",
-    c7: "https%3A%2F%2Flogin.yahoo.com%3A443%2Fconfig%2Flogin_verify2%3F.done%3Dhttps%253A%252F%252Fedit.yahoo.com%252Fconfig%252Feval_profile%253F.scrumb%253D0" 
+    c5: "150002527",
+    c7: "https%3A%2F%2Flogin.yahoo.com%3A443%2Fconfig%2Fmail%3F%26amp%3B.src%3Dym%26amp%3B.intl%3Dus" 
   });
   (function() {
     var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
@@ -1064,14 +4027,51 @@ function flashCacheReady (initialized){ //invoked directly by Flash
   })();
 </script>
 <noscript>
-  <img src="http://b.scorecardresearch.com/p?c1=2&c2=7241469&c4=https%3A%2F%2Flogin.yahoo.com%3A443%2Fconfig%2Flogin_verify2%3F.done%3Dhttps%253A%252F%252Fedit.yahoo.com%252Fconfig%252Feval_profile%253F.scrumb%253D0&c5=150002534&cv=2.0&cj=1" />
+  &lt;img src="http://b.scorecardresearch.com/p?c1=2&amp;c2=7241469&amp;c4=https%3A%2F%2Flogin.yahoo.com%3A443%2Fconfig%2Fmail%3F%26amp%3B.src%3Dym%26amp%3B.intl%3Dus&amp;c5=150002527&amp;cv=2.0&amp;cj=1" /&gt;
 </noscript>
 <!-- End comScore Tag -->
 
-</body>
-</html>
+
+<script type="text/javascript">
+var fixwidth = function() {
+        var width = YAHOO.util.Dom.getViewportWidth();
+        var minwidth = YAHOO.env.ua.ie > 9 ? 560 : 768; // 970 or 768 or 560 (for IE10 on WIN8 - interim fix for photo app)? 
+
+        var delta = 1920 - width;
+
+        if ( delta < 0 || delta > 1650) { return; }
+        if ( width < minwidth ) { width = minwidth; } 
+
+        var iframeHolder = YAHOO.util.Dom.get('iframeHolder');
+        YAHOO.util.Dom.setStyle(iframeHolder, 'overflow' , 'hidden');
+
+        if (YAHOO.env.ua.ie) {
+            YAHOO.util.Dom.setStyle(iframeHolder, 'width', (width + delta * 2/3)  + 'px');
+            YAHOO.util.Dom.setStyle(document.body,'overflow' , 'auto');
+        }
+        else {
+            YAHOO.util.Dom.setStyle(iframeHolder, 'width', width + delta/2  + (width == 800 ? 60 : 0) + 'px');
+            YAHOO.util.Dom.setStyle(document.body,'overflow' , 'hidden');
+        }
+        YAHOO.util.Dom.setStyle(document.body,'width' , width + 'px');
+
+        var uh = YAHOO.util.Dom.get('yucsHead');
+        if(uh) {
+            if (width>1440) width = 1440;
+            YAHOO.util.Dom.setStyle(uh,'width' , width + 'px');
+        }
+                YAHOO.util.Dom.setStyle('footer', 'width', width + (width == 800 ? 60 : 0) + 'px');
+        if(width == 800) {
+            YAHOO.util.Dom.setStyle('footer', 'bottom','-63px');
+        }
+        };
+var hidebodyscroll = function(){
+        YAHOO.util.Dom.setStyle(document.body,'overflow' , (YAHOO.env.ua.ie ? 'auto' : 'hidden'));
+};
+YAHOO.util.Event.addListener(window, "load", function(e) { fixwidth();setTimeout(hidebodyscroll,100);});
+YAHOO.util.Event.addListener(window, "resize", function(e) { fixwidth(); });
+</script>
 
 
 
-
-<!-- l07.member.ird.yahoo.com compressed/chunked Tue Jun 25 06:03:34 PDT 2013 -->
+<script id="hiddenlpsubmitdiv" style="display: none;"></script><script>try{for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ d.innerText=i; } } d.dispatchEvent(customEvent); form.lpsubmitorig2(); } } }}catch(e){}</script></body><script type="text/javascript">var new_nav = new function() {};var x;var old_navigator = window.navigator;for (x in navigator) {if (typeof navigator[x] == 'function') {eval("new_nav." + x + " = function() { return old_navigator." + x + "();};");} else {eval("new_nav." + x + " = navigator." + x + ";");}}new_nav.userAgent = "Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10";new_nav.vendor = "Apple, Inc.";window.navigator = new_nav;</script></html>
