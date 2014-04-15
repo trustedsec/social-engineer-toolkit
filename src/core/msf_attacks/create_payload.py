@@ -253,7 +253,7 @@ if exploit == "dll_hijacking":
 
     if os.path.isfile(setdir + "/meta_config"):
         # if we aren't using the infectious method then do normal routine
-        if not os.path.isfile(setdir + "/fileformat.file" % (setdir)):
+        if not os.path.isfile("%s/fileformat.file" % (setdir)):
             print_info("This may take a few to load MSF...")
             try:
                 child1=pexpect.spawn("ruby %s/msfconsole -L -r %s/meta_config" % (meta_path,setdir))
@@ -264,7 +264,7 @@ if exploit == "dll_hijacking":
 
     # get the emails out
     # if we aren't using the infectious method then do the normal routine
-    if not os.path.isfile(setdir + "/fileformat.file" % (setdir)):
+    if not os.path.isfile("%s/fileformat.file" % (setdir)):
         sys.path.append("src/phishing/smtp/client/")
         debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'",1)
         try: reload(smtp_client)

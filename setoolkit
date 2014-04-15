@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 import sys
+import traceback
 
 # if we are running in the path no need to change
 if os.path.isfile("setoolkit"):
@@ -229,6 +230,7 @@ except KeyboardInterrupt:
 # handle exceptions
 except Exception, error:
     log(error)
+    log(traceback.format_exc())
     print "\n\n[!] Something went wrong, printing the error: "+ str(error)
 
 # cleanup routine
