@@ -15,16 +15,13 @@ from BaseHTTPServer import HTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
 
 from src.core.setcore import *
+from src.core.setconfig import *
+
 definepath=os.getcwd()
 
 # grab port for command center
-port=44444
-fileopen=file("%s/config/set_config" % (definepath), "r")
-for line in fileopen:
-    line=line.rstrip()
-    match=re.search("COMMAND_CENTER_PORT=",line)
-    if match:
-        port=line.replace("COMMAND_CENTER_PORT=","")
+sconfig = SetConfig("%s/config/set_config" % (definepath))
+port = int(sconfig.get("COMMAND_CENTER_PORT",44444))
 
 # define command center template
 fileopen=file("src/commandcenter/command_center.html", "r")
@@ -52,42 +49,12 @@ class myRequestHandler(BaseHTTPRequestHandler):
     # GET Request here
     def do_GET(self):
 
-        webattack_email="off"
-        self_signed="off"
-        auto_detect="on"
-        ettercap="off"
-        sendmail="off"
-
-        fileopen=file("%s/config/set_config" % (definepath), "r")
-        for line in fileopen:
-            line=line.rstrip()
-            # check for webattack email
-            match1=re.search("WEBATTACK_EMAIL=ON", line)
-            if match1:
-                webattack_email="on"
-
-            # check for auto detect IP address
-            match2=re.search("AUTO_DETECT=OFF", line)
-            if match2:
-                auto_detect="off"
-
-            # self signed check
-            match3=re.search("SELF_SIGNED_APPLET=ON", line)
-            if match3:
-                self_signed="on"
-
-            match4=re.search("ETTERCAP=ON", line)
-            if match4:
-                ettercap="on"
-
-            match5=re.search("SENDMAIL=ON", line)
-            if match5:
-                sendmail="on"
-
-            match6=re.search("DSNIFF=ON", line)
-            if match6:
-                ettercap="on"
-
+        webattack_email = sconfig.get("WEBATTACK_EMAIL","OFF").lower()
+        self_signed = sconfig.get("SELF_SIGNED_APPLET","OFF").lower()
+        auto_detect = sconfig.get("AUTO_DETECT","ON").lower()
+        ettercap = sconfig.get("ETTERCAP","OFF").lower()
+        ettercap = sconfig.get("DSNIFF","OFF").lower()
+        sendmail = sconfig.get("SENDMAIL","OFF").lower()
 
         def post_load(filename):
             fileopen=file("header","r")
@@ -267,11 +234,8 @@ class myRequestHandler(BaseHTTPRequestHandler):
             fileopen=file("header","r")
             for line in fileopen:
                 self.wfile.write(line)
-
-            fileopen=file("%s/config/set_config" % (definepath), "r")
-            for line in fileopen:
-                match=re.search("AUTO_DETECT=OFF", line)
-                if match: auto_detect="off"
+            
+            auto_detect = sconfig.get("AUTO_DETECT","ON").lower()
 
             # this will dynamically import web_attack vector and check for flags to add additional options
             fileopen=file("phish.site","r")
@@ -415,33 +379,13 @@ class myRequestHandler(BaseHTTPRequestHandler):
         ettercap="off"
         sendmail="off"
 
-        fileopen=file("%s/config/set_config" % (definepath), "r")
-        for line in fileopen:
-            line=line.rstrip()
-            match=re.search("COMMAND_CENTER_PORT=",line)
-            if match: port=line.replace("COMMAND_CENTER_PORT=","")
-
-            # check for webattack email
-            match1=re.search("WEBATTACK_EMAIL=ON", line)
-            if match1: webattack_email="on"
-
-            # check for auto detect IP address
-            match2=re.search("AUTO_DETECT=OFF", line)
-            if match2: auto_detect="off"
-
-            # self signed check
-            match3=re.search("SELF_SIGNED_APPLET=ON", line)
-            if match3: self_signed="on"
-
-            match4=re.search("ETTERCAP=ON", line)
-            if match4: ettercap="on"
-
-            match5=re.search("SENDMAIL=ON", line)
-            if match5: sendmail="on"
-
-            # if dsniff is on
-            match6=re.search("DSNIFF=ON", line)
-            if match6: ettercap = "on"
+        webattack_email = sconfig.get("WEBATTACK_EMAIL","OFF").lower()
+        self_signed = sconfig.get("SELF_SIGNED_APPLET","OFF").lower()
+        auto_detect = sconfig.get("AUTO_DETECT","ON").lower()
+        ettercap = sconfig.get("ETTERCAP","OFF").lower()
+        ettercap = sconfig.get("DSNIFF","OFF").lower()
+        sendmail = sconfig.get("SENDMAIL","OFF").lower()
+        port = int(sconfig.get("COMMAND_CENTER_PORT",44444))
 
 
         def post_load(filename):
@@ -1579,11 +1523,8 @@ class myRequestHandler(BaseHTTPRequestHandler):
 
             try:
                 os.chdir(definepath)
-                fileopen=file("config/set_config", "r")
-                for line in fileopen:
-                    line=line.rstrip()
-                    match=re.search("TERMINAL=", line)
-                    if match: terminal=line.replace("TERMINAL=","")
+                terminal = sconfig.get("TERMINAL","")
+                
                 if terminal == "XTERM" or terminal == "xterm" or terminal == "":
                     proc = subprocess.Popen("xterm -geometry 90x30 -bg black -fg white -fn *-fixed-*-*-*-20-* -T 'The Social-Engineer Toolkit (SET)' -e 'python seautomate %s/answer.txt' &" % (setdir), shell=True)
 
@@ -1628,11 +1569,8 @@ print """
 
 """
 
-fileopen=file("%s/config/set_config" % (definepath), "r")
-for line in fileopen:
-    line=line.rstrip()
-    match=re.search("COMMAND_CENTER_INTERFACE=", line)
-    if match: bind_interface=line.replace("COMMAND_CENTER_INTERFACE=", "")
+bind_interface = sconfig.get("COMMAND_CENTER_INTERFACE","")
+
 
 print "Interface is bound to http://%s on port %s (open browser to ip/port)" % (bind_interface,str(port))
 httpd = HTTPServer(('%s' % (bind_interface), int(port)), myRequestHandler)
