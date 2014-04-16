@@ -33,7 +33,7 @@ class SetConfig():
                         cnt += 1
                         if cnt < len(lineparts):
                             parametervalue += "="
-                    if parametervalue.startswith('"') and parametervalue.endswith('"'):
+                    if (parametervalue.startswith('"') and parametervalue.endswith('"')) or (parametervalue.startswith("'") and parametervalue.endswith('"')):
                         parametervalue = parametervalue[1:-1]
                     parametervalue_check = parametervalue.upper().replace(" ","")
                     if (parametervalue_check in trues):
