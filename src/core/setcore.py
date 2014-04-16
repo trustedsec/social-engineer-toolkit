@@ -403,9 +403,10 @@ def cleanup_routine():
 # Update Metasploit
 #
 def update_metasploit():
-    print_info("Updating the Metasploit Framework...Be patient.")
     msf_path = meta_path()
-    svn_update = subprocess.Popen("cd %s/;svn update" % (msf_path), shell=True).wait()
+    print_info("Updating the Metasploit Framework (%s)...Be patient." % (msf_path))
+    #svn_update = subprocess.Popen("cd %s/;svn update" % (msf_path), shell=True).wait()
+    msf_update = subprocess.Popen("cd %s/;./msfupdate" % (msf_path), shell=True).wait()
     print_status("Metasploit has successfully updated!")
     return_continue()
 
