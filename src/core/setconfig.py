@@ -26,7 +26,15 @@ class SetConfig():
                 parametername = lineparts[0].replace(" ","").upper()
                 parametervalue = ""
                 if len(lineparts) > 1:
-                    parametervalue = lineparts[1].strip()
+                    # a config parameter value may have a =, so glue the pieces together again
+                    cnt = 1
+                    while cnt < len(lineparts):
+                        parametervalue += lineparts[cnt]
+                        cnt += 1
+                        if cnt < len(lineparts):
+                            parametervalue += "="
+                    if parametervalue.startswith('"') and parametervalue.endswith('"'):
+                        parametervalue = parametervalue[1:-1]
                     parametervalue_check = parametervalue.upper().replace(" ","")
                     if (parametervalue_check in trues):
                         parametervalue = "ON"
