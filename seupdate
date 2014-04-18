@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# simple svn update for set pulling from core modules
+# simple wrapper around set update features pulling from core modules
 #
 import os
 import sys

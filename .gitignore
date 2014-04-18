@@ -1,3 +1,6 @@
 *.pyc
 *.jar
 *.jar.orig
+config/set_config.py
+src/agreement4
+src/logs/*
