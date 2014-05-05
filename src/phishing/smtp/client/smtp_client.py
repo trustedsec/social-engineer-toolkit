@@ -360,7 +360,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 print str(e)
                 try:
                     mailServer.login(provideremail, pwd)
-                    thread.start_new_thread(mailServer.sendmail,(from_address, to, msg.as_string()))
+                    thread.start_new_thread(mailServer.sendmail(from_address, to, msg.as_string()))
                 except Exception, e:
                     return_continue()
 
