@@ -281,7 +281,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
             return_continue()
 
     if sendmail == 1:
-        mailServer.sendmail,(from_address, to, msg.as_string())
+        mailServer.sendmail(from_address, to, msg.as_string())
 
 # if we specified a single address
 if option1 == '1':
