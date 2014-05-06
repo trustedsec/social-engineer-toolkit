@@ -50,7 +50,7 @@ for line in sendmail_file:
                 # Flip sendmail switch to get rid of some questions
                 sendmail=1
                 # just throw user and password to blank, needed for defining below
-                user=''
+                provideruser=''
                 pwd=''
 
     # Search for SMTP provider we will be using
@@ -277,17 +277,18 @@ relay = raw_input(setprompt(["1"], ""))
 counter=0
 # Specify SMTP Option Here
 if relay == '1':
-    user = raw_input(setprompt(["1"], ("Your %s email address" % email_provider)))
-    from_address = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
-    user1 = user
+    provideruser = raw_input(setprompt(["1"], ("Your %s email address" % email_provider)))
+    from_address = provideruser
+    from_displayname = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
     pwd = getpass.getpass("Email password: ")
 
 # Specify Open-Relay Option Here
 if relay == '2':
-    user1 = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
-    from_address = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
+    from_address = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
+    from_displayname = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
     if sendmail==0:
-        user = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
+        # Ask for a username and password if we aren't using sendmail
+        provideruser = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
         pwd =  getpass.getpass("Password for open-relay [blank]: ")
 
     if sendmail==0:
@@ -308,7 +309,7 @@ else:
 # Define mail send here
 def mail(to, subject, text, attach, prioflag1, prioflag2):
     msg = MIMEMultipart()
-    msg['From'] = from_address
+    msg['From'] = from_displayname
     msg['To'] = to
     msg['X-Priority'] = prioflag1
     msg['X-MSMail-Priority'] = prioflag2
@@ -345,30 +346,30 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 except:
                     pass
                 mailServer.ehlo()
-                if len(user) > 0:
-                    mailServer.login(user, pwd)
-                mailServer.sendmail(user1, to, msg.as_string())
+                if len(provideruser) > 0:
+                    mailServer.login(provideruser, pwd)
+                mailServer.sendmail(from_address, to, msg.as_string())
         except Exception, e:
             print_error("Unable to deliver email. Printing exceptions message below, this is most likely due to an illegal attachment. If using GMAIL they inspect PDFs and is most likely getting caught.")
             raw_input("Press {return} to view error message.")
             print str(e)
             try:
-                mailServer.docmd("AUTH LOGIN", base64.b64encode(user))
+                mailServer.docmd("AUTH LOGIN", base64.b64encode(provideruser))
                 mailServer.docmd(base64.b64encode(pwd), "")
             except Exception,e:
                 print str(e)
                 try:
-                    mailServer.login(user, pwd)
-                    thread.start_new_thread(mailServer.sendmail,(user1, to, msg.as_string()))
+                    mailServer.login(provideremail, pwd)
+                    thread.start_new_thread(mailServer.sendmail(from_address, to, msg.as_string()))
                 except Exception, e:
                     return_continue()
 
     if email_provider == "yahoo" or email_provider == "hotmail":
-        mailServer.login(user, pwd)
-        thread.start_new_thread(mailServer.sendmail,(user1, to, msg.as_string()))
+        mailServer.login(provideruser, pwd)
+        thread.start_new_thread(mailServer.sendmail,(from_address, to, msg.as_string()))
 
     if sendmail == 1:
-        thread.start_new_thread(mailServer.sendmail,(user1, to, msg.as_string()))
+        thread.start_new_thread(mailServer.sendmail,(from_address, to, msg.as_string()))
 
 if option1 == '1':
     try:

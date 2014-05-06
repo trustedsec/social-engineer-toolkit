@@ -54,8 +54,8 @@ for line in sendmail_file:
                 port = ("25")
                 # Flip sendmail switch to get rid of some questions
                 sendmail=1
-                # just throw user and password to blank, needed for defining below
-                user=''
+                # just throw provideruser and password to blank, needed for defining below
+                provideruser=''
                 pwd=''
 
     # Search for SMTP provider we will be using
@@ -145,18 +145,18 @@ if option1 != "99":
     counter=0
     # Specify mail Option Here
     if relay == '1':
-        user = raw_input(setprompt(["1"], "Your %s email address" % (email_provider)))
-        from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see"))
-        user1 = user
+        provideruser = raw_input(setprompt(["1"], "Your %s email address" % (email_provider)))
+	from_address = provideruser
+        from_displayname = raw_input(setprompt(["1"], "The FROM NAME the user will see"))
         pwd = getpass.getpass("Email password: ")
 
     # Specify Open-Relay Option Here    
     if relay == '2':
-        user1 = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
-        user = user1
-        from_address = raw_input(setprompt(["1"], "The FROM NAME the user will see"))
+        from_address = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
+        from_displayname = raw_input(setprompt(["1"], "The FROM NAME the user will see"))
         if sendmail==0:
-            user = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
+            # Ask for a username and password if we aren't using sendmail
+            provideruser = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
             pwd =  getpass.getpass("Password for open-relay [blank]: ")
 
         if sendmail==0:
@@ -241,7 +241,7 @@ if option1 != "99":
 def mail(to, subject, prioflag1, prioflag2, text):
 
     msg = MIMEMultipart()
-    msg['From'] = from_address
+    msg['From'] = from_displayname
     msg['To'] = to
     msg['X-Priority'] = prioflag1
     msg['X-MSMail-Priority'] = prioflag2
@@ -264,15 +264,15 @@ def mail(to, subject, prioflag1, prioflag2, text):
             else: mailServer.ehlo()
 
     try:
-        if user != "" or pwd != "":
-            mailServer.login(user, pwd)
-            mailServer.sendmail(user, to, msg.as_string())
+        if provideruser != "" or pwd != "":
+            mailServer.login(provideruser, pwd)
+            mailServer.sendmail(from_address, to, msg.as_string())
 
     except:
         # try logging in with base64 encoding here
         import base64
         try:
-            mailServer.docmd("AUTH LOGIN", base64.b64encode(user))
+            mailServer.docmd("AUTH LOGIN", base64.b64encode(provideruser))
             mailServer.docmd(base64.b64encode(pwd), "")
 
         # except exceptions and print incorrect passowrd
@@ -281,7 +281,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
             return_continue()
 
     if sendmail == 1:
-        mailServer.sendmail,(user, to, msg.as_string())
+        mailServer.sendmail(from_address, to, msg.as_string())
 
 # if we specified a single address
 if option1 == '1':
