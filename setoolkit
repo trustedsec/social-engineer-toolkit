@@ -69,7 +69,7 @@ try:
     from Crypto.Cipher import AES
 
 except ImportError:
-    print "[!] The python-pycrypto python module not installed. You will loose the ability to use multi-pyinjector."
+    print "[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector."
     pass
 
 #########################################
