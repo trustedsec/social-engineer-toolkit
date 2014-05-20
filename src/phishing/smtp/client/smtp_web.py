@@ -38,25 +38,13 @@ for line in sendmail_file:
     if match:
         # if match and if line is flipped on continue on
         if line == ("SENDMAIL=ON"):
-            print_info("Sendmail is a Linux based SMTP Server, this can be used to spoof email addresses.")
-            print_info("Sendmail can take up to three minutes to start")
-            print_status("Sendmail is set to ON")
-            sendmail_choice = yesno_prompt(["1"], "Start Sendmail? [yes|no]")
-            # if yes, then do some good stuff
-            if sendmail_choice == "YES":
-                print_info("Sendmail can take up to 3-5 minutes to start")
-                if os.path.isfile("/etc/init.d/sendmail"):
-                    subprocess.Popen("/etc/init.d/sendmail start", shell=True).wait()
-                if not os.path.isfile("/etc/init.d/sendmail"):
-                    pause = raw_input("[!] Sendmail was not found. Try again and restart. (For Kali - apt-get install sendmail-bin)")
-                    sys.exit()
-                smtp = ("localhost")
-                port = ("25")
-                # Flip sendmail switch to get rid of some questions
-                sendmail=1
-                # just throw provideruser and password to blank, needed for defining below
-                provideruser=''
-                pwd=''
+            print_info("You need to configure EMAIL_PROVIDER and /etc/ssmtp/* parameters manually before")
+            print_info("running this option")
+            # Flip sendmail switch to get rid of some questions
+            sendmail=1
+            # just throw provideruser and password to blank, needed for defining below
+            provideruser=''
+            pwd=''
 
     # Search for SMTP provider we will be using
     match1=re.search("EMAIL_PROVIDER=", line)
