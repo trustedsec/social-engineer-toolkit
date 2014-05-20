@@ -24,6 +24,8 @@ def ms_module(exploit):
     """ Receives the input given by the user from gen_payload.py """
 
     return {
+            '1':"exploit/windows/browser/ms14_012_cmarkup_uaf",
+            '2':"exploit/windows/browser/ms14_012_textrange",
             '1':"exploit/windows/browser/ms13_080_cdisplaypointer",
             '2':"exploit/windows/browser/ie_setmousecapture_uaf",
             '3':"exploit/multi/browser/java_jre17_jmxbean_2",
@@ -136,24 +138,25 @@ def ms_attacks(exploit):
     return {
             '1':"dll_hijacking",
             '2':"unc_embed",
-            '3':"exploit/windows/fileformat/ms11_006_createsizeddibsection",
-            '4':"exploit/windows/fileformat/ms10_087_rtf_pfragments_bof",
-            '5':"exploit/windows/fileformat/adobe_flashplayer_button",
-            '6':"exploit/windows/fileformat/adobe_cooltype_sing",
-            '7':"exploit/windows/fileformat/adobe_flashplayer_newfunction",
-            '8':"exploit/windows/fileformat/adobe_collectemailinfo",
-            '9':"exploit/windows/fileformat/adobe_geticon",
-            '10':"exploit/windows/fileformat/adobe_jbig2decode",
-            '11':"exploit/windows/fileformat/adobe_pdf_embedded_exe",
-            '12':"exploit/windows/fileformat/adobe_utilprintf",
-            '13':"custom/exe/to/vba/payload",
-            '14':"exploit/windows/fileformat/adobe_u3d_meshdecl",
-            '15':'exploit/windows/fileformat/adobe_pdf_embedded_exe_nojs',
-            '16':"exploit/windows/fileformat/foxit_title_bof",
-            '17':"exploit/windows/fileformat/apple_quicktime_pnsize",
-            '18':"exploit/windows/fileformat/nuance_pdf_launch_overflow",
-            '19':"exploit/windows/fileformat/adobe_reader_u3d",
-            '20':"exploit/windows/fileformat/ms12_027_mscomctl_bof",
+            '3':"exploit/windows/fileformat/ms14_017_rtf",
+            '4':"exploit/windows/fileformat/ms11_006_createsizeddibsection",
+            '5':"exploit/windows/fileformat/ms10_087_rtf_pfragments_bof",
+            '6':"exploit/windows/fileformat/adobe_flashplayer_button",
+            '7':"exploit/windows/fileformat/adobe_cooltype_sing",
+            '8':"exploit/windows/fileformat/adobe_flashplayer_newfunction",
+            '9':"exploit/windows/fileformat/adobe_collectemailinfo",
+            '10':"exploit/windows/fileformat/adobe_geticon",
+            '11':"exploit/windows/fileformat/adobe_jbig2decode",
+            '12':"exploit/windows/fileformat/adobe_pdf_embedded_exe",
+            '13':"exploit/windows/fileformat/adobe_utilprintf",
+            '14':"custom/exe/to/vba/payload",
+            '15':"exploit/windows/fileformat/adobe_u3d_meshdecl",
+            '16':'exploit/windows/fileformat/adobe_pdf_embedded_exe_nojs',
+            '17':"exploit/windows/fileformat/foxit_title_bof",
+            '18':"exploit/windows/fileformat/apple_quicktime_pnsize",
+            '19':"exploit/windows/fileformat/nuance_pdf_launch_overflow",
+            '20':"exploit/windows/fileformat/adobe_reader_u3d",
+            '21':"exploit/windows/fileformat/ms12_027_mscomctl_bof",
             }.get(exploit,"INVALID")
 
 def teensy_config(choice):
@@ -176,9 +179,9 @@ def webattack_vector(attack_vector):
             '2':"browser",
             '3':"harvester",
             '4':"tabnapping",
-            '5':"mlitme",
-            '6':"webjacking",
-            '7':"multiattack"
+            '5':"webjacking",
+            '6':"multiattack",
+            '7':"fsattack"
             }.get(attack_vector,"ERROR")
 
 
@@ -223,4 +226,5 @@ def category(category):
             '30':"delldrac",
             '31':"ridenum",
             '32':"psexec",
+            '33':"fsattack",
            }.get(category,"ERROR")

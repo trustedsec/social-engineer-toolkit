@@ -1,4 +1,51 @@
 ~~~~~~~~~~~~~~~~
+version 6.0
+~~~~~~~~~~~~~~~~
+
+* fixed psexec which would only bring one shell back instead of as many as you used for the host
+* fixed an issue that would cause metasploit payloads to not be properly generated when using msfvenom, this was due to a code change requiring -f <codetype> 
+* on the update SET menu, it will automatically check if Kali Linux is installed, if it is will automatically enable bleeding edge repos for daily updates to SET
+* added SET to automatically do apt-get update/upgrade/dist-upgrade/autoremove upon checking for updates if using Kali
+* fixed an issue that would cause the MSSQL bruter to throw a payload_options error when powershell was detected, this was due to a file not being written out for payloads.powershell.prep to function properly
+* updated dell drac attack to remove old working and twitter handle
+* upgraded downgrade attack for powershell to server 2008/2012 compatiblity
+* fixed a sql port bug error that would cause the mssql bruter to fail when importing a list without a port
+* fixed an issue in sql bruter when legacy debug method was used if no powershell, would error out when selecting a standard Metasploit payload
+* fixed an issue that was causing a menu mismatch using the web attack vector, when selecting anything above 5 would cause a menu mismtach
+* fixed dr4k0s menu system so when you 99 out, it goes back to the SET menus by returning at that point versus exit(0)
+* removed NAT and cloner from dr4k0s fsattack - it was automatically added based on attack vector, wasn't needed
+* added additional fixes for msfvenom and generating https/http shells
+* fixed an issue that would cause webjacking method to not successfully redirect to index2.html when use APACHE_SERVER=ON
+* made apache_server=on to the default - still configurable in config/set_config
+* fixed a bug that would cause mssql deploy stager on legacy debug64 to throw an error on not finding 1msf.exe - this has since been resolved
+* removed old references to a module that is no longer in SET
+* updated the SET user manual to the latest version 6.0 and incorporated the FSAttack from d4rk0s
+* added ablity for OSX persistence when you have access to the filesystem
+* permenantly removed the command center, will redesign later - no longer needed
+* removed command center wording from SET user manual
+* removed command center options in the set_config
+* removed unused options inside set_config related to mlitm
+* added automatic check to see if bleeding edge repos were enabled or not when using Kali - if kali is in use will prompt to automatically enable bleeding edge repos
+* updated seupdate to reflect bleeding edge repos as well
+* removed self_signed_applet from the config menu - it will not prompt inside of the Java Applet Attack method
+* added ability to use same codebase for the new selection process for SET.
+* redesigned the java applet selection process and allow you to verify new code signign certificates or import your own applet into the java applet attack method
+* added better error handlign when using setoolkit
+* updated the version of RIDENUM to the latest version inside of SET
+* updated the report template to remove secmaniac and update with trustedsec
+* removed old references to secmaniac in various code segments
+* added the MS14-012 Microsoft Internet Explorer CMarkup Use-After-Free from Metasploit
+* added the MS14-012 Microsoft Internet Explorer TextRange Use-After-Free exploit from Metasploit
+* added the MS14-017 Microsoft Word RTF Object Confusion fileformat exploit
+* added a new initial image loader (doctor who theme) - pssssh
+* removed the metasploit update feature - this should be handled through kali and theres packages, distributions, etc. its hard to predict which will be used for Metasploit
+* removed old mentions in update_config that were no longer needed
+* removed the sms attack vector - it hasn't been maintained or updated in a long time and no longer supported
+* added option 99 in qrcode generation to go back a previous menu, it was missing
+* added set ExitOnSession for autorun attack inside of SET
+* changed some of the formating and variable names in the fsattack
+
+~~~~~~~~~~~~~~~~
 version 5.4.8
 ~~~~~~~~~~~~~~~~
 

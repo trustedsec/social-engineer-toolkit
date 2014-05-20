@@ -33,7 +33,7 @@ def usage():
 Written by: David Kennedy (ReL1K)
 Company: https://www.trustedsec.com
 Twitter: @TrustedSec
-Twitter: @Dave_ReL1K
+Twitter: @HackingDave
 
 Rid Enum is a RID cycling attack that attempts to enumerate user accounts through
 null sessions and the SID to RID enum. If you specify a password file, it will

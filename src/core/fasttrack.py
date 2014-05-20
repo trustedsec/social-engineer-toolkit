@@ -52,7 +52,7 @@ try:
                             print_error("File not found! Please type in the path to the file correctly.")
                         else:
                             break            
-                if choice == "1": port = ""                   
+                if choice == "1": port = "1433"                   
                 if choice == "2": port = "1433"
                 # ask for a wordlist
                 wordlist = raw_input(setprompt(["19","21","22"], "Enter path to a wordlist file [use default wordlist]"))
@@ -174,7 +174,7 @@ try:
                                 # if we equal the number used above
                                 if counter == int(select_server):
                                         #  ipaddr + "," + username + "," + str(port) + "," + passwords
-                                    print "\nHow do you want to deploy the binary via debug (win2k, winxp, win2003) and/or powershell (vista,win7) or just a shell\n\n   1. Deploy Backdoor to System\n   2. Standard Windows Shell\n\n   99. Return back to the main menu.\n"
+                                    print "\nHow do you want to deploy the binary via debug (win2k, winxp, win2003) and/or powershell (vista,win7,2008,2012) or just a shell\n\n   1. Deploy Backdoor to System\n   2. Standard Windows Shell\n\n   99. Return back to the main menu.\n"
                                     option = raw_input(setprompt(["19","21","22"], "Which deployment option do you want [1]"))
                                     if option == "": option = "1"
                                     # if 99 then break

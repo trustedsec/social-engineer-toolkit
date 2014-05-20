@@ -136,14 +136,19 @@ try:
                         return_continue()
                         break
 
-                # Web Attack menu choice 9: Create or Import a CodeSigning Certificate
-                if attack_vector == '8':
-                    sys.path.append("src/html/unsigned")
-                    debug_msg(me, "importing 'src.html.unsigned.verified_sign'", 1)
+                # full screen attack vector
+                if attack_vector == '7':
+                    # dont need site cloner
+                    site_cloned = False
+                    # skip nat section and exit out
+                    choice3 = "-1"
+                    sys.path.append("src/webattack/fsattack")
+                    debug_msg(me, "importing 'src.webattack.fsaattack'", 1)
                     try:
-                        reload(verified_sign)
+                        reload(full)
                     except:
-                        import verified_sign
+                        import full
+
                 # Web Attack menu choice 9: Return to the Previous Menu
                 if attack_vector == '99': break
 
@@ -164,7 +169,7 @@ try:
                     #     USER INPUT: SHOW WEB ATTACK VECTORS MENU    #
                     ###################################################
 
-                    if attack_vector != "8":
+                    if attack_vector != "7":
                         debug_msg(me, "printing 'text.webattack_vectors_menu'", 5)
                         show_webvectors_menu = create_menu(text.webattack_vectors_text, text.webattack_vectors_menu)
                         print '  99) Return to Webattack Menu\n'
@@ -312,15 +317,7 @@ try:
 
                         # if java applet attack
                         if attack_vector == "java":
-                            # Allow Self-Signed Certificates
-                            fileopen = file("config/set_config", "r").readlines()
-                            for line in fileopen:
-                                line = line.rstrip()
-                                match = re.search("SELF_SIGNED_APPLET=ON", line)
-                                if match:
-                                    sys.path.append("src/html/unsigned/")
-                                    debug_msg(me, "importing 'src.html.unsigned.self_sign'", 1)
-                                    import self_sign
+                            applet_choice()
 
                     # Select SET quick setup
                     if choice3 == '1':
@@ -351,14 +348,17 @@ try:
                             reload(arp)
                         except:
                             import arp
+
                         # actual website attack here
                         # web_server.py is main core
                         sys.path.append("src/html/")
+
                         # clean up stale file
                         if os.path.isfile(setdir + "/cloner.failed"):
                             os.remove(setdir + "/cloner.failed")
 
                         site_cloned = True
+
                         debug_msg(me, "line 375: importing 'src.webattack.web_clone.cloner'", 1)
                         try: reload(src.webattack.web_clone.cloner)
                         except: import src.webattack.web_clone.cloner

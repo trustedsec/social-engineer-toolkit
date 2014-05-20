@@ -318,6 +318,7 @@ try:
 
             print bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win + "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC
 
+
         ## selection of browser exploits
         ## check to see if multiattack is in use
         multi_meta="off"

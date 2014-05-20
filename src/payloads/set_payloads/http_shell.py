@@ -5,7 +5,7 @@
 #  AES Encrypted Reverse HTTP Shell by:
 #
 #         Dave Kennedy (ReL1K)
-#      http://www.secmaniac.com
+#      http://www.trustedsec.com
 #
 ##########################################################################################################################
 #
@@ -95,7 +95,7 @@ try:
 except IndexError:
     print " \nAES Encrypted Reverse HTTP Shell by:"
     print "        Dave Kennedy (ReL1K)"
-    print "      http://www.secmaniac.com"
+    print "      http://www.trustedsec.com"
     print "Usage: shell.exe <reverse_ip_address> <rport>"
     time.sleep(0.1)
     sys.exit()

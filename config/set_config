@@ -98,12 +98,9 @@ WEBATTACK_EMAIL=OFF
 ### Web attack time delay between emails default is 1 second
 TIME_DELAY_EMAIL=1
 #
-### Man Left In The Middle port, this will be used for the web server bind port
-MLITM_PORT=80
-#
 ### Use Apache instead of the standard Python web server. This will increase the speed
 ### of the attack vector.
-APACHE_SERVER=OFF
+APACHE_SERVER=ON
 #
 ### Path to the Apache web root
 APACHE_DIRECTORY=/var/www
@@ -112,11 +109,6 @@ APACHE_DIRECTORY=/var/www
 ### or metasploit exploit. Default is port 80. This also goes if you are using apache_server equal on.
 ### You need to specify what port Apache is listening on in order for this to work properly.
 WEB_PORT=80
-#
-### Create self-signed Java applets and spoof publisher note this requires you to
-### install --->  Java 6 JDK, BT5 or Ubuntu users: apt-get install openjdk-6-jdk
-### If this is not installed it will not work. Can also do: apt-get install sun-java6-jdk
-SELF_SIGNED_APPLET=OFF
 #
 ### This flag will set the java id flag within the java applet to something different.
 ### This could be to make it look more believable or for better obfuscation
@@ -150,22 +142,9 @@ PEM_SERVER=/root/newreq.pem
 ### and harder to convince the victim. 5000 = 5 seconds
 WEBJACKING_TIME=2000
 #
-### Command center interface to bind to by default it is localhost only. If you want to enable it
-### so you can hit the command center remotely put the interface to 0.0.0.0 to bind to all interfaces.
-COMMAND_CENTER_INTERFACE=127.0.0.1
-#
-### Port for the command center
-COMMAND_CENTER_PORT=44444
-#
 ### This will remove the set interactive shell from the menu selection. The SET payloads are large in nature
 ### and things like the pwniexpress need smaller set builds
 SET_INTERACTIVE_SHELL=ON
-#
-### What do you want to use for your default terminal within the command center. The default is xterm
-### the options you have are as follow - gnome, konsole, xterm, solo. If you select solo it will place
-### all results in the same shell you used to open the set-web interface. This is useful if your using
-### something that only has one console, such as an iPhone or iPad.
-TERMINAL=SOLO
 #
 ### Digital signature stealing method must have the pefile Python modules loaded
 ### from http://code.google.com/p/pefile/. Be sure to install this before turning

