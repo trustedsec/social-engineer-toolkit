@@ -12,8 +12,8 @@ version 6.0
 * fixed a sql port bug error that would cause the mssql bruter to fail when importing a list without a port
 * fixed an issue in sql bruter when legacy debug method was used if no powershell, would error out when selecting a standard Metasploit payload
 * fixed an issue that was causing a menu mismatch using the web attack vector, when selecting anything above 5 would cause a menu mismtach
-* fixed dr4k0s menu system so when you 99 out, it goes back to the SET menus by returning at that point versus exit(0)
-* removed NAT and cloner from dr4k0s fsattack - it was automatically added based on attack vector, wasn't needed
+* fixed d4rk0 menu system so when you 99 out, it goes back to the SET menus by returning at that point versus exit(0)
+* removed NAT and cloner from d4rk0 fsattack - it was automatically added based on attack vector, wasn't needed
 * added additional fixes for msfvenom and generating https/http shells
 * fixed an issue that would cause webjacking method to not successfully redirect to index2.html when use APACHE_SERVER=ON
 * made apache_server=on to the default - still configurable in config/set_config
