@@ -461,6 +461,9 @@ def run():
             filewrite.close()
             os.remove(setdir + "/web_clone/index.html")
             shutil.copyfile(setdir + "/web_clone/index.2", setdir + "/web_clone/index.html")
+            # copy the entire web_clone directory.  
+            # Without this only index.php|html are copied even though the user may have chosen to import the entire directory in the set module.
+            copyfolder(setdir + "/web_clone", apache_dir)
         if os.path.isfile("%s/index.html" % (apache_dir)):
             os.remove("%s/index.html" % (apache_dir))
         if track_email == False:

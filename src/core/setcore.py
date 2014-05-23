@@ -24,7 +24,7 @@ try:
     from Crypto.Cipher import AES
 
 except ImportError:
-    print "[!] The python-pycrypto python module not installed. You will loose the ability for encrypted communications."
+    print "[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications."
     pass
 
 # get the main SET path
