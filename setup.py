@@ -46,7 +46,7 @@ if platform.system() == "Linux":
 
         # if sources.list is not available then we're running something offset
         else:
-            print "[!] Your not running a Debian variant. Installer not finished for this type of Linux distro."
+            print "[!] You're not running a Debian variant. Installer not finished for this type of Linux distro."
             print "[!] Install git, python-pexpect, python-crypto, python-openssl, python-pefile manually for all of SET dependancies."
             sys.exit()
 
