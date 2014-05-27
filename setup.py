@@ -33,6 +33,17 @@ if platform.system() == "Linux":
             # force install of debian packages
             subprocess.Popen("apt-get --force-yes -y install git build-essential python-pexpect python-pefile python-crypto python-openssl", shell=True).wait()
 
+        # if make.conf is recognized, we are using Gentoo
+        if os.path.isfile("/etc/portage/make.conf"):
+
+            # Force install of Gentoo packages(Also included dev-python/imaging for QR Code Generator)
+            subprocess.Popen("emerge pexpect imaging pycrypto pyopenssl && wget https://pefile.googlecode.com/files/pefile-1.2.10-139.tar.gz && tar xvfz pefile-1.2.10-139.tar.gz && chmod a+x pefile-1.2.10-139/setup.py", shell=True).wait()
+
+            # Using static stable of pefile tarball for the time being. Will at some point change the wget to use urllib instead, but trying to keep imports to a minimum
+            os.chdir('pefile-1.2.10-139/')
+            subprocess.Popen("./setup.py install", shell=True).wait()
+            os.chdir('../')
+
         # if sources.list is not available then we're running something offset
         else:
             print "[!] Your not running a Debian variant. Installer not finished for this type of Linux distro."
@@ -44,11 +55,11 @@ if platform.system() == "Linux":
             sys.exit()
 
         if not os.path.isfile("/usr/bin/git"):
-            print "[-] Install failed. GIT is not installed... SET will not continue." 
+            print "[-] Install failed. GIT is not installed... SET will not continue."
             print "[!] Install GIT and run the installer again."
             sys.exit()
 
-        print "[*] Installing SET into the /usr/share/setoolkit folder through git..."		
+        print "[*] Installing SET into the /usr/share/setoolkit folder through git..."
         subprocess.Popen("git clone https://github.com/trustedsec/social-engineer-toolkit /usr/share/setoolkit", shell=True).wait()
         print "[*] Installing setoolkit installer to /usr/bin/setoolkit..."
         subprocess.Popen("cp /usr/share/setoolkit/setoolkit /usr/bin", shell=True).wait()
@@ -67,4 +78,7 @@ if platform.system() != "Linux":
     if platform.system() != "Darwin":
         print "[!] Sorry this installer is not designed for any other system other than Linux and Mac. Please install the python depends manually."
 
-
+if os.path.isdir("/etc/portage/make.conf"):
+            print "[!] Assuming usage of Gentoo/Pentoo/Sabayon"
+            print "[!] Please install Metasploit by issuing: emerge -av metasploit"
+            sys.exit()
