@@ -892,7 +892,7 @@ try:
         #
         # Main Menu choice 8: Wireless Attack Point Attack Vector
         #
-        if main_menu_choice == '8':
+        if main_menu_choice == '7':
 
             if operating_system == "windows":
                 print_warning("Sorry. The wireless attack vector is not yet supported in Windows.")
@@ -975,7 +975,7 @@ try:
 
 
         # Main Menu choice 9: QRCode Generator
-        if main_menu_choice == '9':
+        if main_menu_choice == '8':
             try:
                 from PIL import Image, ImageDraw
                 from src.qrcode.qrgenerator import *
@@ -986,27 +986,27 @@ When you have the QRCode Generated, select an additional attack vector within SE
 deploy the QRCode to your victim. For example, generate a QRCode of the SET Java Applet
 and send the QRCode via a mailer.
 """
-                url = raw_input("Enter the URL you want the QRCode to go to: ")
-                # if the reports directory does not exist then create it
-                if not os.path.isdir("%s/reports" % (setdir)):
-                    os.makedirs("%s/reports" % (setdir))
-                gen_qrcode(url)
-                return_continue()
+                url = raw_input("Enter the URL you want the QRCode to go to (99 to exit): ")
+                if url != "99":
+                    # if the reports directory does not exist then create it
+                    if not os.path.isdir("%s/reports" % (setdir)):
+                        os.makedirs("%s/reports" % (setdir))
+                    gen_qrcode(url)
+                    return_continue()
 
             except ImportError:
-                print_error("This module requires python-imaging to work properly.")
-                print_error("In Ubuntu do apt-get install python-imaging")
-                print_error("Else refer to here for installation: http://code.google.com/appengine/docs/python/images/installingPIL.html")
-                return_continue()
+                    print_error("This module requires python-imaging to work properly.")
+                    print_error("In Ubuntu do apt-get install python-imaging")
+                    print_error("Else refer to here for installation: http://code.google.com/appengine/docs/python/images/installingPIL.html")
+                    return_continue()
 
         # Main Menu choice 10: PowerShell Attacks
-        if main_menu_choice == '10':
-            #show_powershell_menu = create_menu(text.powershell_text, text.powershell_menu)
-            #powershell_menu_choice = raw_input(setprompt(["1"], ""))
-            import src.powershell.powershell
+        if main_menu_choice == '9':
+            try: import src.powershell.powershell
+            except: reload(src.powershell.powershell)
 
         # Main Menu choice 11: Third Party Modules
-        if main_menu_choice == '11':
+        if main_menu_choice == '10':
             sys.path.append("src/core")
             debug_msg(me, "importing 'src.core.module_handler'", 1)
             try:
@@ -1017,39 +1017,6 @@ and send the QRCode via a mailer.
         # Main Menu choice 99: Exit the Social-Engineer Toolkit
         if main_menu_choice == '99':
             break
-
-        # Main Menu choice 7: SMS Spoofing Attack Vector
-        if main_menu_choice == '7':
-            sms_menu_choice = '0'
-            while sms_menu_choice != '3':
-
-            ###################################################
-            #        USER INPUT: SHOW SMS MENU                #
-            ###################################################
-                debug_msg(me, "printing 'text.sms_attack_text'", 5)
-                show_sms_menu = create_menu(text.sms_attack_text, text.sms_attack_menu)
-                sms_menu_choice = raw_input(setprompt(["7"], ""))
-
-                if sms_menu_choice == 'exit':
-                    exit_set()
-
-                if sms_menu_choice == '1':
-                    sys.path.append("src/sms/client/")
-                    debug_msg(me, "importing 'src.sms.client.sms_client'", 1)
-                    try:
-                        reload(sms_client)
-                    except:
-                        import sms_client
-
-                if sms_menu_choice == '2':
-                    sys.path.append("src/sms/client/")
-                    debug_msg(me, "importing 'src.sms.client.custom_sms_template'", 1)
-                    try:
-                        reload(custom_sms_template)
-                    except:
-                        import custom_sms_template
-
-                if sms_menu_choice == '99': break
 
 # handle keyboard interrupts
 except KeyboardInterrupt:
