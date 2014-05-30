@@ -8,6 +8,7 @@ version 6.0.1
 * added option to fall back to old method if powershell injection fails (option menu)
 * start msf listener first, wait for msf to launch, then trigger vulnerability
 * threaded the powershell injection command through mssql
+* updated wordlist to include a couple more wordlists found in the wild
 
 ~~~~~~~~~~~~~~~~
 version 6.0
