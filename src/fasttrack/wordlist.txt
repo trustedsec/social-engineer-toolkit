@@ -64,6 +64,10 @@ test
 dev
 qa
 god
+admin
+adminadmin
+admins
+goat
 sysadmin
 water
 dirt
