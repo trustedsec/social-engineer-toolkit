@@ -160,7 +160,7 @@ def deploy_hex2binary(ipaddr,port,username,password):
     #
 
     if option == "1":
-        print_status("Using powershell x86 process downgrade attack..")
+        print_status("Using universal powershell x86 process downgrade attack..")
         payload = "x86"
 
         # specify ipaddress of reverse listener
