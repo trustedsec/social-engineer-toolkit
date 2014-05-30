@@ -3,6 +3,11 @@ version 6.0.1
 ~~~~~~~~~~~~~~~~
 
 * fixed menu system to remove sms spoofing (no longer supported)
+* redesigned powershell injection to be much more efficient 
+* removed time delays in powershell injection, instead use pexpect expect() to wait for listener to start
+* added option to fall back to old method if powershell injection fails (option menu)
+* start msf listener first, wait for msf to launch, then trigger vulnerability
+* threaded the powershell injection command through mssql
 
 ~~~~~~~~~~~~~~~~
 version 6.0
