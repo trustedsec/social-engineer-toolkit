@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.0.1
+~~~~~~~~~~~~~~~~
+
+* fixed menu system to remove sms spoofing (no longer supported)
+
+~~~~~~~~~~~~~~~~
 version 6.0
 ~~~~~~~~~~~~~~~~
 
