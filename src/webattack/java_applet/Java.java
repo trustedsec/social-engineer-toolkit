@@ -88,6 +88,8 @@ public class Java extends Applet {
 	    {
             // URL parameter
              URL url = new URL(downParm);
+            // set URL string in case they are checking user agent - hugs mubix
+            url.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)"); 
             // Get an input stream for reading
             InputStream in = url.openStream();
             // Create a buffered input stream for efficency
