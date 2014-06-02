@@ -145,9 +145,7 @@ try:
             print line.rstrip()
 
         print bcolors.RED + """
-The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are
-not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting
-yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN
+The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN
         choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
         if choice == "yes" or choice == "y":
             filewrite = file("src/agreement4", "w")
@@ -155,7 +153,7 @@ yes (only one time), you agree to the terms of service and that you will only us
             filewrite.close()
             print bcolors.ENDC
         else:
-            print "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
+            print bcolors.ENDC + "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
             sys.exit()
 
     while 1:

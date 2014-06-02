@@ -1,4 +1,18 @@
 ~~~~~~~~~~~~~~~~
+version 6.0.2
+~~~~~~~~~~~~~~~~
+
+* changed powershell injection technique to not exitonsession when creating the metasploit.rc file when specified in the powershell menu, this was already enabled when using psexec or other methods
+* shrunk the powershell injection code command, not as much length needed - useful for shorter payloads
+* slimmed down actual encoded powershell injection code, removed un-used code from the central powershell routine
+* fixed a few typos and alignment on licensing agreement within SET and minor silly modifications to license
+* fixed coloring when exiting and alignment for purpose of good disclaimer
+* added print_status to bleeding edge tracking
+* fixed unresponsive powershell injection when uses windows 8
+* changed java applet user agent string inside applet to evade java blockers
+* removed old ID and value parameters from the Java Applet database, no longer used based on changes through Java 7 update 42 - SET now uses manifest files
+
+~~~~~~~~~~~~~~~~
 version 6.0.1
 ~~~~~~~~~~~~~~~~
 

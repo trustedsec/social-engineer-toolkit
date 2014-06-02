@@ -5,8 +5,6 @@ Written by: David Kennedy (ReL1K)
 
 Company: [TrustedSec](https://www.trustedsec.com)
 
-Development Team: Thomas Werth, Joey Furr (j0fer), JR DePre (pr1me)
-
 DISCLAIMER: This is only for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes period.
 
 Please read the LICENSE under readme/LICENSE for the licensing of SET. 
@@ -23,5 +21,3 @@ For bug reports or enhancements, please open an issue here https://github.com/tr
 
 - Linux
 - Windows (experimental)
-
-

