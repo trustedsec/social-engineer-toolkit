@@ -11,6 +11,8 @@ version 6.0.2
 * fixed unresponsive powershell injection when uses windows 8
 * changed java applet user agent string inside applet to evade java blockers
 * removed old ID and value parameters from the Java Applet database, no longer used based on changes through Java 7 update 42 - SET now uses manifest files
+* fixed unsigned.py moving to unsigned libraries
+* rehauled downloader inside java applet
 
 ~~~~~~~~~~~~~~~~
 version 6.0.1
