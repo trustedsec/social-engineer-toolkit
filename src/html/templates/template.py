@@ -50,14 +50,14 @@ if choice == "3":
     URL="http://www.facebook.com"
 
 # if twitter
-if choice == "5":
+if choice == "4":
     if os.path.isfile("src/html/index.template"): 
       os.remove("src/html/index.template")
     shutil.copyfile("src/html/templates/twitter/index.template", "src/html/index.template")
     URL="http://www.twitter.com"
 
 # if yahoo
-if choice =="6":
+if choice =="5":
     if os.path.isfile("src/html/index.template"): os.remove("src/html/index.template")
     shutil.copyfile("src/html/templates/yahoo/index.template", "src/html/index.template")
     URL="http://mail.yahoo.com"
