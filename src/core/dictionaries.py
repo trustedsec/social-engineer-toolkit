@@ -24,8 +24,8 @@ def ms_module(exploit):
     """ Receives the input given by the user from gen_payload.py """
 
     return {
-            '1':"exploit/windows/browser/ms14_012_cmarkup_uaf",
-            '2':"exploit/windows/browser/ms14_012_textrange",
+            '1':"exploit/windows/browser/ms14_012_textrange",
+            '2':"exploit/windows/browser/ms14_012_cmarkup_uaf",
             '3':"exploit/windows/browser/ms13_080_cdisplaypointer",
             '4':"exploit/windows/browser/ie_setmousecapture_uaf",
             '5':"exploit/multi/browser/java_jre17_jmxbean_2",
