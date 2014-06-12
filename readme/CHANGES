@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.0.3
+~~~~~~~~~~~~~~~~
+
+* added a check in for twitter logins - they are doing client-side validation if root isn't twitter.com - added a rename on function variables to get around the password field not being allowed to be entered
+
+~~~~~~~~~~~~~~~~
 version 6.0.2
 ~~~~~~~~~~~~~~~~
 

