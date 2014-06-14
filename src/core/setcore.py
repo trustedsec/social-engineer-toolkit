@@ -461,7 +461,7 @@ def update_set():
 
     # if we aren't running Kali :( 
     else:
-        peinr_info("Kali-Linux not detected, manually updating..")
+        print_info("Kali-Linux not detected, manually updating..")
         print_info("Updating the Social-Engineer Toolkit, be patient...")
         print_info("Performing cleanup first...")
         subprocess.Popen("git clean -fd", shell=True).wait()
