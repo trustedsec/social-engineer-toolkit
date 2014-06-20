@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.0.4
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause credential harvester, tabnabbing, and webjacking to not properly redirect after successful credential nab
+
+~~~~~~~~~~~~~~~~
 version 6.0.3
 ~~~~~~~~~~~~~~~~
 
