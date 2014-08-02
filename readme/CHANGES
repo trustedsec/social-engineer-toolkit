@@ -1,4 +1,14 @@
 ~~~~~~~~~~~~~~~~
+version 6.0.5
+~~~~~~~~~~~~~~~~
+
+* fixed an issue with fasttrack built-in attack with RIDENUM - would not properly close built in brute force file causing an exception
+* converted powershell injection to use -win hidden instead of -win hid, for some reason some versions of Windows get mad and don't execute the code properly
+* fixed powershell injection in mssql bruter
+* added better upper/lower handling in options in mssql bruter
+* fixed an issue causing timing issues in mssql bruter powershell injection technique
+
+~~~~~~~~~~~~~~~~
 version 6.0.4
 ~~~~~~~~~~~~~~~~
 

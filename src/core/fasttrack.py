@@ -327,9 +327,10 @@ try:
             if dict == "":
                 # write out a file
                 filewrite = file(setdir + "/dictionary.txt", "w")
-                filewrite.write("\nPassword1")
+                filewrite.write("\nPassword1\nPassword!\nlc username")
                 # specify the path
                 dict = setdir + "/dictionary.txt"
+                filewrite.close()
 
             # if we are not brute forcing
             if dict.lower() == "no":

