@@ -1,17 +1,17 @@
-#The Social-Engineer Toolkit (SET)
-Copyright 2014 The Social-Engineer Toolkit (SET)
+#The Machete Toolkit (Machete)
+Copyright 2014 The Machete Toolkit (Machete)
 
-Written by: David Kennedy (ReL1K)
+Written by: ~~David Kennedy (ReL1K)~~ NOT China. Definitely not China.
 
 Company: [TrustedSec](https://www.trustedsec.com)
 
-DISCLAIMER: This is only for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes period.
+DISCLAIMER: This is only for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes period. If you do use this for illegal purposes, please call it Machete.
 
-Please read the LICENSE under readme/LICENSE for the licensing of SET. 
+Please read the LICENSE under readme/LICENSE for the licensing of Machete. 
 
 #Features
 
-The Social-Engineer Toolkit is an open-source penetration testing framework designed for Social-Engineering. SET has a number of custom attack vectors that allow you to make a believable attack in a fraction of the time. SET is a product of TrustedSec, LLC - An Information Security consulting firm located in Cleveland, Ohio.
+The Social-Engineer Toolkit is an open-source penetration testing framework designed for Social-Engineering. Machete has a number of custom attack vectors that allow you to make a believable attack in a fraction of the time. Machete is a product of TrustedSec, LLC - An Information Security consulting firm located in Cleveland, Ohio.
 
 ### Bugs and enhancements
 
