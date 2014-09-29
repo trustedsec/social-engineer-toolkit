@@ -35,16 +35,16 @@ if platform.system() == "Linux":
 
         # if sources.list is not available then we're running something offset
         else:
-            print "[!] Your not running a Debian variant. Installer not finished for this type of Linux distro."
+            print "[!] You're not running a Debian variant. Installer not finished for this type of Linux distro."
             print "[!] Install git, python-pexpect, python-crypto, python-openssl, python-pefile manually for all of SET dependancies."
             sys.exit()
 
         if os.path.isdir("/usr/share/setoolkit"):
-            print "[!] SET is already installed in /usr/share/setoolkit, remove and start again."
+            print "[!] SET is already installed in /usr/share/setoolkit. Remove and start again."
             sys.exit()
 
         if not os.path.isfile("/usr/bin/git"):
-            print "[-] Install failed. GIT is not installed... SET will not continue." 
+            print "[-] Install failed. GIT is not installed. SET will not continue." 
             print "[!] Install GIT and run the installer again."
             sys.exit()
 
@@ -65,6 +65,4 @@ if platform.system() =='Darwin':
 
 if platform.system() != "Linux":
     if platform.system() != "Darwin":
-        print "[!] Sorry this installer is not designed for any other system other than Linux and Mac. Please install the python depends manually."
-
-
+        print "[!] Sorry this installer is not designed for any other system other than Linux and Mac. Please install the Python dependencies manually."
