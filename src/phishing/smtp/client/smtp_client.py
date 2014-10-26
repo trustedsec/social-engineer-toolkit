@@ -70,7 +70,7 @@ for line in sendmail_file:
         if email_provider == "yahoo":
             if sendmail == 0:
                 smtp = ("smtp.mail.yahoo.com")
-                port = ("25")
+                port = ("465")
 
         # support smtp for hotmail
         if email_provider == "hotmail":
@@ -331,16 +331,16 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
     mailServer.ehlo()
     # send ehlo to smtp server
     if sendmail == 0:
-        if email_provider == "gmail":
+        if email_provider == "gmail" or email_provider == "yahoo":
             mailServer.ehlo()
-            # start TLS for gmail sometimes needed
+            # start TLS needed for gmail and yahoo
             try:
                 mailServer.starttls()
             except: pass
             mailServer.ehlo()
     if counter == 0:
         try:
-            if email_provider == "gmail":
+            if email_provider == "gmail" or email_provider == "yahoo:
                 try:
                     mailServer.starttls()
                 except:
@@ -364,7 +364,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 except Exception, e:
                     return_continue()
 
-    if email_provider == "yahoo" or email_provider == "hotmail":
+    if email_provider == "hotmail":
         mailServer.login(provideruser, pwd)
         thread.start_new_thread(mailServer.sendmail,(from_address, to, msg.as_string()))
 
