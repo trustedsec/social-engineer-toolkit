@@ -340,7 +340,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
             mailServer.ehlo()
     if counter == 0:
         try:
-            if email_provider == "gmail" or email_provider == "yahoo:
+            if email_provider == "gmail" or email_provider == "yahoo":
                 try:
                     mailServer.starttls()
                 except:
