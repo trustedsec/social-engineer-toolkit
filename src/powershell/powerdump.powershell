@@ -279,14 +279,30 @@ function Get-UserName([byte[]]$V)
 function Get-UserHashes($u, [byte[]]$hbootkey)
 {
     [byte[]]$enc_lm_hash = $null; [byte[]]$enc_nt_hash = $null;
-    if ($u.HashOffset + 0x28 -lt $u.V.Length)
+    
+    # check if hashes exist (if byte memory equals to 20, then we've got a hash)
+    $LM_exists = $false;
+    $NT_exists = $false;
+    # LM header check
+    if ($u.V[0xa0..0xa3] -eq 20)
+    {
+        $LM_exists = $true;
+    }
+    # NT header check
+    elseif ($u.V[0xac..0xaf] -eq 20)
+    {
+        $NT_exists = $true;
+    }
+
+    if ($LM_exists -eq $true)
     {
         $lm_hash_offset = $u.HashOffset + 4;
         $nt_hash_offset = $u.HashOffset + 8 + 0x10;
         $enc_lm_hash = $u.V[$($lm_hash_offset)..$($lm_hash_offset+0x0f)];
         $enc_nt_hash = $u.V[$($nt_hash_offset)..$($nt_hash_offset+0x0f)];
     }
-    elseif ($u.HashOffset + 0x14 -lt $u.V.Length)
+	
+    elseif ($NT_exists -eq $true)
     {
         $nt_hash_offset = $u.HashOffset + 8;
         $enc_nt_hash = [byte[]]$u.V[$($nt_hash_offset)..$($nt_hash_offset+0x0f)];
