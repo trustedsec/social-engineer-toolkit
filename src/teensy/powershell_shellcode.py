@@ -134,7 +134,7 @@ Keyboard.send_now();
 }
 """)
 print "[*] Payload has been extracted. Copying file to %s/reports/teensy.pde" % (setdir)
-if not os.path.isfile(setdir + "/reports/"):
+if not os.path.isdir(setdir + "/reports/"):
     os.makedirs(setdir + "/reports/")
 filewrite = file(setdir + "/reports/teensy.pde", "w")
 filewrite.write(teensy)

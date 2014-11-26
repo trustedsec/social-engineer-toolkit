@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from src.core.setcore import *
-from impacket import tds
+#from impacket import tds
+import src.core.tds as tds
 import sys
 import subprocess
 import socket
@@ -10,6 +11,7 @@ import time
 import binascii
 import base64
 import shutil
+
 
 #
 # this is the mssql modules
@@ -21,6 +23,17 @@ operating_system = check_os()
 
 msf_path = meta_path()
 
+try:
+    from impacket import tds
+except ImportError:
+    if os.path.isdir("/usr/share/pyshared/impacket"):
+        sys.path.append("/usr/share/pyshared/impacket")
+        import tds
+        sys.path.append(definepath)
+
+    else:
+        print "[!] Impacket is not installed. This menu will not work."
+        sys.exit()
 #
 # this is the brute forcer
 #
@@ -105,7 +118,7 @@ def deploy_hex2binary(ipaddr,port,username,password):
     if match:
         print_status("Powershell was detected on the remote system.")
         option_ps = raw_input("Do you want to use powershell injection? [yes/no]:")
-        if option_ps == "" or option_ps == "y" or option_ps == "yes":
+        if option_ps.lower() == "" or option_ps == "y" or option_ps == "yes":
             option = "1"
             print_status("Powershell delivery selected. Boom!")
         else: option = "2"
