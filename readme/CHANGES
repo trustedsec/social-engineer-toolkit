@@ -1,4 +1,19 @@
 ~~~~~~~~~~~~~~~~
+version 6.1.1
+~~~~~~~~~~~~~~~~
+
+* removed bleeding edge as a default option when launchin SET - it has since been moved into config/set_config and can be turned on by switching BLEEDING_EDGE to on. Use at your own risk - it can break stuff
+
+~~~~~~~~~~~~~~~~
+version 6.1
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that would throw a directory already created exception when using shellcode injection for Arduino
+* fixed a bug when reverse_http/https was specified under powershell prep, it would not properly handle patching IP address or port
+* fixed a bug where TDS would not be recognized as installed on updated impacket systems
+* removed disable database support on psexec
+
+~~~~~~~~~~~~~~~~
 version 6.0.5
 ~~~~~~~~~~~~~~~~
 

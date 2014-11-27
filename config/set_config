@@ -1,29 +1,29 @@
 ##################################################################################################
 ##################################################################################################
-##					                                                							##
-## The following config file will allow you to customize settings within            			##
-## the Social Engineer Toolkit. The lines that do not have comment code				            ##
-## ("#") are the fields you want to toy with. They are pretty easy to			            	##
-## understand.											                                        ##
-##												                                                ##
-## The Metasploit path is the default path for where Metasploit is located.			            ##
-## Metasploit is required for SET to function properly.						                    ##
-##												                                                ##
-## The ETTERCAP function specifies if you want to use ARP Cache poisoning in			        ##
-## conjunction with the web attacks, note that ARP Cache poisoning is only			            ##
-## for internal subnets only and does not work against people on the internet.			        ##
-##												                                                ##
-## The SENDMAIL option allows you to spoof source IP addresses utilizing an			            ##
-## application called SendMail. Sendmail is NOT installed by default on BackTrack5.		        ##
-## To spoof email addresses when performing the mass email attacks, you must 			        ## 
-## install Sendmail manually using: apt-get install sendmail					                ##
-##												                                                ##
-## Note that ETTERCAP and SENDMAIL flags only accept ON or OFF switches.			            ##
-##												                                                ##
-## Note that the Metasploit_PATH cannot have a / after the folder name.				            ##
-##												                                                ##
-## There are additional options, read the comments for additional descriptions.		            ##
-##											                                                    ##
+##					                                                	##
+## The following config file will allow you to customize settings within            		##
+## the Social Engineer Toolkit. The lines that do not have comment code				##
+## ("#") are the fields you want to toy with. They are pretty easy to			        ##
+## understand.											##
+##										                ##
+## The Metasploit path is the default path for where Metasploit is located.			##
+## Metasploit is required for SET to function properly.					        ##
+##									                        ##
+## The ETTERCAP function specifies if you want to use ARP Cache poisoning in		        ##
+## conjunction with the web attacks, note that ARP Cache poisoning is only	                ##
+## for internal subnets only and does not work against people on the internet.	                ##
+##								                                ##
+## The SENDMAIL option allows you to spoof source IP addresses utilizing an                     ##
+## application called SendMail. Sendmail is NOT installed by default on Kali.		        ##
+## To spoof email addresses when performing the mass email attacks, you must 	                ## 
+## install Sendmail manually using: apt-get install sendmail	                                ##
+#							                                        ##
+## Note that ETTERCAP and SENDMAIL flags only accept ON or OFF switches.	                ##
+##										                ##
+## Note that the Metasploit_PATH cannot have a / after the folder name.		                ##
+##							                                        ##
+## There are additional options, read the comments for additional descriptions.		        ##
+##								                                ##
 ##################################################################################################
 ##################################################################################################
 #
@@ -270,5 +270,9 @@ TRACK_EMAIL_ADDRESSES=OFF
 #
 ### THIS ALLOWS YOU TO TURN A DNS SERVER ON IN SET. ALL RESPONSES WILL REDIRECT TO THE SET INSTANCE WHICH CAN LAUNCH ATTACK VECTORS
 DNS_SERVER=OFF
+#
+### THIS WILL TURN ON BLEEDING EDGE REPOSITORIES IF YOU ARE USING KALI LINUX - USE AT YOUR OWN RISK, THEY TEND TO BE UNSTABLE
+#
+BLEEDING_EDGE=OFF
 #
 #######################################################################################################################################

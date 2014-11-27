@@ -230,7 +230,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.1'
+    define_version = '6.1.1'
     return define_version
 
 class create_menu:
@@ -405,49 +405,6 @@ def cleanup_routine():
 
     except:
         pass
-
-# quick check to see if we are running kali-linux
-def check_kali():
-    if os.path.isfile("/etc/apt/sources.list"):
-        kali = file("/etc/apt/sources.list", "r")
-        kalidata = kali.read()
-        if "kali" in kalidata:
-            return "Kali"
-        # if we aren't running kali
-        else: return "Non-Kali"
-    else:
-        print "[!] Not running a Debian variant.."
-        return "Non-Kali"
-
-# checking if we have bleeding-edge enabled for updates
-def bleeding_edge():
-    # first check if we are actually using Kali
-    kali = check_kali()
-    if kali == "Kali":
-        print_status("Checking to see if bleeding-edge repos are active.")
-        # check if we have the repos enabled first
-        fileopen = file("/etc/apt/sources.list", "r")
-        kalidata = fileopen.read()
-        if "deb http://repo.kali.org/kali kali-bleeding-edge main" in kalidata:
-            print_status("Bleeding edge already active..Moving on..")
-            subprocess.Popen("apt-get update;apt-get upgrade -f -y --force-yes;apt-get dist-upgrade -f -y --force-yes;apt-get autoremove -f -y --force-yes", shell=True).wait()
-            return True
-
-        # else lets add them if they want
-        else:
-            print_status("Adding Kali bleeding edge to sources.list for updates.")
-            # we need to add repo to kali file
-            # we will rewrite the entire apt in case not all repos are there
-            filewrite = file("/etc/apt/sources.list", "w")
-            filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org/kali kali main non-free contrib\ndeb-src http://http.kali.org/kali kali main non-free contrib\n## Security updates\ndeb http://security.kali.org/kali-security kali/updates main contrib non-free\ndeb http://repo.kali.org/kali kali-bleeding-edge main")
-            filewrite.close()
-            print_status("Updating Kali now...")
-            subprocess.Popen("apt-get update;apt-get upgrade -f -y --force-yes;apt-get dist-upgrade -f -y --force-yes;apt-get autoremove -f -y --force-yes", shell=True).wait()
-            return True
-
-    else:
-        print "[!] Kali was not detected. Not adding bleeding edge repos."
-        return False
 
 #
 # Update The Social-Engineer Toolkit
@@ -802,7 +759,7 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                     [---]
+[---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
 [---]              Codename: '""" + bcolors.YELLOW + """Midnight""" + bcolors.BLUE + """'                [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
@@ -1596,6 +1553,7 @@ def capture(func, *args, **kwargs):
     return (result, c1.getvalue(), c2.getvalue())
 
 
+# check to see if we are running kali linux
 def check_kali():
     if os.path.isfile("/etc/apt/sources.list"):
         kali = file("/etc/apt/sources.list", "r")
@@ -1610,30 +1568,38 @@ def check_kali():
 
 # checking if we have bleeding-edge enabled for updates
 def bleeding_edge():
-    # first check if we are actually using Kali
-    kali = check_kali()
-    if kali == "Kali":
-        print_status("Checking to see if bleeding-edge repos are active.")
-        # check if we have the repos enabled first
-        fileopen = file("/etc/apt/sources.list", "r")
-        kalidata = fileopen.read()
-        if "deb http://repo.kali.org/kali kali-bleeding-edge main" in kalidata:
-            print_status("Bleeding edge already active..Moving on..")
-            return True
-        else:
-            print_warning("Bleeding edge repos were not detected. This is recommended.")
-            enable = raw_input("Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
-            if enable == "y" or enable == "yes":
-                print_status("Adding Kali bleeding edge to sources.list for updates.")
-                # we need to add repo to kali file
-                # we will rewrite the entire apt in case not all repos are there
-                filewrite = file("/etc/apt/sources.list", "w")
-                filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org/kali kali main non-free contrib\ndeb-src http://http.kali.org/kali kali main non-free contrib\n## Security updates\ndeb http://security.kali.org/kali-security kali/updates main contrib non-free\ndeb http://repo.kali.org/kali kali-bleeding-edge main")
-                filewrite.close()
-                print "[*] It is recommended to now run apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get autoremove and restart SET."
-                return True
-            else:
-                print "[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!"
+	bleeding = check_config("BLEEDING_EDGE=").lower()
+	if bleeding == "on":
+		# first check if we are actually using Kali
+		kali = check_kali()
+		if kali == "Kali":
+        		print_status("Checking to see if bleeding-edge repos are active.")
+        		# check if we have the repos enabled first
+        		fileopen = file("/etc/apt/sources.list", "r")
+        		kalidata = fileopen.read()
+        		if "deb http://repo.kali.org/kali kali-bleeding-edge main" in kalidata:
+            			print_status("Bleeding edge already active..Moving on..")
+		                return True
+			else:
+            			print_warning("Bleeding edge repos were not detected. Use at your own risk!")
+            			enable = raw_input("Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
+            			if enable == "y" or enable == "yes":
+					print_status("Backing up sources.list to /etc/apt/sources.list.bak")
+					if os.path.isfile("/etc/apt/sources.list.bak"): os.remove("/etc/apt/sources.list.bak")
+					shutil.copyfile("/etc/apt/sources.list", "/etc/apt/sources.list.bak")
+            				print_status("Adding Kali bleeding edge to sources.list for updates.")
+                			# we need to add repo to kali file
+                			# we will rewrite the entire apt in case not all repos are there
+                			filewrite = file("/etc/apt/sources.list", "w")
+                			filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org/kali kali main non-free contrib\ndeb-src http://http.kali.org/kali kali main non-free contrib\n## Security updates\ndeb http://security.kali.org/kali-security kali/updates main contrib non-free\ndeb http://repo.kali.org/kali kali-bleeding-edge main")
+                			filewrite.close()
+                			print "[*] It is recommended to now run apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get autoremove and restart SET."
+		                	return True
+				else:
+                			print "[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!"
+
+		else:
+			print "[*] Kali Linux was not detected, moving on..."
 
 # here we give multiple options to specify for SET java applet
 def applet_choice():
