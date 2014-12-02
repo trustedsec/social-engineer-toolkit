@@ -109,7 +109,7 @@ while a==1:
     print "\n  99. Return to Main Menu\n"
 
 
-    profile=raw_input(setprompt(["2","16"], "Enter selections one at a time (8 to finish)"))
+    profile=raw_input(setprompt(["2","16"], "Enter selections one at a time (7 to finish)"))
 
     if profile == "": profile = "7"
     # if the option is something other than 1-7 flag invalid option
