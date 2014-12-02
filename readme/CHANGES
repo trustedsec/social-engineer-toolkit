@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 6.1.2
+~~~~~~~~~~~~~~~~
+
+* fixed powershell injection where payload would not properly generate when using pyinjector
+* fixed menu option error when using multi-attack vector
+
+~~~~~~~~~~~~~~~~
 version 6.1.1
 ~~~~~~~~~~~~~~~~
 

