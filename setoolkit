@@ -18,7 +18,7 @@ elif os.path.isdir("/usr/share/set"):
         os.chdir("/usr/share/set")
         sys.path.append("/usr/share/set")
 
-# if we can't see our config then something didn't go good..
+# if we can't see our config then something didn't go right...
 if not os.path.isfile("config/set_config"):
 	print_error("Cannot locate SET executable. Try running from the local directory.")
 	print_error("If this does not work, please run the setup.py install file.")
@@ -42,7 +42,7 @@ if not os.path.isfile("src/logs/set_logfile.log"):
     filewrite.write("")
     filewrite.close()
 
-# grab the operating system
+# check which operating system
 operating_system = check_os()
 
 # use ~/.set
@@ -89,7 +89,8 @@ if operating_system == "posix":
     subprocess.Popen("chmod +x seautomate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 dns = check_config("DNS_SERVER=")
-if dns == "ON" or dns == "on": start_dns()
+if dns.lower() == "on":
+	start_dns()
 
 # remove old files
 for root, dirs, files in os.walk(setdir):
@@ -147,7 +148,8 @@ try:
         print bcolors.RED + """
 The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN
         choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
-        if choice == "yes" or choice == "y":
+        choice += " " #b/c method below
+        if choice[0].lower() == "y":
             filewrite = file("src/agreement4", "w")
             filewrite.write("user accepted")
             filewrite.close()
@@ -156,7 +158,7 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
             print bcolors.ENDC + "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
             sys.exit()
 
-    while 1:
+    while True:
         show_banner(define_version,'1')
         show_main_menu = create_menu(text.main_text, text.main_menu)
 
@@ -167,6 +169,7 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
         main_menu_choice = (raw_input(setprompt("0", "")))
 
         # funny
+        # edit: you're hilarious. 
         if main_menu_choice == "hugs":
             print_warning("Have you given someone a hug today? Remember a hug can change the world.")
             pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
