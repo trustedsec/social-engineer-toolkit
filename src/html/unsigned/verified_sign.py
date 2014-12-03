@@ -81,7 +81,7 @@ if firstprompt == "3":
     subprocess.Popen("jarsigner -verbose -keystore %s -storepass %s -keypass %s -tsa http://tsa.starfieldtech.com/ -signedjar Signed_Update.jar %s/src/html/unsigned/unsigned.jar %s" % 
                      (keyStore, storepass, keypass, definepath, keyAlias), shell=True).wait()
     # move it into our html directory
-    subprocess.Popen("mv Signed_Update.jar %s/Signed_Update.jar.orig" % (setdir), shell=True).wait()
+    subprocess.Popen("mv Signed_Update.jar %s/Signed_Update.jar" % (setdir), shell=True).wait()
     # move back to original directory
     print_status("Java Applet is now signed and will be imported into the java applet website attack from now on...")
         
@@ -175,7 +175,6 @@ if firstprompt == "2":
                     if os.path.isfile(cert_path): break
 
             # import the certificate
-            print_info("here")
             subprocess.Popen("keytool -import -alias MyCert -file %s" % (cert_path), shell=True).wait()
     
     # if our certificate is in the data store
