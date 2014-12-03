@@ -56,10 +56,35 @@ Option 2 will go through the process of either creating the code signing certifi
 
 1. Import your own java applet into SET (needs to be SIGNED).
 2. Either create a code-signing csr or use a code-signing certificate you already own.
+3. Provide a KeyStore and Alias to the cert you wish to use (use this option if your cert is already in a keystore).
 """
-firstprompt = raw_input("Enter your choice [1-2]: ")
+firstprompt = raw_input("Enter your choice [1-3]: ")
 if firstprompt == "": firstprompt == "2"
 
+#if we elected to use a cert already in a keystore, then get the alias to the cert and the keystore path
+if firstprompt == "3":
+    #get the keystore path
+    keyStore = raw_input(setprompt("0", "Path to the KeyStore"))
+    if not os.path.isfile(keyStore):
+        # loop forever
+        while 1 == 1:
+            print_error("ERROR:Filename not found. Try again.")
+            # re-prompt if we didn't file the filename
+            keyStore=raw_input(setprompt("0", "Path to the KeyStore"))
+            # if we find the filename then break out of loop
+            if os.path.isfile(keyStore): break
+    keyAlias = raw_input(setprompt("0", "Alias of the Key in the KeyStore"))
+    storepass = raw_input(setprompt("0", "Password of the KeyStore"))
+    keypass = raw_input(setprompt("0", "Password of the Key"))
+
+    # sign the applet with the imported certificate
+    subprocess.Popen("jarsigner -verbose -keystore %s -storepass %s -keypass %s -tsa http://tsa.starfieldtech.com/ -signedjar Signed_Update.jar %s/src/html/unsigned/unsigned.jar %s" % 
+                     (keyStore, storepass, keypass, definepath, keyAlias), shell=True).wait()
+    # move it into our html directory
+    subprocess.Popen("mv Signed_Update.jar %s/Signed_Update.jar.orig" % (setdir), shell=True).wait()
+    # move back to original directory
+    print_status("Java Applet is now signed and will be imported into the java applet website attack from now on...")
+        
 # if we want to import our own java applet
 if firstprompt == "1":
     newpath = raw_input("Enter the path to the .jar file: ")
@@ -101,13 +126,14 @@ if firstprompt == "2":
             use_flag = 1
 
         # exception here in case it was already imported before
-        except: pass
-
+        except: pass             
+                        
     # this will exit the menu
     if prompt == "quit" or prompt == "q":
         use_flag = 0
         prompt = "yes"
         cert_path = ""
+        
     # if we have a cert now or if we need to generate one
     if use_flag == 1 or prompt == "no" or prompt == "n":
 
@@ -149,8 +175,9 @@ if firstprompt == "2":
                     if os.path.isfile(cert_path): break
 
             # import the certificate
+            print_info("here")
             subprocess.Popen("keytool -import -alias MyCert -file %s" % (cert_path), shell=True).wait()
-
+    
     # if our certificate is in the data store
     if os.path.isfile(cert_path):
         # sign the applet with the imported certificate
