@@ -359,7 +359,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 mailServer.ehlo()
                 if len(provideruser) > 0:
                     mailServer.login(provideruser, pwd)
-                mailServer.sendmail(from_address, to, io.get_value())
+                mailServer.sendmail(from_address, to, io.getvalue())
         except Exception, e:
             print_error("Unable to deliver email. Printing exceptions message below, this is most likely due to an illegal attachment. If using GMAIL they inspect PDFs and is most likely getting caught.")
             raw_input("Press {return} to view error message.")
@@ -371,16 +371,16 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 print str(e)
                 try:
                     mailServer.login(provideremail, pwd)
-                    thread.start_new_thread(mailServer.sendmail(from_address, to, io.get_value()))
+                    thread.start_new_thread(mailServer.sendmail(from_address, to, io.getvalue()))
                 except Exception, e:
                     return_continue()
 
     if email_provider == "hotmail":
         mailServer.login(provideruser, pwd)
-        thread.start_new_thread(mailServer.sendmail,(from_address, to, io.get_value()))
+        thread.start_new_thread(mailServer.sendmail,(from_address, to, io.getvalue()))
 
     if sendmail == 1:
-        thread.start_new_thread(mailServer.sendmail,(from_address, to, io.get_value()))
+        thread.start_new_thread(mailServer.sendmail,(from_address, to, io.getvalue()))
 
 if option1 == '1':
     try:
