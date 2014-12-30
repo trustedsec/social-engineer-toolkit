@@ -12,15 +12,21 @@ import pexpect
 import base64
 import thread
 
+from cStringIO import StringIO
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
+from email.header import Header
+from email.generator import Generator
+from email import Charset
 from email import Encoders
 # DEFINE SENDMAIL CONFIG
 sendmail=0
 sendmail_file=file("config/set_config","r").readlines()
 
 from src.core.setcore import *
+
+Charset.add_charset('utf-8', Charset.BASE64, Charset.BASE64, 'utf-8')
 
 # Specify if its plain or html
 message_flag="plain"
@@ -309,14 +315,14 @@ else:
 # Define mail send here
 def mail(to, subject, text, attach, prioflag1, prioflag2):
     msg = MIMEMultipart()
-    msg['From'] = from_displayname
+    msg['From'] = str(Header(from_displayname, 'UTF-8').encode() + ' <' + from_address + '> ')
     msg['To'] = to
     msg['X-Priority'] = prioflag1
     msg['X-MSMail-Priority'] = prioflag2
-    msg['Subject'] = subject
+    msg['Subject'] = Header(subject, 'UTF-8').encode()
     # specify if its html or plain
     # body message here
-    body_type=MIMEText(text, "%s" % (message_flag))
+    body_type=MIMEText(text, "%s" % (message_flag), 'UTF-8')
     msg.attach(body_type)
     # define connection mimebase
     part = MIMEBase('application', 'octet-stream')
@@ -326,6 +332,11 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
     # add headers
     part.add_header('Content-Disposition','attachment; filename="%s"' % os.path.basename(attach))
     msg.attach(part)
+    
+    io = StringIO()
+    msggen = Generator(io, False)
+    msggen.flatten(msg)
+    
     # define connection to smtp server
     mailServer = smtplib.SMTP(smtp, int(port))
     mailServer.ehlo()
@@ -348,7 +359,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 mailServer.ehlo()
                 if len(provideruser) > 0:
                     mailServer.login(provideruser, pwd)
-                mailServer.sendmail(from_address, to, msg.as_string())
+                mailServer.sendmail(from_address, to, io.getvalue())
         except Exception, e:
             print_error("Unable to deliver email. Printing exceptions message below, this is most likely due to an illegal attachment. If using GMAIL they inspect PDFs and is most likely getting caught.")
             raw_input("Press {return} to view error message.")
@@ -360,16 +371,16 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 print str(e)
                 try:
                     mailServer.login(provideremail, pwd)
-                    thread.start_new_thread(mailServer.sendmail(from_address, to, msg.as_string()))
+                    thread.start_new_thread(mailServer.sendmail(from_address, to, io.getvalue()))
                 except Exception, e:
                     return_continue()
 
     if email_provider == "hotmail":
         mailServer.login(provideruser, pwd)
-        thread.start_new_thread(mailServer.sendmail,(from_address, to, msg.as_string()))
+        thread.start_new_thread(mailServer.sendmail,(from_address, to, io.getvalue()))
 
     if sendmail == 1:
-        thread.start_new_thread(mailServer.sendmail,(from_address, to, msg.as_string()))
+        thread.start_new_thread(mailServer.sendmail,(from_address, to, io.getvalue()))
 
 if option1 == '1':
     try:
