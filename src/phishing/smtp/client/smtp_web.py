@@ -10,10 +10,16 @@ import glob
 import random
 import time
 import base64
+from cStringIO import StringIO
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
+from email.header import Header
+from email.generator import Generator
+from email import Charset
 from email import Encoders
+
+Charset.add_charset('utf-8', Charset.BASE64, Charset.BASE64, 'utf-8')
 
 # default the email messages to plain text
 # unless otherwise specified
@@ -241,16 +247,20 @@ if option1 != "99":
 def mail(to, subject, prioflag1, prioflag2, text):
 
     msg = MIMEMultipart()
-    msg['From'] = from_displayname
+    msg['From'] = str(Header(from_displayname, 'UTF-8').encode() + ' <' + from_address + '> ')
     msg['To'] = to
     msg['X-Priority'] = prioflag1
     msg['X-MSMail-Priority'] = prioflag2
-    msg['Subject'] = subject
+    msg['Subject'] = Header(subject, 'UTF-8').encode()
 
-    body_type=MIMEText(text, "%s" % (message_flag))
+    body_type=MIMEText(text, "%s" % (message_flag), 'UTF-8')
     msg.attach(body_type)
 
     mailServer = smtplib.SMTP(smtp, port)
+
+    io = StringIO()
+    msggen = Generator(io, False)
+    msggen.flatten(msg)
 
     if sendmail == 0:
 
@@ -266,7 +276,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
     try:
         if provideruser != "" or pwd != "":
             mailServer.login(provideruser, pwd)
-            mailServer.sendmail(from_address, to, msg.as_string())
+            mailServer.sendmail(from_address, to, io.getvalue())
 
     except:
         # try logging in with base64 encoding here
@@ -281,7 +291,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
             return_continue()
 
     if sendmail == 1:
-        mailServer.sendmail(from_address, to, msg.as_string())
+        mailServer.sendmail(from_address, to, io.getvalue())
 
 # if we specified a single address
 if option1 == '1':
