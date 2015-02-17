@@ -176,8 +176,8 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
 
         # funny2
         if main_menu_choice == "derbycon":
-            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 4.0 -- September 24th - 28th 2014" + bcolors.ENDC)
-            pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 24 - Sep 28th! Press {return} to continue." + bcolors.ENDC)
+            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 5.0 -- September 23th - 27th 2015" + bcolors.ENDC)
+            pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 23 - Sep 27th! Press {return} to continue." + bcolors.ENDC)
 
         # quit out
         if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":

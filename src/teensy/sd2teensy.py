@@ -33,7 +33,7 @@ It works by reading natively off the SDCard into a buffer space thats then
 written out through the keyboard.
 """
 
-# if we hit here we are good since msfpayload is installed
+# if we hit here we are good since msfvenom is installed
 print """
         .-. .-. . . .-. .-. .-. .-. .-.   .  . .-. .-. .-.
         |.. |-| |\| |.. `-.  |  |-  |(    |\/| | | |  )|-

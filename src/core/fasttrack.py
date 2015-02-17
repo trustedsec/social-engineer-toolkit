@@ -154,7 +154,7 @@ try:
                             if success != "":
                                 success = success.rstrip()
                                 success=success.split(",")
-                                success= bcolors.BOLD + success[0] + bcolors.ENDC + "   username: " + bcolors.BOLD + "%s" % (success[1]) + bcolors.ENDC + " | password: " + bcolors.BOLD + "%s" % (success[3]) + bcolors.ENDC
+                                success= bcolors.BOLD + success[0] + bcolors.ENDC + "   username: " + bcolors.BOLD + "%s" % (success[1]) + bcolors.ENDC + " | password: " + bcolors.BOLD + "%s" % (success[3]) + bcolors.ENDC + "   SQLPort: " + bcolors.BOLD + "%s" % (success[2]) + bcolors.ENDC
                                 print "   " + str(counter) + ". " + success
                                 # increment counter
                                 counter = counter + 1

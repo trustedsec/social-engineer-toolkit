@@ -1,6 +1,5 @@
 #!/usr/bin/python
 from src.core.setcore import *
-#from impacket import tds
 import src.core.tds as tds
 import sys
 import subprocess

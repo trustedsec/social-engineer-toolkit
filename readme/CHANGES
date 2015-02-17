@@ -1,4 +1,23 @@
 ~~~~~~~~~~~~~~~~
+version 6.2
+~~~~~~~~~~~~~~~~
+
+* changed IP address for the payload listener to specify LHOST
+* included TDS as a standard impacket library
+* added port to MSSQL display when compromising system
+* moved create_payloads in payloadgen to be compliant with msfvenom creation and moved off msfpayload and msfencode
+* fixed multiple files still using msfpayload or msfvenom
+* fixed a bug that caused a tds exceptions error when using the SQL attack (missing tds library)
+* updated specific wording in setoolkit launcher
+* slimmed powershell injection code to reduce injection code by about 17 bytes
+* completely randomized the java applet to the point where it will randomize the name, no longer uses Signed_Update.jar - there were signatures floating around that were detecting it based on static names
+* randomized and obfuscated pyinjector code base and locked into its own virtual container and debugger protection
+* randomized and obfuscated multi pyinjector code base and locked into its own virtual container and debugger protection
+* added the java applet to now smart detect if powershell is installed, if it is then it will not download an executable which could be used on detection capabilities. Powershell is plenty stable and should not require any deviations for a binary to be downloaded. 
+* added ability to check if certain paths are legitimate, if they are will deploy payloads via java applet
+* full msfvenom support and conversion off msfpayload msfencode
+
+~~~~~~~~~~~~~~~~
 version 6.1.2
 ~~~~~~~~~~~~~~~~
 
