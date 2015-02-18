@@ -16,6 +16,7 @@ version 6.2
 * added the java applet to now smart detect if powershell is installed, if it is then it will not download an executable which could be used on detection capabilities. Powershell is plenty stable and should not require any deviations for a binary to be downloaded. 
 * added ability to check if certain paths are legitimate, if they are will deploy payloads via java applet
 * full msfvenom support and conversion off msfpayload msfencode
+* removed old call for impacket tds compatibility
 
 ~~~~~~~~~~~~~~~~
 version 6.1.2
