@@ -13,7 +13,7 @@ sys.path.append(definepath)
 meta_path = meta_path()
 
 # launch msf listener
-print_info("The payload can be found in the SET home directory.")
+print_info("The payload can be found in the SET home (/root/.set/) directory.")
 # j0fer 06-27-2012 # choice = raw_input(setprompt("0", "Start the listener now? [yes|no]"))
 choice = yesno_prompt("0", "Start the listener now? [yes|no]")
 # j0fer 06-27-2012 # if choice == "yes" or choice == "y":
