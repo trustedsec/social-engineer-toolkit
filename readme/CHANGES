@@ -20,6 +20,7 @@ version 6.3
 * added the ability for powershell to execute first and if successful then not drop binary stager as last resort
 * added a workaround for a metasploit bug that would cause bundle install issues when launching directly within the /opt/metasploit/apps/pro/msf3 directory or within the /usr/share/ framework directory. I first check for /usr/bin/msfconsole first and if there I do not append to the path variable in order to launch from anywhere
 * added ability to use default msfconsole launcher if applicable from any path instead of from home directory - fixed in psexec, powershell injection, java applet, custom payloads, etc.
+* randomized custom parameter name when deploying custom binaries to throw off static signatures
 
 ~~~~~~~~~~~~~~~~
 version 6.2

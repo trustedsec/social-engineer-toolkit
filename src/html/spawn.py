@@ -34,7 +34,10 @@ if check_options("CUSTOM_EXE="):
         fileopen3 = fileopen = file("%s/web_clone/index.html" % (setdir), "r")
         filewrite = file("%s/web_clone/index.html.new" % (setdir), "w")
         data = fileopen3.read()
-        data = data.replace('param name="8" value="YES"', 'param name="8" value="CUST"')
+
+	# we randomize param name so static sigs cant be used
+	goat_random = generate_random_string(4, 4)
+        data = data.replace('param name="8" value="YES"', 'param name="8" value="%s"' % (goat_random))
         filewrite.write(data)
         filewrite.close()
 	subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (setdir,setdir), shell=True).wait()

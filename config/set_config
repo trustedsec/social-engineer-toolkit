@@ -42,16 +42,6 @@ ENCOUNT=4
 ### NOTE: This will make bypassuac not work properly. Migrate to a different process to get it to work.
 AUTO_MIGRATE=OFF
 #
-### Custom exe you want to use for MetaSploit encoding, this usually has better av
-### detection. Currently it is set to legit.binary which is just calc.exe. An example
-### you could use would be putty.exe so this field would be /pathtoexe/putty.exe
-CUSTOM_EXE=legit.binary
-#
-### This is for the backdoored executable if you want to keep the executable to still work. Normally
-### when legit.binary is used, it will render the application useless. Specifying this will keep the
-### application working
-BACKDOOR_EXECUTION=ON
-#
 ### Here we can run multiple meterpreter scripts once a session is active. This
 ### may be important if we are sleeping and need to run persistence, try to elevate
 ### permissions and other tasks in an automated fashion. First turn this trigger on
@@ -145,11 +135,6 @@ WEBJACKING_TIME=2000
 ### This will remove the set interactive shell from the menu selection. The SET payloads are large in nature
 ### and things like the pwniexpress need smaller set builds
 SET_INTERACTIVE_SHELL=ON
-#
-### Digital signature stealing method must have the pefile Python modules loaded
-### from http://code.google.com/p/pefile/. Be sure to install this before turning
-### this flag on!!! This flag gives much better AV detection
-DIGITAL_SIGNATURE_STEAL=OFF
 #
 ### These two options will turn the upx packer to on and automatically attempt
 ### to pack the executable which may evade anti-virus a little better.
