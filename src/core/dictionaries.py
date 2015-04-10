@@ -99,22 +99,12 @@ def ms_payload_2(payload):
     """ Receives the input given by the user from create_payloadS.py """
 
     return {
-            '1':"windows/shell_reverse_tcp",
-            '2':"windows/meterpreter/reverse_tcp",
-            '3':"windows/vncinject/reverse_tcp",
-            '4':"windows/shell_bind_tcp",
-            '5':"windows/x64/shell_bind_tcp",
-            '6':"windows/x64/shell_reverse_tcp",
-            '7':"windows/x64/meterpreter/reverse_tcp",
-            '8':"windows/meterpreter/reverse_tcp_allports",
-            '9':"windows/meterpreter/reverse_https",
-            '10':"windows/meterpreter/reverse_tcp_dns",
-            '11':"set/reverse_shell",
-            '12':"set/reverse_shell",
-            '13':"set/reverse_shell",
-            '14':"shellcode/alphanum",
-            '15':"shellcode/pyinject",
-            '16':"shellcode/multipyinject",
+            '1':"shellcode/pyinject",
+            '2':"shellcode/multipyinject",
+            '3':"set/reverse_shell",
+            '4':"set/reverse_shell",
+            '5':"set/reverse_shell",
+            '6':"shellcode/alphanum",
             }.get(payload,"ERROR")
 
 def ms_payload_3(payload):

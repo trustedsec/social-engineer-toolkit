@@ -230,7 +230,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.2'
+    define_version = '6.3'
     return define_version
 
 class create_menu:
@@ -295,14 +295,15 @@ def meta_path():
                 if os.path.isfile("/opt/metasploit/msf3/msfconsole"):
                     msf_path = "/opt/metasploit/msf3/"
                     trigger = 1
-                if os.path.isfile("/usr/bin/msfconsole"):
-                    msf_path = ""
-                    trigger = 1
 
                 # specific for pwnpad and pwnplug (pwnie express)
                 if os.path.isfile("/opt/metasploit-framework/msfconsole"):
-                    msf_path = "/opt/metasploit-framework"
+                    msf_path = "/opt/metasploit-framework/"
                     trigger = 1
+
+		if os.path.isfile("/usr/bin/msfconsole"):
+			msf_path = ""
+			trigger = 1
 
                 if trigger == 0:
                     if check_os() != "windows":
@@ -764,7 +765,7 @@ def show_banner(define_version,graphic):
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
 [---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
-[---]               Codename: '""" + bcolors.YELLOW + """Recharge""" + bcolors.BLUE + """'               [---]
+[---]              Codename: '""" + bcolors.YELLOW + """#HugLife""" + bcolors.BLUE + """'                [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]

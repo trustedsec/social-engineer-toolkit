@@ -79,7 +79,7 @@ try:
     msf_path = meta_path()
     # launch metasploit below
     print_status("Launching Metasploit.. This may take a few seconds.")
-    subprocess.Popen("ruby %s/msfconsole -L -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
+    subprocess.Popen("%smsfconsole -L -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
 
 # handle exceptions
 except Exception, e:

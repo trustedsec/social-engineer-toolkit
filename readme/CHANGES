@@ -1,4 +1,27 @@
 ~~~~~~~~~~~~~~~~
+version 6.3
+~~~~~~~~~~~~~~~~
+
+* removed old payloads that were no longer needed - pyinjector and multipyinjector to the job, standard meterpreter payloads all get picked up regardless of encoding
+* fixed an issue causing PDF templates from not being properly created when selecting solo
+* added ability for custom exe to properly execute when deploy binaries is still specified to OFF (it has to)
+* rewrote java applet to incorporate custom binary selection
+* added check to deploy binaries to auto select yes parameter 8 automatically 
+* removed disitools from SET - no longer needed in custom binary
+* removed legit binary, no longer needed
+* removed three config options no longer needed
+* defaulted the memory injection technique as the main method for old payloads
+* added additional obfuscation around AES generation and making sure static sigs cant hit it
+* stablized MSSQL bruter and injection through powershell
+* fixed webjacking that would cause the menu to bomb out if invalid responses
+* fixed an issue when importing a custom payload, it would try to kick off a listener which it shouldnt
+* added additional wording about when specifying a custom payload that you will need to create your own listener
+* added flag replacement variable for param name 8 which will indicate a randomized four alphanumeric for custom payload delivery - this will allow custom payloads to function properly without triggering powershell or other exploitation methods
+* added the ability for powershell to execute first and if successful then not drop binary stager as last resort
+* added a workaround for a metasploit bug that would cause bundle install issues when launching directly within the /opt/metasploit/apps/pro/msf3 directory or within the /usr/share/ framework directory. I first check for /usr/bin/msfconsole first and if there I do not append to the path variable in order to launch from anywhere
+* added ability to use default msfconsole launcher if applicable from any path instead of from home directory - fixed in psexec, powershell injection, java applet, custom payloads, etc.
+
+~~~~~~~~~~~~~~~~
 version 6.2
 ~~~~~~~~~~~~~~~~
 

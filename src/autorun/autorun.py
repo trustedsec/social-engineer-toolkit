@@ -74,7 +74,7 @@ if trigger == 2 or trigger == 3:
             filewrite.write("set ExitOnSession false\n")
             filewrite.write("exploit -j")
             filewrite.close()
-        subprocess.Popen("ruby %s/msfconsole -L -r %s/meta_config" % (msf_path, setdir), shell=True).wait()
+        subprocess.Popen("%smsfconsole -L -r %s/meta_config" % (msf_path, setdir), shell=True).wait()
     else:
         print_warning("cancelling...")
         sleep (2)

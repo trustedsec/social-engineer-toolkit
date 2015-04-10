@@ -238,22 +238,12 @@ infectious_text = """
 if operating_system != "windows":
     if msf_path != False:
         payload_menu_1 = [
-'Windows Shell Reverse_TCP               Spawn a command shell on victim and send back to attacker',
-'Windows Reverse_TCP Meterpreter         Spawn a meterpreter shell on victim and send back to attacker',
-'Windows Reverse_TCP VNC DLL             Spawn a VNC server on victim and send back to attacker',
-'Windows Bind Shell                      Execute payload and create an accepting port on remote system',
-'Windows Bind Shell X64                  Windows x64 Command Shell, Bind TCP Inline',
-'Windows Shell Reverse_TCP X64           Windows X64 Command Shell, Reverse TCP Inline',
-'Windows Meterpreter Reverse_TCP X64     Connect back to the attacker (Windows x64), Meterpreter',
-'Windows Meterpreter All Ports           Spawn a meterpreter shell and find a port home (every port)',
-'Windows Meterpreter Reverse HTTPS       Tunnel communication over HTTP using SSL and use Meterpreter',
-'Windows Meterpreter Reverse DNS         Use a hostname instead of an IP address and spawn Meterpreter',
+'Meterpreter Memory Injection (DEFAULT)  This will drop a meterpreter payload through PyInjector',
+'Meterpreter Multi-Memory Injection      This will drop multiple Metasploit payloads via memory',
 'SE Toolkit Interactive Shell            Custom interactive reverse toolkit designed for SET',
 'SE Toolkit HTTP Reverse Shell           Purely native HTTP shell with AES encryption support',
 'RATTE HTTP Tunneling Payload            Security bypass payload that will tunnel all comms over HTTP',
 'ShellCodeExec Alphanum Shellcode        This will drop a meterpreter payload through shellcodeexec',
-'PyInjector Shellcode Injection          This will drop a meterpreter payload through PyInjector',
-'MultiPyInjector Shellcode Injection     This will drop multiple Metasploit payloads via memory',
 'Import your own executable              Specify a path for your own executable\n']
 
 if operating_system == "windows" or msf_path == False:
