@@ -161,6 +161,6 @@ if choice == "YES":
     filewrite.close()
     print "[*] Launching Metasploit...."
     try:
-        child = pexpect.spawn("msfconsole -r %s/metasploit.answers" % (setdir))
+        child = pexpect.spawn("msfconsole -r %s/metasploit.answers\r\n\r\n" % (setdir))
         child.interact()
     except: pass

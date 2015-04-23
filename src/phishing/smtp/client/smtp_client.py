@@ -410,7 +410,7 @@ if not os.path.isfile(setdir + "/template.zip"):
                 if not os.path.isfile(setdir + "/unc_config"):
                     print_error("Sorry, you did not generate your payload through SET, this option is not supported.")
         if os.path.isfile(setdir + "/unc_config"):
-            child=pexpect.spawn("%smsfconsole -L -r %s/unc_config" % (meta_path,setdir))
+            child=pexpect.spawn("%smsfconsole -r %s/unc_config" % (meta_path,setdir))
             try: child.interact()
             except Exception: child.close()
 
@@ -428,9 +428,9 @@ if not os.path.isfile(setdir + "/template.zip"):
             filewrite.write("set LPORT "+line[2]+"\n")
             filewrite.write("set ENCODING shikata_ga_nai\n")
             filewrite.write("set ExitOnSession false\n")
-            filewrite.write("exploit -j\n\n")
+            filewrite.write("exploit -j\r\n\r\n")
             filewrite.close()
-            child=pexpect.spawn("%smsfconsole -L -r %s/meta_config" % (meta_path,setdir))
+            child=pexpect.spawn("%smsfconsole -r %s/meta_config" % (meta_path,setdir))
             try:
                 child.interact()
             except Exception:

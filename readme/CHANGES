@@ -1,4 +1,18 @@
 ~~~~~~~~~~~~~~~~
+version 6.3.1
+~~~~~~~~~~~~~~~~
+
+* rewrote the solo payload generation into its own payload delivery that piggy backs the existing menu system
+* fixed an issue when creating the payload and listener options (option 6) would specify src was not found - this was due to a code cleanup project from versoin 6.3
+* rewrote the autorun to function accordingly with new solo
+* optimized and rewrote code base for payload creation - eliminated lots of old lines of code
+* rewrote autorun code and optimized to leverage solo and slimmed down code base
+* fixed an issue that would cause autorun to not work when relaunching
+* fixed an issue that would cause browser autopwn to use the old program_junk folder vs. /root/.set/ folder data
+* added \r\n\r\n returns to all msfconsoles - people get confused without having that extra enter in place thinking msfconsole is broke
+* added \r\n\r\n to all meta_config generations when using msfconsole -r for resource files
+
+~~~~~~~~~~~~~~~~
 version 6.3
 ~~~~~~~~~~~~~~~~
 

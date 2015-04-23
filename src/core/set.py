@@ -729,64 +729,29 @@ try:
 
             # if choice is standard payload
             if infectious_menu_choice == "2":
-                filewrite = file(setdir + "/standardpayload.file", "w")
-                filewrite.write("standardpayload=on")
-                filewrite.close()
-                #sys.path.append("src/core/payloadgen/")
-                #try: reload(create_payloads)
-                #except: import create_payloads
-                debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
-                import src.core.payloadgen.create_payloads
+		# trigger set options for infectious media
+		update_options("INFECTION_MEDIA=ON")
+		try: import src.core.payloadgen.solo
+		except: reload(src.core.payloadgen.solo)
 
+	    # if we aren't exiting, then launch autorun
             if infectious_menu_choice != "99":
-                # import the autorun stuff
-                sys.path.append("src/autorun/")
-                debug_msg(me, "importing 'src.autorun.autorun'", 1)
-                try:
-                    reload(autorun)
-                except:
-                    import autorun
+		try: src.autorun.autolaunch
+		except: reload(src.autorun.autolaunch)
 
-            if infectious_menu_choice == "2":
-                sys.path.append("src/core/payloadgen/")
-                debug_msg(me, "importing 'src.core.payloadgen.solo'", 1)
-                try:
-                    reload(solo)
-                except:
-                    import solo
+
         #
         #
         # Main Menu choice 4: Create a Payload and Listener
         #
         #
         if main_menu_choice == '4':
-            filewrite = file(setdir + "/payloadgen", "w")
-            filewrite.write("payloadgen=solo")
-            filewrite.close()
-            debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
-            try: import src.core.payloadgen.create_payloads
-            except: reload(src.core.payloadgen.create_payloads)
-            print_status("Your payload is now in the root directory of SET as payload.exe")
-            if os.path.isfile(setdir + "/meterpreter.alpha"):
-                print "[*] Saving alphanumeric shellcode in root directory of SET as meterpreter.alpha"
-                shutil.copyfile(setdir + "/meterpreter.alpha", definepath + "/meterpreter.alpha")
-
-            # if we didn't select the SET interactive shell or RATTE
-            if not os.path.isfile(setdir + "/set.payload"):
-                upx_check = check_config("UPX_ENCODE=")
-                if upx_check.lower() == "on":
-	                upx("msf.exe")
-
+	    update_options("PAYLOADGEN=SOLO")
+	    try: import src.core.payloadgen.solo
+	    except: reload(src.core.payloadgen.solo)
             # if the set payload is there
             if os.path.isfile(setdir + "/msf.exe"):
                 shutil.copyfile(setdir + "/msf.exe", "payload.exe")
-
-            sys.path.append("src/core/payloadgen/")
-            debug_msg(me, "importing 'src.core.payloadgen.solo'", 1)
-            try:
-                reload(solo)
-            except:
-                import solo
             return_continue()
 
         # Main Menu choice 5: Mass Mailer Attack

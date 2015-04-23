@@ -83,14 +83,14 @@ def ms_payload(payload):
             '1':"windows/shell_reverse_tcp",
             '2':"windows/meterpreter/reverse_tcp",
             '3':"windows/vncinject/reverse_tcp",
-            '4':"windows/shell_bind_tcp",
-            '5':"windows/x64/shell_bind_tcp",
-            '6':"windows/x64/shell_reverse_tcp",
-            '7':"windows/x64/meterpreter/reverse_tcp",
-            '8':"windows/meterpreter/reverse_tcp_allports",
-            '9':"windows/meterpreter/reverse_https",
-            '10':"windows/meterpreter/reverse_tcp_dns",
-            '11':"windows/download_exec",
+            #'4':"windows/shell_bind_tcp",
+            #'5':"windows/x64/shell_bind_tcp",
+            '4':"windows/x64/shell_reverse_tcp",
+            '5':"windows/x64/meterpreter/reverse_tcp",
+            '6':"windows/meterpreter/reverse_tcp_allports",
+            '7':"windows/meterpreter/reverse_https",
+            '8':"windows/meterpreter/reverse_tcp_dns",
+            '9':"windows/download_exec",
             }.get(payload,"ERROR")
 
 # called from create_payloads.py

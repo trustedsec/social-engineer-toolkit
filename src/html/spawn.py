@@ -515,7 +515,7 @@ try:
                 meta_config = "meta_config_multipyinjector"
 	    # if we arent using a custom payload
 	    if custom != 1:
-	            child1=pexpect.spawn("%smsfconsole -r %s/%s" % (msf_path,setdir,meta_config))
+	            child1=pexpect.spawn("%smsfconsole -r %s/%s\r\n\r\n" % (msf_path,setdir,meta_config))
             # check if we want to deliver emails or track users that click the link
             webattack_email = check_config("WEBATTACK_EMAIL=").lower()
             if webattack_email == "on" or track_email == "on":

