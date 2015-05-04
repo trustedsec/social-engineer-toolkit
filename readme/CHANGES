@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.3.2
+~~~~~~~~~~~~~~~~
+
+* rewrote pyinjector and multipyinjector to evade sandbox technologies
+
+~~~~~~~~~~~~~~~~
 version 6.3.1
 ~~~~~~~~~~~~~~~~
 

