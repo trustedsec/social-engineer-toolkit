@@ -3,6 +3,8 @@ version 6.3.2
 ~~~~~~~~~~~~~~~~
 
 * rewrote pyinjector and multipyinjector to evade sandbox technologies
+* added user + kernel debugger detection and automatic termination of payloads
+* bundled binaries in virtual machine containers for added detection resilience
 
 ~~~~~~~~~~~~~~~~
 version 6.3.1
