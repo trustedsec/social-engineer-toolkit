@@ -2,8 +2,8 @@
 import os
 import sys
 
-try:raw_input
-except: raw_input = input
+#try:raw_input
+#except: raw_input = input
 
 # if we are running in the path no need to change
 if os.path.isfile("setoolkit"):
@@ -177,10 +177,10 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
             print_warning("Have you given someone a hug today? Remember a hug can change the world.")
             pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
 
-    # funny2
-    if main_menu_choice == "freehugs":
-        print_warning("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG.")
-        pause = raw_input("\nDo not press return until giving someone a hug.")
+        # funny2
+        if main_menu_choice == "freehugs":
+            print_warning("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG.")
+            pause = raw_input("\nDo not press return until giving someone a hug.")
 
         # funny3
         if main_menu_choice == "derbycon":
