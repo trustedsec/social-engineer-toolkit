@@ -2,14 +2,17 @@
 import os
 import sys
 
+#try:raw_input
+#except: raw_input = input
+
 # if we are running in the path no need to change
 if os.path.isfile("setoolkit"):
     pass
 
 # check where we are and load default directory
 elif os.path.isdir("/usr/share/setoolkit"):
-	if not os.path.isfile("setoolkit"):
-		os.chdir("/usr/share/setoolkit")
+    if not os.path.isfile("setoolkit"):
+        os.chdir("/usr/share/setoolkit")
         sys.path.append("/usr/share/setoolkit")
 
 # check where we are and load default directory
@@ -68,7 +71,7 @@ try:
     from Crypto.Cipher import AES
 
 except ImportError:
-    print "[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector."
+    print("[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector.")
     pass
 
 #########################################
@@ -118,8 +121,8 @@ if operating_system == "posix":
         ################################################
 
     if os.geteuid() != 0:
-        print "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)"
-        print "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n"
+        print("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
+        print("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
         exit_set()
 
 # if there isn't a set_config.py file yet, create one
@@ -143,19 +146,19 @@ try:
     if not os.path.isfile("src/agreement4"):
         fileopen = file("readme/LICENSE", "r")
         for line in fileopen:
-            print line.rstrip()
+            print(line.rstrip())
 
-        print bcolors.RED + """
-The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN
+        print(bcolors.RED + """
+The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN)
         choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
         choice += " " #b/c method below
         if choice[0].lower() == "y":
             filewrite = file("src/agreement4", "w")
             filewrite.write("user accepted")
             filewrite.close()
-            print bcolors.ENDC
+            print(bcolors.ENDC)
         else:
-            print bcolors.ENDC + "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
+            print(bcolors.ENDC + "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC)
             sys.exit()
 
     while True:
@@ -163,7 +166,7 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
         show_main_menu = create_menu(text.main_text, text.main_menu)
 
         # special case of list item 99
-        print '\n  99) Exit the Social-Engineer Toolkit\n'
+        print('\n  99) Exit the Social-Engineer Toolkit\n')
 
         # main core menu
         main_menu_choice = (raw_input(setprompt("0", "")))
@@ -174,10 +177,10 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
             print_warning("Have you given someone a hug today? Remember a hug can change the world.")
             pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
 
-	# funny2
-	if main_menu_choice == "freehugs":
-		print_warning("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG.")
-		pause = raw_input("\nDo not press return until giving someone a hug.")
+        # funny2
+        if main_menu_choice == "freehugs":
+            print_warning("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG.")
+            pause = raw_input("\nDo not press return until giving someone a hug.")
 
         # funny3
         if main_menu_choice == "derbycon":
@@ -226,12 +229,12 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
 
 # handle keyboard interrupts
 except KeyboardInterrupt:
-    print "\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"
+    print("\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n")
 
 # handle exceptions
-except Exception, error:
+except Exception as error:
     log(error)
-    print "\n\n[!] Something went wrong, printing the error: "+ str(error)
+    print("\n\n[!] Something went wrong, printing the error: "+ str(error))
 
 # cleanup routine
 cleanup_routine()
