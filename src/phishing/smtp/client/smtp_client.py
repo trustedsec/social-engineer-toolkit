@@ -22,7 +22,7 @@ from email import Charset
 from email import Encoders
 # DEFINE SENDMAIL CONFIG
 sendmail=0
-sendmail_file=file("config/set_config","r").readlines()
+sendmail_file=file("/etc/setoolkit/set.config","r").readlines()
 
 from src.core.setcore import *
 

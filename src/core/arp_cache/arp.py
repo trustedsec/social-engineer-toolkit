@@ -13,7 +13,7 @@ from src.core.setcore import *
 definepath=os.getcwd()
 
 # grab config file
-config=file("config/set_config", "r").readlines()
+config=file("/etc/setoolkit/set.config", "r").readlines()
 # grab our default directory
 cwd=os.getcwd()
 # set a variable as default to n or no
@@ -35,7 +35,7 @@ for line in config:
         ettercapchoice = 'n'
 
 # GRAB CONFIG from SET
-fileopen=file("config/set_config", "r").readlines()
+fileopen=file("/etc/setoolkit/set.config", "r").readlines()
 for line in fileopen:
     # grab the ettercap interface
     match=re.search("ETTERCAP_INTERFACE=", line)

@@ -1,4 +1,21 @@
 ~~~~~~~~~~~~~~~~
+version 6.4
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause 32-bit powershell injection from possibly not working
+* fixed an issue that would cause payloads to not fire when powershell injection occurs
+* restructured how bleeding edge is written initially and no longer overwrite sources.list
+* removed slim_set, was used for pwnie way back and is no longer needed
+* cleaned up an old mailing_list.txt format that is no longer needed
+* rehauled the config directories, no longer is there a config/ directory within the SET root directory, it is now under /etc/setoolkit/set.config
+* added dynamic import updates to /etc/setoolkit
+* factored config changes from git pull request to fix grammar and formatting
+* slimmed down powershell injection code by 32 bytes 
+* reworked config imports from harvester and cloner for the new config format
+* rewrote portions of powershell injection to incorporate and handle reverse_http and reverse_https
+* slimmed down powershell injection code more, and give two flag variables to shave shellcode off in order to support http/https payloads
+
+~~~~~~~~~~~~~~~~
 version 6.3.2
 ~~~~~~~~~~~~~~~~
 

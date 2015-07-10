@@ -14,10 +14,13 @@ import pexpect
 import time
 from src.core.setcore import *
 from src.core.menu import text
-from config.set_config import AIRBASE_NG_PATH as airbase_path
-from config.set_config import ACCESS_POINT_SSID as access_point
-from config.set_config import AP_CHANNEL as ap_channel
-from config.set_config import DNSSPOOF_PATH as dnsspoof_path
+
+sys.path.append("/etc/setoolkit")
+from set_config import AIRBASE_NG_PATH as airbase_path
+from set_config import ACCESS_POINT_SSID as access_point
+from set_config import AP_CHANNEL as ap_channel
+from set_config import DNSSPOOF_PATH as dnsspoof_path
+sys.path.append(definepath)
 
 if not os.path.isfile("/etc/init.d/isc-dhcp-server"):
     print_warning("isc-dhcp-server does not appear to be installed.")

@@ -15,14 +15,16 @@ import urllib2
 operating_system = check_os()
 definepath=os.getcwd()
 
-from config.set_config import USER_AGENT_STRING as user_agent
-from config.set_config import WEB_PORT as web_port
-from config.set_config import JAVA_ID_PARAM as java_id
-from config.set_config import JAVA_REPEATER as java_repeater  #Boolean
-from config.set_config import JAVA_TIME as java_time
-from config.set_config import METASPLOIT_IFRAME_PORT as metasploit_iframe
-from config.set_config import AUTO_REDIRECT as auto_redirect  #Boolean
-from config.set_config import UNC_EMBED as unc_embed          #Boolean
+sys.path.append("/etc/setoolkit")
+from set_config import USER_AGENT_STRING as user_agent
+from set_config import WEB_PORT as web_port
+from set_config import JAVA_ID_PARAM as java_id
+from set_config import JAVA_REPEATER as java_repeater  #Boolean
+from set_config import JAVA_TIME as java_time
+from set_config import METASPLOIT_IFRAME_PORT as metasploit_iframe
+from set_config import AUTO_REDIRECT as auto_redirect  #Boolean
+from set_config import UNC_EMBED as unc_embed          #Boolean
+sys.path.append(definepath)
 
 track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 

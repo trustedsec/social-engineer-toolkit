@@ -21,10 +21,12 @@ sys.path.append(definepath)
 
 from src.core.setcore import *
 
-from config.set_config import APACHE_SERVER as apache_check
-from config.set_config import WEBATTACK_EMAIL as webattack_email
-from config.set_config import TRACK_EMAIL_ADDRESSES as track_email
-from config.set_config import HARVESTER_LOG as logpath
+sys.path.append("/etc/setoolkit")
+from set_config import APACHE_SERVER as apache_check
+from set_config import WEBATTACK_EMAIL as webattack_email
+from set_config import TRACK_EMAIL_ADDRESSES as track_email
+from set_config import HARVESTER_LOG as logpath
+sys.path.append(definepath)
 
 if track_email == True:
     print_status("You have selected to track user accounts, Apache will automatically be turned on to handle tracking of users.")

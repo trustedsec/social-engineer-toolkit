@@ -252,7 +252,7 @@ try:
 
                     # pull ip address
                     if choice3 != "-1":
-                        fileopen = file("config/set_config", "r").readlines()
+                        fileopen = file("/etc/setoolkit/set.config", "r").readlines()
                         for line in fileopen:
                             line = line.rstrip()
                             match = re.search("AUTO_DETECT=ON", line)
@@ -869,7 +869,7 @@ try:
                 airbase_path = ""
                 dnsspoof_path = ""
                 # need to pull the SET config file
-                fileopen = file("config/set_config", "r")
+                fileopen = file("/etc/setoolkit/set.config", "r")
                 for line in fileopen:
                     line = line.rstrip()
                     match = re.search("AIRBASE_NG_PATH=", line)

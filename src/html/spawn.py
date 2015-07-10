@@ -400,7 +400,7 @@ try:
                             try:
                                 ipaddr.connect(('localhost', web_port))
                                 if ipaddr:
-                                    print_warning("If you want to use Apache, edit the config/set_config")
+                                    print_warning("If you want to use Apache, edit the /etc/setoolkit/set.config")
                                     print_error("Exit whatever is listening and restart SET")
                                     exit_set()
 
@@ -409,11 +409,11 @@ try:
                                 print_status("Success! Apache was stopped. Moving forward within SET...")
                         # if we don't want to stop apache then exit SET and flag user
                         if apache_stop.lower() == "n" or apache_stop.lower() == "no":
-                            print_warning("If you want to use Apache, edit the config/set_config and turn apache on")
+                            print_warning("If you want to use Apache, edit the /etc/setoolkit/set.config and turn apache on")
                             print_error("Exit whatever is lsitening or turn Apache on in set_config and restart SET")
                             exit_set()
                     else:
-                        print_warning("If you want to use Apache, edit the config/set_config")
+                        print_warning("If you want to use Apache, edit the /etc/setoolkit/set.config")
                         print_error("Exit whatever is listening and restart SET")
                         exit_set()
 
@@ -439,7 +439,7 @@ except Exception, e:
     # if we are using apache
     if apache == 1:
         print_error("Error:Apache does not appear to be running.")
-        print_error("Start it or turn APACHE off in config/set_config")
+        print_error("Start it or turn APACHE off in /etc/setoolkit/set.config")
         print_status("Attempting to start Apache manually...")
         apache_counter = 0
 
@@ -590,7 +590,7 @@ except KeyboardInterrupt:
 if automatic_listener == "off" or multiattack== "on":
 
     if automatic_listener == "off":
-        print_warning("Listener is turned off in config/set_config!")
+        print_warning("Listener is turned off in /etc/setoolkit/set.config!")
     if automatic_listener == "off" or template == "CUSTOM" or template == "SELF":
 
         while 1:

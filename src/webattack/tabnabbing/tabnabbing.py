@@ -10,7 +10,7 @@ from src.core.setcore import *
 #
 
 # pull the timing for SET CONFIG on webjacking
-fileopen=file("config/set_config", "r")
+fileopen=file("/etc/setoolkit/set.config", "r")
 for line in fileopen:
     match=re.search("WEBJACKING_TIME=", line)
     if match:

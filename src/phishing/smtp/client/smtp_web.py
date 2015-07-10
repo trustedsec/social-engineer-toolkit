@@ -36,7 +36,7 @@ definepath = os.getcwd()
 # DEFINE SENDMAIL CONFIG and WEB ATTACK
 sendmail=0
 
-sendmail_file=file("%s/config/set_config" % (definepath),"r").readlines()
+sendmail_file=file("/etc/setoolkit/set.config","r").readlines()
 for line in sendmail_file:
     # strip carriage returns
     line=line.rstrip()

