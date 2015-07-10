@@ -768,7 +768,7 @@ def show_banner(define_version,graphic):
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
 [---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
-[---]            Codename: '""" + bcolors.YELLOW + """Tropic Storm""" + bcolors.BLUE + """'              [---]
+[---]           Codename: '""" + bcolors.YELLOW + """Tropic Thunder""" + bcolors.BLUE + """'             [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE+"""       [---]
