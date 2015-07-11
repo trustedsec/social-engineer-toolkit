@@ -283,6 +283,11 @@ def meta_path():
     trigger = 0
     if not os.path.isdir(msf_path):
 
+                # specific for backbox linux
+                if os.path.isfile("/opt/metasploit-framework/msfconsole"):
+                    msf_path = "/opt/metasploit-framework/"
+                    trigger = 1
+
                 # specific for kali linux
                 if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
                     msf_path = "/opt/metasploit/apps/pro/msf3/"
@@ -414,16 +419,23 @@ def cleanup_routine():
 # Update The Social-Engineer Toolkit
 #
 def update_set():
+    backbox = check_backbox()
     kali = check_kali()
-    if kali == "Kali":
+
+    if backbox == "BackBox":
+        print_status("You are running BackBox Linux which already implements SET updates.")
+        print_status("No need for further operations, just update your system.")
+        time.sleep(2)
+
+    elif kali == "Kali":
         print_status("You are running Kali Linux which maintains SET updates.")
         print_status("You can enable bleeding-edge repos for up-to-date SET.")
         time.sleep(2)
         bleeding_edge()
-
-    # if we aren't running Kali :( 
+    
+    # if we aren't running Kali or BackBox :( 
     else:
-        print_info("Kali-Linux not detected, manually updating..")
+        print_info("Kali or BackBox Linux not detected, manually updating..")
         print_info("Updating the Social-Engineer Toolkit, be patient...")
         print_info("Performing cleanup first...")
         subprocess.Popen("git clean -fd", shell=True).wait()
@@ -1589,6 +1601,18 @@ def capture(func, *args, **kwargs):
     sys.stderr = stderr
     return (result, c1.getvalue(), c2.getvalue())
 
+# check to see if we are running backbox linux
+def check_backbox():
+    if os.path.isfile("/etc/issue"):
+        backbox = file("/etc/issue", "r")
+        backboxdata = backbox.read()
+        if "BackBox" in backboxdata:
+            return "BackBox"
+        # if we aren't running backbox
+        else: return "Non-BackBox"
+    else:
+        print "[!] Not running a Debian variant.."
+        return "Non-BackBox"
 
 # check to see if we are running kali linux
 def check_kali():
