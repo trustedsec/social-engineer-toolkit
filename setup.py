@@ -7,11 +7,6 @@ import sys
 import os
 import platform
 
-# Changes:
-# * Check user id
-# * Pacman support
-# * Python 3 on setup.py
-
 # if nix then run installer
 if platform.system() == "Linux":
     # give installer a null value

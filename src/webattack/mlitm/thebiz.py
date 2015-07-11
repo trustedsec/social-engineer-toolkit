@@ -31,7 +31,7 @@ from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from src.core import setcore
 
 # GRAB DEFAULT PORT FOR WEB SERVER
-fileopen=file("config/set_config" , "r").readlines()
+fileopen=file("/etc/setoolkit/set.config" , "r").readlines()
 counter=0
 for line in fileopen:
     line=line.rstrip()

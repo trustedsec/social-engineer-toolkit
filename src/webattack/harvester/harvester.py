@@ -75,7 +75,7 @@ except: import src.webattack.harvester.scraper
 
 # GRAB DEFAULT PORT FOR WEB SERVER AND CHECK FOR COMMAND CENTER
 command_center="off"
-fileopen=file("config/set_config" , "r").readlines()
+fileopen=file("/etc/setoolkit/set.config" , "r").readlines()
 counter=0
 for line in fileopen:
     line=line.rstrip()
@@ -116,7 +116,7 @@ if counter== 0: URL=''
 ssl_flag="false"
 self_signed="false"
 # SEE IF WE WANT TO USE SSL
-fileopen=file("config/set_config" , "r").readlines()
+fileopen=file("/etc/setoolkit/set.config" , "r").readlines()
 for line in fileopen:
     line=line.rstrip()
     match=re.search("WEBATTACK_SSL=ON", line)
