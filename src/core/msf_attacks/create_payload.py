@@ -25,7 +25,7 @@ meta_path=meta_path()
 apache=0
 
 # open set_config
-apache_check=file("%s/config/set_config" % (definepath),"r").readlines()
+apache_check=file("/etc/setoolkit/set.config","r").readlines()
 
 # loop this guy to search for the APACHE_SERVER config variable
 for line in apache_check:

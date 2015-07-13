@@ -17,16 +17,17 @@ trigger = 0
 if check_options("INFECTION_MEDIA=") == "ON":
 #if os.path.isfile(setdir + "/standardpayload.file"):
     trigger = 1
-    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir %s/autorun;cp %s/payload.exe %s/autorun/program.exe 1> /dev/null 2> /dev/null" % (setdir,setdir,setdir,setdir), shell=True).wait()
+    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir %s/autorun 1> /dev/null 2> /dev/null;cp %s/payload.exe %s/autorun/program.exe 1> /dev/null 2> /dev/null" % (setdir,setdir,setdir,setdir), shell=True).wait()
 
 if os.path.isfile(setdir + "/fileformat.file"):
     trigger = 2
-    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp %s/template.pdf autorun/ 1> /dev/null 2>/dev/null" % (setdir,setdir), shell=True).wait()
+    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir autorun 1> /dev/null 2> /dev/null;cp %s/template.pdf autorun/ 1> /dev/null 2>/dev/null" % (setdir,setdir), shell=True).wait()
 
 if os.path.isfile(setdir + "/dll/openthis.wab"):
-    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir autorun;cp %s/dll/* autorun/ 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
+    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir autorun 1> /dev/null 2> /dev/null;cp %s/dll/* autorun/ 1> /dev/null 2> /dev/null" % (setdir,setdir), shell=True).wait()
     trigger = 3
 
+if not os.path.isdir(setdir + "/autorun"): os.makedirs (setdir + "/autorun/")
 filewrite = file(setdir + "/autorun/autorun.inf", "w")
 
 # if using standard payloads

@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 6.4.1
+~~~~~~~~~~~~~~~~
+
+* fixed config related issue in seautomate, seupdate, and msf payload generation
+* fixed an issue causing src to be undefined in infectious media generator
+
+~~~~~~~~~~~~~~~~
 version 6.4
 ~~~~~~~~~~~~~~~~
 
