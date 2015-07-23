@@ -1,4 +1,16 @@
 ~~~~~~~~~~~~~~~~
+version 6.5
+~~~~~~~~~~~~~~~~
+
+* added brand new attack vector HTA attack and incorporated powershell injection into it
+* fixed a prompt that would cause double IP questions in certain attack vectors
+* slimmed down powershell injection http/https attack vectors in order to use in payload delivery
+* added exploit to browser attack Adobe Flash Player ByteArray Use After Free (2015-07-06)
+* added exploit to browser attack Adobe Flash Player Nellymoser Audio Decoding Buffer Overflow (2015-06-23)
+* added exploit to browser attack Adobe Flash Player Drawing Fill Shader Memory Corruption (2015-05-12)
+
+
+~~~~~~~~~~~~~~~~
 version 6.4.1
 ~~~~~~~~~~~~~~~~
 

@@ -62,6 +62,7 @@ webattack_menu = ['Java Applet Attack Method',
                   'Web Jacking Attack Method',
                   'Multi-Attack Web Method',
                   'Full Screen Attack Method',
+		  'HTA Attack Method',
                   '0D']
 
 fasttrack_menu = ['Microsoft SQL Bruter',
@@ -119,6 +120,8 @@ The """ + bcolors.BOLD + """TabNabbing""" + bcolors.ENDC + """ method will wait 
 The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, emgent. This method utilizes iframe replacements to make the highlighted URL link to appear legitimate however when clicked a window pops up then is replaced with the malicious link. You can edit the link replacement settings in the set_config if its too slow/fast.
 
 The """ + bcolors.BOLD + """Multi-Attack""" + bcolors.ENDC + """ method will add a combination of attacks through the web attack menu. For example you can utilize the Java Applet, Metasploit Browser, Credential Harvester/Tabnabbing all at once to see which is successful.
+
+The """ + bcolors.BOLD + """HTA Attack""" + bcolors.ENDC + """ method will allow you to clone a site and perform powershell injection through HTA files which can be used for Windows-based powershell exploitation through the browser.
 """)
 
 webattack_vectors_menu = ['Web Templates',
@@ -317,6 +320,9 @@ create_payloads_text = """
            ********** PAYLOADS **********\n"""
 
 browser_exploits_menu = [
+'Adobe Flash Player ByteArray Use After Free (2015-07-06)',
+'Adobe Flash Player Nellymoser Audio Decoding Buffer Overflow (2015-06-23)',
+'Adobe Flash Player Drawing Fill Shader Memory Corruption (2015-05-12)',
 'MS14-012 Microsoft Internet Explorer TextRange Use-After-Free (2014-03-11)',
 'MS14-012 Microsoft Internet Explorer CMarkup Use-After-Free (2014-02-13)',
 'Internet Explorer CDisplayPointer Use-After-Free (10/13/2013)',
