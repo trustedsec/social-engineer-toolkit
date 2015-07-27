@@ -752,7 +752,7 @@ try:
 
 	    # if we aren't exiting, then launch autorun
             if infectious_menu_choice != "99":
-		try: src.autorun.autolaunch
+		try: import src.autorun.autolaunch
 		except: reload(src.autorun.autolaunch)
 
 
@@ -763,8 +763,9 @@ try:
         #
         if main_menu_choice == '4':
 	    update_options("PAYLOADGEN=SOLO")
-	    try: import src.core.payloadgen.solo
-	    except: reload(src.core.payloadgen.solo)
+	    import src.core.payloadgen.solo
+	    #try: import src.core.payloadgen.solo
+	    #except: reload(src.core.payloadgen.solo)
             # if the set payload is there
             if os.path.isfile(setdir + "/msf.exe"):
                 shutil.copyfile(setdir + "/msf.exe", "payload.exe")
