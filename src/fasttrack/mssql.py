@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from src.core.setcore import *
 import src.core.tds as tds
 import sys

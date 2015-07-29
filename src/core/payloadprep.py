@@ -1,7 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 ############################################
-# Code behind the SET interactive shell
-# and RATTE
+# Code behind the SET interactive shell and RATTE
 ############################################
 import os
 import sys

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from src.core.setcore import debug_msg, mod_name
 import subprocess
 import re
