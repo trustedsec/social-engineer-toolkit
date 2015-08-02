@@ -341,7 +341,7 @@ try:
 			shutil.copyfile(setdir + "/Launcher.hta", apache_dir + "/Launcher.hta")
 
 			print_status("Launching Metapsloit.. Please wait one.")
-			subprocess.Popen("msfconsole -r %s/meta_config" % (setdir), shell=True).wait()
+			subprocess.Popen("%smsfconsole -r %s/meta_config" % (meta_path(), setdir), shell=True).wait()
 
         ## selection of browser exploits
         ## check to see if multiattack is in use

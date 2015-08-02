@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.1
+~~~~~~~~~~~~~~~~
+
+* changed meta_path to pull blank path when using Kali linux
+
+~~~~~~~~~~~~~~~~
 version 6.5
 ~~~~~~~~~~~~~~~~
 

