@@ -1,4 +1,4 @@
-#############################################
+	#############################################
 #
 # Main SET module for psexec 
 #
@@ -79,7 +79,7 @@ try:
     msf_path = meta_path()
     # launch metasploit below
     print_status("Launching Metasploit.. This may take a few seconds.")
-    subprocess.Popen("%smsfconsole -r %s/reports/powershell/powershell.rc" % (msf_path, setdir), shell=True).wait()
+    subprocess.Popen("msfconsole -r %s/reports/powershell/powershell.rc" % (setdir), shell=True).wait()
 
 # handle exceptions
 except Exception, e:
