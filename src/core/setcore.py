@@ -276,13 +276,11 @@ def validate_ip(address):
 # grab the metaspoit path
 #
 def meta_path():
-    # DEFINE METASPLOIT PATH
-    msf_path = check_config("METASPLOIT_PATH=")
-    if msf_path.endswith("/"): pass
-    else: msf_path = msf_path + "/"
-    trigger = 0
-    if not os.path.isdir(msf_path):
 
+    # DEFINE METASPLOIT PATH
+    trigger = 0
+    try:
+    
                 # specific for backbox linux
                 if os.path.isfile("/opt/metasploit-framework/msfconsole"):
                     msf_path = "/opt/metasploit-framework/"
@@ -327,6 +325,20 @@ def meta_path():
                     if check_os() == "windows":
                         print_warning("Metasploit payloads are not currently supported. This is coming soon.")
                         msf_path = ""
+
+
+    except Exception, e:
+	print_status("Something went wrong. Printing error: " + str(e))
+
+    # if all else fails then pull config path
+    if trigger == 0:
+	    msf_path = check_config("METASPLOIT_PATH=")
+	    if msf_path.endswith("/"): pass
+	    else: msf_path = msf_path + "/"
+
+	    if not os.path.isfile(msf_path): 
+		print_error("Unable to find Metasploit. Disabling Metasploit.")
+		msf_path = False		
 
     # this is an option if we don't want to use Metasploit period
     check_metasploit = check_config("METASPLOIT_MODE=").lower()
