@@ -162,7 +162,7 @@ def deploy_hex2binary(ipaddr,port,username,password):
                 except: import pexpect
                 print_status("Starting the Metasploit listener...")
                 msf_path = meta_path()
-                child2 = pexpect.spawn("%smsfconsole -r %s/meta_config\r\n\r\n" % (msf_path,setdir))
+                child2 = pexpect.spawn("%smsfconsole -r %s/meta_config\r\n\r\n" % (meta_path(),setdir))
 
         # random executable name
         random_exe = generate_random_string(10,15)
