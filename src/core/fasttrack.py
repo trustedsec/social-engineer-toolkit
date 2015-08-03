@@ -41,6 +41,11 @@ try:
             if attack_vector_sql == '1':
                 print "\nHere you can select either a CIDR notation/IP Address or a filename\nthat contains a list of IP Addresses.\n\nFormat for a file would be similar to this:\n\n192.168.13.25\n192.168.13.26\n192.168.13.26\n\n1. Scan IP address or CIDR\n2. Import file that contains SQL Server IP addresses\n"
                 choice = raw_input(setprompt(["19", "21", "22"], "Enter your choice (ex. 1 or 2) [1]"))
+		if choice != "1":
+			if choice != "2":
+				if choice !="":
+					print_error("You did not specify 1 or 2! Please try again.")
+					choice =raw_input(setprompt(["19", "21", "22"], "Enter your choice (ex. 1 or 2) [1]"))
                 # grab ip address
                 if choice == "": choice = "1"
                 if choice == "1":
