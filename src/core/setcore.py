@@ -724,20 +724,22 @@ def windows_root():
 # core log file routine for SET
 #
 def log(error):
+    try:
         # open log file only if directory is present (may be out of directory for some reason)
-    if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath())):
-        filewrite = file("%s/src/logs/set_logfile.log" % (definepath()), "w")
-        filewrite.write("")
-        filewrite.close()
-    if os.path.isfile("%s/src/logs/set_logfile.log" % (definepath())):
-        error = str(error)
-        # open file for writing
-        filewrite = file("%s/src/logs/set_logfile.log" % (definepath()), "a")
-        # write error message out
-        filewrite.write("ERROR: " + date_time() + ": " + error + "\n")
-        # close the file
-        filewrite.close()
-
+        if not os.path.isfile("%s/src/logs/set_logfile.log" % (definepath())):
+            filewrite = file("%s/src/logs/set_logfile.log" % (definepath()), "w")
+            filewrite.write("")
+            filewrite.close()
+        if os.path.isfile("%s/src/logs/set_logfile.log" % (definepath())):
+            error = str(error)
+            # open file for writing
+            filewrite = file("%s/src/logs/set_logfile.log" % (definepath()), "a")
+            # write error message out
+            filewrite.write("ERROR: " + date_time() + ": " + error + "\n")
+            # close the file
+            filewrite.close()
+    except IOError as err:
+        pass
 #
 # upx encoding and modify binary
 #
