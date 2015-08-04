@@ -172,6 +172,8 @@ try:
                         update_options("ATTACK_VECTOR=HTA")
                         gen_hta_cool_stuff()
                         attack_vector = "hta"
+			print_status("Automatically starting Apache for you...")
+			subprocess.Popen("service apache2 start", shell=True).wait()
 
                 # Removed to delete MLITM
                 if attack_vector != "99999":
