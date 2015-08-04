@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.2
+~~~~~~~~~~~~~~~~
+
+* added smallest payload option for msfvenom shellcode creation
+
+~~~~~~~~~~~~~~~~
 version 6.5.1
 ~~~~~~~~~~~~~~~~
 
