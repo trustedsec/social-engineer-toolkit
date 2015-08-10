@@ -347,7 +347,7 @@ def RebootServer(message='Rebooting', timeout=0, bForce=0, bReboot=1):
 def AbortReboot():
     AdjustPrivilege(SE_SHUTDOWN_NAME)
     try:
-        win32api.AbortSystemShotdown(None)
+        win32api.AbortSystemShutdown(None)
     finally:
         AdjustPrivilege(SE_SHUTDOWN_NAME, 0)
 
