@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.3
+~~~~~~~~~~~~~~~~
+
+* added automatic path detection for metasploit in SET and PTF
+
+~~~~~~~~~~~~~~~~
 version 6.5.2
 ~~~~~~~~~~~~~~~~
 

@@ -308,6 +308,11 @@ def meta_path():
                     msf_path = "/opt/metasploit-framework/"
                     trigger = 1
 
+		# specific for pentesters framework github.com/trustedsec/ptf
+		if os.path.isfile("/pentest/exploitation/metasploit/msfconsole"):
+			msf_path = "/pentest/exploitation/metasploit/msfconsole"
+			trigger = 1
+
 		if os.path.isfile("/usr/bin/msfconsole"):
 			msf_path = ""
 			trigger = 1
