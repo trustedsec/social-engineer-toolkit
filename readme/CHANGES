@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.4
+~~~~~~~~~~~~~~~~
+
+* fixed pdf template creation when using file format attack vector on option number one - was due to msfcli being removed - converted over to msfconsole
+* fixed using infectious media generator using pdf template
+
+~~~~~~~~~~~~~~~~
 version 6.5.3
 ~~~~~~~~~~~~~~~~
 
