@@ -42,6 +42,7 @@ for line in apache_check:
                 line2=line2.rstrip()
                 apache_path=line2.replace("APACHE_DIRECTORY=","")
                 apache=1
+		if os.path.isdir(apache_path + "/html"): apache_path = apache_path + "/html"
 
 ###################################################
 #        USER INPUT: SHOW PAYLOAD MENU            #
