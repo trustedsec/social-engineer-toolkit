@@ -317,19 +317,10 @@ def meta_path():
 			msf_path = ""
 			trigger = 1
 
-                if trigger == 0:
-                    if check_os() != "windows":
-                        check_metasploit = check_config("METASPLOIT_MODE=").lower()
-                        if check_metasploit != "off":
-                            print_error("Metasploit path not found. These payloads will be disabled.")
-                            print_error("Please configure in the /etc/setoolkit/set.config.")
-                            return_continue()
-                            return False
-
-                    # if we are using windows
-                    if check_os() == "windows":
-                        print_warning("Metasploit payloads are not currently supported. This is coming soon.")
-                        msf_path = ""
+                # if we are using windows
+                if check_os() == "windows":
+                   print_warning("Metasploit payloads are not currently supported. This is coming soon.")
+                   msf_path = False
 
 
     except Exception, e:
@@ -339,10 +330,12 @@ def meta_path():
     if trigger == 0:
 	    msf_path = check_config("METASPLOIT_PATH=")
 	    if msf_path.endswith("/"): pass
+	    
 	    else: msf_path = msf_path + "/"
 
-	    if not os.path.isfile(msf_path): 
-		print_error("Unable to find Metasploit. Disabling Metasploit.")
+	    if not os.path.isfile(msf_path + "/msfconsole"): 
+		print_error("Metasploit path not found. These payloads will be disabled.")
+		print_error("Please configure Metasploit's path in the /etc/setoolkit/set.config file.")
 		msf_path = False		
 
     # this is an option if we don't want to use Metasploit period
