@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.5
+~~~~~~~~~~~~~~~~
+
+* fixed automatic payload creation on pdf template where on Kali it would hang on waiting for payload
+
+~~~~~~~~~~~~~~~~
 version 6.5.4
 ~~~~~~~~~~~~~~~~
 

