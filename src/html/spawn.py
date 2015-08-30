@@ -81,6 +81,7 @@ def web_server_start():
     apache_check = check_config("APACHE_SERVER=").lower()
     if apache_check == "on" or track_email == "on":
         apache_path = check_config("APACHE_DIRECTORY=")
+	if os.path.isdir(apache_path + "/html"): apache_path = apache_path + "/html"
         apache = 1
         if operating_system == "windows": apache = 0
 

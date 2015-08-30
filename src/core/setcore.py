@@ -233,7 +233,7 @@ def print_error(message):
     print bcolors.RED + bcolors.BOLD + "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC
 
 def get_version():
-    define_version = '6.5.2'
+    define_version = '6.5.5'
     return define_version
 
 class create_menu:
@@ -308,23 +308,19 @@ def meta_path():
                     msf_path = "/opt/metasploit-framework/"
                     trigger = 1
 
+		# specific for pentesters framework github.com/trustedsec/ptf
+		if os.path.isfile("/pentest/exploitation/metasploit/msfconsole"):
+			msf_path = "/pentest/exploitation/metasploit/"
+			trigger = 1
+
 		if os.path.isfile("/usr/bin/msfconsole"):
 			msf_path = ""
 			trigger = 1
 
-                if trigger == 0:
-                    if check_os() != "windows":
-                        check_metasploit = check_config("METASPLOIT_MODE=").lower()
-                        if check_metasploit != "off":
-                            print_error("Metasploit path not found. These payloads will be disabled.")
-                            print_error("Please configure in the /etc/setoolkit/set.config.")
-                            return_continue()
-                            return False
-
-                    # if we are using windows
-                    if check_os() == "windows":
-                        print_warning("Metasploit payloads are not currently supported. This is coming soon.")
-                        msf_path = ""
+                # if we are using windows
+                if check_os() == "windows":
+                   print_warning("Metasploit payloads are not currently supported. This is coming soon.")
+                   msf_path = False
 
 
     except Exception, e:
@@ -334,10 +330,12 @@ def meta_path():
     if trigger == 0:
 	    msf_path = check_config("METASPLOIT_PATH=")
 	    if msf_path.endswith("/"): pass
+	    
 	    else: msf_path = msf_path + "/"
 
-	    if not os.path.isfile(msf_path): 
-		print_error("Unable to find Metasploit. Disabling Metasploit.")
+	    if not os.path.isfile(msf_path + "/msfconsole"): 
+		print_error("Metasploit path not found. These payloads will be disabled.")
+		print_error("Please configure Metasploit's path in the /etc/setoolkit/set.config file.")
 		msf_path = False		
 
     # this is an option if we don't want to use Metasploit period

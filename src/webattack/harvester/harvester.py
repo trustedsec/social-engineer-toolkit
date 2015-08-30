@@ -431,6 +431,7 @@ def run():
         try:
 
             apache_dir = check_config("APACHE_DIRECTORY=")
+	    if os.path.isdir(apache_dir + "/html"): apache_dir = apache_dir + "/html"
             print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
         except Exception, e:
                 print e 

@@ -337,6 +337,7 @@ try:
 			filewrite.close()
 			print_status("Copying over files to Apache server...")
 			apache_dir = check_config("APACHE_DIRECTORY=")
+			if os.path.isdir(apache_dir + "/html"): apache_dir = apache_dir + "/html"
 			shutil.copyfile(setdir + "/web_clone/index.html", apache_dir + "/index.html")
 			shutil.copyfile(setdir + "/Launcher.hta", apache_dir + "/Launcher.hta")
 

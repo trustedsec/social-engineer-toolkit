@@ -1,4 +1,25 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.5
+~~~~~~~~~~~~~~~~
+
+* fixed automatic payload creation on pdf template where on Kali it would hang on waiting for payload
+
+~~~~~~~~~~~~~~~~
+version 6.5.4
+~~~~~~~~~~~~~~~~
+
+* fixed pdf template creation when using file format attack vector on option number one - was due to msfcli being removed - converted over to msfconsole
+* fixed using infectious media generator using pdf template
+* added automatic detection of /var/www/html or /var/www
+* added automatic path selection when using config file
+
+~~~~~~~~~~~~~~~~
+version 6.5.3
+~~~~~~~~~~~~~~~~
+
+* added automatic path detection for metasploit in SET and PTF
+
+~~~~~~~~~~~~~~~~
 version 6.5.2
 ~~~~~~~~~~~~~~~~
 
