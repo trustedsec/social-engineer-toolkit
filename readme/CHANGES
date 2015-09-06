@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.6
+~~~~~~~~~~~~~~~~
+
+* fixed solo payload generation where listener would not launch properly 
+
+~~~~~~~~~~~~~~~~
 version 6.5.5
 ~~~~~~~~~~~~~~~~
 

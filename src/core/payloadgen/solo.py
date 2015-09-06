@@ -39,5 +39,4 @@ if check_options("INFECTION_MEDIA=") != "ON":
 	payload_query = raw_input(setprompt(["4"], "Do you want to start the payload and listener now? (yes/no)"))
 	if payload_query.lower() == "y" or payload_query.lower() == "yes":
 		print_status("Launching msfconsole, this could take a few to load. Be patient...")
-		subprocess.Popen(meta_path + "msfconsole -r " + setdir + "/meta_config\r\n", shell=True).wait()
-
+		subprocess.Popen(meta_path + "msfconsole -r " + setdir + "/meta_config", shell=True).wait()
