@@ -55,7 +55,7 @@ def brute(ipaddr,username,port,wordlist):
             try:
             
                 ipaddr = str(ipaddr)
-                print "Attempting to brute force " + bcolors.BOLD + bcolors.ENDC + " with username of " + bcolors.BOLD + username + bcolors.ENDC + " and password of " + bcolors.BOLD + passwords + bcolors.ENDC
+                print "Attempting to brute force " + bcolors.BOLD + ipaddr + bcolors.ENDC + " with username of " + bcolors.BOLD + username + bcolors.ENDC + " and password of " + bcolors.BOLD + passwords + bcolors.ENDC
 
                 # connect to the sql server and attempt a password
                 if ":" in ipaddr:   
