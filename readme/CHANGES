@@ -1,4 +1,12 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.7
+~~~~~~~~~~~~~~~~
+
+* fix chown issue on different platforms when using harvester (pull request)
+* fixed an issue when moving to /etc/setoolkit/set.config would throw exception when using teensy attack vectors, now fixed
+* fixed an issue which would cause msf.exe to not be found when using dll hijacking
+
+~~~~~~~~~~~~~~~~
 version 6.5.6
 ~~~~~~~~~~~~~~~~
 

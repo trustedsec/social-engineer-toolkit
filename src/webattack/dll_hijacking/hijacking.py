@@ -137,3 +137,6 @@ if choice == "2":
     for name in glob.glob(setdir + "/dll/*"):
         file.write(name, os.path.basename(name), zipfile.ZIP_DEFLATED)
     file.close()
+
+if os.path.isfile(setdir + "/msf.exe"):
+	subprocess.Popen("cp %s/msf.exe %s/src/html/" % (setdir, definepath), shell=True).wait()
