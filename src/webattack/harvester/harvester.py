@@ -444,7 +444,12 @@ def run():
         filewrite = file("%s/harvester_%s.txt" % (logpath,now), "w")
         filewrite.write("")
         filewrite.close()
-        subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (logpath,now), shell=True).wait()
+
+        # Check sys platform to perform chown
+        if sys.platform == "darwin":
+            subprocess.Popen("chown _www:_www '%s/harvester_%s.txt'" % (logpath,now), shell=True).wait()
+        else:
+            subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (logpath,now), shell=True).wait()
 
         # if we are using webjacking, etc.
         if os.path.isfile(setdir + "/web_clone/index2.html"):
