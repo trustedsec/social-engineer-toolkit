@@ -2,6 +2,27 @@
 import os
 import sys
 import shutil
+import subprocess
+
+# if we are using kali
+if os.path.isdir("/usr/share/set/"):
+	if not os.path.isdir("/usr/share/set/.git"):
+		print ("[!] It appears you are using Kali which does not maintain updates well for common tools.")
+		print ("[!] It's recommended that you use SET to manage updates for you instead of Kali to stay up-to-date.")
+		print ("[*] Do you want SET to remove the old Kali packages and handle updates on it's own?")
+		pause = raw_input("Let SET handle updates: [yes][no]: ")
+		if pause.lower() == "yes" or pause.lower() == "y":
+			print ("[*] Great! Removing the old SET package from Kali.")
+			subprocess.Popen("rm -rf /usr/share/set", shell=True).wait()
+			print ("[*] Checking out SET from git repository")
+			subprocess.Popen("git clone https://github.com/trustedsec/social-engineer-toolkit /usr/share/setoolkit/", shell=True).wait()
+			# create launcher
+			print "[*] SET installed, creating launcher now."
+			filewrite = file("/usr/local/bin/setoolkit", "w")
+			filewrite.write("#!/bin/sh\ncd /usr/share/setoolkit/\nchmod +x setoolkit\n./setoolkit $*")
+			filewrite.close()
+			subprocess.Popen("chmod +x /usr/local/bin/setoolkit", shell=True).wait()
+			print ("[*] Done! You can now enjoy your favorite tool, always up to date!")
 
 # if we are running in the path no need to change
 if os.path.isfile("setoolkit"):
@@ -37,7 +58,6 @@ if not "CONFIG_VERSION=6.4" in data:
 from src.core.setcore import *
 from src.core.menu import text
 from src.core.update_config import update_config
-import subprocess
 import shutil
 import re
 

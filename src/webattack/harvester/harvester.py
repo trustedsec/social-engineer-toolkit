@@ -72,7 +72,6 @@ homepath=os.getcwd()
 try: reload(src.webattack.harvester.scraper)
 except: import src.webattack.harvester.scraper
 
-
 # GRAB DEFAULT PORT FOR WEB SERVER AND CHECK FOR COMMAND CENTER
 command_center="off"
 fileopen=file("/etc/setoolkit/set.config" , "r").readlines()
@@ -276,7 +275,7 @@ class SETHandler(BaseHTTPRequestHandler):
         # put the params into site.template for later user
         filewrite=file(setdir + "/site.template","a")
         filewrite.write("\n")
-        filewrite2 = file("src/logs/harvester.log", "a")
+        filewrite2 = file("%s/src/logs/harvester.log" % (definepath), "a")
         filewrite.write("\n\n")
         print bcolors.RED+"[*] WE GOT A HIT! Printing the output:\r" + bcolors.GREEN
         for line in url:
@@ -433,14 +432,19 @@ def run():
             apache_dir = check_config("APACHE_DIRECTORY=")
 	    if os.path.isdir(apache_dir + "/html"): apache_dir = apache_dir + "/html"
             print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
+
         except Exception, e:
                 print e 
+
         print "Please note that all output from the harvester will be found under apache_dir/harvester_date.txt"
         print "Feel free to customize post.php in the %s directory" % (apache_dir) + bcolors.ENDC
         filewrite = file("%s/post.php" % (apache_dir), "w")
         now=datetime.datetime.today()
         filewrite.write("""<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?><meta http-equiv="refresh" content="0; url=%s" />""" % (now, RAW_URL))
         filewrite.close()
+	if os.path.isdir("/var/www/html"):
+		logpath = ("/var/www/html")
+
         filewrite = file("%s/harvester_%s.txt" % (logpath,now), "w")
         filewrite.write("")
         filewrite.close()

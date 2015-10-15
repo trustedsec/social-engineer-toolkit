@@ -1,4 +1,13 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.8
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would write out .setindex.html instead of copying to .set/index.html.
+* fixed an issue that would cause harvester log to not properly write out on certain systems.
+* fixed an issue that would cause the harvester log file to not write if path was /var/www/html
+* added to automatically check if Kali is in use - removes the old install and git clones in order to keep SET up to date
+
+~~~~~~~~~~~~~~~~
 version 6.5.7
 ~~~~~~~~~~~~~~~~
 

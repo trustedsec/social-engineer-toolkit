@@ -94,7 +94,7 @@ for line in fileopen:
 filewrite.close()
 # move our newly created website with our post stuff to our cloned area
 if os.path.isfile(setdir + "/web_clone/index.html.new"):
-    shutil.copyfile(setdir + "/web_clone/index.html.new", setdir + site)
+    shutil.copyfile(setdir + "/web_clone/index.html.new", setdir + "/" + site)
     if os.path.isfile(setdir + "/web_clone/" + site):
         os.remove(setdir + "/web_clone/" + site)
     shutil.move(setdir + "/web_clone/index.html.new", setdir + "/web_clone/%s" % (site))
