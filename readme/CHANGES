@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.9
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that was causing credential harvester to fail
+
+~~~~~~~~~~~~~~~~
 version 6.5.8
 ~~~~~~~~~~~~~~~~
 

@@ -275,7 +275,11 @@ class SETHandler(BaseHTTPRequestHandler):
         # put the params into site.template for later user
         filewrite=file(setdir + "/site.template","a")
         filewrite.write("\n")
-        filewrite2 = file("%s/src/logs/harvester.log" % (definepath), "a")
+	if not os.path.isfile("%s/src/logs/harvester.log" % (os.getcwd())):
+		filewrite3 = file("%s/src/logs/harvester.log" % os.getcwd(), "w")
+		filewrite3.write("")
+		filewrite3.close()
+        filewrite2 = file("%s/src/logs/harvester.log" % os.getcwd(), "a")
         filewrite.write("\n\n")
         print bcolors.RED+"[*] WE GOT A HIT! Printing the output:\r" + bcolors.GREEN
         for line in url:
