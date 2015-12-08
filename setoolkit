@@ -43,10 +43,11 @@ import re
 
 if check_kali() == "Kali":
 	if check_config("BLEEDING_EDGE=").lower() != "on":
-		print_status("Kali bleeding edge was not detected to be on...")	
-		print_status("Kali install detected. Note that if you are not using bleeding edge repositories, your version of SET will be roughly 4 months behind.")
-		print_status("It is recommended to switch to bleeding-edge repos to ensure you are running the latest version of SET and other tools.")
-		pause = raw_input("Press [enter] to accept that SET is several months out of date and probably contains bugs and issues.")
+		if not os.path.isdir(".git"):
+			print_status("Kali bleeding edge was not detected to be on...")	
+			print_status("Kali install detected. Note that if you are not using bleeding edge repositories, your version of SET will be roughly 4 months behind.")
+			print_status("It is recommended to switch to bleeding-edge repos to ensure you are running the latest version of SET and other tools.")
+			pause = raw_input("Press [enter] to accept that SET is several months out of date and probably contains bugs and issues.")
 	
 # check directory and make it
 if not os.path.isdir("src/logs/"):
