@@ -216,7 +216,7 @@ def deploy_hex2binary(ipaddr,port,username,password):
                 print_status("Starting the Metasploit listener...")
                 child2 = pexpect.spawn("%smsfconsole -r %s/reports/powershell/powershell.rc" % (msf_path,setdir))
                 print_status("Waiting for the listener to start first before we continue forward...")
-                print_status("Be patient, Metaploit takes a little bit to start...")
+                print_status("Be patient, Metasploit takes a little bit to start...")
                 child2.expect("Starting the payload handler", timeout=30000)
                 print_status("Metasploit started... Waiting a couple more seconds for listener to activate..")
                 time.sleep(5)

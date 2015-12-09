@@ -341,7 +341,7 @@ try:
 			shutil.copyfile(setdir + "/web_clone/index.html", apache_dir + "/index.html")
 			shutil.copyfile(setdir + "/Launcher.hta", apache_dir + "/Launcher.hta")
 
-			print_status("Launching Metapsloit.. Please wait one.")
+			print_status("Launching Metasploit.. Please wait one.")
 			subprocess.Popen("%smsfconsole -r %s/meta_config" % (meta_path(), setdir), shell=True).wait()
 
         ## selection of browser exploits
