@@ -24,7 +24,7 @@
 ##							                                        ##
 ## There are additional options; read the comments for additional descriptions.		        ##
 ##												##
-## CONFIG_VERSION=6.4										##
+## CONFIG_VERSION=7.0										##
 ##								                                ##
 ##################################################################################################
 ##################################################################################################
@@ -224,7 +224,7 @@ CUSTOM_LINUX_OSX_PAYLOAD=OFF
 ENABLE_PERSISTENCE_OSX=OFF
 #
 ### Determines what user agent string to use fo ranything that clones the website. 
-USER_AGENT_STRING=Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)
+USER_AGENT_STRING=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36
 #
 ### The SET interactive shell works by first deploying a stager payload that pulls an additional executable.
 ### The downloader is currently being picked up by anti-virus and is actually somewhat hard to obfuscate because it has 
