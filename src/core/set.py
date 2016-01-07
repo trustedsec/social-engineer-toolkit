@@ -85,7 +85,7 @@ try:
 
                     # Spearphish menu choice 1: Perform a Mass Email Attack
                     if spearphish_menu_choice == '1':
-                        sys.path.append("src/core/msf_attacks/")
+                        sys.path.append(definepath + "/src/core/msf_attacks/")
                         debug_msg(me, "importing 'src.core.msf_attacks.create_payload'", 1)
                         try:
                             reload(create_payload)
@@ -94,7 +94,7 @@ try:
                         import create_payload
                     # Spearphish menu choice 2: Create a FileFormat Payload
                     if spearphish_menu_choice == '2':
-                        sys.path.append("src/core/msf_attacks/")
+                        sys.path.append(definepath + "/src/core/msf_attacks/")
                         debug_msg(me, "importing 'src.core.msf_attacks.create_payload'", 1)
                         try:
                             reload(create_payload)
@@ -142,7 +142,7 @@ try:
                     site_cloned = False
                     # skip nat section and exit out
                     choice3 = "-1"
-                    sys.path.append("src/webattack/fsattack")
+                    sys.path.append(definepath + "/src/webattack/fsattack")
                     debug_msg(me, "importing 'src.webattack.fsaattack'", 1)
                     try:
                         reload(full)
@@ -339,7 +339,7 @@ try:
                     if choice3 == '1':
 
                             # get the template ready
-                        sys.path.append("src/html/templates")
+                        sys.path.append(definepath + "/src/html/templates")
                         debug_msg(me, "importing src.html.templates.template'", 1)
                         try:
                             reload(template)
@@ -349,7 +349,7 @@ try:
                         # grab browser exploit selection
                         if attack_vector == "browser":
                                 # grab clientattack
-                            sys.path.append("src/webattack/browser_exploits")
+                            sys.path.append(definepath + "/src/webattack/browser_exploits")
                             debug_msg(me, "line 357: importing 'src.webattack.browser_exploits.gen_payload'", 1)
                             try:
                                 reload(gen_payload)
@@ -358,7 +358,7 @@ try:
 
                         # arp cache attack, will exit quickly
                         # if not in config file
-                        sys.path.append("src/core/arp_cache")
+                        sys.path.append(definepath + "/src/core/arp_cache")
                         debug_msg(me, "line 364: importing 'src.core.arp_cache.arp'", 1)
                         try:
                             reload(arp)
@@ -367,7 +367,7 @@ try:
 
                         # actual website attack here
                         # web_server.py is main core
-                        sys.path.append("src/html/")
+                        sys.path.append(definepath + "/src/html/")
 
                         # clean up stale file
                         if os.path.isfile(setdir + "/cloner.failed"):
@@ -397,10 +397,10 @@ try:
                                     try:reload(src.webattack.tabnabbing)
                                     except: import src.webattack.tabnabbing
                                 # start web cred harvester here
-                                # sys.path.append("src/webattack/harvester")
                                 debug_msg(me, "importing 'src.webattack.harvester.harvester'", 1)
-                                try: reload(src.webattack.harvester.harvester)
-                                except: import src.webattack.harvester.harvester
+				sys.path.append(definepath + "/src/webattack/harvester/")
+                                try: reload(harvester)
+                                except: import harvester
 
                             # if we are using profiler lets prep everything to get ready
                             if attack_vector == "profiler":
@@ -435,7 +435,7 @@ try:
                     # Create a website clone
                     if choice3 == '2':
                         # flag that we want a custom website
-                        sys.path.append("src/webattack/web_clone/")
+                        sys.path.append(definepath + "/src/webattack/web_clone/")
                         if os.path.isfile(setdir + "/site.template"):
                             os.remove(setdir + "/site.template")
                         filewrite = file(setdir + "/site.template", "w")
@@ -464,7 +464,7 @@ try:
                         # grab browser exploit selection
                         if attack_vector == "browser":
                             # grab clientattack
-                            sys.path.append("src/webattack/browser_exploits")
+                            sys.path.append(definepath + "/src/webattack/browser_exploits")
                             debug_msg(me, "importing 'src.webattack.browser_exploits.gen_payload'", 1)
                             try:
                                 reload(gen_payload)
@@ -498,7 +498,7 @@ try:
                                     import src.core.payloadgen.create_payloads
 
                             # arp cache if applicable
-                            sys.path.append("src/core/arp_cache")
+                            sys.path.append(definepath + "/src/core/arp_cache")
                             debug_msg(me, "line 500: importing 'src.core.arp_cache.arp'", 1)
                             try:
                                 reload(arp)
@@ -508,13 +508,13 @@ try:
                             # tabnabbing and harvester selection here
                             if attack_vector == "harvester" or attack_vector == "tabnabbing" or attack_vector == "webjacking":
                                 if attack_vector == "tabnabbing" or attack_vector == "webjacking":
-                                    sys.path.append("src/webattack/tabnabbing")
+                                    sys.path.append(definepath + "/src/webattack/tabnabbing")
                                     debug_msg(me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
                                     try:
                                         reload(tabnabbing)
                                     except:
                                         import tabnabbing
-                                sys.path.append("src/webattack/harvester")
+                                sys.path.append(definepath + "/src/webattack/harvester")
                                 debug_msg(me, "importing 'src.webattack.harvester.harvester'", 1)
 
                                 try:
@@ -524,7 +524,7 @@ try:
 
                             # multi_attack vector here
                             if attack_vector == "multiattack":
-                                sys.path.append("src/webattack/multi_attack/")
+                                sys.path.append(definepath + "/src/webattack/multi_attack/")
                                 debug_msg(me, "importing 'src.webattack.multi_attack.multiattack'", 1)
                                 try:
                                     reload(multiattack)
@@ -537,7 +537,7 @@ try:
                                     if attack_vector != "multiattack":
                                         if attack_vector != "webjacking":
 						if attack_vector != "hta":
-	                                            sys.path.append("src/html")
+	                                            sys.path.append(definepath + "/src/html")
 	                                            debug_msg(me, "importing 'src.html.spawn'", 1)
 	                                            try:
 	                                                reload(spawn)
@@ -547,7 +547,7 @@ try:
                     # Import your own site
                     if choice3 == '3':
 
-                        sys.path.append("src/webattack/web_clone/")
+                        sys.path.append(defineapth + "/src/webattack/web_clone/")
                         if os.path.isfile(setdir + "/site.template"):
                             os.remove(setdir + "/site.template")
                         filewrite = file(setdir + "/site.template", "w")
@@ -608,7 +608,7 @@ try:
                         # grab browser exploit selection
                         if attack_vector == "browser":
                             # grab clientattack
-                            sys.path.append("src/webattack/browser_exploits")
+                            sys.path.append(definepath + "/src/webattack/browser_exploits")
                             debug_msg(me, "importing 'src.webattack.browser_exploits.gen_payload'", 1)
                             try:
                                 reload(gen_payload)
@@ -616,7 +616,7 @@ try:
                                 import gen_payload
 
                         # arp cache if applicable
-                        sys.path.append("src/core/arp_cache")
+                        sys.path.append(definepath + "/src/core/arp_cache")
                         debug_msg(me, "line 592: importing 'src.core.arp_cache.arp'", 1)
                         try:
                             reload(arp)
@@ -626,7 +626,7 @@ try:
                         # if not harvester spawn server
                         if attack_vector == "java" or attack_vector == "browser":
                                 # import web_server and do magic
-                            sys.path.append("src/html")
+                            sys.path.append(definepath + "/src/html")
                             debug_msg(me, "importing 'src.html.spawn'", 1)
                             try:
                                 reload(spawn)
@@ -648,7 +648,7 @@ try:
                             filewrite.close()
 
                             # start web cred harvester here
-                            sys.path.append("src/webattack/harvester")
+                            sys.path.append(definepath + "/src/webattack/harvester")
                             debug_msg(me, "importing 'src.webattack.harvester.harvester'", 1)
                             try:
                                 reload(harvester)
@@ -669,7 +669,7 @@ try:
                             filewrite.write("\nURL=%s" % (URL))
                             filewrite.close()
                             # start tabnabbing here
-                            sys.path.append("src/webattack/tabnabbing")
+                            sys.path.append(definepath + "/src/webattack/tabnabbing")
                             debug_msg(me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
                             try:
                                 reload(tabnabbing)
@@ -677,7 +677,7 @@ try:
                                 import tabnabbing
 
                             # start web cred harvester here
-                            sys.path.append("src/webattack/harvester")
+                            sys.path.append(definepath + "/src/webattack/harvester")
                             debug_msg(me, "importing 'src.webattack.harvester.harvester'", 1)
                             try:
                                 reload(harvester)
@@ -738,7 +738,7 @@ try:
                 filewrite = file(setdir + "/fileformat.file","w")
                 filewrite.write("fileformat=on")
                 filewrite.close()
-                sys.path.append("src/core/msf_attacks/")
+                sys.path.append(definepath + "/src/core/msf_attacks/")
                 debug_msg(me, "importing 'src.core.msf_attacks.create_payload'", 1)
                 try:
                     reload(create_payload)
@@ -805,7 +805,7 @@ try:
                         filewrite.write("payload")
                         filewrite.close()
                         # load a payload
-                        sys.path.append("src/core/payloadgen")
+                        sys.path.append(definepath + "/src/core/payloadgen")
                         debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
                         try:
                             reload(create_payloads)
@@ -822,7 +822,7 @@ try:
                 filewrite.close()
                 # if we are doing binary2teensy
                 if teensy_menu_choice != "7" and teensy_menu_choice !="8" and teensy_menu_choice != "9" and teensy_menu_choice !="10" and teensy_menu_choice != "11" and teensy_menu_choice != "12":
-                    sys.path.append("src/teensy")
+                    sys.path.append(definepath + "/src/teensy")
                     debug_msg(me, "importing 'src.teensy.teensy'", 1)
                     try:
                         reload(teensy)
@@ -927,7 +927,7 @@ try:
                             wireless_menu_choice = raw_input(setprompt(["8"], ""))
                             # if we want to start access point
                             if wireless_menu_choice == "1":
-                                sys.path.append("src/wireless/")
+                                sys.path.append(definepath + "/src/wireless/")
                                 debug_msg(me, "importing 'src.wireless.wifiattack'", 1)
                                 try:
                                     reload(wifiattack)
@@ -936,7 +936,7 @@ try:
 
                             # if we want to stop the wifi attack
                             if wireless_menu_choice == "2":
-                                sys.path.append("src/wireless/")
+                                sys.path.append(definepath + "/src/wireless/")
                                 debug_msg(me, "importing 'src.wireless.stop_wifiattack'", 1)
                                 try:
                                     reload(stop_wifiattack)
@@ -991,7 +991,7 @@ and send the QRCode via a mailer.
 
         # Main Menu choice 11: Third Party Modules
         if main_menu_choice == '10':
-            sys.path.append("src/core")
+            sys.path.append(definepath + "/src/core")
             debug_msg(me, "importing 'src.core.module_handler'", 1)
             try:
                 reload(module_handler)

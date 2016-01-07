@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.0
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause payload creation to halt if .msf5 was a path instead of .msf4
+
+~~~~~~~~~~~~~~~~
 version 6.5.9
 ~~~~~~~~~~~~~~~~
 
