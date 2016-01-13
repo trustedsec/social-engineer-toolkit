@@ -57,7 +57,7 @@ if not os.path.isdir("src/logs/"):
 # check set logfile
 if not os.path.isfile("src/logs/set_logfile.log"):
     # create new log
-    filewrite = file("src/logs/set_logfile.log", "w")
+    filewrite = open("src/logs/set_logfile.log", "w")
     filewrite.write("")
     filewrite.close()
 
@@ -149,7 +149,7 @@ define_version = get_version()
 cleanup_routine()
 
 # create the set.options routine
-filewrite = file(setdir + "/set.options", "w")
+filewrite = open(setdir + "/set.options", "w")
 filewrite.write("{This is the main SET configuration file for all options used in SET}\n")
 filewrite.close()
 
@@ -160,7 +160,7 @@ try:
 
     # intitial user menu
     if not os.path.isfile("src/agreement4"):
-        fileopen = file("readme/LICENSE", "r")
+        fileopen = open("readme/LICENSE", "r")
         for line in fileopen:
             print (line.rstrip())
 
@@ -169,7 +169,7 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
         choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
         choice += " " #b/c method below
         if choice[0].lower() == "y":
-            filewrite = file("src/agreement4", "w")
+            filewrite = open("src/agreement4", "w")
             filewrite.write("user accepted")
             filewrite.close()
             print (bcolors.ENDC)

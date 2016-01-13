@@ -182,7 +182,7 @@ def setprompt(category, text):
 def yesno_prompt(category, text):
     valid_response = False
     while not valid_response:
-        response = input(setprompt(category, text))
+        response = raw_input(setprompt(category, text))
         response = str.lower(response)
         if response == "no" or response == "n":
             response = "NO"
@@ -198,7 +198,7 @@ def yesno_prompt(category, text):
 def return_continue():
     print(("\n      Press " + bcolors.RED +
            "<return> " + bcolors.ENDC + "to continue"))
-    pause = input()
+    pause = raw_input()
 
 ############ DEBUGGING ###############
 # ALWAYS SET TO ZERO BEFORE COMMIT!
@@ -224,7 +224,7 @@ def debug_msg(currentModule, message, msgType):
                   currentModule + "': " + message + bcolors.ENDC)
 
             if DEBUG_LEVEL == 2 or DEBUG_LEVEL == 4 or DEBUG_LEVEL == 6:
-                input("waiting for <ENTER>\n")
+                raw_input("waiting for <ENTER>\n")
 
 
 def mod_name():
@@ -413,13 +413,13 @@ def grab_ipaddress():
                     rhost = rhost.getsockname()[0]
                     return rhost
                 except Exception:
-                    rhost = input(
+                    rhost = raw_input(
                         setprompt("0", "Enter your interface IP Address"))
                     while 1:
                         # check if IP address is valid
                         ip_check = is_valid_ip(rhost)
                         if ip_check == False:
-                            rhost = input("[!] Invalid ip address try again: ")
+                            rhost = raw_input("[!] Invalid ip address try again: ")
                         if ip_check == True:
                             break
                     return rhost
@@ -427,13 +427,13 @@ def grab_ipaddress():
         # if AUTO_DETECT=OFF prompt for IP Address
             match1 = re.search("AUTO_DETECT=OFF", line)
             if match1:
-                rhost = input(
+                rhost = raw_input(
                     setprompt("0", "IP address for the payload listener (LHOST)"))
                 while 1:
                         # check if IP address is valid
                     ip_check = is_valid_ip(rhost)
                     if ip_check == False:
-                        rhost = input("[!] Invalid ip address try again: ")
+                        rhost = raw_input("[!] Invalid ip address try again: ")
                     if ip_check == True:
                         break
                 return rhost
@@ -899,7 +899,7 @@ def show_banner(define_version, graphic):
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]
 
-""" + bcolors.GREEN + """        Welcome to the Social-Engineer Toolkit (SET). 
+""" + bcolors.GREEN + """        Welcome to the Social-Engineer Toolkit (SET).
          The one stop shop for all of your SE needs.
 """)
     print(bcolors.BLUE + """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC)
@@ -1015,28 +1015,28 @@ def show_graphic():
 
     if menu == 10:
         print(bcolors.GREEN + """
-                          .  ..                             
-                       MMMMMNMNMMMM=                        
-                   .DMM.           .MM$                     
-                 .MM.                 MM,.                  
-                 MN.                    MM.                 
-               .M.                       MM                 
-              .M   .....................  NM                
-              MM   .8888888888888888888.   M7               
-             .M    88888888888888888888.   ,M               
-             MM       ..888.MMMMM    .     .M.              
-             MM         888.MMMMMMMMMMM     M               
-             MM         888.MMMMMMMMMMM.    M               
-             MM         888.      NMMMM.   .M               
-              M.        888.MMMMMMMMMMM.   ZM               
-              NM.       888.MMMMMMMMMMM    M:               
-              .M+      .....              MM.               
-               .MM.                     .MD                 
-                 MM .                  .MM                  
-                  $MM                .MM.                   
-                    ,MM?          .MMM                      
-                       ,MMMMMMMMMMM 
-                     
+                          .  ..
+                       MMMMMNMNMMMM=
+                   .DMM.           .MM$
+                 .MM.                 MM,.
+                 MN.                    MM.
+               .M.                       MM
+              .M   .....................  NM
+              MM   .8888888888888888888.   M7
+             .M    88888888888888888888.   ,M
+             MM       ..888.MMMMM    .     .M.
+             MM         888.MMMMMMMMMMM     M
+             MM         888.MMMMMMMMMMM.    M
+             MM         888.      NMMMM.   .M
+              M.        888.MMMMMMMMMMM.   ZM
+              NM.       888.MMMMMMMMMMM    M:
+              .M+      .....              MM.
+               .MM.                     .MD
+                 MM .                  .MM
+                  $MM                .MM.
+                    ,MM?          .MMM
+                       ,MMMMMMMMMMM
+
                 https://www.trustedsec.com""" + bcolors.ENDC)
 
     if menu == 11:
@@ -1117,17 +1117,17 @@ def custom_template():
     try:
         print ("         [****]  Custom Template Generator [****]\n")
         print ("Always looking for new templates! In the set/src/templates directory send an email\nto info@trustedsec.com if you got a good template!")
-        author = input(setprompt("0", "Enter the name of the author"))
+        author = raw_input(setprompt("0", "Enter the name of the author"))
         filename = randomgen = random.randrange(1, 99999999999999999999)
         filename = str(filename) + (".template")
-        subject = input(setprompt("0", "Enter the subject of the email"))
+        subject = raw_input(setprompt("0", "Enter the subject of the email"))
         try:
-            body = input(setprompt(
+            body = raw_input(setprompt(
                 "0", "Enter the body of the message, hit return for a new line. Control+c when finished: "))
             while body != 'sdfsdfihdsfsodhdsofh':
                 try:
                     body += (r"\n")
-                    body += input("Next line of the body: ")
+                    body += raw_input("Next line of the body: ")
                 except KeyboardInterrupt:
                     break
         except KeyboardInterrupt:
@@ -1149,7 +1149,7 @@ def check_length(choice, max):
     counter = 0
     while 1:
         if counter == 1:
-            choice = input(bcolors.YELLOW + bcolors.BOLD +
+            choice = raw_input(bcolors.YELLOW + bcolors.BOLD +
                            "[!] " + bcolors.ENDC + "Invalid choice try again: ")
         # try block in case its not a integer
         try:
@@ -1363,7 +1363,7 @@ def socket_listener(port):
     # start loop
 
     while 1:
-        command = input("Enter shell command or quit: ")
+        command = raw_input("Enter shell command or quit: ")
         conn.send(command)
         # if we specify quit then break out of loop and close socket
         if command == "quit":
@@ -1845,7 +1845,7 @@ def bleeding_edge():
             else:
                 print_warning(
                     "Bleeding edge repos were not detected. Use at your own risk!")
-                enable = input(
+                enable = raw_input(
                     "Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
                 if enable == "y" or enable == "yes":
                     print_status(
@@ -1882,7 +1882,7 @@ Select which option you want:
 2. Use the applet built into SET.
 3. I have my own code signing certificate or applet.\n""")
 
-    choice1 = input("Enter the number you want to use [1-3]: ")
+    choice1 = raw_input("Enter the number you want to use [1-3]: ")
 
     # use the default
     if choice1 == "":
@@ -1906,3 +1906,11 @@ Select which option you want:
             import src.html.unsigned.verified_sign
         except:
             reload(src.html.unsigned.verified_sign)
+
+# reload module function for python 2 and python 3
+def module_reload(module):
+    if sys.version_info >= (3,0):
+        import importlib
+        importlib.reload(module)
+    else:
+        reload(module)
