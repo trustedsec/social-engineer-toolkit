@@ -22,7 +22,7 @@ print_info_spaces(
 for name in glob.glob("modules/*.py"):
 
     counter = counter + 1
-    fileopen = file(name, "r")
+    fileopen = open(name, "r")
 
     for line in fileopen:
         line = line.rstrip()

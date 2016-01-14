@@ -15,7 +15,7 @@ subprocess.Popen("mkdir CA;cd CA;mkdir newcerts private", shell=True).wait()
 os.chdir("CA/")
 # create necessary files
 subprocess.Popen("echo '01' > serial;touch index.txt", shell=True).wait()
-filewrite = file("openssl.cnf", "w")
+filewrite = open("openssl.cnf", "w")
 filewrite.write("""#
 # OpenSSL configuration file.
 #

