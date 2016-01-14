@@ -7,11 +7,14 @@ from src.core.setcore import *
 # Simple python script to kill things created by the SET wifi attack vector
 #
 
-interface = raw_input(setprompt(["8"], "Enter your wireless interface (ex: wlan0): "))
+interface = input(
+    setprompt(["8"], "Enter your wireless interface (ex: wlan0): "))
 
 # fix a bug if present
-print_status("Attempting to set rfkill to unblock all if RTL is in use. Ignore errors on this.")
-subprocess.Popen("rmmod rtl8187;rfkill block all;rfkill unblock all;modprobe rtl8187;rfkill unblock all;ifconfig %s up" % (interface), shell=True).wait()
+print_status(
+    "Attempting to set rfkill to unblock all if RTL is in use. Ignore errors on this.")
+subprocess.Popen("rmmod rtl8187;rfkill block all;rfkill unblock all;modprobe rtl8187;rfkill unblock all;ifconfig %s up" % (
+    interface), shell=True).wait()
 
 print_status("Killing airbase-ng...")
 subprocess.Popen("killall airbase-ng", shell=True).wait()

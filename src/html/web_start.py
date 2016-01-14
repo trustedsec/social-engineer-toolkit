@@ -3,7 +3,9 @@
 import sys
 import setcore
 me = setcore.mod_name()
-setcore.debug_msg(me,"importing 'src.html.spawn'",1)
+setcore.debug_msg(me, "importing 'src.html.spawn'", 1)
 sys.path.append("src/html")
-try: reload(spawn)
-except: pass
+try:
+    reload(spawn)
+except:
+    pass
