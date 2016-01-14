@@ -1,4 +1,4 @@
-#!/usr/bin/python
+ #!/usr/bin/python
 import binascii
 import base64
 import sys
@@ -40,10 +40,10 @@ msf_path = meta_path() + "msfconsole"
 # shellcodeexec was converted to hex via binascii.hexlify:
 #
 # import binascii
-# fileopen = file("shellcodeexec.exe", "wb")
+# fileopen = open("shellcodeexec.exe", "wb")
 # data = fileopen.read()
 # data = binascii.hexlify(data)
-# filewrite = file("hex.txt", "w")
+# filewrite = open("hex.txt", "w")
 # filewrite.write(data)
 # filewrite.close()
 #
