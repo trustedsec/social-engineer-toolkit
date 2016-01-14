@@ -13,7 +13,8 @@ if os.path.isdir("/usr/share/setoolkit"):
 
 # if we can't see our config then something didn't go good..
 if not os.path.isfile("/etc/setoolkit/set.config"):
-    print_error("Cannot locate SET executable. Try running from the local directory.")
+    print_error(
+        "Cannot locate SET executable. Try running from the local directory.")
     print_error("If this does not work, please run the setup.py install file.")
     sys.exit()
 
@@ -25,7 +26,8 @@ try:
 
 # except keyboard interrupts
 except KeyboardInterrupt:
-    print "\n[!] Control-C detected. Exiting updating SET."
+    print("\n[!] Control-C detected. Exiting updating SET.")
 
 # handle all other errors
-except Exception, e: print "\n[!] Something went wrong.. Printing the error: " + e
+except Exception as e:
+    print("\n[!] Something went wrong.. Printing the error: " + e)
