@@ -7,7 +7,7 @@ import base64
 import binascii
 import threading
 import select
-import _thread
+import thread
 import time
 import random
 import string
@@ -814,7 +814,7 @@ try:
                     # to leverage SET interactive shell.
                     # this starts the main routine which is where we get all
                     # our port forward stuff
-                    _thread.start_new_thread(
+                    thread.start_new_thread(
                         main, (garbage_one, garbage_two, garbage_three))
 
                 # except exception
@@ -874,7 +874,7 @@ try:
                     #
                     # start a new thread
                     #
-                    _thread.start_new_thread(getsystem, (set_payload, ipaddr))
+                    thread.start_new_thread(getsystem, (set_payload, ipaddr))
 
                 # handle error messages
                 except Exception as e:
@@ -914,7 +914,7 @@ try:
                 garbage3 = ""
 
                 # start the keystroke logger
-                _thread.start_new_thread(
+                thread.start_new_thread(
                     start_keystroke, (garbage1, garbage2, garbage3))
 
             # dump keystrokes
@@ -1002,7 +1002,7 @@ try:
                     #
                     # start a new thread
                     #
-                    _thread.start_new_thread(
+                    thread.start_new_thread(
                         launch_uac, (bypassuac, set_payload, ipaddr))
 
                 # handle error messages

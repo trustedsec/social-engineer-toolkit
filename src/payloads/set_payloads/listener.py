@@ -4,7 +4,7 @@ import os
 import threading
 import sys
 import re
-import _thread
+import thread
 import time
 import select
 import base64
@@ -325,7 +325,7 @@ def start_listener():
             garbage1 = ""
             garbage2 = ""
             garbage3 = ""
-            _thread.start_new_thread(
+            thread.start_new_thread(
                 call_connections, (d, garbage1, garbage2, garbage3))
             sys.exit()  # exit_set()
 
@@ -640,7 +640,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     garbage1 = ""
                     garbage2 = ""
                     garbage3 = ""
-                    _thread.start_new_thread(
+                    thread.start_new_thread(
                         call_connections, (d, garbage1, garbage2, garbage3))
                     sys.exit()
 
@@ -705,7 +705,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                             garbage1 = ""
                             garbage2 = ""
                             garbage3 = ""
-                            _thread.start_new_thread(
+                            thread.start_new_thread(
                                 call_connections, (d, garbage1, garbage2, garbage3))
                             sys.exit()  # exit_set()
 
@@ -1296,7 +1296,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
             garbage1 = ""
             garbage2 = ""
             garbage3 = ""
-            _thread.start_new_thread(
+            thread.start_new_thread(
                 call_connections, (d, garbage1, garbage2, garbage3))
             sys.exit()  # exit_set()
 
@@ -1305,7 +1305,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
             garbage1 = ""
             garbage2 = ""
             garbage3 = ""
-            _thread.start_new_thread(
+            thread.start_new_thread(
                 call_connections, (d, garbage1, garbage2, garbage3))
 
     print_status(
@@ -1391,7 +1391,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     # addr = addr.replace(":WINDOWS", "")
 
                     # call our shell handler
-                    _thread.start_new_thread(
+                    thread.start_new_thread(
                         handle_connection, (conn, addr, encryption, operating_system))
 
                 # increment dict_point until we hit choice
@@ -1504,7 +1504,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     garbage1 = ""
                     garbage2 = ""
                     garbage3 = ""
-                    _thread.start_new_thread(
+                    thread.start_new_thread(
                         call_connections, (d, garbage1, garbage2, garbage3))
 
             except TypeError as e:  # except typerrors
@@ -1512,7 +1512,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                 garbage1 = ""
                 garbage2 = ""
                 garbage3 = ""
-                _thread.start_new_thread(
+                thread.start_new_thread(
                     call_connections, (d, garbage1, garbage2, garbage3))
 
             except Exception as e:  # handle exceptions
@@ -1521,7 +1521,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                 garbage1 = ""
                 garbage2 = ""
                 garbage3 = ""
-                _thread.start_new_thread(
+                thread.start_new_thread(
                     call_connections, (d, garbage1, garbage2, garbage3))
 
     # handle control-c
@@ -1537,7 +1537,7 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
         garbage1 = ""
         garbage2 = ""
         garbage3 = ""
-        _thread.start_new_thread(
+        thread.start_new_thread(
             call_connections, (d, garbage1, garbage2, garbage3))
         log(e)
         sys.exit()

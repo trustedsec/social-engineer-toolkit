@@ -10,7 +10,8 @@ import sys
 import time
 import re
 import shutil
-import urllib.request, urllib.parse, urllib.error
+#import urllib.request, urllib.parse, urllib.error
+import urllib
 
 operating_system = check_os()
 definepath = os.getcwd()

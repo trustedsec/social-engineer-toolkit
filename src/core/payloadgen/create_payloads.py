@@ -483,6 +483,7 @@ try:
                     data = fileopen.read()
                     if payloadgen != "solo":
                         # base64 1
+			data = str(data)
                         data = base64.b64encode(data)
                         # encode it again for the fun 2
                         data = base64.b64encode(data)

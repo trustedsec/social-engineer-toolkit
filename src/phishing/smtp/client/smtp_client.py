@@ -10,7 +10,7 @@ import glob
 import random
 import pexpect
 import base64
-import _thread
+import thread
 
 from io import StringIO
 from email.MIMEMultipart import MIMEMultipart
@@ -22,7 +22,7 @@ from email import Charset
 from email import Encoders
 # DEFINE SENDMAIL CONFIG
 sendmail = 0
-sendmail_file = file("/etc/setoolkit/set.config", "r").readlines()
+sendmail_file = open("/etc/setoolkit/set.config", "r").readlines()
 
 from src.core.setcore import *
 
@@ -195,7 +195,7 @@ if option1 == '1' or option1 == '2':
     if template_choice == '1':
         # set path for
         path = 'src/templates/'
-        filewrite = file(setdir + "/email.templates", "w")
+        filewrite = open(setdir + "/email.templates", "w")
         counter = 0
         # Pull all files in the templates directory
         for infile in glob.glob(os.path.join(path, '*.template')):
@@ -208,14 +208,14 @@ if option1 == '1' or option1 == '2':
         # close the file
         filewrite.close()
         # read in formatted filenames
-        fileread = file(setdir + "/email.templates", "r").readlines()
+        fileread = open(setdir + "/email.templates", "r").readlines()
         print_info("Available templates:")
         for line in fileread:
             line = line.rstrip()
             line = line.split(" ")
             filename = line[0]
             # read in file
-            fileread2 = file("src/templates/%s" % (filename), "r").readlines()
+            fileread2 = open("src/templates/%s" % (filename), "r").readlines()
             for line2 in fileread2:
                 match = re.search("SUBJECT=", line2)
                 if match:
@@ -236,7 +236,7 @@ if option1 == '1' or option1 == '2':
             if match:
                 # print line[0]
                 extract = line[0]
-                fileopen = file("src/templates/" +
+                fileopen = open("src/templates/" +
                                 str(extract), "r").readlines()
                 for line2 in fileopen:
                     match2 = re.search("SUBJECT=", line2)
@@ -404,18 +404,18 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                 print(str(e))
                 try:
                     mailServer.login(provideremail, pwd)
-                    _thread.start_new_thread(mailServer.sendmail(
+                    thread.start_new_thread(mailServer.sendmail(
                         from_address, to, io.getvalue()))
                 except Exception as e:
                     return_continue()
 
     if email_provider == "hotmail":
         mailServer.login(provideruser, pwd)
-        _thread.start_new_thread(mailServer.sendmail,
+        thread.start_new_thread(mailServer.sendmail,
                                 (from_address, to, io.getvalue()))
 
     if sendmail == 1:
-        _thread.start_new_thread(mailServer.sendmail,
+        thread.start_new_thread(mailServer.sendmail,
                                 (from_address, to, io.getvalue()))
 
 if option1 == '1':
@@ -429,7 +429,7 @@ if option1 == '1':
 if option1 == '2':
     counter = 0
     email_num = 0
-    fileopen = file(filepath, "r").readlines()
+    fileopen = open(filepath, "r").readlines()
     for line in fileopen:
         to = line.rstrip()
         mail("%s" % (to),
@@ -457,13 +457,13 @@ if not os.path.isfile(setdir + "/template.zip"):
                 child.close()
 
         if os.path.isfile(setdir + "/payload.options"):
-            fileopen = file(setdir + "/payload.options", "r").readlines()
+            fileopen = open(setdir + "/payload.options", "r").readlines()
             for line in fileopen:
                 line = line.rstrip()
                 line = line.split(" ")
 
             # CREATE THE LISTENER HERE
-            filewrite = file(setdir + "/meta_config", "w")
+            filewrite = open(setdir + "/meta_config", "w")
             filewrite.write("use exploit/multi/handler\n")
             filewrite.write("set PAYLOAD " + line[0] + "\n")
             filewrite.write("set LHOST " + line[1] + "\n")

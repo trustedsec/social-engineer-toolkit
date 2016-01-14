@@ -5,8 +5,8 @@ import re
 import socket
 import subprocess
 from src.core.setcore import *
-import _thread
-import socketserver
+import thread
+#import socketserver
 import shutil
 import re
 import threading
@@ -297,8 +297,8 @@ def web_server_start():
                         target=webserver.start_server, args=(web_port, path))
                     p.start()
                 except Exception:
-                    import _thread
-                    _thread.start_new_thread(
+                    import thread
+                    thread.start_new_thread(
                         webserver.start_server, (web_port, path))
 
             # Handle KeyboardInterrupt

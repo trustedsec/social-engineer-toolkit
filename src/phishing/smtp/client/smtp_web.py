@@ -3,7 +3,6 @@ import smtplib
 import os
 import getpass
 import sys
-import _thread
 import subprocess
 import re
 import glob

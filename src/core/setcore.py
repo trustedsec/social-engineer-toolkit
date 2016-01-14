@@ -1914,3 +1914,6 @@ def module_reload(module):
         importlib.reload(module)
     else:
         reload(module)
+
+def input(string):
+	return raw_input(string)
