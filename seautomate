@@ -14,7 +14,8 @@ if os.path.isdir("/usr/share/setoolkit"):
 
 # if we can't see our config then something didn't go good..
 if not os.path.isfile("/etc/setoolkit/set.config"):
-    print_error("Cannot locate SET executable. Try running from the local directory.")
+    print_error(
+        "Cannot locate SET executable. Try running from the local directory.")
     print_error("If this does not work, please run the setup.py install file.")
     sys.exit()
 
@@ -28,8 +29,8 @@ try:
     import pexpect
 # if pexpect fails
 except ImportError:
-    print "\n[*] PEXPECT is required, please download and install before running this..."
-    print "[*] Exiting SEAUTOMATE mode..."
+    print("\n[*] PEXPECT is required, please download and install before running this...")
+    print("[*] Exiting SEAUTOMATE mode...")
     sys.exit()
 
 # try to define filename through argument specified during command line mode
@@ -38,23 +39,23 @@ try:
 
 # if we through an exception spit out the command line syntax
 except IndexError:
-    print "\nThe Social-Engineer Toolkit Automate - Automatation for SET"
-    print "\nSimply create a file that has each option you want from menu mode."
-    print "For example your file should look something like this:"
-    print "\n2\n2\n2\nhttps://gmail.com\n2\n2\n443\netc.\n"
-    print "Usage: ./seautomate <filename>"
+    print("\nThe Social-Engineer Toolkit Automate - Automatation for SET")
+    print("\nSimply create a file that has each option you want from menu mode.")
+    print("For example your file should look something like this:")
+    print("\n2\n2\n2\nhttps://gmail.com\n2\n2\n443\netc.\n")
+    print("Usage: ./seautomate <filename>")
     sys.exit()
 
 # if the filename doesnt exist, throw an error
 if not os.path.isfile(filename):
-    print "\n[*] Sorry hoss, unable to locate that filename, try again.\n"
+    print("\n[*] Sorry hoss, unable to locate that filename, try again.\n")
     sys.exit()
 
 password = False
 # if the path is around
 if os.path.isfile(filename):
     try:
-        print "[*] Spawning SET in a threaded process..."
+        print("[*] Spawning SET in a threaded process...")
         child = pexpect.spawn("python setoolkit")
         fileopen = open(filename, "r")
         for line in fileopen:
@@ -69,9 +70,9 @@ if os.path.isfile(filename):
                 password = True
 
             if password is False:
-                print "[*] Sending command {0} to the interface...".format(line)
+                print("[*] Sending command {0} to the interface...".format(line))
             if password is True:
-                print "[*] Sending command [**********] (password masked) to the interface..."
+                print("[*] Sending command [**********] (password masked) to the interface...")
                 password = False
 
             if line == "default":
@@ -79,7 +80,7 @@ if os.path.isfile(filename):
 
             if line == "CONTROL-C-HERE":
                 try:
-                    print "[*] This may take a few seconds while SET catches up..."
+                    print("[*] This may take a few seconds while SET catches up...")
                     child.expect("Next line of the body:")
                     time.sleep(2)
                     child.sendline("\n")
@@ -87,20 +88,22 @@ if os.path.isfile(filename):
 
                 # if the user is using pexpect < 2.3
                 except AttributeError:
-                    print "[-] Error: You are running pexpect < 2.3 which is needed for this function"
-                    choice = raw_input("Would you like to install it now yes or no: ")
+                    print("[-] Error: You are running pexpect < 2.3 which is needed for this function")
+                    choice = raw_input(
+                        "Would you like to install it now yes or no: ")
                     if choice == "yes" or choice == "y":
-                        subprocess.Popen("wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3;python setup.py install;cd ..;rm -rf pexpect-2*", shell=True).wait()
+                        subprocess.Popen(
+                            "wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3;python setup.py install;cd ..;rm -rf pexpect-2*", shell=True).wait()
                         try:
                             reload(pexpect)
                             child.sendcontrol('c')
                         except:
-                            print "[*] Relaunch the Social-Engineer Toolkit for changes to apply."
+                            print("[*] Relaunch the Social-Engineer Toolkit for changes to apply.")
                             sys.exit()
             if line != "CONTROL-C-HERE":
                 child.sendline(line)
 
-        print "[*] Finished sending commands, interacting with the interface.."
+        print("[*] Finished sending commands, interacting with the interface..")
         child.interact()
 
     # sometimes pexpect can throw errors upon exit this handles them
@@ -109,9 +112,9 @@ if os.path.isfile(filename):
 
     # handle keyboardinterrupts (controlc)
     except KeyboardInterrupt:
-        print "[*] Control-C detected, exiting the Social-Engineer Toolkit.."
+        print("[*] Control-C detected, exiting the Social-Engineer Toolkit..")
         sys.exit()
 
     # handle everything else
     except Exception as e:
-        print "[*] Something went wrong, printing error: ", e
+        print("[*] Something went wrong, printing error: ", e)
