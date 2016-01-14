@@ -311,7 +311,7 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
                         setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
 
                 # catch errors, will convert to log later
-                except Exception, error:
+                except Exception as error:
                     log(error)
 
             # if we are using the HTTP reverse shell then lets use this
@@ -335,5 +335,5 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
                         setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
 
                 # catch errors, will convert to log later
-                except Exception, error:
+                except Exception as error:
                     log(error)

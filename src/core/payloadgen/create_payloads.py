@@ -94,7 +94,7 @@ if check_options("IPADDR=") == False:
             ipaddr = ipaddr.getsockname()[0]
             update_options("IPADDR=" + ipaddr)
 
-        except Exception, e:
+        except Exception as e:
             log(e)
             ipaddr = raw_input(
                 setprompt(["4"], "IP address for the payload listener (LHOST)"))
@@ -796,10 +796,10 @@ try:
                     filewrite.write("exploit -j\r\n\r\n")
             filewrite.close()
 
-        except Exception, e:
+        except Exception as e:
             log(e)
             print_error("ERROR:Something went wrong:")
-            print bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC
+            print(bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC)
 
 
 # Catch all errors

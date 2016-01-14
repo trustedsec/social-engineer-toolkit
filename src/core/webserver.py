@@ -1,6 +1,6 @@
-import SimpleHTTPServer
-import BaseHTTPServer
-import httplib
+import http.server
+import http.server
+import http.client
 import os
 import sys
 from src.core.setcore import *
@@ -9,7 +9,7 @@ from src.core.setcore import *
 web_port = check_config("WEB_PORT=")
 
 
-class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class StoppableHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     """http request handler with QUIT stopping the server"""
 
     def do_QUIT(self):
@@ -70,7 +70,7 @@ class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         return f
 
 
-class StoppableHttpServer(BaseHTTPServer.HTTPServer):
+class StoppableHttpServer(http.server.HTTPServer):
     """http server that reacts to self.stop flag"""
 
     def serve_forever(self):
@@ -85,7 +85,7 @@ class StoppableHttpServer(BaseHTTPServer.HTTPServer):
 def stop_server(web_port):
     web_port = int(web_port)
     """send QUIT request to http server running on localhost:<port>"""
-    conn = httplib.HTTPConnection("localhost:%d" % web_port)
+    conn = http.client.HTTPConnection("localhost:%d" % web_port)
     conn.request("QUIT", "/")
     conn.getresponse()
 
