@@ -4,6 +4,9 @@ version 7.0
 
 * fixed an issue that would cause payload creation to halt if .msf5 was a path instead of .msf4
 * fixed an issue when reimporting modules or re-selecting options that would cause it to not work properly
+* updated config option to use most recent user agent string
+* massive re-haul for pep8
+* massive re-haul for python3
 
 ~~~~~~~~~~~~~~~~
 version 6.5.9

