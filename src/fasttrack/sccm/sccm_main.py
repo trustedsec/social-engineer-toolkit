@@ -1,9 +1,10 @@
 #!/usr/bin/python
 from src.core.setcore import *
-print "The" + bcolors.BOLD + " SCCM Attack Vector " + bcolors.ENDC + "will utilize the SCCM configurations to deploy malicious software. \n\nYou need to have the SMSServer name and a PackageID you want to package on the website. Then you need to copy this configuration file to the startup directory for all of the users on the server."
+print("The" + bcolors.BOLD + " SCCM Attack Vector " + bcolors.ENDC + "will utilize the SCCM configurations to deploy malicious software. \n\nYou need to have the SMSServer name and a PackageID you want to package on the website. Then you need to copy this configuration file to the startup directory for all of the users on the server.")
 
-sms_server = raw_input("Enter the IP address or hostname of the SMS Server: ")
-package_id = raw_input("Enter the Package ID of the package you want to patch: ")
+sms_server = input("Enter the IP address or hostname of the SMS Server: ")
+package_id = input(
+    "Enter the Package ID of the package you want to patch: ")
 
 configuration = '''
 # configuration file written by Dave DeSimone and Bill Readshaw
@@ -32,10 +33,12 @@ Next
 ''' % (sms_server, package_id)
 
 # write out the file to reports
-filewrite = file(setdir + "/reports/sccm_configuration.txt", "w")
+filewrite = open(setdir + "/reports/sccm_configuration.txt", "w")
 filewrite.write(configuration)
 filewrite.close()
 print_status("The SCCM configuration script has been successfully created.")
 print_status("You need to copy the script to the startup folder of the server.")
-print_status("Report has been exported to %s/reports/sccm_configuration.txt" % (definepath))
-pause = raw_input("Press " + bcolors.RED + "{return} " + bcolors.ENDC + "to exit this menu.")
+print_status(
+    "Report has been exported to %s/reports/sccm_configuration.txt" % (definepath))
+pause = input("Press " + bcolors.RED +
+                  "{return} " + bcolors.ENDC + "to exit this menu.")

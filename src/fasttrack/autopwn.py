@@ -10,10 +10,11 @@ import pexpect
 
 # this will load the database
 def prep(database, ranges):
-    print "\n"
-    setcore.PrintStatus("Prepping the answer file based on what was specified.")
+    print("\n")
+    setcore.PrintStatus(
+        "Prepping the answer file based on what was specified.")
     # prep the file to be written
-    filewrite=file("src/program_junk/autopwn.answer", "w")
+    filewrite = open("src/program_junk/autopwn.answer", "w")
     setcore.PrintStatus("Using the " + database + "sql driver for autopwn")
     filewrite.write("db_driver " + database + "\r\n")
     setcore.PrintStatus("Autopwn will attack the following systems: " + ranges)
@@ -22,7 +23,8 @@ def prep(database, ranges):
     filewrite.write("jobs -K\r\n")
     filewrite.write("sessions -l\r\n")
     filewrite.close()
-    setcore.PrintStatus("Answer file has been created and prepped for delivery into Metasploit.\n")
+    setcore.PrintStatus(
+        "Answer file has been created and prepped for delivery into Metasploit.\n")
 
 
 def launch():
@@ -31,25 +33,30 @@ def launch():
             if path variables aren't set for msfconsole this will break, even if its specified in set_config """
 
     # launch the attack
-    setcore.PrintStatus("Launching Metasploit and attacking the systems specified. This may take a moment..")
+    setcore.PrintStatus(
+        "Launching Metasploit and attacking the systems specified. This may take a moment..")
     # try/catch block
     try:
-        child = pexpect.spawn("%msfconsole -r %s/autopwn.answer\r\n\r\n" % (meta_path,setdir))
+        child = pexpect.spawn(
+            "%msfconsole -r %s/autopwn.answer\r\n\r\n" % (meta_path, setdir))
         child.interact()
 
     # handle exceptions and log them
-    except Exception, error: setcore.log(error)
+    except Exception as error:
+        setcore.log(error)
 
 
 def do_autopwn():
-    print 'Doing do_autopwn'
+    print('Doing do_autopwn')
     # pull the metasploit database
     database = setcore.meta_database()
-    range = raw_input(setcore.setprompt(["19","20"], "Enter the IP ranges to attack (nmap syntax only)"))
+    range = input(setcore.setprompt(
+        ["19", "20"], "Enter the IP ranges to attack (nmap syntax only)"))
 
     # prep the answer file
     prep(database, range)
-    confirm_attack = raw_input(setcore.setprompt(["19","20"], "You are about to attack systems are you sure [y/n]"))
+    confirm_attack = input(setcore.setprompt(
+        ["19", "20"], "You are about to attack systems are you sure [y/n]"))
 
     # if we are sure, then lets do it
     if confirm_attack == "yes" or confirm_attack == "y":

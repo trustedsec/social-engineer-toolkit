@@ -1,6 +1,0 @@
-rel1k:
-
- - add ability to read in port number and IP address (ie. ip:1433)
-
-j0fer:
-Add configuration option in set_config to specify sendmail location. Currently hard coded.

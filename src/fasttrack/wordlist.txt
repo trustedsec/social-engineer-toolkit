@@ -94,7 +94,16 @@ dirt
 air
 earth
 company
+company1
+company123
+company1!
+company!
 secret
+secret!
+secret123
+secret1212
+secret12
+secret1!
 sqlpass123
 Summer2013
 Summer2012
