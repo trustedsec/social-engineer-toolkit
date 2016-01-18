@@ -128,19 +128,15 @@ try:
         counter=0
         # try except block in case no internet connection, route to Internet, etc.
         try:
-                # check if we have wget, if we don't then use urllib2
-            wget = 0
-            if os.path.isfile("/usr/local/bin/wget"):
-                wget = 1
-            if os.path.isfile("/usr/bin/wget"):
-                wget = 1
-            if os.path.isfile("/usr/local/wget"):
-                wget = 1
+            # check if we have wget, if we don't then use urllib2
+            # wget is called, but output is sent to devnull to hide "wget: missing URL" error
+            DNULL = open(os.devnull, 'w')
+            wget = subprocess.Popen('wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
 
             if wget == 1:
                 subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" "%s";' % (proxy_config,setdir,user_agent,url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
-            if wget == 0:
+            else:
                 # if we don't have wget installed we will use python to rip, not as good as wget
                 headers = { 'User-Agent' : user_agent }
                 # read in the websites
