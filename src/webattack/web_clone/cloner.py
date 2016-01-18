@@ -131,8 +131,7 @@ try:
             # check if we have wget, if we don't then use urllib2
             # wget is called, but output is sent to devnull to hide "wget: missing URL" error
             DNULL = open(os.devnull, 'w')
-            wget = subprocess.Popen('wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
-
+            wget = subprocess.call('wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
             if wget == 1:
                 subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" "%s";' % (proxy_config,setdir,user_agent,url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
