@@ -1917,3 +1917,13 @@ def module_reload(module):
 
 def input(string):
 	return raw_input(string)
+
+# fetch URL needed for web cloning
+def fetch_template():
+    fileopen = open(setdir + "/site.template").readlines()
+    for line in fileopen:
+        line = line.rstrip()
+        match = re.search("URL=", line)
+        if match:
+            line = line.split("=")
+            return line[1]

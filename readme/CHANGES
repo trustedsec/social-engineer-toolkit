@@ -7,6 +7,9 @@ version 7.0
 * updated config option to use most recent user agent string
 * massive re-haul for pep8
 * massive re-haul for python3
+* added more words to mssql wordlist
+* major refactoring of python codebase to support both python2 and python3
+* restructured HTA attack vector and improved codebase to redirect after 3 seconds to the legitimate website while still launching the HTA file, this makes it very easy to coax victim into beleiving the HTA they are running is from a legitimate link
 
 ~~~~~~~~~~~~~~~~
 version 6.5.9

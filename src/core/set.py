@@ -172,15 +172,9 @@ try:
                 ###############################################################
                 # HTA ATTACK VECTOR METHOD HERE
                 ###############################################################
-                if attack_vector == '8':
-                    from src.webattack.hta.main import *
-                    # update config
-                    update_options("ATTACK_VECTOR=HTA")
-                    gen_hta_cool_stuff()
-                    attack_vector = "hta"
-                    print_status("Automatically starting Apache for you...")
-                    subprocess.Popen("service apache2 start",
-                                     shell=True).wait()
+                #if attack_vector == '8':
+                    # assign HTA attack vector - do more later
+                #    attack_vector = "hta"
 
                 # Removed to delete MLITM
                 if attack_vector != "99999":
@@ -208,8 +202,6 @@ try:
 
                 try:
                     # write our attack vector to file to be called later
-                    # print definepath()
-                    # os.chdir(definepath)
                     filewrite = open(setdir + "/attack_vector", "w")
 
                     # webjacking and web templates are not allowed
@@ -237,6 +229,7 @@ try:
                     # if attack vector is default or 1 for java applet
                     if attack_vector == '':
                         attack_vector = '1'
+
                     # specify java applet attack
                     if attack_vector == '1':
                         attack_vector = "java"
@@ -279,6 +272,13 @@ try:
                         # trigger the multiattack flag in SET
                         attack_vector = "multiattack"
                         # write the attack vector to file
+                        filewrite.write(attack_vector)
+                        filewrite.close()
+
+                    # hta attack vector
+                    if attack_vector == '8':
+                        # call hta attack vector
+                        attack_vector = "hta"
                         filewrite.write(attack_vector)
                         filewrite.close()
 
@@ -375,7 +375,7 @@ try:
                                         setprompt(["2"], "IP address for the POST back in Harvester/Tabnabbing"))
                                 if check_options("IPADDR=") != 0:
                                     ipaddr = check_options("IPADDR=")
-                                update_options("IPADDR=" + ipaddr)
+                                    update_options("IPADDR=" + ipaddr)
 
                         # if java applet attack
                         if attack_vector == "java":
@@ -471,6 +471,17 @@ try:
                                 from src.webattack.profiler.webprofiler import *
                                 prep_website()
 
+                            # launch HTA attack vector after the website has been cloned
+                            if attack_vector == "hta":
+                                # launch HTA attack vector after the website has been cloned
+                                from src.webattack.hta.main import *
+                                # update config
+                                update_options("ATTACK_VECTOR=HTA")
+                                gen_hta_cool_stuff()
+                                attack_vector = "hta"
+                                print_status("Automatically starting Apache for you...")
+                                subprocess.Popen("service apache2 start",shell=True).wait()
+
                             if attack_vector != "harvester":
                                 if attack_vector != "tabnabbing":
                                     if attack_vector != "multiattack":
@@ -500,8 +511,8 @@ try:
                     # Create a website clone
                     if choice3 == '2':
                         # flag that we want a custom website
-                        sys.path.append(
-                            definepath + "/src/webattack/web_clone/")
+                        definepath = os.getcwd()
+                        sys.path.append(definepath + "/src/webattack/web_clone/")
                         if os.path.isfile(setdir + "/site.template"):
                             os.remove(setdir + "/site.template")
                         filewrite = open(setdir + "/site.template", "w")
@@ -527,6 +538,17 @@ try:
 
                         filewrite.write("\nURL=%s" % (URL))
                         filewrite.close()
+
+                        # launch HTA attack vector after the website has been cloned
+                        if attack_vector == "hta":
+                            # launch HTA attack vector after the website has been cloned
+                            from src.webattack.hta.main import *
+                            # update config
+                            update_options("ATTACK_VECTOR=HTA")
+                            gen_hta_cool_stuff()
+                            attack_vector = "hta"
+                            print_status("Automatically starting Apache for you...")
+                            subprocess.Popen("service apache2 start",shell=True).wait()
 
                         # grab browser exploit selection
                         if attack_vector == "browser":
@@ -569,6 +591,7 @@ try:
                                     import src.core.payloadgen.create_payloads
 
                             # arp cache if applicable
+                            definepath = os.getcwd()
                             sys.path.append(definepath + "/src/core/arp_cache")
                             debug_msg(
                                 me, "line 500: importing 'src.core.arp_cache.arp'", 1)
@@ -694,6 +717,17 @@ try:
                             debug_msg(
                                 me, "importing 'src.webattack.web_clone.cloner'", 1)
                             import src.webattack.web_clone.cloner
+
+                        # launch HTA attack vector after the website has been cloned
+                        if attack_vector == "hta":
+                            # launch HTA attack vector after the website has been cloned
+                            from src.webattack.hta.main import *
+                            # update config
+                            update_options("ATTACK_VECTOR=HTA")
+                            gen_hta_cool_stuff()
+                            attack_vector = "hta"
+                            print_status("Automatically starting Apache for you...")
+                            subprocess.Popen("service apache2 start",shell=True).wait()
 
                         # if java applet attack
                         if attack_vector == "java":
