@@ -312,39 +312,39 @@ try:
             # ms08067
             if range == "1":
                 try:
-                    reload(src.fasttrack.exploits.ms08067)
+                    module_reload(src.fasttrack.exploits.ms08067)
                 except:
                     import src.fasttrack.exploits.ms08067
 
             # firefox 3.6.16
             if range == "2":
                 try:
-                    reload(src.fasttrack.exploits.firefox_3_6_16)
+                    module_reload(src.fasttrack.exploits.firefox_3_6_16)
                 except:
                     import src.fasttrack.exploits.firefox_3_6_16
             # solarwinds
             if range == "3":
                 try:
-                    reload(src.fasttrack.exploits.solarwinds)
+                    module_reload(src.fasttrack.exploits.solarwinds)
                 except:
                     import src.fasttrack.exploits.solarwinds
 
             # rdp DoS
             if range == "4":
                 try:
-                    reload(src.fasttrack.exploits.rdpdos)
+                    module_reload(src.fasttrack.exploits.rdpdos)
                 except:
                     import src.fasttrack.exploits.rdpdos
 
             if range == "5":
                 try:
-                    reload(src.fasttrack.exploits.mysql_bypass)
+                    module_reload(src.fasttrack.exploits.mysql_bypass)
                 except:
                     import src.fasttrack.exploits.mysql_bypass
 
             if range == "6":
                 try:
-                    reload(src.fasttrack.exploits.f5)
+                    module_reload(src.fasttrack.exploits.f5)
                 except:
                     import src.fasttrack.exploits.f5
 
@@ -356,7 +356,7 @@ try:
         if attack_vector == "3":
             # load sccm attack
             try:
-                reload(src.fasttrack.sccm.sccm_main)
+                module_reload(src.fasttrack.sccm.sccm_main)
             except:
                 import src.fasttrack.sccm.sccm_main
 
@@ -445,7 +445,7 @@ try:
         if attack_vector == "6":
             print("\nPSEXEC Powershell Injection Attack:\n\nThis attack will inject a meterpreter backdoor through powershell memory injection. This will circumvent\nAnti-Virus since we will never touch disk. Will require Powershell to be installed on the remote victim\nmachine. You can use either straight passwords or hash values.\n")
             try:
-                reload(src.fasttrack.psexec)
+                module_reload(src.fasttrack.psexec)
             except:
                 import src.fasttrack.psexec
 

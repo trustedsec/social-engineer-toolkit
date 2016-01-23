@@ -317,7 +317,7 @@ if java_applet == "on" or meta_attack == "on" or harvester == "on" or tabnabbing
     sys.path.append("src/webattack/web_clone")
     debug_msg(me, "importing 'src.webattack.web_clone.cloner'", 1)
     try:
-        reload(cloner)
+        module_reload(cloner)
     except:
         import cloner
 
@@ -327,7 +327,7 @@ if java_applet == "on" or meta_attack == "on" or harvester == "on" or tabnabbing
         sys.path.append("src/core/arp_cache")
         debug_msg(me, "importing 'src.core.arp_cache.arp'", 1)
         try:
-            reload(arp)
+            module_reload(arp)
         except:
             import arp
 
@@ -336,7 +336,7 @@ if java_applet == "on":
     sys.path.append("src/core/payloadgen/")
     debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
     try:
-        reload(create_payloads)
+        module_reload(create_payloads)
     except:
         import create_payloads
     payloadgen = 1
@@ -362,7 +362,7 @@ if harvester == "on" or tabnabbing == "on" or webjacking == "on":
         sys.path.append("src/webattack/tabnabbing")
         debug_msg(me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
         try:
-            reload(tabnabbing)
+            module_reload(tabnabbing)
         except:
             import tabnabbing
     # if the harvester is on set the multi_harvester flag
@@ -380,7 +380,7 @@ if mlitm == "on":
     else:
         debug_msg(me, "importing 'src.mlitm.mlitm'", 1)
         try:
-            reload(mlitm)
+            module_reload(mlitm)
         except:
             import mlitm
 
@@ -389,7 +389,7 @@ if java_applet == "on" or meta_attack == "on":
     sys.path.append("src/html/")
     debug_msg(me, "importing 'src.html.spawn'", 1)
     try:
-        reload(spawn)
+        module_reload(spawn)
     except:
         import spawn
 

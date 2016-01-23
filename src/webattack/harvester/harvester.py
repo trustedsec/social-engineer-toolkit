@@ -71,7 +71,7 @@ homepath = os.getcwd()
 
 # pull scraper
 try:
-    reload(src.webattack.harvester.scraper)
+    module_reload(src.webattack.harvester.scraper)
 except:
     import src.webattack.harvester.scraper
 
@@ -389,7 +389,7 @@ def run():
                 pass
             if attack_vector != 'multiattack':
                 try:
-                    reload(src.webattack.harvester.report_generator)
+                    module_reload(src.webattack.harvester.report_generator)
                 except:
                     import src.webattack.harvester.report_generator
             if attack_vector != 'multiattack':
@@ -584,7 +584,7 @@ if webattack_email == True:
     try:
         import src.phishing.smtp.client.smtp_web
     except Exception as e:
-        reload(src.phishing.smtp.client.smtp_web)
+        module_reload(src.phishing.smtp.client.smtp_web)
 
 # see if we're tabnabbing or multiattack
 fileopen = open(setdir + "/attack_vector", "r")

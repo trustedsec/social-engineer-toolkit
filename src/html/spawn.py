@@ -570,7 +570,7 @@ try:
         automatic_listener = check_config("AUTOMATIC_LISTENER=").lower()
         if automatic_listener != "off":
             try:
-                reload(pexpect)
+                module_reload(pexpect)
             except:
                 import pexpect
             # specify if we are using the multi pyinjector
@@ -586,7 +586,7 @@ try:
             webattack_email = check_config("WEBATTACK_EMAIL=").lower()
             if webattack_email == "on" or track_email == "on":
                 try:
-                    reload(src.phishing.smtp.client.smtp_web)
+                    module_reload(src.phishing.smtp.client.smtp_web)
                 except:
                     import src.phishing.smtp.client.smtp_web
 
@@ -606,14 +606,14 @@ try:
             print("\n")
             print_info("Launching the SET Interactive Shell...")
             try:
-                reload(src.payloads.set_payloads.listener)
+                module_reload(src.payloads.set_payloads.listener)
             except:
                 import src.payloads.set_payloads.listener
         if set_payload == "SETSHELL_HTTP":
             print("\n")
             print_info("Launching the SET HTTP Reverse Shell Listener...")
             try:
-                reload(src.payloads.set_payloads.set_http_server)
+                module_reload(src.payloads.set_payloads.set_http_server)
             except:
                 import src.payloads.set_payloads.set_http_server
 
@@ -696,7 +696,7 @@ if apache == 0:
     try:
         import src.core.webserver as webserver
     except:
-        reload(src.core.webserver)
+        module_reload(src.core.webserver)
     webserver.stop_server(web_port)
 
 # call the cleanup routine

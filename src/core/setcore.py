@@ -567,7 +567,7 @@ def site_cloner(website, exportpath, *args):
     # if we are using menu mode we reload just in case
     try:
         debug_msg("setcore", "importing 'src.webattack.web_clone.cloner'", 1)
-        reload(cloner)
+        module_reload(cloner)
 
     except:
         debug_msg("setcore", "importing 'src.webattack.web_clone.cloner'", 1)
@@ -608,7 +608,7 @@ def meterpreter_reverse_tcp_exe(port):
     sys.path.append("src/core/payloadgen")
     try:
         debug_msg("setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
-        reload(create_payloads)
+        module_reload(create_payloads)
 
     except:
         debug_msg("setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
@@ -1887,7 +1887,7 @@ Select which option you want:
         try:
             import src.html.unsigned.self_sign
         except:
-            reload(src.html.unsigned.self_sign)
+            module_reload(src.html.unsigned.self_sign)
 
     # if we need to use the built in applet
     if choice1 == "2":
@@ -1899,7 +1899,7 @@ Select which option you want:
         try:
             import src.html.unsigned.verified_sign
         except:
-            reload(src.html.unsigned.verified_sign)
+            module_reload(src.html.unsigned.verified_sign)
 
 # reload module function for python 2 and python 3
 def module_reload(module):
@@ -1907,7 +1907,7 @@ def module_reload(module):
         import importlib
         importlib.reload(module)
     else:
-        reload(module)
+        module_reload(module)
 
 def input(string):
 	return raw_input(string)

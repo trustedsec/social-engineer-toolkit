@@ -69,7 +69,7 @@ try:
     print_status(
         "Prepping the payload for delivery and injecting alphanumeric shellcode...")
     try:
-        reload(src.payloads.powershell.prep)
+        module_reload(src.payloads.powershell.prep)
     except:
         import src.payloads.powershell.prep
     # create the directory if it does not exist

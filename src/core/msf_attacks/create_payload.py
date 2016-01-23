@@ -236,7 +236,7 @@ if exploit_counter == 0:
             sys.path.append("src/phishing/smtp/client/")
             debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
             try:
-                reload(smtp_client)
+                module_reload(smtp_client)
             except:
                 import smtp_client
 
@@ -262,7 +262,7 @@ if exploit == "unc_embed":
     sys.path.append("src/phishing/smtp/client/")
     debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
     try:
-        reload(smtp_client)
+        module_reload(smtp_client)
     except:
         import smtp_client
 
@@ -271,14 +271,14 @@ if exploit == "dll_hijacking":
     sys.path.append("src/core/payloadgen")
     debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
     try:
-        reload(create_payloads)
+        module_reload(create_payloads)
     except:
         import create_payloads
 
     sys.path.append("src/webattack/dll_hijacking")
     debug_msg(me, "importing 'src.webattack.dll_hijacking.hijacking'", 1)
     try:
-        reload(hijacking)
+        module_reload(hijacking)
     except:
         import hijacking
 
@@ -320,7 +320,7 @@ if exploit == "dll_hijacking":
         sys.path.append("src/phishing/smtp/client/")
         debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
         try:
-            reload(smtp_client)
+            module_reload(smtp_client)
         except:
             import smtp_client
         try:

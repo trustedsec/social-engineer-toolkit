@@ -9,7 +9,7 @@ me = mod_name()
 sys.path.append("src/core")
 debug_msg(me, "re-importing 'src.core.setcore'", 1)
 try:
-    reload(setcore)
+    module_reload(setcore)
 except:
     import setcore
 print("[---] Updating the Social Engineer Toolkit FileFormat Exploit List [---]")
