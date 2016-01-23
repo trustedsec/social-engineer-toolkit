@@ -217,6 +217,11 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
             pause = raw_input(
                 bcolors.BOLD + "\nDon't miss it! Sep 23 - Sep 25th! Press {return} to continue." + bcolors.ENDC)
 
+        # rance
+        if main_menu_choice == "rance":
+            print_warning(bcolors.BOLD + "We miss you buddy. David Jones (Rance) changed a lot of us and you'll always be apart of our lives (and SET). Fuck Cancer." + bcolors.ENDC)
+            pause = raw_input("Press {return} to continue.")
+
         # quit out
         if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":
             exit_set()
