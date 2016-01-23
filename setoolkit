@@ -213,7 +213,7 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
         # funny3
         if main_menu_choice == "derbycon":
             print_warning(
-                bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 6.0 -- September 23th - 25th 2016" + bcolors.ENDC)
+                bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 6.0 'Recharge' -- September 23th - 25th 2016" + bcolors.ENDC)
             pause = raw_input(
                 bcolors.BOLD + "\nDon't miss it! Sep 23 - Sep 25th! Press {return} to continue." + bcolors.ENDC)
 
