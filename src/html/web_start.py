@@ -6,6 +6,6 @@ me = mod_name()
 debug_msg(me, "importing 'src.html.spawn'", 1)
 sys.path.append("src/html")
 try:
-    moduel_reload(spawn)
+    module_reload(spawn)
 except:
     pass
