@@ -239,6 +239,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         # grab the metasploit path from config or smart detection
         msf_path = meta_path()
         if operating_system == "posix":
+<<<<<<< HEAD
             try:
                 module_reload(pexpect)
             except:
@@ -254,6 +255,17 @@ def deploy_hex2binary(ipaddr, port, username, password):
             print_status(
                 "Metasploit started... Waiting a couple more seconds for listener to activate..")
             time.sleep(5)
+=======
+                try: reload(pexpect)
+                except: import pexpect
+                print_status("Starting the Metasploit listener...")
+                child2 = pexpect.spawn("%smsfconsole -r %s/reports/powershell/powershell.rc" % (msf_path,setdir))
+                print_status("Waiting for the listener to start first before we continue forward...")
+                print_status("Be patient, Metasploit takes a little bit to start...")
+                child2.expect("Starting the payload handler", timeout=30000)
+                print_status("Metasploit started... Waiting a couple more seconds for listener to activate..")
+                time.sleep(5)
+>>>>>>> e1891e7750024253b5c984aa58a226582ffcb2ab
 
         # assign random_exe command to the powershell command
         random_exe = powershell_command

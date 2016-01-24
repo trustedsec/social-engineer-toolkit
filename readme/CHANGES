@@ -1153,7 +1153,7 @@ version 3.6
 * added Adobe Flash Player Object Type Confusion to the web interface
 * fixed a menu bug that would not allow you to return to the previous menu in the java applet
 * fixed a bug that would cause the multiattack metasploit, java applet, and cred harvester to not work on the right ports and raise a exceptions
-* added background listener to credential harvester and multiattack -- allows credential harvester to continue to run even if metapsloit has been exited
+* added background listener to credential harvester and multiattack -- allows credential harvester to continue to run even if metasploit has been exited
 * fixed a bug that would still flag any website as cloned successfully. The new code fixes that by checking to ensure the site was properly cloned.
 * fixed a cloning web bug that would error out then continue with payload selection
 * added a cleanup routine to the web cloner for post completion on the cloner, this fixes a repetitive issue when launching multiple attacks in the menu system

