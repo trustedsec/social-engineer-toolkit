@@ -294,6 +294,7 @@ payload_menu_3 = [
 create_payloads_menu = [
     'SET Custom Written DLL Hijacking Attack Vector (RAR, ZIP)',
     'SET Custom Written Document UNC LM SMB Capture Attack',
+    'MS15-100 Microsoft Windows Media Center MCL Vulnerability',
     'MS14-017 Microsoft Word RTF Object Confusion (2014-04-01)',
     'Microsoft Windows CreateSizedDIBSECTION Stack Buffer Overflow',
     'Microsoft Word RTF pFragments Stack Buffer Overflow (MS10-087)',
