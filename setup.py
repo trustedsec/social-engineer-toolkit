@@ -11,8 +11,8 @@ import platform
 if platform.system() == "Linux":
     # give installer a null value
     installer = False
-    
-    #Check user ID 
+
+    #Check user ID
     if os.getuid() != 0:
         print("Are you root? Please execute as root")
         exit()
@@ -38,17 +38,23 @@ if platform.system() == "Linux":
             # force install of debian packages
             subprocess.Popen("apt-get --force-yes -y install git build-essential python-pexpect python-pefile python-crypto python-openssl", shell=True).wait()
 
-        # If pacman.conf exists, we have a Arch based system
+        # if pacman.conf exists, we have a Arch based system
         elif os.path.isfile("/etc/pacman.conf"):
             subprocess.Popen("pacman -S --noconfirm --needed git python2 python2-beautifulsoup3 python2-pexpect python2-crypto", shell=True).wait()
             subprocess.Popen("wget https://pefile.googlecode.com/files/pefile-1.2.10-139.tar.gz", shell=True).wait()
             subprocess.Popen("tar xvfz pefile-1.2.10-139.tar.gz", shell=True).wait()
             subprocess.Popen("chmod a+x pefile-1.2.10-139/setup.py", shell=True).wait()
             subprocess.Popen("rm -rf pefile-1.2.10-139*", shell=True).wait()
-    
-        # if sources.list or pacman.conf is not available then we're running something offset
+
+        # if dnf.conf is there, we are dealing with a >= fedora 22
+        elif os.path.isfile("/etc/dnf/dnf.conf"):
+
+            # install rpm packets
+            subprocess.Popen("dnf -y install git python-pexpect python-pefile python-crypto pyOpenSSL", shell=True).wait()
+
+        # if sources.list, pacman.conf or dnf.conf is not available then we're running something offset
         else:
-            print("[!] You're not running a Debian or Arch variant. Installer not finished for this type of Linux distro.")
+            print("[!] You're not running a Debian, Fedora or Arch variant. Installer not finished for this type of Linux distro.")
             print("[!] Install git, python-pexpect, python-crypto, python-openssl, python-pefile manually for all of SET dependancies.")
             sys.exit()
 
