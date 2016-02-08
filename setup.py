@@ -51,11 +51,15 @@ if platform.system() == "Linux":
                 "chmod a+x pefile-1.2.10-139/setup.py", shell=True).wait()
             subprocess.Popen("rm -rf pefile-1.2.10-139*", shell=True).wait()
 
+        # if dnf.conf is there, we are dealing with a >= fedora 22 - added thanks to whoismath pr
+        elif os.path.isfile("/etc/dnf/dnf.conf"):
+            subprocess.Popen("dnf -y install git python-pexpect python-pefile python-crypto pyOpenSSL", shell=True).wait()
+
         # if sources.list or pacman.conf is not available then we're running
         # something offset
         else:
             print(
-                "[!] You're not running a Debian or Arch variant. Installer not finished for this type of Linux distro.")
+                "[!] You're not running a Debian, Fedora or Arch variant. Installer not finished for this type of Linux distro.")
             print("[!] Install git, python-pexpect, python-crypto, python-openssl, python-pefile manually for all of SET dependancies.")
             sys.exit()
 

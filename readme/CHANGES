@@ -13,6 +13,7 @@ version 7.0
 * rewrote alphanumeric shellcode injector to be python3 compliant and optimized
 * added module_rewrite function instead of reload() for python3
 * added Metasploit MS15-100 Microsoft Windows Media Center MCL Vulnerability to fileformat attacks
+* added Fedora automatic install thanks to whoismath PR
 
 ~~~~~~~~~~~~~~~~
 version 6.5.9
