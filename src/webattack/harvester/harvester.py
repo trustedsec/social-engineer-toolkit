@@ -503,17 +503,17 @@ def run():
         if os.path.isdir("/var/www/html"):
             logpath = ("/var/www/html")
 
-        filewrite = open("%s/harvester_%s.txt" % (logpath, now), "w")
+        filewrite = open("%s/%s" % (logpath, harvester_file), "w")
         filewrite.write("")
         filewrite.close()
 
         # Check sys platform to perform chown
         if sys.platform == "darwin":
-            subprocess.Popen("chown _www:_www '%s/harvester_%s.txt'" %
-                             (logpath, now), shell=True).wait()
+            subprocess.Popen("chown _www:_www '%s/%s'" %
+                             (logpath, harvester_file), shell=True).wait()
         else:
-            subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" %
-                             (logpath, now), shell=True).wait()
+            subprocess.Popen("chown www-data:www-data '%s/%s'" %
+                             (logpath, harvester_file), shell=True).wait()
 
         # if we are using webjacking, etc.
         if os.path.isfile(setdir + "/web_clone/index2.html"):
