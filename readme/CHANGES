@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.0.2
+~~~~~~~~~~~~~~~~
+
+* added a capture recorder within SET so that you don't need to exit when using credential harvester with Apache specified. Can still exit whenever you want and will still be under your apache root directory, but this way - everything is self contained within SET itself.
+
+~~~~~~~~~~~~~~~~
 version 7.0.1
 ~~~~~~~~~~~~~~~~
 

@@ -1908,7 +1908,7 @@ def module_reload(module):
     else:
         module_reload(module)
 
-# used to replace any input that we have from python 2 to python 3 
+# used to replace any input that we have from python 2 to python 3
 def input(string):
 	return raw_input(string)
 
@@ -1921,3 +1921,23 @@ def fetch_template():
         if match:
             line = line.split("=")
             return line[1]
+
+
+# tail a file
+def tail(filename):
+    if os.path.isfile(filename):
+        file = open(filename,'r')
+        st_results = os.stat(filename)
+        st_size = st_results[6]
+        file.seek(st_size)
+
+        while 1:
+            where = file.tell()
+            line = file.readline()
+            if not line:
+                time.sleep(1)
+                file.seek(where)
+            else:
+                print line, # already has newline
+
+    else: print_error("File not found, cannot tail.")
