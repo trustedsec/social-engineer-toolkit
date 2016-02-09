@@ -556,7 +556,7 @@ def run():
                 print_status("SET is now listening for incoming credentials. You can control-c out of this and completely exit SET at anytime and still keep the attack going.")
                 print_status("All files are located under the Apache web root directory: " + apache_dir)
                 print_status("All fields captures will be displayed below.")
-                print("[Credential Harvester is now listening below...]")
+                print("[Credential Harvester is now listening below...]\n\n")
                 tail(apache_dir + "/" + harvester_file)
             except KeyboardInterrupt:
                 print_status("Exiting the menu - note that everything is still running and logging under your web directory path: " + apache_dir)
