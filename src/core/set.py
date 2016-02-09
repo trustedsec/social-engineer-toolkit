@@ -375,7 +375,6 @@ try:
                                         setprompt(["2"], "IP address for the POST back in Harvester/Tabnabbing"))
 
                                 if check_options("IPADDR=") != 0:
-                                    print "I HERE"
                                     ipaddr = check_options("IPADDR=")
                                     update_options("IPADDR=" + ipaddr)
                                 else:

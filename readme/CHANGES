@@ -3,6 +3,7 @@ version 7.0.1
 ~~~~~~~~~~~~~~~~
 
 * fixed an issue where harvester would error out when using python2 - worked fine in python3 - added backwards compatibility
+* fixed an issue that would cause the IP address to not update when selecting credential harvester and cause a double prompt
 
 ~~~~~~~~~~~~~~~~
 version 7.0
