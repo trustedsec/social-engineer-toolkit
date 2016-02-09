@@ -373,9 +373,15 @@ try:
                                         "If you're using an external IP, use your external IP for this")
                                     ipaddr = raw_input(
                                         setprompt(["2"], "IP address for the POST back in Harvester/Tabnabbing"))
+
                                 if check_options("IPADDR=") != 0:
+                                    print "I HERE"
                                     ipaddr = check_options("IPADDR=")
                                     update_options("IPADDR=" + ipaddr)
+                                else:
+                                    if ipaddr != "":
+                                        update_options("IPADDR=" + ipaddr)
+
 
                         # if java applet attack
                         if attack_vector == "java":
