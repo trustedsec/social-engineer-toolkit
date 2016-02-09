@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.0.1
+~~~~~~~~~~~~~~~~
+
+* fixed an issue where harvester would error out when using python2 - worked fine in python3 - added backwards compatibility
+
+~~~~~~~~~~~~~~~~
 version 7.0
 ~~~~~~~~~~~~~~~~
 

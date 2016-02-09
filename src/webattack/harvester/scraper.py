@@ -4,7 +4,7 @@ import os
 import sys
 import re
 import subprocess
-import urllib.parse
+import urllib
 import shutil
 from src.core.setcore import *
 

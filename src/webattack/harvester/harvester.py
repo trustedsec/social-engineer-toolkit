@@ -4,13 +4,22 @@ import sys
 import os
 import re
 import cgi
-import http.server
-import http.server
+# need for python2 -> 3
+try:
+    from http.server import *
+
+except ImportError:
+    from BaseHTTPServer import *
+
 import socket
-from socketserver import BaseServer
-from http.server import SimpleHTTPRequestHandler
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from socketserver import ThreadingMixIn
+
+# needed for python2 -> 3
+try:
+    from socketserver import *
+
+except ImportError:
+    from SocketServer import *
+
 import threading
 import datetime
 import shutil
@@ -218,12 +227,12 @@ class SETHandler(BaseHTTPRequestHandler):
             """Handle an error gracefully.  May be overridden.
                The default is to print a traceback and continue.
             """
-            print('-' * 40)
-            print('Exception happened during processing of request from', end=' ')
+            #print('-' * 40)
+            #print('Exception happened during processing of request from', end=' ')
             print(client_address)
-            import traceback
-            traceback.print_exc()  # XXX But this goes to stderr!
-            print('-' * 40)
+            #import traceback
+            #traceback.print_exc()  # XXX But this goes to stderr!
+            #print('-' * 40)
             pass
 
         counter = 0
