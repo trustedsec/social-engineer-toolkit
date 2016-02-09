@@ -4,6 +4,7 @@ version 7.0.2
 
 * added a capture recorder within SET so that you don't need to exit when using credential harvester with Apache specified. Can still exit whenever you want and will still be under your apache root directory, but this way - everything is self contained within SET itself.
 * added disclaimer for if php files were rendered as text - means proper php plugins are not installed
+* multiple fixes for urllib.imports for python2/3 compatibility
 
 ~~~~~~~~~~~~~~~~
 version 7.0.1

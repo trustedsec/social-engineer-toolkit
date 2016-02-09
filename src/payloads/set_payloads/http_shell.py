@@ -36,8 +36,7 @@
 ##########################################################################
 
 
-import urllib.request, urllib.parse, urllib.error
-import urllib.request, urllib.error, urllib.parse
+import urllib
 from Crypto.Cipher import AES
 import sys
 import os

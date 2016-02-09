@@ -11,7 +11,7 @@
 ############################################
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
-import urllib.parse
+import urllib
 import re
 import os
 import base64

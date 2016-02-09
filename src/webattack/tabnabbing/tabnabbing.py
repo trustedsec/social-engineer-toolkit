@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import subprocess
 import re
-import urllib.request, urllib.error, urllib.parse
+import urllib
 import os
 from src.core.setcore import *
 #
