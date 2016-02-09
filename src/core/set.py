@@ -13,7 +13,7 @@ import sys
 import socket
 from src.core.setcore import *
 from src.core.menu import text
-
+ipaddr= ""
 me = mod_name()
 ###############################################
 # Define path and set it to the SET root dir
