@@ -657,7 +657,7 @@ try:
                     if choice3 == '3':
 
                         sys.path.append(
-                            defineapth + "/src/webattack/web_clone/")
+                            definepath + "/src/webattack/web_clone/")
                         if os.path.isfile(setdir + "/site.template"):
                             os.remove(setdir + "/site.template")
                         filewrite = open(setdir + "/site.template", "w")
