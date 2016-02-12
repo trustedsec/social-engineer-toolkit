@@ -488,9 +488,7 @@ def update_set():
 
     elif kali == "Kali":
         print_status("You are running Kali Linux which maintains SET updates.")
-        print_status("You can enable bleeding-edge repos for up-to-date SET.")
         time.sleep(2)
-        bleeding_edge()
 
     # if we aren't running Kali or BackBox :(
     else:
@@ -1821,44 +1819,7 @@ def check_kali():
         print("[!] Not running a Debian variant..")
         return "Non-Kali"
 
-# checking if we have bleeding-edge enabled for updates
-
-
-def bleeding_edge():
-    bleeding = check_config("BLEEDING_EDGE=").lower()
-    if bleeding == "on":
-            # first check if we are actually using Kali
-        kali = check_kali()
-        if kali == "Kali":
-            print_status("Checking to see if bleeding-edge repos are active.")
-            # check if we have the repos enabled first
-            if os.path.isfile("/etc/apt/sources.list.d/bleeding.list"):
-                print_status("Bleeding edge already active..Moving on..")
-                return True
-            else:
-                print_warning(
-                    "Bleeding edge repos were not detected. Use at your own risk!")
-                enable = raw_input(
-                    "Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
-                if enable == "y" or enable == "yes":
-                    print_status(
-                        "Adding Kali bleeding edge to sources.list for updates.")
-                    # we need to add repo to a new sources file
-                    filewrite = open("/etc/apt/sources.list.d/bleeding.list", "w")
-                    filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org kali-bleeding-edge main contrib non-free")
-                    filewrite.close()
-                    print_status("It is recommended that you run apt-get update && apt-get upgrade && apt-get dist-upgrade, then apt-get -t install -t kali-bleeding-edge set framework3")
-                    return True
-                else:
-                    print(
-                        "[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!")
-
-        else:
-            print("[*] Kali Linux was not detected, moving on...")
-
 # here we give multiple options to specify for SET java applet
-
-
 def applet_choice():
 
     # prompt here
