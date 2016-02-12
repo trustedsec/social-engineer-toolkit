@@ -260,7 +260,7 @@ def print_error(message):
 
 
 def get_version():
-    define_version = '7.0.2'
+    define_version = '7.0.3'
     return define_version
 
 class create_menu:
@@ -1938,6 +1938,6 @@ def tail(filename):
                 time.sleep(1)
                 file.seek(where)
             else:
-                print line, # already has newline
+                print(line,) # already has newline
 
     else: print_error("File not found, cannot tail.")
