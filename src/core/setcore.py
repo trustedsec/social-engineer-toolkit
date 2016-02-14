@@ -520,7 +520,7 @@ def help_menu():
     for line in fileopen:
         line = line.rstrip()
         print(line)
-    fileopen = open("readme/CREDITS", "r").readlines()
+    fileopen = open("docs/CREDITS", "r").readlines()
     print("\n")
     for line in fileopen:
         line = line.rstrip()

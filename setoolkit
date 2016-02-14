@@ -161,7 +161,7 @@ try:
 
     # initial user menu
     if not os.path.isfile("src/agreement4"):
-        fileopen = open("readme/LICENSE", "r")
+        fileopen = open("docs/LICENSE", "r")
         for line in fileopen:
             print((line.rstrip()))
 
