@@ -110,9 +110,9 @@ try:
                     if spearphish_menu_choice == '99':
                         break
 
- #####################
- # Web Attack Menu
- #####################
+        #####################
+        # Web Attack Menu
+        #####################
         # Main Menu choice 2: Website Attack Vectors
         if main_menu_choice == '2':
             while 1:
@@ -485,7 +485,7 @@ try:
                                 gen_hta_cool_stuff()
                                 attack_vector = "hta"
                                 print_status("Automatically starting Apache for you...")
-                                subprocess.Popen("service apache2 start",shell=True).wait()
+                                subprocess.Popen("service apache2 start", shell=True).wait()
 
                             if attack_vector != "harvester":
                                 if attack_vector != "tabnabbing":
@@ -1192,4 +1192,5 @@ and send the QRCode via a mailer.
 # handle keyboard interrupts
 except KeyboardInterrupt:
     print("\n\n Thank you for " + bcolors.RED + "shopping" + bcolors.ENDC +
-          " with the Social-Engineer Toolkit.\n\n Hack the Gibson...and remember...hugs are worth more than handshakes.\n")
+          " with the Social-Engineer Toolkit.\n\n "
+          "Hack the Gibson...and remember...hugs are worth more than handshakes.\n")

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 # module_handler.py
-
+from src.core.setcore import *
 import glob
 import re
 import sys
-from src.core.setcore import *
+
 
 # this is just if the user wants to return to menu
 menu_return = "false"

