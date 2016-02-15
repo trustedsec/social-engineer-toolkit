@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-
-from src.core.setcore import *
-from src.core.menu import text
-from src.core.update_config import update_config
 import re
 import os
 import sys
@@ -40,6 +36,10 @@ if not "CONFIG_VERSION=7.0" in data:
     shutil.move("/etc/setoolkit/set.config", "/etc/setoolkit/set.config.bak")
     shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
 
+# import after config checks have been properly created
+from src.core.setcore import *
+from src.core.menu import text
+from src.core.update_config import update_config
 
 # check directory and make it
 if not os.path.isdir("src/logs/"):
@@ -258,9 +258,9 @@ except KeyboardInterrupt:
            " with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"))
 
 # handle exceptions
-except Exception as error:
-    log(error)
-    print ("\n\n[!] Something went wrong, printing the error: "+ str(error))
+#except Exception as error:
+#    log(error)
+#    print ("\n\n[!] Something went wrong, printing the error: "+ str(error))
 
 # cleanup routine
 cleanup_routine()
