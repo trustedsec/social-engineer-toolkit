@@ -1172,9 +1172,9 @@ and send the QRCode via a mailer.
         # Main Menu choice 10: PowerShell Attacks
         if main_menu_choice == '9':
             try:
-                import src.powershell.powershell
-            except:
                 module_reload(src.powershell.powershell)
+            except:
+                import src.powershell.powershell
 
         # Main Menu choice 11: Third Party Modules
         if main_menu_choice == '10':
@@ -1183,7 +1183,7 @@ and send the QRCode via a mailer.
             try:
                 module_reload(module_handler)
             except:
-                from . import module_handler
+                import module_handler
 
         # Main Menu choice 99: Exit the Social-Engineer Toolkit
         if main_menu_choice == '99':
