@@ -223,21 +223,21 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
         if main_menu_choice == '1':
             try:
                 module_reload(src.core.set)
-            except NameError:
+            except:
                 import src.core.set
 
         # load fasttrack
         if main_menu_choice == '2':
             try:
                 module_reload(src.core.fasttrack)
-            except NameError:
+            except:
                 import src.core.fasttrack
 
         # third party modules
         if main_menu_choice == '3':
             try:
                 module_reload(src.core.module_handler)
-            except NameError:
+            except:
                 import src.core.module_handler
 
         # update set
@@ -258,9 +258,9 @@ except KeyboardInterrupt:
            " with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"))
 
 # handle exceptions
-except Exception as error:
-    log(error)
-    print ("\n\n[!] Something went wrong, printing the error: "+ str(error))
+#except Exception as error:
+#    log(error)
+#    print ("\n\n[!] Something went wrong, printing the error: "+ str(error))
 
 # cleanup routine
 cleanup_routine()
