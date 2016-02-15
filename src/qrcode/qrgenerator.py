@@ -1,17 +1,16 @@
 from src.qrcode.qrcode import *
 from src.core.setcore import *
+from time import sleep
 import os
 
 # generate the qrcode and save it definition
-
-
 def gen_qrcode(url):
     # generate the qrcode
     qr = QRCode(5, QRErrorCorrectLevel.L)
     qr.addData(url)
     qr.make()
     im = qr.makeImage()
-    time.sleep(1)
+    sleep(1)
     if os.path.isfile(setdir + "/reports/qrcode_attack.png"):
         os.remove(setdir + "/reports/qrcode_attack.png")
     # save the image out

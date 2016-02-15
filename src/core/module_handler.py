@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 # module_handler.py
-
+from src.core.setcore import *
 import glob
 import re
 import sys
-from src.core.setcore import *
+
 
 # this is just if the user wants to return to menu
 menu_return = "false"
@@ -17,7 +17,7 @@ counter = 0
 print("\n")
 print_info_spaces("Social-Engineer Toolkit Third Party Modules menu.")
 print_info_spaces(
-    "Please read the readme/modules.txt for information on how to create your own modules.\n")
+    "Please read the docs/modules.txt for information on how to create your own modules.\n")
 
 for name in glob.glob("modules/*.py"):
 

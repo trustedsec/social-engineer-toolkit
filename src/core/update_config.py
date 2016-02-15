@@ -12,7 +12,7 @@ update_config.py:
     upon.
 """
 import os
-from src.core.setcore import print_status, print_info, print_error, return_continue
+from src.core.setcore import print_status, print_info, print_error
 import datetime
 from time import sleep
 
@@ -142,7 +142,6 @@ CONFIG_DATE='""" + timestamp + """'\n""")
     else:
         print_error("Update failed? Timestamp on config file is: %s" % verify)
     print_status("SET is using the new config, no need to restart")
-    # return_continue()
 
 if __name__ == "__main__":
     update_config()

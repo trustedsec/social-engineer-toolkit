@@ -10,7 +10,7 @@ from time import sleep
 from src.core.menu import text
 
 # "This is RATTE (Remote Administration Tool Tommy Edition) prepare module.It will prepare a custom ratteM.exe."
-MAIN=" RATTE (Remote Administration Tool Tommy Edition) Create Payload only. Read the readme/RATTE-Readme.txt first"
+MAIN=" RATTE (Remote Administration Tool Tommy Edition) Create Payload only. Read the docs/RATTE-Readme.txt first"
 AUTHOR=" Thomas Werth"
 
 #

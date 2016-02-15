@@ -1,9 +1,20 @@
 #!/usr/bin/env python
 
+from src.core.setcore import *
+from src.core.menu import text
+from src.core.update_config import update_config
+import re
 import os
 import sys
 import shutil
 import subprocess
+
+# reload() is python2 only
+# For python3 you use importlib.reload
+try:
+    reload()
+except NameError:
+    import importlib.reload as reload
 
 # if we are running in the path no need to change
 if os.path.isfile("setoolkit"):
@@ -37,20 +48,6 @@ if not "CONFIG_VERSION=7.0" in data:
     shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
 
 
-from src.core.setcore import *
-from src.core.menu import text
-from src.core.update_config import update_config
-import shutil
-import re
-
-if check_kali() == "Kali":
-	if check_config("BLEEDING_EDGE=").lower() != "on":
-		if not os.path.isdir(".git"):
-			print_status("Kali bleeding edge was not detected to be on...")	
-			print_status("Kali install detected. Note that if you are not using bleeding edge repositories, your version of SET will be roughly 4 months behind.")
-			print_status("It is recommended to switch to bleeding-edge repos to ensure you are running the latest version of SET and other tools.")
-			pause = raw_input("Press [enter] to accept that SET is several months out of date and probably contains bugs and issues.")
-	
 # check directory and make it
 if not os.path.isdir("src/logs/"):
     os.makedirs("src/logs/")
@@ -80,15 +77,12 @@ if not os.path.isdir(setdir + "/reports/"):
     os.makedirs(setdir + "/reports")
 
 
-# check bleeding edge
-bleeding_edge()
-
 # check to see if we have python-pycrypto
 try:
     from Crypto.Cipher import AES
 
 except ImportError:
-    print ("[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector.")
+    print("[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector.")
     pass
 
 #########################################
@@ -165,9 +159,9 @@ try:
     if os.path.isfile(setdir + "/Signed_Update.jar"):
         os.remove(setdir + "/Signed_Update.jar")
 
-    # intitial user menu
+    # initial user menu
     if not os.path.isfile("src/agreement4"):
-        fileopen = open("readme/LICENSE", "r")
+        fileopen = open("docs/LICENSE", "r")
         for line in fileopen:
             print((line.rstrip()))
 
