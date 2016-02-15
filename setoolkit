@@ -221,16 +221,24 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
 
         # load set
         if main_menu_choice == '1':
-            module_reload(src.core.set)
+            try:
+                module_reload(src.core.set)
+            except NameError:
+                import src.core.set
 
         # load fasttrack
         if main_menu_choice == '2':
-            module_reload(src.core.fasttrack)
-
+            try:
+                module_reload(src.core.fasttrack)
+            except NameError:
+                import src.core.fasttrack
 
         # third party modules
         if main_menu_choice == '3':
-            module_reload(src.core.module_handler)
+            try:
+                module_reload(src.core.module_handler)
+            except NameError:
+                import src.core.module_handler
 
         # update set
         if main_menu_choice == '4':

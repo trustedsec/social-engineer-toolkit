@@ -1867,7 +1867,7 @@ def module_reload(module):
         import importlib
         importlib.reload(module)
     else:
-        module_reload(module)
+        reload(module)
 
 # used to replace any input that we have from python 2 to python 3
 def input(string):
