@@ -9,7 +9,9 @@ import glob
 import random
 import time
 import base64
-from io import StringIO
+# fix for python2 to 3 compatibility
+try: from cStringIO import StringIO
+except NameError: from io import StringIO
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
@@ -337,9 +339,9 @@ if option1 == '1':
     except KeyboardInterrupt:
         print_error("Control-C detected, exiting out of SET.")
         sys.exit()
-    except Exception:
-        print_error("Something went wrong.. Try again")
-        sys.exit()
+#    except Exception as err:
+#        print_error("Something went wrong.. Try again")
+#        sys.exit()
 
 # if we specified the mass mailer for multiple users
 if option1 == '2':

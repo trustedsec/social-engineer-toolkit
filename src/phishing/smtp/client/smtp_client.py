@@ -11,8 +11,9 @@ import random
 import pexpect
 import base64
 import thread
-
-from io import StringIO
+# python 2 to 3 fix
+try: from cStringIO import StringIO
+except NameError: from io import StringIO
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
