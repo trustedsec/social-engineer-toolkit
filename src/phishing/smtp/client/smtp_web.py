@@ -339,9 +339,9 @@ if option1 == '1':
     except KeyboardInterrupt:
         print_error("Control-C detected, exiting out of SET.")
         sys.exit()
-#    except Exception as err:
-#        print_error("Something went wrong.. Try again")
-#        sys.exit()
+    except Exception as err:
+        print_error("Something went wrong.. Printing error: " + str(err))
+        sys.exit()
 
 # if we specified the mass mailer for multiple users
 if option1 == '2':
