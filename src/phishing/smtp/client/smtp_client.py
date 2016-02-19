@@ -72,6 +72,7 @@ for line in sendmail_file:
         email_provider = line.replace("EMAIL_PROVIDER=", "").lower()
 
         # support smtp for gmail
+        ## Issue ## Set reports the email as successfully sent but I haven't had any success with it
         if email_provider == "gmail":
             if sendmail == 0:
                 smtp = ("smtp.gmail.com")
@@ -81,13 +82,13 @@ for line in sendmail_file:
         if email_provider == "yahoo":
             if sendmail == 0:
                 smtp = ("smtp.mail.yahoo.com")
-                port = ("465")
+                port = ("587") #This was previously 465 and changed to 587
 
         # support smtp for hotmail
         if email_provider == "hotmail":
             if sendmail == 0:
-                smtp = ("smtp.hotmail.com")
-                port = ("25")
+                smtp = ("smtp.live.com") #smtp.hotmail.com is no longer in use
+                port = ("587")
 
 # DEFINE METASPLOIT PATH
 meta_path = meta_path()
@@ -377,7 +378,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
     if sendmail == 0:
         if email_provider == "gmail" or email_provider == "yahoo":
             mailServer.ehlo()
-            # start TLS needed for gmail and yahoo
+            # start TLS needed for gmail and yahoo and hotmail (live)
             try:
                 mailServer.starttls()
             except:
@@ -385,7 +386,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
             mailServer.ehlo()
     if counter == 0:
         try:
-            if email_provider == "gmail" or email_provider == "yahoo":
+            if email_provider == "gmail" or email_provider == "yahoo" or email_provider == "hotmail":
                 try:
                     mailServer.starttls()
                 except:
