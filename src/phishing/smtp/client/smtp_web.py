@@ -304,7 +304,8 @@ def mail(to, subject, prioflag1, prioflag2, text):
         if provideruser != "" or pwd != "":
             mailServer.login(provideruser, pwd)
             mailServer.sendmail(from_address, to, io.getvalue())
-
+        else:
+            mailServer.sendmail(from_address, to, io.getvalue())
     except:
         # try logging in with base64 encoding here
         import base64
