@@ -9,7 +9,9 @@ import glob
 import random
 import time
 import base64
-from io import StringIO
+# fix for python2 to 3 compatibility
+try: from cStringIO import StringIO
+except NameError: from io import StringIO
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
@@ -84,13 +86,13 @@ for line in sendmail_file:
         if email_provider == "yahoo":
             if sendmail == 0:
                 smtp = ("smtp.mail.yahoo.com")
-                port = ("25")
+                port = ("587")
 
         # support smtp for hotmail
         if email_provider == "hotmail":
             if sendmail == 0:
-                smtp = ("smtp.hotmail.com")
-                port = ("25")
+                smtp = ("smtp.live.com")
+                port = ("587")
 
 
 print ("""
@@ -288,7 +290,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
 
     if sendmail == 0:
 
-        if email_provider == "gmail":
+        if email_provider == "gmail" or email_provider == "yahoo" or email_provider == "hotmail":
             try:
                 mailServer.starttls()
             except:
@@ -337,8 +339,8 @@ if option1 == '1':
     except KeyboardInterrupt:
         print_error("Control-C detected, exiting out of SET.")
         sys.exit()
-    except Exception:
-        print_error("Something went wrong.. Try again")
+    except Exception as err:
+        print_error("Something went wrong.. Printing error: " + str(err))
         sys.exit()
 
 # if we specified the mass mailer for multiple users

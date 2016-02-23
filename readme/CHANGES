@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 7.0.3
+~~~~~~~~~~~~~~~~
+
+* fixed a python3 format issue in tail
+* removed bleeding edge check since they should be in rolling now (thanks L1ghtn1ng)
+
+~~~~~~~~~~~~~~~~
 version 7.0.2
 ~~~~~~~~~~~~~~~~
 

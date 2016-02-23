@@ -35,9 +35,10 @@ if powershell_menu_choice != "99":
         filewrite.close()
 
         try:
-            reload(src.payloads.powershell.prep)
+            module_reload(src.payloads.powershell.prep)
         except:
             import src.payloads.powershell.prep
+
         # create the directory if it does not exist
         if not os.path.isdir(setdir + "/reports/powershell"):
             os.makedirs(setdir + "/reports/powershell")
