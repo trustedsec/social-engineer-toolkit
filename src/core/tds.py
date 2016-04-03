@@ -575,7 +575,7 @@ class MSSQL():
 
         # Test this!
         if resp['Encryption'] != TDS_ENCRYPT_NOT_SUP:
-            print ("Encryption not supported")
+            print "Encryption not supported"
 
         login = TDS_LOGIN()
 
@@ -665,11 +665,11 @@ class MSSQL():
         if len(self.colMeta) == 0:
             return
         for col in self.colMeta:
-           print (col['Format'] % col['Name'] + self.COL_SEPARATOR,)
-        print ('')
+           print col['Format'] % col['Name'] + self.COL_SEPARATOR,
+        print ''
         for col in self.colMeta:
-           print ('-'*col['Length'] + self.COL_SEPARATOR,)
-        print ('')
+           print '-'*col['Length'] + self.COL_SEPARATOR,
+        print ''
 
     def printRows(self):
         if self.lastError is True:
@@ -678,22 +678,22 @@ class MSSQL():
         self.printColumnsHeader()
         for row in self.rows:
             for col in self.colMeta:
-               print (col['Format'] % row[col['Name']] + self.COL_SEPARATOR,)
-            print ('')
+               print col['Format'] % row[col['Name']] + self.COL_SEPARATOR,
+            print ''
 
 
     def printReplies(self):
        for keys in self.replies.keys():
            for i, key in enumerate(self.replies[keys]):
                if key['TokenType'] == TDS_ERROR_TOKEN:
-                   print ("[!] ERROR(%s): Line %d: %s" % (key['ServerName'].decode('utf-16le'), key['LineNumber'], key['MsgText'].decode('utf-16le')))
+                   print "[!] ERROR(%s): Line %d: %s" % (key['ServerName'].decode('utf-16le'), key['LineNumber'], key['MsgText'].decode('utf-16le'))
                    self.lastError = True
 
                elif key['TokenType'] == TDS_INFO_TOKEN:
-                   print ("[*] INFO(%s): Line %d: %s" % (key['ServerName'].decode('utf-16le'), key['LineNumber'], key['MsgText'].decode('utf-16le')))
+                   print "[*] INFO(%s): Line %d: %s" % (key['ServerName'].decode('utf-16le'), key['LineNumber'], key['MsgText'].decode('utf-16le'))
 
                elif key['TokenType'] == TDS_LOGINACK_TOKEN:
-                   print ("[*] ACK: Result: %s - %s (%d%d %d%d) " % (key['Interface'], key['ProgName'].decode('utf-16le'), key['MajorVer'], key['MinorVer'], key['BuildNumHi'], key['BuildNumLow']))
+                   print "[*] ACK: Result: %s - %s (%d%d %d%d) " % (key['Interface'], key['ProgName'].decode('utf-16le'), key['MajorVer'], key['MinorVer'], key['BuildNumHi'], key['BuildNumLow'])
 
                elif key['TokenType'] == TDS_ENVCHANGE_TOKEN:
                    if key['Type'] in (TDS_ENVCHANGE_DATABASE, TDS_ENVCHANGE_LANGUAGE, TDS_ENVCHANGE_CHARSET, TDS_ENVCHANGE_PACKETSIZE):
@@ -713,8 +713,8 @@ class MSSQL():
                       else:
                           type = "%d" % key['Type']
                  
-                      print ("[*] ENVCHANGE(%s): Old Value: %s, New Value: %s" % (type,record['OldValue'].decode('utf-16le'), record['NewValue'].decode('utf-16le'))
-      ) 
+                      print "[*] ENVCHANGE(%s): Old Value: %s, New Value: %s" % (type,record['OldValue'].decode('utf-16le'), record['NewValue'].decode('utf-16le'))
+       
     def parseRow(self,token):
         # TODO: This REALLY needs to be improved. Right now we don't support correctly all the data types
         # help would be appreciated ;) 
@@ -990,10 +990,10 @@ class MSSQL():
                 else:
                     value = 'NULL'
             elif (type == TDS_SSVARIANTTYPE):
-                print ("ParseRow: SQL Variant type not yet supported :(")
+                print "ParseRow: SQL Variant type not yet supported :("
                 raise
             else:
-                print ("ParseROW: Unsupported data type: 0%x" % type)
+                print "ParseROW: Unsupported data type: 0%x" % type
                 raise
             row[col['Name']] = value
 
@@ -1070,7 +1070,7 @@ class MSSQL():
                 typeData = struct.unpack('<L',data[:4])[0]
                 data = data[4:]
             else:
-                print ("Unsupported data type: 0x%x" % colType)
+                print "Unsupported data type: 0x%x" % colType
                 raise
 
             # Collation exceptions:
@@ -1149,7 +1149,7 @@ class MSSQL():
             elif tokenID == TDS_DONE_TOKEN:
                 token = TDS_DONE(tokens)
             else:
-                print ("Unknown Token %x" % tokenID)
+                print "Unknown Token %x" % tokenID
                 return replies
 
             if replies.has_key(tokenID) is not True:
@@ -1186,4 +1186,432 @@ class MSSQL():
         ret = self.batch(sql_query)
         self.printReplies()
 
-        return ret
+        return ret#!/usr/bin/env python
+# Copyright (c) 2003-2012 CORE Security Technologies
+#
+# This software is provided under under a slightly modified version
+# of the Apache Software License. See the accompanying LICENSE file
+# for more information.
+#
+# $Id: tds.py 632 2012-07-26 22:18:33Z bethus@gmail.com $
+#
+# Description: [MS-TDS] & [MC-SQLR] implementation. 
+#
+# ToDo:
+# [ ] Add all the tokens left 
+# [ ] parseRow should be rewritten and add support for all the SQL types in a 
+#     good way. Right now it just supports a few types.
+# [ ] printRows is crappy, just an easy way to print the rows. It should be 
+#     rewritten to output like a normal SQL client
+#
+# Author:
+#  Alberto Solino (beto@coresecurity.com)
+#
+
+
+from impacket import ntlm, uuid
+from impacket.structure import Structure
+import random
+import string
+import struct
+import socket, select
+import random
+import binascii 
+import math
+import datetime
+
+
+# MC-SQLR Constants and Structures
+SQLR_PORT           = 1434
+SQLR_CLNT_BCAST_EX  = 0x02
+SQLR_CLNT_UCAST_EX  = 0x03
+SQLR_CLNT_UCAST_INST= 0x04
+SQLR_CLNT_UCAST_DAC = 0x0f
+
+
+class SQLR(Structure):
+    commonHdr = (
+        ('OpCode','B'),
+    )
+
+class SQLR_UCAST_INST(SQLR):
+    structure = (
+        ('Instance',':')
+    )
+    def __init__(self, data = None):
+        SQLR.__init__(self,data)
+        if data is not None:
+            self['OpCode'] = SQLR_CLNT_UCAST_INST
+
+class SQLR_UCAST_DAC(SQLR):
+    structure = (
+        ('Protocol', 'B=1'),
+        ('Instance', ':'),
+    )
+    def __init__(self, data = None):
+        SQLR.__init__(self,data)
+        if data is not None:
+            self['OpCode'] = SQLR_CLNT_UCAST_DAC
+
+class SQLR_Response(SQLR):
+    structure = (
+        ('Size','<H'),
+        ('_Data','_-Data','self["Size"]'),
+        ('Data',':'),
+    )
+
+# TDS Constants and Structures
+
+# TYPE constants
+TDS_SQL_BATCH       = 1
+TDS_PRE_TDS_LOGIN   = 2
+TDS_RPC             = 3
+TDS_TABULAR         = 4
+TDS_ATTENTION       = 6
+TDS_BULK_LOAD_DATA  = 7
+TDS_TRANSACTION     = 14
+TDS_LOGIN7          = 16
+TDS_SSPI            = 17
+TDS_PRE_LOGIN       = 18
+
+# Status constants
+TDS_STATUS_NORMAL            = 0
+TDS_STATUS_EOM               = 1 
+TDS_STATUS_RESET_CONNECTION  = 8
+TDS_STATUS_RESET_SKIPTRANS   = 16
+
+# Encryption
+TDS_ENCRYPT_OFF              = 0
+TDS_ENCRYPT_ON               = 1
+TDS_ENCRYPT_NOT_SUP          = 2
+TDS_ENCRYPT_REQ              = 3
+
+# Option 2 Flags
+TDS_INTEGRATED_SECURITY_ON   = 0x80
+TDS_INIT_LANG_FATAL          = 0x01
+TDS_ODBC_ON                  = 0x02
+
+# Token Types
+TDS_ALTMETADATA_TOKEN        = 0x88
+TDS_ALTROW_TOKEN             = 0xD3
+TDS_COLMETADATA_TOKEN        = 0x81
+TDS_COLINFO_TOKEN            = 0xA5
+TDS_DONE_TOKEN               = 0xFD
+TDS_DONEPROC_TOKEN           = 0xFE
+TDS_DONEINPROC_TOKEN         = 0xFF
+TDS_ENVCHANGE_TOKEN          = 0xE3
+TDS_ERROR_TOKEN              = 0xAA
+TDS_INFO_TOKEN               = 0xAB
+TDS_LOGINACK_TOKEN           = 0xAD
+TDS_NBCROW_TOKEN             = 0xD2
+TDS_OFFSET_TOKEN             = 0x78
+TDS_ORDER_TOKEN              = 0xA9
+TDS_RETURNSTATUS_TOKEN       = 0x79
+TDS_RETURNVALUE_TOKEN        = 0xAC
+TDS_ROW_TOKEN                = 0xD1
+TDS_SSPI_TOKEN               = 0xED
+TDS_TABNAME_TOKEN            = 0xA4
+
+# ENVCHANGE Types
+TDS_ENVCHANGE_DATABASE       = 1
+TDS_ENVCHANGE_LANGUAGE       = 2
+TDS_ENVCHANGE_CHARSET        = 3
+TDS_ENVCHANGE_PACKETSIZE     = 4
+TDS_ENVCHANGE_UNICODE        = 5
+TDS_ENVCHANGE_UNICODE_DS     = 6
+TDS_ENVCHANGE_COLLATION      = 7
+TDS_ENVCHANGE_TRANS_START    = 8
+TDS_ENVCHANGE_TRANS_COMMIT   = 9
+TDS_ENVCHANGE_ROLLBACK       = 10
+TDS_ENVCHANGE_DTC            = 11
+
+# Column types
+# FIXED-LEN Data Types
+TDS_NULL_TYPE                = 0x1F
+TDS_INT1TYPE                 = 0x30
+TDS_BITTYPE                  = 0x32
+TDS_INT2TYPE                 = 0x34
+TDS_INT4TYPE                 = 0x38
+TDS_DATETIM4TYPE             = 0x3A
+TDS_FLT4TYPE                 = 0x3B
+TDS_MONEYTYPE                = 0x3C
+TDS_DATETIMETYPE             = 0x3D
+TDS_FLT8TYPE                 = 0x3E
+TDS_MONEY4TYPE               = 0x7A
+TDS_INT8TYPE                 = 0x7F
+
+# VARIABLE-Len Data Types
+TDS_GUIDTYPE                 = 0x24
+TDS_INTNTYPE                 = 0x26
+TDS_DECIMALTYPE              = 0x37
+TDS_NUMERICTYPE              = 0x3F
+TDS_BITNTYPE                 = 0x68
+TDS_DECIMALNTYPE             = 0x6A
+TDS_NUMERICNTYPE             = 0x6C
+TDS_FLTNTYPE                 = 0x6D
+TDS_MONEYNTYPE               = 0x6E
+TDS_DATETIMNTYPE             = 0x6F
+TDS_DATENTYPE                = 0x28
+TDS_TIMENTYPE                = 0x29
+TDS_DATETIME2NTYPE           = 0x2A
+TDS_DATETIMEOFFSETNTYPE      = 0x2B
+TDS_CHARTYPE                 = 0x2F
+TDS_VARCHARTYPE              = 0x27
+TDS_BINARYTYPE               = 0x2D
+TDS_VARBINARYTYPE            = 0x25
+TDS_BIGVARBINTYPE            = 0xA5
+TDS_BIGVARCHRTYPE            = 0xA7
+TDS_BIGBINARYTYPE            = 0xAD
+TDS_BIGCHARTYPE              = 0xAF
+TDS_NVARCHARTYPE             = 0xE7
+TDS_NCHARTYPE                = 0xEF
+TDS_XMLTYPE                  = 0xF1
+TDS_UDTTYPE                  = 0xF0
+TDS_TEXTTYPE                 = 0x23
+TDS_IMAGETYPE                = 0x22
+TDS_NTEXTTYPE                = 0x63
+TDS_SSVARIANTTYPE            = 0x62
+
+class TDSPacket(Structure):
+    structure = (
+        ('Type','<B'),
+        ('Status','<B=1'),
+        ('Length','>H=8+len(Data)'),
+        ('SPID','>H=0'),
+        ('PacketID','<B=0'),
+        ('Window','<B=0'),
+        ('Data',':'),
+    )
+
+class TDS_PRELOGIN(Structure):
+    structure = (
+        ('VersionToken','>B=0'),
+        ('VersionOffset','>H'),
+        ('VersionLength','>H=len(self["Version"])'),
+        ('EncryptionToken','>B=0x1'),
+        ('EncryptionOffset','>H'),
+        ('EncryptionLength','>H=1'),
+        ('InstanceToken','>B=2'),
+        ('InstanceOffset','>H'),
+        ('InstanceLength','>H=len(self["Instance"])'),
+        ('ThreadIDToken','>B=3'),
+        ('ThreadIDOffset','>H'),
+        ('ThreadIDLength','>H=4'),
+        ('EndToken','>B=0xff'),
+        ('_Version','_-Version','self["VersionLength"]'),
+        ('Version',':'),
+        ('Encryption','B'),
+        ('_Instance','_-Instance','self["InstanceLength"]-1'),
+        ('Instance',':'),
+        ('ThreadID',':'),
+    )
+
+    def __str__(self):
+        self['VersionOffset']=21
+        self['EncryptionOffset']=self['VersionOffset'] + len(self['Version'])
+        self['InstanceOffset']=self['EncryptionOffset'] + 1
+        self['ThreadIDOffset']=self['InstanceOffset'] + len(self['Instance'])
+        return Structure.__str__(self)
+
+class TDS_LOGIN(Structure):
+    structure = (
+        ('Length','<L=0'),
+        ('TDSVersion','>L=0x71'),
+        ('PacketSize','>L=32766'),
+        ('ClientProgVer','>L=7'),
+        ('ClientPID','<L=0'),
+        ('ConnectionID','<L=0'),
+        ('OptionFlags1','<B=0xe0'),
+        ('OptionFlags2','<B'),
+        ('TypeFlags','<B=0'),
+        ('OptionFlags3','<B=0'),
+        ('ClientTimeZone','<L=0'),
+        ('ClientLCID','<L=0'),
+        ('HostNameOffset','<H'),
+        ('HostNameLength','<H=len(self["HostName"])/2'),
+        ('UserNameOffset','<H=0'),
+        ('UserNameLength','<H=len(self["UserName"])/2'),
+        ('PasswordOffset','<H=0'),
+        ('PasswordLength','<H=len(self["Password"])/2'),
+        ('AppNameOffset','<H'),
+        ('AppNameLength','<H=len(self["AppName"])/2'),
+        ('ServerNameOffset','<H'),
+        ('ServerNameLength','<H=len(self["ServerName"])/2'),
+        ('UnusedOffset','<H=0'),
+        ('UnusedLength','<H=0'),
+        ('CltIntNameOffset','<H'),
+        ('CltIntNameLength','<H=len(self["CltIntName"])/2'),
+        ('LanguageOffset','<H=0'),
+        ('LanguageLength','<H=0'),
+        ('DatabaseOffset','<H=0'),
+        ('DatabaseLength','<H=len(self["Database"])/2'),
+        ('ClientID','6s="\x01\x02\x03\x04\x05\x06"'),
+        ('SSPIOffset','<H'),
+        ('SSPILength','<H=len(self["SSPI"])'),
+        ('AtchDBFileOffset','<H'),
+        ('AtchDBFileLength','<H=len(self["AtchDBFile"])/2'),
+        ('HostName',':'),
+        ('UserName',':'),
+        ('Password',':'),
+        ('AppName',':'),
+        ('ServerName',':'),
+        ('CltIntName',':'),
+        ('Database',':'),
+        ('SSPI',':'),
+        ('AtchDBFile',':'),
+    )
+    def __init__(self,data=None):
+        Structure.__init__(self,data)
+        if data is None:
+            self['UserName'] = ''
+            self['Password'] = ''
+            self['Database'] = ''
+            self['AtchDBFile'] = ''
+
+    def __str__(self):
+        index = 36+50
+        self['HostNameOffset']= index
+
+        index += len(self['HostName'])
+
+        if self['UserName'] != '':
+            self['UserNameOffset'] = index
+        else:
+            self['UserNameOffset'] = 0
+
+        index += len(self['UserName'])
+
+        if self['Password'] != '':
+            self['PasswordOffset'] = index
+        else:
+            self['PasswordOffset'] = 0
+
+        index += len(self['Password'])
+
+        self['AppNameOffset']= index
+        self['ServerNameOffset']=self['AppNameOffset'] + len(self['AppName'])
+        self['CltIntNameOffset']=self['ServerNameOffset'] + len(self['ServerName'])
+        self['LanguageOffset']=self['CltIntNameOffset'] + len(self['CltIntName'])
+        self['DatabaseOffset']=self['LanguageOffset'] 
+        self['SSPIOffset']=self['DatabaseOffset'] + len(self['Database'])
+        self['AtchDBFileOffset']=self['SSPIOffset'] + len(self['SSPI'])
+        return Structure.__str__(self)
+
+class TDS_LOGIN_ACK(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Length','<H'),
+        ('Interface','<B'),
+        ('TDSVersion','<L'),
+        ('ProgNameLen','<B'),
+        ('_ProgNameLen','_-ProgName','self["ProgNameLen"]*2'),
+        ('ProgName',':'),
+        ('MajorVer','<B'),
+        ('MinorVer','<B'),
+        ('BuildNumHi','<B'),
+        ('BuildNumLow','<B'),
+    )
+
+class TDS_RETURNSTATUS(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Value','<L'),
+    )
+
+class TDS_INFO_ERROR(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Length','<H'),
+        ('Number','<L'),
+        ('State','<B'),
+        ('Class','<B'),
+        ('MsgTextLen','<H'),
+        ('_MsgTextLen','_-MsgText','self["MsgTextLen"]*2'),
+        ('MsgText',':'),
+        ('ServerNameLen','<B'),
+        ('_ServerNameLen','_-ServerName','self["ServerNameLen"]*2'),
+        ('ServerName',':'),
+        ('ProcNameLen','<B'),
+        ('_ProcNameLen','_-ProcName','self["ProcNameLen"]*2'),
+        ('ProcName',':'),
+        ('LineNumber','<H'),
+    )
+
+class TDS_ENVCHANGE(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Length','<H=4+len(Data)'),
+        ('Type','<B'),
+        ('_Data','_-Data','self["Length"]-1'),
+        ('Data',':'),
+    )
+
+class TDS_DONEINPROC(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Status','<H'),
+        ('CurCmd','<H'),
+        ('DoneRowCount','<L'),
+    )
+
+class TDS_ORDER(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Length','<H'),
+        ('_Data','_-Data','self["Length"]'),
+        ('Data',':'),
+    )
+
+
+class TDS_ENVCHANGE_VARCHAR(Structure):
+    structure = (
+        ('NewValueLen','<B=len(NewValue)'),
+        ('_NewValue','_-NewValue','self["NewValueLen"]*2'),
+        ('NewValue',':'),
+        ('OldValueLen','<B=len(OldValue)'),
+        ('_OldValue','_-OldValue','self["OldValueLen"]*2'),
+        ('OldValue',':'),
+    )
+    
+class TDS_ROW(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Data',':'),
+    )
+
+class TDS_DONE(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Status','<H'),
+        ('CurCmd','<H'),
+        ('DoneRowCount','<L'),
+    )
+
+class TDS_COLMETADATA(Structure):
+    structure = (
+        ('TokenType','<B'),
+        ('Count','<H'),
+        ('Data',':'),
+    )
+
+class MSSQL():
+    def __init__(self, address, port=1433):
+        self.packetSize = 32766
+        self.server = address
+        self.port = port
+        self.socket = 0
+        self.replies = {}
+        self.colMeta = []
+        self.rows = []
+        self.currentDB = ''
+        self.COL_SEPARATOR = '  '
+        self.MAX_COL_LEN = 255
+        self.lastError = False
+
+    def getInstances(self, timeout = 5):
+        packet = SQLR()
+        packet['OpCode'] = SQLR_CLNT_UCAST_EX
+
+        # Open the connection
+        af, socktype, proto, canonname, sa = socket.getaddrinfo(self.server, SQLR_PORT, 0, socket.SOCK_DGRAM)[0]
+
