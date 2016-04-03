@@ -86,13 +86,13 @@ for line in sendmail_file:
         if email_provider == "yahoo":
             if sendmail == 0:
                 smtp = ("smtp.mail.yahoo.com")
-                port = ("25")
+                port = ("587")
 
         # support smtp for hotmail
         if email_provider == "hotmail":
             if sendmail == 0:
-                smtp = ("smtp.hotmail.com")
-                port = ("25")
+                smtp = ("smtp.live.com")
+                port = ("587")
 
 
 print ("""
@@ -290,7 +290,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
 
     if sendmail == 0:
 
-        if email_provider == "gmail":
+        if email_provider == "gmail" or email_provider == "yahoo" or email_provider == "hotmail":
             try:
                 mailServer.starttls()
             except:
@@ -304,7 +304,8 @@ def mail(to, subject, prioflag1, prioflag2, text):
         if provideruser != "" or pwd != "":
             mailServer.login(provideruser, pwd)
             mailServer.sendmail(from_address, to, io.getvalue())
-
+        else:
+            mailServer.sendmail(from_address, to, io.getvalue())
     except:
         # try logging in with base64 encoding here
         import base64
