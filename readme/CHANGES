@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 7.0.4
+~~~~~~~~~~~~~~~~
+
+* fixed an issue with tds not working on mssql with powershell injection
+* fixed an issue that would cause payload generation to continue generating and never close
+
+~~~~~~~~~~~~~~~~
 version 7.0.3
 ~~~~~~~~~~~~~~~~
 
