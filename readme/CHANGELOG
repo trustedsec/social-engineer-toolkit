@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 7.0.5
+~~~~~~~~~~~~~~~~
+
+* switched psexec powershell injection to reverse_https
+* switched mssql payload injection to reverse_https
+
+~~~~~~~~~~~~~~~~
 version 7.0.4
 ~~~~~~~~~~~~~~~~
 
