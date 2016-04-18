@@ -71,7 +71,7 @@ def start_listener():
                 # if null then default to port 443
                 print("[*] Defaulting to port 443 for the listener.")
                 PORT = 443
-                update_config("PORT=443")
+                update_options("PORT=443")
 
         try:
             # make the port an integer
