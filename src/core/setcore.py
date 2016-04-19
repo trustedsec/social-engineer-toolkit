@@ -260,7 +260,7 @@ def print_error(message):
 
 
 def get_version():
-    define_version = '7.0.4'
+    define_version = '7.0.5'
     return define_version
 
 class create_menu:
