@@ -53,7 +53,7 @@ try:
                     choice = "1"
                 if choice == "1":
                     range = raw_input(setprompt(
-                        ["19", "21", "22"], "Enter the CIDR or single IP (ex. 192.168.1.1/24)"))
+                        ["19", "21", "22"], "Enter the CIDR, single IP, or multiple IPs seperated by space (ex. 192.168.1.1/24)"))
                 if choice == "2":
                     while 1:
                         range = raw_input(setprompt(
@@ -90,13 +90,21 @@ try:
                     sql_servers = ''
                     print_status(
                         "Hunting for SQL servers.. This may take a little bit.")
-                    if "/" in str(range):
-                        iprange = printCIDR(range)
-                        iprange = iprange.split(",")
-                        for host in iprange:
-                            sqlport = get_sql_port(host)
-                            if sqlport != None:
-                                sql_servers = sql_servers + host + ":" + sqlport + ","
+                    if "/" or " " in str(range):
+			if "/" in str(range):
+	                        iprange = printCIDR(range)
+	                        iprange = iprange.split(",")
+	                        for host in iprange:
+	                            sqlport = get_sql_port(host)
+	                            if sqlport != None:
+	                                sql_servers = sql_servers + host + ":" + sqlport + ","
+			else:
+				range1 = range.split(" ")
+				for ip in range1:
+					sqlport = get_sql_port(ip)
+					if sqlport != None:
+						sql_servers = sql_servers + ip + ":" + sqlport + ","
+
                     else:
                         # use udp discovery to get the SQL server IDP through
                         # 1434
