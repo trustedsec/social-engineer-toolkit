@@ -13,7 +13,8 @@ version 7.1
 * added option to import new file or metasploit file for meterpreter bypass method
 * added better handling around binary injection technique for binary dropper method 
 * added better threading within brute forcing sql accounts
- 
+* fixed an issue where SET directory would not properly fill in dll hijacking and give invalid /root/.setsrc path instead of .set/src 
+
 ~~~~~~~~~~~~~~~~
 version 7.0.6
 ~~~~~~~~~~~~~~~~
