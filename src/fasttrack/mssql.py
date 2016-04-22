@@ -18,7 +18,6 @@ import _mssql
 # define the base path
 definepath = definepath()
 operating_system = check_os()
-
 msf_path = meta_path()
 
 #
