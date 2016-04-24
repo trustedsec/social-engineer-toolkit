@@ -459,7 +459,7 @@ try:
                 stop_rid = "15000"
             print_status(
                 "Launching RID_ENUM to start enumerating user accounts...")
-            subprocess.Popen("python src/fasttrack/rid_enum.py %s %s %s %s" %
+            subprocess.Popen("python src/fasttrack/ridenum.py %s %s %s %s" %
                              (ipaddr, start_rid, stop_rid, dict), shell=True).wait()
 
             # once we are finished, prompt.
