@@ -20,5 +20,4 @@ For bug reports or enhancements, please open an issue here: https://github.com/t
 ### Supported platforms
 
 * Linux
-* Windows (experimental)
-* Mac OS X (partial)
+* Mac OS X 
