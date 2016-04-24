@@ -1778,9 +1778,17 @@ def get_sql_port(host):
     except:
         pass
 
+# this will manually tcp connect if needed
+def sql_nmap_scan(ipaddr):
+        proc = subprocess.Popen("nmap -v -sT -p1433 %s" % (ipaddr), shell=True, stdout=subprocess.PIPE)
+        output =  proc.communicate()[0].split("\n")
+        result = ""
+        for result in output:
+                if "Discovered open port" in result:
+                        result = result.split("on ")[1]
+	return result
+
 # capture output from a function
-
-
 def capture(func, *args, **kwargs):
     """Capture the output of func when called with the given arguments.
 

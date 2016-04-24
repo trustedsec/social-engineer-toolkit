@@ -15,6 +15,10 @@ version 7.1
 * added better threading within brute forcing sql accounts
 * fixed an issue where SET directory would not properly fill in dll hijacking and give invalid /root/.setsrc path instead of .set/src 
 * reduced file format generation counter to when it prompts error message
+* fixed an issue in mssql bruter that would remove the port parameter when attempting to brute force
+* added if udp 1434 is not found, it will fall back to nmap to discover if 1433 default port is open - ran into pentest where udp wasn't allowed and missed SQL servers because of this
+* added better handling and description of the SQL servers found during the test - might be useful for pentests to store that data somewhere
+* added more improvements and handling around MSSQL server
 
 ~~~~~~~~~~~~~~~~
 version 7.0.6

@@ -41,12 +41,19 @@ def brute(ipaddr, username, port, wordlist):
             # try actual password
             try:
 
+                # connect to the sql server and attempt a password
+                if ":" in ipaddr:
+                    ipaddr = ipaddr.split(":")
+                    port = ipaddr[1]
+                    ipaddr = ipaddr[0]
+
                 ipaddr = str(ipaddr)
-                print("Attempting to brute force " + bcolors.BOLD + ipaddr + bcolors.ENDC + " with username of " + bcolors.BOLD + username + bcolors.ENDC + " and password of " + bcolors.BOLD + passwords + bcolors.ENDC)
+		port = str(port)
+
+                print("Attempting to brute force " + bcolors.BOLD + ipaddr + ":" + port + bcolors.ENDC + " with username of " + bcolors.BOLD + username + bcolors.ENDC + " and password of " + bcolors.BOLD + passwords + bcolors.ENDC)
 
                 # connect to the sql server and attempt a password
                 if ":" in ipaddr:
-                    #target_server = _mssql.connect(ipaddr, username, passwords)
                     ipaddr = ipaddr.split(":")
                     port = ipaddr[1]
                     ipaddr = ipaddr[0]

@@ -96,20 +96,32 @@ try:
 	                        iprange = iprange.split(",")
 	                        for host in iprange:
 	                            sqlport = get_sql_port(host)
+				    if sqlport == None:
+					sql_nmap_scan(host)
+					if sql_nmap_scan != None:
+						sql_servers = sql_servers + host + ":" + "1433" + ","
 	                            if sqlport != None:
 	                                sql_servers = sql_servers + host + ":" + sqlport + ","
 			else:
 				range1 = range.split(" ")
 				for ip in range1:
 					sqlport = get_sql_port(ip)
+                                    	if sqlport == None:
+                                        	sql_nmap_scan(ip)
+                                        	if sql_nmap_scan != None:
+                                                	sql_servers = sql_servers + ip + ":" + "1433" + ","
+
 					if sqlport != None:
 						sql_servers = sql_servers + ip + ":" + sqlport + ","
 
                     else:
-                        # use udp discovery to get the SQL server IDP through
-                        # 1434
+                        # use udp discovery to get the SQL server UDP 1434
                         sqlport = get_sql_port(range)
-                        # UDP could be closed - defaulting to 1433
+                        # if its not closed then check nmap - if both fail then nada
+                        if sqlport == None:
+                        	sql_nmap_scan(host)
+                        	if sql_nmap_scan != None:
+                        		sql_servers = sql_servers + host + ":" + "1433" + ","
                         if sqlport != None:
                             sql_servers = range + ":" + sqlport
 
@@ -176,8 +188,13 @@ try:
 
                 # if we didn't successful attack one
                 if counter == 0:
-                    print_warning(
-                        "Sorry. Unable to locate or fully compromise a MSSQL Server.")
+		    if sql_servers:
+                    	print_warning("Sorry. Unable to locate or fully compromise a MSSQL Server on the following SQL servers: ")
+			for line in sql_servers: 
+				if line != "":
+					print "SQL Server: " + line.rstrip()
+
+		    else: print_warning("Sorry. Unable to find any SQL servers to attack.")
                     pause = raw_input(
                         "Press {return} to continue to the main menu.")
                 # if we successfully attacked one
@@ -188,8 +205,12 @@ try:
                         counter = 1
                         # here we list the servers we compromised
                         master_names = master_list.split(":")
+			print_status("SET Fast-Track attacked the following SQL servers: ")
+			for line in sql_servers:
+				if line != "": 	
+					print "SQL Servers: " + line.rstrip()
                         print_status(
-                            "Select the compromise SQL server you want to interact with:\n")
+                            "Below are the successfully compromised systems.\nSelect the compromise SQL server you want to interact with:\n")
                         for success in master_names:
                             if success != "":
                                 success = success.rstrip()
