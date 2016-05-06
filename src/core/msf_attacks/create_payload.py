@@ -16,6 +16,7 @@ me = mod_name()
 definepath = os.getcwd()
 define_version = get_version()
 users_home = os.getenv("HOME")
+outfile = ("template.pdf")
 
 # metasploit path
 meta_path = meta_path()

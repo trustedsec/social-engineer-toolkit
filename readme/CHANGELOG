@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.1.1
+~~~~~~~~~~~~~~~~
+
+* fixes an issue when generating PDF exes that would cause an outfile error
+
+~~~~~~~~~~~~~~~~
 version 7.1
 ~~~~~~~~~~~~~~~~
 
