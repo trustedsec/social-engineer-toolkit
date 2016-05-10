@@ -169,11 +169,17 @@ if exploit_counter == 0:
     # SET FILE OUTPATH
     # /root/.msf4/local/msf.pdf
     filename_code = outfile
+    msfpath = ""
     if os.path.isdir(users_home + "/.msf4/"):
         msfpath = (users_home + "/.msf4/")
 
     if os.path.isdir(users_home + "/.msf5/"):
         msfpath = (users_home + "/.msf5/")
+
+    # if we have never run msf before
+    if msfpath == "":
+	os.makedirs(users_home + "/.msf5/")
+	msfpath = (users_home + "/.msf5")
 
     outpath = (msfpath + "local/" + outfile)
     print_info("Generating fileformat exploit...")
