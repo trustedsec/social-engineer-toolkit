@@ -210,7 +210,7 @@ if exploit_counter == 0:
                                  stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
                 a = 2  # break
             else:
-                print_status("Waiting for payload generation to complete...")
+                print_status("Waiting for payload generation to complete (be patient, takes a bit)...")
                 if os.path.isfile(msfpath + "local/" + outfile):
                     subprocess.Popen("cp %slocal/%s %s" %
                                      (msfpath, outfile, setdir), shell=True)
