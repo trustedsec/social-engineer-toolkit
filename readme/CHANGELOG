@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.1.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue on pdf generation payloads when metasploit had never been run before on a system - now forces directory creation
+
+~~~~~~~~~~~~~~~~
 version 7.1.1
 ~~~~~~~~~~~~~~~~
 

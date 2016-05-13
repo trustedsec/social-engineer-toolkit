@@ -174,12 +174,23 @@ if exploit_counter == 0:
         msfpath = (users_home + "/.msf4/")
 
     if os.path.isdir(users_home + "/.msf5/"):
-        msfpath = (users_home + "/.msf5/")
+	# then we know its actually created
+	if os.path.isdir(users_home + "/.msf5/loot"):
+	        msfpath = (users_home + "/.msf5/")
 
     # if we have never run msf before
     if msfpath == "":
-	os.makedirs(users_home + "/.msf5/")
-	msfpath = (users_home + "/.msf5")
+	print_warning("Metasploit has not been previously run on the system. This means that the msf directories haven't been created yet. Running Metasploit for you.")
+	child = pexpect.spawn("msfconsole")
+	print_status("Waiting 10 seconds for the directories to be created...")
+	time.sleep(10)
+	child.close()
+	if os.path.isdir(users_home + "/.msf4"):
+		print_status("All good! The directories were created.")
+		msfpath = (users_home + "/.msf4/")
+	else:
+		print_error("Please exit out of SET and type 'msfconsole' from the command prompt and launch SET again. Can't find the msf4 directory.")
+		sys.exit()
 
     outpath = (msfpath + "local/" + outfile)
     print_info("Generating fileformat exploit...")
