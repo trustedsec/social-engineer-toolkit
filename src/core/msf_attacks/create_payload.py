@@ -212,6 +212,7 @@ if exploit_counter == 0:
 	counter = 0
         while a == 1:
 	    if counter == 10: 
+		a = 2
 		print_error("Unable to generate PDF - there appears to be an issue with your Metasploit install.")
 		print_error("You will need to troubleshoot Metasploit manually and try generating a PDF. You can manually troubleshoot by going to /root/.set/ and typing msfconsole -r template.rc to reproduce the issue.")
 		pause = raw_input("Press {return} to move back.")
