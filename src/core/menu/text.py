@@ -36,6 +36,7 @@ main = ['Spear-Phishing Attack Vectors',
         'Wireless Access Point Attack Vector',
         'QRCode Generator Attack Vector',
         'Powershell Attack Vectors',
+	'SMS Spoofing Attack Vector', 
         'Third Party Modules']
 
 spearphish_menu = ['Perform a Mass Email Attack',

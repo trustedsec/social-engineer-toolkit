@@ -1169,15 +1169,23 @@ and send the QRCode via a mailer.
                     "Else refer to here for installation: http://code.google.com/appengine/docs/python/images/installingPIL.html")
                 return_continue()
 
-        # Main Menu choice 10: PowerShell Attacks
+        # Main Menu choice 9: PowerShell Attacks
         if main_menu_choice == '9':
             try:
                 module_reload(src.powershell.powershell)
             except:
                 import src.powershell.powershell
 
+
+	# sms spoofing module option 10
+	if main_menu_choice == '10':
+	   try: 
+		module_reload(src.sms.sms)
+	   except:
+		import src.sms.sms
+
         # Main Menu choice 11: Third Party Modules
-        if main_menu_choice == '10':
+        if main_menu_choice == '11':
             sys.path.append(definepath + "/src/core")
             debug_msg(me, "importing 'src.core.module_handler'", 1)
             try:
