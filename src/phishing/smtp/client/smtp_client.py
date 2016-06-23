@@ -77,6 +77,7 @@ for line in sendmail_file:
             if sendmail == 0:
                 smtp = ("smtp.gmail.com")
                 port = ("587")
+		print_status("If you are using GMAIL - you will need to need to create an application password: https://support.google.com/accounts/answer/6010255?hl=en")
 
         # support smtp for yahoo
         if email_provider == "yahoo":
