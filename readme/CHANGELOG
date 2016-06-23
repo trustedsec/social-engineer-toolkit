@@ -5,6 +5,7 @@ version 7.2
 * fixed an issue on installer not copying SET directory properly (why was I moving a file and ... nevermind.)
 * changed delay time for HTA attack vector from 3 seconds to 10 seconds to allow proper loading
 * added wording when using gmail and application specific passwords
+* rewrote ms08-067 instead of being the python exploit to use the metasploit default which is much more reliable
 
 ~~~~~~~~~~~~~~~~
 version 7.1.2
