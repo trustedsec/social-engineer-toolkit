@@ -3,6 +3,7 @@ version 7.2
 ~~~~~~~~~~~~~~~~
 
 * fixed an issue on installer not copying SET directory properly (why was I moving a file and ... nevermind.)
+* changed delay time for HTA attack vector from 3 seconds to 10 seconds to allow proper loading
 
 ~~~~~~~~~~~~~~~~
 version 7.1.2
