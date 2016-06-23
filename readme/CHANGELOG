@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue on installer not copying SET directory properly (why was I moving a file and ... nevermind.)
+
+~~~~~~~~~~~~~~~~
 version 7.1.2
 ~~~~~~~~~~~~~~~~
 

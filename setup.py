@@ -73,9 +73,9 @@ if platform.system() == "Linux":
             print("[!] Install GIT and run the installer again.")
             sys.exit()
 
-        print("[*] Moving SET into the /usr/share/ directory...")
-        subprocess.Popen(
-            "cd .. && mv social-engineer-toolkit setoolkit && mv setoolkit /usr/share/", shell=True).wait()
+        print("[*] Copying SET into the /usr/share/ directory...")
+        cwdpath = os.getcwd()
+        subprocess.Popen("cd ..;cp -rf %s /usr/share/setoolkit" % (cwdpath), shell=True).wait()
         print("[*] Installing setoolkit installer to /usr/bin/setoolkit...")
         subprocess.Popen(
             "echo #!/bin/bash > /usr/bin/setoolkit", shell=True).wait()
@@ -86,8 +86,8 @@ if platform.system() == "Linux":
         subprocess.Popen(
             "cp /usr/share/setoolkit/seupdate /usr/bin/", shell=True).wait()
         subprocess.Popen("chmod +x /usr/bin/setoolkit", shell=True).wait()
-        print("[*] Note you will manually need to install Core Security 'Impacket'")
-        print("[*] Download link: http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Impacket")
+        #print("[*] Note you will manually need to install Core Security 'Impacket'")
+        #print("[*] Download link: http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Impacket")
         # https://impacket.googlecode.com/files/impacket-0.9.10.tar.gz
         print("[*] Once downloaded, tar -zxvf impacket*, go to the directory and run python setup.py install.")
         print("[*] We are now finished! To run SET, type setoolkit...")
