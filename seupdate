@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# simple svn update for set pulling from core modules
+# simple git update for set pulling from core modules
 #
 import os
 import sys
