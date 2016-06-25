@@ -907,7 +907,7 @@ def show_banner(define_version, graphic):
 
 
 def show_graphic():
-    menu = random.randrange(2, 13)
+    menu = random.randrange(2, 14)
     if menu == 2:
         print(bcolors.YELLOW + r"""
                  .--.  .--. .-----.
@@ -1063,6 +1063,36 @@ def show_graphic():
                  -------------------                                  !""" + bcolors.ENDC)
 
     if menu == 12:
+        print(bcolors.YELLOW + r'''
+           ,..-,
+         ,;;f^^"""-._
+        ;;'          `-.
+       ;/               `.
+       ||  _______________\_______________________
+       ||  |HHHHHHHHHHPo"~~\"o?HHHHHHHHHHHHHHHHHHH|
+       ||  |HHHHHHHHHP-._   \,'?HHHHHHHHHHHHHHHHHH|
+        |  |HP;""?HH|    """ |_.|HHP^^HHHHHHHHHHHH|
+        |  |HHHb. ?H|___..--"|  |HP ,dHHHPo'|HHHHH|
+        `| |HHHHHb.?Hb    .--J-dHP,dHHPo'_.rdHHHHH|
+         \ |HHHi.`;;.H`-./__/-'H_,--'/;rdHHHHHHHHH|
+           |HHHboo.\ `|"\"/"\" '/\ .'dHHHHHHHHHHHH|
+           |HHHHHHb`-|.  \|  \ / \/ dHHHHHHHHHHHHH|
+           |HHHHHHHHb| \ |\   |\ |`|HHHHHHHHHHHHHH|
+           |HHHHHHHHHb  \| \  | \| |HHHHHHHHHHHHHH|
+           |HHHHHHHHHHb |\  \|  |\|HHHHHHHHHHHHHHH|
+           |HHHHHHHHHHHb| \  |  / dHHHHHHHHHHHHHHH|
+           |HHHHHHHHHHHHb  \/ \/ .fHHHHHHHHHHHHHHH|
+           |HHHHHHHHHHHHH| /\ /\ |HHHHHHHHHHHHHHHH|
+           |""""""""""""""""""""""""""""""""""""""|
+           |,;=====.     ,-.  =.       ,=,,=====. |
+           |||     '    //"\\   \\   //  ||     ' |
+           |||         ,/' `\.  `\. ,/'  ``=====. |
+           |||     .   //"""\\   \\_//    .     |||
+           |`;=====' =''     ``=  `-'     `=====''|
+           |______________________________________|
+	''')
+
+    if menu == 13:
         print(bcolors.RED + r"""
                       ..:::::::::..
                   ..:::aad8888888baa:::..
@@ -1085,6 +1115,9 @@ def show_graphic():
               `::::::88::88:::::::88::::::'
                  ``:::::::::::::::::::''
                       ``:::::::::''""" + bcolors.ENDC)
+
+
+
 
 #
 # identify if set interactive shells are disabled
