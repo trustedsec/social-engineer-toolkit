@@ -128,14 +128,6 @@ if counter == 0:
     if os.path.isfile(setdir + "/template.mov"):
         file_format = (setdir + "/template.mov")
 
-if counter == 0:
-   print_status("No prior payloads were detected, do you want to import your own payload?")
-   yesno = raw_input("Hit yes to input file to import, or hit no to just send emails [y/n]:")
-   if yesno.lower() == "y" or yesno.lower() == "yes":
-	file_format = raw_input("Enter the file to attach to the emails: ")
-	if not os.path.isfile(file_format):
-		print_error("File was not found! Proceeding without an attachment")
-
 # Determine if prior payload created
 if not os.path.isfile(setdir + "/template.pdf"):
     if not os.path.isfile(setdir + "/template.rar"):

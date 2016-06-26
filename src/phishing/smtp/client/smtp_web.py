@@ -12,6 +12,7 @@ import base64
 # fix for python2 to 3 compatibility
 try: from cStringIO import StringIO
 except NameError: from io import StringIO
+import email,email.encoders,email.mime.text,email.mime.base
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
@@ -196,6 +197,13 @@ if option1 != "99":
         prioflag1 = ' 1 (Highest)'
         prioflag2 = ' High'
 
+    # if we want to attach a file
+    file_format = ""
+    yesno = raw_input("Do you want to attach a file - [y/n]: ")
+    if yesno.lower() == "y" or yesno.lower() == "yes":
+	file_format = raw_input("Enter the path to the file you want to attach: ")
+        if not os.path.isfile(file_format): file_format = ""
+
     subject = input(setprompt(["1"], "Email subject"))
     try:
         html_flag = input(
@@ -282,6 +290,14 @@ def mail(to, subject, prioflag1, prioflag2, text):
     body_type = MIMEText(text, "%s" % (message_flag), 'UTF-8')
     msg.attach(body_type)
 
+    # now attach the file
+    if file_format != "":
+	    fileMsg = email.mime.base.MIMEBase('application', '')
+	    fileMsg.set_payload(file(file_format).read())
+	    email.encoders.encode_base64(fileMsg)
+	    fileMsg.add_header('Content-Disposition','attachment;filename=%s' % (file_format))
+	    msg.attach(fileMsg)
+
     mailServer = smtplib.SMTP(smtp, port)
 
     io = StringIO()
@@ -340,9 +356,9 @@ if option1 == '1':
     except KeyboardInterrupt:
         print_error("Control-C detected, exiting out of SET.")
         sys.exit()
-    except Exception as err:
-        print_error("Something went wrong.. Printing error: " + str(err))
-        sys.exit()
+#    except Exception as err:
+#        print_error("Something went wrong.. Printing error: " + str(err))
+#        sys.exit()
 
 # if we specified the mass mailer for multiple users
 if option1 == '2':

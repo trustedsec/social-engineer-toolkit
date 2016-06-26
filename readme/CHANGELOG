@@ -7,6 +7,7 @@ version 7.2
 * added wording when using gmail and application specific passwords
 * rewrote ms08-067 instead of being the python exploit to use the metasploit default which is much more reliable
 * re-introduced the SMS spoofing method (now option 10) - it has been optimized and reduced to only use SMSGang as a main provider. 
+* added ability to add your own attachments via file format attacks instead of having to use the ones built in
 
 ~~~~~~~~~~~~~~~~
 version 7.1.2
