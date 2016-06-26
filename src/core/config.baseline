@@ -24,7 +24,7 @@
 ##							                                        ##
 ## There are additional options; read the comments for additional descriptions.		        ##
 ##												##
-## CONFIG_VERSION=7.0										##
+## CONFIG_VERSION=7.2										##
 ##								                                ##
 ##################################################################################################
 ##################################################################################################
@@ -259,4 +259,7 @@ DNS_SERVER=OFF
 #
 BLEEDING_EDGE=OFF
 #
+### This will download 1 deep the website with WGET instead of the standard. This may give better results but takes longer
+WGET_DEEP=ON
+
 #######################################################################################################################################
