@@ -11,6 +11,7 @@ import random
 import pexpect
 import base64
 import thread
+
 # python 2 to 3 fix
 try: from cStringIO import StringIO
 except NameError: from io import StringIO
@@ -21,6 +22,7 @@ from email.header import Header
 from email.generator import Generator
 from email import Charset
 from email import Encoders
+
 # DEFINE SENDMAIL CONFIG
 sendmail = 0
 sendmail_file = open("/etc/setoolkit/set.config", "r").readlines()
@@ -111,6 +113,7 @@ if os.path.isfile(setdir + "/template.pdf"):
             if choose_payload == '3':
                 file_format = (setdir + "/template.zip")
             counter = 1
+
 if counter == 0:
     if os.path.isfile(setdir + "/template.pdf"):
         file_format = (setdir + "/template.pdf")
@@ -125,6 +128,14 @@ if counter == 0:
     if os.path.isfile(setdir + "/template.mov"):
         file_format = (setdir + "/template.mov")
 
+if counter == 0:
+   print_status("No prior payloads were detected, do you want to import your own payload?")
+   yesno = raw_input("Hit yes to input file to import, or hit no to just send emails [y/n]:")
+   if yesno.lower() == "y" or yesno.lower() == "yes":
+	file_format = raw_input("Enter the file to attach to the emails: ")
+	if not os.path.isfile(file_format):
+		print_error("File was not found! Proceeding without an attachment")
+
 # Determine if prior payload created
 if not os.path.isfile(setdir + "/template.pdf"):
     if not os.path.isfile(setdir + "/template.rar"):
@@ -133,8 +144,7 @@ if not os.path.isfile(setdir + "/template.pdf"):
                 if not os.path.isfile(setdir + "/template.rtf"):
                     if not os.path.isfile(setdir + "/template.mov"):
                         print("No previous payload created.")
-                        file_format = input(
-                            setprompt(["1"], "Enter the file to use as an attachment"))
+                        file_format = input(setprompt(["1"], "Enter the file to use as an attachment"))
                         if not os.path.isfile("%s" % (file_format)):
                             while 1:
                                 print_error("ERROR:FILE NOT FOUND. Try Again.")
