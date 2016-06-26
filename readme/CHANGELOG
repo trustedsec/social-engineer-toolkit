@@ -9,6 +9,7 @@ version 7.2
 * re-introduced the SMS spoofing method (now option 10) - it has been optimized and reduced to only use SMSGang as a main provider. 
 * added ability to add your own attachments via file format attacks instead of having to use the ones built in
 * added ability to add your own attachments via mass mailer attack vector
+* added new config option called wget_deep and incremented config to 7.2 - this will allow 1 deep download wgets
 
 ~~~~~~~~~~~~~~~~
 version 7.1.2
