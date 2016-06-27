@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-#########################################
+#
 #
 # The Social-Engineer Toolkit
 # Written by: David Kennedy (ReL1K)
 #
-###############################################
+#
 import shutil
 import os
 import time
@@ -13,18 +13,18 @@ import sys
 import socket
 from src.core.setcore import *
 from src.core.menu import text
-ipaddr= ""
+ipaddr = ""
 me = mod_name()
-###############################################
+#
 # Define path and set it to the SET root dir
-###############################################
+#
 
 definepath = os.getcwd()
 sys.path.append(definepath)
 
-################################################
+#
 # ROOT CHECK
-################################################
+#
 
 # grab the operating system
 operating_system = check_os()
@@ -34,8 +34,10 @@ msf_path = meta_path()
 
 if operating_system == "posix":
     if os.geteuid() != 0:
-        print("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
-        print("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
+        print(
+            "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
+        print(
+            "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
         sys.exit(1)
 
 define_version = get_version()
@@ -43,9 +45,9 @@ define_version = get_version()
 try:
     while 1:
         show_banner(define_version, '1')
-       ###################################################
-       #        USER INPUT: SHOW MAIN MENU               #
-       ###################################################
+       #
+       # USER INPUT: SHOW MAIN MENU               #
+       #
         debug_msg(me, "printing 'text.main'", 5)
         show_main_menu = create_menu(text.main_text, text.main)
         # special case of list item 99
@@ -65,9 +67,9 @@ try:
         if main_menu_choice == '1':  # 'Spearphishing Attack Vectors
             while 1:
 
-             ###################################################
-             #        USER INPUT: SHOW SPEARPHISH MENU         #
-             ###################################################
+             #
+             # USER INPUT: SHOW SPEARPHISH MENU         #
+             #
 
                 if operating_system != "windows":
                     debug_msg(me, "printing 'text.spearphish_menu'", 5)
@@ -110,16 +112,16 @@ try:
                     if spearphish_menu_choice == '99':
                         break
 
- #####################
+ #
  # Web Attack Menu
- #####################
+ #
         # Main Menu choice 2: Website Attack Vectors
         if main_menu_choice == '2':
             while 1:
 
-                ###################################################
-                #        USER INPUT: SHOW WEB ATTACK MENU         #
-                ###################################################
+                #
+                # USER INPUT: SHOW WEB ATTACK MENU         #
+                #
 
                 debug_msg(me, "printing 'text.webattack_menu'", 5)
                 show_webattack_menu = create_menu(
@@ -169,19 +171,19 @@ try:
                     return_continue()
                     break
 
-                ###############################################################
+                #
                 # HTA ATTACK VECTOR METHOD HERE
-                ###############################################################
-                #if attack_vector == '8':
+                #
+                # if attack_vector == '8':
                     # assign HTA attack vector - do more later
                 #    attack_vector = "hta"
 
                 # Removed to delete MLITM
                 if attack_vector != "99999":
 
-                    ###################################################
-                    #     USER INPUT: SHOW WEB ATTACK VECTORS MENU    #
-                    ###################################################
+                    #
+                    # USER INPUT: SHOW WEB ATTACK VECTORS MENU    #
+                    #
 
                     if attack_vector != "7":
                         debug_msg(
@@ -381,7 +383,6 @@ try:
                                     if ipaddr != "":
                                         update_options("IPADDR=" + ipaddr)
 
-
                         # if java applet attack
                         if attack_vector == "java":
                             applet_choice()
@@ -442,7 +443,8 @@ try:
                             debug_msg(
                                 me, "importing 'src.core.payloadgen.create_payloads'", 1)
                             try:
-                                module_reload(src.core.payloadgen.create_payloads)
+                                module_reload(
+                                    src.core.payloadgen.create_payloads)
                             except:
                                 import src.core.payloadgen.create_payloads
 
@@ -476,16 +478,20 @@ try:
                                 from src.webattack.profiler.webprofiler import *
                                 prep_website()
 
-                            # launch HTA attack vector after the website has been cloned
+                            # launch HTA attack vector after the website has
+                            # been cloned
                             if attack_vector == "hta":
-                                # launch HTA attack vector after the website has been cloned
+                                # launch HTA attack vector after the website
+                                # has been cloned
                                 from src.webattack.hta.main import *
                                 # update config
                                 update_options("ATTACK_VECTOR=HTA")
                                 gen_hta_cool_stuff()
                                 attack_vector = "hta"
-                                print_status("Automatically starting Apache for you...")
-                                subprocess.Popen("service apache2 start",shell=True).wait()
+                                print_status(
+                                    "Automatically starting Apache for you...")
+                                subprocess.Popen(
+                                    "service apache2 start", shell=True).wait()
 
                             if attack_vector != "harvester":
                                 if attack_vector != "tabnabbing":
@@ -517,7 +523,8 @@ try:
                     if choice3 == '2':
                         # flag that we want a custom website
                         definepath = os.getcwd()
-                        sys.path.append(definepath + "/src/webattack/web_clone/")
+                        sys.path.append(
+                            definepath + "/src/webattack/web_clone/")
                         if os.path.isfile(setdir + "/site.template"):
                             os.remove(setdir + "/site.template")
                         filewrite = open(setdir + "/site.template", "w")
@@ -525,7 +532,8 @@ try:
                         print_info("SET supports both HTTP and HTTPS")
                         # specify the site to clone
                         print_info("Example: http://www.thisisafakesite.com")
-                        URL = raw_input(setprompt(["2"], "Enter the url to clone"))
+                        URL = raw_input(
+                            setprompt(["2"], "Enter the url to clone"))
                         match = re.search("http://", URL)
                         match1 = re.search("https://", URL)
                         if not match:
@@ -544,16 +552,20 @@ try:
                         filewrite.write("\nURL=%s" % (URL))
                         filewrite.close()
 
-                        # launch HTA attack vector after the website has been cloned
+                        # launch HTA attack vector after the website has been
+                        # cloned
                         if attack_vector == "hta":
-                            # launch HTA attack vector after the website has been cloned
+                            # launch HTA attack vector after the website has
+                            # been cloned
                             from src.webattack.hta.main import *
                             # update config
                             update_options("ATTACK_VECTOR=HTA")
                             gen_hta_cool_stuff()
                             attack_vector = "hta"
-                            print_status("Automatically starting Apache for you...")
-                            subprocess.Popen("service apache2 start",shell=True).wait()
+                            print_status(
+                                "Automatically starting Apache for you...")
+                            subprocess.Popen(
+                                "service apache2 start", shell=True).wait()
 
                         # grab browser exploit selection
                         if attack_vector == "browser":
@@ -591,7 +603,8 @@ try:
                                 debug_msg(
                                     me, "importing 'src.core.payloadgen.create_payloads'", 1)
                                 try:
-                                    module_reload(src.core.payloadgen.create_payloads)
+                                    module_reload(
+                                        src.core.payloadgen.create_payloads)
                                 except:
                                     import src.core.payloadgen.create_payloads
 
@@ -723,16 +736,20 @@ try:
                                 me, "importing 'src.webattack.web_clone.cloner'", 1)
                             import src.webattack.web_clone.cloner
 
-                        # launch HTA attack vector after the website has been cloned
+                        # launch HTA attack vector after the website has been
+                        # cloned
                         if attack_vector == "hta":
-                            # launch HTA attack vector after the website has been cloned
+                            # launch HTA attack vector after the website has
+                            # been cloned
                             from src.webattack.hta.main import *
                             # update config
                             update_options("ATTACK_VECTOR=HTA")
                             gen_hta_cool_stuff()
                             attack_vector = "hta"
-                            print_status("Automatically starting Apache for you...")
-                            subprocess.Popen("service apache2 start",shell=True).wait()
+                            print_status(
+                                "Automatically starting Apache for you...")
+                            subprocess.Popen(
+                                "service apache2 start", shell=True).wait()
 
                         # if java applet attack
                         if attack_vector == "java":
@@ -850,15 +867,16 @@ try:
                         print (" Returning to main menu.\n")
                         break
                 except KeyboardInterrupt:
-                    print(" Control-C detected, bombing out to previous menu..")
+                    print(
+                        " Control-C detected, bombing out to previous menu..")
                     break
 
         # Define Auto-Infection USB/CD Method here
         if main_menu_choice == '3':
 
-                ###################################################
-                #     USER INPUT: SHOW INFECTIOUS MEDIA MENU      #
-                ###################################################
+                #
+                # USER INPUT: SHOW INFECTIOUS MEDIA MENU      #
+                #
                 # Main Menu choice 3: Infectious Media Generator
             debug_msg(me, "printing 'text.infectious_menu'", 5)
             show_infectious_menu = create_menu(
@@ -939,9 +957,9 @@ try:
         # Main Menu choice 6: Teensy USB HID Attack Vector
         if main_menu_choice == '6':
 
-            ###################################################
-            #        USER INPUT: SHOW TEENSY MENU             #
-            ###################################################
+            #
+            # USER INPUT: SHOW TEENSY MENU             #
+            #
             debug_msg(me, "printing 'text.teensy_menu'", 5)
             show_teensy_menu = create_menu(text.teensy_text, text.teensy_menu)
             teensy_menu_choice = raw_input(setprompt(["6"], ""))
@@ -1097,14 +1115,15 @@ try:
                         # start the menu here
                         while 1:
 
-                                ###############################################
-                                #        USER INPUT: SHOW WIRELESS MENU           #
-                                ###############################################
+                                #
+                                # USER INPUT: SHOW WIRELESS MENU           #
+                                #
                             debug_msg(
                                 me, "printing 'text.wireless_attack_menu'", 5)
                             show_wireless_menu = create_menu(
                                 text.wireless_attack_text, text.wireless_attack_menu)
-                            wireless_menu_choice = raw_input(setprompt(["8"], ""))
+                            wireless_menu_choice = raw_input(
+                                setprompt(["8"], ""))
                             # if we want to start access point
                             if wireless_menu_choice == "1":
                                 sys.path.append(definepath + "/src/wireless/")
@@ -1176,13 +1195,12 @@ and send the QRCode via a mailer.
             except:
                 import src.powershell.powershell
 
-
-	# sms spoofing module option 10
-	if main_menu_choice == '10':
-	   try: 
-		module_reload(src.sms.sms)
-	   except:
-		import src.sms.sms
+        # sms spoofing module option 10
+        if main_menu_choice == '10':
+            try:
+                module_reload(src.sms.sms)
+            except:
+                import src.sms.sms
 
         # Main Menu choice 11: Third Party Modules
         if main_menu_choice == '11':
