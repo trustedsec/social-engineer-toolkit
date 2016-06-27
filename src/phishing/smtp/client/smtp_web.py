@@ -10,9 +10,14 @@ import random
 import time
 import base64
 # fix for python2 to 3 compatibility
-try: from cStringIO import StringIO
-except NameError: from io import StringIO
-import email,email.encoders,email.mime.text,email.mime.base
+try:
+    from cStringIO import StringIO
+except NameError:
+    from io import StringIO
+import email
+import email.encoders
+import email.mime.text
+import email.mime.base
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
@@ -142,7 +147,8 @@ if option1 == '2':
         setprompt(["1"], "Path to the file to import into SET"))
     if not os.path.isfile(filepath):
         while 1:
-            print("[!] File not found! Please try again and enter the FULL path to the file.")
+            print(
+                "[!] File not found! Please try again and enter the FULL path to the file.")
             filepath = input(
                 setprompt(["1"], "Path to the file to import into SET"))
             if os.path.isfile(filepath):
@@ -201,8 +207,10 @@ if option1 != "99":
     file_format = ""
     yesno = raw_input("Do you want to attach a file - [y/n]: ")
     if yesno.lower() == "y" or yesno.lower() == "yes":
-	file_format = raw_input("Enter the path to the file you want to attach: ")
-        if not os.path.isfile(file_format): file_format = ""
+        file_format = raw_input(
+            "Enter the path to the file you want to attach: ")
+        if not os.path.isfile(file_format):
+            file_format = ""
 
     subject = input(setprompt(["1"], "Email subject"))
     try:
@@ -227,17 +235,28 @@ if option1 != "99":
         # track email is pulled dynamically from the config as
         # TRACK_EMAIL_ADDRESSES
         if track_email.lower() == "on":
-            print("You have specified to track user email accounts when they are sent. In")
-            print("order for this to work, you will need to specify the URL within the body")
-            print("of the email and where you would like to inject the base64 encoded name.")
-            print("\nWhen a user clicks on the link, the URL Will post back to SET and track")
-            print("each of the users clicks and who the user was. As an example, say my SET")
-            print("website is hosted at http://www.trustedsec.com/index.php and I want to track users.")
-            print("I would type below " + bcolors.BOLD + "http://www.trustedsec.com/index.php?INSERTUSERHERE" + bcolors.ENDC + ". Note that in")
-            print("order for SET to work, you will need to specify index.php?INSERTUSERHERE. That is the")
-            print("keyword that SET uses in order to replace the base name with the URL.")
-            print("\nInsert the FULL url and the " + bcolors.BOLD + "INSERTUSERHERE" + bcolors.ENDC + "on where you want to insert the base64 name.\n\nNOTE: You must have a index.php and a ? mark seperating the user. YOU MUST USE PHP!")
-            print("\nNote that the actual URL does NOT need to contain index.php but has to be named that for the php code in Apache to work.")
+            print(
+                "You have specified to track user email accounts when they are sent. In")
+            print(
+                "order for this to work, you will need to specify the URL within the body")
+            print(
+                "of the email and where you would like to inject the base64 encoded name.")
+            print(
+                "\nWhen a user clicks on the link, the URL Will post back to SET and track")
+            print(
+                "each of the users clicks and who the user was. As an example, say my SET")
+            print(
+                "website is hosted at http://www.trustedsec.com/index.php and I want to track users.")
+            print("I would type below " + bcolors.BOLD +
+                  "http://www.trustedsec.com/index.php?INSERTUSERHERE" + bcolors.ENDC + ". Note that in")
+            print(
+                "order for SET to work, you will need to specify index.php?INSERTUSERHERE. That is the")
+            print(
+                "keyword that SET uses in order to replace the base name with the URL.")
+            print("\nInsert the FULL url and the " + bcolors.BOLD + "INSERTUSERHERE" + bcolors.ENDC +
+                  "on where you want to insert the base64 name.\n\nNOTE: You must have a index.php and a ? mark seperating the user. YOU MUST USE PHP!")
+            print(
+                "\nNote that the actual URL does NOT need to contain index.php but has to be named that for the php code in Apache to work.")
         print_warning(
             "IMPORTANT: When finished, type END (all capital) then hit {return} on a new line.")
         body = input(setprompt(
@@ -292,11 +311,12 @@ def mail(to, subject, prioflag1, prioflag2, text):
 
     # now attach the file
     if file_format != "":
-	    fileMsg = email.mime.base.MIMEBase('application', '')
-	    fileMsg.set_payload(file(file_format).read())
-	    email.encoders.encode_base64(fileMsg)
-	    fileMsg.add_header('Content-Disposition','attachment;filename=%s' % (file_format))
-	    msg.attach(fileMsg)
+        fileMsg = email.mime.base.MIMEBase('application', '')
+        fileMsg.set_payload(file(file_format).read())
+        email.encoders.encode_base64(fileMsg)
+        fileMsg.add_header(
+            'Content-Disposition', 'attachment;filename=%s' % (file_format))
+        msg.attach(fileMsg)
 
     mailServer = smtplib.SMTP(smtp, port)
 

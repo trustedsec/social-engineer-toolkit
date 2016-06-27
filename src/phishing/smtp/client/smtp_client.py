@@ -13,8 +13,10 @@ import base64
 import thread
 
 # python 2 to 3 fix
-try: from cStringIO import StringIO
-except NameError: from io import StringIO
+try:
+    from cStringIO import StringIO
+except NameError:
+    from io import StringIO
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
@@ -74,23 +76,26 @@ for line in sendmail_file:
         email_provider = line.replace("EMAIL_PROVIDER=", "").lower()
 
         # support smtp for gmail
-        ## Issue ## Set reports the email as successfully sent but I haven't had any success with it
+        # Issue ## Set reports the email as successfully sent but I haven't had
+        # any success with it
         if email_provider == "gmail":
             if sendmail == 0:
                 smtp = ("smtp.gmail.com")
                 port = ("587")
-		print_status("If you are using GMAIL - you will need to need to create an application password: https://support.google.com/accounts/answer/6010255?hl=en")
+                print_status(
+                    "If you are using GMAIL - you will need to need to create an application password: https://support.google.com/accounts/answer/6010255?hl=en")
 
         # support smtp for yahoo
         if email_provider == "yahoo":
             if sendmail == 0:
                 smtp = ("smtp.mail.yahoo.com")
-                port = ("587") #This was previously 465 and changed to 587
+                port = ("587")  # This was previously 465 and changed to 587
 
         # support smtp for hotmail
         if email_provider == "hotmail":
             if sendmail == 0:
-                smtp = ("smtp.live.com") #smtp.hotmail.com is no longer in use
+                smtp = ("smtp.live.com")
+                        # smtp.hotmail.com is no longer in use
                 port = ("587")
 
 # DEFINE METASPLOIT PATH
@@ -136,7 +141,8 @@ if not os.path.isfile(setdir + "/template.pdf"):
                 if not os.path.isfile(setdir + "/template.rtf"):
                     if not os.path.isfile(setdir + "/template.mov"):
                         print("No previous payload created.")
-                        file_format = input(setprompt(["1"], "Enter the file to use as an attachment"))
+                        file_format = input(
+                            setprompt(["1"], "Enter the file to use as an attachment"))
                         if not os.path.isfile("%s" % (file_format)):
                             while 1:
                                 print_error("ERROR:FILE NOT FOUND. Try Again.")
@@ -304,7 +310,8 @@ if option1 == '2':
 if option1 == '99':
     exit_set()
 
-print(("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (email_provider)))
+print(("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" %
+      (email_provider)))
 relay = input(setprompt(["1"], ""))
 counter = 0
 # Specify SMTP Option Here
@@ -399,7 +406,8 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
                     mailServer.login(provideruser, pwd)
                 mailServer.sendmail(from_address, to, io.getvalue())
         except Exception as e:
-            print_error("Unable to deliver email. Printing exceptions message below, this is most likely due to an illegal attachment. If using GMAIL they inspect PDFs and is most likely getting caught.")
+            print_error(
+                "Unable to deliver email. Printing exceptions message below, this is most likely due to an illegal attachment. If using GMAIL they inspect PDFs and is most likely getting caught.")
             input("Press {return} to view error message.")
             print(str(e))
             try:
