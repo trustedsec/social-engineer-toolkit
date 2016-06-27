@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-#########################################################################
+#
 # This file clones a website for SET to use in conjunction with the java
 # applet attack.
-#########################################################################
+#
 from src.core.setcore import *
 import subprocess
 import os
@@ -54,7 +54,7 @@ if os.path.isfile(setdir + "/proxy.confg"):
 if not os.path.isfile(setdir + "/proxy.confg"):
     proxy_config = "ls"
 
-## if counter == 0: web_port=80
+# if counter == 0: web_port=80
 
 webdav_meta = 0
 # see if exploit requires webdav
@@ -135,13 +135,16 @@ try:
             # wget is called, but output is sent to devnull to hide "wget:
             # missing URL" error
             DNULL = open(os.devnull, 'w')
-            wget = subprocess.call('wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
+            wget = subprocess.call(
+                'wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
 
             if wget == 1:
-		if check_config("WGET_DEEP").lower() == "on":
-	                subprocess.Popen('%s;wget -H -N -k -p -l 2 -nd -P %s/web_clone/ --no-check-certificate -U "%s" "%s";' % (proxy_config, setdir, user_agent, url), shell=True).wait()
-		else:
-	                subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" "%s";' % (proxy_config, setdir, user_agent, url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                if check_config("WGET_DEEP").lower() == "on":
+                    subprocess.Popen('%s;wget -H -N -k -p -l 2 -nd -P %s/web_clone/ --no-check-certificate -U "%s" "%s";' %
+                                     (proxy_config, setdir, user_agent, url), shell=True).wait()
+                else:
+                    subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" "%s";' %
+                                     (proxy_config, setdir, user_agent, url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
             else:
                 # if we don't have wget installed we will use python to rip,
@@ -164,7 +167,7 @@ try:
 
         # if it failed ;(
         except Exception as e:
-	    print e
+            print e
             pass
 
         # If the website did not clone properly, exit out.
