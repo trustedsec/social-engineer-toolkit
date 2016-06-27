@@ -17,6 +17,7 @@ import base64
 from src.core import dictionaries
 import io
 import trace
+import urllib2
 
 if sys.version_info >= (3, 0):
     # python 3 removes reduce from builtin and into functools
@@ -905,6 +906,24 @@ def show_banner(define_version, graphic):
     print(bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ +
           bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC)
 
+
+    # here we check if  there is a new version of SET - if there is, then display a banner
+    cv = get_version()
+
+    # pull version
+    try: 
+        response = urllib2.urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
+        setcheck = response.readlines()
+        for line in setcheck:
+            line = line.rstrip()
+            if "define_version =" in line:
+		# define_version = '7.1.2'
+                version = line.replace("define_version = ", "").replace("'", "", 2).replace("    ", "")
+                   
+        if cv != version:
+		print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN + "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
+    except Exception as err:
+	print err
 
 def show_graphic():
     menu = random.randrange(2, 14)
