@@ -21,7 +21,7 @@ PORT_TOO_HIGH = "Let's stick with the LOWER 65,535 ports..."
 main_text = " Select from the menu:\n"
 
 main_menu = ['Social-Engineering Attacks',
-             'Fast-Track Penetration Testing',
+             'Penetration Testing (Fast-Track)',
              'Third Party Modules',
              'Update the Social-Engineer Toolkit',
              'Update SET configuration',
