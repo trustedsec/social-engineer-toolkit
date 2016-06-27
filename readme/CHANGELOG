@@ -10,6 +10,7 @@ version 7.2
 * added ability to add your own attachments via file format attacks instead of having to use the ones built in
 * added ability to add your own attachments via mass mailer attack vector
 * added new config option called wget_deep and incremented config to 7.2 - this will allow 1 deep download wgets
+* added ability to select on deeper wgets through web cloner in the web attack vectors - this will allow you to clone the site and not just the index.html which might be better.. to enable this edit /etc/setoolkit/set.config and turn WGET_DEEP to on.
 
 ~~~~~~~~~~~~~~~~
 version 7.1.2
