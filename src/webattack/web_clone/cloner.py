@@ -166,8 +166,8 @@ try:
                     filewrite.close()
 
         # if it failed ;(
-        except Exception as e:
-            print e
+        except Exception as err:
+            print(err)
             pass
 
         # If the website did not clone properly, exit out.
