@@ -13,6 +13,7 @@ version 7.2
 * added ability to select on deeper wgets through web cloner in the web attack vectors - this will allow you to clone the site and not just the index.html which might be better.. to enable this edit /etc/setoolkit/set.config and turn WGET_DEEP to on.
 * added a new check upon startup (which may delay the start of set for a couple seconds, but it will check to see if there is a new version of SET available for you automatically - this is displayed on the main launcher UI when you first start SET
 * fixed setup.py a bit to reflect more on whats out there.. I may convert this to a standard setup installer eventually
+* updated the licensing agreement - should check it out - some bold things you need to do in order to use SET!
 
 ~~~~~~~~~~~~~~~~
 version 7.1.2
