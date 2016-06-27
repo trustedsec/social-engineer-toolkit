@@ -16,6 +16,9 @@ version 7.2
 * updated the licensing agreement - should check it out - some bold things you need to do in order to use SET!
 * changed the default payload in HTA and Java Applet attack to be reverse_https instead of reverse_tcp (although both can be specified)
 * number of fixes around spacing for python3 and python3 compatibility (urllib)
+* removed string decode on HTA attack vector which is no longer needed in python3 (and python2)
+* changed urllib2 to import urllib instead for python2 and python3 compatibility in setcore
+* changed encoding techniques to bytes instead of strings for python3 compatibility
 
 ~~~~~~~~~~~~~~~~
 version 7.1.2
