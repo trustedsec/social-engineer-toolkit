@@ -135,12 +135,14 @@ try:
             # wget is called, but output is sent to devnull to hide "wget:
             # missing URL" error
             DNULL = open(os.devnull, 'w')
-            wget = subprocess.call(
-                'wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
+            wget = subprocess.call('wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
 
             if wget == 1:
-                subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" "%s";' % (
-                    proxy_config, setdir, user_agent, url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                print "WE BE CLONIN"
+		if check_config("WGET_DEEP").lower() == "on":
+	                subprocess.Popen('%s;wget -H -N -k -p -l 2 -nd -P %s/web_clone/ --no-check-certificate -U "%s" "%s";' % (proxy_config, setdir, user_agent, url), shell=True).wait()
+		else:
+	                subprocess.Popen('%s;cd %s/web_clone/;wget --no-check-certificate -O index.html -c -k -U "%s" "%s";' % (proxy_config, setdir, user_agent, url), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
             else:
                 # if we don't have wget installed we will use python to rip,
@@ -162,7 +164,8 @@ try:
                     filewrite.close()
 
         # if it failed ;(
-        except:
+        except Exception as e:
+	    print e
             pass
 
         # If the website did not clone properly, exit out.
