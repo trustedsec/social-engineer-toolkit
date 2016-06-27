@@ -314,9 +314,11 @@ try:
                         print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n")
                         # select payload
                         choice9 = raw_input(
-                            setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_tcp]"))
+                            setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_https]"))
                         # select default meterpreter reverse tcp
-                        if choice9 == "" or choice9 == "1":
+                        if choice9 == "":
+			    choice9 = "windows/meterpreter/reverse_https"
+			if choice9 == "1":
                             choice9 = "windows/meterpreter/reverse_tcp"
                         # select reverse https
                         if choice9 == "2":

@@ -138,7 +138,6 @@ try:
             wget = subprocess.call('wget', shell=True, stdout=DNULL, stderr=subprocess.STDOUT)
 
             if wget == 1:
-                print "WE BE CLONIN"
 		if check_config("WGET_DEEP").lower() == "on":
 	                subprocess.Popen('%s;wget -H -N -k -p -l 2 -nd -P %s/web_clone/ --no-check-certificate -U "%s" "%s";' % (proxy_config, setdir, user_agent, url), shell=True).wait()
 		else:
