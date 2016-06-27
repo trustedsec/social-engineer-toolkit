@@ -5,8 +5,9 @@ import re
 import socket
 import subprocess
 from src.core.setcore import *
-import thread
-#import socketserver
+#python 3 compatibility
+try: import thread
+except ImportError: import _thread as thread
 import shutil
 import re
 import threading

