@@ -269,7 +269,7 @@ def print_error(message):
 
 
 def get_version():
-    define_version = '7.2'
+    define_version = '7.2.1'
     return define_version
 
 
@@ -908,7 +908,7 @@ def show_banner(define_version, graphic):
     print(bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE + """)         [---]
 [---]        Created by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
-[---]                  Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """                    [---]
+[---]                 Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """                   [---]
 [---]             Codename: '""" + bcolors.YELLOW + """Wine and Gold""" + bcolors.ENDC + bcolors.BLUE + """'            [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
@@ -928,15 +928,14 @@ def show_banner(define_version, graphic):
 
     # pull version
     try:
-        response = urlopen(
-            'https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
+        response = urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
         setcheck = response.readlines()
         for line in setcheck:
             line = line.rstrip()
             if "define_version =" in line:
                 # define_version = '7.1.2'
-                version = line.replace("define_version = ", "").replace(
-                    "'", "", 2).replace("    ", "")
+                version = line.replace("define_version = ", "").replace("'", "", 2).replace("    ", "")
+                break
 
         if cv != version:
             print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN +
