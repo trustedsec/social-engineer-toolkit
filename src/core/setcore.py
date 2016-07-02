@@ -919,8 +919,9 @@ def show_banner(define_version, graphic):
 """)
     print(bcolors.BLUE +
           """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC)
-    print(bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n             Visit: """ +
+    print(bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ +
           bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC)
+    print(bcolors.BLUE + """   It's easy to update using the PenTesters Framework! (PTF)\nVisit """ + bcolors.YELLOW + """https://github.com/trustedsec/ptf""" + bcolors.BLUE + """ to update all your tools!\n\n""" + bcolors.ENDC)
 
     # here we check if  there is a new version of SET - if there is, then
     # display a banner
