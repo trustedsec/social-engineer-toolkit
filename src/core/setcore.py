@@ -19,6 +19,10 @@ import io
 import trace
 from urllib import *
 
+# needed for checking SET versions speedup
+global global_version
+global_version = 0
+
 if sys.version_info >= (3, 0):
     # python 3 removes reduce from builtin and into functools
     from functools import *
@@ -928,14 +932,18 @@ def show_banner(define_version, graphic):
 
     # pull version
     try:
-        response = urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
-        setcheck = response.readlines()
-        for line in setcheck:
-            line = line.rstrip()
-            if "define_version =" in line:
-                # define_version = '7.1.2'
-                version = line.replace("define_version = ", "").replace("'", "", 2).replace("    ", "")
-                break
+        if global_version == 0:
+            response = urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
+            setcheck = response.readlines()
+            for line in setcheck:
+                line = line.rstrip()
+                if "define_version =" in line:
+                    # define_version = '7.1.2'
+                    global version
+                    version = line.replace("define_version = ", "").replace("'", "", 2).replace("    ", "")
+                    global global_version
+                    global_version = 1
+                    break
 
         if cv != version:
             print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN +
