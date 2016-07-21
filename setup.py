@@ -37,7 +37,7 @@ if platform.system() == "Linux":
 
             # force install of debian packages
             subprocess.Popen(
-                "apt-get --force-yes -y install git apache2 libapache2-mod-php python-pymssql build-essential python-pexpect python-pefile python-crypto python-openssl", shell=True).wait()
+                "apt-get --force-yes -y install git apache2 python-requests libapache2-mod-php python-pymssql build-essential python-pexpect python-pefile python-crypto python-openssl", shell=True).wait()
 
         # If pacman.conf exists, we have a Arch based system
         elif os.path.isfile("/etc/pacman.conf"):

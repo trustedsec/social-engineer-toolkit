@@ -5,6 +5,11 @@ version 7.3
 * completely rewrote the SMS spoofing module from scratch to use spoofmytextmessage.com which the folks over there are super helpful and provided an undocumented API to be used within SET. This now works great and has been extensively tested.
 * sped up the load process when using the main menu system the loading would pull from github each time the show_banner() function was called - this only loads once per SET load now
 * fixed a string integer error from input to raw_input in the RDP DOS use after free in exploits
+* added libapache2-mod-php to setup.py - needed for credential harvester
+* added python-requests to setup.py - needed for sms spoofing
+* added better check for python-requests in sms spoofing
+* added better formating within sms spoofing
+* added error handling to sms spoofing if something goes wrong during auth process
 
 ~~~~~~~~~~~~~~~~
 version 7.2.3
