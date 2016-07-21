@@ -46,8 +46,6 @@ except ImportError:
     pass
 
 # get the main SET path
-
-
 def definepath():
     if check_os() == "posix":
         if os.path.isfile("setoolkit"):
@@ -59,8 +57,6 @@ def definepath():
         return os.getcwd()
 
 # check operating system
-
-
 def check_os():
     if os.name == "nt":
         operating_system = "windows"
@@ -187,7 +183,6 @@ def setprompt(category, text):
             promptstring = promptstring + "> " + text + ":"
             return promptstring
 
-
 def yesno_prompt(category, text):
     valid_response = False
     while not valid_response:
@@ -202,7 +197,6 @@ def yesno_prompt(category, text):
         else:
             print_warning("valid responses are 'n|y|N|Y|no|yes|No|Yes|NO|YES'")
     return response
-
 
 def return_continue():
     print(("\n      Press " + bcolors.RED +
