@@ -15,6 +15,7 @@ version 7.3
 * general cleanup of setcore
 * cleaned up setup file and added better descriptions
 * fixed a bug that would cause fsattack to not load properly
+* moved from pulling entire setcore which is a few thousand lines to adding src/core/set.version which contains the version - much faster in pulling down
 
 ~~~~~~~~~~~~~~~~
 version 7.2.3
