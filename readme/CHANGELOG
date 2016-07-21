@@ -13,6 +13,7 @@ version 7.3
 * removed socket error when no internet connection using update check
 * use global lock for checking previous use on update
 * general cleanup of setcore
+* cleaned up setup file and added better descriptions
 
 ~~~~~~~~~~~~~~~~
 version 7.2.3
