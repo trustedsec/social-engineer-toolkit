@@ -73,7 +73,7 @@ if platform.system() == "Linux":
             print("[!] Install GIT and run the installer again.")
             sys.exit()
 
-        print("[*] Copying SET into the /usr/share/ directory...")
+        print("[*] Copying SET into the /usr/share/setoolkit directory...")
         cwdpath = os.getcwd()
         subprocess.Popen("cd ..;cp -rf %s /usr/share/setoolkit" % (cwdpath), shell=True).wait()
         print("[*] Installing setoolkit installer to /usr/bin/setoolkit...")
@@ -89,7 +89,7 @@ if platform.system() == "Linux":
         #print("[*] Note you will manually need to install Core Security 'Impacket'")
         #print("[*] Download link: http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Impacket")
         # https://impacket.googlecode.com/files/impacket-0.9.10.tar.gz
-        print("[*] Once downloaded, tar -zxvf impacket*, go to the directory and run python setup.py install.")
+        #print("[*] Once downloaded, tar -zxvf impacket*, go to the directory and run python setup.py install.")
         print("[*] We are now finished! To run SET, type setoolkit...")
 
 if platform.system() == 'Darwin':

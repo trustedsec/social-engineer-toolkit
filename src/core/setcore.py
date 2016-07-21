@@ -252,7 +252,8 @@ def print_error(message):
           "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC)
 
 def get_version():
-    define_version = '7.3'
+    define_version = file("src/core/set.version", "r").read().rstrip()
+    #define_version = '7.2.3'
     return define_version
 
 class create_menu:
@@ -825,27 +826,22 @@ def show_banner(define_version, graphic):
 
     # pull version
     try:
+        version = ""
         if not os.path.isfile(setdir + "/version.lock"):
-            response = urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
-            setcheck = response.readlines()
-            for line in setcheck:
-                line = line.rstrip()
-                if "define_version =" in line:
-                    # define_version = '7.1.2'
-                    global version
-                    version = line.replace("define_version = ", "").replace("'", "", 2).replace("    ", "")
-                    break
-                filewrite = file(setdir + "/version.lock")
-                filewrite.write(version)
-                filewrite.close()
+            version = urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/set.version').read().rstrip()
+            filewrite = file(setdir + "/version.lock", "w")
+            filewrite.write(version)
+            filewrite.close()
 
         else: version = open(setdir + "/version.lock", "r").read()
+
         if cv != version:
-            print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN +
-                  "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
+            if version != "":
+                print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN + "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
+
     except Exception as err:
-        #print(err)
-        pass
+        print(err)
+        #pass
 
 def show_graphic():
     menu = random.randrange(2, 15)
