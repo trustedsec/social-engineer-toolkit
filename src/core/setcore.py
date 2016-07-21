@@ -269,7 +269,7 @@ def print_error(message):
 
 
 def get_version():
-    define_version = '7.2.3'
+    define_version = '7.3'
     return define_version
 
 class create_menu:
@@ -907,8 +907,8 @@ def show_banner(define_version, graphic):
     print(bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE + """)         [---]
 [---]        Created by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
-[---]                 Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """                   [---]
-[---]             Codename: '""" + bcolors.YELLOW + """Wine and Gold""" + bcolors.ENDC + bcolors.BLUE + """'            [---]
+[---]                  Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """                    [---]
+[---]               Codename: '""" + bcolors.YELLOW + """Five/Nine""" + bcolors.ENDC + bcolors.BLUE + """'              [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]

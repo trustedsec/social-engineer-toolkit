@@ -1,61 +1,28 @@
 #!/usr/bin/env python
 
-import re
-import glob
-import os
 from src.core.setcore import *
-import httplib
-import socket
-import urllib
+from src.sms.protectedapi import send_sms
 
-def send_smsgang_sms(to, origin, text, pincode):
-    try:
-        params = urllib.urlencode({
-                                   "tonumber" : to,
-                                   "senderid" : origin,
-                                   "pincode" : pincode,
-                                   "iso_msg" : text,
-                                   "unicode_msg" : "",
-                                   "B2" : "Send SMS"
-                                    })
-        headers = { "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8" }
-        conn = httplib.HTTPConnection('www.smsgang.com')
-        conn.request('POST', '/sendsms.php?langfile=en', params, headers)
-        response = conn.getresponse()
-        if (response.status == 200 and 
-                re.search("Your SMS was sent", response.read())):
-            print "\nSMS has been sent.\n"
-        else:
-            print "\nError while sending SMS - ensure that you have a valid PIN.\n"
-    except Exception as e:
-        print("\nError sending SMS - printing the error message: ")
-	print(e)
+# to = raw_input(setprompt(["7"], "Enter the phone number to send to"))
+print("""\n        ----- The Social-Engineer Toolkit (SET) SMS Spoofing Attack Vector -----\n""")
+print("This attack vector relies upon a third party service called www.spoofmytextmessage.com. This is a third party service outside of the control from the Social-Engineer Toolkit. The fine folks over at spoofmytextmessage.com have provided an undocumented API for us to use in order to allow SET to perform the SMS spoofing. You will need to visit https://www.spoofmytextmessage.com and sign up for an account. They example multiple payment methods such as PayPal, Bitcoin, and many more options. Once you purchase your plan that you want, you will need to remember your email address and password used for the account. SET will then handle the rest.\n")
+print("In order for this to work you must have an account over at spoofmytextmessage.com\n")
+print("Special thanks to Khalil @sehnaoui  for testing out the service for me and finding spoofmytextmessage.com\n")
+print_error("DISCLAIMER: By submitting yes, you understand that you accept all terms and services from spoofmytextmessage.com and you are fully aware of your countries legal stance on SMS spoofing prior to performing any of these. By accepting yes you fully acknowledge these terms and will not use them for unlawful purposes.") 
+message = raw_input("\nDo you accept these terms (yes or no): ")
+if message == "yes": 
+    print_status("Okay! Moving on - SET needs some information from you in order to spoof the message.")
+    email = raw_input("Enter your email address for the spoofmytextmessage.com account: ")
+    pw = raw_input("Enter your password for the spoofmytextmessage.com account: ")
+    print_status("The next section requires a country code, this is the code you would use to dial to the specific country, for example if I was sending a message to 555-555-5555 to the United States (or from) you would enter +1 below.")
+    tocountry = raw_input("Enter the country code for the number you are sending TO (for example U.S would be '+1')[1]: ")
+    if tocountry == "": tocountry = "+1"
+    fromcountry = raw_input("Enter the country code for the number you are sending FROM (for example U.S. would be '+1')[1]: ")
+    if fromcountry == "": fromcountry = "+1"
+    tonumber = raw_input("Enter the number to send the SMS TO - be sure to include country code (example: +15551234567): ")
+    fromnumber = raw_input("Enter the number you want to come FROM - be sure to include country code (example: +15551234567): ")
+    message = raw_input("Enter the message you want to send via the text message: ")
+    send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message)
 
-def launch():
-        while 1:
-        	try:
-			to = raw_input(setprompt(["7"], "Enter the phone number to send to"))
-                	origin = raw_input(setprompt(["7"], "Source/spoofed number phone"))
-                        body = raw_input(setprompt(["7"], "Body of the message, hit return for a new line. Type quit on a line to exit"))
-			goat = ""
-                        while goat != 'quit':
-                                	body += ("\n")
-                                        goat = raw_input("Next line of the body: ")
-					if goat != "quit":
-						body += goat
-
-                except KeyboardInterrupt:
-                        break
-
-                pincode = raw_input(setprompt(["7"], "Your SMSGANG pincode"))
-                send_smsgang_sms(to.rstrip(), origin.rstrip(), body.rstrip(), pincode)
-                # Finish here then return to main menu
-                print_status("SET has completed sending the initial message. Check for errors.")
-                return_continue()
-		break
-
-print("The SMS Spoofing Method will send a message from a source number that you specify and a full message that you detail within this module.\n\nNote that the current and only supported module is through a third party called SMSGang. SMSGang requires you to purchase credits which you can purchase directly from http://www.smsgang.com/. When purchasing, you will get a specific PIN that allows you to send messages as stated. You must purchase these credits before hand in order to send randomized and spoofed source text messages. Please note that you should check the legality of SMS spoofing in your individual countries in order to ensure you are in within legal compliance with all source text spoofing laws.")
-print("\n\n")
-# launch the question area
-launch()
+else:
+    print_status("Okay! Exiting out of the Social-Engineer Toolkit SMS Spoofing Attack Vector...") 
