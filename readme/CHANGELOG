@@ -10,6 +10,9 @@ version 7.3
 * added better check for python-requests in sms spoofing
 * added better formating within sms spoofing
 * added error handling to sms spoofing if something goes wrong during auth process
+* removed socket error when no internet connection using update check
+* use global lock for checking previous use on update
+* general cleanup of setcore
 
 ~~~~~~~~~~~~~~~~
 version 7.2.3

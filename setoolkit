@@ -270,9 +270,9 @@ except KeyboardInterrupt:
            " with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"))
 
 # handle exceptions
-# except Exception as error:
-#    log(error)
-#    print ("\n\n[!] Something went wrong, printing the error: "+ str(error))
+except Exception as error:
+    log(error)
+    print ("\n\n[!] Something went wrong, printing the error: "+ str(error))
 
 # cleanup routine
 cleanup_routine()
