@@ -4,7 +4,7 @@
 # Author: d4rk0
 # twitter: @d4rk0s
 
-from .fsattacks import *
+from src.webattack.fsattack.fsattacks import *
 
 
 def mainFullScreenAttackLoadExample():
