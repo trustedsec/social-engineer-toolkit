@@ -455,6 +455,8 @@ def cleanup_routine():
             os.remove("src/html/index.html")
         if os.path.isfile(setdir + "/Signed_Update.jar"):
             os.remove(setdir + "/Signed_Update.jar")
+        if os.path.isfile(setdir + "/version.lock"):
+            os.remove(setdir + "/version.lock")
 
     except:
         pass
