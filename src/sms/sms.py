@@ -23,6 +23,8 @@ try:
         tonumber = raw_input(setprompt(["7"], "Enter the number to send the SMS TO - be sure to include country code (example: +15551234567)"))
         fromnumber = raw_input(setprompt(["7"], "Enter the number you want to come FROM - be sure to include country code (example: +15551234567)"))
         message = raw_input(setprompt(["7"], "Enter the message you want to send via the text message"))
+
+        # note that the function for this is in a compiled python file with no source - this was done at the request of the third party we use since the API is not documented. I hand wrote the code and can validate its authenticity - it imports python requests and json and uses that to interact with the API. From a security standpoint if you are uncomfortable using this - feel free to ping me and I can walk you through what I do without giving away the API from the third party.
         send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message)
 
     else:
