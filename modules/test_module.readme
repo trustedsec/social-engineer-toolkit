@@ -1,13 +1,18 @@
-#
 # These are required fields
-#
-from src.core.setcore import *
-import sys
+import src.core.setcore as core
 
-MAIN="This is a test module"
-AUTHOR="Dave - TrustedSec"
+# Py2/3 compatibility
+# Python3 renamed raw_input to input
+try:
+    input = raw_input
+except NameError:
+    pass
+
+MAIN = "   This is a test module"
+AUTHOR = "   Dave - TrustedSec"
+
 
 # def main(): header is required
 def main():
-	java_applet_attack("https://gmail.com","443","reports/")
-	pause=raw_input("This module has finished completing. Press <enter> to continue")
+    core.java_applet_attack("https://gmail.com", "443", "reports/")
+    pause = input("   This module has finished completing. Press <enter> to continue")

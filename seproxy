@@ -4,14 +4,21 @@
 # Simple proxy for SET, note will show up in history
 #
 
-import pexpect
 import sys
 import getpass
+import os
 
-from src.core.setcore import *
+import src.core.setcore as core
+
+# Py2/3 compatibility
+# Python3 renamed raw_input to input
+try:
+    input = raw_input
+except NameError:
+    pass
 
 # grab the operating system
-operating_system = check_os()
+operating_system = core.check_os()
 
 # if windows then do some stuff
 if operating_system == "posix":
@@ -23,8 +30,8 @@ if operating_system == "posix":
 
     try:
 
-        proxy = raw_input("Enter the proxy server: ")
-        username = raw_input(
+        proxy = input("Enter the proxy server: ")
+        username = input(
             "Enter the username for the proxy (hit enter for none): ")
         password = getpass.getpass(
             "Enter the password for the proxy (hit enter for none): ")
@@ -40,15 +47,14 @@ if operating_system == "posix":
     if username == "":
         proxy_string = "export http_proxy='http://%s'" % (proxy)
 
-    filewrite = open(setdir + "/proxy.config", "w")
+    filewrite = open(core.setdir + "/proxy.config", "w")
     filewrite.write(proxy_string)
     filewrite.close()
 
     from src.core.set import *
 
     def kill_proc(port, flag):
-        proc = subprocess.Popen("netstat -antp | grep '%s'" %
-                                (port), shell=True, stdout=subprocess.PIPE)
+        proc = subprocess.Popen("netstat -antp | grep '%s'" % (port), shell=True, stdout=subprocess.PIPE)
         stdout_value = proc.communicate()[0]
         a = re.search("\d+/%s" % (flag), stdout_value)
         if a:
@@ -67,6 +73,6 @@ if operating_system == "posix":
     # handle errors
     except Exception as error:
         log(error)
-        pass
+
 else:
     print("[!] Sorry, this only works on posix (nix) based systems and is not compatible with this operating system.")
