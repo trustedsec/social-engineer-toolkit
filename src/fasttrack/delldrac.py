@@ -12,7 +12,7 @@
 # @TrustedSec
 #
 ##########################################
-import urllib
+from urllib import *
 import re
 import threading
 import sys
@@ -95,7 +95,7 @@ def login_drac(ipaddr_single):
         "WEBVAR_ISCMCLOGIN": 0
     }
     # URL encode it
-    data = urllib.parse.urlencode(opts)
+    data = urlencode(opts)
     # our headers to pass (taken from raw post)
     headers = {
         # "Host": "10.245.196.52",
@@ -113,10 +113,10 @@ def login_drac(ipaddr_single):
 
     }
     # request the page
-    req = urllib.request.Request(url, data, headers)
+    #req = urlopen(url, data, headers)
     try:
         # capture the response
-        response = urllib.request.urlopen(req, timeout=2)
+        response = urlopen(url, data, headers, timeout=2)
         data = response.read()
         # if we failed our login, just pass through
         if "Failure_Login_IPMI_Then_LDAP" in data:
@@ -153,7 +153,7 @@ def login_chassis(ipaddr_single):
         "WEBSERVER_timeout_select": "1800"
     }
     # url encode
-    data = urllib.parse.urlencode(opts)
+    data = urlencode(opts)
     # headers (taken from raw POST)
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:14.0) Gecko/20100101 Firefox/14.0.1",
@@ -165,11 +165,12 @@ def login_chassis(ipaddr_single):
         "Referer": "https://%s/cgi-bin/webcgi/login" % (ipaddr_single),
         "Content-Length": 78
     }
+
     # request the page
-    req = urllib.request.Request(url, data, headers)
+    #req = Request(url, data, headers)
     try:
         # capture the response
-        response = urllib.request.urlopen(req, timeout=2)
+        response = urlopen(url, data, headers, timeout=2)
         data = response.read()
         # if we failed to login
         if "login_failed_hr_top" in data:
