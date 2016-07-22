@@ -1,0 +1,3 @@
+#Incomplete adding them as I find them
+pexpect
+pycrypto
