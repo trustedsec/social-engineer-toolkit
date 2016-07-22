@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
-# Centralized core modules for SET        #
+# Centralized core modules for SET
+#
 #
 import re
 import sys
@@ -17,7 +18,12 @@ import base64
 from src.core import dictionaries
 import io
 import trace
-from urllib import *
+#python 2 and 3 compatibility
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib import urlopen
+import multiprocessing
 
 if sys.version_info >= (3, 0):
     # python 3 removes reduce from builtin and into functools
@@ -252,7 +258,7 @@ def print_error(message):
           "[!] " + bcolors.ENDC + bcolors.RED + str(message) + bcolors.ENDC)
 
 def get_version():
-    define_version = file("src/core/set.version", "r").read().rstrip()
+    define_version = open("src/core/set.version", "r").read().rstrip()
     #define_version = '7.2.3'
     return define_version
 
@@ -829,17 +835,33 @@ def show_banner(define_version, graphic):
     # pull version
     try:
         version = ""
-        if not os.path.isfile(setdir + "/version.lock"):
-            version = urlopen('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/set.version').read().rstrip()
-            filewrite = file(setdir + "/version.lock", "w")
-            filewrite.write(version)
-            filewrite.close()
+        def pull_version():
+            if not os.path.isfile(setdir + "/version.lock"):
+                url = ('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/set.version')
+                version = urlopen(url).read().rstrip().decode('utf-8')
+                filewrite = open(setdir + "/version.lock", "w")
+                filewrite.write(version)
+                filewrite.close()
 
-        else: version = open(setdir + "/version.lock", "r").read()
+            else: version = open(setdir + "/version.lock", "r").read()
 
-        if cv != version:
-            if version != "":
-                print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN + "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
+            if cv != version:
+                if version != "":
+                    print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN + "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
+
+        # why urllib and sockets cant control DNS resolvers is beyond me - so we use this as a hack job to add a delay and kill if updates are taking too long
+        p = multiprocessing.Process(target=pull_version)
+        p.start()
+
+        # Wait for 5 seconds or until process finishes
+        p.join(8)
+
+        # If thread is still active
+        if p.is_alive():
+            print(bcolors.RED + " Unable to check for new version of SET (is your network up?)\n" + bcolors.ENDC) 
+            # terminate the process
+            p.terminate()
+            p.join()
 
     except Exception as err:
         print(err)

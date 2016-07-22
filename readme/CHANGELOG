@@ -16,6 +16,8 @@ version 7.3
 * cleaned up setup file and added better descriptions
 * fixed a bug that would cause fsattack to not load properly
 * moved from pulling entire setcore which is a few thousand lines to adding src/core/set.version which contains the version - much faster in pulling down
+* fixed a bug in dell drac that caused it to error out
+* added timeout delay for pulling new version biggest challenge here is that urllib base is socket and socket timeout is tied to gethostbyname() which does not support a timeout, needed to add multiprocessing poll for 8 seconds to add timeout delay when checking for updates
 
 ~~~~~~~~~~~~~~~~
 version 7.2.3

@@ -18,7 +18,6 @@ import threading
 import sys
 import time
 
-
 class bcolors:
     PURPLE = '\033[95m'
     CYAN = '\033[96m'
@@ -80,7 +79,7 @@ print("media device.")
 print("")
 print("Enter the IP Address or CIDR notation below. Example: 192.168.1.1/24")
 print("")
-ipaddr = input("Enter the IP or CIDR: ")
+ipaddr = raw_input("Enter the IP or CIDR: ")
 
 # try logging into DRAC, chassis is something different
 
@@ -351,4 +350,4 @@ else:
            " Sorry, unable to find any of the Dell servers with default creds..Good luck :("))
 
 
-input("Press {return} to exit.")
+raw_input("Press {return} to exit.")
