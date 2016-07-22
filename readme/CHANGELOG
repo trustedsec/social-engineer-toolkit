@@ -19,6 +19,7 @@ version 7.3
 * fixed a bug in dell drac that caused it to error out
 * added timeout delay for pulling new version biggest challenge here is that urllib base is socket and socket timeout is tied to gethostbyname() which does not support a timeout, needed to add multiprocessing poll for 8 seconds to add timeout delay when checking for updates
 * added check for urllib for python2 and python3 compatibility
+* changed delldrac to python 2 to 3 compatibility and rewrote requests to use solid urlopen instead of requests
 
 ~~~~~~~~~~~~~~~~
 version 7.2.3
