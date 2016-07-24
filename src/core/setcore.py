@@ -837,11 +837,13 @@ def show_banner(define_version, graphic):
         version = ""
         def pull_version():
             if not os.path.isfile(setdir + "/version.lock"):
-                url = ('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/set.version')
-                version = urlopen(url).read().rstrip().decode('utf-8')
-                filewrite = open(setdir + "/version.lock", "w")
-                filewrite.write(version)
-                filewrite.close()
+                try:
+                    url = ('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/set.version')
+                    version = urlopen(url).read().rstrip().decode('utf-8')
+                    filewrite = open(setdir + "/version.lock", "w")
+                    filewrite.write(version)
+                    filewrite.close()
+                except KeyboardInterrupt: version = "keyboard interrupt"
 
             else: version = open(setdir + "/version.lock", "r").read()
 
