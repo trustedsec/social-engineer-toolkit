@@ -32,3 +32,4 @@ try:
 
 except ImportError:
     print_error("Looks like you dont have python-requests installed. Please install (apt-get install python-requests) and try again.")
+    print("Press {return} to continue.")
