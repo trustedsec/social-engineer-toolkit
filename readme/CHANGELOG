@@ -1,4 +1,14 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.1
+~~~~~~~~~~~~~~~~
+
+* PR for better python3 and pep8 handling - (thanks Cabalist)
+* added better handling around SMS spoofing and if legacy version of openssl is around
+* updated requirements.txt
+* added setdir definition from setdir to core.setdir on setoolkit
+* removed old version of Signed_update.jar.orig, updated .gitignore to include .jar, and removed old version of unsigned.jar
+
+~~~~~~~~~~~~~~~~
 version 7.3
 ~~~~~~~~~~~~~~~~
 
