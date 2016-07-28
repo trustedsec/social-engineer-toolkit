@@ -3,3 +3,7 @@ pycrypto
 requests
 pyopenssl
 pefile
+
+# Generate QR Codes
+qrcode
+pillow

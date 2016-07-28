@@ -1,21 +1,26 @@
-from src.qrcode.qrcode import *
-from src.core.setcore import *
+# coding=utf-8
 import os
+import time
+
+import src.core.setcore as core
+import qrcode
 
 # generate the qrcode and save it definition
 
 
 def gen_qrcode(url):
     # generate the qrcode
-    qr = QRCode(5, QRErrorCorrectLevel.L)
-    qr.addData(url)
+    qr = qrcode.QRCode(5, error_correction=qrcode.constants.ERROR_CORRECT_L)
+    qr.add_data(url)
     qr.make()
-    im = qr.makeImage()
+    im = qr.make_image()
     time.sleep(1)
-    if os.path.isfile(setdir + "/reports/qrcode_attack.png"):
-        os.remove(setdir + "/reports/qrcode_attack.png")
+
+    qr_img_path = os.path.join(core.setdir, "reports/qrcode_attack.png")
+
+    if os.path.isfile(qr_img_path):
+        os.remove(qr_img_path)
     # save the image out
-    im.save(setdir + "/reports/qrcode_attack.png", format='png')
+    im.save(qr_img_path, format='png')
     # print that its been successful
-    print_status(
-        "QRCode has been generated under %s/reports/qrcode_attack.png!" % (setdir))
+    core.print_status("QRCode has been generated under {}".format(qr_img_path))
