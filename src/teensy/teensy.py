@@ -154,7 +154,7 @@ if payload_counter == 1:
             child = pexpect.spawn("python src/html/web_server.py")
 
     else:
-        subprocess.Popen("cp {} %s/x.exe".format(metasploit_exec_path, os.path.join(webclone_path, "x.exe")), shell=True).wait()
+        subprocess.Popen("cp {} {}".format(metasploit_exec_path, os.path.join(webclone_path, "x.exe")), shell=True).wait()
 
     if os.path.isfile(os.path.join(core.setdir, "meta_config")):
         print(core.bcolors.BLUE + "\n[*] Launching MSF Listener...")
