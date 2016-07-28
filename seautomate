@@ -6,17 +6,31 @@ import time
 import subprocess
 import re
 
+# Py2/3 compatibility
+# Python3 renamed raw_input to input
+try:
+    input = raw_input
+except NameError:
+    pass
+
+try:
+    reload
+except NameError:
+    from importlib import reload
+
+
 # check where we are and load default directory
 if os.path.isdir("/usr/share/setoolkit"):
     if not os.path.isfile("se-toolkit"):
         os.chdir("/usr/share/setoolkit")
         sys.path.append("/usr/share/setoolkit")
 
+import src.core.setcore as core
+
 # if we can't see our config then something didn't go good..
 if not os.path.isfile("/etc/setoolkit/set.config"):
-    print_error(
-        "Cannot locate SET executable. Try running from the local directory.")
-    print_error("If this does not work, please run the setup.py install file.")
+    core.print_error("Cannot locate SET executable. Try running from the local directory.")
+    core.print_error("If this does not work, please run the setup.py install file.")
     sys.exit()
 
 
@@ -89,8 +103,7 @@ if os.path.isfile(filename):
                 # if the user is using pexpect < 2.3
                 except AttributeError:
                     print("[-] Error: You are running pexpect < 2.3 which is needed for this function")
-                    choice = raw_input(
-                        "Would you like to install it now yes or no: ")
+                    choice = input("Would you like to install it now yes or no: ")
                     if choice == "yes" or choice == "y":
                         subprocess.Popen(
                             "wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3;python setup.py install;cd ..;rm -rf pexpect-2*", shell=True).wait()

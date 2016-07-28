@@ -24,7 +24,7 @@ if platform.system() == "Linux":
 
     # if index is out of range then flag options
     except IndexError:
-        print("** SET Dependancy Installer **")
+        print("** SET Dependency Installer **")
         print("** Written by: Dave Kennedy (ReL1K) **")
         print("** Visit: https://www.trustedsec.com **")
         print("\nTo install: setup.py install")
@@ -75,7 +75,7 @@ if platform.system() == "Linux":
 
         print("[*] Copying SET into the /usr/share/setoolkit directory...")
         cwdpath = os.getcwd()
-        subprocess.Popen("cd ..;cp -rf %s /usr/share/setoolkit" % (cwdpath), shell=True).wait()
+        subprocess.Popen("cd ..;cp -rf %s /usr/share/setoolkit" % cwdpath, shell=True).wait()
         print("[*] Installing setoolkit installer to /usr/bin/setoolkit...")
         subprocess.Popen(
             "echo #!/bin/bash > /usr/bin/setoolkit", shell=True).wait()
