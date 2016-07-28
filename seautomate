@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 import sys
 import os
@@ -71,50 +72,54 @@ if os.path.isfile(filename):
     try:
         print("[*] Spawning SET in a threaded process...")
         child = pexpect.spawn("python setoolkit")
-        fileopen = open(filename, "r")
-        for line in fileopen:
-            line = line.rstrip()
-            # if we just use enter send default
-            if line == "":
-                line = "default"
+        with open(filename) as fileopen:
+            for line in fileopen:
+                line = line.rstrip()
+                # if we just use enter send default
+                if line == "":
+                    line = "default"
 
-            match1 = re.search("OMGPASSWORDHERE", line)
-            if match1:
-                line = line.replace("OMGPASSWORDHERE", "")
-                password = True
+                match1 = re.search("OMGPASSWORDHERE", line)
+                if match1:
+                    line = line.replace("OMGPASSWORDHERE", "")
+                    password = True
 
-            if password is False:
-                print("[*] Sending command {0} to the interface...".format(line))
-            if password is True:
-                print("[*] Sending command [**********] (password masked) to the interface...")
-                password = False
+                if password is False:
+                    print("[*] Sending command {0} to the interface...".format(line))
+                if password is True:
+                    print("[*] Sending command [**********] (password masked) to the interface...")
+                    password = False
 
-            if line == "default":
-                line = ""
+                if line == "default":
+                    line = ""
 
-            if line == "CONTROL-C-HERE":
-                try:
-                    print("[*] This may take a few seconds while SET catches up...")
-                    child.expect("Next line of the body:")
-                    time.sleep(2)
-                    child.sendline("\n")
-                    child.sendcontrol('c')
+                if line == "CONTROL-C-HERE":
+                    try:
+                        print("[*] This may take a few seconds while SET catches up...")
+                        child.expect("Next line of the body:")
+                        time.sleep(2)
+                        child.sendline("\n")
+                        child.sendcontrol('c')
 
-                # if the user is using pexpect < 2.3
-                except AttributeError:
-                    print("[-] Error: You are running pexpect < 2.3 which is needed for this function")
-                    choice = input("Would you like to install it now yes or no: ")
-                    if choice == "yes" or choice == "y":
-                        subprocess.Popen(
-                            "wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;tar -zxvf pexpect-2.3.tar.gz;cd pexpect-2.3;python setup.py install;cd ..;rm -rf pexpect-2*", shell=True).wait()
-                        try:
-                            reload(pexpect)
-                            child.sendcontrol('c')
-                        except:
-                            print("[*] Relaunch the Social-Engineer Toolkit for changes to apply.")
-                            sys.exit()
-            if line != "CONTROL-C-HERE":
-                child.sendline(line)
+                    # if the user is using pexpect < 2.3
+                    except AttributeError:
+                        print("[-] Error: You are running pexpect < 2.3 which is needed for this function")
+                        choice = input("Would you like to install it now yes or no: ")
+                        if choice == "yes" or choice == "y":
+                            subprocess.Popen("wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;"
+                                             "tar -zxvf pexpect-2.3.tar.gz;"
+                                             "cd pexpect-2.3;"
+                                             "python setup.py install;"
+                                             "cd ..;"
+                                             "rm -rf pexpect-2*", shell=True).wait()
+                            try:
+                                reload(pexpect)
+                                child.sendcontrol('c')
+                            except:
+                                print("[*] Relaunch the Social-Engineer Toolkit for changes to apply.")
+                                sys.exit()
+                if line != "CONTROL-C-HERE":
+                    child.sendline(line)
 
         print("[*] Finished sending commands, interacting with the interface..")
         child.interact()
@@ -130,4 +135,4 @@ if os.path.isfile(filename):
 
     # handle everything else
     except Exception as e:
-        print("[*] Something went wrong, printing error: ", e)
+        print("[*] Something went wrong, printing error: {}".format(e))
