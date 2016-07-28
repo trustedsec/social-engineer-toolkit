@@ -48,7 +48,7 @@ import src.core.setcore as core
 from src.core.menu import text
 from src.core.update_config import update_config
 
-if os.path.isfile(setdir + "/version.lock"): os.remove(setdir + "/version.lock")
+if os.path.isfile(core.setdir + "/version.lock"): os.remove(core.setdir + "/version.lock")
 
 # check directory and make it
 if not os.path.isdir("src/logs/"):
