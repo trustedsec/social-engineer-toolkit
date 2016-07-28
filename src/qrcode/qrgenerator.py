@@ -23,4 +23,4 @@ def gen_qrcode(url):
     # save the image out
     im.save(qr_img_path, format='png')
     # print that its been successful
-    core.print_status("QRCode has been generated under {}".format(qr_img_path))
+    core.print_status("QRCode has been generated under {0}".format(qr_img_path))
