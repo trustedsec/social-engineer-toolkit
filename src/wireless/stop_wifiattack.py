@@ -17,7 +17,7 @@ subprocess.Popen("rmmod rtl8187;"
                  "rfkill unblock all;"
                  "modprobe rtl8187;"
                  "rfkill unblock all;"
-                 "ifconfig {} up".format(interface),
+                 "ifconfig {0} up".format(interface),
                  shell=True).wait()
 
 core.print_status("Killing airbase-ng...")

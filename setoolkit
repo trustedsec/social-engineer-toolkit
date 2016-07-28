@@ -167,7 +167,7 @@ try:
             for line in fileopen:
                 print((line.rstrip()))
 
-        print("{}The Social-Engineer Toolkit is designed purely"
+        print("{0}The Social-Engineer Toolkit is designed purely"
               " for good and not evil. If you are planning on "
               "using this tool for malicious purposes that are "
               "not authorized by the company you are performing "
@@ -175,7 +175,7 @@ try:
               "service and license of this toolset. By hitting "
               "yes (only one time), you agree to the terms of "
               "service and that you will only use this tool for "
-              "lawful purposes only.{}".format(core.bcolors.RED, core.bcolors.ENDC))
+              "lawful purposes only.{1}".format(core.bcolors.RED, core.bcolors.ENDC))
         print(core.bcolors.GREEN)
         choice = input("\nDo you agree to the terms of service [y/n]: ")
         choice += " "  # b/c method below
@@ -269,7 +269,7 @@ try:
 
 # handle keyboard interrupts
 except KeyboardInterrupt:
-    print(("\n\nThank you for {}shopping{} with the Social-Engineer Toolkit."
+    print(("\n\nThank you for {0}shopping{1} with the Social-Engineer Toolkit."
            "\n\nHack the Gibson...and remember...hugs are worth more "
            "than handshakes.\n".format(core.bcolors.RED, core.bcolors.ENDC)))
 

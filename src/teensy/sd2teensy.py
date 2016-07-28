@@ -234,7 +234,7 @@ Keyboard.send_now();
 }}
 """.format(random_filename=random_filename, powershell_command=powershell_command, vbs=vbs, bat=bat))
 # delete temporary file
-subprocess.Popen("rm {} 1> /dev/null 2>/dev/null".format(random_filename), shell=True).wait()
+subprocess.Popen("rm {0} 1> /dev/null 2>/dev/null".format(random_filename), shell=True).wait()
 print("[*] Binary to Teensy file exported as teensy.pde")
 # write the teensy.pde file out
 with open("teensy.pde", "w") as filewrite:

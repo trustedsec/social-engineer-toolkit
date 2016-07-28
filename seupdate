@@ -32,4 +32,4 @@ except KeyboardInterrupt:
 
 # handle all other errors
 except Exception as e:
-    print("\n[!] Something went wrong.. Printing the error: {}".format(e))
+    print("\n[!] Something went wrong.. Printing the error: {0}".format(e))

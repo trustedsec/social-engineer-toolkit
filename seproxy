@@ -41,21 +41,21 @@ if operating_system == "posix":
         sys.exit()
 
     if username != "":
-        proxy_string = "export http_proxy='http://{}:{}@{}'".format(username, password, proxy)
+        proxy_string = "export http_proxy='http://{0}:{1}@{2}'".format(username, password, proxy)
     else:
-        proxy_string = "export http_proxy='http://{}'".format(proxy)
+        proxy_string = "export http_proxy='http://{0}'".format(proxy)
 
     with open(os.path.join(core.setdir, "/proxy.config"), "w") as filewrite:
         filewrite.write(proxy_string)
 
     def kill_proc(port, flag):
-        proc = subprocess.Popen("netstat -antp | grep '{}'".format(port), shell=True, stdout=subprocess.PIPE)
+        proc = subprocess.Popen("netstat -antp | grep '{0}'".format(port), shell=True, stdout=subprocess.PIPE)
         stdout_value = proc.communicate()[0]
-        a = re.search("\d+/{}".format(flag), stdout_value)
+        a = re.search("\d+/{0}".format(flag), stdout_value)
         if a:
             b = a.group()
-            b = b.replace("/{}".format(flag), "")
-            subprocess.Popen("kill -9 {} 1> /dev/null 2> /dev/null".format(b), shell=True).wait()
+            b = b.replace("/{0}".format(flag), "")
+            subprocess.Popen("kill -9 {0} 1> /dev/null 2> /dev/null".format(b), shell=True).wait()
 
     # cleans up stale processes from SET
     try:

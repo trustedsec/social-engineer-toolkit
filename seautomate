@@ -135,4 +135,4 @@ if os.path.isfile(filename):
 
     # handle everything else
     except Exception as e:
-        print("[*] Something went wrong, printing error: {}".format(e))
+        print("[*] Something went wrong, printing error: {0}".format(e))
