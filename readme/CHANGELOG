@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue if python-requests was not installed it would bomb the module and SET out
+
+~~~~~~~~~~~~~~~~
 version 7.3.1
 ~~~~~~~~~~~~~~~~
 
