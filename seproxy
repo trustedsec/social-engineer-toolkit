@@ -7,6 +7,8 @@
 import sys
 import getpass
 import os
+import subprocess
+import re
 
 import src.core.setcore as core
 
@@ -26,42 +28,34 @@ if operating_system == "posix":
     definepath = os.getcwd()
 
     print("\n[*] Welcome to the SET-Proxy Configuration Utility")
-    print("\nEnter the proxy setting informatiom below.\n\nExample: http://10.3.1.1:8080\n")
+    print("\nEnter the proxy setting information below.\n\nExample: http://10.3.1.1:8080\n")
 
     try:
 
         proxy = input("Enter the proxy server: ")
-        username = input(
-            "Enter the username for the proxy (hit enter for none): ")
-        password = getpass.getpass(
-            "Enter the password for the proxy (hit enter for none): ")
+        username = input("Enter the username for the proxy (hit enter for none): ")
+        password = getpass.getpass("Enter the password for the proxy (hit enter for none): ")
 
     except KeyboardInterrupt:
         print("\n[!] Exiting the Social-Engineer Toolkit.")
         sys.exit()
 
     if username != "":
-        proxy_string = "export http_proxy='http://%s:%s@%s'" % (
-            username, password, proxy)
+        proxy_string = "export http_proxy='http://{0}:{1}@{2}'".format(username, password, proxy)
+    else:
+        proxy_string = "export http_proxy='http://{0}'".format(proxy)
 
-    if username == "":
-        proxy_string = "export http_proxy='http://%s'" % (proxy)
-
-    filewrite = open(core.setdir + "/proxy.config", "w")
-    filewrite.write(proxy_string)
-    filewrite.close()
-
-    from src.core.set import *
+    with open(os.path.join(core.setdir, "/proxy.config"), "w") as filewrite:
+        filewrite.write(proxy_string)
 
     def kill_proc(port, flag):
-        proc = subprocess.Popen("netstat -antp | grep '%s'" % (port), shell=True, stdout=subprocess.PIPE)
+        proc = subprocess.Popen("netstat -antp | grep '{0}'".format(port), shell=True, stdout=subprocess.PIPE)
         stdout_value = proc.communicate()[0]
-        a = re.search("\d+/%s" % (flag), stdout_value)
+        a = re.search("\d+/{0}".format(flag), stdout_value)
         if a:
             b = a.group()
-            b = b.replace("/%s" % (flag), "")
-            subprocess.Popen("kill -9 %s 1> /dev/null 2> /dev/null" %
-                             (b), shell=True).wait()
+            b = b.replace("/{0}".format(flag), "")
+            subprocess.Popen("kill -9 {0} 1> /dev/null 2> /dev/null".format(b), shell=True).wait()
 
     # cleans up stale processes from SET
     try:
@@ -72,7 +66,7 @@ if operating_system == "posix":
 
     # handle errors
     except Exception as error:
-        log(error)
+        core.log(error)
 
 else:
     print("[!] Sorry, this only works on posix (nix) based systems and is not compatible with this operating system.")
