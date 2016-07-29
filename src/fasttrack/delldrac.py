@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 ###########################################
 #
@@ -91,7 +92,7 @@ def login_drac(ipaddr_single):
                "Accept-Encoding": "gzip, deflate",
                "Connection": "keep-alive",
                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-               "Referer": "https://{}/Applications/dellUI/login.htm".format(ipaddr_single),
+               "Referer": "https://{0}/Applications/dellUI/login.htm".format(ipaddr_single),
                "Content-Length": 63,
                "Cookie": "test=1; SessionLang=EN",
                "Pragma": "no-cache",
@@ -145,7 +146,7 @@ def login_chassis(ipaddr_single):
                "Accept-Encoding": "gzip, deflate",
                "Connection": "keep-alive",
                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-               "Referer": "https://{}/cgi-bin/webcgi/login".format(ipaddr_single),
+               "Referer": "https://{0}/cgi-bin/webcgi/login".format(ipaddr_single),
                "Content-Length": 78}
 
     # request the page
@@ -159,7 +160,7 @@ def login_chassis(ipaddr_single):
             pass  # login failed
         # to many people logged in at a given time
         if 'Connection refused, maximum sessions already in use.' in data:
-            print(("{}[!]{} There are to many people logged but un: root and pw: calvin are legit on IP: {}".format(bcolors.YELLOW,
+            print(("{0}[!]{1} There are to many people logged but un: root and pw: calvin are legit on IP: {2}".format(bcolors.YELLOW,
                                                                                                                     bcolors.ENDC,
                                                                                                                     ipaddr_single)))
             global global_check3
@@ -167,7 +168,7 @@ def login_chassis(ipaddr_single):
 
         # successful guess of passwords
         if "/cgi-bin/webcgi/index" in data:
-            print("{}[*]{} Dell Chassis Compromised! username: root password: calvin for IP address: ".format(bcolors.GREEN,
+            print("{0}[*]{1} Dell Chassis Compromised! username: root password: calvin for IP address: {2}".format(bcolors.GREEN,
                                                                                                               bcolors.ENDC,
                                                                                                               ipaddr_single))
             global global_check4

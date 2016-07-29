@@ -187,7 +187,7 @@ try:
             sid = check_user(ip, account)
             # if its false then cycle threw
             if not sid:
-                print("[!] Failed using account name: {}...Attempting another.".format(account))
+                print("[!] Failed using account name: {0}...Attempting another.".format(account))
             else:
                 # success! Break out of the loop
                 print("[*] Successfully enumerated SID account.. Moving on to extract via RID.\n")
@@ -220,7 +220,7 @@ try:
         if sid_names:
             for name in sid_names:
                 # print the sid
-                print("Account name: {}".format(name))
+                print("Account name: {0}".format(name))
                 # write the file out
                 filewrite.write(name + "\n")
 

@@ -28,7 +28,7 @@ def prep(database, ranges):
         core.print_status("Using the {0} sql driver for autopwn".format(database))
         filewrite.write("db_driver {0}\r\n".format(database))
         core.print_status("Autopwn will attack the following systems: {0}".format(ranges))
-        filewrite.write("db_nmap {}\r\n".format(ranges))
+        filewrite.write("db_nmap {0}\r\n".format(ranges))
         filewrite.write("db_autopwn -p -t -e -r\r\n")
         filewrite.write("jobs -K\r\n")
         filewrite.write("sessions -l\r\n")
