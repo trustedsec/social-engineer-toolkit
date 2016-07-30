@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.3
+~~~~~~~~~~~~~~~~
+
+* code audit and cleanup (much appreciated Cabalist)
+* fixed set.options error if file isnt found
+
+~~~~~~~~~~~~~~~~
 version 7.3.2
 ~~~~~~~~~~~~~~~~
 
