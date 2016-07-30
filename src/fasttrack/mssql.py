@@ -9,7 +9,7 @@ import time
 
 import src.core.setcore as core
 import src.core.tds as tds
-from src.core.payloadgen import create_payloads
+#from src.core.payloadgen import create_payloads
 
 # Py2/3 compatibility
 # Python3 renamed raw_input to input
@@ -114,9 +114,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         pass
     # just throw a simple command via powershell to get the output
     try:
-        print("""Pick which deployment method to use. The first is PowerShell
-         and should be used on any modern operating system. The second method
-         will use the certutil method to convert a binary to a binary""")
+        print("""Pick which deployment method to use. The first is PowerShell and should be used on any modern operating system. The second method will use the certutil method to convert a binary to a binary""")
 
         choice = input("Enter your choice:\n\n"
                        "1.) Use PowerShell Injection (recommended)\n"
