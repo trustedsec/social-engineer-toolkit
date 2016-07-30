@@ -6,9 +6,9 @@ import os
 import shutil
 import subprocess
 import time
-
 import src.core.setcore as core
-import src.core.tds as tds
+import impacket.tds as tds
+
 #from src.core.payloadgen import create_payloads
 
 # Py2/3 compatibility
