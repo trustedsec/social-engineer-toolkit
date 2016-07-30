@@ -9,6 +9,9 @@ version 7.3.4
 * fixed an issue that would cause TDS to error out when directly connecting to MSSQL server
 * removed impacket TDS from src.core and added impacket.tds
 * updated requirements.txt for impacket
+* fixed a bug when using certutil method and pairing directory strings
+* fixed automatic brute on mssql server when single host was scanned
+* fixed spacing issue on msfconsole -r was set to msfconsole-r
 
 ~~~~~~~~~~~~~~~~
 version 7.3.3

