@@ -838,11 +838,13 @@ def show_banner(define_version, graphic):
         def pull_version():
             if not os.path.isfile(setdir + "/version.lock"):
                 try:
+
                     url = ('https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/set.version')
                     version = urlopen(url).read().rstrip().decode('utf-8')
                     filewrite = open(setdir + "/version.lock", "w")
                     filewrite.write(version)
                     filewrite.close()
+
                 except KeyboardInterrupt: version = "keyboard interrupt"
 
             else: version = open(setdir + "/version.lock", "r").read()
@@ -1324,15 +1326,17 @@ def copyfolder(sourcePath, destPath):
 def check_options(option):
         # open the directory
     trigger = 0
-    fileopen = open(setdir + "/set.options", "r").readlines()
-    for line in fileopen:
-        match = re.search(option, line)
-        if match:
-            line = line.rstrip()
-            line = line.replace('"', "")
-            line = line.split("=")
-            return line[1]
-            trigger = 1
+    if os.path.isfile(setdir + "/set.options"):
+        fileopen = open(setdir + "/set.options", "r").readlines()
+        for line in fileopen:
+            match = re.search(option, line)
+            if match:
+                line = line.rstrip()
+                line = line.replace('"', "")
+                line = line.split("=")
+                return line[1]
+                trigger = 1
+
     if trigger == 0:
         return trigger
 
