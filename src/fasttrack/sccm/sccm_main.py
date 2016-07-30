@@ -48,7 +48,7 @@ Next
 '''.format(sms_server, package_id)
 
 # write out the file to reports
-with open(os.path.join(core.setdir, "reports/sccm_configuration.txt"), 'w') as filewrite:
+with open(os.path.join(core.setdir + "reports/sccm_configuration.txt"), 'w') as filewrite:
     filewrite.write(configuration)
 core.print_status("The SCCM configuration script has been successfully created.")
 core.print_status("You need to copy the script to the startup folder of the server.")

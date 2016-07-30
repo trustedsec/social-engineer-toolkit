@@ -97,11 +97,14 @@ try:
                             iprange = iprange.split(",")
                             for host in iprange:
                                 sqlport = get_sql_port(host)
+                                if sqlport != None: print_status("Found SQL port on IP Address: %s and on port: %s" % (host, sqlport))
                                 if sqlport == None:
-                                    sql_nmap_scan(host)
-                                    if sql_nmap_scan != None:
+                                    nmapscan = sql_nmap_scan(host)
+                                    if nmapscan != "":
                                         sql_servers = sql_servers + \
                                             host + ":" + "1433" + ","
+                                        print_status("Found a SQL port on IP Address: %s and on port: 1433" % (host))
+                                    if nmapscan == "": print_warning("Unable to find a SQL server on IP: %s" % (host)) 
                                 if sqlport != None:
                                     sql_servers = sql_servers + \
                                         host + ":" + sqlport + ","

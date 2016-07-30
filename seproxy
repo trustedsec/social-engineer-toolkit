@@ -45,7 +45,7 @@ if operating_system == "posix":
     else:
         proxy_string = "export http_proxy='http://{0}'".format(proxy)
 
-    with open(os.path.join(core.setdir, "/proxy.config"), "w") as filewrite:
+    with open(os.path.join(core.setdir + "/proxy.config"), "w") as filewrite:
         filewrite.write(proxy_string)
 
     def kill_proc(port, flag):

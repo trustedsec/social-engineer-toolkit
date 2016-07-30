@@ -1,4 +1,13 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.4
+~~~~~~~~~~~~~~~~
+
+* fixed an issue with mssql bruter that would cause it to fail over to nmap scans even if host wasn't valid
+* fixed an issue that would cause UDP to not work properly when scanning subnet ranges
+* improved handling and descriptions in mssql
+* fixed error in mssql bruter
+
+~~~~~~~~~~~~~~~~
 version 7.3.3
 ~~~~~~~~~~~~~~~~
 

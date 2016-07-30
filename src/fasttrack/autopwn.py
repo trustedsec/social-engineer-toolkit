@@ -44,8 +44,8 @@ def launch():
     core.print_status("Launching Metasploit and attacking the systems specified. This may take a moment..")
     # try/catch block
     try:
-        child = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(core.meta_path, 'msfconsole'),
-                                                          os.path.join(core.setdir, "autopwn.answer")))
+        child = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(core.meta_path + 'msfconsole'),
+                                                          os.path.join(core.setdir + "autopwn.answer")))
         child.interact()
 
     # handle exceptions and log them
