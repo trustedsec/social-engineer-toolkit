@@ -8,6 +8,7 @@ import subprocess
 import time
 import src.core.setcore as core
 import impacket.tds as tds
+from src.payloads.powershell.prep import prep_powershell_payload
 
 #from src.core.payloadgen import create_payloads
 
@@ -172,28 +173,25 @@ def deploy_hex2binary(ipaddr, port, username, password):
 
         if choice1 == "1":
             web_path = None
-            try:
-                core.module_reload(create_payloads)
-            except:
-                import src.core.payloadgen.create_payloads
+            prep_powershell_payload()
 
-                # if we are using a SET interactive shell payload then we need to make
-                # the path under web_clone versus ~./set
-                if os.path.isfile(os.path.join(core.setdir + "set.payload")):
-                    web_path = os.path.join(core.setdir + "web_clone")
-                    # then we are using metasploit
-                else:
-                    if operating_system == "posix":
-                        web_path = core.setdir
-                        # if it isn't there yet
-                        if not os.path.isfile(core.setdir + "1msf.exe"):
-                            # move it then
-                            subprocess.Popen("cp %s/msf.exe %s/1msf.exe" %
-                                             (core.setdir, core.setdir), shell=True).wait()
-                            subprocess.Popen("cp %s/1msf.exe %s/ 1> /dev/null 2> /dev/null" %
-                                             (core.setdir, core.setdir), shell=True).wait()
-                            subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" %
-                                             (core.setdir, core.setdir), shell=True).wait()
+            # if we are using a SET interactive shell payload then we need to make
+            # the path under web_clone versus ~./set
+            if os.path.isfile(os.path.join(core.setdir + "set.payload")):
+                web_path = os.path.join(core.setdir + "web_clone")
+                # then we are using metasploit
+            else:
+                if operating_system == "posix":
+                    web_path = core.setdir
+                    # if it isn't there yet
+                    if not os.path.isfile(core.setdir + "1msf.exe"):
+                        # move it then
+                        subprocess.Popen("cp %s/msf.exe %s/1msf.exe" %
+                                         (core.setdir, core.setdir), shell=True).wait()
+                        subprocess.Popen("cp %s/1msf.exe %s/ 1> /dev/null 2> /dev/null" %
+                                         (core.setdir, core.setdir), shell=True).wait()
+                        subprocess.Popen("cp %s/msf2.exe %s/msf.exe 1> /dev/null 2> /dev/null" %
+                                         (core.setdir, core.setdir), shell=True).wait()
             payload_filename = os.path.join(web_path + "1msf.exe")
 
         with open(payload_filename, "rb") as fileopen:
