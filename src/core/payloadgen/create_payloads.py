@@ -10,6 +10,7 @@ import base64
 from src.core.setcore import *
 from src.core.menu.text import *
 from src.core.dictionaries import *
+from src.payloads.powershell.prep import prep_powershell_payload
 
 try:
     if len(check_options("IPADDR=")) > 2:
@@ -599,10 +600,7 @@ try:
             if setshell_counter == 0:
                 if custom == 0:  # or choice1 != "set/reverse_shell" or choice1 != "shellcode/alphanum":
                     if os.path.isfile("%s/web_clone/index.html" % (setdir)):
-                        try:
-                            reload(src.payloads.powershell.prep)
-                        except:
-                            import src.payloads.powershell.prep
+                        prep_powershell_payload()
                         if os.path.isfile("%s/x86.powershell" % (setdir)):
                             fileopen1 = open(
                                 "%s/x86.powershell" % (setdir), "r")

@@ -8,6 +8,7 @@ import os
 import subprocess
 
 import src.core.setcore as core
+from src.payloads.powershell.prep import  prep_powershell_payload
 
 # Py2/3 compatibility
 # Python3 renamed raw_input to input
@@ -74,10 +75,7 @@ try:
     core.update_options("POWERSHELL_SOLO=ON")
     core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
 
-    try:
-        core.module_reload(src.payloads.powershell.prep)
-    except:
-        import src.payloads.powershell.prep
+    prep_powershell_payload()
 
     # create the directory if it does not exist
     if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
