@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.6
+~~~~~~~~~~~~~~~~
+
+* fixed a bug around mssql bruter and code enhancement changes
+
+~~~~~~~~~~~~~~~~
 version 7.3.5
 ~~~~~~~~~~~~~~~~
 
