@@ -3,6 +3,7 @@ version 7.3.10
 ~~~~~~~~~~~~~~~~
 
 * added masking of password in sms
+* fixed encoding issue with sms spoofing
 
 ~~~~~~~~~~~~~~~~
 version 7.3.9
