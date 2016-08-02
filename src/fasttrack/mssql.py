@@ -174,6 +174,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
             web_path = None
 
             #prep_powershell_payload()
+            import src.core.payloadgen.create_payloads 
 
             # if we are using a SET interactive shell payload then we need to make
             # the path under web_clone versus ~./set
