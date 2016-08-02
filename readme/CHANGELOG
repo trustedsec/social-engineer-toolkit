@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.8
+~~~~~~~~~~~~~~~~
+
+* added encodedcommand to get around AV evasion
+
+~~~~~~~~~~~~~~~~
 version 7.3.7
 ~~~~~~~~~~~~~~~~
 
