@@ -1,31 +1,31 @@
 ##################################################################################################
 ##################################################################################################
-##					                                                	##
-## The following config file will allow you to customize settings within            		##
-## the Social-Engineer Toolkit. The lines that do not have comment code				##
-## ("#") are the fields you want to toy with. They are pretty easy to			        ##
-## understand.											##
-##										                ##
-## The Metasploit path is the default path for where Metasploit is located.			##
-## Metasploit is required for SET to function properly.					        ##
-##									                        ##
-## The "ETTERCAP" option specifies if you want to use ARP cache poisoning in		        ##
-## conjunction with the web attacks; note that ARP cache poisoning is only	                ##
+##                                                                                              ##
+## The following config file will allow you to customize settings within                        ##
+## the Social-Engineer Toolkit. The lines that do not have comment code				            ##
+## ("#") are the fields you want to toy with. They are pretty easy to			                ##
+## understand.											                                        ##
+##										                                                        ##
+## The Metasploit path is the default path for where Metasploit is located.			            ##
+## Metasploit is required for SET to function properly.					                        ##
+##									                                                            ##
+## The "ETTERCAP" option specifies if you want to use ARP cache poisoning in		            ##
+## conjunction with the web attacks; note that ARP cache poisoning is only	                    ##
 ## for internal subnets only and does not work against people on the Internet.	                ##
-##								                                ##
+##								                                                                ##
 ## The "SENDMAIL" option allows you to spoof source IP addresses utilizing an                   ##
-## program called Sendmail. Sendmail is not installed by default on Kali.		        ##
-## To spoof email addresses when performing the mass email attacks, you must 	                ## 
-## install Sendmail manually using the command: "apt-get install sendmail"	                ##
-#							                                        ##
+## program called Sendmail. Sendmail is not installed by default on Kali.		                ##
+## To spoof email addresses when performing the mass email attacks, you must                    ## 
+## install Sendmail manually using the command: "apt-get install sendmail"	                    ##
+#							                                                                    ##
 ## Note that "ETTERCAP" and "SENDMAIL" options only accept ON or OFF switches.	                ##
-##										                ##
-## Note that the "Metasploit_PATH" option cannot have a '/' after the folder name.		##
-##							                                        ##
-## There are additional options; read the comments for additional descriptions.		        ##
-##												##
-## CONFIG_VERSION=7.2										##
-##								                                ##
+##										                                                        ##
+## Note that the "Metasploit_PATH" option cannot have a '/' after the folder name.		        ##
+##							                                                                    ##
+## There are additional options; read the comments for additional descriptions.		            ##
+##												                                                ##
+## CONFIG_VERSION=7.3.9										                                    ##
+##								                                                                ##
 ##################################################################################################
 ##################################################################################################
 #
@@ -189,8 +189,8 @@ POWERSHELL_INJECTION=ON
 #
 ### This will allow you to change the Metasploit payload to whatever you want based on the PowerShell alphanumeric
 ### injection attack. Specify this if PowerShell injection is enabled and you want to change it from the standard
-### "reverse_tcp" attack. Note that all payloads use x86; the process will automatically downgrade to 32-bit.
-POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_tcp
+### "reverse_https" attack. Note that all payloads use x86; the process will automatically downgrade to 32-bit.
+POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_https
 #
 ### This option will spray multiple ports through PowerShell in an effort to get a port outbound. 
 ### Note that PowerShell injection must be enabled.

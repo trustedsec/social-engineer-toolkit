@@ -40,7 +40,8 @@ if not os.path.isfile("/etc/setoolkit/set.config"):
 # here we check to ensure we have the latest version
 with open("/etc/setoolkit/set.config") as fileopen:
     data = fileopen.read()
-if "CONFIG_VERSION=7.2" not in data:
+
+if "CONFIG_VERSION=7.3.9" not in data:
     print("[*] Overwriting old config for updates to SET. Backing up your old one in /etc/setoolkit/")
     shutil.move("/etc/setoolkit/set.config", "/etc/setoolkit/set.config.bak")
     shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")

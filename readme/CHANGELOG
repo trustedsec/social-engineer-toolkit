@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.9
+~~~~~~~~~~~~~~~~
+
+* config cleanup
+* fixed an issue when using psexec injection it would use reverse_tcp instead of reverse_https this was due to the set.config being used
+
+~~~~~~~~~~~~~~~~
 version 7.3.8
 ~~~~~~~~~~~~~~~~
 

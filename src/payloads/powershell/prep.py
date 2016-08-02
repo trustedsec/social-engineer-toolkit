@@ -52,7 +52,7 @@ powershell_inject_x86 = check_config("POWERSHELL_INJECT_PAYLOAD_X86=")
 
 # if we specified a hostname then default to reverse https/http
 if validate_ip(ipaddr) == False:
-    powershell_inject_x86 = "windows/meterpreter/reverse_http"
+    powershell_inject_x86 = "windows/meterpreter/reverse_https"
 
 # prompt what port to listen on for powershell then make an append to the current
 # metasploit answer file
