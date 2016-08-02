@@ -2,6 +2,7 @@
 # coding=utf-8
 import src.core.setcore as core
 import sys
+import getpass
 
 # Py2/3 compatibility
 # Python3 renamed raw_input to input
@@ -33,7 +34,8 @@ def _do_sms():
     if message == "yes":
         core.print_status("Okay! Moving on - SET needs some information from you in order to spoof the message.")
         email = input(core.setprompt(["7"], "Enter your email address for the spoofmytextmessage.com account"))
-        pw = input(core.setprompt(["7"], "Enter your password for the spoofmytextmessage.com account"))
+        core.print_status("Note that the password below will be masked and you will not see the output.")
+        pw = getpass.getpass(core.setprompt(["7"], "Enter your password for the spoofmytextmessage.com account"))
         core.print_status("The next section requires a country code, this is the code you would use to dial "
                           "to the specific country, for example if I was sending a message to 555-555-5555 to "
                           "the United States (or from) you would enter +1 below.")
