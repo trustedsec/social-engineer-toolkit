@@ -12,7 +12,6 @@ import subprocess
 
 import src.core.setcore as core
 from src.core.menu import text
-from src.payloads.powershell.prep import prep_powershell_payload
 
 # Py2/3 compatibility
 # Python3 renamed raw_input to input
@@ -43,7 +42,12 @@ if powershell_menu_choice != "99":
         with open(core.setdir + "/payload_options.shellcode", "w") as filewrite:
             filewrite.write("windows/meterpreter/reverse_tcp {},".format(port))
 
-        prep_powershell_payload()
+        try:
+            core.module_reload(src.payloads.powershell.prep)
+        except:
+            import src.payloads.powershell.prep
+
+        #prep_powershell_payload()
 
         # create the directory if it does not exist
         if not os.path.isdir(core.setdir + "/reports/powershell"):

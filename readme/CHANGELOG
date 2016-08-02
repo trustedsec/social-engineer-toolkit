@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.7
+~~~~~~~~~~~~~~~~
+
+* replaced powershell prep with the old one - it broke almost all powershell injection in SET
+* fixed an issue that would cause scanner to continue to scan even when port not discovered (function issue)
+
+~~~~~~~~~~~~~~~~
 version 7.3.6
 ~~~~~~~~~~~~~~~~
 

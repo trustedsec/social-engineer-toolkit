@@ -113,8 +113,8 @@ try:
                             for ip in range1:
                                 sqlport = get_sql_port(ip)
                                 if sqlport == None:
-                                    sql_nmap_scan(ip)
-                                    if sql_nmap_scan != "":
+                                    nmapscan = sql_nmap_scan(ip)
+                                    if nmapscan != "":
                                         sql_servers = sql_servers + \
                                             ip + ":" + "1433" + ","
 

