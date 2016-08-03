@@ -1453,7 +1453,6 @@ def generate_shellcode(payload, ipaddr, port):
     data = proc.communicate()[0]
     data = data.decode('ascii')
     # start to format this a bit to get it ready
-    #goat
     repls = [';', ' ', '+', '"', '\n', 'unsigned char buf=',
              'unsignedcharbuf[]=', "b'", "'", '\\n']
     for repl in repls:
@@ -1774,10 +1773,9 @@ def get_sql_port(host):
         sql_port = d[0].split(";")[9]
         if sql_port != None: 
             return host + ": " + sql_port
-
         else:
             proc = subprocess.Popen("nmap -v -sT -p1433 %s" %
-                                    (ipaddr), shell=True, stdout=subprocess.PIPE)
+                                    (host), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             output = proc.communicate()[0].split("\n")
             result = ""
             counter = 0
@@ -1785,7 +1783,7 @@ def get_sql_port(host):
                 if "Discovered open port" in result:
                     result = result.split("on ")[1]
                     counter = 1
-                    return host + ":" + result
+                    return host + ":" + "1433"
             if counter == 0:
                 return None 
 
