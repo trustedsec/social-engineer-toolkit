@@ -1762,7 +1762,7 @@ def get_sql_port(host):
 
     # Build the socket with a .1 second timeout
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.settimeout(.3)
+    s.settimeout(.1)
 
     # Attempt to query UDP:1434 and return MSSQL running port
     try:
