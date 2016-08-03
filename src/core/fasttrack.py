@@ -3,9 +3,10 @@ from src.core.setcore import *
 from src.core.menu import text
 import subprocess
 from multiprocessing.dummy import Pool as ThreadPool 
-
 definepath = os.getcwd()
 
+try: input = raw_input
+except: pass
 
 #
 #
@@ -97,7 +98,7 @@ try:
                         if "/" in str(range):
                             iprange = printCIDR(range)
                             iprange = iprange.split(",")
-                            pool = ThreadPool(30)
+                            pool = ThreadPool(200)
                             sqlport = pool.map(get_sql_port, iprange)
                             pool.close()
                             pool.join()
@@ -152,6 +153,13 @@ try:
                     # split into tuple for different IP address
                     sql_servers = sql_servers.split(",")
                     # start loop and brute force
+
+                    print_status("The following SQL servers and associated ports were identified; ")
+                    for sql in sql_servers:
+                        if sql != "":
+                            print "SQL Server:" + sql
+                    print_status("By pressing enter, you will begin the brute force process on all SQL accounts identified in the list above.")
+                    test = input("Press {enter} to begin the brute force process.")
                     for servers in sql_servers:
 
                         # this will return the following format ipaddr + "," +
