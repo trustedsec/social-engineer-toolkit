@@ -98,7 +98,7 @@ try:
                         if "/" in str(range):
                             iprange = printCIDR(range)
                             iprange = iprange.split(",")
-                            pool = ThreadPool(200)
+                            pool = ThreadPool(30)
                             sqlport = pool.map(get_sql_port, iprange)
                             pool.close()
                             pool.join()
@@ -154,10 +154,10 @@ try:
                     sql_servers = sql_servers.split(",")
                     # start loop and brute force
 
-                    print_status("The following SQL servers and associated ports were identified; ")
+                    print_status("The following SQL servers and associated ports were identified: ")
                     for sql in sql_servers:
                         if sql != "":
-                            print "SQL Server:" + sql
+                            print(sql)
                     print_status("By pressing enter, you will begin the brute force process on all SQL accounts identified in the list above.")
                     test = input("Press {enter} to begin the brute force process.")
                     for servers in sql_servers:
@@ -195,9 +195,6 @@ try:
                     if sql_servers:
                         print_warning(
                             "Sorry. Unable to locate or fully compromise a MSSQL Server on the following SQL servers: ")
-                        for line in sql_servers:
-                            if line != "":
-                                print("SQL Server: " + line.rstrip())
 
                     else:
                         print_warning(

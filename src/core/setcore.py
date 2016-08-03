@@ -18,6 +18,7 @@ import base64
 from src.core import dictionaries
 import io
 import trace
+
 #python 2 and 3 compatibility
 try:
     from urllib.request import urlopen
@@ -1765,29 +1766,30 @@ def get_sql_port(host):
 
     # Attempt to query UDP:1434 and return MSSQL running port
     try:
-        port = 1434
-        msg = "\x02\x41\x41\x41\x41"
-        s.sendto(msg, (host, port))
-        d = s.recvfrom(1024)
+        sql_port = None
+        try:
+            port = 1434
+            msg = "\x02\x41\x41\x41\x41"
+            s.sendto(msg, (host, port))
+            d = s.recvfrom(1024)
+            sql_port = d[0].split(";")[9]
 
-        sql_port = d[0].split(";")[9]
-        if sql_port != None: 
-            return host + ": " + sql_port
-        else:
-            proc = subprocess.Popen("nmap -v -sT -p1433 %s" %
-                                    (host), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output = proc.communicate()[0].split("\n")
-            result = ""
-            counter = 0
-            for result in output:
-                if "Discovered open port" in result:
-                    result = result.split("on ")[1]
-                    counter = 1
-                    return host + ":" + "1433"
-            if counter == 0:
-                return None 
+        # if we have an exception, udp 1434 isnt there could be firewalled off so we need to check 1433 just in case
+        except:
+            sql_port = "1433"
+            pass
 
-    except:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(.2)
+            s.connect((host, int(sql_port)))
+            return host + ":" + sql_port
+
+        # if port is closed
+        except: return None
+
+    except Exception as err:
+        print str(err)
         pass
 
 # capture output from a function
