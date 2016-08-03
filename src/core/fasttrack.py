@@ -2,8 +2,10 @@
 from src.core.setcore import *
 from src.core.menu import text
 import subprocess
+from multiprocessing.dummy import Pool as ThreadPool 
 
 definepath = os.getcwd()
+
 
 #
 #
@@ -95,45 +97,27 @@ try:
                         if "/" in str(range):
                             iprange = printCIDR(range)
                             iprange = iprange.split(",")
-                            for host in iprange:
-                                sqlport = get_sql_port(host)
-                                if sqlport != None: print_status("Found SQL port on IP Address: %s and on port: %s" % (host, sqlport))
-                                if sqlport == None:
-                                    nmapscan = sql_nmap_scan(host)
-                                    if nmapscan != "":
-                                        sql_servers = sql_servers + \
-                                            host + ":" + "1433" + ","
-                                        print_status("Found a SQL port on IP Address: %s and on port: 1433" % (host))
-                                    if nmapscan == "": print_warning("Unable to find a SQL server on IP: %s" % (host)) 
-                                if sqlport != None:
-                                    sql_servers = sql_servers + \
-                                        host + ":" + sqlport + ","
+                            pool = ThreadPool(30)
+                            sqlport = pool.map(get_sql_port, iprange)
+                            pool.close()
+                            pool.join()
+                            for sql in sqlport:
+                                if sql != None: sql_servers = sql_servers + sql + ","
+
                         else:
                             range1 = range.split(" ")
                             for ip in range1:
                                 sqlport = get_sql_port(ip)
-                                if sqlport == None:
-                                    nmapscan = sql_nmap_scan(ip)
-                                    if nmapscan != "":
-                                        sql_servers = sql_servers + \
-                                            ip + ":" + "1433" + ","
-
                                 if sqlport != None:
-                                    sql_servers = sql_servers + \
-                                        ip + ":" + sqlport + ","
+                                    sql_servers = sql_servers + sqlport + ","
 
                     else:
                         # use udp discovery to get the SQL server UDP 1434
                         sqlport = get_sql_port(range)
                         # if its not closed then check nmap - if both fail then
                         # nada
-                        if sqlport == None:
-                            sql_nmap_scan(host)
-                            if sql_nmap_scan != "":
-                                sql_servers = sql_servers + \
-                                    host + ":" + "1433" + ","
                         if sqlport != None:
-                            sql_servers = range + ":" + sqlport
+                            sql_servers = sqlport + ","
 
                 # specify choice 2
                 if choice == "2":

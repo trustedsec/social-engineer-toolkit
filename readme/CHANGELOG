@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.11
+~~~~~~~~~~~~~~~~
+
+* major rehaul on mssql bruter now supports threading support for all udp/1433 scans
+* combined udp/1433 sweep/scan functions and simplified code
+
+~~~~~~~~~~~~~~~~
 version 7.3.10
 ~~~~~~~~~~~~~~~~
 

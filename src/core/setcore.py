@@ -1762,7 +1762,7 @@ def get_sql_port(host):
 
     # Build the socket with a .1 second timeout
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.settimeout(.1)
+    s.settimeout(.2)
 
     # Attempt to query UDP:1434 and return MSSQL running port
     try:
@@ -1772,21 +1772,25 @@ def get_sql_port(host):
         d = s.recvfrom(1024)
 
         sql_port = d[0].split(";")[9]
-        return sql_port
+        if sql_port != None: 
+            return host + ": " + sql_port
+
+        else:
+            proc = subprocess.Popen("nmap -v -sT -p1433 %s" %
+                                    (ipaddr), shell=True, stdout=subprocess.PIPE)
+            output = proc.communicate()[0].split("\n")
+            result = ""
+            counter = 0
+            for result in output:
+                if "Discovered open port" in result:
+                    result = result.split("on ")[1]
+                    counter = 1
+                    return host + ":" + result
+            if counter == 0:
+                return None 
 
     except:
         pass
-
-# this will manually tcp connect if needed
-def sql_nmap_scan(ipaddr):
-    proc = subprocess.Popen("nmap -v -sT -p1433 %s" %
-                            (ipaddr), shell=True, stdout=subprocess.PIPE)
-    output = proc.communicate()[0].split("\n")
-    result = ""
-    for result in output:
-        if "Discovered open port" in result:
-            result = result.split("on ")[1]
-    return result
 
 # capture output from a function
 def capture(func, *args, **kwargs):
