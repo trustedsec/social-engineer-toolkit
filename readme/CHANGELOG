@@ -5,6 +5,7 @@ version 7.3.12
 * added prompt before brute forcing
 * removed nmap depend and used standard sockets for tcp connect
 * reduced connect time for mssql
+* added warning when you are out of credits for sms spoof
 
 ~~~~~~~~~~~~~~~~
 version 7.3.11
