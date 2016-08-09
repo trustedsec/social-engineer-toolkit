@@ -210,7 +210,7 @@ def return_continue():
            "<return> " + bcolors.ENDC + "to continue"))
     pause = raw_input()
 
-# DEBUGGING ###############
+# DEBUGGING #############
 # ALWAYS SET TO ZERO BEFORE COMMIT!
 DEBUG_LEVEL = 0
 #  0 = Debugging OFF
