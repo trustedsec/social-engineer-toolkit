@@ -63,7 +63,7 @@ if core.check_options("CUSTOM_EXE="):
         data = data.replace('param name="8" value="YES"', 'param name="8" value="{0}"'.format(goat_random))
         filewrite.write(data)
 
-    subprocess.Popen("mv {0{ {1}".format(os.path.join(core.setdir, "web_clone/index.html.new"),
+    subprocess.Popen("mv {0} {1}".format(os.path.join(core.setdir, "web_clone/index.html.new"),
                                          os.path.join(core.setdir, "web_clone/index.html")),
                      shell=True).wait()
 
