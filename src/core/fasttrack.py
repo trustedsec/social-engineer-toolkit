@@ -158,8 +158,10 @@ try:
                     for sql in sql_servers:
                         if sql != "":
                             print(sql)
-                    print_status("By pressing enter, you will begin the brute force process on all SQL accounts identified in the list above.")
-                    test = input("Press {enter} to begin the brute force process.")
+
+		    if len(sql_servers) > 2:
+                        print_status("By pressing enter, you will begin the brute force process on all SQL accounts identified in the list above.")
+                        test = input("Press {enter} to begin the brute force process.")
                     for servers in sql_servers:
 
                         # this will return the following format ipaddr + "," +
