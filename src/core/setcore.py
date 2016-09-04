@@ -345,7 +345,7 @@ def meta_path():
         if os.path.isfile("/usr/bin/msfconsole"):
             msf_path = ""
             trigger = 1
-        #﻿Kali linux bleeding edge should return this in order to work
+        # Kali linux bleeding edge should return this in order to work
         if os.path.isfile("/usr/share/metasploit-framework/msfconsole"):
             msf_path = "/usr/share/metasploit-framework/"
             trigger = 1
