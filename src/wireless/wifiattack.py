@@ -22,6 +22,9 @@ from set_config import AP_CHANNEL as ap_channel
 from set_config import DNSSPOOF_PATH as dnsspoof_path
 sys.path.append(core.definepath)
 
+try: input = raw_input
+except: pass
+
 if not os.path.isfile("/etc/init.d/isc-dhcp-server"):
     core.print_warning("isc-dhcp-server does not appear to be installed.")
     core.print_warning("apt-get install isc-dhcp-server to install it. Things may fail now.")

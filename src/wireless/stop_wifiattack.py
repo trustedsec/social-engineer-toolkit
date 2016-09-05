@@ -8,6 +8,9 @@ import src.core.setcore as core
 # Simple python script to kill things created by the SET wifi attack vector
 #
 
+try: input = raw_input
+except: pass
+
 interface = input(core.setprompt(["8"], "Enter your wireless interface (ex: wlan0): "))
 
 # fix a bug if present
