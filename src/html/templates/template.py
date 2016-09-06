@@ -77,7 +77,7 @@ if not os.path.isdir(os.path.join(core.setdir, "web_clone")):
     os.makedirs(os.path.join(core.setdir, "web_clone/"))
 if os.path.isfile(os.path.join(core.setdir, "web_clone/index.html")):
     os.remove(os.path.join(core.setdir, "web_clone/index.html"))
-shutil.copyfile("src/html/index.template", os.path.join(core.setdir, "/web_clone/index.html"))
+shutil.copyfile("src/html/index.template", os.path.join(core.setdir, "web_clone/index.html"))
 
 with open(os.path.join(core.setdir, "site.template"), 'w') as filewrite:
     filewrite.write("TEMPLATE=SELF\nURL={0}".format(url))
