@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.13
+~~~~~~~~~~~~~~~~
+
+* some versions of OpenSSL would throw a zipimporter error. 7.3.13 resolves this issue
+
+~~~~~~~~~~~~~~~~
 version 7.3.12
 ~~~~~~~~~~~~~~~~
 
