@@ -299,7 +299,8 @@ def deploy_hex2binary(ipaddr, port, username, password):
                                                      os.path.join(core.setdir + "reports/powershell/powershell.rc")))
             core.print_status("Waiting for the listener to start first before we continue forward...")
             core.print_status("Be patient, Metasploit takes a little bit to start...")
-            child2.expect("Starting the payload handler", timeout=30000)
+            #child2.expect("Starting the payload handler", timeout=30000)
+            child2.expect("Processing", timeout=30000)
             core.print_status("Metasploit started... Waiting a couple more seconds for listener to activate..")
             time.sleep(5)
 
