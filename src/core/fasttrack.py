@@ -92,8 +92,7 @@ try:
                 if choice != "2":
                     # sql_servers
                     sql_servers = ''
-                    print_status(
-                        "Hunting for SQL servers.. This may take a little bit.")
+                    print_status("Hunting for SQL servers.. This may take a little bit.")
                     if "/" or " " in str(range):
                         if "/" in str(range):
                             iprange = printCIDR(range)
@@ -103,14 +102,17 @@ try:
                             pool.close()
                             pool.join()
                             for sql in sqlport:
-                                if sql != None: sql_servers = sql_servers + sql + ","
+                                if sql != None:
+                                    if sql != "":
+                                        sql_servers = sql_servers + sql + ","
 
                         else:
                             range1 = range.split(" ")
                             for ip in range1:
                                 sqlport = get_sql_port(ip)
                                 if sqlport != None:
-                                    sql_servers = sql_servers + sqlport + ","
+                                    if sqlport != "":
+                                        sql_servers = sql_servers + sqlport + ","
 
                     else:
                         # use udp discovery to get the SQL server UDP 1434
@@ -118,7 +120,8 @@ try:
                         # if its not closed then check nmap - if both fail then
                         # nada
                         if sqlport != None:
-                            sql_servers = sqlport + ","
+                            if sqlport != "":
+                                sql_servers = sqlport + ","
 
                 # specify choice 2
                 if choice == "2":

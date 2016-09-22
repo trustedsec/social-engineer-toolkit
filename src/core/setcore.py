@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+1#!/usr/bin/env python
 #
 # Centralized core modules for SET
 #
@@ -1786,7 +1786,9 @@ def get_sql_port(host):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(.2)
             s.connect((host, int(sql_port)))
-            return host + ":" + sql_port
+            return_host = host + ":" + sql_port
+            if return_host != ":" + sql_port:
+                return host + ":" + sql_port
 
         # if port is closed
         except: return None

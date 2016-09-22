@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.15
+~~~~~~~~~~~~~~~~
+
+* fix repetative sqlport issue bug for non existent hosts
+
+~~~~~~~~~~~~~~~~
 version 7.3.14
 ~~~~~~~~~~~~~~~~
 
