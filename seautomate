@@ -43,6 +43,7 @@ if not os.path.isfile("/etc/setoolkit/set.config"):
 # try to import pexpect
 try:
     import pexpect
+
 # if pexpect fails
 except ImportError:
     print("\n[*] PEXPECT is required, please download and install before running this...")
@@ -73,26 +74,27 @@ if os.path.isfile(filename):
     try:
         print("[*] Spawning SET in a threaded process...")
         child = pexpect.spawn("python setoolkit")
+        child.expect("99\) Exit the Social-Engineer Toolkit")
         with open(filename) as fileopen:
             for line in fileopen:
                 line = line.rstrip()
                 # if we just use enter send default
                 if line == "":
-                    line = "default"
+                    line = "blank line"
 
-                match1 = re.search("OMGPASSWORDHERE", line)
-                if match1:
-                    line = line.replace("OMGPASSWORDHERE", "")
-                    password = True
+                #match1 = re.search("OMGPASSWORDHERE", line)
+                #if match1:
+                #    line = line.replace("OMGPASSWORDHERE", "")
+                #    password = True
 
-                if password is False:
-                    print("[*] Sending command {0} to the interface...".format(line))
-                if password is True:
-                    print("[*] Sending command [**********] (password masked) to the interface...")
-                    password = False
+                #if password is False:
+                print("[*] Sending command {0} to the interface...".format(line))
+                #if password is True:
+                #    print("[*] Sending command [**********] (password masked) to the interface...")
+                #    password = False
 
-                if line == "default":
-                    line = ""
+                if line == "blank line":
+                    line = "\n"
 
                 if line == "CONTROL-C-HERE":
                     try:
@@ -107,12 +109,13 @@ if os.path.isfile(filename):
                         print("[-] Error: You are running pexpect < 2.3 which is needed for this function")
                         choice = input("Would you like to install it now yes or no: ")
                         if choice == "yes" or choice == "y":
-                            subprocess.Popen("wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;"
-                                             "tar -zxvf pexpect-2.3.tar.gz;"
-                                             "cd pexpect-2.3;"
-                                             "python setup.py install;"
-                                             "cd ..;"
-                                             "rm -rf pexpect-2*", shell=True).wait()
+                            #subprocess.Popen("wget http://sourceforge.net/projects/pexpect/files/pexpect/Release%202.3/pexpect-2.3.tar.gz;"
+                            #                 "tar -zxvf pexpect-2.3.tar.gz;"
+                            #                 "cd pexpect-2.3;"
+                            #                 "python setup.py install;"
+                            #                 "cd ..;"
+                            #                 "rm -rf pexpect-2*", shell=True).wait()
+                            subprocess.Popen("pip install pexpect", shell=True).wait()
                             try:
                                 reload(pexpect)
                                 child.sendcontrol('c')

@@ -1,4 +1,13 @@
 ~~~~~~~~~~~~~~~~
+version 7.3.16
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that caused seautomatic to not detect full path of toolkit when launching from within directory
+* fixed a bug in seautomate that would not wait for commands to execute based on time delay when launching and causing it to not submit
+* fixed an issue where python3 would not import urllib.request
+* fixed an issue that would cause python2.7 not to work without wget installed
+
+~~~~~~~~~~~~~~~~
 version 7.3.15
 ~~~~~~~~~~~~~~~~
 

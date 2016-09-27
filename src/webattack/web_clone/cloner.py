@@ -11,6 +11,11 @@ import time
 import re
 import shutil
 import urllib
+# needed for python3
+try: import urllib.request
+except ImportError: 
+    import urllib2
+    pass
 operating_system = check_os()
 definepath = os.getcwd()
 
@@ -151,10 +156,15 @@ try:
                 # not as good as wget
                 headers = {'User-Agent': user_agent}
                 # read in the websites
-                req = urllib.request.Request(url, None, headers)
-                # read in the data from the initial request
-                html = urllib.request.urlopen(req).read()
-                # if length isnt much then we didnt get the site cloned
+                try:
+                    req = urllib.request.Request(url, None, headers)
+                    # read in the data from the initial request
+                    html = urllib.request.urlopen(req).read()
+                    # if length isnt much then we didnt get the site cloned
+                except AttributeError:
+                    req = urllib2.Request(url, headers=headers)
+                    html = urllib2.urlopen(req).read()
+
                 if len(html) > 1:
                     # if the site has cloned properly
                     site_cloned = True
