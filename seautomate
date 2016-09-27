@@ -16,13 +16,14 @@ except NameError:
 
 try:
     reload
+
 except NameError:
     from importlib import reload
 
 
 # check where we are and load default directory
 if os.path.isdir("/usr/share/setoolkit"):
-    if not os.path.isfile("se-toolkit"):
+    if not os.path.isfile("setoolkit"):
         os.chdir("/usr/share/setoolkit")
         sys.path.append("/usr/share/setoolkit")
 
