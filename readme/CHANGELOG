@@ -3,6 +3,7 @@ version 7.4
 ~~~~~~~~~~~~~~~~
 
 * added better obfuscation around encodedcommand
+* added new third party module google analytics attack: # https://github.com/ZonkSec/google-analytics-attack. Walkthrough here: http://www.zonksec.com/blog/social-engineering-google-analytics/
 
 ~~~~~~~~~~~~~~~~
 version 7.3.16
