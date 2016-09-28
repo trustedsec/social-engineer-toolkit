@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.4
+~~~~~~~~~~~~~~~~
+
+* added better obfuscation around encodedcommand
+
+~~~~~~~~~~~~~~~~
 version 7.3.16
 ~~~~~~~~~~~~~~~~
 
