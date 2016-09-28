@@ -1794,7 +1794,7 @@ def get_sql_port(host):
         except: return None
 
     except Exception as err:
-        print str(err)
+        print(err)
         pass
 
 # capture output from a function
