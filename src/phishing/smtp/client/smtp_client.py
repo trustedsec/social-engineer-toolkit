@@ -10,20 +10,24 @@ import glob
 import random
 import pexpect
 import base64
-import thread
 
-# python 2 to 3 fix
+# python 2 to 3 fixes
+try:
+    import _thread as thread # Py3
+except ImportError:
+    import thread # Py2
 try:
     from cStringIO import StringIO
-except NameError:
+except ImportError:
     from io import StringIO
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEBase import MIMEBase
-from email.MIMEText import MIMEText
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
 from email.header import Header
 from email.generator import Generator
-from email import Charset
-from email import Encoders
+import email.charset as Charset
+import email.encoders as Encoders
 
 # DEFINE SENDMAIL CONFIG
 sendmail = 0
