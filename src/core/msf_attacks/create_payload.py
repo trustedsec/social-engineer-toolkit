@@ -174,23 +174,23 @@ if exploit_counter == 0:
         msfpath = (users_home + "/.msf4/")
 
     if os.path.isdir(users_home + "/.msf5/"):
-	# then we know its actually created
-	if os.path.isdir(users_home + "/.msf5/loot"):
-	        msfpath = (users_home + "/.msf5/")
+        # then we know its actually created
+        if os.path.isdir(users_home + "/.msf5/loot"):
+            msfpath = (users_home + "/.msf5/")
 
     # if we have never run msf before
     if msfpath == "":
-	print_warning("Metasploit has not been previously run on the system. This means that the msf directories haven't been created yet. Running Metasploit for you.")
-	child = pexpect.spawn("msfconsole")
-	print_status("Waiting 10 seconds for the directories to be created...")
-	time.sleep(10)
-	child.close()
-	if os.path.isdir(users_home + "/.msf4"):
-		print_status("All good! The directories were created.")
-		msfpath = (users_home + "/.msf4/")
-	else:
-		print_error("Please exit out of SET and type 'msfconsole' from the command prompt and launch SET again. Can't find the msf4 directory.")
-		sys.exit()
+        print_warning("Metasploit has not been previously run on the system. This means that the msf directories haven't been created yet. Running Metasploit for you.")
+        child = pexpect.spawn("msfconsole")
+        print_status("Waiting 10 seconds for the directories to be created...")
+        time.sleep(10)
+        child.close()
+    if os.path.isdir(users_home + "/.msf4"):
+        print_status("All good! The directories were created.")
+        msfpath = (users_home + "/.msf4/")
+    else:
+        print_error("Please exit out of SET and type 'msfconsole' from the command prompt and launch SET again. Can't find the msf4 directory.")
+        sys.exit()
 
     outpath = (msfpath + "local/" + outfile)
     print_info("Generating fileformat exploit...")
@@ -209,29 +209,29 @@ if exploit_counter == 0:
         child = pexpect.spawn(
             "%smsfconsole -r %s/template.rc" % (meta_path, setdir))
         a = 1
-	counter = 0
-        while a == 1:
-	    if counter == 10: 
-		a = 2
-		print_error("Unable to generate PDF - there appears to be an issue with your Metasploit install.")
-		print_error("You will need to troubleshoot Metasploit manually and try generating a PDF. You can manually troubleshoot by going to /root/.set/ and typing msfconsole -r template.rc to reproduce the issue.")
-		pause = raw_input("Press {return} to move back.")
-		break
-            if os.path.isfile(setdir + "/" + outfile):
-                subprocess.Popen("cp " + msfpath + "local/%s %s" % (filename_code, setdir),
-                                 stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-                a = 2  # break
-            else:
-                print_status("Waiting for payload generation to complete (be patient, takes a bit)...")
-                if os.path.isfile(msfpath + "local/" + outfile):
-                    subprocess.Popen("cp %slocal/%s %s" %
-                                     (msfpath, outfile, setdir), shell=True)
-		    counter = counter + 1 
-                time.sleep(3)
+    counter = 0
+    while a == 1:
+        if counter == 10: 
+            a = 2
+            print_error("Unable to generate PDF - there appears to be an issue with your Metasploit install.")
+            print_error("You will need to troubleshoot Metasploit manually and try generating a PDF. You can manually troubleshoot by going to /root/.set/ and typing msfconsole -r template.rc to reproduce the issue.")
+            pause = raw_input("Press {return} to move back.")
+            break
+        if os.path.isfile(setdir + "/" + outfile):
+            subprocess.Popen("cp " + msfpath + "local/%s %s" % (filename_code, setdir),
+                             stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+            a = 2  # break
+        else:
+            print_status("Waiting for payload generation to complete (be patient, takes a bit)...")
+            if os.path.isfile(msfpath + "local/" + outfile):
+                subprocess.Popen("cp %slocal/%s %s" %
+                                 (msfpath, outfile, setdir), shell=True)
+                counter = counter + 1 
+            time.sleep(3)
 
-        print_status("Payload creation complete.")
-        time.sleep(1)
-        print_status("All payloads get sent to the %s directory" % (outfile))
+    print_status("Payload creation complete.")
+    time.sleep(1)
+    print_status("All payloads get sent to the %s directory" % (outfile))
     if exploit == 'custom/exe/to/vba/payload':
         # Creating Payload here
         # if not 64 specify raw output and filename of vb1.exe
