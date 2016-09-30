@@ -7,6 +7,7 @@ version 7.4
 * converted alphanumeric shellcode to accept DNS names
 * changed alphanumeric shellcode to reverse_https instead of reverse_tcp
 * added prompt for TLS support in email phishing
+* added fsociety new logo - much larger lol
 
 ~~~~~~~~~~~~~~~~
 version 7.3.16
