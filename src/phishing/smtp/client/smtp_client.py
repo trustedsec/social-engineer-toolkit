@@ -356,9 +356,8 @@ else:
     prioflag1 = ' 1 (Highest)'
     prioflag2 = ' High'
 
+
 # Define mail send here
-
-
 def mail(to, subject, text, attach, prioflag1, prioflag2):
     msg = MIMEMultipart()
     msg['From'] = str(
@@ -398,6 +397,10 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
             except:
                 pass
             mailServer.ehlo()
+    if not "gmail|yahoo|hotmail|" in email_provider: 
+        tls = yesno_prompt(["1"], "Does your server support TLS? [yes|no]")
+        if tls == "YES":
+            mailServer.starttls()
     if counter == 0:
         try:
             if email_provider == "gmail" or email_provider == "yahoo" or email_provider == "hotmail":
