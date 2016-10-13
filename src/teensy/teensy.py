@@ -83,7 +83,7 @@ with open(os.path.join(core.setdir + "teensy")) as fileopen:
 
 
 def writefile(filename, now):
-    with open(os.path.join("src/teensy" + filename)) as fileopen, \
+    with open(os.path.join("src/teensy/" + filename)) as fileopen, \
             open(os.path.join(core.setdir + "/reports/teensy_{0}.pde".format(now)), "w") as filewrite:
 
         for line in fileopen:
