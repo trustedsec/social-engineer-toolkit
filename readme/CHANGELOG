@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.4.1
+~~~~~~~~~~~~~~~~
+
+* converted all powershell encodedcommand to abbreviated
+
+~~~~~~~~~~~~~~~~
 version 7.4
 ~~~~~~~~~~~~~~~~
 

