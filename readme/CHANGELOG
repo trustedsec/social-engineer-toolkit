@@ -13,6 +13,7 @@ version 7.4
 * replaced spawn.py with older version which did not do the full pytho3 conversion os.path.join breaks in python2
 * fixed spawning issue within spawn.py that would cause meta path to not launch in certain circumstances
 * fixed an issue that would cause pdf generation to not complete properly
+* added link to SET user manual into readme on github
 
 ~~~~~~~~~~~~~~~~
 version 7.3.16
