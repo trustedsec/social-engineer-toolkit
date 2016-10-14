@@ -8,6 +8,9 @@ version 7.4
 * changed alphanumeric shellcode to reverse_https instead of reverse_tcp
 * added prompt for TLS support in email phishing
 * added fsociety new logo - much larger lol
+* fixed issue that would cause java applet to not launch webserver
+* fixed issue that would cause metasploit browser to not launch webserver
+* replaced spawn.py with older version which did not do the full pytho3 conversion os.path.join breaks in python2
 
 ~~~~~~~~~~~~~~~~
 version 7.3.16
