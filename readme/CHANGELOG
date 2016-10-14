@@ -14,6 +14,7 @@ version 7.4
 * fixed spawning issue within spawn.py that would cause meta path to not launch in certain circumstances
 * fixed an issue that would cause pdf generation to not complete properly
 * added link to SET user manual into readme on github
+* fixed an issue that would cause HTA attack vector to not spawn reverse https payloads properly (size constraint)
 
 ~~~~~~~~~~~~~~~~
 version 7.3.16
