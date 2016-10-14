@@ -1182,10 +1182,11 @@ and send the QRCode via a mailer.
 
             except ImportError:
                 print_error(
-                    "This module requires python-imaging to work properly.")
-                print_error("In Ubuntu do apt-get install python-imaging")
+                    "This module requires PIL (Or Pillow) and qrcode to work properly.")
                 print_error(
-                    "Else refer to here for installation: http://code.google.com/appengine/docs/python/images/installingPIL.html")
+                    "Just do pip install Pillow; pip install qrcode")
+                print_error(
+                    "Else refer to here for installation: http://pillow.readthedocs.io/en/3.3.x/installation.html")
                 return_continue()
 
         # Main Menu choice 9: PowerShell Attacks
