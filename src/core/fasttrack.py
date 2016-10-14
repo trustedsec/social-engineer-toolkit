@@ -162,7 +162,7 @@ try:
                         if sql != "":
                             print(sql)
 
-		    if len(sql_servers) > 2:
+                    if len(sql_servers) > 2:
                         print_status("By pressing enter, you will begin the brute force process on all SQL accounts identified in the list above.")
                         test = input("Press {enter} to begin the brute force process.")
                     for servers in sql_servers:
