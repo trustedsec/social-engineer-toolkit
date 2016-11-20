@@ -35,7 +35,11 @@ ipaddr = core.grab_ipaddress()
 #
 # metasploit_path here
 #
-msf_path = core.meta_path() + "msfconsole"
+
+
+msf_path = core.meta_path()
+if msf_path == "": msf_path = "/usr/bin/msfconsole"
+else: msf_path = msf_path + "/msfconsole"
 
 ################################################################
 #
