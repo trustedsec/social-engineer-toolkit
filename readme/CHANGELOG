@@ -4,6 +4,7 @@ version 7.4.2
 
 * define function meta_path() better
 * fixed a bug in binary2teensy that would not properly identify metasploit if launcher is in /usr/bin/msfconsole
+* fixed a bug in binary2teensy where it would not open the directory properly and make reports
 
 ~~~~~~~~~~~~~~~~
 version 7.4.1
