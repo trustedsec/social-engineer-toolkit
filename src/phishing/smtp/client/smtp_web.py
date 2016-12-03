@@ -32,7 +32,7 @@ Charset.add_charset('utf-8', Charset.BASE64, Charset.BASE64, 'utf-8')
 # unless otherwise specified
 message_flag = "plain"
 
-# impor the core modules
+# import the core modules
 from src.core.setcore import *
 
 # do we want to track the users that click links
