@@ -349,7 +349,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
             mailServer.docmd("AUTH LOGIN", base64.b64encode(provideruser))
             mailServer.docmd(base64.b64encode(pwd), "")
 
-        # except exceptions and print incorrect passowrd
+        # except exceptions and print incorrect password
         except Exception as e:
             print_warning(
                 "It appears your password was incorrect.\nPrinting response: " + (str(e)))
