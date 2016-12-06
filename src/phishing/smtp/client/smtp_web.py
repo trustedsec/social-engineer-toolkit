@@ -32,7 +32,7 @@ Charset.add_charset('utf-8', Charset.BASE64, Charset.BASE64, 'utf-8')
 # unless otherwise specified
 message_flag = "plain"
 
-# impor the core modules
+# import the core modules
 from src.core.setcore import *
 
 # do we want to track the users that click links
@@ -349,7 +349,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
             mailServer.docmd("AUTH LOGIN", base64.b64encode(provideruser))
             mailServer.docmd(base64.b64encode(pwd), "")
 
-        # except exceptions and print incorrect passowrd
+        # except exceptions and print incorrect password
         except Exception as e:
             print_warning(
                 "It appears your password was incorrect.\nPrinting response: " + (str(e)))
