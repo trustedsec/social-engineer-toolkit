@@ -25,12 +25,21 @@ import threading
 import datetime
 import shutil
 
+# detect openssl module
+try:
+#   from OpenSSL import SSL
+    from OpenSSL import SSL
+
+# handle import error that openssl is not there
+except Exception as err:
+    print("Python OpenSSL wasn't detected or PEM file not found, note that SSL compatibility will be affected.")
+    print_status("Printing error: " + str(err))
+    pass
+
 # get path to normal
 definepath = os.getcwd()
 sys.path.append(definepath)
-
 from src.core.setcore import *
-
 sys.path.append("/etc/setoolkit")
 from set_config import APACHE_SERVER as apache_check
 from set_config import WEBATTACK_EMAIL as webattack_email
@@ -39,16 +48,8 @@ from set_config import HARVESTER_LOG as logpath
 sys.path.append(definepath)
 
 if track_email == True:
-    print_status(
-        "You have selected to track user accounts, Apache will automatically be turned on to handle tracking of users.")
+    print_status("You have selected to track user accounts, Apache will automatically be turned on to handle tracking of users.")
     apache_check = True
-
-# detect openssl module
-try:
-    from OpenSSL import SSL
-# handle import error that openssl is not there
-except Exception:
-    print("Python OpenSSL wasn't detected or has an installation issue, note that SSL compatibility is now turned off")
 
 ############################################
 #          Credential harvester            #
@@ -650,6 +651,7 @@ try:
 
     # if we are using ssl
     if ssl_flag == 'true':
+        print "GOAT"
         ssl_server()
 
     # if we aren't using ssl

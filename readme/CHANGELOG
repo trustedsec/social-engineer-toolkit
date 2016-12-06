@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.4.3
+~~~~~~~~~~~~~~~~
+
+* add a patch to pyopenssl through zipimporter - looks like a bug in pyopenssl when paths are specified
+
+~~~~~~~~~~~~~~~~
 version 7.4.2
 ~~~~~~~~~~~~~~~~
 
