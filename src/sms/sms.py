@@ -9,6 +9,17 @@ import getpass
 try: input = raw_input
 except NameError: pass
 
+
+trigger = 0
+try:
+    import requests
+
+except ImportError:
+    core.print_error("Looks like you dont have python-requests installed. "
+                     "Please install (apt-get install python-requests) and try again.")
+    input("Press {return} to continue.")
+    trigger = 1
+
 def _do_sms():
     print("""\n        ----- The Social-Engineer Toolkit (SET) SMS Spoofing Attack Vector -----\n""")
     print("This attack vector relies upon a third party service called www.spoofmytextmessage.com. "
@@ -70,14 +81,8 @@ def _do_sms():
     else:
         core.print_status("Okay! Exiting out of the Social-Engineer Toolkit SMS Spoofing Attack Vector...")
 
+# launch sms
 try:
-    import requests
-
-except ImportError:
-    core.print_error("Looks like you dont have python-requests installed. "
-                     "Please install (apt-get install python-requests) and try again.")
-    input("Press {return} to continue.")
-
-try:
-    _do_sms()
+    if trigger == 0:
+        _do_sms()
 except Exception as err: print_error("Something went wrong, printing error: " + str(err))
