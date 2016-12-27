@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.4.4
+~~~~~~~~~~~~~~~~
+
+* fixed /usr/bin/msfconsole not showing appropriate metasploit path
+
+~~~~~~~~~~~~~~~~
 version 7.4.3
 ~~~~~~~~~~~~~~~~
 

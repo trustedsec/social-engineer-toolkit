@@ -344,7 +344,7 @@ def meta_path():
 
         # if we are using just the standard path for msfconsole
         if os.path.isfile("/usr/bin/msfconsole"):
-            msf_path = ""
+            msf_path = "/usr/bin/"
             trigger = 1
 
         # Kali linux bleeding edge should return this in order to work
