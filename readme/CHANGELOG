@@ -3,6 +3,7 @@ version 7.4.4
 ~~~~~~~~~~~~~~~~
 
 * fixed /usr/bin/msfconsole not showing appropriate metasploit path
+* fixed using hostname in powershell injector (when using http/https) payloads
 
 ~~~~~~~~~~~~~~~~
 version 7.4.3

