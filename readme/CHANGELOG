@@ -4,6 +4,7 @@ version 7.4.4
 
 * fixed /usr/bin/msfconsole not showing appropriate metasploit path
 * fixed using hostname in powershell injector (when using http/https) payloads
+* added better handling around import methods in sms spoofing and break out error messages
 
 ~~~~~~~~~~~~~~~~
 version 7.4.3
