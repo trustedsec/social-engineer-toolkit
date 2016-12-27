@@ -72,9 +72,12 @@ def _do_sms():
 
 try:
     import requests
-    _do_sms()
 
 except ImportError:
     core.print_error("Looks like you dont have python-requests installed. "
                      "Please install (apt-get install python-requests) and try again.")
     input("Press {return} to continue.")
+
+try:
+    _do_sms()
+except Exception as err: print_error("Something went wrong, printing error: " + str(err))
