@@ -108,7 +108,7 @@ to convert the payload back to a binary for us.
 """)
 
 webattack_text = ("""
-The Web Attack module is  a unique way of utilizing multiple web-based attacks in order to compromise the intended victim.
+The Web Attack module is a unique way of utilizing multiple web-based attacks in order to compromise the intended victim.
 
 The """ + bcolors.BOLD + """Java Applet Attack""" + bcolors.ENDC + """ method will spoof a Java Certificate and deliver a metasploit based payload. Uses a customized java applet created by Thomas Werth to deliver the payload.
 
