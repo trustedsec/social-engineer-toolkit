@@ -1016,23 +1016,23 @@ try:
                 # if we are doing the sd2teensy osx attack
                 if teensy_menu_choice == "9":
                     print_status(
-                        "Generating the SD2Teensy OSX pde file for you...")
+                        "Generating the SD2Teensy OSX ino file for you...")
                     if not os.path.isdir(setdir + "/reports/osx_sd2teensy"):
                         os.makedirs(setdir + "/reports/osx_sd2teensy")
-                    shutil.copyfile("src/teensy/osx_sd2teensy.pde",
-                                    "%s/reports/osx_sd2teensy/osx_sd2teensy.pde" % (setdir))
+                    shutil.copyfile("src/teensy/osx_sd2teensy.ino",
+                                    "%s/reports/osx_sd2teensy/osx_sd2teensy.ino" % (setdir))
                     print_status(
-                        "File has been exported to ~/.set/reports/osx_sd2teensy/osx_sd2teensy.pde")
+                        "File has been exported to ~/.set/reports/osx_sd2teensy/osx_sd2teensy.ino")
                     return_continue()
 
                 # if we are doing the X10 Arduino Sniffer
                 if teensy_menu_choice == "10":
                     print_status(
-                        "Generating the Arduino sniffer and libraries pde..")
+                        "Generating the Arduino sniffer and libraries ino..")
                     if not os.path.isdir(setdir + "/reports/arduino_sniffer"):
                         os.makedirs(setdir + "/reports/arduino_sniffer")
-                    shutil.copyfile("src/teensy/x10/x10_sniffer.pde",
-                                    setdir + "/reports/arduino_sniffer/x10_sniffer.pde")
+                    shutil.copyfile("src/teensy/x10/x10_sniffer.ino",
+                                    setdir + "/reports/arduino_sniffer/x10_sniffer.ino")
                     shutil.copyfile("src/teensy/x10/libraries.zip",
                                     setdir + "/reports/arduino_sniffer/libraries.zip")
                     print_status(
@@ -1042,13 +1042,13 @@ try:
                 # if we are doing the X10 Jammer
                 if teensy_menu_choice == "11":
                     print_status(
-                        "Generating the Arduino jammer pde and libraries...")
+                        "Generating the Arduino jammer ino and libraries...")
                     if not os.path.isdir(setdir + "/reports/arduino_jammer"):
                         os.makedirs(setdir + "/reports/arduino_jammer")
-                    shutil.copyfile("src/teensy/x10/x10_blackout.pde",
-                                    setdir + "/reports/arduino_jammer/x10_blackout.pde")
+                    shutil.copyfile("src/teensy/x10/x10_blackout.ino",
+                                    setdir + "/reports/arduino_jammer/x10_blackout.ino")
                     shutil.copyfile("src/teensy/x10/libraries.zip",
-                                    setdir + "/reports/arduino_hammer/libraries.zip")
+                                    setdir + "/reports/arduino_jammer/libraries.zip")
                     print_status(
                         "Arduino jammer files and libraries exported to ~/.set/reports/arduino_jammer")
                     return_continue()
@@ -1056,7 +1056,7 @@ try:
                 # powershell shellcode injection
                 if teensy_menu_choice == "12":
                     print_status(
-                        "Generating the Powershell - Shellcode injection pde..")
+                        "Generating the Powershell - Shellcode injection ino..")
                     debug_msg(
                         me, "importing 'src.teensy.powershell_shellcode'", 1)
                     import src.teensy.powershell_shellcode
