@@ -235,16 +235,16 @@ Keyboard.send_now();
 """.format(random_filename=random_filename, powershell_command=powershell_command, vbs=vbs, bat=bat))
 # delete temporary file
 subprocess.Popen("rm {0} 1> /dev/null 2>/dev/null".format(random_filename), shell=True).wait()
-print("[*] Binary to Teensy file exported as teensy.pde")
-# write the teensy.pde file out
-with open("teensy.pde", "w") as filewrite:
-    # write the teensy.pde file out
+print("[*] Binary to Teensy file exported as teensy.ino")
+# write the teensy.ino file out
+with open("teensy.ino", "w") as filewrite:
+    # write the teensy.ino file out
     filewrite.write(output_variable)
 print("""
 
 Instructions:
 
-Copy the converts.txt file to the sdcard on the Teensy device. Use the teensy.pde normally
+Copy the converts.txt file to the sdcard on the Teensy device. Use the teensy.ino normally
 and use the Arduino IDE to place the latest code in there. Notice that you need to change
 some code marked above based on the Teensy and the Teensy++ based on how you soldered the PIN's
 on.
