@@ -84,7 +84,7 @@ with open(os.path.join(core.setdir + "teensy")) as fileopen:
 
 def writefile(filename, now):
     with open(os.path.join("src/teensy/" + filename)) as fileopen, \
-            open(os.path.join(core.setdir + "/reports/teensy_{0}.pde".format(now)), "w") as filewrite:
+            open(os.path.join(core.setdir + "/reports/teensy_{0}.ino".format(now)), "w") as filewrite:
 
         for line in fileopen:
             match = re.search("IPADDR", line)
@@ -100,37 +100,37 @@ def writefile(filename, now):
 
 # powershell downloader
 if choice == "1":
-    writefile("powershell_down.pde", now)
+    writefile("powershell_down.ino", now)
 
 # wscript downloader
 if choice == "2":
-    writefile("wscript.pde", now)
+    writefile("wscript.ino", now)
 
 # powershell reverse
 if choice == "3":
-    writefile("powershell_reverse.pde", now)
+    writefile("powershell_reverse.ino", now)
 
 # beef injector
 if choice == "4":
-    writefile("beef.pde", now)
+    writefile("beef.ino", now)
 
 # java applet downloader
 if choice == "5":
-    writefile("java_applet.pde", now)
+    writefile("java_applet.ino", now)
 
 # gnome wget downloader
 if choice == "6":
-    writefile("gnome_wget.pde", now)
+    writefile("gnome_wget.ino", now)
 
 if choice == "13":
-    writefile("peensy.pde", now)
+    writefile("peensy.ino", now)
     payload_counter = 0
 
 # save our stuff here
 print(core.bcolors.BLUE +
-      "\n[*] PDE file created. You can get it under '{0}'".format(os.path.join(core.setdir +
+      "\n[*] INO file created. You can get it under '{0}'".format(os.path.join(core.setdir +
                                                                                "reports" +
-                                                                               "teensy_{0}.pde".format(now))) +
+                                                                               "teensy_{0}.ino".format(now))) +
       core.bcolors.ENDC)
 print(core.bcolors.GREEN +
       '[*] Be sure to select "Tools", "Board", and "Teensy 2.0 (USB/KEYBOARD)" in Arduino' +
@@ -147,7 +147,7 @@ if payload_counter == 1:
     if not apache:
 
         subprocess.Popen("mkdir {0};"
-                         "cp {1} {2} 1> /dev/null 2> /dev/null".format(webclone_path + 
+                         "cp {1} {2} 1> /dev/null 2> /dev/null".format(webclone_path +
                                                                      metasploit_exec_path +
                                                                      os.path.join(webclone_path + "x.exe")),
                          shell=True).wait()
