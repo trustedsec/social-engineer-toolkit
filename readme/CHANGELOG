@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.4.6
+~~~~~~~~~~~~~~~~
+
+* updated config to turn apache_server default from on to off. can switch this under /etc/setoolkit/set.config to on if you want apache. 
+
+~~~~~~~~~~~~~~~~
 version 7.4.5
 ~~~~~~~~~~~~~~~~
 
