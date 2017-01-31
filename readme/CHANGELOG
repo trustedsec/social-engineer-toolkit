@@ -1,8 +1,12 @@
 ~~~~~~~~~~~~~~~~
-version 7.4.6
+version 7.5
 ~~~~~~~~~~~~~~~~
 
 * updated config to turn apache_server default from on to off. can switch this under /etc/setoolkit/set.config to on if you want apache. 
+* wrote centralized function for new powershell encodedcommand obfsucation
+* added encodedcommand to java applet
+* added encodedcommand to hta attack vector
+* added encodedcommand to teensy
 
 ~~~~~~~~~~~~~~~~
 version 7.4.5

