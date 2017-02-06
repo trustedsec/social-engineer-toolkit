@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
-import src.core.setcore as core
+#import src.core.setcore as core
+from src.core.setcore import *
 import sys
 import getpass
 
@@ -15,7 +16,7 @@ try:
     import requests
 
 except ImportError:
-    core.print_error("Looks like you dont have python-requests installed. "
+    print_error("Looks like you dont have python-requests installed. "
                      "Please install (apt-get install python-requests) and try again.")
     input("Press {return} to continue.")
     trigger = 1
@@ -35,7 +36,7 @@ def _do_sms():
     print("Special thanks to Khalil @sehnaoui for testing out the service for me and finding "
           "spoofmytextmessage.com\n")
 
-    core.print_error("DISCLAIMER: By submitting yes, you understand that you accept all terms and "
+    print_error("DISCLAIMER: By submitting yes, you understand that you accept all terms and "
                      "services from spoofmytextmessage.com and you are fully aware of your countries "
                      "legal stance on SMS spoofing prior to performing any of these. By accepting yes "
                      "you fully acknowledge these terms and will not use them for unlawful purposes.")
@@ -43,31 +44,40 @@ def _do_sms():
     message = input("\nDo you accept these terms (yes or no): ")
 
     if message == "yes":
-        core.print_status("Okay! Moving on - SET needs some information from you in order to spoof the message.")
-        email = input(core.setprompt(["7"], "Enter your email address for the spoofmytextmessage.com account"))
-        core.print_status("Note that the password below will be masked and you will not see the output.")
-        pw = getpass.getpass(core.setprompt(["7"], "Enter your password for the spoofmytextmessage.com account"))
-        core.print_status("The next section requires a country code, this is the code you would use to dial "
+        print_status("Okay! Moving on - SET needs some information from you in order to spoof the message.")
+
+
+        print_status("Please note that spoofing may not work with all carriers. If it doesn't work, SET cannot be changed or modified in order to make it work. Would recommend trying different routes to get it working, if that doesn't work, you will need to contact spoofmytextmessages.com")
+
+        email = input(setprompt(["7"], "Enter your email address for the spoofmytextmessage.com account"))
+        print_status("Note that the password below will be masked and you will not see the output.")
+        pw = getpass.getpass(setprompt(["7"], "Enter your password for the spoofmytextmessage.com account"))
+        print_status("The next section requires a country code, this is the code you would use to dial "
                           "to the specific country, for example if I was sending a message to 555-555-5555 to "
                           "the United States (or from) you would enter +1 below.")
 
-        tocountry = input(core.setprompt(["7"], "Enter the country code for the number you are sending TO "
+        tocountry = input(setprompt(["7"], "Enter the country code for the number you are sending TO "
                                                 "(for example U.S would be '+1')[+1]"))
         if tocountry == "":
             tocountry = "+1"
 
-        fromcountry = input(core.setprompt(["7"], "Enter the country code for the number you are sending FROM "
+        fromcountry = input(setprompt(["7"], "Enter the country code for the number you are sending FROM "
                                               "(for example U.S. would be '+1')[+1]"))
         if fromcountry == "":
             fromcountry = "+1"
 
-        tonumber = input(core.setprompt(["7"], "Enter the number to send the SMS TO - be sure to include "
+        tonumber = input(setprompt(["7"], "Enter the number to send the SMS TO - be sure to include "
                                            "country code (example: +15551234567)"))
 
-        fromnumber = input(core.setprompt(["7"], "Enter the number you want to come FROM - be sure to include "
+        fromnumber = input(setprompt(["7"], "Enter the number you want to come FROM - be sure to include "
                                              "country code (example: +15551234567)"))
 
-        message = input(core.setprompt(["7"], "Enter the message you want to send via the text message"))
+        message = input(setprompt(["7"], "Enter the message you want to send via the text message"))
+
+        print_status("Routes provide different methods for different carriers. Usually auto is the best option, but you may want to try 1 or 2. The options are [a] (auto), 1, or 2.")
+        route = input(setprompt(["7"], "Enter the route (test different routes) (options a, 1, or 2)[a]"))
+        if route == "": route = ("auto")
+        if route == "a": route = ("auto")
 
         # note that the function for this is in a compiled python file with no source -
         # this was done at the request of the third party we use since the API is not documented.
@@ -75,11 +85,11 @@ def _do_sms():
         # and json and uses that to interact with the API. From a security standpoint if you are
         # uncomfortable using this - feel free to ping me and I can walk you through what I do
         # without giving away the API from the third party.
-        from src.sms.protectedapi import send_sms
-        send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message)
+        from src.sms.spoofapi import send_sms
+        send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message, route)
 
     else:
-        core.print_status("Okay! Exiting out of the Social-Engineer Toolkit SMS Spoofing Attack Vector...")
+        print_status("Okay! Exiting out of the Social-Engineer Toolkit SMS Spoofing Attack Vector...")
 
 # launch sms
 try:
