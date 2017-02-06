@@ -7,6 +7,8 @@ version 7.5
 * added encodedcommand to java applet
 * added encodedcommand to hta attack vector
 * added encodedcommand to teensy
+* added encodedcommand to all modules with powershell injection
+* disabled temporarily the SMS spoofing module - this should be addressed/fixed soon hopefully by spoofmytextmessages.com
 
 ~~~~~~~~~~~~~~~~
 version 7.4.5
