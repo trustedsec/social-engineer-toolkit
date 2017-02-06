@@ -275,9 +275,9 @@ except KeyboardInterrupt:
            "than handshakes.\n".format(core.bcolors.RED, core.bcolors.ENDC)))
 
 # handle exceptions
-#except Exception as error:
-#    core.log(error)
-#    print("\n\n[!] Something went wrong, printing the error: " + str(error))
+except Exception as error:
+    core.log(error)
+    print("\n\n[!] Something went wrong, printing the error: " + str(error))
 
 # cleanup routine
 core.cleanup_routine()
