@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.5.1
+~~~~~~~~~~~~~~~~
+
+* moved config file to be the first identifier for metasploit config file then move onto other methods. Possible for conflicts to override
+
+~~~~~~~~~~~~~~~~
 version 7.5
 ~~~~~~~~~~~~~~~~
 
