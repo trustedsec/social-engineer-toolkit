@@ -1,4 +1,30 @@
 ~~~~~~~~~~~~~~~~
+version 7.5.1
+~~~~~~~~~~~~~~~~
+
+* moved config file to be the first identifier for metasploit config file then move onto other methods. Possible for conflicts to override
+
+~~~~~~~~~~~~~~~~
+version 7.5
+~~~~~~~~~~~~~~~~
+
+* updated config to turn apache_server default from on to off. can switch this under /etc/setoolkit/set.config to on if you want apache. 
+* wrote centralized function for new powershell encodedcommand obfsucation
+* added encodedcommand to java applet
+* added encodedcommand to hta attack vector
+* added encodedcommand to teensy
+* added encodedcommand to all modules with powershell injection
+* remove sms modules templates that were no longer used
+* added routes to help with spoofing - default is auto
+
+~~~~~~~~~~~~~~~~
+version 7.4.5
+~~~~~~~~~~~~~~~~
+
+* update fasttrack wordlist (git suggestion)
+* updated teensy codebase thanks to mikecjudge 
+
+~~~~~~~~~~~~~~~~
 version 7.4.4
 ~~~~~~~~~~~~~~~~
 

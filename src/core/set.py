@@ -1198,6 +1198,11 @@ and send the QRCode via a mailer.
 
         # sms spoofing module option 10
         if main_menu_choice == '10':
+
+
+            ### TEMPORARILY DISABLED
+            #print_error("This module is currently disabled as spoofmytextmessage.com is currently experiencing issues. As soon as it is working again or I can rework the module, this will remain disabled.")
+            #raw_input("Press {return} to connect to the main menu.")
             try:
                 module_reload(src.sms.sms)
             except:

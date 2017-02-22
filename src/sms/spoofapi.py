@@ -8,7 +8,7 @@ import json
 import requests
 from src.core.setcore import *
 
-def send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message):
+def send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message, route):
 
     try: input = raw_input
     except: pass
@@ -38,7 +38,7 @@ def send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message):
             url = 'https://api.spoofmytextmessage.com/2.0/index.php?task=send'
             payload = {'non': 'number', 'fromnumber': fromnumber, 'to': tonumber, 'tocountry': tocountry, 'fromcountry': fromcountry,
                        'text': message, 'code': code, 'task': 'send', 'terms': '1', 'secureid': secureid, 'mid': id, 'email': email,
-                       'source': 'settoolkit', 'osname': 'settoolkit', 'app': 'settoolkit', 'selves': '1'}
+                       'source': 'settoolkit', 'osname': 'settoolkit', 'app': 'settoolkit', 'selves': '1', 'route' : route}
 
             r = requests.post(url, data=payload)
 
@@ -49,7 +49,7 @@ def send_sms(email, pw, tocountry, fromcountry, fromnumber, tonumber, message):
             else:
 
                 print_error("We were unable to successfully send the text message. Check all your settings and try again.")
-                print("Printing error from spoofmytextmessage.com: " + r.content)
+                print_error("Printing error from spoofmytextmessage.com: " + r.content)
                 input("Press {return} to return to the previous menu.")
 
     except IndexError as error:
