@@ -8,6 +8,7 @@ version 7.6
 * added new obfuscation into new encodedcommand function within multiple modules
 * added new java applet to fix expired timeframe
 * removed spoofmytextmessages as it is no longer working properly - will be added when service is fixed
+* added latest airbase-ng to the repository to fix openssl issues
 
 ~~~~~~~~~~~~~~~~
 version 7.5.1
