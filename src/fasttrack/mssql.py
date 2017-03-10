@@ -262,7 +262,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         x86 = file(core.setdir + "x86.powershell").read().rstrip()
         #    x86 = x86.read()
 
-        x86 = core.powershell_encodedcommand() + x86
+        x86 = core.powershell_encodedcommand(x86) 
         core.print_status("If you want the powershell commands and attack, "
                           "they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
         filewrite = open(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")

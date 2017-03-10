@@ -1203,10 +1203,13 @@ and send the QRCode via a mailer.
             ### TEMPORARILY DISABLED
             #print_error("This module is currently disabled as spoofmytextmessage.com is currently experiencing issues. As soon as it is working again or I can rework the module, this will remain disabled.")
             #raw_input("Press {return} to connect to the main menu.")
-            try:
-                module_reload(src.sms.sms)
-            except:
-                import src.sms.sms
+
+            print_warning("Spoofmytextmessages.com no longer works and spoofs messages. Until this is fixed, this module is disabled.")
+            raw_input("Press {return} to continue.")
+            #try:
+                #module_reload(src.sms.sms)
+            #except:
+            #    import src.sms.sms
 
         # Main Menu choice 11: Third Party Modules
         if main_menu_choice == '11':
