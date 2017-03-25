@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.6.1
+~~~~~~~~~~~~~~~~
+
+* fixed old legacy php5 depend in setup.py
+
+~~~~~~~~~~~~~~~~
 version 7.6
 ~~~~~~~~~~~~~~~~
 
