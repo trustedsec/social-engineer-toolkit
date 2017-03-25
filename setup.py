@@ -38,7 +38,7 @@ if platform.system() == "Linux":
 
             # force install of debian packages
             subprocess.Popen("apt-get --force-yes -y install "
-                             "git apache2 python-requests libapache2-mod-php5 "
+                             "git apache2 python-requests libapache2-mod-php "
                              "python-pymssql build-essential python-pexpect "
                              "python-pefile python-crypto python-openssl", shell=True).wait()
 
