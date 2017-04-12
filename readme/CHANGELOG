@@ -1,14 +1,9 @@
 ~~~~~~~~~~~~~~~~
-version 7.6.2
-~~~~~~~~~~~~~~~~
-
-* fixed a print_status error if pyopenssl wasnt loaded
-
-~~~~~~~~~~~~~~~~
 version 7.6.1
 ~~~~~~~~~~~~~~~~
 
 * fixed old legacy php5 depend in setup.py
+* fixed a print_status error if pyopenssl wasnt loaded
 
 ~~~~~~~~~~~~~~~~
 version 7.6
