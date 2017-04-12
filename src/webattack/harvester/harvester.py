@@ -25,17 +25,6 @@ import threading
 import datetime
 import shutil
 
-# detect openssl module
-try:
-#   from OpenSSL import SSL
-    from OpenSSL import SSL
-
-# handle import error that openssl is not there
-except Exception as err:
-    print("Python OpenSSL wasn't detected or PEM file not found, note that SSL compatibility will be affected.")
-    print_status("Printing error: " + str(err))
-    pass
-
 # get path to normal
 definepath = os.getcwd()
 sys.path.append(definepath)
@@ -64,6 +53,18 @@ sys.path.append(definepath)
 
 # import the base setcore libraries
 from src.core.setcore import *
+
+# detect openssl module
+try:
+#   from OpenSSL import SSL
+    from OpenSSL import SSL
+
+# handle import error that openssl is not there
+except Exception as err:
+    print("Python OpenSSL wasn't detected or PEM file not found, note that SSL compatibility will be affected.")
+    print_status("Printing error: " + str(err))
+    pass
+
 
 attack_vector = ""
 fileopen = open(setdir + "/attack_vector", "r")
