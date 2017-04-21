@@ -37,8 +37,8 @@ if platform.system() == "Linux":
         if os.path.isfile("/etc/apt/sources.list"):
 
             # force install of debian packages
-            subprocess.Popen("apt-get --force-yes -y install "
-                             "git apache2 python-requests libapache2-mod-php5 "
+            subprocess.Popen("apt-get -y install "
+                             "git apache2 python-requests libapache2-mod-php "
                              "python-pymssql build-essential python-pexpect "
                              "python-pefile python-crypto python-openssl", shell=True).wait()
 
@@ -81,10 +81,6 @@ if platform.system() == "Linux":
         subprocess.Popen("echo exec python2 setoolkit $@ >> /usr/bin/setoolkit", shell=True).wait()
         subprocess.Popen("cp /usr/share/setoolkit/seupdate /usr/bin/", shell=True).wait()
         subprocess.Popen("chmod +x /usr/bin/setoolkit", shell=True).wait()
-        #print("[*] Note you will manually need to install Core Security 'Impacket'")
-        #print("[*] Download link: http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Impacket")
-        # https://impacket.googlecode.com/files/impacket-0.9.10.tar.gz
-        #print("[*] Once downloaded, tar -zxvf impacket*, go to the directory and run python setup.py install.")
         print("[*] We are now finished! To run SET, type setoolkit...")
 
 if platform.system() == 'Darwin':
