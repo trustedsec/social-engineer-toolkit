@@ -6,7 +6,7 @@ import teensy_gen
 # This appears to be functional with my limited testing so if you know a better way please feel free to improve.
 # The code below takes the files listed containing embedded labels and formats their contents to form the ino file.
 # Commands and shellcode are injected at the appropriate places indicated by the labels.
-# Mike Judge Feb 2017
+# Mike Judge April 2017
 
 # Declare required variables for shellcode generation
 meta_path = '/usr/share/metasploit-framework/'                              # File path to metasploit - std SET msf_path = meta_path().
@@ -31,7 +31,7 @@ build_path = 'C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\msbuild.exe'   
 ino_output_filename = '/usr/share/set/src/teensy/ino_file_gen.ino'                                    # Filename of the final ino file containing the generated arduino code and xml build config for msbuild.
 ino_header_filename = '/usr/share/set/src/teensy/ino_header.txt'                                      # File containg the header arduino code to be incorporated into the ino file before the xml build config.
 ino_tail_filename  = '/usr/share/set/src/teensy/ino_tail.txt'                                         # File containg the header arduino code to be incorporated into the ino file after the xml build config.
-xml_input_filename = '/usr/share/set/src/teensy/build_file.xml'                                       # File containing the xml build structure to be incorporated into the ino file.
+xml_input_filename = '/usr/share/set/src/teensy/ino_build_file.xml'                                   # File containing the xml build structure to be incorporated into the ino file.
 
 # User selection - default values
 print '\n-----default settings for shellcode generation-----\n'
