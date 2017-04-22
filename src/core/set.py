@@ -13,6 +13,7 @@ import sys
 import socket
 from src.core.setcore import *
 from src.core.menu import text
+
 ipaddr = ""
 me = mod_name()
 #
@@ -974,7 +975,7 @@ try:
                 # set our teensy info file in program junk
                 filewrite = open(setdir + "/teensy", "w")
                 filewrite.write(teensy_menu_choice + "\n")
-                if teensy_menu_choice != "3" and teensy_menu_choice != "7" and teensy_menu_choice != "8" and teensy_menu_choice != "9" and teensy_menu_choice != "10" and teensy_menu_choice != "11" and teensy_menu_choice != "12" and teensy_menu_choice != "13":
+                if teensy_menu_choice != "3" and teensy_menu_choice != "7" and teensy_menu_choice != "8" and teensy_menu_choice != "9" and teensy_menu_choice != "10" and teensy_menu_choice != "11" and teensy_menu_choice != "12" and teensy_menu_choice != "13" and teensy_menu_choice != "14":
                     yes_or_no = yesno_prompt(
                         "0", "Do you want to create a payload and listener [yes|no]: ")
                     if yes_or_no == "YES":
@@ -998,7 +999,7 @@ try:
                 filewrite.write("hid")
                 filewrite.close()
                 # if we are doing binary2teensy
-                if teensy_menu_choice != "7" and teensy_menu_choice != "8" and teensy_menu_choice != "9" and teensy_menu_choice != "10" and teensy_menu_choice != "11" and teensy_menu_choice != "12":
+                if teensy_menu_choice != "7" and teensy_menu_choice != "8" and teensy_menu_choice != "9" and teensy_menu_choice != "10" and teensy_menu_choice != "11" and teensy_menu_choice != "12" and teensy_menu_choice != "14":
                     sys.path.append(definepath + "/src/teensy")
                     debug_msg(me, "importing 'src.teensy.teensy'", 1)
                     try:
@@ -1060,6 +1061,14 @@ try:
                     debug_msg(
                         me, "importing 'src.teensy.powershell_shellcode'", 1)
                     import src.teensy.powershell_shellcode
+
+		# HID Msbuild compile to memory Shellcode Attack
+		if teensy_menu_choice == "14":
+		    print_status(
+                        "HID Msbuild compile to memory Shellcode Attack selected")
+                    debug_msg(
+                        me, "importing '-----file-----'", 1)
+                    import src.teensy.inogen
 
             if teensy_menu_choice == "99":
                 teensy_menu_choice = None
@@ -1203,13 +1212,10 @@ and send the QRCode via a mailer.
             ### TEMPORARILY DISABLED
             #print_error("This module is currently disabled as spoofmytextmessage.com is currently experiencing issues. As soon as it is working again or I can rework the module, this will remain disabled.")
             #raw_input("Press {return} to connect to the main menu.")
-
-            print_warning("Spoofmytextmessages.com no longer works and spoofs messages. Until this is fixed, this module is disabled.")
-            raw_input("Press {return} to continue.")
-            #try:
-                #module_reload(src.sms.sms)
-            #except:
-            #    import src.sms.sms
+            try:
+                module_reload(src.sms.sms)
+            except:
+                import src.sms.sms
 
         # Main Menu choice 11: Third Party Modules
         if main_menu_choice == '11':
@@ -1228,3 +1234,4 @@ and send the QRCode via a mailer.
 except KeyboardInterrupt:
     print("\n\n Thank you for " + bcolors.RED + "shopping" + bcolors.ENDC +
           " with the Social-Engineer Toolkit.\n\n Hack the Gibson...and remember...hugs are worth more than handshakes.\n")
+
