@@ -1,0 +1,11 @@
+
+delay(1000);
+CtrlS();          // Save the notepad file
+delay(2000);
+AltF4();          // Quit notepad
+delay(1000);
+
+-----build-----
+
+delay(9000000);
+}
