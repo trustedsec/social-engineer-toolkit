@@ -1,4 +1,4 @@
-1  # !/usr/bin/env python
+# !/usr/bin/env python
 #
 # Centralized core modules for SET
 #
