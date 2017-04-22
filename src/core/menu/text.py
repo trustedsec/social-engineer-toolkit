@@ -152,10 +152,11 @@ teensy_menu = ['Powershell HTTP GET MSF Payload',
                'Binary 2 Teensy Attack (Deploy MSF payloads)',
                'SDCard 2 Teensy Attack (Deploy Any EXE)',
                'SDCard 2 Teensy Attack (Deploy on OSX)',
-               'X10 Arduino Sniffer INO and Libraries',
-               'X10 Arduino Jammer INO and Libraries',
+               'X10 Arduino Sniffer PDE and Libraries',
+               'X10 Arduino Jammer PDE and Libraries',
                'Powershell Direct ShellCode Teensy Attack',
                'Peensy Multi Attack Dip Switch + SDCard Attack',
+	       'HID Msbuild compile to memory Shellcode Attack',
                '0D']
 
 teensy_text = ("""
@@ -170,7 +171,7 @@ teensy_text = ("""
  $22 dollars. This attack vector will auto generate the code
  needed in order to deploy the payload on the system for you.
 
- This attack vector will create the .ino files necessary to import
+ This attack vector will create the .pde files necessary to import
  into Arduino (the IDE used for programming the Teensy). The attack
  vectors range from Powershell based downloaders, wscript attacks,
  and other methods.
@@ -185,7 +186,7 @@ teensy_text = ("""
  This attack vector also attacks X10 based controllers, be sure to be leveraging
  X10 based communication devices in order for this to work.
 
- Select a payload to create the .ino file to import into Arduino:
+ Select a payload to create the pde file to import into Arduino:
 """)
 
 sms_attack_menu = ['Perform a SMS Spoofing Attack',
