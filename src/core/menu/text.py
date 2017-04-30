@@ -156,6 +156,7 @@ teensy_menu = ['Powershell HTTP GET MSF Payload',
                'X10 Arduino Jammer PDE and Libraries',
                'Powershell Direct ShellCode Teensy Attack',
                'Peensy Multi Attack Dip Switch + SDCard Attack',
+	       'HID Msbuild compile to memory Shellcode Attack',
                '0D']
 
 teensy_text = ("""

@@ -1,4 +1,4 @@
-1  # !/usr/bin/env python
+# !/usr/bin/env python
 #
 # Centralized core modules for SET
 #
@@ -869,7 +869,6 @@ def show_banner(define_version, graphic):
 [---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]
-
 """ + bcolors.GREEN + """        Welcome to the Social-Engineer Toolkit (SET).
          The one stop shop for all of your SE needs.
 """)
@@ -1061,7 +1060,6 @@ def show_graphic():
                   $MM                .MM.
                     ,MM?          .MMM
                        ,MMMMMMMMMMM
-
                 https://www.trustedsec.com""" + bcolors.ENDC)
 
     if menu == 11:
@@ -1197,7 +1195,6 @@ XX   MMMMMMMMMMMMMMMMMMMMNo         oNNNNo         oNMMMMMMMMMMMMMMMMMMMM   XX
 XX                                                                          XX
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
     .o88o.                               o8o                .
     888 `"                               `"'              .o8
    o888oo   .oooo.o  .ooooo.   .ooooo.  oooo   .ooooo.  .o888oo oooo    ooo
@@ -1939,7 +1936,6 @@ def get_sql_port(host):
 
 def capture(func, *args, **kwargs):
     """Capture the output of func when called with the given arguments.
-
     The function output includes any exception raised. capture returns
     a tuple of (function result, standard output, standard error).
     """
@@ -1997,11 +1993,8 @@ def applet_choice():
 [-------------------------------------------]
 Java Applet Configuration Options Below
 [-------------------------------------------]
-
 Next we need to specify whether you will use your own self generated java applet, built in applet, or your own code signed java applet. In this section, you have all three options available. The first will create a self-signed certificate if you have the java jdk installed. The second option will use the one built into SET, and the third will allow you to import your own java applet OR code sign the one built into SET if you have a certificate.
-
 Select which option you want:
-
 1. Make my own self-signed certificate applet.
 2. Use the applet built into SET.
 3. I have my own code signing certificate or applet.\n""")
