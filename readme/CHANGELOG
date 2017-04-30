@@ -1,4 +1,11 @@
 ~~~~~~~~~~~~~~~~
+7.6.2
+~~~~~~~~~~~~~~~~
+
+* code cleanup on arduino (PR)
+* fixed an issue in spear phishing that would hold payload generation into a constant loop
+
+~~~~~~~~~~~~~~~~
 version 7.6.1
 ~~~~~~~~~~~~~~~~
 
