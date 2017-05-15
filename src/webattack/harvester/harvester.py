@@ -61,8 +61,8 @@ try:
 
 # handle import error that openssl is not there
 except Exception as err:
-    print("Python OpenSSL wasn't detected or PEM file not found, note that SSL compatibility will be affected.")
-    print_status("Printing error: " + str(err))
+#    print("Python OpenSSL wasn't detected or PEM file not found, note that SSL compatibility will be affected.")
+#    print_status("Printing error: " + str(err))
     pass
 
 

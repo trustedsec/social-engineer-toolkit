@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.6.3
+~~~~~~~~~~~~~~~~
+
+* fixed PEM import zipimporter error message - was more of a warning, supressed if not using pyopenssl
+
+~~~~~~~~~~~~~~~~
 7.6.2
 ~~~~~~~~~~~~~~~~
 
