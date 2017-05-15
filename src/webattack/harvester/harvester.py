@@ -36,6 +36,7 @@ from set_config import TRACK_EMAIL_ADDRESSES as track_email
 from set_config import HARVESTER_LOG as logpath
 sys.path.append(definepath)
 
+
 if track_email == True:
     print_status("You have selected to track user accounts, Apache will automatically be turned on to handle tracking of users.")
     apache_check = True
@@ -50,6 +51,13 @@ me = mod_name()
 
 # append python to our current working directory
 sys.path.append(definepath)
+
+
+if not os.path.isfile("%s/src/logs/harvester.log" % (os.getcwd())):
+    filewrite = file("%s/src/logs/harvester.log" % (os.getcwd()), "w")
+    filewrite.write("")
+    filewrite.close()
+
 
 # import the base setcore libraries
 from src.core.setcore import *
