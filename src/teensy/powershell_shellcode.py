@@ -149,8 +149,10 @@ Keyboard.set_modifier(0);
 Keyboard.set_key1(0);
 Keyboard.send_now();
 }
-""" % (core.powershell_encodedcommand())
-print("[*] Payload has been extracted. Copying file to {0}".format(os.path.join(core.setdir + "reports/teensy.ino")))
+""" % (core.powershell_encodedcommand()))
+
+print("[*] Payload has been extracted. Copying file to root directory under reports/teensy.ino")
+
 if not os.path.isdir(os.path.join(core.setdir + "reports")):
     os.makedirs(os.path.join(core.setdir + "reports"))
 with open(os.path.join(core.setdir + "reports/teensy.ino"), "w") as filewrite:
