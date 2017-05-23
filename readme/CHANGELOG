@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.6.4
+~~~~~~~~~~~~~~~~
+
+* fix an issue where encoding messed up sql commands for mssql bruter attack vector in fasttrack
+
+~~~~~~~~~~~~~~~~
 version 7.6.3
 ~~~~~~~~~~~~~~~~
 
