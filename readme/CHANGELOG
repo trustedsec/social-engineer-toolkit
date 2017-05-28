@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.6.5
+~~~~~~~~~~~~~~~~
+
+* added new chrome user agent in config - config will automatically update
+
+~~~~~~~~~~~~~~~~
 version 7.6.4
 ~~~~~~~~~~~~~~~~
 
