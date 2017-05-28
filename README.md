@@ -32,11 +32,11 @@ For bug reports or enhancements, please open an [issue](https://github.com/trust
 * Mac OS X 
 
 # Installation
-
+## Resolve dependencies
 *Ubuntu/Debian System*
 
 ```
-$ apt-get --force-yes -y install git apache2 python-requests libapache2-mod-php5 \
+$ apt-get --force-yes -y install git apache2 python-requests libapache2-mod-php \
   python-pymssql build-essential python-pexpect python-pefile python-crypto python-openssl
 ```
 
@@ -64,4 +64,14 @@ $ yum update -y && yum install python-pexpect python-crypto python-openssl pytho
 
 ```bash
 $ pip install pexpect pycrypto pyopenssl pefile
+```
+
+## Install SET
+
+*All OSs*
+
+```bash
+$ git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
+$ cd set
+$ python setup.py install
 ```
