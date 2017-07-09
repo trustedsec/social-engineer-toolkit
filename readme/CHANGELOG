@@ -1,4 +1,12 @@
 ~~~~~~~~~~~~~~~~
+version 7.7
+~~~~~~~~~~~~~~~~
+
+* rewrote grab_ipaddress() function to be a centralized routine that incorporates hostnames or IP addresses.
+* rewrote grab_ipaddress() to include automatic detection of ipaddress or failover to manual entry. This will allow easier selection fo IP addresses without having to drop into a different window
+* add hostname support for hta attack vector
+
+~~~~~~~~~~~~~~~~
 version 7.6.5
 ~~~~~~~~~~~~~~~~
 
