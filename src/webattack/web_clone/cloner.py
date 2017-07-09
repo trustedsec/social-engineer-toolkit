@@ -362,16 +362,12 @@ try:
 
             # write the file out
             filewrite.write(index_database)
-
             # close the file after done writing
             filewrite.close()
-
-            print((bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win +
-                  "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC))
+            print((bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win + "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC))
 
         # if we are using HTA attack
         if check_options("ATTACK_VECTOR") == "HTA":
-                # </body>
             if os.path.isfile(setdir + "/Launcher.hta"):
                 data1 = open(setdir + "/web_clone/index.html", "r").read()
                 data2 = open(setdir + "/hta_index", "r").read()
