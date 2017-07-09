@@ -238,7 +238,6 @@ infectious_text = """
  Pick the attack vector you wish to use: fileformat bugs or a straight executable.
 """
 
-
 # used in create_payloads.py
 if operating_system != "windows":
     if msf_path != False:
@@ -264,13 +263,10 @@ What payload do you want to generate:
 """
 
 # used in gen_payload.py
-
 payload_menu_2 = [
     'Windows Shell Reverse_TCP               Spawn a command shell on victim and send back to attacker',
     'Windows Reverse_TCP Meterpreter         Spawn a meterpreter shell on victim and send back to attacker',
     'Windows Reverse_TCP VNC DLL             Spawn a VNC server on victim and send back to attacker',
-    #'Windows Bind Shell                      Execute payload and create an accepting port on remote system.',
-    #'Windows Bind Shell X64                  Windows x64 Command Shell, Bind TCP Inline',
     'Windows Shell Reverse_TCP X64           Windows X64 Command Shell, Reverse TCP Inline',
     'Windows Meterpreter Reverse_TCP X64     Connect back to the attacker (Windows x64), Meterpreter',
     'Windows Meterpreter Egress Buster       Spawn a meterpreter shell and find a port home via multiple ports',
