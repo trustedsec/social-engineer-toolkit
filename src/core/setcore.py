@@ -428,48 +428,33 @@ def meta_database():
 #
 def grab_ipaddress():
     try:
-        fileopen = open("/etc/setoolkit/set.config", "r").readlines()
-        for line in fileopen:
-            line = line.rstrip()
-            match = re.search("AUTO_DETECT=ON", line)
-            if match:
-                try:
-                    rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                    rhost.connect(('google.com', 0))
-                    rhost.settimeout(2)
-                    rhost = rhost.getsockname()[0]
-                    return rhost
-                except Exception:
-                    rhost = raw_input(
-                        setprompt("0", "Enter your interface IP Address"))
-                    while 1:
-                        # check if IP address is valid
-                        ip_check = is_valid_ip(rhost)
-                        if ip_check == False:
-                            rhost = raw_input(
-                                "[!] Invalid ip address try again: ")
-                        if ip_check == True:
-                            break
-                    return rhost
+        rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        rhost.connect(('google.com', 0))
+        rhost.settimeout(2)
+        revipaddr = rhost.getsockname()[0]
+        rhost = raw_input(setprompt("0", "IP address or URL (www.ex.com) for the payload listener (LHOST) [" + revipaddr + "]"))
+        if rhost == "": rhost = revipaddr
 
-        # if AUTO_DETECT=OFF prompt for IP Address
-            match1 = re.search("AUTO_DETECT=OFF", line)
-            if match1:
-                rhost = raw_input(
-                    setprompt("0", "IP address for the payload listener (LHOST)"))
-                while 1:
-                        # check if IP address is valid
-                    ip_check = is_valid_ip(rhost)
-                    if ip_check == False:
-                        rhost = raw_input("[!] Invalid ip address try again: ")
-                    if ip_check == True:
+    except Exception:
+        rhost = raw_input(setprompt("0", "Enter your interface/reverse listener IP Address or URL"))
+
+    if validate_ip(rhost) == False:
+        while 1:
+            choice = raw_input(setprompt(["2"], "This is not an IP address. Are you using a hostname? [y/n] "))
+            if choice == "" or choice.lower() == "y":
+                print_status("Roger that ghostrider. Using hostnames moving forward (hostnames are 1337, nice job)..")
+                break
+            else:
+                rhost = raw_input(setprompt(["2"], "IP address for the reverse connection [" + rhost + "]"))
+                if validate_ip(rhost) == True: break
+                else:
+                    choice = raw_input(setprompt(["2"], "This is not an IP address. Are you using a hostname? [y/n] "))
+                    if choice == "" or choice.lower() == "y":
+                        print_status("Roger that ghostrider. Using hostnames moving forward (hostnames are 1337, nice job)..")
                         break
-                return rhost
 
-    except Exception as e:
-        print_error("ERROR:Something went wrong:")
-        print(bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC)
-
+    # rhost return when verified
+    return rhost
 
 #
 # cleanup old or stale files
@@ -865,7 +850,7 @@ def show_banner(define_version, graphic):
 [---]        The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE + """)         [---]
 [---]        Created by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
                       Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """
-                    Codename: '""" + bcolors.YELLOW + """Vault7""" + bcolors.ENDC + bcolors.BLUE + """'
+                   Codename: '""" + bcolors.YELLOW + """Legacy""" + bcolors.ENDC + bcolors.BLUE + """'
 [---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]
