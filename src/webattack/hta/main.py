@@ -9,8 +9,7 @@ from src.core.setcore import *
 def gen_hta_cool_stuff():
     print_status(
         "HTA Attack Vector selected. Enter your IP, Port, and Payload...")
-    ipaddr = input(
-        "Enter the IP address for the reverse payload (LHOST): ")
+    ipaddr = grab_ipaddress()
     update_options("IPADDR=%s" % (ipaddr))
     port = input("Enter the port for the reverse payload [443]: ")
     if port == "":
