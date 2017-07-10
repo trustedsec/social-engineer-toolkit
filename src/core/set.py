@@ -345,29 +345,7 @@ try:
                                                 # if you arent using NAT/Port
                                                 # FWD
                                                 if nat_or_fwd == "NO":
-                                                    print_info(
-                                                        "Enter the IP address of your interface IP or if your using an external IP, what")
-                                                    print_info(
-                                                        "will be used for the connection back and to house the web server (your interface address)")
-                                                    ipaddr = raw_input(
-                                                        setprompt(["2"], "IP address or hostname for the reverse connection"))
-                                                    # here we check if they are
-                                                    # using a hostname else we
-                                                    # loop through until they
-                                                    # have a legit one
-                                                    if validate_ip(ipaddr) == False:
-                                                        while 1:
-                                                            choice = raw_input(setprompt(
-                                                                ["2"], "This is not an IP address. Are you using a hostname? [y/n] "))
-                                                            if choice == "" or choice.lower() == "y":
-                                                                print_status(
-                                                                    "Roger that. Using hostnames moving forward..")
-                                                                break
-                                                            else:
-                                                                ipaddr = raw_input(
-                                                                    setprompt(["2"], "IP address for the reverse connection"))
-                                                                if validate_ip(ipaddr) == True:
-                                                                    break
+                                                    ipaddr = grab_ipaddress()
 
                                 if attack_vector == "harvester" or attack_vector == "tabnabbing" or attack_vector == "webjacking":
                                     print_info(
