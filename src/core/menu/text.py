@@ -242,8 +242,8 @@ infectious_text = """
 if operating_system != "windows":
     if msf_path != False:
         payload_menu_1 = [
-            'Meterpreter Memory Injection (DEFAULT)  This will drop a meterpreter payload through PyInjector',
-            'Meterpreter Multi-Memory Injection      This will drop multiple Metasploit payloads via memory',
+            'Meterpreter Memory Injection (DEFAULT)  This will drop a meterpreter payload through powershell injection',
+            'Meterpreter Multi-Memory Injection      This will drop multiple Metasploit payloads via powershell injection',
             'SE Toolkit Interactive Shell            Custom interactive reverse toolkit designed for SET',
             'SE Toolkit HTTP Reverse Shell           Purely native HTTP shell with AES encryption support',
             'RATTE HTTP Tunneling Payload            Security bypass payload that will tunnel all comms over HTTP',
