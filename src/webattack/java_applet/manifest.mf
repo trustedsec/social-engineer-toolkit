@@ -1,3 +1,3 @@
 Permissions: all-permissions
 Codebase: *
-Application-Name: Website Trusted and Certified (VERIFIED)
+Application-Name: Application is Safe and Secure

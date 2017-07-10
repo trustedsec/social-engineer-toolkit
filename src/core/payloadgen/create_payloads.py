@@ -570,6 +570,7 @@ try:
                             if os.path.isfile("%s/x86.powershell" % (setdir)):
                                 fileopen1 = open("%s/x86.powershell" % (setdir), "r")
                                 x86 = fileopen1.read()
+                                x86 = "powershell -ec " + x86
 
                         # if we specified option cmd/multi which allows us to enter commands in instead and execute them many times
                         if choice1 == "cmd/multi":

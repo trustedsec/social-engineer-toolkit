@@ -6,6 +6,7 @@ version 7.7
 * rewrote grab_ipaddress() to include automatic detection of ipaddress or failover to manual entry. This will allow easier selection fo IP addresses without having to drop into a different window
 * add hostname support for hta attack vector
 * removed deploy binaries as a default option in the set.config file
+* added ability for new menu for java applet that now allows you to specify multiple commands - useful if you want to insert things like empire payloads, etc.
 
 ~~~~~~~~~~~~~~~~
 version 7.6.5
