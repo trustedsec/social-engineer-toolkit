@@ -24,7 +24,7 @@
 ##							                                                                    ##
 ## There are additional options; read the comments for additional descriptions.		            ##
 ##												                                                ##
-## CONFIG_VERSION=7.6.5										                                    ##
+## CONFIG_VERSION=7.7										                                    ##
 ##								                                                                ##
 ##################################################################################################
 ##################################################################################################
@@ -241,7 +241,7 @@ AUTOMATIC_LISTENER=ON
 METASPLOIT_MODE=ON
 #
 ### This will turn off the deployment of binaries for the Java applet attack and only use the PowerShell method.
-DEPLOY_BINARIES=YES
+DEPLOY_BINARIES=NO
 #
 ### This is for debugging purposes only. This will remove the cleanup functionality within SET to debug file states.
 CLEANUP_ENABLED_DEBUG=OFF

