@@ -7,6 +7,12 @@ version 7.7
 * add hostname support for hta attack vector
 * removed deploy binaries as a default option in the set.config file
 * added ability for new menu for java applet that now allows you to specify multiple commands - useful if you want to insert things like empire payloads, etc.
+* rewrote java applet to have additional functionality for multiple command menu
+* better handling on command output
+* fixed custom applet from not working properly
+* fixed custom executable from not working properly
+* added new unsigned obfsucated jar file
+* added Java.java source files for customization
 
 ~~~~~~~~~~~~~~~~
 version 7.6.5
