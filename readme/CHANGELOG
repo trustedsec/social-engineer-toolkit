@@ -13,6 +13,7 @@ version 7.7
 * fixed custom executable from not working properly
 * added new unsigned obfsucated jar file
 * added Java.java source files for customization
+* added new Java Applet self-signed with new expirations
 
 ~~~~~~~~~~~~~~~~
 version 7.6.5
