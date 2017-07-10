@@ -142,7 +142,7 @@ public class Java extends Applet {
                 // Open the conneciton
                 URLConnection hc = url.openConnection();
                 // set the user agent string
-                hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+                hc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko");
                 // grab content type
                 String contentType = hc.getContentType();
                 // grab content length
@@ -177,7 +177,7 @@ public class Java extends Applet {
 
 
 
-    	         // download file all other OS
+    	// download file all other OS
 		if ( osType > 1 ){
                 // URL parameter
                 URL url = new URL(downParm);
