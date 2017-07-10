@@ -248,7 +248,8 @@ if operating_system != "windows":
             'SE Toolkit HTTP Reverse Shell           Purely native HTTP shell with AES encryption support',
             'RATTE HTTP Tunneling Payload            Security bypass payload that will tunnel all comms over HTTP',
             'ShellCodeExec Alphanum Shellcode        This will drop a meterpreter payload through shellcodeexec',
-            'Import your own executable              Specify a path for your own executable\n']
+            'Import your own executable              Specify a path for your own executable',
+            'Import your own commands.txt            Specify payloads to be sent via command line\n']
 
 if operating_system == "windows" or msf_path == False:
     payload_menu_1 = [

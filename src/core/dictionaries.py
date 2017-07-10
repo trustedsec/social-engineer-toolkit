@@ -108,6 +108,7 @@ def ms_payload_2(payload):
         '4': "set/reverse_shell",
         '5': "set/reverse_shell",
         '6': "shellcode/alphanum",
+        '8': "cmd/multi"
     }.get(payload, "ERROR")
 
 

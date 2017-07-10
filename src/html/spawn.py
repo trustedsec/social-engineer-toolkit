@@ -27,12 +27,9 @@ if applet_name == "":
 custom = 0
 if check_options("CUSTOM_EXE="):
     custom = 1
-    print_status(
-        "Note that since you are using a custom payload, you will need to create your OWN listener.")
-    print_status(
-        "SET has no idea what type of payload you are using, so you will need to set this up manually.")
-    print_status(
-        "If using a custom Metasploit payload, setup a multi/handler, etc. to capture the connection back.")
+    print_status("Note that since you are using a custom payload, you will need to create your OWN listener.")
+    print_status("SET has no idea what type of payload you are using, so you will need to set this up manually.")
+    print_status("If using a custom Metasploit payload, setup a multi/handler, etc. to capture the connection back.")
 
     # here we need to modify the java applet to recognize custom attribute
     fileopen3 = fileopen = open("%s/web_clone/index.html" % (setdir), "r")

