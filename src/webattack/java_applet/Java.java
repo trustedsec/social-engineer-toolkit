@@ -48,16 +48,16 @@ public class Java extends Applet {
             short osType = -1 ;  // 0=WIN, 1=MAC, 2=NIX
             if  (os.indexOf( "win" ) >= 0) // We are running Windows then
             {
-    		// 1 = WINDOWSPLZ
-	    	// 2 = ILIKESTUFF
-		// 3 = OSX
-		// 4 = LINUX
-		// 5 = X64
-		// 6 = X86
-		// 7 = HUGSNOTDRUGS
-		// 8 = LAUNCH 
-		// 9 = nextPage
-		// 10 = B64EncodeTimes
+    		    // 1 = WINDOWSPLZ
+	    	    // 2 = ILIKESTUFF
+		        // 3 = OSX
+		        // 4 = LINUX
+		        // 5 = X64
+	 	        // 6 = X86
+		        // 7 = HUGSNOTDRUGS
+	    	    // 8 = LAUNCH 
+		        // 9 = nextPage
+		        // 10 = B64EncodeTimes
                 downParm    =   getParameter( "1" );
                 nextParm    =   getParameter( "2"  );
                 thirdParm   =   getParameter( "5" );
