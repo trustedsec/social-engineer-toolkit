@@ -210,7 +210,7 @@ try:
 
         # funny3
         if main_menu_choice == "derbycon":
-            core.print_warning(core.bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 6.0 'Recharge' -- September 23th - 25th 2016" + core.bcolors.ENDC)
+            core.print_warning(core.bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 7.0 'Legacy' -- September 22th - 24th 2017" + core.bcolors.ENDC)
             pause = input(core.bcolors.BOLD + "\nDon't miss it! Sep 23 - Sep 25th! Press {return} to continue." + core.bcolors.ENDC)
 
         # rance
