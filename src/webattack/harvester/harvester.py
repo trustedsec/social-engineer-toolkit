@@ -420,19 +420,21 @@ def run():
 
         # handle the rest
         except Exception as e:
-            print(bcolors.RED + "[*] Looks like the web_server can't bind to 80. Are you running Apache?" + bcolors.ENDC)
-            apache_stop = input(
-                "Do you want to attempt to disable Apache? [y/n]: ")
+            print(bcolors.RED + "[*] Looks like the web_server can't bind to 80. Are you running Apache or NGINX?" + bcolors.ENDC)
+            apache_stop = input("Do you want to attempt to disable Apache? [y/n]: ")
             apache_counter = 0
             if apache_stop == "yes" or apache_stop == "y" or apache_stop == "":
                 if os.path.isfile("/etc/init.d/apache2"):
-                    subprocess.Popen(
-                        "/etc/init.d/apache2 stop", shell=True).wait()
+                    subprocess.Popen("/etc/init.d/apache2 stop", shell=True).wait()
                     apache_counter = 1
                 if os.path.isfile("/etc/init.d/httpd"):
-                    subprocess.Popen("/etc/init.d/httpd stop",
-                                     shell=True).wait()
+                    subprocess.Popen("/etc/init.d/httpd stop", shell=True).wait()
                     apache_counter = 1
+
+                if os.path.isfile("/etc/init.d/nginx"):
+                    subprocess.Popen("/etc/init.d/nginx stop", shell=True).wait()
+                    apache_counter = 1 
+
             if apache_counter == 1:
 
                 # check if we are running apache mode

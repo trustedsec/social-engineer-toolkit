@@ -312,8 +312,8 @@ def web_server_start():
                 print(bcolors.ENDC + "Do you want to try to stop Apache? y/n")
                 stop_apache = input("Attempt to stop Apache? y/n: ")
                 if stop_apache == "yes" or stop_apache == "y" or stop_apache == "":
-                    subprocess.Popen(
-                        "/etc/init.d/apache2 stop", shell=True).wait()
+                    subprocess.Popen("/etc/init.d/apache2 stop", shell=True).wait()
+                    subprocess.Popen("/etc/init.d/nginx stop", shell=True).wait()
                     try:
 
                         # specify port listener here

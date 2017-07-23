@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.1
+~~~~~~~~~~~~~~~~
+
+* added nginx to service to stop on top of apache2
+
+~~~~~~~~~~~~~~~~
 version 7.7
 ~~~~~~~~~~~~~~~~
 
