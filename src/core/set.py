@@ -1046,7 +1046,7 @@ try:
                         "HID Msbuild compile to memory Shellcode Attack selected")
                     debug_msg(
                         me, "importing '-----file-----'", 1)
-                    import src.teensy.inogen
+                    import src.teensy.ino_gen
 
             if teensy_menu_choice == "99":
                 teensy_menu_choice = None
