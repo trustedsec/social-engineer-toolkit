@@ -247,8 +247,8 @@ class SETHandler(BaseHTTPRequestHandler):
             #print('-' * 40)
             pass
 
-        counter = 0
-
+        webroot = os.path.abspath(os.path.join(setdir, 'web_clone'))
+        requested_file = os.path.abspath(os.path.join(webroot, self.path))
         # try block setup to catch transmission errors
         try:
 
@@ -262,10 +262,9 @@ class SETHandler(BaseHTTPRequestHandler):
                 # write out that we had a visit
                 visits.write("hit\n")
                 # visits.close()
-                counter = 1
 
             # used for index2
-            if self.path == "/index2.html":
+            elif self.path == "/index2.html":
                 self.send_response(200)
                 self.send_header('Content_type', 'text/html')
                 self.end_headers()
@@ -275,25 +274,23 @@ class SETHandler(BaseHTTPRequestHandler):
                 # write out that we had a visit
                 visits.write("hit\n")
                 # visits.close()
-                counter = 1
 
             else:
-                if os.path.isfile(setdir + "/web_clone/%s" % (self.path)):
+                if not requested_file.startswith(webroot + os.path.sep):
+                    print('directory traversal attempt detected from: ' + self.client_address[0])
+                    self.send_response(404)
+                    self.end_headers()
+
+                elif os.path.isfile(requested_file):
                     self.send_response(200)
                     self.end_headers()
-                    fileopen = open(setdir + "/web_clone/%s" %
-                                    (self.path), "rb")
+                    fileopen = open(requested_file, "rb")
                     for line in fileopen:
                         self.wfile.write(line)
 
-            # if the file wasn't found
-            if counter == 0:
-                if os.path.isfile(setdir + "/web_clone/%s" % (self.path)):
-                    fileopen = open(setdir + "/web_clone/%s" %
-                                    (self.path), "rb")
-                    for line in fileopen:
-                        self.wfile.write(line)
-                    fileopen.close()
+                else:
+                    self.send_response(404)
+                    self.end_headers()
 
         # handle errors, log them and pass through
         except Exception as e:
