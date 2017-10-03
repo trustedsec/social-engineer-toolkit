@@ -332,7 +332,7 @@ def meta_path():
 
         # pull from config first
         msf_path = check_config("METASPLOIT_PATH=")
-        if not msf_path.endswith("/"):
+        if not str(msf_path.endswith("/")):
             msf_path = msf_path + "/"
         if os.path.isfile(msf_path + "msfconsole"):
             trigger = 1

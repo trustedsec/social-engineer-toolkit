@@ -1,4 +1,12 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.2
+~~~~~~~~~~~~~~~~
+
+* fix endswith nonetype error
+* fix directory traversal issue (thanks Spencer - awesome PR)
+* add automatic IP detection for settings in credential harvester
+
+~~~~~~~~~~~~~~~~
 version 7.7.1
 ~~~~~~~~~~~~~~~~
 
