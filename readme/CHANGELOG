@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.3
+~~~~~~~~~~~~~~~~
+
+* added better randomization of variable names for powershell payloads to evade detection
+
+~~~~~~~~~~~~~~~~
 version 7.7.2
 ~~~~~~~~~~~~~~~~
 

