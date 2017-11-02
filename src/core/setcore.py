@@ -1537,7 +1537,7 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
         "$w", var11)
 
     # unicode and base64 encode and return it
-    return base64.b64encode(powershell_command.encode('utf_16_le')).decode("ascii")
+    return base64.b64encode(powershell_code.encode('utf_16_le')).decode("ascii")
 
 # generate base shellcode
 def generate_shellcode(payload, ipaddr, port):
