@@ -1045,8 +1045,8 @@ try:
                     import src.teensy.powershell_shellcode
 
 		# HID Msbuild compile to memory Shellcode Attack
-		if teensy_menu_choice == "14":
-		    print_status(
+                if teensy_menu_choice == "14":
+                    print_status(
                         "HID Msbuild compile to memory Shellcode Attack selected")
                     debug_msg(
                         me, "importing '-----file-----'", 1)
