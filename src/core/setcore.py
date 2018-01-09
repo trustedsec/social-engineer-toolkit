@@ -1379,7 +1379,7 @@ def check_config(param):
                 # remove any quotes or single quotes
                 line = line.replace('"', "")
                 line = line.replace("'", "")
-                line = line.split("=")
+                line = line.split("=", 1)
                 return line[1]
 
 # copy an entire folder function

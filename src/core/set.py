@@ -348,10 +348,8 @@ try:
                                                     ipaddr = grab_ipaddress()
 
                                 if attack_vector == "harvester" or attack_vector == "tabnabbing" or attack_vector == "webjacking":
-                                    print_info(
-                                        "This option is used for what IP the server will POST to.")
-                                    print_info(
-                                        "If you're using an external IP, use your external IP for this")
+                                    print_info("This option is used for what IP the server will POST to.")
+                                    print_info("If you're using an external IP, use your external IP for this")
                                     rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                                     rhost.connect(('google.com', 0))
                                     rhost.settimeout(2)

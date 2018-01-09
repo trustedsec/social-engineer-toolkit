@@ -1,5 +1,11 @@
 ~~~~~~~~~~~~~~~~
-7.7.4
+version 7.7.5
+~~~~~~~~~~~~~~~~
+
+* fix line split based on = on credential harvester
+
+~~~~~~~~~~~~~~~~
+version 7.7.4
 ~~~~~~~~~~~~~~~~
 
 * fix code
