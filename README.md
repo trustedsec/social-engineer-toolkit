@@ -43,7 +43,7 @@ $ apt-get --force-yes -y install git apache2 python-requests libapache2-mod-php 
 *Arch System*
 
 ```bash
-$ pacman -S --noconfirm --needed git python2 python2-beautifulsoup3 python2-pexpect python2-crypto
+$ pacman -S --noconfirm --needed git python2 python2-beautifulsoup4 python2-pexpect python2-crypto
 $ wget https://github.com/erocarrera/pefile/archive/master.zip && unzip master.zip
 $ chmod a+x pefile-master/setup.py && rm -rf pefile-master*
 ```
