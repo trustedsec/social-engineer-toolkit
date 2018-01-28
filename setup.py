@@ -45,7 +45,7 @@ if platform.system() == "Linux":
         # If pacman.conf exists, we have a Arch based system
         elif os.path.isfile("/etc/pacman.conf"):
             subprocess.Popen("pacman -S --noconfirm --needed git python2 "
-                             "python2-beautifulsoup3 python2-pexpect python2-crypto", shell=True).wait()
+                             "python2-beautifulsoup4 python2-pexpect python2-crypto", shell=True).wait()
 
             subprocess.Popen("wget https://github.com/erocarrera/pefile/archive/master.zip", shell=True).wait()
             subprocess.Popen("unzip master.zip", shell=True).wait()
