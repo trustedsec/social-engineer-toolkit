@@ -35,7 +35,7 @@ except NameError:
     pass
 
 definepath = os.getcwd()
-setdir = core.setdir()
+setdir = core.userconfigpath
 
 MAIN = " RATTE Java Applet Attack (Remote Administration Tool Tommy Edition) - Read the readme/RATTE_README.txt first"
 

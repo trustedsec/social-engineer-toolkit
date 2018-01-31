@@ -40,7 +40,7 @@ def prepare_ratte(ipaddr, ratteport, persistent, customexe):
     ############
     # PATCH Server IP into RATTE
     ############
-    with open(os.path.join(core.setdir + "ratteM.exe"), "wb") as filewrite:
+    with open(os.path.join(core.userconfigpath, "ratteM.exe"), "wb") as filewrite:
 
         host = (len(ipaddr) + 1) * "X"
         r_port = (len(str(ratteport)) + 1) * "Y"
@@ -126,7 +126,7 @@ def main():
     ############
     prepare_ratte(ipaddr, ratteport, persistent, customexe)
 
-    core.print_status("Payload has been exported to %s" % os.path.join(core.setdir + "ratteM.exe"))
+    core.print_status("Payload has been exported to %s" % os.path.join(core.userconfigpath, "ratteM.exe"))
 
     ###################
     # start ratteserver

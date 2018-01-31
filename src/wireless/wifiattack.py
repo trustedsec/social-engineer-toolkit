@@ -92,14 +92,14 @@ else:
 if fakeap_dhcp_menu_choice == "1":
     # writes the dhcp server out
     core.print_status("Writing the dhcp configuration file to ~/.set")
-    with open(os.path.join(core.setdir + "dhcp.conf"), "w") as filewrite:
+    with open(os.path.join(core.userconfigpath, "dhcp.conf"), "w") as filewrite:
         filewrite.write(dhcp_config1)
     dhcptun = 1
 
 if fakeap_dhcp_menu_choice == "2":
     # writes the dhcp server out
     core.print_status("Writing the dhcp configuration file to ~/.set")
-    with open(os.path.join(core.setdir + "dhcp.conf"), "w") as filewrite:
+    with open(os.path.join(core.userconfigpath, "dhcp.conf"), "w") as filewrite:
         filewrite.write(dhcp_config2)
     dhcptun = 2
 

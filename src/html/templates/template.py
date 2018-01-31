@@ -73,13 +73,13 @@ if choice == "5":
     shutil.copyfile("src/html/templates/yahoo/index.template", "src/html/index.template")
     url = "http://mail.yahoo.com"
 
-if not os.path.isdir(os.path.join(core.setdir, "web_clone")):
-    os.makedirs(os.path.join(core.setdir, "web_clone/"))
-if os.path.isfile(os.path.join(core.setdir, "web_clone/index.html")):
-    os.remove(os.path.join(core.setdir, "web_clone/index.html"))
-shutil.copyfile("src/html/index.template", os.path.join(core.setdir, "web_clone/index.html"))
+if not os.path.isdir(os.path.join(core.userconfigpath, "web_clone")):
+    os.makedirs(os.path.join(core.userconfigpath, "web_clone/"))
+if os.path.isfile(os.path.join(core.userconfigpath, "web_clone/index.html")):
+    os.remove(os.path.join(core.userconfigpath, "web_clone/index.html"))
+shutil.copyfile("src/html/index.template", os.path.join(core.userconfigpath, "web_clone/index.html"))
 
-with open(os.path.join(core.setdir, "site.template"), 'w') as filewrite:
+with open(os.path.join(core.userconfigpath, "site.template"), 'w') as filewrite:
     filewrite.write("TEMPLATE=SELF\nURL={0}".format(url))
 
 core.debug_msg(core.mod_name(), "exiting src.html.templates.template'", 1)

@@ -463,11 +463,11 @@ def cleanup_routine():
     try:
         # restore original Java Applet
         shutil.copyfile("%s/src/html/Signed_Update.jar.orig" %
-                        (definepath()), setdir + "/Signed_Update.jar")
+                        (definepath()), userconfigpath + "Signed_Update.jar")
         if os.path.isfile("newcert.pem"):
             os.remove("newcert.pem")
-        if os.path.isfile(setdir + "/interfaces"):
-            os.remove(setdir + "/interfaces")
+        if os.path.isfile(userconfigpath + "interfaces"):
+            os.remove(userconfigpath + "interfaces")
         if os.path.isfile("src/html/1msf.raw"):
             os.remove("src/html/1msf.raw")
         if os.path.isfile("src/html/2msf.raw"):
@@ -476,10 +476,10 @@ def cleanup_routine():
             os.remove("msf.exe")
         if os.path.isfile("src/html/index.html"):
             os.remove("src/html/index.html")
-        if os.path.isfile(setdir + "/Signed_Update.jar"):
-            os.remove(setdir + "/Signed_Update.jar")
-        if os.path.isfile(setdir + "/version.lock"):
-            os.remove(setdir + "/version.lock")
+        if os.path.isfile(userconfigpath + "Signed_Update.jar"):
+            os.remove(userconfigpath + "Signed_Update.jar")
+        if os.path.isfile(userconfigpath + "version.lock"):
+            os.remove(userconfigpath + "version.lock")
 
     except:
         pass
@@ -559,19 +559,19 @@ def generate_random_string(low, high):
 def site_cloner(website, exportpath, *args):
     grab_ipaddress()
     ipaddr = grab_ipaddress()
-    filewrite = open(setdir + "/interface", "w")
+    filewrite = open(userconfigpath + "interface", "w")
     filewrite.write(ipaddr)
     filewrite.close()
-    filewrite = open(setdir + "/ipaddr", "w")
+    filewrite = open(userconfigpath + "ipaddr", "w")
     filewrite.write(ipaddr)
     filewrite.close()
-    filewrite = open(setdir + "/site.template", "w")
+    filewrite = open(userconfigpath + "site.template", "w")
     filewrite.write("URL=" + website)
     filewrite.close()
     # if we specify a second argument this means we want to use java applet
     if args[0] == "java":
         # needed to define attack vector
-        filewrite = open(setdir + "/attack_vector", "w")
+        filewrite = open(userconfigpath + "attack_vector", "w")
         filewrite.write("java")
         filewrite.close()
     sys.path.append("src/webattack/web_clone")
@@ -586,7 +586,7 @@ def site_cloner(website, exportpath, *args):
 
     # copy the file to a new folder
     print_status("Site has been successfully cloned and is: " + exportpath)
-    subprocess.Popen("mkdir '%s';cp %s/web_clone/* '%s'" % (exportpath, setdir,
+    subprocess.Popen("mkdir '%s';cp %s/web_clone/* '%s'" % (exportpath, userconfigpath,
                                                             exportpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 
@@ -666,7 +666,7 @@ def java_applet_attack(website, port, directory):
     if check_options != 0:
 
         # move the file to the specified directory and filename
-        subprocess.Popen("cp %s/msf.exe %s/%s" % (setdir, directory, filename),
+        subprocess.Popen("cp %s/msf.exe %s/%s" % (userconfigpath, directory, filename),
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     applet_name = check_options("APPLET_NAME=")
@@ -675,7 +675,7 @@ def java_applet_attack(website, port, directory):
 
     # lastly we need to copy over the signed applet
     subprocess.Popen(
-        "cp %s/Signed_Update.jar %s/%s" % (setdir, directory, applet_name),
+        "cp %s/Signed_Update.jar %s/%s" % (userconfigpath, directory, applet_name),
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
     # start the web server by running it in the background
@@ -700,41 +700,41 @@ def teensy_pde_generator(attack_method):
     if attack_method == "beef":
         # specify the filename
         filename = open("src/teensy/beef.ino", "r")
-        filewrite = open(setdir + "/reports/beef.ino", "w")
+        filewrite = open(userconfigpath + "reports/beef.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Beef Attack Vector under %s/reports/beef.ino" % (setdir))
+            "Successfully generated Teensy HID Beef Attack Vector under %s/reports/beef.ino" % (userconfigpath))
 
     # if we are doing the attack vector teensy beef
     if attack_method == "powershell_down":
         # specify the filename
         filename = open("src/teensy/powershell_down.ino", "r")
-        filewrite = open(setdir + "/reports/powershell_down.ino", "w")
+        filewrite = open(userconfigpath + "reports/powershell_down.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_down.ino" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_down.ino" % (userconfigpath))
 
     # if we are doing the attack vector teensy
     if attack_method == "powershell_reverse":
         # specify the filename
         filename = open("src/teensy/powershell_reverse.ino", "r")
-        filewrite = open(setdir + "/reports/powershell_reverse.ino", "w")
+        filewrite = open(userconfigpath + "reports/powershell_reverse.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_reverse.ino" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/powershell_reverse.ino" % (userconfigpath))
 
     # if we are doing the attack vector teensy beef
     if attack_method == "java_applet":
         # specify the filename
         filename = open("src/teensy/java_applet.ino", "r")
-        filewrite = open(setdir + "/reports/java_applet.ino", "w")
+        filewrite = open(userconfigpath + "reports/java_applet.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/java_applet.ino" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/java_applet.ino" % (userconfigpath))
 
     # if we are doing the attack vector teensy
     if attack_method == "wscript":
         # specify the filename
         filename = open("src/teensy/wscript.ino", "r")
-        filewrite = open(setdir + "/reports/wscript.ino", "w")
+        filewrite = open(userconfigpath + "reports/wscript.ino", "w")
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/wscript.ino" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/wscript.ino" % (userconfigpath))
 
     # All the options share this code except binary2teensy
     if attack_method != "binary2teensy":
@@ -750,7 +750,7 @@ def teensy_pde_generator(attack_method):
         # specify the filename
         import src.teensy.binary2teensy
         teensy_string = (
-            "Successfully generated Teensy HID Attack Vector under %s/reports/binary2teensy.ino" % (setdir))
+            "Successfully generated Teensy HID Attack Vector under %s/reports/binary2teensy.ino" % (userconfigpath))
 
     print_status(teensy_string)
 #
@@ -811,10 +811,10 @@ def upx(path_to_file):
             "Packing the executable and obfuscating PE file randomly, one moment.")
         # packing executable
         subprocess.Popen(
-            "%s -9 -q -o %s/temp.binary %s" % (upx_path, setdir, path_to_file),
+            "%s -9 -q -o %s/temp.binary %s" % (upx_path, userconfigpath, path_to_file),
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
         # move it over the old file
-        subprocess.Popen("mv %s/temp.binary %s" % (setdir, path_to_file),
+        subprocess.Popen("mv %s/temp.binary %s" % (userconfigpath, path_to_file),
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
         # random string
@@ -822,7 +822,7 @@ def upx(path_to_file):
 
         # 4 upx replace - we replace 4 upx open the file
         fileopen = open(path_to_file, "rb")
-        filewrite = open(setdir + "/temp.binary", "wb")
+        filewrite = open(userconfigpath + "temp.binary", "wb")
 
         # read the file open for data
         data = fileopen.read()
@@ -830,7 +830,7 @@ def upx(path_to_file):
         filewrite.write(data.replace("UPX", random_string, 4))
         filewrite.close()
         # copy the file over
-        subprocess.Popen("mv %s/temp.binary %s" % (setdir, path_to_file),
+        subprocess.Popen("mv %s/temp.binary %s" % (userconfigpath, path_to_file),
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     time.sleep(3)
 
@@ -873,13 +873,13 @@ def show_banner(define_version, graphic):
         version = ""
 
         def pull_version():
-            if not os.path.isfile(setdir + "/version.lock"):
+            if not os.path.isfile(userconfigpath + "version.lock"):
                 try:
 
                     url = (
                         'https://raw.githubusercontent.com/trustedsec/social-engineer-toolkit/master/src/core/set.version')
                     version = urlopen(url).read().rstrip().decode('utf-8')
-                    filewrite = open(setdir + "/version.lock", "w")
+                    filewrite = open(userconfigpath + "version.lock", "w")
                     filewrite.write(version)
                     filewrite.close()
 
@@ -887,7 +887,7 @@ def show_banner(define_version, graphic):
                     version = "keyboard interrupt"
 
             else:
-                version = open(setdir + "/version.lock", "r").read()
+                version = open(userconfigpath + "version.lock", "r").read()
 
             if cv != version:
                 if version != "":
@@ -1414,8 +1414,8 @@ def copyfolder(sourcePath, destPath):
 def check_options(option):
         # open the directory
     trigger = 0
-    if os.path.isfile(setdir + "/set.options"):
-        fileopen = open(setdir + "/set.options", "r").readlines()
+    if os.path.isfile(userconfigpath + "set.options"):
+        fileopen = open(userconfigpath + "set.options", "r").readlines()
         for line in fileopen:
             match = re.search(option, line)
             if match:
@@ -1433,13 +1433,13 @@ def check_options(option):
 
 def update_options(option):
         # if the file isn't there write a blank file
-    if not os.path.isfile(setdir + "/set.options"):
-        filewrite = open(setdir + "/set.options", "w")
+    if not os.path.isfile(userconfigpath + "set.options"):
+        filewrite = open(userconfigpath + "set.options", "w")
         filewrite.write("")
         filewrite.close()
 
     # remove old options
-    fileopen = open(setdir + "/set.options", "r")
+    fileopen = open(userconfigpath + "set.options", "r")
     old_options = ""
     for line in fileopen:
         match = re.search(option, line)
@@ -1447,7 +1447,7 @@ def update_options(option):
             line = ""
         old_options = old_options + line
     # append to file
-    filewrite = open(setdir + "/set.options", "w")
+    filewrite = open(userconfigpath + "set.options", "w")
     filewrite.write(old_options + "\n" + option + "\n")
     filewrite.close()
 
@@ -1771,7 +1771,7 @@ def setdir():
         return "src/program_junk/"
 
 # set the main directory for SET
-setdir = setdir()
+userconfigpath = setdir()
 
 # Copyright (c) 2007 Brandon Sterne
 # Licensed under the MIT license.

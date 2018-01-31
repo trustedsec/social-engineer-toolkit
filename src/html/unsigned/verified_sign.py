@@ -82,8 +82,8 @@ if firstprompt == "1":
 
     # import into SET
     core.print_status("Importing the applet into SET for weaponization...")
-    shutil.copyfile(newpath, os.path.join(core.setdir, "Signed_Update.jar.orig"))
-    shutil.copyfile(newpath, os.path.join(core.setdir, "Signed_Update.jar"))
+    shutil.copyfile(newpath, os.path.join(core.userconfigpath, "Signed_Update.jar.orig"))
+    shutil.copyfile(newpath, os.path.join(core.userconfigpath, "Signed_Update.jar"))
     core.print_status("The applet has been successfully imported into SET.")
 
 # if we want to either generate a certificate or use our own certificate
@@ -185,6 +185,6 @@ if firstprompt == "2":
         # sign the applet with the imported certificate
         subprocess.Popen("jarsigner -signedjar Signed_Update.jar {0} MyCert".format(os.path.join(definepath, "src/html/unsigned/unsigned.jar")), shell=True).wait()
         # move it into our html directory
-        subprocess.Popen("mv Signed_Update.jar {0}".format(os.path.join(core.setdir, "Signed_Update.jar.orig")), shell=True).wait()
+        subprocess.Popen("mv Signed_Update.jar {0}".format(os.path.join(core.userconfigpath, "Signed_Update.jar.orig")), shell=True).wait()
         # move back to original directory
         core.print_status("Java Applet is now signed and will be imported into the java applet website attack from now on...")

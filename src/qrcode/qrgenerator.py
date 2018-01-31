@@ -16,7 +16,7 @@ def gen_qrcode(url):
     im = qr.make_image()
     time.sleep(1)
 
-    qr_img_path = os.path.join(core.setdir, "reports/qrcode_attack.png")
+    qr_img_path = os.path.join(core.userconfigpath, "reports/qrcode_attack.png")
 
     if os.path.isfile(qr_img_path):
         os.remove(qr_img_path)

