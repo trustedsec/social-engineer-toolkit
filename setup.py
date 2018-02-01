@@ -24,6 +24,7 @@ platformOS = platform.system()
 if platformOS not in  ["Linux", "Darwin"]:
     print("[!] Sorry this installer is not designed for %s (only Linux and Mac)"
           ". Please install the Python dependencies manually." % platformOS)
+    exit()
 
 # Check user ID
 if os.getuid() != 0:
