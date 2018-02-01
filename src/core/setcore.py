@@ -2025,7 +2025,7 @@ def input(string):
 
 
 def fetch_template():
-    fileopen = open(setdir + "/site.template").readlines()
+    fileopen = open(userconfigpath + "site.template").readlines()
     for line in fileopen:
         line = line.rstrip()
         match = re.search("URL=", line)

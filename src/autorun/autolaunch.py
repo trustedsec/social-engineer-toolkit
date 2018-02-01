@@ -33,11 +33,11 @@ if os.path.isfile(os.path.join(core.userconfigpath, "fileformat.file")):
                                                                   os.path.join(core.userconfigpath, "template.pdf")),
                      shell=True).wait()
 
-if os.path.isfile(os.path.join(core.userconfigpath, "/dll/openthis.wab")):
+if os.path.isfile(os.path.join(core.userconfigpath, "dll/openthis.wab")):
     subprocess.Popen("rm -rf {0} 1> /dev/null 2> /dev/null;"
                      "mkdir {0} 1> /dev/null 2> /dev/null;"
                      "cp {1} {0} 1> /dev/null 2> /dev/null".format(autorun_path,
-                                                                   os.path.join(core.userconfigpath, "/dll/*")),
+                                                                   os.path.join(core.userconfigpath, "dll/*")),
                      shell=True).wait()
     trigger = 3
 

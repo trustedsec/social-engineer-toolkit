@@ -29,7 +29,7 @@ now = datetime.datetime.today()
 if operating_system != "windows":
     import pexpect
 
-# check to see if setdir is created
+# check to see if userconfigpath is created
 if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
     os.makedirs(os.path.join(core.userconfigpath, "reports"))
 
@@ -84,7 +84,7 @@ with open(os.path.join(core.userconfigpath, "teensy")) as fileopen:
 
 def writefile(filename, now):
     with open(os.path.join("src/teensy/" + filename)) as fileopen, \
-            open(os.path.join(core.userconfigpath, "/reports/teensy_{0}.ino".format(now)), "w") as filewrite:
+            open(os.path.join(core.userconfigpath, "reports/teensy_{0}.ino".format(now)), "w") as filewrite:
 
         for line in fileopen:
             match = re.search("IPADDR", line)

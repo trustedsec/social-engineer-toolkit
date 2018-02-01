@@ -68,7 +68,7 @@ try:
     if port == "":
         port = "443"
     core.update_options("PORT={0}".format(port))
-    with open(os.path.join(core.userconfigpath, "/payload_options.shellcode"), "w") as filewrite:
+    with open(os.path.join(core.userconfigpath, "payload_options.shellcode"), "w") as filewrite:
         # format needed for shellcode generation
         filewrite.write("{0} {1},".format(payload, port))
     core.update_options("POWERSHELL_SOLO=ON")

