@@ -521,15 +521,16 @@ def update_set():
 
 
 def help_menu():
-    fileopen = open("README.md", "r").readlines()
-    for line in fileopen:
-        line = line.rstrip()
-        print(line)
-    fileopen = open("readme/CREDITS", "r").readlines()
-    print("\n")
-    for line in fileopen:
-        line = line.rstrip()
-        print(line)
+    with open("README.md", "r").readlines() as fileopen:
+        for line in fileopen:
+            line = line.rstrip()
+            print(line)
+
+    with open("readme/CREDITS", "r").readlines() as fileopen:
+        print("\n")
+        for line in fileopen:
+            line = line.rstrip()
+            print(line)
     return_continue()
 
 
@@ -558,16 +559,17 @@ def generate_random_string(low, high):
 
 def site_cloner(website, exportpath, *args):
     grab_ipaddress()
+
+    def wr(sdir, spec, mode, write):
+        # DRY: Do Not Repeat Yourself
+        with open(sdir + spec, mode) as filewrite:
+            filewrite.write(write)
+
     ipaddr = grab_ipaddress()
-    filewrite = open(setdir + "/interface", "w")
-    filewrite.write(ipaddr)
-    filewrite.close()
-    filewrite = open(setdir + "/ipaddr", "w")
-    filewrite.write(ipaddr)
-    filewrite.close()
-    filewrite = open(setdir + "/site.template", "w")
-    filewrite.write("URL=" + website)
-    filewrite.close()
+    wr(setdir, "/interface", "w", ipaddr)
+    wr(setdir, "/ipaddr", "w", ipaddr)
+    wr(setdir, "/site.template", "w", "URL=" + website)
+
     # if we specify a second argument this means we want to use java applet
     if args[0] == "java":
         # needed to define attack vector
@@ -1515,7 +1517,7 @@ def generate_powershell_alphanumeric_payload(payload, ipaddr, port, payload2):
 
     # added random vars before and after to change strings - AV you are
     # seriously ridiculous.
-    var1 = "$" + generate_random_string(2, 2) # $1 
+    var1 = "$" + generate_random_string(2, 2) # $1
     var2 = "$" + generate_random_string(2, 2) # $c
     var3 = "$" + generate_random_string(2, 2) # $2
     var4 = "$" + generate_random_string(2, 2) # $3
