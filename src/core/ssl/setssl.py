@@ -8,7 +8,7 @@ from src.core.setcore import *
 import subprocess
 import os
 definepath = os.getcwd()
-os.chdir(setdir)
+os.chdir(userconfigpath)
 # create the directories for us
 subprocess.Popen("mkdir CA;cd CA;mkdir newcerts private", shell=True).wait()
 # move into CA directory

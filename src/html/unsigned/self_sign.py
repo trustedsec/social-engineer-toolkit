@@ -49,7 +49,7 @@ subprocess.Popen("jarsigner -keystore mykeystore "
 
 # move it into our html directory
 subprocess.Popen("cp Signed_Update.jar ../", shell=True).wait()
-subprocess.Popen("mv Signed_Update.jar {0}".format(core.setdir), shell=True)
+subprocess.Popen("mv Signed_Update.jar {0}".format(core.userconfigpath), shell=True)
 
 # move back to original directory
 os.chdir("../../../")
