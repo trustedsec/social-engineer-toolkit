@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.6
+~~~~~~~~~~~~~~~~
+
+* fix GOAT message when starting SSL server
+
+~~~~~~~~~~~~~~~~
 version 7.7.5
 ~~~~~~~~~~~~~~~~
 

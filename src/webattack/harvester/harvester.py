@@ -659,7 +659,7 @@ try:
 
     # if we are using ssl
     if ssl_flag == 'true':
-        print "GOAT"
+        print_status("Starting built-in SSL server")
         ssl_server()
 
     # if we aren't using ssl
