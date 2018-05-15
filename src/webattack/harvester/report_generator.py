@@ -124,7 +124,7 @@ try:
 except:
     pass
 
-subprocess.Popen("cp -rf %s/src/core/reports/files %s/reports/" % (definepath,
+subprocess.Popen("cp -rf %s/src/core/reports/files %sreports/" % (definepath,
                                                                    userconfigpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 print(bcolors.BLUE + "[*] File exported to %s/reports/%s.html for your reading pleasure..." % (userconfigpath, now) + bcolors.ENDC)
 print(bcolors.BLUE + "[*] File in XML format exported to %s/reports/%s.xml for your reading pleasure..." % (userconfigpath, now) + bcolors.ENDC)

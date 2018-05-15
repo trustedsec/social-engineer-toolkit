@@ -16,10 +16,11 @@ import socket
 
 # needed for python2 -> 3
 try:
-    from socketserver import *
+    from SocketServer import *
+    import SocketServer
 
 except ImportError:
-    from SocketServer import *
+    from socketserver import *
 
 import threading
 import datetime
@@ -575,7 +576,7 @@ def run():
 class SecureHTTPServer(HTTPServer):
 
     def __init__(self, server_address, HandlerClass):
-        BaseServer.__init__(self, server_address, HandlerClass)
+        SocketServer.BaseServer.__init__(self, server_address, HandlerClass)
         # SSLv2 and SSLv3 supported
         ctx = SSL.Context(SSL.SSLv23_METHOD)
         # pem files defined before
@@ -586,24 +587,27 @@ class SecureHTTPServer(HTTPServer):
         # establish public/client certificate
         ctx.use_certificate_file(fpem_cli)
         # setup the ssl socket
-        self.socket = SSL.Connection(ctx, socket.socket(
-            self.address_family, self.socket_type))
+        self.socket = SSL.Connection(ctx, socket.socket(self.address_family, self.socket_type))
         # bind to interface
         self.server_bind()
         # activate the interface
         self.server_activate()
 
-    def shutdown_request(self, request): request.shutdown()
+    def shutdown_request(self, request): 
+        request.shutdown()
 
 
 def ssl_server(HandlerClass=SETHandler, ServerClass=SecureHTTPServer):
-        # bind to all interfaces on 443
 
-    server_address = ('', 443)  # (address, port)
-    # setup the httpd server
-    httpd = ServerClass(server_address, HandlerClass)
-    # serve the httpd server until exit
-    httpd.serve_forever()
+    try:
+        # bind to all interfaces on 443
+        server_address = ('', 443)  # (address, port)
+        # setup the httpd server
+        httpd = ServerClass(server_address, HandlerClass)
+        # serve the httpd server until exit
+        httpd.serve_forever()
+    except Exception, e: 
+        print_error("Something went wrong.. Printing error: " + str(e))
 
 if track_email == True:
     webattack_email = True
