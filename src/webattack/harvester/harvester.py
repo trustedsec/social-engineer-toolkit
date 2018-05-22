@@ -377,6 +377,9 @@ class SETHandler(BaseHTTPRequestHandler):
             counter = 1
 
         # when done posting send them back to the original site
+        print("IM HERE")
+        print(RAW_URL)
+        pause = raw_input("TEST")
         self.wfile.write('<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL))
 
         # set it back to our homepage
@@ -641,8 +644,7 @@ if ssl_flag == 'true':
     # copy patched socket over to web clone
     definepath = os.getcwd()
     # we need to move a modified version of socket to handle SSL
-    shutil.copyfile("%s/src/core/patched/socket.py" %
-                    (definepath), "%s/socket.py" % (definepath))
+    shutil.copyfile("%s/src/core/patched/socket.py" % (definepath), "%s/socket.py" % (definepath))
 
 # head over to cloned dir
 if apache_check == False:
