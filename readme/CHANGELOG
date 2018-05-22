@@ -3,6 +3,8 @@ version 7.7.6
 ~~~~~~~~~~~~~~~~
 
 * fix GOAT message when starting SSL server
+* fix BaseServer not being identified in import
+* fix OSX cloning for harvester (port allocation)
 
 ~~~~~~~~~~~~~~~~
 version 7.7.5

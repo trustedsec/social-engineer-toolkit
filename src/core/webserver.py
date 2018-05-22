@@ -80,20 +80,20 @@ class StoppableHttpServer(http.server.HTTPServer):
             self.handle_request()
 
 # stop the http server
-
-
 def stop_server(web_port):
-    web_port = int(web_port)
-    """send QUIT request to http server running on localhost:<port>"""
-    conn = http.client.HTTPConnection("localhost:%d" % web_port)
-    conn.request("QUIT", "/")
-    conn.getresponse()
+    try:
+        web_port = int(web_port)
+        """send QUIT request to http server running on localhost:<port>"""
+        conn = http.client.HTTPConnection("localhost:%d" % web_port)
+        conn.request("QUIT", "/")
+        conn.getresponse()
+    except: pass
 
 # start the http server
-
-
 def start_server(web_port, path):
-    os.chdir(path)
-    web_port = int(web_port)
-    server = StoppableHttpServer(('', web_port), StoppableHttpRequestHandler)
-    server.serve_forever()
+    try:
+        os.chdir(path)
+        web_port = int(web_port)
+        server = StoppableHttpServer(('', web_port), StoppableHttpRequestHandler)
+        server.serve_forever()
+    except: pass

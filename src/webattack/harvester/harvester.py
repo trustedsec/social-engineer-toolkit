@@ -377,8 +377,7 @@ class SETHandler(BaseHTTPRequestHandler):
             counter = 1
 
         # when done posting send them back to the original site
-        self.wfile.write(
-            '<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL))
+        self.wfile.write('<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL))
 
         # set it back to our homepage
         os.chdir(userconfigpath + "web_clone/")
