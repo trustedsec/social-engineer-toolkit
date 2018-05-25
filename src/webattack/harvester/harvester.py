@@ -324,7 +324,7 @@ class SETHandler(BaseHTTPRequestHandler):
             line = line.rstrip()
             # if regular expression hit on user fields then do different
             match = re.search(
-                "Email|email|login|logon|Logon|Login|user|username|Username", line)
+                "Email|email|login|logon|Logon|Login|user|username|Username|User", line)
             if match:
                 print(bcolors.RED + "POSSIBLE USERNAME FIELD FOUND: " + line + "\r" + bcolors.GREEN)
                 counter = 1
