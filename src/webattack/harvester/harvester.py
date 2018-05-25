@@ -37,7 +37,6 @@ from set_config import TRACK_EMAIL_ADDRESSES as track_email
 from set_config import HARVESTER_LOG as logpath
 sys.path.append(definepath)
 
-
 if track_email == True:
     print_status("You have selected to track user accounts, Apache will automatically be turned on to handle tracking of users.")
     apache_check = True
@@ -621,12 +620,10 @@ if webattack_email == True:
 fileopen = open(userconfigpath + "attack_vector", "r")
 for line in fileopen:
     line = line.rstrip()
-    if line == 'tabnabbing':
-        print(bcolors.RED + "\n[*] Tabnabbing Attack Vector is Enabled...Victim needs to switch tabs.")
+    if line == 'tabnabbing': print(bcolors.RED + "\n[*] Tabnabbing Attack Vector is Enabled...Victim needs to switch tabs.")
 	print("You may need to copy /var/www/* into /var/www/html depending on where your directory structure is.")
 	raw_input("Press {return} if you understand what we're saying here.")
-    if line == 'webjacking':
-        print(bcolors.RED + "\n[*] Web Jacking Attack Vector is Enabled...Victim needs to click the link.")
+    if line == 'webjacking': print(bcolors.RED + "\n[*] Web Jacking Attack Vector is Enabled...Victim needs to click the link.")
 
 if ssl_flag == 'true':
     web_port = "443"
@@ -636,8 +633,7 @@ if ssl_flag == 'true':
     if not os.path.isfile(userconfigpath + "newcert.pem"):
         print("PEM files not detected. SSL will not work properly.")
     # copy over our PEM files
-    subprocess.Popen("cp %s/*.pem %s/web_clone/" % (userconfigpath, userconfigpath),
-                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    subprocess.Popen("cp %s/*.pem %s/web_clone/" % (userconfigpath, userconfigpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     # copy patched socket over to web clone
     definepath = os.getcwd()
     # we need to move a modified version of socket to handle SSL
