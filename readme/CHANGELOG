@@ -6,6 +6,7 @@ version 7.7.7
 * add better wording for templates
 * remove old templates yahoo and facebook
 * add better descriptions for using NAT/External IP addresses for credential harvester
+* fix if a custom PDF is selected, it won't default to a blank pdf
 
 ~~~~~~~~~~~~~~~~
 version 7.7.6

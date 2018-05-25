@@ -107,22 +107,23 @@ if exploit == "exploit/windows/fileformat/adobe_pdf_embedded_exe" or exploit == 
 
     choicepdf = raw_input(setprompt(["4"], ""))
 
-    if choicepdf == 'exit':
-        exit_set()
+    if choicepdf == 'exit': exit_set()
 
     if choicepdf == '1':
         # define if user wants to use their own pdf or built in one
-        inputpdf = raw_input(
-            setprompt(["4"], "Enter path to your pdf [blank-builtin]"))
+        inputpdf = raw_input(setprompt(["4"], "Enter path to your pdf [blank-builtin]"))
+        choicepdf = inputpdf
         # if blank, then default to normal pdf
         if inputpdf == "":
             # change to default SET pdf
             print_info("Defaulting to BLANK PDF built into SET...")
             inputpdf = definepath + "/src/core/msf_attacks/form.pdf"
+            choicepdf = inputpdf
         # if no file exists defalt this
         if not os.path.isfile(inputpdf):
             print_warning("Unable to find PDF, defaulting to blank PDF.")
             inputpdf = definepath + "/src/core/msf_attacks/form.pdf"
+            choicepdf = inputpdf
 
     if choicepdf == '2':
         inputpdf = definepath + "/src/core/msf_attacks/form.pdf"
