@@ -4,18 +4,18 @@
 # Author: d4rk0
 # twitter: @d4rk0s
 
-from fsattacks import *
+from src.webattack.fsattack.fsattacks import *
+
 
 def mainFullScreenAttackLoadExample():
 
-    # Load And Start 
+    # Load And Start
     x = fullScreenAttacks()
     # Checks config if set loads intro if not skips
     x.phishMenuMain()
 
-    
-#if __name__ == "__main__":
+
+# if __name__ == "__main__":
     # Run if executed
 
 mainFullScreenAttackLoadExample()
-

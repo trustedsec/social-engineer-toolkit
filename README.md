@@ -1,5 +1,6 @@
-#The Social-Engineer Toolkit (SET)
-Copyright 2015 The Social-Engineer Toolkit (SET)
+# The Social-Engineer Toolkit (SET)
+
+Copyright 2018 The Social-Engineer Toolkit (SET)
 
 Written by: David Kennedy (ReL1K)
 
@@ -9,15 +10,68 @@ DISCLAIMER: This is only for testing purposes and can only be used where strict 
 
 Please read the LICENSE under readme/LICENSE for the licensing of SET. 
 
-#Features
+
+# SET Tutorial
+
+For a full document on how to use SET, [visit the SET user manual](https://github.com/trustedsec/social-engineer-toolkit/raw/master/readme/User_Manual.pdf).
+
+
+# Features
 
 The Social-Engineer Toolkit is an open-source penetration testing framework designed for social engineering. SET has a number of custom attack vectors that allow you to make a believable attack quickly. SET is a product of TrustedSec, LLC – an information security consulting firm located in Cleveland, Ohio.
 
-### Bugs and enhancements
 
-For bug reports or enhancements, please open an issue here: https://github.com/trustedsec/social-engineer-toolkit/issues
+## Bugs and enhancements
 
-### Supported platforms
+For bug reports or enhancements, please open an [issue](https://github.com/trustedsec/social-engineer-toolkit/issues) here.
 
-- Linux
-- Windows (experimental)
+
+## Supported platforms
+
+* Linux
+* Mac OS X 
+
+# Installation
+## Resolve dependencies
+*Ubuntu/Debian System*
+
+```
+$ apt-get --force-yes -y install git apache2 python-requests libapache2-mod-php \
+  python-pymssql build-essential python-pexpect python-pefile python-crypto python-openssl
+```
+
+*Arch System*
+
+```bash
+$ pacman -S --noconfirm --needed git python2 python2-beautifulsoup4 python2-pexpect python2-crypto
+$ wget https://github.com/erocarrera/pefile/archive/master.zip && unzip master.zip
+$ chmod a+x pefile-master/setup.py && rm -rf pefile-master*
+```
+
+*Fedora System*
+
+```bash
+$ dnf -y install git python-pexpect python-pefile python-crypto pyOpenSSL
+```
+
+*CentOS System*
+
+```bash
+$ yum update -y && yum install python-pexpect python-crypto python-openssl python-pefile
+```
+
+*Mac OS X dependent*
+
+```bash
+$ pip install pexpect pycrypto pyopenssl pefile
+```
+
+## Install SET
+
+*All OSs*
+
+```bash
+$ git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
+$ cd set
+$ python setup.py install
+```

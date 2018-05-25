@@ -1,9 +1,12 @@
 #!/usr/bin/env python
+# coding=utf-8
 #
-# simple svn update for set pulling from core modules
+# simple git update for set pulling from core modules
 #
 import os
 import sys
+
+
 
 # check where we are and load default directory
 if os.path.isdir("/usr/share/setoolkit"):
@@ -11,21 +14,22 @@ if os.path.isdir("/usr/share/setoolkit"):
         os.chdir("/usr/share/setoolkit")
         sys.path.append("/usr/share/setoolkit")
 
+import src.core.setcore as core
+
 # if we can't see our config then something didn't go good..
 if not os.path.isfile("/etc/setoolkit/set.config"):
-    print_error("Cannot locate SET executable. Try running from the local directory.")
-    print_error("If this does not work, please run the setup.py install file.")
+    core.print_error("Cannot locate SET executable. Try running from the local directory.")
+    core.print_error("If this does not work, please run the setup.py install file.")
     sys.exit()
-
-from src.core.setcore import *
 
 try:
     # pull update set from the core libraries
-    update_set()
+    core.update_set()
 
 # except keyboard interrupts
 except KeyboardInterrupt:
-    print "\n[!] Control-C detected. Exiting updating SET."
+    print("\n[!] Control-C detected. Exiting updating SET.")
 
 # handle all other errors
-except Exception, e: print "\n[!] Something went wrong.. Printing the error: " + e
+except Exception as e:
+    print("\n[!] Something went wrong.. Printing the error: {0}".format(e))

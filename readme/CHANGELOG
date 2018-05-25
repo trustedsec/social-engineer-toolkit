@@ -1,4 +1,503 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.7
+~~~~~~~~~~~~~~~~
+
+* remove old test code
+* add better wording for templates
+* remove old templates yahoo and facebook
+* add better descriptions for using NAT/External IP addresses for credential harvester
+* fix if a custom PDF is selected, it won't default to a blank pdf
+* add user variable to harvester
+
+~~~~~~~~~~~~~~~~
+version 7.7.6
+~~~~~~~~~~~~~~~~
+
+* fix GOAT message when starting SSL server
+* fix BaseServer not being identified in import
+* fix OSX cloning for harvester (port allocation)
+* fix web server from not closing properly when using java applet attack
+
+~~~~~~~~~~~~~~~~
+version 7.7.5
+~~~~~~~~~~~~~~~~
+
+* fix line split based on = on credential harvester
+
+~~~~~~~~~~~~~~~~
+version 7.7.4
+~~~~~~~~~~~~~~~~
+
+* fix code
+
+~~~~~~~~~~~~~~~~
+version 7.7.3
+~~~~~~~~~~~~~~~~
+
+* added better randomization of variable names for powershell payloads to evade detection
+
+~~~~~~~~~~~~~~~~
+version 7.7.2
+~~~~~~~~~~~~~~~~
+
+* fix endswith nonetype error
+* fix directory traversal issue (thanks Spencer - awesome PR)
+* add automatic IP detection for settings in credential harvester
+
+~~~~~~~~~~~~~~~~
+version 7.7.1
+~~~~~~~~~~~~~~~~
+
+* added nginx to service to stop on top of apache2
+
+~~~~~~~~~~~~~~~~
+version 7.7
+~~~~~~~~~~~~~~~~
+
+* rewrote grab_ipaddress() function to be a centralized routine that incorporates hostnames or IP addresses.
+* rewrote grab_ipaddress() to include automatic detection of ipaddress or failover to manual entry. This will allow easier selection fo IP addresses without having to drop into a different window
+* add hostname support for hta attack vector
+* removed deploy binaries as a default option in the set.config file
+* added ability for new menu for java applet that now allows you to specify multiple commands - useful if you want to insert things like empire payloads, etc.
+* rewrote java applet to have additional functionality for multiple command menu
+* better handling on command output
+* fixed custom applet from not working properly
+* fixed custom executable from not working properly
+* added new unsigned obfsucated jar file
+* added Java.java source files for customization
+* added new Java Applet self-signed with new expirations
+
+~~~~~~~~~~~~~~~~
+version 7.6.5
+~~~~~~~~~~~~~~~~
+
+* added new chrome user agent in config - config will automatically update
+
+~~~~~~~~~~~~~~~~
+version 7.6.4
+~~~~~~~~~~~~~~~~
+
+* fix an issue where encoding messed up sql commands for mssql bruter attack vector in fasttrack
+
+~~~~~~~~~~~~~~~~
+version 7.6.3
+~~~~~~~~~~~~~~~~
+
+* fixed PEM import zipimporter error message - was more of a warning, supressed if not using pyopenssl
+* fixed a harvester not found exception in harvester
+* fixed powershell teensy conversion error when printing output
+
+~~~~~~~~~~~~~~~~
+7.6.2
+~~~~~~~~~~~~~~~~
+
+* code cleanup on arduino (PR)
+* fixed an issue in spear phishing that would hold payload generation into a constant loop
+
+~~~~~~~~~~~~~~~~
+version 7.6.1
+~~~~~~~~~~~~~~~~
+
+* fixed old legacy php5 depend in setup.py
+* fixed a print_status error if pyopenssl wasnt loaded
+
+~~~~~~~~~~~~~~~~
+version 7.6
+~~~~~~~~~~~~~~~~
+
+* changed generate_random_string to be alpha only - no numeric - conflicts with latest encoding techniques and not needed to introduce numbers
+* changed the hta attack vector to incorporate strong obfuscation
+* fixed the HTA attack vector to include the new method for toString properly
+* added new obfuscation into new encodedcommand function within multiple modules
+* added new java applet to fix expired timeframe
+* removed spoofmytextmessages as it is no longer working properly - will be added when service is fixed
+* added latest airbase-ng to the repository to fix openssl issues
+
+~~~~~~~~~~~~~~~~
+version 7.5.1
+~~~~~~~~~~~~~~~~
+
+* moved config file to be the first identifier for metasploit config file then move onto other methods. Possible for conflicts to override
+* fixed indent with pep8 formatting
+
+~~~~~~~~~~~~~~~~
+version 7.5
+~~~~~~~~~~~~~~~~
+
+* updated config to turn apache_server default from on to off. can switch this under /etc/setoolkit/set.config to on if you want apache. 
+* wrote centralized function for new powershell encodedcommand obfsucation
+* added encodedcommand to java applet
+* added encodedcommand to hta attack vector
+* added encodedcommand to teensy
+* added encodedcommand to all modules with powershell injection
+* remove sms modules templates that were no longer used
+* added routes to help with spoofing - default is auto
+
+~~~~~~~~~~~~~~~~
+version 7.4.5
+~~~~~~~~~~~~~~~~
+
+* update fasttrack wordlist (git suggestion)
+* updated teensy codebase thanks to mikecjudge 
+
+~~~~~~~~~~~~~~~~
+version 7.4.4
+~~~~~~~~~~~~~~~~
+
+* fixed /usr/bin/msfconsole not showing appropriate metasploit path
+* fixed using hostname in powershell injector (when using http/https) payloads
+* added better handling around import methods in sms spoofing and break out error messages
+* change the api to python source for sms spoofing
+
+~~~~~~~~~~~~~~~~
+version 7.4.3
+~~~~~~~~~~~~~~~~
+
+* add a patch to pyopenssl through zipimporter - looks like a bug in pyopenssl when paths are specified
+
+~~~~~~~~~~~~~~~~
+version 7.4.2
+~~~~~~~~~~~~~~~~
+
+* define function meta_path() better
+* fixed a bug in binary2teensy that would not properly identify metasploit if launcher is in /usr/bin/msfconsole
+* fixed a bug in binary2teensy where it would not open the directory properly and make reports
+
+~~~~~~~~~~~~~~~~
+version 7.4.1
+~~~~~~~~~~~~~~~~
+
+* converted all powershell encodedcommand to abbreviated
+
+~~~~~~~~~~~~~~~~
+version 7.4
+~~~~~~~~~~~~~~~~
+
+* added better obfuscation around encodedcommand
+* added new third party module google analytics attack: # https://github.com/ZonkSec/google-analytics-attack. Walkthrough here: http://www.zonksec.com/blog/social-engineering-google-analytics/
+* converted alphanumeric shellcode to accept DNS names
+* changed alphanumeric shellcode to reverse_https instead of reverse_tcp
+* added prompt for TLS support in email phishing
+* added fsociety new logo - much larger lol
+* fixed issue that would cause java applet to not launch webserver
+* fixed issue that would cause metasploit browser to not launch webserver
+* replaced spawn.py with older version which did not do the full pytho3 conversion os.path.join breaks in python2
+* fixed spawning issue within spawn.py that would cause meta path to not launch in certain circumstances
+* fixed an issue that would cause pdf generation to not complete properly
+* added link to SET user manual into readme on github
+* fixed an issue that would cause HTA attack vector to not spawn reverse https payloads properly (size constraint)
+
+~~~~~~~~~~~~~~~~
+version 7.3.16
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that caused seautomatic to not detect full path of toolkit when launching from within directory
+* fixed a bug in seautomate that would not wait for commands to execute based on time delay when launching and causing it to not submit
+* fixed an issue where python3 would not import urllib.request
+* fixed an issue that would cause python2.7 not to work without wget installed
+
+~~~~~~~~~~~~~~~~
+version 7.3.15
+~~~~~~~~~~~~~~~~
+
+* fix repetative sqlport issue bug for non existent hosts
+
+~~~~~~~~~~~~~~~~
+version 7.3.14
+~~~~~~~~~~~~~~~~
+
+* fixed a delay change in mssql
+
+~~~~~~~~~~~~~~~~
+version 7.3.13
+~~~~~~~~~~~~~~~~
+
+* some versions of OpenSSL would throw a zipimporter error. 7.3.13 resolves this issue
+
+~~~~~~~~~~~~~~~~
+version 7.3.12
+~~~~~~~~~~~~~~~~
+
+* added prompt before brute forcing
+* removed nmap depend and used standard sockets for tcp connect
+* reduced connect time for mssql
+* added warning when you are out of credits for sms spoof
+
+~~~~~~~~~~~~~~~~
+version 7.3.11
+~~~~~~~~~~~~~~~~
+
+* major rehaul on mssql bruter now supports threading support for all udp/1433 scans
+* combined udp/1433 sweep/scan functions and simplified code
+
+~~~~~~~~~~~~~~~~
+version 7.3.10
+~~~~~~~~~~~~~~~~
+
+* added masking of password in sms
+* fixed encoding issue with sms spoofing
+
+~~~~~~~~~~~~~~~~
+version 7.3.9
+~~~~~~~~~~~~~~~~
+
+* config cleanup
+* fixed an issue when using psexec injection it would use reverse_tcp instead of reverse_https this was due to the set.config being used
+
+~~~~~~~~~~~~~~~~
+version 7.3.8
+~~~~~~~~~~~~~~~~
+
+* added encodedcommand to get around AV evasion
+
+~~~~~~~~~~~~~~~~
+version 7.3.7
+~~~~~~~~~~~~~~~~
+
+* replaced powershell prep with the old one - it broke almost all powershell injection in SET
+* fixed an issue that would cause scanner to continue to scan even when port not discovered (function issue)
+
+~~~~~~~~~~~~~~~~
+version 7.3.6
+~~~~~~~~~~~~~~~~
+
+* fixed a bug around mssql bruter and code enhancement changes
+
+~~~~~~~~~~~~~~~~
+version 7.3.5
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause psexec fasttrack to not properly work based on with open
+
+~~~~~~~~~~~~~~~~
+version 7.3.4
+~~~~~~~~~~~~~~~~
+
+* fixed an issue with mssql bruter that would cause it to fail over to nmap scans even if host wasn't valid
+* fixed an issue that would cause UDP to not work properly when scanning subnet ranges
+* improved handling and descriptions in mssql
+* fixed error in mssql bruter error handling exception
+* fixed an issue that would cause TDS to error out when directly connecting to MSSQL server
+* removed impacket TDS from src.core and added impacket.tds
+* updated requirements.txt for impacket
+* fixed a bug when using certutil method and pairing directory strings
+* fixed automatic brute on mssql server when single host was scanned
+* fixed spacing issue on msfconsole -r was set to msfconsole-r
+
+~~~~~~~~~~~~~~~~
+version 7.3.3
+~~~~~~~~~~~~~~~~
+
+* code audit and cleanup (much appreciated Cabalist)
+* fixed set.options error if file isnt found
+
+~~~~~~~~~~~~~~~~
+version 7.3.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue if python-requests was not installed it would bomb the module and SET out
+
+~~~~~~~~~~~~~~~~
+version 7.3.1
+~~~~~~~~~~~~~~~~
+
+* PR for better python3 and pep8 handling - (thanks Cabalist)
+* added better handling around SMS spoofing and if legacy version of openssl is around
+* updated requirements.txt
+* added setdir definition from setdir to core.setdir on setoolkit
+* removed old version of Signed_update.jar.orig, updated .gitignore to include .jar, and removed old version of unsigned.jar
+
+~~~~~~~~~~~~~~~~
+version 7.3
+~~~~~~~~~~~~~~~~
+
+* completely rewrote the SMS spoofing module from scratch to use spoofmytextmessage.com which the folks over there are super helpful and provided an undocumented API to be used within SET. This now works great and has been extensively tested.
+* sped up the load process when using the main menu system the loading would pull from github each time the show_banner() function was called - this only loads once per SET load now
+* fixed a string integer error from input to raw_input in the RDP DOS use after free in exploits
+* added libapache2-mod-php to setup.py - needed for credential harvester
+* added python-requests to setup.py - needed for sms spoofing
+* added better check for python-requests in sms spoofing
+* added better formating within sms spoofing
+* added error handling to sms spoofing if something goes wrong during auth process
+* removed socket error when no internet connection using update check
+* use global lock for checking previous use on update
+* general cleanup of setcore
+* cleaned up setup file and added better descriptions
+* fixed a bug that would cause fsattack to not load properly
+* moved from pulling entire setcore which is a few thousand lines to adding src/core/set.version which contains the version - much faster in pulling down
+* fixed a bug in dell drac that caused it to error out
+* added timeout delay for pulling new version biggest challenge here is that urllib base is socket and socket timeout is tied to gethostbyname() which does not support a timeout, needed to add multiprocessing poll for 8 seconds to add timeout delay when checking for updates
+* added check for urllib for python2 and python3 compatibility
+* changed delldrac to python 2 to 3 compatibility and rewrote requests to use solid urlopen instead of requests
+* added keyboard exception handling for urllib pull for version
+
+~~~~~~~~~~~~~~~~
+version 7.2.3
+~~~~~~~~~~~~~~~~
+
+* added better handling around powershell detection
+
+~~~~~~~~~~~~~~~~
+version 7.2.2
+~~~~~~~~~~~~~~~~
+
+* added fsociety banner to initial loading
+
+~~~~~~~~~~~~~~~~
+version 7.2.1
+~~~~~~~~~~~~~~~~
+
+* fix automatic update line replace bug
+
+~~~~~~~~~~~~~~~~
+version 7.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue on installer not copying SET directory properly (why was I moving a file and ... nevermind.)
+* changed delay time for HTA attack vector from 3 seconds to 10 seconds to allow proper loading
+* added wording when using gmail and application specific passwords
+* rewrote ms08-067 instead of being the python exploit to use the metasploit default which is much more reliable
+* re-introduced the SMS spoofing method (now option 10) - it has been optimized and reduced to only use SMSGang as a main provider. 
+* added ability to add your own attachments via file format attacks instead of having to use the ones built in
+* added ability to add your own attachments via mass mailer attack vector
+* added new config option called wget_deep and incremented config to 7.2 - this will allow 1 deep download wgets
+* added ability to select on deeper wgets through web cloner in the web attack vectors - this will allow you to clone the site and not just the index.html which might be better.. to enable this edit /etc/setoolkit/set.config and turn WGET_DEEP to on.
+* added a new check upon startup (which may delay the start of set for a couple seconds, but it will check to see if there is a new version of SET available for you automatically - this is displayed on the main launcher UI when you first start SET
+* fixed setup.py a bit to reflect more on whats out there.. I may convert this to a standard setup installer eventually
+* updated the licensing agreement - should check it out =)
+* changed the default payload in HTA and Java Applet attack to be reverse_https instead of reverse_tcp (although both can be specified)
+* number of fixes around spacing for python3 and python3 compatibility (urllib)
+* removed string decode on HTA attack vector which is no longer needed in python3 (and python2)
+* changed urllib2 to import urllib instead for python2 and python3 compatibility in setcore
+* changed encoding techniques to bytes instead of strings for python3 compatibility
+
+~~~~~~~~~~~~~~~~
+version 7.1.2
+~~~~~~~~~~~~~~~~
+
+* fixed an issue on pdf generation payloads when metasploit had never been run before on a system - now forces directory creation
+
+~~~~~~~~~~~~~~~~
+version 7.1.1
+~~~~~~~~~~~~~~~~
+
+* fixes an issue when generating PDF exes that would cause an outfile error
+
+~~~~~~~~~~~~~~~~
+version 7.1
+~~~~~~~~~~~~~~~~
+
+* added so you can use multiple IP addreses based on space on mssql bruter
+* rewrote mssql bruter to incorporate pymssql
+* rewrote delivery payload method to use certuil instead of windows debug method
+* added better description around handling tabnabbing
+* added better ability to handle powershell injection
+* rewrote and moved off impacket to pymssql
+* added import own binary for mssql deployment
+* changed deployment method from old base64 conversion bypass to Matthew Graeber's certutil binary method
+* added option to import new file or metasploit file for meterpreter bypass method
+* added better handling around binary injection technique for binary dropper method 
+* added better threading within brute forcing sql accounts
+* fixed an issue where SET directory would not properly fill in dll hijacking and give invalid /root/.setsrc path instead of .set/src 
+* reduced file format generation counter to when it prompts error message
+* fixed an issue in mssql bruter that would remove the port parameter when attempting to brute force
+* added if udp 1434 is not found, it will fall back to nmap to discover if 1433 default port is open - ran into pentest where udp wasn't allowed and missed SQL servers because of this
+* added better handling and description of the SQL servers found during the test - might be useful for pentests to store that data somewhere
+* added more improvements and handling around MSSQL server
+* added latest version of ridenum to fasttrack
+* changed rid_enum.py to ridenum.py to be consistent with naming schema
+
+~~~~~~~~~~~~~~~~
+version 7.0.6
+~~~~~~~~~~~~~~~~
+
+* fix an issue that caused tabnabbing to fail
+
+~~~~~~~~~~~~~~~~
+version 7.0.5
+~~~~~~~~~~~~~~~~
+
+* switched psexec powershell injection to reverse_https
+* switched mssql payload injection to reverse_https
+
+~~~~~~~~~~~~~~~~
+version 7.0.4
+~~~~~~~~~~~~~~~~
+
+* fixed an issue with tds not working on mssql with powershell injection
+* fixed an issue that would cause payload generation to continue generating and never close
+* added powershell obfuscation for all attack vectors =)
+
+~~~~~~~~~~~~~~~~
+version 7.0.3
+~~~~~~~~~~~~~~~~
+
+* fixed a python3 format issue in tail
+* removed bleeding edge check since they should be in rolling now (thanks L1ghtn1ng)
+
+~~~~~~~~~~~~~~~~
+version 7.0.2
+~~~~~~~~~~~~~~~~
+
+* added a capture recorder within SET so that you don't need to exit when using credential harvester with Apache specified. Can still exit whenever you want and will still be under your apache root directory, but this way - everything is self contained within SET itself.
+* added disclaimer for if php files were rendered as text - means proper php plugins are not installed
+* multiple fixes for urllib.imports for python2/3 compatibility
+
+~~~~~~~~~~~~~~~~
+version 7.0.1
+~~~~~~~~~~~~~~~~
+
+* fixed an issue where harvester would error out when using python2 - worked fine in python3 - added backwards compatibility
+* fixed an issue that would cause the IP address to not update when selecting credential harvester and cause a double prompt
+
+~~~~~~~~~~~~~~~~
+version 7.0
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause payload creation to halt if .msf5 was a path instead of .msf4
+* fixed an issue when reimporting modules or re-selecting options that would cause it to not work properly
+* updated config option to use most recent user agent string
+* massive re-haul for pep8
+* massive re-haul for python3
+* added more words to mssql wordlist
+* major refactoring of python codebase to support both python2 and python3
+* restructured HTA attack vector and improved codebase to redirect after 3 seconds to the legitimate website while still launching the HTA file, this makes it very easy to coax victim into beleiving the HTA they are running is from a legitimate link
+* rewrote alphanumeric shellcode injector to be python3 compliant and optimized
+* added module_rewrite function instead of reload() for python3
+* added Metasploit MS15-100 Microsoft Windows Media Center MCL Vulnerability to fileformat attacks
+* added Fedora automatic install thanks to whoismath PR
+
+~~~~~~~~~~~~~~~~
+version 6.5.9
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that was causing credential harvester to fail
+
+~~~~~~~~~~~~~~~~
+version 6.5.8
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would write out .setindex.html instead of copying to .set/index.html.
+* fixed an issue that would cause harvester log to not properly write out on certain systems.
+* fixed an issue that would cause the harvester log file to not write if path was /var/www/html
+* added to automatically check if Kali is in use - removes the old install and git clones in order to keep SET up to date
+* removed automatic SET update and put a warning that SET will be out of date using Kali-current vs bleeding edge
+
+~~~~~~~~~~~~~~~~
+version 6.5.7
+~~~~~~~~~~~~~~~~
+
+* fix chown issue on different platforms when using harvester (pull request)
+* fixed an issue when moving to /etc/setoolkit/set.config would throw exception when using teensy attack vectors, now fixed
+* fixed an issue which would cause msf.exe to not be found when using dll hijacking
+
+~~~~~~~~~~~~~~~~
+version 6.5.6
+~~~~~~~~~~~~~~~~
+
+* fixed solo payload generation where listener would not launch properly 
+
+~~~~~~~~~~~~~~~~
 version 6.5.5
 ~~~~~~~~~~~~~~~~
 
@@ -1108,7 +1607,7 @@ version 3.6
 * added Adobe Flash Player Object Type Confusion to the web interface
 * fixed a menu bug that would not allow you to return to the previous menu in the java applet
 * fixed a bug that would cause the multiattack metasploit, java applet, and cred harvester to not work on the right ports and raise a exceptions
-* added background listener to credential harvester and multiattack -- allows credential harvester to continue to run even if metapsloit has been exited
+* added background listener to credential harvester and multiattack -- allows credential harvester to continue to run even if metasploit has been exited
 * fixed a bug that would still flag any website as cloned successfully. The new code fixes that by checking to ensure the site was properly cloned.
 * fixed a cloning web bug that would error out then continue with payload selection
 * added a cleanup routine to the web cloner for post completion on the cloner, this fixes a repetitive issue when launching multiple attacks in the menu system

@@ -23,76 +23,78 @@ definepath = os.getcwd()
 # * paths should be double-quoted
 # * Booleans should not be quoted
 
-def value_type(value):
 
+def value_type(value):
     """ Determines whether the setting parameter should be quoted. """
 
     return {
-            'METASPLOIT_PATH':True,
-            'METASPLOIT_DATABASE':True,
-            'ENCOUNT':False,
-            'AUTO_MIGRATE':False,
-            'CUSTOM_EXE':True,
-            'BACKDOOR_EXECUTION':False,
-            'METERPRETER_MULTI_SCRIPT':False,
-            'LINUX_METERPRETER_MULTI_SCRIPT':False,
-            'METERPRETER_MULTI_COMMANDS':True,
-            'LINUX_METERPRETER_MULTI_COMMANDS':True,
-            'METASPLOIT_IFRAME_PORT':False,
-            'ETTERCAP':False,
-            'ETTERCAP_PATH':True,
-            'ETTERCAP_DSNIFF_INTERFACE':True,
-            'DSNIFF':False,
-            'AUTO_DETECT':False,
-            'SENDMAIL':False,
-            'EMAIL_PROVIDER':True,
-            'WEBATTACK_EMAIL':False,
-            'APACHE_SERVER':False,
-            'APACHE_DIRECTORY':True,
-            'WEB_PORT':False,
-            'JAVA_ID_PARAM':True,
-            'JAVA_REPEATER':False,
-            'JAVA_TIME':True,
-            'WEBATTACK_SSL':False,
-            'SELF_SIGNED_CERT':False,
-            'PEM_CLIENT':True,
-            'PEM_SERVER':True,
-            'WEBJACKING_TIME':False,
-            'COMMAND_CENTER_INTERFACE':True,
-            'COMMAND_CENTER_PORT':False,
-            'SET_INTERACTIVE_SHELL':False,
-            'TERMINAL':True,
-            'DIGITAL_SIGNATURE_STEAL':False,
-            'UPX_ENCODE':False,
-            'UPX_PATH':True,
-            'AUTO_REDIRECT':False,
-            'HARVESTER_REDIRECT':False,
-            'HARVESTER_URL':True,
-            'UNC_EMBED':False,
-            'ACCESS_POINT_SSID':True,
-            'AIRBASE_NG_PATH':True,
-            'DNSSPOOF_PATH':True,
-            'AP_CHANNEL':False,
-            'POWERSHELL_INJECTION':False,
-            'POWERSHELL_VERBOSE':False,
-            'WEB_PROFILER':False,
-            'OSX_REVERSE_PORT':False,
-            'LINUX_REVERSE_PORT':False,
-            'USER_AGENT_STRING':True,
-            'SET_SHELL_STAGER':False,
-            'AUTOMATIC_LISTENER':False,
-            'METASPLOIT_MODE':False,
-            'HARVESTER_LOG':True,
-            'STAGE_ENCODING':False,
-            'TRACK_EMAIL_ADDRESSES':False
-           }.get(value,"ERROR")
+        'METASPLOIT_PATH': True,
+        'METASPLOIT_DATABASE': True,
+        'ENCOUNT': False,
+        'AUTO_MIGRATE': False,
+        'CUSTOM_EXE': True,
+        'BACKDOOR_EXECUTION': False,
+        'METERPRETER_MULTI_SCRIPT': False,
+        'LINUX_METERPRETER_MULTI_SCRIPT': False,
+        'METERPRETER_MULTI_COMMANDS': True,
+        'LINUX_METERPRETER_MULTI_COMMANDS': True,
+        'METASPLOIT_IFRAME_PORT': False,
+        'ETTERCAP': False,
+        'ETTERCAP_PATH': True,
+        'ETTERCAP_DSNIFF_INTERFACE': True,
+        'DSNIFF': False,
+        'AUTO_DETECT': False,
+        'SENDMAIL': False,
+        'EMAIL_PROVIDER': True,
+        'WEBATTACK_EMAIL': False,
+        'APACHE_SERVER': False,
+        'APACHE_DIRECTORY': True,
+        'WEB_PORT': False,
+        'JAVA_ID_PARAM': True,
+        'JAVA_REPEATER': False,
+        'JAVA_TIME': True,
+        'WEBATTACK_SSL': False,
+        'SELF_SIGNED_CERT': False,
+        'PEM_CLIENT': True,
+        'PEM_SERVER': True,
+        'WEBJACKING_TIME': False,
+        'COMMAND_CENTER_INTERFACE': True,
+        'COMMAND_CENTER_PORT': False,
+        'SET_INTERACTIVE_SHELL': False,
+        'TERMINAL': True,
+        'DIGITAL_SIGNATURE_STEAL': False,
+        'UPX_ENCODE': False,
+        'UPX_PATH': True,
+        'AUTO_REDIRECT': False,
+        'HARVESTER_REDIRECT': False,
+        'HARVESTER_URL': True,
+        'UNC_EMBED': False,
+        'ACCESS_POINT_SSID': True,
+        'AIRBASE_NG_PATH': True,
+        'DNSSPOOF_PATH': True,
+        'AP_CHANNEL': False,
+        'POWERSHELL_INJECTION': False,
+        'POWERSHELL_VERBOSE': False,
+        'WEB_PROFILER': False,
+        'OSX_REVERSE_PORT': False,
+        'LINUX_REVERSE_PORT': False,
+        'USER_AGENT_STRING': True,
+        'SET_SHELL_STAGER': False,
+        'AUTOMATIC_LISTENER': False,
+        'METASPLOIT_MODE': False,
+        'HARVESTER_LOG': True,
+        'STAGE_ENCODING': False,
+        'TRACK_EMAIL_ADDRESSES': False,
+        'WGET_DEEP': True
+    }.get(value, "ERROR")
+
 
 def update_config():
     if not os.path.isdir("/etc/setoolkit"):
-	os.makedirs("/etc/setoolkit")
+        os.makedirs("/etc/setoolkit")
 
-    init_file = file("/etc/setoolkit/set.config", "r")
-    new_config = file("/etc/setoolkit/set_config.py", "w")
+    init_file = open("/etc/setoolkit/set.config", "r")
+    new_config = open("/etc/setoolkit/set_config.py", "w")
     timestamp = str(datetime.datetime.now())
 
     new_config.write("""#!/usr/bin/python\n
@@ -108,26 +110,29 @@ def update_config():
 #  set.config.py generated: """ + timestamp + """                     #
 #                                                                     #
 #######################################################################
-CONFIG_DATE='"""+timestamp+"""'\n""")
+CONFIG_DATE='""" + timestamp + """'\n""")
     for line in init_file:
-        if not line.startswith("#"):
-            line = line.rstrip()
-            line = line.split("=")
-            setting = line[0]
-            value = line[1]
-            if value == "ON":
-                value = "True"
-            elif value == "OFF":
-                value = "False"
-            else:
-                pass
+        try:
+            if not line.startswith("#"):
+                line = line.rstrip()
+                line = line.split("=")
+                setting = line[0]
+                value = line[1]
+                if value == "ON":
+                    value = "True"
+                elif value == "OFF":
+                    value = "False"
+                else:
+                    pass
 
-            quoted = value_type(setting)
+                quoted = value_type(setting)
 
-            if quoted:
-                new_config.write(setting + '="' + value + '"\n')
-            else:
-                new_config.write(setting + '=' + value + '\n')
+                if quoted:
+                    new_config.write(setting + '="' + value + '"\n')
+                else:
+                    new_config.write(setting + '=' + value + '\n')
+        except:
+            pass
 
     init_file.close()
     new_config.close()

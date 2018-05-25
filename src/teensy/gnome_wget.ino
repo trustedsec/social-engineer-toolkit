@@ -1,4 +1,4 @@
-/** gnome_wget.pde
+/** gnome_wget.ino
  * 
  * Author: Hugo Caron (y0ug)
  * Date: 2011/03/19

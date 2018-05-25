@@ -1,31 +1,31 @@
 ##################################################################################################
 ##################################################################################################
-##					                                                	##
-## The following config file will allow you to customize settings within            		##
-## the Social-Engineer Toolkit. The lines that do not have comment code				##
-## ("#") are the fields you want to toy with. They are pretty easy to			        ##
-## understand.											##
-##										                ##
-## The Metasploit path is the default path for where Metasploit is located.			##
-## Metasploit is required for SET to function properly.					        ##
-##									                        ##
-## The "ETTERCAP" option specifies if you want to use ARP cache poisoning in		        ##
-## conjunction with the web attacks; note that ARP cache poisoning is only	                ##
+##                                                                                              ##
+## The following config file will allow you to customize settings within                        ##
+## the Social-Engineer Toolkit. The lines that do not have comment code				            ##
+## ("#") are the fields you want to toy with. They are pretty easy to			                ##
+## understand.											                                        ##
+##										                                                        ##
+## The Metasploit path is the default path for where Metasploit is located.			            ##
+## Metasploit is required for SET to function properly.					                        ##
+##									                                                            ##
+## The "ETTERCAP" option specifies if you want to use ARP cache poisoning in		            ##
+## conjunction with the web attacks; note that ARP cache poisoning is only	                    ##
 ## for internal subnets only and does not work against people on the Internet.	                ##
-##								                                ##
+##								                                                                ##
 ## The "SENDMAIL" option allows you to spoof source IP addresses utilizing an                   ##
-## program called Sendmail. Sendmail is not installed by default on Kali.		        ##
-## To spoof email addresses when performing the mass email attacks, you must 	                ## 
-## install Sendmail manually using the command: "apt-get install sendmail"	                ##
-#							                                        ##
+## program called Sendmail. Sendmail is not installed by default on Kali.		                ##
+## To spoof email addresses when performing the mass email attacks, you must                    ## 
+## install Sendmail manually using the command: "apt-get install sendmail"	                    ##
+#							                                                                    ##
 ## Note that "ETTERCAP" and "SENDMAIL" options only accept ON or OFF switches.	                ##
-##										                ##
-## Note that the "Metasploit_PATH" option cannot have a '/' after the folder name.		##
-##							                                        ##
-## There are additional options; read the comments for additional descriptions.		        ##
-##												##
-## CONFIG_VERSION=6.4										##
-##								                                ##
+##										                                                        ##
+## Note that the "Metasploit_PATH" option cannot have a '/' after the folder name.		        ##
+##							                                                                    ##
+## There are additional options; read the comments for additional descriptions.		            ##
+##												                                                ##
+## CONFIG_VERSION=7.7										                                    ##
+##								                                                                ##
 ##################################################################################################
 ##################################################################################################
 #
@@ -92,7 +92,7 @@ TIME_DELAY_EMAIL=1
 #
 ### Use Apache instead of the standard Python web server. This will increase the speed
 ### of the attack vector.
-APACHE_SERVER=ON
+APACHE_SERVER=OFF
 #
 ### Path to the Apache web root.
 APACHE_DIRECTORY=/var/www
@@ -189,8 +189,8 @@ POWERSHELL_INJECTION=ON
 #
 ### This will allow you to change the Metasploit payload to whatever you want based on the PowerShell alphanumeric
 ### injection attack. Specify this if PowerShell injection is enabled and you want to change it from the standard
-### "reverse_tcp" attack. Note that all payloads use x86; the process will automatically downgrade to 32-bit.
-POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_tcp
+### "reverse_https" attack. Note that all payloads use x86; the process will automatically downgrade to 32-bit.
+POWERSHELL_INJECT_PAYLOAD_X86=windows/meterpreter/reverse_https
 #
 ### This option will spray multiple ports through PowerShell in an effort to get a port outbound. 
 ### Note that PowerShell injection must be enabled.
@@ -224,7 +224,7 @@ CUSTOM_LINUX_OSX_PAYLOAD=OFF
 ENABLE_PERSISTENCE_OSX=OFF
 #
 ### Determines what user agent string to use fo ranything that clones the website. 
-USER_AGENT_STRING=Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)
+USER_AGENT_STRING=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
 #
 ### The SET interactive shell works by first deploying a stager payload that pulls an additional executable.
 ### The downloader is currently being picked up by anti-virus and is actually somewhat hard to obfuscate because it has 
@@ -241,7 +241,7 @@ AUTOMATIC_LISTENER=ON
 METASPLOIT_MODE=ON
 #
 ### This will turn off the deployment of binaries for the Java applet attack and only use the PowerShell method.
-DEPLOY_BINARIES=YES
+DEPLOY_BINARIES=NO
 #
 ### This is for debugging purposes only. This will remove the cleanup functionality within SET to debug file states.
 CLEANUP_ENABLED_DEBUG=OFF
@@ -259,4 +259,7 @@ DNS_SERVER=OFF
 #
 BLEEDING_EDGE=OFF
 #
+### This will download 1 deep the website with WGET instead of the standard. This may give better results but takes longer
+WGET_DEEP=OFF
+
 #######################################################################################################################################

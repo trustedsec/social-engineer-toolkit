@@ -1,6 +1,6 @@
-import SimpleHTTPServer
-import BaseHTTPServer
-import httplib
+import http.server
+import http.server
+import http.client
 import os
 import sys
 from src.core.setcore import *
@@ -8,7 +8,8 @@ from src.core.setcore import *
 # specify the web port
 web_port = check_config("WEB_PORT=")
 
-class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+
+class StoppableHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     """http request handler with QUIT stopping the server"""
 
     def do_QUIT(self):
@@ -16,13 +17,14 @@ class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.server.stop = True
-        
+
     def do_POST(self):
         # We could also process paremeters here using something like below.
         self.do_GET()
 
     def send_head(self):
-        # This is ripped directly from SimpleHTTPRequestHandler, only the cookie part is added.
+        # This is ripped directly from SimpleHTTPRequestHandler, only the
+        # cookie part is added.
         """Common code for GET and HEAD commands.
 
         This sends the response code and MIME headers.
@@ -67,7 +69,8 @@ class StoppableHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         self.end_headers()
         return f
 
-class StoppableHttpServer(BaseHTTPServer.HTTPServer):
+
+class StoppableHttpServer(http.server.HTTPServer):
     """http server that reacts to self.stop flag"""
 
     def serve_forever(self):
@@ -78,15 +81,19 @@ class StoppableHttpServer(BaseHTTPServer.HTTPServer):
 
 # stop the http server
 def stop_server(web_port):
-    web_port = int(web_port)
-    """send QUIT request to http server running on localhost:<port>"""
-    conn = httplib.HTTPConnection("localhost:%d" % web_port)
-    conn.request("QUIT", "/")
-    conn.getresponse()
+    try:
+        web_port = int(web_port)
+        """send QUIT request to http server running on localhost:<port>"""
+        conn = http.client.HTTPConnection("localhost:%d" % web_port)
+        conn.request("QUIT", "/")
+        conn.getresponse()
+    except: pass
 
 # start the http server
 def start_server(web_port, path):
-    os.chdir(path)
-    web_port = int(web_port)
-    server = StoppableHttpServer(('', web_port), StoppableHttpRequestHandler)
-    server.serve_forever()
+    try:
+        os.chdir(path)
+        web_port = int(web_port)
+        server = StoppableHttpServer(('', web_port), StoppableHttpRequestHandler)
+        server.serve_forever()
+    except: pass

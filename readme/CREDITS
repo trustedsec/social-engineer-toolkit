@@ -58,6 +58,7 @@ Special thanks to the following people who have contributed to SET:
 * Thanks to Larry Spohn (spoonman) for the python udp 1434 sql discovery code
 * Persistence on OSX - http://patrickmosca.com/root-a-mac-in-10-seconds-or-less/
 * special thanks to d4rk0s for the full screen attack
+* Zonksec for the third party google analytics module http://www.zonksec.com/blog/social-engineering-google-analytics/
 
 The Social-Engineer Development Team:
 

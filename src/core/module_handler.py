@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-## module_handler.py
+# module_handler.py
 
 import glob
 import re
@@ -14,14 +14,15 @@ menu_return = "false"
 counter = 0
 
 # get the menu going
-print "\n"
+print("\n")
 print_info_spaces("Social-Engineer Toolkit Third Party Modules menu.")
-print_info_spaces("Please read the readme/modules.txt for information on how to create your own modules.\n")
+print_info_spaces(
+    "Please read the readme/modules.txt for information on how to create your own modules.\n")
 
 for name in glob.glob("modules/*.py"):
 
     counter = counter + 1
-    fileopen = file(name, "r")
+    fileopen = open(name, "r")
 
     for line in fileopen:
         line = line.rstrip()
@@ -30,9 +31,9 @@ for name in glob.glob("modules/*.py"):
             line = line.replace('MAIN="', "")
             line = line.replace('"', "")
             line = "  " + str(counter) + ". " + line
-            print line
+            print(line)
 
-print "\n  99. Return to the previous menu\n"
+print("\n  99. Return to the previous menu\n")
 choice = raw_input(setprompt(["9"], ""))
 
 if choice == 'exit':
@@ -55,7 +56,7 @@ if menu_return == "false":
     # pull any files in the modules directory that starts with .py
     for name in glob.glob("modules/*.py"):
 
-        counter = counter+1
+        counter = counter + 1
 
         if counter == int(choice):
             # get rid of .modules extension
@@ -76,6 +77,6 @@ if menu_return == "false":
             try:
                 exec("%s.main()" % (name))
             # handle the exception if main isn't there
-            except Exception, e:
+            except Exception as e:
                 raw_input("   [!] There was an issue with a module: %s." % (e))
                 return_continue()

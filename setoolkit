@@ -1,7 +1,17 @@
 #!/usr/bin/env python
+# coding=utf-8
 import os
-import sys
+import re
 import shutil
+import subprocess
+import sys
+
+# Py2/3 compatibility
+# Python3 renamed raw_input to input
+try:
+    input = raw_input
+except NameError:
+    pass
 
 # if we are running in the path no need to change
 if os.path.isfile("setoolkit"):
@@ -9,9 +19,9 @@ if os.path.isfile("setoolkit"):
 
 # check where we are and load default directory
 elif os.path.isdir("/usr/share/setoolkit"):
-	if not os.path.isfile("setoolkit"):
-		os.chdir("/usr/share/setoolkit")
-        sys.path.append("/usr/share/setoolkit")
+    if not os.path.isfile("setoolkit"):
+        os.chdir("/usr/share/setoolkit")
+    sys.path.append("/usr/share/setoolkit")
 
 # check where we are and load default directory
 elif os.path.isdir("/usr/share/set"):
@@ -21,25 +31,29 @@ elif os.path.isdir("/usr/share/set"):
 
 # make sure the config file is located in /etc/setoolkit
 if not os.path.isdir("/etc/setoolkit/"):
-	os.makedirs("/etc/setoolkit/")
-	shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
+    os.makedirs("/etc/setoolkit/")
+    shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
 
 if not os.path.isfile("/etc/setoolkit/set.config"):
-	shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
+    shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
 
-# here we check to ensure we have the latest version 
-data = file("/etc/setoolkit/set.config").read()
-if not "CONFIG_VERSION=6.4" in data:
-	print ("[*] Overwriting old config for updates to SET. Backing up your old one in /etc/setoolkit/")
-	shutil.move("/etc/setoolkit/set.config", "/etc/setoolkit/set.config.bak")
-	shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
+# here we check to ensure we have the latest version
+with open("/etc/setoolkit/set.config") as fileopen:
+    data = fileopen.read()
 
-from src.core.setcore import *
+if "CONFIG_VERSION=7.7" not in data:
+    print("[*] Overwriting old config for updates to SET. Backing up your old one in /etc/setoolkit/")
+    shutil.move("/etc/setoolkit/set.config", "/etc/setoolkit/set.config.bak")
+    shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
+
+# import after config checks have been properly created
+import src.core.setcore as core
 from src.core.menu import text
 from src.core.update_config import update_config
-import subprocess
-import shutil
-import re
+
+
+if os.path.isfile(os.path.join(core.userconfigpath, "version.lock")):
+    os.remove(os.path.join(core.userconfigpath, "version.lock"))
 
 # check directory and make it
 if not os.path.isdir("src/logs/"):
@@ -48,43 +62,36 @@ if not os.path.isdir("src/logs/"):
 # check set logfile
 if not os.path.isfile("src/logs/set_logfile.log"):
     # create new log
-    filewrite = file("src/logs/set_logfile.log", "w")
-    filewrite.write("")
-    filewrite.close()
+    with open("src/logs/set_logfile.log", "w") as filewrite:
+        filewrite.write("")
 
 # check which operating system
-operating_system = check_os()
+operating_system = core.check_os()
 
 # use ~/.set
 if operating_system == "posix":
-    if not os.path.isdir(setdir):
+    if not os.path.isdir(core.userconfigpath):
         # create the set variables
-        os.makedirs(setdir)
+        os.makedirs(core.userconfigpath)
         # if for some reason it failed to pull the path
         userdir = os.path.join(os.path.expanduser('~'), '.set')
         if not os.path.isdir(userdir):
             os.makedirs(userdir)
 
-
-if not os.path.isdir(setdir + "/reports/"):
-    os.makedirs(setdir + "/reports")
-
-
-# check bleeding edge
-bleeding_edge()
+if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
+    os.makedirs(os.path.join(core.userconfigpath, "reports"))
 
 # check to see if we have python-pycrypto
 try:
     from Crypto.Cipher import AES
-
 except ImportError:
-    print "[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector."
+    print("[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector.")
     pass
 
-#########################################
+#
 # The Social-Engineer Toolkit (SET)     #
 # Written by: David Kennedy (ReL1K)     #
-#########################################
+#
 #
 # this is the main menu structure for SET
 
@@ -96,14 +103,20 @@ update_config()
 # chmod routine
 if operating_system == "posix":
     # change permissions if nix
-    subprocess.Popen("chmod +x seautomate;chmod +x set-update;chmod +x setup.py;chmod +x set-proxy;chmod +x src/payloads/ratte/ratteserver;chmod +x src/payloads/set_payloads/listener.py", stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    subprocess.Popen("chmod +x seautomate;"
+                     "chmod +x set-update;"
+                     "chmod +x setup.py;"
+                     "chmod +x set-proxy;"
+                     "chmod +x src/payloads/ratte/ratteserver;"
+                     "chmod +x src/payloads/set_payloads/listener.py",
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
-dns = check_config("DNS_SERVER=")
+dns = core.check_config("DNS_SERVER=")
 if dns.lower() == "on":
-	start_dns()
+    core.start_dns()
 
 # remove old files
-for root, dirs, files in os.walk(setdir):
+for root, dirs, files in os.walk(core.userconfigpath):
     for f in files:
         try:
             match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", f)
@@ -111,120 +124,142 @@ for root, dirs, files in os.walk(setdir):
                 os.unlink(os.path.join(root, f))
 
         # if they are being used then ignore
-        except: pass
+        except:
+            pass
     # loop through all the directories
     for d in dirs:
         try:
             match = re.search(".svn|entries|all-wcprops|props|text-base|prop-base|tmp", d)
             if not match:
                 shutil.rmtree(os.path.join(root, d))
-        except: pass
+        except:
+            pass
 
 # if windows then do some stuff
 if operating_system == "posix":
 
-        ################################################
-        # ROOT CHECK
-        ################################################
+    #
+    # ROOT CHECK
+    #
 
     if os.geteuid() != 0:
-        print "\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)"
-        print "\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n"
-        exit_set()
+        print("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
+        print("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
+        core.exit_set()
 
 # if there isn't a set_config.py file yet, create one
 if not os.path.isfile("/etc/setoolkit/set_config.py"):
     update_config()
 
-define_version = get_version()
-cleanup_routine()
+define_version = core.get_version()
+core.cleanup_routine()
 
 # create the set.options routine
-filewrite = file(setdir + "/set.options", "w")
-filewrite.write("{This is the main SET configuration file for all options used in SET}\n")
-filewrite.close()
+with open(os.path.join(core.userconfigpath, "set.options"), "w") as filewrite:
+    filewrite.write("{This is the main SET configuration file for all options used in SET}\n")
 
 try:
     # Remove old Signed_Updates
-    if os.path.isfile(setdir + "/Signed_Update.jar"):
-        os.remove(setdir + "/Signed_Update.jar")
+    if os.path.isfile(os.path.join(core.userconfigpath, "Signed_Update.jar")):
+        os.remove(os.path.join(core.userconfigpath, "Signed_Update.jar"))
 
-    # intitial user menu
+    # initial user menu
     if not os.path.isfile("src/agreement4"):
-        fileopen = file("readme/LICENSE", "r")
-        for line in fileopen:
-            print line.rstrip()
+        with open("readme/LICENSE") as fileopen:
+            for line in fileopen:
+                print((line.rstrip()))
 
-        print bcolors.RED + """
-The Social-Engineer Toolkit is designed purely for good and not evil. If you are planning on using this tool for malicious purposes that are not authorized by the company you are performing assessments for, you are violating the terms of service and license of this toolset. By hitting yes (only one time), you agree to the terms of service and that you will only use this tool for lawful purposes only.""" + bcolors.GREEN
-        choice = raw_input("\nDo you agree to the terms of service [y/n]: ")
-        choice += " " #b/c method below
+        print("{0}The Social-Engineer Toolkit is designed purely"
+              " for good and not evil. If you are planning on "
+              "using this tool for malicious purposes that are "
+              "not authorized by the company you are performing "
+              "assessments for, you are violating the terms of "
+              "service and license of this toolset. By hitting "
+              "yes (only one time), you agree to the terms of "
+              "service and that you will only use this tool for "
+              "lawful purposes only.{1}".format(core.bcolors.RED, core.bcolors.ENDC))
+        print(core.bcolors.GREEN)
+        choice = input("\nDo you agree to the terms of service [y/n]: ")
+        choice += " "  # b/c method below
         if choice[0].lower() == "y":
-            filewrite = file("src/agreement4", "w")
-            filewrite.write("user accepted")
-            filewrite.close()
-            print bcolors.ENDC
+            with open("src/agreement4", "w") as filewrite:
+                filewrite.write("user accepted")
+            print(core.bcolors.ENDC)
         else:
-            print bcolors.ENDC + "[!] Exiting the Social-Engineer Toolkit, have a nice day." + bcolors.ENDC
+            print(core.bcolors.ENDC + "[!] Exiting the Social-Engineer Toolkit, have a nice day." + core.bcolors.ENDC)
             sys.exit()
 
     while True:
-        show_banner(define_version,'1')
-        show_main_menu = create_menu(text.main_text, text.main_menu)
+        core.show_banner(define_version, '1')
+        show_main_menu = core.create_menu(text.main_text, text.main_menu)
 
         # special case of list item 99
-        print '\n  99) Exit the Social-Engineer Toolkit\n'
+        print('\n  99) Exit the Social-Engineer Toolkit\n')
 
         # main core menu
-        main_menu_choice = (raw_input(setprompt("0", "")))
+        main_menu_choice = (input(core.setprompt("0", "")))
 
         # funny
-        # edit: you're hilarious. 
         if main_menu_choice == "hugs":
-            print_warning("Have you given someone a hug today? Remember a hug can change the world.")
-            pause = raw_input("\nPlease give someone a hug then press {return} to continue.")
+            core.print_warning("Have you given someone a hug today? Remember a hug can change the world.")
+            pause = input("\nPlease give someone a hug then press {return} to continue.")
 
-	# funny2
-	if main_menu_choice == "freehugs":
-		print_warning("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG.")
-		pause = raw_input("\nDo not press return until giving someone a hug.")
+        # funny2
+        if main_menu_choice == "freehugs":
+            core.print_warning("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG.")
+            pause = input("\nDo not press return until giving someone a hug.")
 
         # funny3
         if main_menu_choice == "derbycon":
-            print_warning(bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 5.0 -- September 23th - 27th 2015" + bcolors.ENDC)
-            pause = raw_input(bcolors.BOLD + "\nDon't miss it! Sep 23 - Sep 27th! Press {return} to continue." + bcolors.ENDC)
+            core.print_warning(core.bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 7.0 'Legacy' -- September 22th - 24th 2017" + core.bcolors.ENDC)
+            pause = input(core.bcolors.BOLD + "\nDon't miss it! Sep 23 - Sep 25th! Press {return} to continue." + core.bcolors.ENDC)
+
+        # rance
+        if main_menu_choice == "rance":
+            core.print_warning(core.bcolors.BOLD + "We miss you buddy. David Jones (Rance) changed a lot of us and you'll always be apart of our lives (and SET). Fuck Cancer." + core.bcolors.ENDC)
+            pause = input("Press {return} to continue.")
+
+        # cavs
+        if main_menu_choice == "cavs":
+            core.print_warning(core.bcolors.BOLD + "2015-2016 CHAMPS BABY!!! C l e e e e e  e v  eeee l a a n n d d d d d d d d d d d " + core.bcolors.ENDC)
+            pause = input("Press {return} to continue.")
 
         # quit out
         if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":
-            exit_set()
+            core.exit_set()
             # cleans up stale processes from SET
             try:
                 # kill anything python running on 80
-                kill_proc("80","python")
+                core.kill_proc("80", "python")
                 # kill anything on 443 ruby which is generally a rogue listener
-                kill_proc("443", "ruby")
-            except: pass
+                core.kill_proc("443", "ruby")
+            except:
+                pass
 
         # load set
         if main_menu_choice == '1':
             try:
-                reload(src.core.set)
+                core.module_reload(src.core.set)
             except:
                 import src.core.set
 
         # load fasttrack
         if main_menu_choice == '2':
-            try: reload(src.core.fasttrack)
-            except: import src.core.fasttrack
+            try:
+                core.module_reload(src.core.fasttrack)
+            except:
+                import src.core.fasttrack
 
         # third party modules
         if main_menu_choice == '3':
-            try: reload(src.core.module_handler)
-            except: import src.core.module_handler
+            try:
+                core.module_reload(src.core.module_handler)
+            except:
+                import src.core.module_handler
 
         # update set
         if main_menu_choice == '4':
-            update_set()
+            core.update_set()
 
         # credits
         if main_menu_choice == '5':
@@ -232,16 +267,18 @@ The Social-Engineer Toolkit is designed purely for good and not evil. If you are
 
         # update config
         if main_menu_choice == '6':
-            help_menu()
+            core.help_menu()
 
 # handle keyboard interrupts
 except KeyboardInterrupt:
-    print "\n\nThank you for " + bcolors.RED+"shopping" + bcolors.ENDC+" with the Social-Engineer Toolkit.\n\nHack the Gibson...and remember...hugs are worth more than handshakes.\n"
+    print(("\n\nThank you for {0}shopping{1} with the Social-Engineer Toolkit."
+           "\n\nHack the Gibson...and remember...hugs are worth more "
+           "than handshakes.\n".format(core.bcolors.RED, core.bcolors.ENDC)))
 
 # handle exceptions
-except Exception, error:
-    log(error)
-    print "\n\n[!] Something went wrong, printing the error: "+ str(error)
+except Exception as error:
+    core.log(error)
+    print("\n\n[!] Something went wrong, printing the error: " + str(error))
 
 # cleanup routine
-cleanup_routine()
+core.cleanup_routine()
