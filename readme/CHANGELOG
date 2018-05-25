@@ -1,4 +1,13 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.7
+~~~~~~~~~~~~~~~~
+
+* remove old test code
+* add better wording for templates
+* remove old templates yahoo and facebook
+* add better descriptions for using NAT/External IP addresses for credential harvester
+
+~~~~~~~~~~~~~~~~
 version 7.7.6
 ~~~~~~~~~~~~~~~~
 
