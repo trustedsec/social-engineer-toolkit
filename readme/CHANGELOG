@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.8
+~~~~~~~~~~~~~~~~
+
+* fix ident issue on harvester throwing templates off
+
+~~~~~~~~~~~~~~~~
 version 7.7.7
 ~~~~~~~~~~~~~~~~
 
