@@ -611,9 +611,10 @@ if webattack_email == True:
 fileopen = open(userconfigpath + "attack_vector", "r")
 for line in fileopen:
     line = line.rstrip()
-    if line == 'tabnabbing': print(bcolors.RED + "\n[*] Tabnabbing Attack Vector is Enabled...Victim needs to switch tabs.")
-	print("You may need to copy /var/www/* into /var/www/html depending on where your directory structure is.")
-	raw_input("Press {return} if you understand what we're saying here.")
+    if line == 'tabnabbing': 
+        print(bcolors.RED + "\n[*] Tabnabbing Attack Vector is Enabled...Victim needs to switch tabs.")
+    print_status("You may need to copy /var/www/* into /var/www/html depending on where your directory structure is.")
+    raw_input("Press {return} if you understand what we're saying here.")
     if line == 'webjacking': print(bcolors.RED + "\n[*] Web Jacking Attack Vector is Enabled...Victim needs to click the link.")
 
 if ssl_flag == 'true':
