@@ -24,7 +24,7 @@
 ##							                                                                    ##
 ## There are additional options; read the comments for additional descriptions.		            ##
 ##												                                                ##
-## CONFIG_VERSION=7.7										                                    ##
+## CONFIG_VERSION=7.7.9										                                    ##
 ##								                                                                ##
 ##################################################################################################
 ##################################################################################################
@@ -95,7 +95,7 @@ TIME_DELAY_EMAIL=1
 APACHE_SERVER=OFF
 #
 ### Path to the Apache web root.
-APACHE_DIRECTORY=/var/www
+APACHE_DIRECTORY=/var/www/html
 #
 ### Specify what port to run the HTTP server on that serves the Java applet attack
 ### or Metasploit exploit. The default is port 80. If you are using Apache, you

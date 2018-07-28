@@ -1,4 +1,12 @@
 ~~~~~~~~~~~~~~~~
+version 7.7.9
+~~~~~~~~~~~~~~~~
+
+* fix source.js not copying over when using tabnabbing
+* bump config version and add default apache dir to /var/www/html
+* fix sendmail not found on OSX when using phishing emails
+
+~~~~~~~~~~~~~~~~
 version 7.7.8
 ~~~~~~~~~~~~~~~~
 

@@ -59,10 +59,11 @@ for line in sendmail_file:
                     subprocess.Popen(
                         "/etc/init.d/sendmail start", shell=True).wait()
                 # if not there then prompt user
-                if not os.path.isfile("/etc/init.d/sendmail"):
-                    pause = input(
-                        "[!] Sendmail was not found. Install it and try again. (For Kali: apt-get install sendmail-bin)")
-                    sys.exit()
+                # added for osx
+                if not os.path.isfile("/usr/sbin/sendmail"):
+                    if not os.path.isfile("/etc/init.d/sendmail"):
+                        pause = input("[!] Sendmail was not found. Install it and try again. (For Kali: apt-get install sendmail-bin)")
+                        sys.exit()
                 smtp = ("localhost")
                 port = ("25")
                 # Flip sendmail switch to get rid of some questions

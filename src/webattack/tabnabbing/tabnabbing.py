@@ -10,12 +10,9 @@ from src.core.setcore import *
 #
 
 # pull the timing for SET CONFIG on webjacking
-fileopen = open("/etc/setoolkit/set.config", "r")
-for line in fileopen:
-    match = re.search("WEBJACKING_TIME=", line)
-    if match:
-        line = line.replace("WEBJACKING_TIME=", "")
-        webjacking_timing = line
+apache_check = check_config("APACHE_SERVER=").lower()
+if apache_check == "on": apache_dir = check_config("APACHE_DIRECTORY=").lower()
+webjacking_timing = check_config("WEBJACKING_TIME=")
 
 # grab attack_vector specification
 fileopen = open(userconfigpath + "attack_vector", "r")
@@ -76,6 +73,8 @@ if attack_vector == "tabnabbing":
     filewrite1.write("Please wait while the site loads...\n")
     filewrite1.write("</body>\n")
     filewrite1.close()
+
+    if apache_check == "on": shutil.copy(userconfigpath + "web_clone/source.js", apache_dir)
 
 # define webjacking or multi webjacking here
 if attack_vector == "webjacking" or multi_webjacking == "on":
