@@ -18,6 +18,7 @@ For a full document on how to use SET, [visit the SET user manual](https://githu
 
 # Features
 
+
 The Social-Engineer Toolkit is an open-source penetration testing framework designed for social engineering. SET has a number of custom attack vectors that allow you to make a believable attack quickly. SET is a product of TrustedSec, LLC – an information security consulting firm located in Cleveland, Ohio.
 
 
@@ -36,7 +37,7 @@ For bug reports or enhancements, please open an [issue](https://github.com/trust
 *Ubuntu/Debian System*
 
 ```
-$ apt-get --force-yes -y install git apache2 python-requests libapache2-mod-php \
+$ apt-get -y install git apache2 python-requests libapache2-mod-php \
   python-pymssql build-essential python-pexpect python-pefile python-crypto python-openssl
 ```
 
