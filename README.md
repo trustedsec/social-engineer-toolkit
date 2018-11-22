@@ -37,14 +37,14 @@ For bug reports or enhancements, please open an [issue](https://github.com/trust
 *Ubuntu/Debian System*
 
 ```
-$ apt-get -y install git apache2 python-requests libapache2-mod-php \
+$ sudo apt-get -y install git apache2 python-requests libapache2-mod-php \
   python-pymssql build-essential python-pexpect python-pefile python-crypto python-openssl
 ```
 
 *Arch System*
 
 ```bash
-$ pacman -S --noconfirm --needed git python2 python2-beautifulsoup4 python2-pexpect python2-crypto
+$ sudo pacman -S --noconfirm --needed git python2 python2-beautifulsoup4 python2-pexpect python2-crypto
 $ wget https://github.com/erocarrera/pefile/archive/master.zip && unzip master.zip
 $ chmod a+x pefile-master/setup.py && rm -rf pefile-master*
 ```
@@ -52,13 +52,13 @@ $ chmod a+x pefile-master/setup.py && rm -rf pefile-master*
 *Fedora System*
 
 ```bash
-$ dnf -y install git python-pexpect python-pefile python-crypto pyOpenSSL
+$ sudo dnf -y install git python-pexpect python-pefile python-crypto pyOpenSSL
 ```
 
 *CentOS System*
 
 ```bash
-$ yum update -y && yum install python-pexpect python-crypto python-openssl python-pefile
+$ sudo yum update -y && yum install python-pexpect python-crypto python-openssl python-pefile
 ```
 
 *Mac OS X dependent*
@@ -74,5 +74,5 @@ $ pip install pexpect pycrypto pyopenssl pefile
 ```bash
 $ git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
 $ cd set
-$ python setup.py install
+$ sudo python setup.py install
 ```
