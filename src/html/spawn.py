@@ -240,8 +240,7 @@ def web_server_start():
                                     "%s/web_clone/%s" % (userconfigpath, win))
 
                 # pull random name generation
-                print_status(
-                    "The site has been moved. SET Web Server is now listening..")
+                print_status("The site has been moved. SET Web Server is now listening..")
                 rand_gen = check_options("MSF_EXE=")
                 if rand_gen != 0:
                     if os.path.isfile(userconfigpath + "custom.exe"):
@@ -297,6 +296,10 @@ def web_server_start():
                 except Exception as e:
                     import thread
                     thread.start_new_thread(webserver.start_server, (web_port, path))
+
+
+                if apache == 0:
+                    pause=raw_input("Press <return> when you want to shut down the web server. It is currently listening.")
 
             # Handle KeyboardInterrupt
             except KeyboardInterrupt:

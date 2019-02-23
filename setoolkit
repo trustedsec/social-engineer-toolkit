@@ -13,6 +13,23 @@ try:
 except NameError:
     pass
 
+# import main core functionality into SET
+import src.core.setcore as core
+
+# check which operating system
+operating_system = core.check_os()
+
+if operating_system == "posix":
+
+    #
+    # ROOT CHECK
+    #
+
+    if os.geteuid() != 0:
+        print("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
+        print("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
+        core.exit_set()
+
 # if we are running in the path no need to change
 if os.path.isfile("setoolkit"):
     pass
@@ -47,7 +64,6 @@ if "CONFIG_VERSION=7.7.9" not in data:
     shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
 
 # import after config checks have been properly created
-import src.core.setcore as core
 from src.core.menu import text
 from src.core.update_config import update_config
 
@@ -64,9 +80,6 @@ if not os.path.isfile("src/logs/set_logfile.log"):
     # create new log
     with open("src/logs/set_logfile.log", "w") as filewrite:
         filewrite.write("")
-
-# check which operating system
-operating_system = core.check_os()
 
 # use ~/.set
 if operating_system == "posix":
@@ -134,18 +147,6 @@ for root, dirs, files in os.walk(core.userconfigpath):
                 shutil.rmtree(os.path.join(root, d))
         except:
             pass
-
-# if windows then do some stuff
-if operating_system == "posix":
-
-    #
-    # ROOT CHECK
-    #
-
-    if os.geteuid() != 0:
-        print("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
-        print("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
-        core.exit_set()
 
 # if there isn't a set_config.py file yet, create one
 if not os.path.isfile("/etc/setoolkit/set_config.py"):
