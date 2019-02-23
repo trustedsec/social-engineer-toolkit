@@ -9,6 +9,9 @@ version 8.0
 * removed setup.py in favor of requirements.txt - no longer needed
 * updated readme and install documentation to reflect new install procedures through requirements.txt
 * updated copyright information to 2019
+* removed irc channel, no longer active or used
+* removed old sms phishing menu - spoofmytext never fixed their API and no longer supported
+* removed full screen attack - no longer supported or maintained
 
 ~~~~~~~~~~~~~~~~
 version 7.7.9

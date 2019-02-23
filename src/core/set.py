@@ -145,19 +145,6 @@ try:
                         return_continue()
                         break
 
-                # full screen attack vector
-                if attack_vector == '7':
-                    # dont need site cloner
-                    site_cloned = False
-                    # skip nat section and exit out
-                    choice3 = "-1"
-                    sys.path.append(definepath + "/src/webattack/fsattack")
-                    debug_msg(me, "importing 'src.webattack.fsaattack'", 1)
-                    try:
-                        module_reload(full)
-                    except:
-                        import full
-
                 # Web Attack menu choice 9: Return to the Previous Menu
                 if attack_vector == '99':
                     break
@@ -1209,20 +1196,8 @@ and send the QRCode via a mailer.
             except:
                 import src.powershell.powershell
 
-        # sms spoofing module option 10
-        if main_menu_choice == '10':
-
-
-            ### TEMPORARILY DISABLED
-            print_error("This module is currently disabled as spoofmytextmessage.com is currently experiencing issues. As soon as it is working again or I can rework the module, this will remain disabled.")
-            raw_input("Press {return} to connect to the main menu.")
-            #try:
-            #    module_reload(src.sms.sms)
-            #except:
-            #    import src.sms.sms
-
         # Main Menu choice 11: Third Party Modules
-        if main_menu_choice == '11':
+        if main_menu_choice == '10':
             sys.path.append(definepath + "/src/core")
             debug_msg(me, "importing 'src.core.module_handler'", 1)
             try:

@@ -180,7 +180,6 @@ def webattack_vector(attack_vector):
         '4': "tabnapping",
         '5': "webjacking",
         '6': "multiattack",
-        '7': "fsattack"
     }.get(attack_vector, "ERROR")
 
 
@@ -225,5 +224,4 @@ def category(category):
         '30': "delldrac",
         '31': "ridenum",
         '32': "psexec",
-        '33': "fsattack",
     }.get(category, "ERROR")
