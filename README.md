@@ -6,7 +6,7 @@ Written by: David Kennedy (ReL1K)
 
 Company: [TrustedSec](https://www.trustedsec.com)
 
-DISCLAIMER: **This is ***only*** **for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes, period.
+DISCLAIMER: **This is** ***only*** **for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes, period.**
 
 Please read the LICENSE under readme/LICENSE for the licensing of SET. 
 
