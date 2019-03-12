@@ -1,4 +1,4 @@
-# <p>   The Social-Engineer Toolkit (SET)   :briefcase: </p>
+# <p>:briefcase:   The Social-Engineer Toolkit (SET)   :briefcase: </p>
 
 Copyright 2018 The Social-Engineer Toolkit (SET)
 
