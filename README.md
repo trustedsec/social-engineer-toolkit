@@ -1,4 +1,4 @@
-# :briefcase: <code> </code> The Social-Engineer Toolkit (SET) <code>   </code> :briefcase:
+# {nbsp} + :briefcase: <code> </code> The Social-Engineer Toolkit (SET) <code>   </code> :briefcase:
 
 Copyright 2018 The Social-Engineer Toolkit (SET)
 
