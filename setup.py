@@ -86,7 +86,11 @@ if platformOS == "Linux":
     # if dnf.conf is there, we are dealing with a >= fedora 22 - added thanks to whoismath pr
     elif os.path.isfile("/etc/dnf/dnf.conf"):
         subprocess.Popen("dnf -y install git python-pexpect python-pefile python-crypto pyOpenSSL", shell=True).wait()
-
+    
+    # For Centos 7 
+    elif os.path.isfile("/etc/yum.conf"):
+        subprocess.Popen("yum -y install git python-pexpect python-pefile python-crypto pyOpenSSL", shell=True).wait()
+    
     # if sources.list or pacman.conf is not available then we're running
     # something offset
     else:
