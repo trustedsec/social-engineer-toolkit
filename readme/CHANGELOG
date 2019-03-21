@@ -12,6 +12,7 @@ version 8.0
 * removed irc channel, no longer active or used
 * removed old sms phishing menu - spoofmytext never fixed their API and no longer supported
 * removed full screen attack - no longer supported or maintained
+* removed html generation from web attack, no longer supported
 
 ~~~~~~~~~~~~~~~~
 version 7.7.9
