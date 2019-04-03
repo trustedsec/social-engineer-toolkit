@@ -36,7 +36,6 @@ main = ['Spear-Phishing Attack Vectors',
         'Wireless Access Point Attack Vector',
         'QRCode Generator Attack Vector',
         'Powershell Attack Vectors',
-	'SMS Spoofing Attack Vector', 
         'Third Party Modules']
 
 spearphish_menu = ['Perform a Mass Email Attack',
@@ -62,7 +61,6 @@ webattack_menu = ['Java Applet Attack Method',
                   'Tabnabbing Attack Method',
                   'Web Jacking Attack Method',
                   'Multi-Attack Web Method',
-                  'Full Screen Attack Method',
                   'HTA Attack Method',
                   '0D']
 
@@ -187,22 +185,6 @@ teensy_text = ("""
  X10 based communication devices in order for this to work.
 
  Select a payload to create the pde file to import into Arduino:
-""")
-
-sms_attack_menu = ['Perform a SMS Spoofing Attack',
-                   'Create a Social-Engineering Template',
-                   '0D']
-
-sms_attack_text = ("""
- The """ + bcolors.BOLD + """SMS""" + bcolors.ENDC + """ module allows you to specially craft SMS messages and send them
- to a person. You can spoof the SMS source.
-
- This module was created by the team at TB-Security.com.
-
- You can use a predefined template, create your own template or specify
- an arbitrary message. The main method for this would be to get a user to
- click or coax them on a link in their browser and steal credentials or
- perform other attack vectors.
 """)
 
 wireless_attack_menu = ['Start the SET Wireless Attack Vector Access Point',

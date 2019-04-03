@@ -1,8 +1,0 @@
-Hello.. I added two types of attacks XSS FullScreen ( using js ) and just Regular FullScreen Attacks.
-The second can be expanded by adding different types or a custom option as the first option. If you desire this id be willing
-to add more or if you wish to take this and build off it i would better appreciate that also.I had to sort of 
-cut this project short because of my own work and other projects. I wanted to contribute something
-because i enjoyed learning from SET and wanted to give something back. Hopefully you guys will eventually
-expand on this and end up adding it to set ur free to do whatever you want with the code its open source
-100% and i am giving it to you enjoy  do what you want with the code. i wrote the javascript for xss (header.js) myself
-along with the PHP code for the regular fullscreen attacks obviously along with all of fsattack.py module.  :D - darko

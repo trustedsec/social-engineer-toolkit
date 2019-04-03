@@ -434,10 +434,8 @@ def run():
             if apache_counter == 1:
 
                 # check if we are running apache mode
-                print_status(
-                    "Successfully stopped Apache. Starting the credential harvester.")
-                print_status(
-                    "Harvester is ready, have victim browse to your site.")
+                print_status("Successfully stopped Apache. Starting the credential harvester.")
+                print_status("Harvester is ready, have victim browse to your site.")
                 if apache_check == False:
                     try:
 
@@ -465,11 +463,11 @@ def run():
                     except Exception:
                         apache_counter = 0
 
-            if apache_counter == 0:
-                print(bcolors.GREEN + "[*] Try disabling Apache and try SET again." + bcolors.ENDC)
-                print("[*] Printing error: " + str(e) + "\n")
-                return_continue()
-                exit_set()
+            #if apache_counter == 0:
+            #    print(bcolors.GREEN + "[*] Try disabling Apache and try SET again." + bcolors.ENDC)
+            #    print("[*] Printing error: " + str(e) + "\n")
+            #    return_continue()
+            #    exit_set()
 
     # if we are using apache, then use the harvester php type that writes it out to post.php
     # note just change the index.html to post somewhere else and rename the

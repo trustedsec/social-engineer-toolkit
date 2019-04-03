@@ -850,15 +850,13 @@ def show_banner(define_version, graphic):
 [---]        The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE + """)         [---]
 [---]        Created by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
                       Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """
-                   Codename: '""" + bcolors.YELLOW + """Blackout""" + bcolors.ENDC + bcolors.BLUE + """'
+                  Codename: '""" + bcolors.YELLOW + """Maverick - BETA""" + bcolors.ENDC + bcolors.BLUE + """'
 [---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
 [---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
 [---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]
 """ + bcolors.GREEN + """        Welcome to the Social-Engineer Toolkit (SET).
          The one stop shop for all of your SE needs.
 """)
-    print(bcolors.BLUE +
-          """     Join us on irc.freenode.net in channel #setoolkit\n""" + bcolors.ENDC)
     print(bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ +
           bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC)
     print(bcolors.BLUE + """   It's easy to update using the PenTesters Framework! (PTF)\nVisit """ + bcolors.YELLOW +
