@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 8.0.1
+~~~~~~~~~~~~~~~~
+
+* fix an issue when using import on web clone
+
+~~~~~~~~~~~~~~~~
 version 8.0
 ~~~~~~~~~~~~~~~~
 

@@ -702,19 +702,14 @@ this is how networking works.
                                 "\n1. Copy just the index.html\n2. Copy the entire folder\n\nEnter choice [1/2]: ")
                             if choice == "1" or choice == "":
                                 if os.path.isfile("%s/web_clone/index.html" % (userconfigpath)):
-                                    os.remove(
-                                        "%s/web_clone/index.html" % (userconfigpath))
-                                shutil.copyfile(
-                                    URL + "index.html", "%s/web_clone/" % (userconfigpath))
+                                    os.remove("%s/web_clone/index.html" % (userconfigpath))
+                                shutil.copyfile(URL + "index.html", "%s/web_clone/index.html" % (userconfigpath))
                             if choice == "2":
                                 if os.path.isdir(URL + "src/webattack"):
-                                    print_error(
-                                        "You cannot specify a folder in the default SET path. This goes into a loop Try something different.")
-                                    URL = raw_input(
-                                        "Enter the folder to import into SET, this CANNOT be the SET directory: ")
+                                    print_error("You cannot specify a folder in the default SET path. This goes into a loop Try something different.")
+                                    URL = raw_input("Enter the folder to import into SET, this CANNOT be the SET directory: ")
                                     if os.path.isdir(URL + "src/webattack" % (URL)):
-                                        print_error(
-                                            "You tried the same thing. Exiting now.")
+                                        print_error("You tried the same thing. Exiting now.")
                                         sys.exit()
                                 copyfolder(URL, "%s/web_clone/" % userconfigpath)
 
