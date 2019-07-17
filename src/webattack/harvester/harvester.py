@@ -248,7 +248,7 @@ class SETHandler(BaseHTTPRequestHandler):
             pass
 
         webroot = os.path.abspath(os.path.join(userconfigpath, 'web_clone'))
-        requested_file = os.path.abspath(os.path.join(webroot, self.path))
+        requested_file = os.path.abspath(os.path.join(webroot, os.path.relpath(self.path, '/')))
         # try block setup to catch transmission errors
         try:
 
@@ -276,12 +276,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 # visits.close()
 
             else:
-                if not requested_file.startswith(webroot + os.path.sep):
-                    print('directory traversal attempt detected from: ' + self.client_address[0])
-                    self.send_response(404)
-                    self.end_headers()
-
-                elif os.path.isfile(requested_file):
+                if os.path.isfile(requested_file):
                     self.send_response(200)
                     self.end_headers()
                     fileopen = open(requested_file, "rb")
