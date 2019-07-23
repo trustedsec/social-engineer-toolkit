@@ -167,28 +167,26 @@ try:
                 #    attack_vector = "hta"
 
                 # Removed to delete MLITM
-                if attack_vector != "99999":
+                #if attack_vector != "99999":
 
-                    #
-                    # USER INPUT: SHOW WEB ATTACK VECTORS MENU    #
-                    #
+                #
+                # USER INPUT: SHOW WEB ATTACK VECTORS MENU    #
+                #
 
-                    if attack_vector != "7":
-                        debug_msg(
-                            me, "printing 'text.webattack_vectors_menu'", 5)
-                        show_webvectors_menu = create_menu(
-                            text.webattack_vectors_text, text.webattack_vectors_menu)
-                        print('  99) Return to Webattack Menu\n')
-                        choice3 = raw_input(setprompt(["2"], ""))
+                #if attack_vector != "7":
+                debug_msg(me, "printing 'text.webattack_vectors_menu'", 5)
+                show_webvectors_menu = create_menu(text.webattack_vectors_text, text.webattack_vectors_menu)
+                print('  99) Return to Webattack Menu\n')
+                choice3 = raw_input(setprompt(["2"], ""))
 
-                        if choice3 == 'exit':
-                            exit_set()
+                if choice3 == 'exit':
+                    exit_set()
 
-                        if choice3 == "99":
-                            break
+                if choice3 == "99":
+                    break
 
-                        if choice3 == "quit" or choice3 == '4':
-                            break
+                if choice3 == "quit" or choice3 == '4':
+                    break
 
                 try:
                     # write our attack vector to file to be called later
@@ -196,23 +194,20 @@ try:
 
                     # webjacking and web templates are not allowed
                     if attack_vector == "5" and choice3 == "1":
-                        print(
-                            bcolors.RED + "\n Sorry, you can't use the Web Jacking vector with Web Templates." + bcolors.ENDC)
+                        print(bcolors.RED + "\n Sorry, you can't use the Web Jacking vector with Web Templates." + bcolors.ENDC)
                         return_continue()
                         break
 
                     # if we select multiattack, web templates are not allowed
                     if attack_vector == "6" and choice3 == "1":
-                        print(
-                            bcolors.RED + "\n Sorry, you can't use the Multi-Attack vector with Web Templates." + bcolors.ENDC)
+                        print(bcolors.RED + "\n Sorry, you can't use the Multi-Attack vector with Web Templates." + bcolors.ENDC)
                         return_continue()
                         break
 
                     # if we select web template and tabnabbing, throw this
                     # error and bomb out to menu
                     if attack_vector == "4" and choice3 == "1":
-                        print(
-                            bcolors.RED + "\n Sorry, you can only use the cloner option with the tabnabbing method." + bcolors.ENDC)
+                        print(bcolors.RED + "\n Sorry, you can only use the cloner option with the tabnabbing method." + bcolors.ENDC)
                         return_continue()
                         break
 
@@ -239,10 +234,8 @@ try:
                         attack_vector = "harvester"
                         filewrite.write(attack_vector)
                         filewrite.close()
-                        print_info(
-                            "Credential harvester will allow you to utilize the clone capabilities within SET")
-                        print_info(
-                            "to harvest credentials or parameters from a website as well as place them into a report")
+                        print_info("Credential harvester will allow you to utilize the clone capabilities within SET")
+                        print_info("to harvest credentials or parameters from a website as well as place them into a report")
 
                     # specify tab nabbing attack vector
                     if attack_vector == '4':
@@ -266,7 +259,7 @@ try:
                         filewrite.close()
 
                     # hta attack vector
-                    if attack_vector == '8':
+                    if attack_vector == '7':
                         # call hta attack vector
                         attack_vector = "hta"
                         filewrite.write(attack_vector)
@@ -305,28 +298,19 @@ try:
                                                 # this part is to determine if NAT/port forwarding is used
                                                 # if it is it'll prompt for
                                                 # additional questions
-                                                print_info(
-                                                    "NAT/Port Forwarding can be used in the cases where your SET machine is")
-                                                print_info(
-                                                    "not externally exposed and may be a different IP address than your reverse listener.")
-                                                nat_or_fwd = yesno_prompt(
-                                                    '0', 'Are you using NAT/Port Forwarding [yes|no]')
+                                                print_info("NAT/Port Forwarding can be used in the cases where your SET machine is")
+                                                print_info("not externally exposed and may be a different IP address than your reverse listener.")
+                                                nat_or_fwd = yesno_prompt('0', 'Are you using NAT/Port Forwarding [yes|no]')
                                                 if nat_or_fwd == "YES":
-                                                    ipquestion = raw_input(setprompt(
-                                                        ["2"], "IP address to SET web server (this could be your external IP or hostname)"))
-
-                                                    filewrite2 = open(
-                                                        userconfigpath + "interface", "w")
-                                                    filewrite2.write(
-                                                        ipquestion)
+                                                    ipquestion = raw_input(setprompt(["2"], "IP address to SET web server (this could be your external IP or hostname)"))
+                                                    filewrite2 = open(userconfigpath + "interface", "w")
+                                                    filewrite2.write(ipquestion)
                                                     filewrite2.close()
                                                     # is your payload/listener
                                                     # on a different IP?
-                                                    natquestion = yesno_prompt(
-                                                        ["2"], "Is your payload handler (metasploit) on a different IP from your external NAT/Port FWD address [yes|no]")
+                                                    natquestion = yesno_prompt(["2"], "Is your payload handler (metasploit) on a different IP from your external NAT/Port FWD address [yes|no]")
                                                     if natquestion == 'YES':
-                                                        ipaddr = raw_input(
-                                                            setprompt(["2"], "IP address for the reverse handler (reverse payload)"))
+                                                        ipaddr = raw_input(setprompt(["2"], "IP address for the reverse handler (reverse payload)"))
                                                     if natquestion == "NO":
                                                         ipaddr = ipquestion
                                                 # if you arent using NAT/Port
@@ -355,8 +339,6 @@ this from an external perpective, it will not work. This isn't a SET issue
 this is how networking works.
 """)
 
-                                    #print_info("This option is used for what IP the server will POST to.")
-                                    #print_info("If you're using an external IP, use your external IP for this")
                                     try:
                                         rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                                         rhost.connect(('google.com', 0))
@@ -384,8 +366,7 @@ this is how networking works.
 
                             # get the template ready
                         sys.path.append(definepath + "/src/html/templates")
-                        debug_msg(
-                            me, "importing src.html.templates.template'", 1)
+                        debug_msg(me, "importing src.html.templates.template'", 1)
                         try:
                             module_reload(template)
                         except:
@@ -396,8 +377,7 @@ this is how networking works.
                                 # grab clientattack
                             sys.path.append(
                                 definepath + "/src/webattack/browser_exploits")
-                            debug_msg(
-                                me, "line 357: importing 'src.webattack.browser_exploits.gen_payload'", 1)
+                            debug_msg(me, "line 357: importing 'src.webattack.browser_exploits.gen_payload'", 1)
                             try:
                                 module_reload(gen_payload)
                             except:
@@ -406,8 +386,7 @@ this is how networking works.
                         # arp cache attack, will exit quickly
                         # if not in config file
                         sys.path.append(definepath + "/src/core/arp_cache")
-                        debug_msg(
-                            me, "line 364: importing 'src.core.arp_cache.arp'", 1)
+                        debug_msg(me, "line 364: importing 'src.core.arp_cache.arp'", 1)
                         try:
                             module_reload(arp)
                         except:
@@ -423,8 +402,7 @@ this is how networking works.
 
                         site_cloned = True
 
-                        debug_msg(
-                            me, "line 375: importing 'src.webattack.web_clone.cloner'", 1)
+                        debug_msg(me, "line 375: importing 'src.webattack.web_clone.cloner'", 1)
                         try:
                             module_reload(src.webattack.web_clone.cloner)
                         except:
@@ -432,11 +410,9 @@ this is how networking works.
 
                         # grab java applet attack
                         if attack_vector == "java":
-                            debug_msg(
-                                me, "importing 'src.core.payloadgen.create_payloads'", 1)
+                            debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
                             try:
-                                module_reload(
-                                    src.core.payloadgen.create_payloads)
+                                module_reload(src.core.payloadgen.create_payloads)
                             except:
                                 import src.core.payloadgen.create_payloads
 
@@ -480,10 +456,8 @@ this is how networking works.
                                 update_options("ATTACK_VECTOR=HTA")
                                 gen_hta_cool_stuff()
                                 attack_vector = "hta"
-                                print_status(
-                                    "Automatically starting Apache for you...")
-                                subprocess.Popen(
-                                    "service apache2 start", shell=True).wait()
+                                print_status("Automatically starting Apache for you...")
+                                subprocess.Popen("service apache2 start", shell=True).wait()
 
                             if attack_vector != "harvester":
                                 if attack_vector != "tabnabbing":

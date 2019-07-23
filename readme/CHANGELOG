@@ -3,6 +3,7 @@ version 8.0.1
 ~~~~~~~~~~~~~~~~
 
 * fix an issue when using import on web clone
+* fix an issue when using hta attack vector would just put you out to main menu
 
 ~~~~~~~~~~~~~~~~
 version 8.0
