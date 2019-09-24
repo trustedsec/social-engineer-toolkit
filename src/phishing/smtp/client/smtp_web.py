@@ -12,7 +12,7 @@ import base64
 # fix for python2 to 3 compatibility
 try:
     from cStringIO import StringIO
-except NameError:
+except ImportError:
     from io import StringIO
 import email
 import email.encoders

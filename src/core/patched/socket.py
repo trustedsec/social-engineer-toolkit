@@ -84,7 +84,7 @@ import os, sys, warnings
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 try:
     import errno
