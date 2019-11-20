@@ -28,7 +28,7 @@ powershell_menu_choice = input(core.setprompt(["29"], ""))
 if powershell_menu_choice != "99":
     # specify ipaddress of reverse listener
     #ipaddr = core.grab_ipaddress()
-    ipaddr = raw_input("Enter the IPAddress or DNS name for the reverse host: ")
+    ipaddr = input("Enter the IPAddress or DNS name for the reverse host: ")
     core.update_options("IPADDR=" + ipaddr)
 
     # if we select alphanumeric shellcode
