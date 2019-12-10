@@ -7,4 +7,5 @@ impacket
 # Generate QR Codes
 qrcode
 pillow
-pymssql
+# The pymssql project has been discontinued.
+pymssql<3.0
