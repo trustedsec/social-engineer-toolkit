@@ -23,7 +23,7 @@ from set_config import DNSSPOOF_PATH as dnsspoof_path
 sys.path.append(core.definepath)
 
 try: input = raw_input
-except: pass
+except NameError: pass
 
 if not os.path.isfile("/etc/init.d/isc-dhcp-server"):
     core.print_warning("isc-dhcp-server does not appear to be installed.")

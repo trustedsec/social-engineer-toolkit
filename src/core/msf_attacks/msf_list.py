@@ -1,17 +1,19 @@
 #!/usr/bin/env python
-from src.core.setcore import debug_msg, mod_name
-import subprocess
 import re
+import subprocess
 import sys
+import src
+from src.core import module_reload
+from src.core.setcore import debug_msg, meta_path, mod_name
 
 me = mod_name()
 
 sys.path.append("src/core")
 debug_msg(me, "re-importing 'src.core.setcore'", 1)
 try:
-    module_reload(setcore)
+    module_reload(src.core.setcore)
 except:
-    import setcore
+    import src.core.setcore
 print("[---] Updating the Social Engineer Toolkit FileFormat Exploit List [---]")
 generate_list = subprocess.Popen(
     "%s/msfcli | grep fileformat > src/core/msf_attacks/database/msf.database" % (meta_path), shell=True).wait()
