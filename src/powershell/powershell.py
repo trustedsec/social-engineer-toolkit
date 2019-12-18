@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 
+import src
 import src.core.setcore as core
 from src.core.menu import text
 
@@ -57,7 +58,7 @@ if powershell_menu_choice != "99":
         # here we format everything for us
         with  open(core.userconfigpath + "x86.powershell") as fileopen:
             x86 = fileopen.read()
-        x86 = core.powershell_encodedcommand(x86) 
+        x86 = core.powershell_encodedcommand(x86)
         core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.userconfigpath, "reports/powershell/")))
         with open(core.userconfigpath + "reports/powershell/x86_powershell_injection.txt", "w") as filewrite:
             filewrite.write(x86)

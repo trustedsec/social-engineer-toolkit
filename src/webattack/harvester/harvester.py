@@ -588,7 +588,7 @@ def ssl_server(HandlerClass=SETHandler, ServerClass=SecureHTTPServer):
         httpd = ServerClass(server_address, HandlerClass)
         # serve the httpd server until exit
         httpd.serve_forever()
-    except Exception, e: 
+    except Exception as e: 
         print_error("Something went wrong.. Printing error: " + str(e))
 
 if track_email == True:

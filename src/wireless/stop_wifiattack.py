@@ -9,7 +9,7 @@ import src.core.setcore as core
 #
 
 try: input = raw_input
-except: pass
+except NameError: pass
 
 interface = input(core.setprompt(["8"], "Enter your wireless interface (ex: wlan0): "))
 

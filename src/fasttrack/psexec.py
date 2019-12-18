@@ -7,6 +7,7 @@
 import os
 import subprocess
 
+import src
 import src.core.setcore as core
 
 # Py2/3 compatibility
@@ -84,9 +85,9 @@ try:
         os.makedirs(os.path.join(core.userconfigpath, "reports/powershell"))
 
     x86 = open(core.userconfigpath + "x86.powershell", "r").read()
-    x86 = core.powershell_encodedcommand(x86) 
+    x86 = core.powershell_encodedcommand(x86)
     core.print_status("If you want the powershell commands and attack, they are exported to {0}".format(os.path.join(core.userconfigpath, "reports/powershell")))
-    filewrite = file(core.userconfigpath + "reports/powershell/x86_powershell_injection.txt", "w")
+    filewrite = open(core.userconfigpath + "reports/powershell/x86_powershell_injection.txt", "w")
     filewrite.write(x86)
     filewrite.close()
     payload = "windows/meterpreter/reverse_https\n"  # if we are using x86
