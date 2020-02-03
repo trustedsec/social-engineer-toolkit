@@ -4,6 +4,7 @@ version 8.0.2
 
 * fix an issue on harvester file not defined (python 3 compat)
 * add a simple install for setoolkit (setup.py)
+* teensy remove old path generation location /usr/share/set to /usr/share/setoolkit
 
 ~~~~~~~~~~~~~~~~
 version 8.0.1
