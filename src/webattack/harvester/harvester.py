@@ -54,7 +54,7 @@ sys.path.append(definepath)
 
 
 if not os.path.isfile("%s/src/logs/harvester.log" % (os.getcwd())):
-    filewrite = file("%s/src/logs/harvester.log" % (os.getcwd()), "w")
+    filewrite = open("%s/src/logs/harvester.log" % (os.getcwd()), "w")
     filewrite.write("")
     filewrite.close()
 
