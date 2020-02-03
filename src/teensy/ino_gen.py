@@ -34,10 +34,10 @@ xml_output_filename = 'ShellcodeRunner.xml'                                 # Na
 build_path = 'C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\msbuild.exe'   # Path to msbuild.exe - needs to have \ escaped with \\ to prevent issues.          --Make user selectable--
 
 # Variables for external files
-ino_output_filename = '/usr/share/set/src/teensy/ino_file_gen.ino'                                    # Filename of the final ino file containing the generated arduino code and xml build config for msbuild.
-ino_header_filename = '/usr/share/set/src/teensy/ino_header.txt'                                      # File containg the header arduino code to be incorporated into the ino file before the xml build config.
-ino_tail_filename  = '/usr/share/set/src/teensy/ino_tail.txt'                                         # File containg the header arduino code to be incorporated into the ino file after the xml build config.
-xml_input_filename = '/usr/share/set/src/teensy/ino_build_file.xml'                                   # File containing the xml build structure to be incorporated into the ino file.
+ino_output_filename = '/usr/share/setoolkit/src/teensy/ino_file_gen.ino'                                    # Filename of the final ino file containing the generated arduino code and xml build config for msbuild.
+ino_header_filename = '/usr/share/setoolkit/src/teensy/ino_header.txt'                                      # File containg the header arduino code to be incorporated into the ino file before the xml build config.
+ino_tail_filename  = '/usr/share/setoolkit/src/teensy/ino_tail.txt'                                         # File containg the header arduino code to be incorporated into the ino file after the xml build config.
+xml_input_filename = '/usr/share/setoolkit/src/teensy/ino_build_file.xml'                                   # File containing the xml build structure to be incorporated into the ino file.
 
 # User selection - default values
 print('\n-----default settings for shellcode generation-----\n')
