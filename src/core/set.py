@@ -14,6 +14,11 @@ import socket
 from src.core.setcore import *
 from src.core.menu import text
 
+try:
+    raw_input
+except:
+    raw_input = input
+
 ipaddr = ""
 me = mod_name()
 #
