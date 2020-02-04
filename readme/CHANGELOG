@@ -7,6 +7,7 @@ version 8.0.2
 * teensy remove old path generation location /usr/share/set to /usr/share/setoolkit
 * fixed raw_input issue for python3
 * changed env variable to python3
+* remove patched socket no longer needed
 
 ~~~~~~~~~~~~~~~~
 version 8.0.1

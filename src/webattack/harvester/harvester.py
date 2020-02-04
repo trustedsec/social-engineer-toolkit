@@ -622,7 +622,7 @@ if ssl_flag == 'true':
     # copy patched socket over to web clone
     definepath = os.getcwd()
     # we need to move a modified version of socket to handle SSL
-    shutil.copyfile("%s/src/core/patched/socket.py" % (definepath), "%s/socket.py" % (definepath))
+    #shutil.copyfile("%s/src/core/patched/socket.py" % (definepath), "%s/socket.py" % (definepath))
 
 # head over to cloned dir
 if apache_check == False:
@@ -650,9 +650,9 @@ try:
         run()
 except:
     # cleanup modified socket
-    if ssl_flag == "true":
-        if os.path.isfile(definepath + "/socket.py"):
-            os.remove(definepath + "/socket.py")
-        if os.path.isfile(definepath + "/socket.pyc"):
-            os.remove(definepath + "/socket.pyc")
+    #if ssl_flag == "true":
+        #if os.path.isfile(definepath + "/socket.py"):
+        #    os.remove(definepath + "/socket.py")
+        #if os.path.isfile(definepath + "/socket.pyc"):
+        #    os.remove(definepath + "/socket.pyc")
     pass
