@@ -1,8 +1,8 @@
 # :briefcase: &nbsp;  The Social-Engineer Toolkit (SET) &nbsp;  :briefcase:
 
-Copyright 2019 The Social-Engineer Toolkit (SET)
+Copyright 2020 The Social-Engineer Toolkit (SET)
 
-Written by: David Kennedy (ReL1K)
+Written by: David Kennedy (ReL1K) @HackingDave
 
 Company: [TrustedSec](https://www.trustedsec.com)
 
