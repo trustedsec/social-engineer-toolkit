@@ -10,6 +10,7 @@ version 8.0.2
 * remove patched socket no longer needed
 * add better description on webattack ssl in config baseline
 * fixed metasploit listener not launching when using browser autopwn
+* fixed an ssue where create payloads would throw bytes error
 
 ~~~~~~~~~~~~~~~~
 version 8.0.1
