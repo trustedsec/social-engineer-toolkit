@@ -44,7 +44,8 @@ For bug reports or enhancements, please open an [issue](https://github.com/trust
 
 ## Install via requirements.txt
 
-$ pip install -r requirements.txt
+pip3 install -r requirements.txt
+python setup.py 
 
 ## Install SET
 
