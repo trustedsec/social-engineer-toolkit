@@ -9,6 +9,7 @@ version 8.0.2
 * changed env variable to python3
 * remove patched socket no longer needed
 * add better description on webattack ssl in config baseline
+* fixed metasploit listener not launching when using browser autopwn
 
 ~~~~~~~~~~~~~~~~
 version 8.0.1

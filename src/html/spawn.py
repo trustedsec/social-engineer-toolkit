@@ -14,6 +14,22 @@ import threading
 import socket
 import datetime
 
+# set current path
+definepath = os.getcwd()
+
+# check os
+operating_system = check_os()
+
+# set default value for automatic listener
+automatic_listener = ""
+
+# specify base msf_path
+msf_path = ""
+
+try: module_reload(pexpect)
+except: import pexpect
+
+
 # see if we are tracking emails
 track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 
@@ -44,26 +60,6 @@ if check_options("CUSTOM_EXE="):
     print_status("SET has no idea what type of payload you are using, so you will need to set this up manually.")
     print_status("If using a custom Metasploit payload, setup a multi/handler, etc. to capture the connection back.")
 
-
-# set current path
-definepath = os.getcwd()
-
-# check os
-operating_system = check_os()
-
-# set default value for automatic listener
-automatic_listener = ""
-
-if operating_system == "posix":
-    try:
-        import pexpect
-    except ImportError:
-        print_error(
-            "python-pexpect is not installed.. some things may not work.")
-        return_continue()
-
-# specify base msf_path
-msf_path = ""
 
 # see if we are using setshell
 set_payload = ""
@@ -299,6 +295,11 @@ def web_server_start():
 
 
                 if apache == 0:
+                    if os.path.isfile(userconfigpath + "meta_config"):
+                        msf_path = meta_path()
+                        #print("You will need to launch the listener on your own, execute in a different shell the following command if using Metasploit:")
+                        child = pexpect.spawn("%smsfconsole -r %s/meta_config" % (msf_path, userconfigpath))
+                        child.interact()
                     pause=raw_input("Press <return> when you want to shut down the web server. It is currently listening.")
 
             # Handle KeyboardInterrupt
@@ -380,7 +381,6 @@ def web_server_start():
     if operating_system != "windows":
         # Grab metaspoit path
         msf_path = meta_path()
-        import pexpect
 
 # define if use apache or not
 apache = 0
@@ -531,8 +531,7 @@ try:
         print((bcolors.PURPLE +
                "\n[--] Tested on Windows, Linux, and OSX [--]" + bcolors.ENDC))
         if apache == 1:
-            print((
-                bcolors.GREEN + "[--] Apache web server is currently in use for performance. [--]" + bcolors.ENDC))
+            print((bcolors.GREEN + "[--] Apache web server is currently in use for performance. [--]" + bcolors.ENDC))
 
     if os.path.isfile(userconfigpath + "meta_config"):
         fileopen = open(userconfigpath + "meta_config", "r")
@@ -548,6 +547,7 @@ try:
                         exit_set()
                     print(bcolors.RED + """Since the exploit picked requires port 80 for WebDav, the\nSET HTTP Server port has been changed to 8080. You will need\nto coax someone to your IP Address on 8080, for example\nyou need it to be http://172.16.32.50:8080 instead of standard\nhttp (80) traffic.""")
 
+
     web_server_start()
     # if we are using ettercap
     if os.path.isfile(userconfigpath + "ettercap"):
@@ -557,12 +557,11 @@ try:
             # run in background
             ettercap = ettercap + " &"
             # spawn ettercap or dsniff
-            subprocess.Popen(ettercap, shell=True,
-                             stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+            subprocess.Popen(ettercap, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
     # if metasploit config is in directory
     if os.path.isfile(userconfigpath + "meta_config"):
-      if ("CUSTOM" not in template) and ("SELF" not in template):
+      if ("CUSTOM" not in template) or ("SELF" not in template):
         print_info("Launching MSF Listener...")
         print_info("This may take a few to load MSF...")
         # this checks to see if we want to start a listener
