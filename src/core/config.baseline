@@ -84,7 +84,7 @@ SENDMAIL=OFF
 ### The email providers supported are Gmail, Hotmail, and Yahoo.
 EMAIL_PROVIDER=GMAIL
 #
-### Turn on if you want to use email in conjunction with the web attack.
+### Turn on if you want to use email in conjunction with the web attack. 
 WEBATTACK_EMAIL=OFF
 #
 ### Web attack time delay between emails. The default is one second.
@@ -116,7 +116,7 @@ JAVA_REPEATER=OFF
 ### and over even if they hit "run." 200 equals 2 seconds.
 JAVA_TIME=200
 #
-### Turn on SSL/TLS certificates for secure SET communications through the web attack vector.
+### Turn on SSL/TLS certificates for secure SET communications through the web attack vector. Only use with built in not with APACHE_SERVER on.
 WEBATTACK_SSL=OFF
 #
 ### Path to the PEM file to utilize certificates with the web attack vector (required).
