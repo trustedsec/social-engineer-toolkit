@@ -8,6 +8,7 @@ version 8.0.2
 * fixed raw_input issue for python3
 * changed env variable to python3
 * remove patched socket no longer needed
+* add better description on webattack ssl in config baseline
 
 ~~~~~~~~~~~~~~~~
 version 8.0.1
