@@ -591,6 +591,7 @@ try:
                         data = fileopen3.read()
 
                         # encode once, will need to decode later
+                        x86 = x86.encode("utf-8")
                         base_encode = base64.b64encode(x86)
                         data = data.replace('param name="5" value=""', 'param name="5" value="%s"' % (base_encode))
                         data = data.replace('param name="6" value=""', 'param name="6" value="%s"' % (base_encode))
