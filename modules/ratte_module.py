@@ -37,11 +37,11 @@ except NameError:
 definepath = os.getcwd()
 userconfigpath = core.userconfigpath
 
-MAIN = " RATTE Java Applet Attack (Remote Administration Tool Tommy Edition) - Read the readme/RATTE_README.txt first"
+MAIN="RATTE Java Applet Attack (Remote Administration Tool Tommy Edition) - Read the readme/RATTE_README.txt first"
 
 # This is RATTE (Remote Administration Tool Tommy Edition) attack module. It will launch a java applet attack to inject RATTE. Then it will launch RATTE-Server and wait for victim to connect. RATTE can beat local Firewalls, IDS and even EAL 4+ certified network firewalls.
 # This release one is only for education!"
-AUTHOR = "   Thomas Werth"
+AUTHOR="Thomas Werth"
 
 httpd = None
 
