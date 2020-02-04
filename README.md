@@ -52,7 +52,8 @@ python setup.py
 *All OSs*
 
 ```bash
-$ git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
-$ cd set
-$ pip install -r requirements.txt
+git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
+cd setoolkit
+pip3 install -r requirements.txt
+python setup.py
 ```
