@@ -6,8 +6,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        os: [ubuntu-latest]  # [macos-latest, windows-latest]
+        python-version: [3.5, 3.6, 3.7]  # , 3.8]
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python ${{ matrix.python-version }}
