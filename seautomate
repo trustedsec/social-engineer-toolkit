@@ -6,6 +6,7 @@ import os
 import time
 import subprocess
 import re
+from distutils.spawn import find_executable
 
 # Py2/3 compatibility
 # Python3 renamed raw_input to input
@@ -19,7 +20,6 @@ try:
 
 except NameError:
     from importlib import reload
-
 
 # check where we are and load default directory
 if os.path.isdir("/usr/share/setoolkit"):
@@ -73,7 +73,8 @@ password = False
 if os.path.isfile(filename):
     try:
         print("[*] Spawning SET in a threaded process...")
-        child = pexpect.spawn("python setoolkit")
+        cmd = find_executable('python3') or find_executable('python')
+        child = pexpect.spawn("{} setoolkit".format(cmd))
         child.expect("99\) Exit the Social-Engineer Toolkit")
         with open(filename) as fileopen:
             for line in fileopen:
