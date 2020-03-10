@@ -566,7 +566,10 @@ class SecureHTTPServer(HTTPServer):
         self.server_activate()
 
     def shutdown_request(self, request): 
-        request.shutdown()
+        try:
+            pass
+        except KeyboardInterrupt:
+            request.shutdown()
 
 
 def ssl_server(HandlerClass=SETHandler, ServerClass=SecureHTTPServer):
