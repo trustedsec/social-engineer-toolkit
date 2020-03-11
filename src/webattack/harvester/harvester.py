@@ -381,28 +381,12 @@ def run():
     # check if we are not running apache mode
     if apache_check == False:
         try:
-
             server = ThreadedHTTPServer(('', int(web_port)), SETHandler)
             server.serve_forever()
-
         # handle keyboard interrupts
         except KeyboardInterrupt:
-            os.chdir(homepath)
-            try:
-                visits.close()
-                bites.close()
-
-            except:
-                pass
-            if attack_vector != 'multiattack':
-                try:
-                    module_reload(src.webattack.harvester.report_generator)
-                except:
-                    import src.webattack.harvester.report_generator
-            if attack_vector != 'multiattack':
-                return_continue()
-            os.chdir(homepath)
-            httpd.socket.close()
+            server.socket.close()
+            generate_reports()
 
         # handle the rest
         except Exception as e:
@@ -428,28 +412,14 @@ def run():
                 print_status("Harvester is ready, have victim browse to your site.")
                 if apache_check == False:
                     try:
-
                         try:
                             server = ThreadedHTTPServer(
                                 ('', int(web_port)), SETHandler)
                             server.serve_forever()
-
                         # handle keyboard interrupts
                         except KeyboardInterrupt:
-                            os.chdir(homepath)
-                        try:
-                            visits.close()
-                            bites.close()
-
-                        except:
-                            pass
-                        if attack_vector != 'multiattack':
-                            sys.path.append("src/harvester")
-                            from . import report_generator
-                        if attack_vector != 'multiattack':
-                            return_continue()
-                        os.chdir(homepath)
-                        httpd.socket.close()
+                            generate_reports()
+                        server.socket.close()
                     except Exception:
                         apache_counter = 0
 
@@ -566,20 +536,39 @@ class SecureHTTPServer(HTTPServer):
         self.server_activate()
 
     def shutdown_request(self, request): 
-        request.shutdown()
+        try:
+            pass
+        except Exception as e:
+            request.shutdown()
 
 
 def ssl_server(HandlerClass=SETHandler, ServerClass=SecureHTTPServer):
-
     try:
         # bind to all interfaces on 443
         server_address = ('', 443)  # (address, port)
         # setup the httpd server
-        httpd = ServerClass(server_address, HandlerClass)
+        server = ServerClass(server_address, HandlerClass)
         # serve the httpd server until exit
-        httpd.serve_forever()
+        server.serve_forever()
     except Exception as e: 
         print_error("Something went wrong.. Printing error: " + str(e))
+    except KeyboardInterrupt:
+        generate_reports()
+
+def generate_reports():
+    os.chdir(homepath)
+    try:
+        visits.close()
+        bites.close()
+    except:
+        pass
+    if attack_vector != 'multiattack':
+        try:
+            module_reload(src.webattack.harvester.report_generator)
+        except:
+            import src.webattack.harvester.report_generator
+    if attack_vector != 'multiattack':
+        return_continue()
 
 if track_email == True:
     webattack_email = True
