@@ -4,6 +4,10 @@ import sys
 import os
 import re
 import cgi
+import posixpath
+import mimetypes
+import urllib.parse
+import shutil
 
 # need for python2 -> 3
 try:
@@ -213,6 +217,13 @@ bites = open(userconfigpath + "bites.file", "a")
 # SET Handler for handling POST requests and general setup through SSL
 class SETHandler(BaseHTTPRequestHandler):
 
+    extensions_map = _encodings_map_default = {
+        '.gz': 'application/gzip',
+        '.Z': 'application/octet-stream',
+        '.bz2': 'application/x-bzip2',
+        '.xz': 'application/x-xz',
+    }
+
     def setup(self):
         # added a try except block in case of transmission errors
         try:
@@ -224,6 +235,68 @@ class SETHandler(BaseHTTPRequestHandler):
         # except errors and pass them
         except:
             pass
+
+    def translate_path(self, path, webroot):
+        """Translate a /-separated PATH to the local filename syntax.
+        Components that mean special things to the local file system
+        (e.g. drive or directory names) are ignored.  (XXX They should
+        probably be diagnosed.)
+        """
+        # abandon query parameters
+        path = path.split('?',1)[0]
+        path = path.split('#',1)[0]
+        # Don't forget explicit trailing slash when normalizing. Issue17324
+        trailing_slash = path.rstrip().endswith('/')
+        try:
+            path = urllib.parse.unquote(path, errors='surrogatepass')
+        except UnicodeDecodeError:
+            path = urllib.parse.unquote(path)
+        path = posixpath.normpath(path)
+        words = path.split('/')
+        words = filter(None, words)
+        path = webroot
+        for word in words:
+            if os.path.dirname(word) or word in (os.curdir, os.pardir):
+                # Ignore components that are not a simple file/directory name
+                continue
+            path = os.path.join(path, word)
+        if trailing_slash:
+            path += '/'
+        return path
+
+    def guess_type(self, path):
+        """Guess the type of a file.
+        Argument is a PATH (a filename).
+        Return value is a string of the form type/subtype,
+        usable for a MIME Content-type header.
+        The default implementation looks the file's extension
+        up in the table self.extensions_map, using application/octet-stream
+        as a default; however it would be permissible (if
+        slow) to look inside the data to make a better guess.
+        """
+        base, ext = posixpath.splitext(path)
+        if ext in self.extensions_map:
+            return self.extensions_map[ext]
+        ext = ext.lower()
+        if ext in self.extensions_map:
+            return self.extensions_map[ext]
+        guess, _ = mimetypes.guess_type(path)
+        if guess:
+            return guess
+        return 'application/octet-stream'
+
+    def copyfile(self, source, outputfile):
+        """Copy all data between two file objects.
+        The SOURCE argument is a file object open for reading
+        (or anything with a read() method) and the DESTINATION
+        argument is a file object open for writing (or
+        anything with a write() method).
+        The only reason for overriding this would be to change
+        the block size or perhaps to replace newlines by CRLF
+        -- note however that this the default server uses this
+        to copy binary data as well.
+        """
+        shutil.copyfileobj(source, outputfile)
 
     # handle basic GET requests
     def do_GET(self):
@@ -243,6 +316,7 @@ class SETHandler(BaseHTTPRequestHandler):
 
         webroot = os.path.abspath(os.path.join(userconfigpath, 'web_clone'))
         requested_file = os.path.abspath(os.path.join(webroot, os.path.relpath(self.path, '/')))
+
         # try block setup to catch transmission errors
         try:
 
@@ -273,12 +347,18 @@ class SETHandler(BaseHTTPRequestHandler):
 
             else:
                 if os.path.isfile(requested_file):
-                    self.send_response(200)
-                    self.end_headers()
+
+                    path = self.translate_path(self.path, webroot)
+                    ctype = self.guess_type(path)
+
                     fileopen = open(requested_file, "rb")
-                    for line in fileopen:
-                        line = line.encode('utf-8')
-                        self.wfile.write(line)
+                    fs = os.fstat(fileopen.fileno())
+                    self.send_response(200)
+                    self.send_header("Content-type", ctype)
+                    self.send_header("Content-Length", str(fs[6]))
+                    self.end_headers()
+
+                    self.copyfile(fileopen, self.wfile)
 
                 else:
                     self.send_response(404)
