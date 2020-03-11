@@ -21,6 +21,7 @@ try:
 
 except ImportError:
     from socketserver import *
+    import socketserver
 
 import threading
 import datetime
@@ -518,7 +519,10 @@ def run():
 class SecureHTTPServer(HTTPServer):
 
     def __init__(self, server_address, HandlerClass):
-        SocketServer.BaseServer.__init__(self, server_address, HandlerClass)
+        try:
+            SocketServer.BaseServer.__init__(self, server_address, HandlerClass)
+        except NameError:
+            socketserver.BaseServer.__init__(self, server_address, HandlerClass)
         # SSLv2 and SSLv3 supported
         ctx = SSL.Context(SSL.SSLv23_METHOD)
         # pem files defined before
