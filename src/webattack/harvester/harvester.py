@@ -381,27 +381,11 @@ def run():
     # check if we are not running apache mode
     if apache_check == False:
         try:
-
             server = ThreadedHTTPServer(('', int(web_port)), SETHandler)
             server.serve_forever()
-
         # handle keyboard interrupts
         except KeyboardInterrupt:
-            os.chdir(homepath)
-            try:
-                visits.close()
-                bites.close()
-
-            except:
-                pass
-            if attack_vector != 'multiattack':
-                try:
-                    module_reload(src.webattack.harvester.report_generator)
-                except:
-                    import src.webattack.harvester.report_generator
-            if attack_vector != 'multiattack':
-                return_continue()
-            os.chdir(homepath)
+            generate_reports()
             httpd.socket.close()
 
         # handle the rest
@@ -568,12 +552,11 @@ class SecureHTTPServer(HTTPServer):
     def shutdown_request(self, request): 
         try:
             pass
-        except KeyboardInterrupt:
+        except Exception as e:
             request.shutdown()
 
 
 def ssl_server(HandlerClass=SETHandler, ServerClass=SecureHTTPServer):
-
     try:
         # bind to all interfaces on 443
         server_address = ('', 443)  # (address, port)
@@ -583,6 +566,23 @@ def ssl_server(HandlerClass=SETHandler, ServerClass=SecureHTTPServer):
         httpd.serve_forever()
     except Exception as e: 
         print_error("Something went wrong.. Printing error: " + str(e))
+    except KeyboardInterrupt:
+        generate_reports()
+
+def generate_reports():
+    os.chdir(homepath)
+    try:
+        visits.close()
+        bites.close()
+    except:
+        pass
+    if attack_vector != 'multiattack':
+        try:
+            module_reload(src.webattack.harvester.report_generator)
+        except:
+            import src.webattack.harvester.report_generator
+    if attack_vector != 'multiattack':
+        return_continue()
 
 if track_email == True:
     webattack_email = True
