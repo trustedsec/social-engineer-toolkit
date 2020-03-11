@@ -385,8 +385,8 @@ def run():
             server.serve_forever()
         # handle keyboard interrupts
         except KeyboardInterrupt:
+            server.socket.close()
             generate_reports()
-            httpd.socket.close()
 
         # handle the rest
         except Exception as e:
@@ -412,28 +412,14 @@ def run():
                 print_status("Harvester is ready, have victim browse to your site.")
                 if apache_check == False:
                     try:
-
                         try:
                             server = ThreadedHTTPServer(
                                 ('', int(web_port)), SETHandler)
                             server.serve_forever()
-
                         # handle keyboard interrupts
                         except KeyboardInterrupt:
-                            os.chdir(homepath)
-                        try:
-                            visits.close()
-                            bites.close()
-
-                        except:
-                            pass
-                        if attack_vector != 'multiattack':
-                            sys.path.append("src/harvester")
-                            from . import report_generator
-                        if attack_vector != 'multiattack':
-                            return_continue()
-                        os.chdir(homepath)
-                        httpd.socket.close()
+                            generate_reports()
+                        server.socket.close()
                     except Exception:
                         apache_counter = 0
 
@@ -561,9 +547,9 @@ def ssl_server(HandlerClass=SETHandler, ServerClass=SecureHTTPServer):
         # bind to all interfaces on 443
         server_address = ('', 443)  # (address, port)
         # setup the httpd server
-        httpd = ServerClass(server_address, HandlerClass)
+        server = ServerClass(server_address, HandlerClass)
         # serve the httpd server until exit
-        httpd.serve_forever()
+        server.serve_forever()
     except Exception as e: 
         print_error("Something went wrong.. Printing error: " + str(e))
     except KeyboardInterrupt:
