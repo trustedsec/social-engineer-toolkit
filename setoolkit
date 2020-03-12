@@ -126,7 +126,8 @@ if operating_system == "posix":
 
 dns = core.check_config("DNS_SERVER=")
 if dns.lower() == "on":
-    core.start_dns()
+    import src.core.minifakedns
+    src.core.minifakedns.start_dns_server()
 
 # remove old files
 for root, dirs, files in os.walk(core.userconfigpath):
@@ -153,7 +154,6 @@ if not os.path.isfile("/etc/setoolkit/set_config.py"):
     update_config()
 
 define_version = core.get_version()
-core.cleanup_routine()
 
 # create the set.options routine
 with open(os.path.join(core.userconfigpath, "set.options"), "w") as filewrite:

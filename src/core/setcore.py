@@ -16,6 +16,7 @@ import string
 import inspect
 import base64
 from src.core import dictionaries
+import src.core.minifakedns
 import io
 import trace
 
@@ -480,7 +481,7 @@ def cleanup_routine():
             os.remove(userconfigpath + "Signed_Update.jar")
         if os.path.isfile(userconfigpath + "version.lock"):
             os.remove(userconfigpath + "version.lock")
-
+        src.core.minifakedns.stop_dns_server()
     except:
         pass
 
@@ -1701,108 +1702,6 @@ def check_ports(filename, port):
         return True
     else:
         return False
-
-# main dns class
-
-
-class DNSQuery:
-
-    def __init__(self, data):
-        self.data = data
-        self.dominio = ''
-
-        tipo = (ord(data[2]) >> 3) & 15   # Opcode bits
-        if tipo == 0:                     # Standard query
-            ini = 12
-            lon = ord(data[ini])
-            while lon != 0:
-                self.dominio += data[ini + 1:ini + lon + 1] + '.'
-                ini += lon + 1
-                lon = ord(data[ini])
-
-    def respuesta(self, ip):
-        packet = ''
-        if self.dominio:
-            packet += self.data[:2] + "\x81\x80"
-            packet += self.data[4:6] + self.data[4:6] + \
-                '\x00\x00\x00\x00'   # Questions and Answers Counts
-            # Original Domain Name Question
-            packet += self.data[12:]
-            # Pointer to domain name
-            packet += '\xc0\x0c'
-            # Response type, ttl and resource data length -> 4 bytes
-            packet += '\x00\x01\x00\x01\x00\x00\x00\x3c\x00\x04'
-            packet += str.join('', [chr(int(x))
-                                    for x in ip.split('.')])  # 4bytes of IP
-        return packet
-
-# Main dns routine.
-def dns():
-    """
-    Main DNS routine.
-
-    This runs in its own thread, started by `start_dns()` when the
-    config option `DNS_SERVER` is set to `ON`.
-    """
-
-    def usurp_systemd_resolved():
-        """
-        Helper function to get systemd-resolved out of the way when it
-        is listening on 127.0.0.1:53 and we are trying to run SET's
-        own DNS server.
-        """
-        try:
-            os.mkdir('/etc/systemd/resolved.conf.d')
-        except (OSError, FileExistsError):
-            pass
-        with open('/etc/systemd/resolved.conf.d/99-setoolkit-dns.conf', 'w') as f:
-            f.write("[Resolve]\nDNS=9.9.9.9\nDNSStubListener=no")
-        subprocess.call(['systemctl', 'restart', 'systemd-resolved.service'])
-        os.rename('/etc/resolv.conf', '/etc/resolv.conf.original')
-        os.symlink('/run/systemd/resolve/resolv.conf', '/etc/resolv.conf')
-
-    def cede_to_systemd_resolved():
-        """
-        Helper function to cede system configuration back to systemd-resolved
-        after we have usurped control over DNS configuration away from it.
-        """
-        os.remove('/etc/systemd/resolved.conf.d/99-setoolkit-dns.conf')
-        os.remove('/etc/resolv.conf')
-        os.rename('/etc/resolv.conf.original', '/etc/resolv.conf')
-        subprocess.call(['systemctl', 'restart', 'systemd-resolved.service'])
-
-    # Flag to remember which configuration we usurped. Used for cleanup.
-    cede_configuration = None
-
-    udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        udps.bind(('', 53))
-    except OSError as e:
-        if 'Address already in use' == e.strerror and os.path.exists('/etc/resolv.conf'):
-            # We can't listen on port 53 because something else got
-            # there before we did. It's probably systemd-resolved's
-            # DNS stub resolver, but since we are probably running as
-            # the `root` user, we can fix this ourselves.
-            if 'stub-resolv.conf' in os.path.realpath('/etc/resolv.conf'):
-                usurp_systemd_resolved()
-                cede_configuration = cede_to_systemd_resolved
-            # Try binding again, now that the port might be available.
-            udps.bind(('', 53))
-    try:
-        while 1:
-            data, addr = udps.recvfrom(1024)
-            p = DNSQuery(data)
-            udps.sendto(p.respuesta(ip), addr)
-    except KeyboardInterrupt:
-        print("Exiting the DNS Server..")
-        if cede_configuration is not None:
-            cede_configuration()
-        udps.close()
-        sys.exit()
-
-# start dns
-def start_dns():
-    thread.start_new_thread(dns, ())
 
 # the main ~./set path for SET
 
