@@ -96,15 +96,15 @@ class DNSQuery:
         #    000 0 0000
         #
         # To test for this reliably, we do a bitwise AND with a value
-        # of decimal 15, which is 1111 in binary, exactly four bits:
+        # of decimal 31, which is 11111 in binary, exactly five bits:
         #
         #      00000000  (Remember, 0 AND 1 equals 0.)
-        #  AND 00001111
+        #  AND 00011111
         #  ------------
         #      00000000 = decimal 0
         #
         # In one line of Python code, we get the following:
-        kind = (flags[0] >> 3) & 15 # Opcode is in bits 4, 5, 6, and 7 of first byte.
+        kind = (flags[0] >> 3) & 31 # Opcode is in bits 4, 5, 6, and 7 of first byte.
                                     # QR bit is 8th bit, but it should be 0.
                                     # And now, we test to see if the result
         if 0 == kind:               # was a standard query.
