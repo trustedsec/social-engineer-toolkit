@@ -345,10 +345,7 @@ this is how networking works.
 """)
 
                                     try:
-                                        rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                                        rhost.connect(('google.com', 0))
-                                        rhost.settimeout(2)
-                                        revipaddr = rhost.getsockname()[0]
+                                        revipaddr = detect_public_ip()
                                         ipaddr = raw_input(setprompt(["2"], "IP address for the POST back in Harvester/Tabnabbing [" + revipaddr + "]"))
                                         if ipaddr == "": ipaddr=revipaddr
                                     except Exception:

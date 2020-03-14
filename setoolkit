@@ -127,7 +127,8 @@ if operating_system == "posix":
 dns = core.check_config("DNS_SERVER=")
 if dns.lower() == "on":
     import src.core.minifakedns
-    src.core.minifakedns.start_dns_server()
+    from src.core.setcore import detect_public_ip
+    src.core.minifakedns.start_dns_server(detect_public_ip())
 
 # remove old files
 for root, dirs, files in os.walk(core.userconfigpath):

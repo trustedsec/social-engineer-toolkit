@@ -304,7 +304,19 @@ class create_menu:
         return
 
 
+def detect_public_ip():
+    """
+    Helper function to auto-detect our public IP(v4) address.
+    """
+    rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    rhost.connect(('google.com', 0))
+    rhost.settimeout(2)
+    return rhost.getsockname()[0]
+
 def validate_ip(address):
+    """
+    Validates that a given string is an IPv4 dotted quad.
+    """
     try:
         if socket.inet_aton(address):
             if len(address.split('.')) == 4:
@@ -429,10 +441,7 @@ def meta_database():
 #
 def grab_ipaddress():
     try:
-        rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        rhost.connect(('google.com', 0))
-        rhost.settimeout(2)
-        revipaddr = rhost.getsockname()[0]
+        revipaddr = detect_public_ip()
         rhost = raw_input(setprompt("0", "IP address or URL (www.ex.com) for the payload listener (LHOST) [" + revipaddr + "]"))
         if rhost == "": rhost = revipaddr
 
