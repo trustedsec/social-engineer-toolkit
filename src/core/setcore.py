@@ -1,4 +1,4 @@
-# !/usr/bin/env python
+#!/usr/bin/env python
 #
 # Centralized core modules for SET
 #
@@ -16,6 +16,7 @@ import string
 import inspect
 import base64
 from src.core import dictionaries
+import src.core.minifakedns
 import io
 import trace
 
@@ -303,7 +304,19 @@ class create_menu:
         return
 
 
+def detect_public_ip():
+    """
+    Helper function to auto-detect our public IP(v4) address.
+    """
+    rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    rhost.connect(('google.com', 0))
+    rhost.settimeout(2)
+    return rhost.getsockname()[0]
+
 def validate_ip(address):
+    """
+    Validates that a given string is an IPv4 dotted quad.
+    """
     try:
         if socket.inet_aton(address):
             if len(address.split('.')) == 4:
@@ -428,10 +441,7 @@ def meta_database():
 #
 def grab_ipaddress():
     try:
-        rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        rhost.connect(('google.com', 0))
-        rhost.settimeout(2)
-        revipaddr = rhost.getsockname()[0]
+        revipaddr = detect_public_ip()
         rhost = raw_input(setprompt("0", "IP address or URL (www.ex.com) for the payload listener (LHOST) [" + revipaddr + "]"))
         if rhost == "": rhost = revipaddr
 
@@ -480,7 +490,7 @@ def cleanup_routine():
             os.remove(userconfigpath + "Signed_Update.jar")
         if os.path.isfile(userconfigpath + "version.lock"):
             os.remove(userconfigpath + "version.lock")
-
+        src.core.minifakedns.stop_dns_server()
     except:
         pass
 
@@ -1701,63 +1711,6 @@ def check_ports(filename, port):
         return True
     else:
         return False
-
-# main dns class
-
-
-class DNSQuery:
-
-    def __init__(self, data):
-        self.data = data
-        self.dominio = ''
-
-        tipo = (ord(data[2]) >> 3) & 15   # Opcode bits
-        if tipo == 0:                     # Standard query
-            ini = 12
-            lon = ord(data[ini])
-            while lon != 0:
-                self.dominio += data[ini + 1:ini + lon + 1] + '.'
-                ini += lon + 1
-                lon = ord(data[ini])
-
-    def respuesta(self, ip):
-        packet = ''
-        if self.dominio:
-            packet += self.data[:2] + "\x81\x80"
-            packet += self.data[4:6] + self.data[4:6] + \
-                '\x00\x00\x00\x00'   # Questions and Answers Counts
-            # Original Domain Name Question
-            packet += self.data[12:]
-            # Pointer to domain name
-            packet += '\xc0\x0c'
-            # Response type, ttl and resource data length -> 4 bytes
-            packet += '\x00\x01\x00\x01\x00\x00\x00\x3c\x00\x04'
-            packet += str.join('', [chr(int(x))
-                                    for x in ip.split('.')])  # 4bytes of IP
-        return packet
-
-# main dns routine
-
-
-def dns():
-    udps = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udps.bind(('', 53))
-    try:
-        while 1:
-            data, addr = udps.recvfrom(1024)
-            p = DNSQuery(data)
-            udps.sendto(p.respuesta(ip), addr)
-
-    except KeyboardInterrupt:
-        print("Exiting the DNS Server..")
-        sys.exit()
-        udps.close()
-
-# start dns
-
-
-def start_dns():
-    thread.start_new_thread(dns, ())
 
 # the main ~./set path for SET
 
