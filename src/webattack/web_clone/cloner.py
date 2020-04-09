@@ -192,7 +192,7 @@ try:
             filewrite.close()
 
         if os.path.isfile(userconfigpath + "web_clone/index.html"):
-            fileopen = open(userconfigpath + "web_clone/index.html", "r")
+            fileopen = open(userconfigpath + "web_clone/index.html", "r", encoding='utf-8', errors='ignore')
             counter = 0
             for line in fileopen:
                 counter = counter + 1
