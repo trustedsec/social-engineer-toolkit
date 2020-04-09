@@ -59,7 +59,7 @@ if apache_mode == "on":
     apache_rewrite = "post.php"
 
 # start the scraping process
-fileopen = open(userconfigpath + "web_clone/%s" % (site), "r").readlines()
+fileopen = open(userconfigpath + "web_clone/%s" % (site), "r", encoding='utf-8', errors='ignore').readlines()
 filewrite = open(userconfigpath + "web_clone/index.html.new", "w")
 for line in fileopen:
 
