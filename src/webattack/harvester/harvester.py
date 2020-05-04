@@ -3,11 +3,11 @@ import subprocess
 import sys
 import os
 import re
-import cgi
 import posixpath
 import mimetypes
 import urllib.parse
 import shutil
+from html import escape as html_escape
 
 # need for python2 -> 3
 try:
@@ -412,7 +412,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 else:
                     line = ""
                 counter = 1
-            filewrite.write(cgi.escape("PARAM: " + line + "\n"))
+            filewrite.write(html_escape("PARAM: " + line + "\n"))
             filewrite2.write(line + "\n")
             # if a counter hits at 0 then print this line
             if counter == 0:
