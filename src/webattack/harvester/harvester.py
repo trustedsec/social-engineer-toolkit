@@ -4,9 +4,11 @@ import sys
 import os
 import re
 import cgi
+from html import escape
 import posixpath
 import mimetypes
 import urllib.parse
+import six
 import shutil
 
 # need for python2 -> 3
@@ -412,7 +414,10 @@ class SETHandler(BaseHTTPRequestHandler):
                 else:
                     line = ""
                 counter = 1
-            filewrite.write(cgi.escape("PARAM: " + line + "\n"))
+            if six.PY2:
+                filewrite.write(cgi.escape("PARAM: " + line + "\n"))
+            else:
+                filewrite.write(escape("PARAM: " + line + "\n"))
             filewrite2.write(line + "\n")
             # if a counter hits at 0 then print this line
             if counter == 0:
