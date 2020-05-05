@@ -8,6 +8,9 @@ import posixpath
 import mimetypes
 import urllib.parse
 import shutil
+import html
+
+# I am Swam Htet Aung I repair some error in this code for python latest versions
 
 # need for python2 -> 3
 try:
@@ -412,7 +415,7 @@ class SETHandler(BaseHTTPRequestHandler):
                 else:
                     line = ""
                 counter = 1
-            filewrite.write(cgi.escape("PARAM: " + line + "\n"))
+            filewrite.write(html.escape("PARAM: " + line + "\n"))
             filewrite2.write(line + "\n")
             # if a counter hits at 0 then print this line
             if counter == 0:
@@ -452,8 +455,8 @@ class SETHandler(BaseHTTPRequestHandler):
         self.send_response(302, 'Found')
         self.send_header('Location', RAW_URL)
         self.end_headers()
-        html = ('<!doctype html><html><head><meta http-equiv="refresh" content="0; url=%s"><title>Loading...</title></head><body></body></html>' % (RAW_URL)).encode('utf-8')
-        self.wfile.write(html)
+        htmll = ('<!doctype html><html><head><meta http-equiv="refresh" content="0; url=%s"><title>Loading...</title></head><body></body></html>' % (RAW_URL)).encode('utf-8')
+        self.wfile.write(htmll)
 
         # set it back to our homepage
         os.chdir(userconfigpath + "web_clone/")
