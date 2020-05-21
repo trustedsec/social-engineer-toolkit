@@ -52,12 +52,12 @@ class StoppableHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             else:
                 return self.list_directory(path)
         ctype = self.guess_type(path)
-        if ctype.startswith('text/'):
-            mode = 'r'
-        else:
-            mode = 'rb'
+        #if ctype.startswith('text/'):
+        #    mode = 'rb'
+        #else:
+        #    mode = 'rb'
         try:
-            f = open(path, mode)
+            f = open(path, "rb")
         except IOError:
             self.send_error(404, "File not found")
             return None
