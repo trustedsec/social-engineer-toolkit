@@ -384,14 +384,18 @@ def mail(to, subject, prioflag1, prioflag2, text):
         # try logging in with base64 encoding here
         import base64
         try:
+            #py2 compatability
             mailServer.docmd("AUTH LOGIN", base64.b64encode(provideruser))
             mailServer.docmd(base64.b64encode(pwd), "")
-
-        # except exceptions and print incorrect password
-        except Exception as e:
-            print_warning(
-                "It appears your password was incorrect.\nPrinting response: " + (str(e)))
-            return_continue()
+        except:
+            try:
+                #py3 compatability
+                mailServer.docmd("AUTH LOGIN", base64.b64encode(provideruser.encode('utf-8')))
+                mailServer.docmd(base64.b64encode(pwd.encode('utf-8')), "")
+            # except exceptions and print incorrect password
+            except Exception as e:
+                print_warning("It appears your password was incorrect.\nPrinting response: " + (str(e)))
+                return_continue()
 
     if sendmail == 1:
         mailServer.sendmail(from_address, to, io.getvalue())
