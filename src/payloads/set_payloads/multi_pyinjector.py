@@ -2,7 +2,7 @@
 # The Social-Engineer Toolkit Multi-PyInjector revised and simplified version.
 # Version: 0.4
 #
-# This will spawn only a seperate thread per each shellcode instance.
+# This will spawn only a separate thread per each shellcode instance.
 #
 # Much cleaner and optimized code. No longer needs files and is passed via
 # command line.

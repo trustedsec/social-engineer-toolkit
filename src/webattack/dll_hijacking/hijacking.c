@@ -35,7 +35,7 @@ host=int(len(ipaddr)+1) * "X"
 filewrite.write(data.replace(str(host), ipaddr+"\x00", 1))
 filewrite.close()
 
-Once the DLL is executed and the payload downloaded from the SET web server, a seperate thread is created
+Once the DLL is executed and the payload downloaded from the SET web server, a separate thread is created
 and the payload executed. Once closed and the thread terminates, the executable should be deleted however
 this isn't 100 percent.
 
@@ -200,7 +200,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason, LPVOID lpvReserved)
 	// print our temp directory to our buffer we created 'path'
 	sprintf(path, "%s\\x.exe", tmpdir);
 	// here is where we start a new process and execute a command
-	// this was the cleanest method as we create a complety seperate instance
+	// this was the cleanest method as we create a complety separate instance
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 
