@@ -6,6 +6,7 @@ RATTE has been extend to be very customizeable.
 For now you can set:
 - Connect Back IP
 - Connect Back Port
+- To downloads requirements and if your are using python3 or pip3 use pip3 install -r requirements.txt
 - Wheater RATTE is persistent or not (example: For network Firewall testing, there is no need for beeing persistent. In a penetration test things may look different)
 - a custom filename which RATTE uses for running so local firewalls and user may be fooled using names like iexplore.exe or 		firefox.exe and on ...
 
