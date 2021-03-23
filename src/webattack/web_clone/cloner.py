@@ -171,7 +171,7 @@ try:
                     # open file for writing
                     filewrite = open(userconfigpath + "web_clone/index.html", "w")
                     # write the data back from the request
-                    filewrite.write(html)
+                    filewrite.write(html.decode("utf-8"))
                     # close the file
                     filewrite.close()
 
