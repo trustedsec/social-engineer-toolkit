@@ -46,6 +46,5 @@ For bug reports or enhancements, please open an [issue](https://github.com/trust
 
 ## Resolve dependencies
 *Ubuntu/Debian System
-=======
 * Linux
 * Mac OS X (experimental)
