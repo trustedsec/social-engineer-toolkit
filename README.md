@@ -45,7 +45,7 @@ For a full document on how to use SET, [visit the SET user manual](https://githu
 For bug reports or enhancements, please open an [issue](https://github.com/trustedsec/social-engineer-toolkit/issues) here.
 
 ## Resolve dependencies
-*Ubuntu/Debian System*
+*Ubuntu/Debian System
 =======
 * Linux
 * Mac OS X (experimental)
