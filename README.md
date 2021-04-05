@@ -16,19 +16,15 @@ Please read the LICENSE under readme/LICENSE for the licensing of SET.
 
 
 # Installation
-##Install on Windows 10 WSL/WSL2 Kali Linux
+## Windows 10 WSL/WSL2 Kali Linux
 ```bash
 sudo apt install set -y
 ```
 Kali Linux on Windows 10 is a minimal installation so it doesn't have any tools installed.
 You can easily install Social Engineer Toolkit on WSL/WSL2 without needing pip using the above command.
 
-## Install via requirements.txt
-pip3 install -r requirements.txt
-python setup.py
+## Linux
 
-## Install SET
-*All OSs*
 ```bash
 git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
 cd setoolkit
@@ -43,8 +39,3 @@ For a full document on how to use SET, [visit the SET user manual](https://githu
 
 ## Bugs and enhancements
 For bug reports or enhancements, please open an [issue](https://github.com/trustedsec/social-engineer-toolkit/issues) here.
-
-## Resolve dependencies
-* Ubuntu/Debian System
-* Linux
-* Mac OS X (experimental)
