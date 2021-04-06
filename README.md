@@ -15,7 +15,7 @@ Please read the LICENSE under readme/LICENSE for the licensing of SET.
 * Linux
 * Mac OS X
 
-
+<br/>
 ## Installation
 #### Windows 10 WSL/WSL2 Kali Linux
 ```bash
@@ -32,10 +32,10 @@ pip3 install -r requirements.txt
 python setup.py
 ```
 
-
+<br/>
 ## SET Tutorial
 For a full document on how to use SET, [visit the SET user manual](https://github.com/trustedsec/social-engineer-toolkit/raw/master/readme/User_Manual.pdf).
 
-
+<br/>
 ## Bugs and enhancements
 For bug reports or enhancements, please open an [issue](https://github.com/trustedsec/social-engineer-toolkit/issues) here.
