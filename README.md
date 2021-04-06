@@ -11,7 +11,7 @@ The Social-Engineer Toolkit is an open-source penetration testing framework desi
 DISCLAIMER: This is *only* for testing purposes and can only be used where strict consent has been given. Do not use this for illegal purposes, period.
 Please read the LICENSE under readme/LICENSE for the licensing of SET. 
 
-#### Supported platforms
+#### Supported platforms:
 * Linux
 * Mac OS X
 
