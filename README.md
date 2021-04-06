@@ -35,6 +35,7 @@ python setup.py
 
 ## SET Tutorial
 For a full document on how to use SET, [visit the SET user manual](https://github.com/trustedsec/social-engineer-toolkit/raw/master/readme/User_Manual.pdf).
+
 <br/>
 
 ## Bugs and enhancements
