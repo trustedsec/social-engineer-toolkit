@@ -24,7 +24,6 @@ Kali Linux on Windows 10 is a minimal installation so it doesn't have any tools 
 You can easily install Social Engineer Toolkit on WSL/WSL2 without needing pip using the above command.
 
 ## Linux
-
 ```bash
 git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
 cd setoolkit
