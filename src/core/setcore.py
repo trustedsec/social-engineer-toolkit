@@ -194,7 +194,7 @@ def setprompt(category, text):
                 prompt += ":" + bcolors.UNDERL + \
                     bcolors.DARKCYAN + level + bcolors.ENDC
             promptstring = str(prompt)
-            promptstring = promptstring + "> " + text + ":"
+            promptstring = promptstring + "> " + text + ": "
             return promptstring
 
 
