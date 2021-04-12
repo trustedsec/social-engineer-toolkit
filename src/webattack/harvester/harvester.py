@@ -3,7 +3,6 @@ import subprocess
 import sys
 import os
 import re
-import cgi
 import posixpath
 import mimetypes
 import urllib.parse
