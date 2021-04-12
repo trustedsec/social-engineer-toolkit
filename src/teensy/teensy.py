@@ -129,7 +129,7 @@ if choice == "13":
 # save our stuff here
 print(core.bcolors.BLUE +
       "\n[*] INO file created. You can get it under '{0}'".format(os.path.join(core.userconfigpath,
-                                                                               "reports" +
+                                                                               "reports",
                                                                                "teensy_{0}.ino".format(now))) +
       core.bcolors.ENDC)
 print(core.bcolors.GREEN +
