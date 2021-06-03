@@ -13,6 +13,19 @@ Please read the LICENSE under readme/LICENSE for the licensing of SET.
 
 #### Supported platforms:
 * Linux
+* Mac OS X (experimental)
+
+# Installation
+
+## Install via requirements.txt
+
+```bash
+pip3 install -r requirements.txt
+python3 setup.py 
+```
+
+## Install SET
+=======
 * Mac OS X
 <br/>
 
