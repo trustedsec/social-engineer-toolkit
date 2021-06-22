@@ -340,7 +340,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
     # now attach the file
     if file_format != "":
         fileMsg = email.mime.base.MIMEBase('application', '')
-        fileMsg.set_payload(file(file_format).read())
+        fileMsg.set_payload(open(file_format, 'rb').read())
         email.encoders.encode_base64(fileMsg)
         fileMsg.add_header(
             'Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file_format) )
@@ -349,7 +349,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
     for inline_file in inline_files:
         if inline_file != "":
             fileMsg = email.mime.base.MIMEBase('application', '')
-            fileMsg.set_payload(file(inline_file).read())
+            fileMsg.set_payload(open(inline_file, 'rb').read())
             email.encoders.encode_base64(fileMsg)
             fileMsg.add_header(
                 'Content-Disposition', 'inline; filename="%s"' % os.path.basename(inline_file) )
