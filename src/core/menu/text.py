@@ -108,7 +108,7 @@ to convert the payload back to a binary for us.
 webattack_text = ("""
 The Web Attack module is a unique way of utilizing multiple web-based attacks in order to compromise the intended victim.
 
-The """ + bcolors.BOLD + """Java Applet Attack""" + bcolors.ENDC + """ method will spoof a Java Certificate and deliver a metasploit based payload. Uses a customized java applet created by Thomas Werth to deliver the payload.
+The """ + bcolors.BOLD + """Java Applet Attack""" + bcolors.ENDC + """ method will spoof a Java Certificate and deliver a Metasploit-based payload. Uses a customized java applet created by Thomas Werth to deliver the payload.
 
 The """ + bcolors.BOLD + """Metasploit Browser Exploit""" + bcolors.ENDC + """ method will utilize select Metasploit browser exploits through an iframe and deliver a Metasploit payload.
 
@@ -116,11 +116,11 @@ The """ + bcolors.BOLD + """Credential Harvester""" + bcolors.ENDC + """ method 
 
 The """ + bcolors.BOLD + """TabNabbing""" + bcolors.ENDC + """ method will wait for a user to move to a different tab, then refresh the page to something different.
 
-The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, emgent. This method utilizes iframe replacements to make the highlighted URL link to appear legitimate however when clicked a window pops up then is replaced with the malicious link. You can edit the link replacement settings in the set_config if its too slow/fast.
+The """ + bcolors.BOLD + """Web-Jacking Attack""" + bcolors.ENDC + """ method was introduced by white_sheep, emgent. This method utilizes iframe replacements to make the highlighted URL link to appear legitimate however when clicked a window pops up then is replaced with the malicious link. You can edit the link replacement settings in the set_config if it's too slow/fast.
 
-The """ + bcolors.BOLD + """Multi-Attack""" + bcolors.ENDC + """ method will add a combination of attacks through the web attack menu. For example you can utilize the Java Applet, Metasploit Browser, Credential Harvester/Tabnabbing all at once to see which is successful.
+The """ + bcolors.BOLD + """Multi-Attack""" + bcolors.ENDC + """ method will add a combination of attacks through the web attack menu. For example, you can utilize the Java Applet, Metasploit Browser, Credential Harvester/Tabnabbing all at once to see which is successful.
 
-The """ + bcolors.BOLD + """HTA Attack""" + bcolors.ENDC + """ method will allow you to clone a site and perform powershell injection through HTA files which can be used for Windows-based powershell exploitation through the browser.
+The """ + bcolors.BOLD + """HTA Attack""" + bcolors.ENDC + """ method will allow you to clone a site and perform PowerShell injection through HTA files which can be used for Windows-based PowerShell exploitation through the browser.
 """)
 
 webattack_vectors_menu = ['Web Templates',
@@ -141,9 +141,9 @@ webattack_vectors_text = ("""
  functionality.
    """)
 
-teensy_menu = ['Powershell HTTP GET MSF Payload',
+teensy_menu = ['PowerShell HTTP GET MSF Payload',
                'WSCRIPT HTTP GET MSF Payload',
-               'Powershell based Reverse Shell Payload',
+               'PowerShell based Reverse Shell Payload',
                'Internet Explorer/FireFox Beef Jack Payload',
                'Go to malicious java site and accept applet Payload',
                'Gnome wget Download Payload',
@@ -152,7 +152,7 @@ teensy_menu = ['Powershell HTTP GET MSF Payload',
                'SDCard 2 Teensy Attack (Deploy on OSX)',
                'X10 Arduino Sniffer PDE and Libraries',
                'X10 Arduino Jammer PDE and Libraries',
-               'Powershell Direct ShellCode Teensy Attack',
+               'PowerShell Direct ShellCode Teensy Attack',
                'Peensy Multi Attack Dip Switch + SDCard Attack',
 	       'HID Msbuild compile to memory Shellcode Attack',
                '0D']
@@ -171,7 +171,7 @@ teensy_text = ("""
 
  This attack vector will create the .pde files necessary to import
  into Arduino (the IDE used for programming the Teensy). The attack
- vectors range from Powershell based downloaders, wscript attacks,
+ vectors range from PowerShell based downloaders, wscript attacks,
  and other methods.
 
  For more information on specifications and good tutorials visit:
@@ -195,7 +195,7 @@ wireless_attack_menu = ['Start the SET Wireless Attack Vector Access Point',
 wireless_attack_text = """
  The """ + bcolors.BOLD + """Wireless Attack""" + bcolors.ENDC + """ module will create an access point leveraging your
  wireless card and redirect all DNS queries to you. The concept is fairly
- simple, SET will create a wireless access point, dhcp server, and spoof
+ simple, SET will create a wireless access point, DHCP server, and spoof
  DNS to redirect traffic to the attacker machine. It will then exit out
  of that menu with everything running as a child process.
 
@@ -224,7 +224,7 @@ infectious_text = """
 if operating_system != "windows":
     if msf_path != False:
         payload_menu_1 = [
-            'Meterpreter Memory Injection (DEFAULT)  This will drop a meterpreter payload through powershell injection',
+            'Meterpreter Memory Injection (DEFAULT)  This will drop a Meterpreter payload through powershell injection',
             'Meterpreter Multi-Memory Injection      This will drop multiple Metasploit payloads via powershell injection',
             'SE Toolkit Interactive Shell            Custom interactive reverse toolkit designed for SET',
             'SE Toolkit HTTP Reverse Shell           Purely native HTTP shell with AES encryption support',
@@ -240,7 +240,7 @@ if operating_system == "windows" or msf_path == False:
         'RATTE HTTP Tunneling Payload    Security bypass payload that will tunnel all comms over HTTP\n']
 
 payload_menu_1_text = """
-What payload do you want to generate:
+What payload would you like to generate:
 
   Name:                                       Description:
 """
@@ -252,7 +252,7 @@ payload_menu_2 = [
     'Windows Reverse_TCP VNC DLL             Spawn a VNC server on victim and send back to attacker',
     'Windows Shell Reverse_TCP X64           Windows X64 Command Shell, Reverse TCP Inline',
     'Windows Meterpreter Reverse_TCP X64     Connect back to the attacker (Windows x64), Meterpreter',
-    'Windows Meterpreter Egress Buster       Spawn a meterpreter shell and find a port home via multiple ports',
+    'Windows Meterpreter Egress Buster       Spawn a Meterpreter shell and find a port home via multiple ports',
     'Windows Meterpreter Reverse HTTPS       Tunnel communication over HTTP using SSL and use Meterpreter',
     'Windows Meterpreter Reverse DNS         Use a hostname instead of an IP address and use Reverse Meterpreter',
     'Download/Run your Own Executable        Downloads an executable and runs it\n'
@@ -264,10 +264,10 @@ payload_menu_2_text = """\n"""
 payload_menu_3_text = ""
 payload_menu_3 = [
     'Windows Reverse TCP Shell              Spawn a command shell on victim and send back to attacker',
-    'Windows Meterpreter Reverse_TCP        Spawn a meterpreter shell on victim and send back to attacker',
+    'Windows Meterpreter Reverse_TCP        Spawn a Meterpreter shell on victim and send back to attacker',
     'Windows Reverse VNC DLL                Spawn a VNC server on victim and send back to attacker',
     'Windows Reverse TCP Shell (x64)        Windows X64 Command Shell, Reverse TCP Inline',
-    'Windows Meterpreter Reverse_TCP (X64)  Connect back to the attacker (Windows x64), Meterpreter',
+    'Windows Meterpreter Reverse_TCP (X64)  Connects back to the attacker (Windows x64), Meterpreter',
     'Windows Shell Bind_TCP (X64)           Execute payload and create an accepting port on remote system',
     'Windows Meterpreter Reverse HTTPS      Tunnel communication over HTTP using SSL and use Meterpreter\n']
 
@@ -343,7 +343,7 @@ browser_exploits_menu = [
     'Microsoft Internet Explorer 7 Uninitialized Memory Corruption (2009-02-10)',
     'Microsoft Internet Explorer Style getElementsbyTagName Corruption (2009-11-20)',
     'Microsoft Internet Explorer isComponentInstalled Overflow (2006-02-24)',
-    'Microsoft Internet Explorer Explorer Data Binding Corruption (2008-12-07)',
+    'Microsoft Internet Explorer Data Binding Corruption (2008-12-07)',
     'Microsoft Internet Explorer Unsafe Scripting Misconfiguration (2010-09-20)',
     'FireFox 3.5 escape Return Value Memory Corruption (2009-07-13)',
     'FireFox 3.6.16 mChannel use after free vulnerability (2011-05-10)',
@@ -361,7 +361,7 @@ powershell_menu = ['Powershell Alphanumeric Shellcode Injector',
                    '0D']
 
 powershell_text = ("""
-The """ + bcolors.BOLD + """Powershell Attack Vector""" + bcolors.ENDC + """ module allows you to create PowerShell specific attacks. These attacks will allow you to use PowerShell which is available by default in all operating systems Windows Vista and above. PowerShell provides a fruitful  landscape for deploying payloads and performing functions that  do not get triggered by preventative technologies.\n""")
+The """ + bcolors.BOLD + """Powershell Attack Vector""" + bcolors.ENDC + """ module allows you to create PowerShell specific attacks. These attacks will allow you to use PowerShell which is available by default in all operating systems Windows Vista and above. PowerShell provides a fruitful landscape for deploying payloads and performing functions that  do not get triggered by preventative technologies.\n""")
 
 
 encoder_menu = ['shikata_ga_nai',
@@ -376,16 +376,16 @@ in order to get around basic AV detection.
 """
 
 dll_hijacker_text = """
- The DLL Hijacker vulnerability will allow normal file extenstions to
+ The DLL Hijacker vulnerability will allow normal file extensions to
  call local (or remote) .dll files that can then call your payload or
  executable. In this scenario it will compact the attack in a zip file
  and when the user opens the file extension, will trigger the dll then
  ultimately our payload. During the time of this release, all of these
  file extensions were tested and appear to work and are not patched. This
- will continiously be updated as time goes on.
+ will continuously be updated as time goes on.
 """
 
 fakeap_dhcp_menu = ['10.0.0.100-254',
                     '192.168.10.100-254\n']
 
-fakeap_dhcp_text = "Please choose which DHCP Config you would like to use: "
+fakeap_dhcp_text = "Please choose the DHCP configuration you would like to use: "
