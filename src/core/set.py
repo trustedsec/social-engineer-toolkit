@@ -338,9 +338,9 @@ If you are using an EXTERNAL IP ADDRESS, you need to place the EXTERNAL
 IP address below, not your NAT address. Additionally, if you don't know
 basic networking concepts, and you have a private IP address, you will
 need to do port forwarding to your NAT IP address from your external IP
-address. A browser doesns't know how to communicate with a private IP
+address. A browser doesn’t know how to communicate with a private IP
 address, so if you don't specify an external IP address if you are using
-this from an external perpective, it will not work. This isn't a SET issue
+this from an external perspective, it will not work. This isn't a SET issue
 this is how networking works.
 """)
 
