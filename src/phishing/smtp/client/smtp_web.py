@@ -208,6 +208,19 @@ if option1 == '1' or option1 == '2':
                         body = body.replace(r'\n', " \n ")
                         body = body.split("=")
                         body = body[1]
+                    match4 = re.search("HTML=", line2)
+                    if match4:
+                        message_flag = "html"
+                        body = "\n"
+                        for line3 in fileopen:
+                            if re.match("SUBJECT=", line3):
+                                match = False
+                            elif re.match('HTML="', line3):
+                                match = True
+                            elif re.match('END"', line3):
+                                match = False
+                            elif match:
+                                body = body + line3
     if template_choice == '2':
         subject = input(setprompt(["1"], "Subject of the email"))
         try:
