@@ -17,17 +17,10 @@ Please read the LICENSE under readme/LICENSE for the licensing of SET.
 
 # Installation
 
-## Install via requirements.txt
+## Install via pip
 
 ```bash
-pip3 install -r requirements.txt
-python3 setup.py 
-```
-
-## Install via GitHub
-
-```sh
-pip3 install git+https://github.com/donno2048/social-engineer-toolkit.git
+pip3 install .
 ```
 
 ## Install SET
