@@ -294,13 +294,12 @@ def web_server_start():
                     thread.start_new_thread(webserver.start_server, (web_port, path))
 
 
-                if apache == 0:
-                    if os.path.isfile(userconfigpath + "meta_config"):
-                        msf_path = meta_path()
-                        #print("You will need to launch the listener on your own, execute in a different shell the following command if using Metasploit:")
-                        child = pexpect.spawn("%smsfconsole -r %s/meta_config" % (msf_path, userconfigpath))
-                        child.interact()
-                    pause=raw_input("Press <return> when you want to shut down the web server. It is currently listening.")
+                if os.path.isfile(userconfigpath + "meta_config"):
+                    msf_path = meta_path()
+                    #print("You will need to launch the listener on your own, execute in a different shell the following command if using Metasploit:")
+                    child = pexpect.spawn("%smsfconsole -r %s/meta_config" % (msf_path, userconfigpath))
+                    child.interact()
+                pause=raw_input("Press <return> when you want to shut down the web server. It is currently listening.")
 
             # Handle KeyboardInterrupt
             except KeyboardInterrupt:
