@@ -24,6 +24,12 @@ pip3 install -r requirements.txt
 python3 setup.py 
 ```
 
+## Install via GitHub
+
+```sh
+pip3 install git+https://github.com/donno2048/social-engineer-toolkit.git
+```
+
 ## Install SET
 =======
 * Mac OS X

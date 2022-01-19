@@ -134,3 +134,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Not actually needed, but for future packaging
+setoolkit-*/
