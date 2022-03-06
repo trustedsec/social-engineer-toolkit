@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:impish
 
 # Update sources and install git
 RUN apt update -y && apt install git -y && apt install python3-pip -y 
