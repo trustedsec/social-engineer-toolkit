@@ -19,7 +19,7 @@ class StoppableHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.server.stop = True
 
     def do_POST(self):
-        # We could also process paremeters here using something like below.
+        # We could also process parameters here using something like below.
         self.do_GET()
 
     def send_head(self):

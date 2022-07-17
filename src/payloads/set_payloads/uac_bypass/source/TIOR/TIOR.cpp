@@ -10,7 +10,7 @@
 //
 //	This application is used for redirection data from the console to the pipes, 
 //	not useng pipes at the other side.
-//	It is caused by some differences when using some other proceses which
+//	It is caused by some differences when using some other processes which
 //	also redirect data. Main reason is differences in ReadConsole and ReadFile
 //	methods.
 //	Using this redirector app, child process will never know that his parent redirects it's IO.
