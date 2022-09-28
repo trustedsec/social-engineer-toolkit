@@ -192,6 +192,23 @@ try:
             filewrite.close()
 
         if os.path.isfile(userconfigpath + "web_clone/index.html"):
+            # If the website charset is not utf-8, convert it to utf-8.
+            fileopen = open(userconfigpath + "web_clone/index.html", "r", errors='ignore')
+            content = fileopen.read()
+            charset = None
+            m = re.compile('<meta .*(http-equiv="?Content-Type"?.*)?charset="?([a-zA-Z0-9_-]+)"?', re.I).search(content)
+            if m and m.lastindex == 2:
+                charset = m.group(2).lower()
+            fileopen.close()
+            if (charset is not None) and (charset != 'utf-8'):
+                fileopen = open(userconfigpath + "web_clone/index.html", "r", encoding=charset, errors='ignore')
+                content = fileopen.read()
+                fileopen.close()
+                content.encode('utf-8')
+                content = content.replace(charset, 'utf-8', 1)
+                filewrite = open(userconfigpath + "web_clone/index.html", "w", encoding='utf-8', errors='ignore')
+                filewrite.write(content)
+                filewrite.close()
             fileopen = open(userconfigpath + "web_clone/index.html", "r", encoding='utf-8', errors='ignore')
             counter = 0
             for line in fileopen:
