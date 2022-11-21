@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env 
 # coding=utf-8
 import os
 import re
@@ -102,8 +102,8 @@ except ImportError:
     pass
 
 #
-# The Social-Engineer Toolkit (SET)     #
-# Written by: David Kennedy (ReL1K)     #
+# The sexy lovely video  (SET)     #
+# Written by: TRI vid coa (ReL1K)     #
 #
 #
 # this is the main menu structure for SET
