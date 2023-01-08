@@ -10,7 +10,7 @@ version 8.0.2
 
 * fix an issue on harvester file not defined (python 3 compat)
 * add a simple install for setoolkit (setup.py)
-* teensy remove old path generation location /usr/share/set to /usr/share/setoolkit
+* teensy remove old path generation location /usr/local/share/set to /usr/local/share/setoolkit
 * fixed raw_input issue for python3
 * changed env variable to python3
 * remove patched socket no longer needed
@@ -670,7 +670,7 @@ version 6.3
 * added additional wording about when specifying a custom payload that you will need to create your own listener
 * added flag replacement variable for param name 8 which will indicate a randomized four alphanumeric for custom payload delivery - this will allow custom payloads to function properly without triggering powershell or other exploitation methods
 * added the ability for powershell to execute first and if successful then not drop binary stager as last resort
-* added a workaround for a metasploit bug that would cause bundle install issues when launching directly within the /opt/metasploit/apps/pro/msf3 directory or within the /usr/share/ framework directory. I first check for /usr/bin/msfconsole first and if there I do not append to the path variable in order to launch from anywhere
+* added a workaround for a metasploit bug that would cause bundle install issues when launching directly within the /opt/metasploit/apps/pro/msf3 directory or within the /usr/local/share/ framework directory. I first check for /usr/bin/msfconsole first and if there I do not append to the path variable in order to launch from anywhere
 * added ability to use default msfconsole launcher if applicable from any path instead of from home directory - fixed in psexec, powershell injection, java applet, custom payloads, etc.
 * randomized custom parameter name when deploying custom binaries to throw off static signatures
 
@@ -887,7 +887,7 @@ version 5.4
 * added obfuscation to the multipyinjection binary
 * added proper permissions for manifest files within SET and Java Applet - removes warning message in applets
 * officially removed se-toolkit - use setoolkit from now on to launch SET
-* fixed a bug that would cause SET to not function properly if running from a different directory and /usr/share/setoolkit was present
+* fixed a bug that would cause SET to not function properly if running from a different directory and /usr/local/share/setoolkit was present
 * fixed SET to no longer use se-toolkit in the launcher
 * fixed an issue that would cause STAGE_ENCODING to report None type instead of on/off
 * added STAGE_ENCODING to update_config.py options for dynamic importing
@@ -1111,7 +1111,7 @@ version 5.0.8
 version 5.0.7
 ~~~~~~~~~~~~~~~~
 
-* added /usr/share/set for standard kali installations of se-toolkit launch
+* added /usr/local/share/set for standard kali installations of se-toolkit launch
 
 ~~~~~~~~~~~~~~~~
 version 5.0.6

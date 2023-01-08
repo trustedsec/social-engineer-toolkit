@@ -35,16 +35,16 @@ if os.path.isfile("setoolkit"):
     pass
 
 # check where we are and load default directory
-elif os.path.isdir("/usr/share/setoolkit"):
+elif os.path.isdir("/usr/local/share/setoolkit"):
     if not os.path.isfile("setoolkit"):
-        os.chdir("/usr/share/setoolkit")
-    sys.path.append("/usr/share/setoolkit")
+        os.chdir("/usr/local/share/setoolkit")
+    sys.path.append("/usr/local/share/setoolkit")
 
 # check where we are and load default directory
-elif os.path.isdir("/usr/share/set"):
+elif os.path.isdir("/usr/local/share/set"):
     if not os.path.isfile("setoolkit"):
-        os.chdir("/usr/share/set")
-        sys.path.append("/usr/share/set")
+        os.chdir("/usr/local/share/set")
+        sys.path.append("/usr/local/share/set")
 
 # make sure the config file is located in /etc/setoolkit
 if not os.path.isdir("/etc/setoolkit/"):
