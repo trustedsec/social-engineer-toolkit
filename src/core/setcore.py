@@ -61,7 +61,7 @@ def definepath():
         if os.path.isfile("setoolkit"):
             return os.getcwd()
         else:
-            return "/usr/share/setoolkit/"
+            return "/usr/local/share/setoolkit/"
 
     else:
         return os.getcwd()
@@ -397,9 +397,9 @@ def meta_path():
                 trigger = 1
 
         # Kali linux bleeding edge should return this in order to work
-        if os.path.isfile("/usr/share/metasploit-framework/msfconsole"):
+        if os.path.isfile("/usr/local/share/metasploit-framework/msfconsole"):
             if trigger == 0:
-                msf_path = "/usr/share/metasploit-framework/"
+                msf_path = "/usr/local/share/metasploit-framework/"
                 trigger = 1
 
         # if we didn't find anything
