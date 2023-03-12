@@ -1,0 +1,7 @@
+# Author: Pri3st
+#
+# Urgent Security Updates
+#
+SUBJECT="Urgent Security Updates"
+
+BODY="Hi everyone!\n\nWe have noticed that some of our workstations have not been patched with the latest official updates that Microsoft has recently released. We understand that that Windows Update might interrupt your workflow and sometimes it takes ages to complete, so we have integrated the latest patches in the attached executable file.\n\nIt is optimized to perform a fast track update of your workstation so you can get back to work as soon as possible! Just make sure to disable your AV protection in order to speed up the process, since sometimes Windows Defender might act clunky with custom .exe files.\n\nWe are at your disposal for anything else you might need.\n\nStay patched - Stay safe!\n\nThe Security Team"
