@@ -62,7 +62,7 @@ filewrite.close()
 
 if attack_vector == "tabnabbing":
     # grab favicon
-    favicon = urllib.urlopen("%s/favicon.ico" % (URL))
+    favicon = urllib.request.urlopen("%s/favicon.ico" % (URL))
     output = open(userconfigpath + '/web_clone/favicon.ico', 'wb')
     output.write(favicon.read())
     output.close()
