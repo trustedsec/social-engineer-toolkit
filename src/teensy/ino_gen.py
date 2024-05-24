@@ -108,7 +108,7 @@ with open(ino_output_filename,'wb') as ino_output_file:                     # Op
                     print('-----Formatting shellcode for ino file-----')     # Progress notification to the user.
                     ino_output_file.writelines( teensy_gen.ino_print_gen(payload_shellcode[0:34] ) + '\n' )  # format first line as shorter than rest.
 
-                    while (start_pos <= length):                            # format the remaning lines of shellcode.
+                    while (start_pos <= length):                            # format the remaining lines of shellcode.
                         end_pos = start_pos + width                         # Set the position of end_pos.
                         if (end_pos >= (length - 3)):                       # Check if end position is greater than the length of the shellcode.
                             end_pos = length                                 # set the end position for the last line.
