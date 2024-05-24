@@ -66,7 +66,7 @@ METASPLOIT_IFRAME_PORT=8080
 ETTERCAP=OFF
 #
 ### Ettercap home directory (needed for DNS_spoof).
-ETTERCAP_PATH=/usr/share/ettercap
+ETTERCAP_PATH=/usr/local/share/ettercap
 #
 ### Specify what interface you want Ettercap or dsniff to listen on.
 ETTERCAP_INTERFACE=eth0
