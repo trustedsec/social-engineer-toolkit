@@ -505,7 +505,7 @@ if option1 == '2':
         # if we specify to track users, this will replace the INSERTUSERHERE
         # with the "TO" field.
         if track_email.lower() == "on":
-            body_new = body_new.replace("INSERTUSERHERE", base64.b64encode(to.encode()))
+            body_new = body_new.replace("INSERTUSERHERE", str(base64.b64encode(to.encode())))
         # send the actual email
         time_delay = check_config("TIME_DELAY_EMAIL=").lower()
         time.sleep(int(time_delay))
