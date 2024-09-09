@@ -26,7 +26,18 @@ python3 setup.py
 
 ## Install SET
 =======
-* Mac OS X
+#### Mac OS X
+You will need to use a virtual environment for the Python install if you are using an M2 Macbook with the following instructions in your CLI within the social-engineer-toolkit directory. 
+```bash
+    # to install dependencies, run the following:
+    python3 -m venv path/to/venv
+    source path/to/venv/bin/activate
+    python3 -m pip install -r requirements.txt
+
+    # to install SET
+    sudo python3 setup.py 
+```
+
 <br/>
 
 ## Installation
