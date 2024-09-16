@@ -43,11 +43,12 @@ written out through the keyboard.
 """)
 
 # if we hit here we are good since msfvenom is installed
-print("""
+print(r"""
         .-. .-. . . .-. .-. .-. .-. .-.   .  . .-. .-. .-.
         |.. |-| |\| |.. `-.  |  |-  |(    |\/| | | |  )|-
         `-' ` ' ' ` `-' `-'  '  `-' ' '   '  ` `-' `-' `-'
-                                                   enabled.\n""")
+                                                   enabled.""")
+print()
 
 # grab the path and filename from user
 path = input(core.setprompt(["6"], "Path to the file you want deployed on the teensy SDCard"))

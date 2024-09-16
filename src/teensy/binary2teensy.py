@@ -124,12 +124,12 @@ try:
 
 # except keyboardintterupts here
 except KeyboardInterrupt:
-    print("""
+    print(r"""
     .-. .-. . . .-. .-. .-. .-. .-.   .  . .-. .-. .-.
     |.. |-| |\| |.. `-.  |  |-  |(    |\/| | | |  )|-
     `-' ` ' ' ` `-' `-'  '  `-' ' '   '  ` `-' `-' `-'
-                                               disabled.\n""")
-
+                                               disabled.""")
+    print()
     sys.exit("\n[!] Control-C detected. Bombing out. Later Gangster...\n\n")
 
 print_status("Generating alpha_mixed shellcode to be injected after shellexec has been deployed on victim...")

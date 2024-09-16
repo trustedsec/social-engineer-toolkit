@@ -21,7 +21,7 @@ print("The" + core.bcolors.BOLD + " SCCM Attack Vector " + core.bcolors.ENDC +
 sms_server = input("Enter the IP address or hostname of the SMS Server: ")
 package_id = input("Enter the Package ID of the package you want to patch: ")
 
-configuration = '''
+configuration = r'''
 # configuration file written by Dave DeSimone and Bill Readshaw
 # attack vector presented at Defcon 20
 # added to set 07/27/2012
