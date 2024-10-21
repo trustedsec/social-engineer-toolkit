@@ -71,7 +71,7 @@ def send_spoof(params):
 ### auto_params - makes request to target site, regexes for params
 def auto_params(url):
     try: #parses URL for host and page
-        m = re.search('(https?:\/\/(.*?))\/(.*)',url)
+        m = re.search(r'(https?:\/\/(.*?))\/(.*)',url)
         host = str(m.group(1))
         page = "/" + str(m.group(3))
     except:
@@ -83,7 +83,7 @@ def auto_params(url):
         print("\n[-] Unable to reach target website for parsing.\n")
         sys.exit()
     try: #parses target webpage for title
-        m = re.search('<title>(.*)<\/title>', r.text)
+        m = re.search(r'<title>(.*)<\/title>', r.text)
         page_title = str(m.group(1))
     except:
         print("\n[-] Unable to parse target page for title.\n")

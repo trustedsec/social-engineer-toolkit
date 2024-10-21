@@ -1365,7 +1365,7 @@ def kill_proc(port, flag):
     proc = subprocess.Popen("netstat -antp | grep '%s'" %
                             (port), shell=True, stdout=subprocess.PIPE)
     stdout_value = proc.communicate()[0]
-    a = re.search("\d+/%s" % (flag), stdout_value)
+    a = re.search(r"\d+/%s" % (flag), stdout_value)
     if a:
         b = a.group()
         b = b.replace("/%s" % (flag), "")
@@ -1803,7 +1803,7 @@ def printCIDR(c):
 
 def validateCIDRBlock(b):
     # appropriate format for CIDR block ($prefix/$subnet)
-    p = re.compile("^([0-9]{1,3}\.){0,3}[0-9]{1,3}(/[0-9]{1,2}){1}$")
+    p = re.compile(r"^([0-9]{1,3}\.){0,3}[0-9]{1,3}(/[0-9]{1,2}){1}$")
     if not p.match(b):
         return False
     # extract prefix and subnet size

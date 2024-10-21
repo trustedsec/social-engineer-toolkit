@@ -391,7 +391,7 @@ Explanation: Reboots the remote server instantly.
 Example: reboot now""")
                     # if we're running under windows
                     if operating_system == "windows":
-                        print("""
+                        print(r"""
 Command: localadmin <username> <password>
 Explanation: adds a local admin to the system
 Example: localadmin bob p@55w0rd!
