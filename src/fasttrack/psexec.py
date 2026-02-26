@@ -77,7 +77,7 @@ try:
 
     try:
         core.module_reload(src.payloads.powershell.prep)
-    except:
+    except Exception:
         import src.payloads.powershell.prep
 
     # create the directory if it does not exist

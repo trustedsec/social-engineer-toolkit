@@ -484,7 +484,7 @@ try:
                         print_status(
                             "Apache appears to be running, moving files into Apache's home")
 
-                except:
+                except Exception:
                     print_error("Exit whatever is listening and restart SET")
                     exit_set()
 
@@ -568,7 +568,7 @@ try:
         if automatic_listener != "off":
             try:
                 module_reload(pexpect)
-            except:
+            except Exception:
                 import pexpect
             # specify if we are using the multi pyinjector
             meta_config = "meta_config"
@@ -583,7 +583,7 @@ try:
             if webattack_email == "on" or track_email == "on":
                 try:
                     module_reload(src.phishing.smtp.client.smtp_web)
-                except:
+                except Exception:
                     import src.phishing.smtp.client.smtp_web
 
         # if we arent using a custom payload
@@ -603,14 +603,14 @@ try:
             print_info("Launching the SET Interactive Shell...")
             try:
                 module_reload(src.payloads.set_payloads.listener)
-            except:
+            except Exception:
                 import src.payloads.set_payloads.listener
         if set_payload == "SETSHELL_HTTP":
             print("\n")
             print_info("Launching the SET HTTP Reverse Shell Listener...")
             try:
                 module_reload(src.payloads.set_payloads.set_http_server)
-            except:
+            except Exception:
                 import src.payloads.set_payloads.set_http_server
 
         if set_payload == "RATTE":
@@ -652,10 +652,10 @@ except Exception as e:
             if apache == 1:
                 subprocess.Popen("rm %s/index.html 1> /dev/null 2> /dev/null;rm %s/Signed* 1> /dev/null 2> /dev/null;rm %s/*.exe 1> /dev/null 2> /dev/null" %
                                  (apache_path, apache_path, apache_path), shell=True).wait()
-    except:
+    except Exception:
         try:
             child.close()
-        except:
+        except Exception:
             pass
 
 except KeyboardInterrupt:
@@ -691,7 +691,7 @@ if apache == 0:
     # stop the web server
     try:
         import src.core.webserver as webserver
-    except:
+    except Exception:
         module_reload(src.core.webserver)
     webserver.stop_server(web_port)
 

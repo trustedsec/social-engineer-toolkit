@@ -45,7 +45,7 @@ if choice == '99':
 # throw error if not integer
 try:
     choice = int(choice)
-except:
+except Exception:
     print_warning("An integer was not used try again")
     choice = raw_input(setprompt(["9"], ""))
 
@@ -69,7 +69,7 @@ if menu_return == "false":
 
             try:
                 exec("import " + name)
-            except:
+            except Exception:
                 pass
 
             # this will call the main() function inside the python file

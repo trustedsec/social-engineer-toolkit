@@ -74,24 +74,24 @@ def auto_params(url):
         m = re.search(r'(https?:\/\/(.*?))\/(.*)',url)
         host = str(m.group(1))
         page = "/" + str(m.group(3))
-    except:
+    except Exception:
         print("\n[-] Unable to parse URL for host/page. Did you forget an ending '/'?\n")
         sys.exit()
     try: #makes request to target page
         r = requests.get(url)
-    except:
+    except Exception:
         print("\n[-] Unable to reach target website for parsing.\n")
         sys.exit()
     try: #parses target webpage for title
         m = re.search(r'<title>(.*)<\/title>', r.text)
         page_title = str(m.group(1))
-    except:
+    except Exception:
         print("\n[-] Unable to parse target page for title.\n")
         sys.exit()
     try: #parses target webpage for tracking id
         m = re.search("'(UA-(.*))',", r.text)
         tid = str(m.group(1))
-    except:
+    except Exception:
         print("\n[-] Unable to find TrackingID (UA-XXXXX). Website may not be running Google Anayltics.\n")
         sys.exit()
     #builds params dict

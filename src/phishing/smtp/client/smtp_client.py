@@ -395,7 +395,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
             # start TLS needed for gmail and yahoo and hotmail (live)
             try:
                 mailServer.starttls()
-            except:
+            except Exception:
                 pass
             mailServer.ehlo()
     if not "gmail|yahoo|hotmail|" in email_provider: 
@@ -407,7 +407,7 @@ def mail(to, subject, text, attach, prioflag1, prioflag2):
             if email_provider == "gmail" or email_provider == "yahoo" or email_provider == "hotmail":
                 try:
                     mailServer.starttls()
-                except:
+                except Exception:
                     pass
                 mailServer.ehlo()
                 if len(provideruser) > 0:

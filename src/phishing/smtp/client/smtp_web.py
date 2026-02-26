@@ -20,25 +20,25 @@ import email.mime.text
 import email.mime.base
 try:
     from email.MIMEMultipart import MIMEMultipart
-except:
+except Exception:
     from email.mime.multipart import MIMEMultipart
 try:
     from email.MIMEBase import MIMEBase
-except:
+except Exception:
     from email.mime.base import MIMEBase
 try:
     from email.MIMEText import MIMEText
-except:
+except Exception:
     from email.mime.text import MIMEText
 from email.header import Header
 from email.generator import Generator
 try:
     from email import Charset
-except:
+except Exception:
     from email import charset as Charset
 try:
     from email import Encoders
-except:
+except Exception:
     from email import encoders as Encoders
 
 Charset.add_charset('utf-8', Charset.BASE64, Charset.BASE64, 'utf-8')
@@ -443,7 +443,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
         if email_provider == "gmail" or email_provider == "yahoo" or email_provider == "hotmail":
             try:
                 mailServer.starttls()
-            except:
+            except Exception:
                 pass
                 mailServer.ehlo()
 
@@ -456,7 +456,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
             mailServer.sendmail(from_address, to, io.getvalue())
         else:
             mailServer.sendmail(from_address, to, io.getvalue())
-    except:
+    except Exception:
         # try logging in with base64 encoding here
         import base64
         try:

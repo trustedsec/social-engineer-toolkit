@@ -82,7 +82,7 @@ def stop_web_server_tw():
     try:
         httpd.socket.close()
     # handle the exception
-    except:
+    except Exception:
         httpd.socket.close()
 
 

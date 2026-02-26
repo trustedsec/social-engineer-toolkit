@@ -166,7 +166,7 @@ if payload_counter == 1:
                 child1 = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(msf_path + "msfconsole"),
                                                                    os.path.join(core.userconfigpath, "meta_config")))
                 child1.interact()
-        except:
+        except Exception:
             if operating_system != "windows":
                 if not apache:
                     child.close()

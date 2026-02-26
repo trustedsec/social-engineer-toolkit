@@ -266,7 +266,7 @@ if exploit_counter == 0:
             debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
             try:
                 module_reload(smtp_client)
-            except:
+            except Exception:
                 import smtp_client
 
 # start the unc_embed attack stuff here
@@ -292,7 +292,7 @@ if exploit == "unc_embed":
     debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
     try:
         module_reload(smtp_client)
-    except:
+    except Exception:
         import smtp_client
 
 # start the dll_hijacking stuff here
@@ -301,14 +301,14 @@ if exploit == "dll_hijacking":
     debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
     try:
         module_reload(create_payloads)
-    except:
+    except Exception:
         import create_payloads
 
     sys.path.append("src/webattack/dll_hijacking")
     debug_msg(me, "importing 'src.webattack.dll_hijacking.hijacking'", 1)
     try:
         module_reload(hijacking)
-    except:
+    except Exception:
         import hijacking
 
     # if we are not using apache
@@ -337,10 +337,10 @@ if exploit == "dll_hijacking":
             try:
                 child1 = pexpect.spawn(
                     "%smsfconsole -L -r %s/meta_config" % (meta_path, userconfigpath))
-            except:
+            except Exception:
                 try:
                     child1.close()
-                except:
+                except Exception:
                     pass
 
     # get the emails out
@@ -350,14 +350,14 @@ if exploit == "dll_hijacking":
         debug_msg(me, "importing 'src.phishing.smtp.client.smtp_client'", 1)
         try:
             module_reload(smtp_client)
-        except:
+        except Exception:
             import smtp_client
         try:
             child1.interact()
-        except:
+        except Exception:
             if apache == 0:
                 try:
                     child.close()
                     child1.close()
-                except:
+                except Exception:
                     pass

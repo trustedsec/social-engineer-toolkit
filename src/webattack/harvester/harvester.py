@@ -97,7 +97,7 @@ homepath = os.getcwd()
 # pull scraper
 try:
     module_reload(src.webattack.harvester.scraper)
-except:
+except Exception:
     import src.webattack.harvester.scraper
 
 # GRAB DEFAULT PORT FOR WEB SERVER AND CHECK FOR COMMAND CENTER
@@ -226,7 +226,7 @@ class SETHandler(BaseHTTPRequestHandler):
             self.wfile = socket.SocketIO(self.request, "wb")
 
         # except errors and pass them
-        except:
+        except Exception:
             pass
 
     # handle basic GET requests
@@ -397,12 +397,12 @@ def run():
                 visits.close()
                 bites.close()
 
-            except:
+            except Exception:
                 pass
             if attack_vector != 'multiattack':
                 try:
                     module_reload(src.webattack.harvester.report_generator)
-                except:
+                except Exception:
                     import src.webattack.harvester.report_generator
             if attack_vector != 'multiattack':
                 return_continue()
@@ -446,7 +446,7 @@ def run():
                             visits.close()
                             bites.close()
 
-                        except:
+                        except Exception:
                             pass
                         if attack_vector != 'multiattack':
                             sys.path.append("src/harvester")
@@ -644,7 +644,7 @@ try:
     # if we aren't using ssl
     if ssl_flag == 'false':
         run()
-except:
+except Exception:
     # cleanup modified socket
     #if ssl_flag == "true":
         #if os.path.isfile(definepath + "/socket.py"):

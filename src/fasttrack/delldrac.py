@@ -122,7 +122,7 @@ def login_drac(ipaddr_single):
             global global_check2
             global_check2 = 1
     # handle failed attempts and move on
-    except:
+    except Exception:
         pass
 
 
@@ -175,7 +175,7 @@ def login_chassis(ipaddr_single):
             global_check4 = 1
 
     # except and move on for failed login attempts
-    except:
+    except Exception:
         pass
 
 

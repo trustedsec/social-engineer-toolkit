@@ -131,7 +131,7 @@ CONFIG_DATE='""" + timestamp + """'\n""")
                     new_config.write(setting + '="' + value + '"\n')
                 else:
                     new_config.write(setting + '=' + value + '\n')
-        except:
+        except Exception:
             pass
 
     init_file.close()

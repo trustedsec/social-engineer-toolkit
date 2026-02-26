@@ -72,7 +72,7 @@ try:
             match2 = re.search("set SRVPORT %s" % (metasploit_iframe), line)
             if not match2:
                 webdav_meta = 80
-except:
+except Exception:
     pass
 
 template = ""
@@ -443,7 +443,7 @@ try:
 
             try:
                 filewrite.close()
-            except:
+            except Exception:
                 pass
             print((
                 bcolors.BLUE + "[*] Malicious iframe injection successful...crafting payload.\n" + bcolors.ENDC))

@@ -119,7 +119,7 @@ try:
     #filewrite.close()
     filewrite2.write(r"</harvester>" + "\n")
     filewrite2.close()
-except:
+except Exception:
     pass
 
 subprocess.Popen("cp -rf %s/src/core/reports/files %sreports/" % (definepath, userconfigpath), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).wait()

@@ -12,7 +12,7 @@ sys.path.append("src/core")
 debug_msg(me, "re-importing 'src.core.setcore'", 1)
 try:
     module_reload(src.core.setcore)
-except:
+except Exception:
     import src.core.setcore
 print("[---] Updating the Social Engineer Toolkit FileFormat Exploit List [---]")
 generate_list = subprocess.Popen(

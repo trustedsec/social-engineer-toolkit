@@ -186,5 +186,5 @@ if choice == "YES":
         child = pexpect.spawn("{0} -r {1}\r\n\r\n".format(os.path.join(core.meta_path() + "msfconsole"),
                                                           os.path.join(core.userconfigpath, "metasploit.answers")))
         child.interact()
-    except:
+    except Exception:
         pass

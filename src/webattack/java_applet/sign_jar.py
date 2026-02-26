@@ -31,5 +31,5 @@ Is this correct: yes
     subprocess.Popen(
         "cp Java_Obf.jar ../../html/unsigned/unsigned.jar", shell=True).wait()
     print("[*] New java applet has been successfully imported into The Social-Engineer Toolkit (SET)")
-except:
+except Exception:
     pass

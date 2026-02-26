@@ -354,39 +354,39 @@ try:
             if range == "1":
                 try:
                     module_reload(src.fasttrack.exploits.ms08067)
-                except:
+                except Exception:
                     import src.fasttrack.exploits.ms08067
 
             # firefox 3.6.16
             if range == "2":
                 try:
                     module_reload(src.fasttrack.exploits.firefox_3_6_16)
-                except:
+                except Exception:
                     import src.fasttrack.exploits.firefox_3_6_16
             # solarwinds
             if range == "3":
                 try:
                     module_reload(src.fasttrack.exploits.solarwinds)
-                except:
+                except Exception:
                     import src.fasttrack.exploits.solarwinds
 
             # rdp DoS
             if range == "4":
                 try:
                     module_reload(src.fasttrack.exploits.rdpdos)
-                except:
+                except Exception:
                     import src.fasttrack.exploits.rdpdos
 
             if range == "5":
                 try:
                     module_reload(src.fasttrack.exploits.mysql_bypass)
-                except:
+                except Exception:
                     import src.fasttrack.exploits.mysql_bypass
 
             if range == "6":
                 try:
                     module_reload(src.fasttrack.exploits.f5)
-                except:
+                except Exception:
                     import src.fasttrack.exploits.f5
 
         #
@@ -398,7 +398,7 @@ try:
             # load sccm attack
             try:
                 module_reload(src.fasttrack.sccm.sccm_main)
-            except:
+            except Exception:
                 import src.fasttrack.sccm.sccm_main
 
         #
@@ -489,7 +489,7 @@ try:
                 "\nPSEXEC Powershell Injection Attack:\n\nThis attack will inject a meterpreter backdoor through powershell memory injection. This will circumvent\nAnti-Virus since we will never touch disk. Will require Powershell to be installed on the remote victim\nmachine. You can use either straight passwords or hash values.\n")
             try:
                 module_reload(src.fasttrack.psexec)
-            except:
+            except Exception:
                 import src.fasttrack.psexec
 
 # handle keyboard exceptions

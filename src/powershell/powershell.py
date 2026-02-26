@@ -46,7 +46,7 @@ if powershell_menu_choice != "99":
 
         try:
             core.module_reload(src.payloads.powershell.prep)
-        except:
+        except Exception:
             import src.payloads.powershell.prep
 
         #prep_powershell_payload()

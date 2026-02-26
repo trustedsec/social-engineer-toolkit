@@ -9,5 +9,5 @@ core.debug_msg(core.mod_name(), "importing 'src.html.spawn'", 1)
 sys.path.append("src/html")
 try:
     import src.html.spawn
-except:
+except Exception:
     pass

@@ -131,7 +131,7 @@ while a == 1:
         # convert it back
         profile = str(profile)
     # if it triggers an exception reassign profile to option 8
-    except:
+    except Exception:
         profile = "10"
 
     # if you want to return to main menu
@@ -318,7 +318,7 @@ if java_applet == "on" or meta_attack == "on" or harvester == "on" or tabnabbing
     debug_msg(me, "importing 'src.webattack.web_clone.cloner'", 1)
     try:
         module_reload(cloner)
-    except:
+    except Exception:
         import cloner
 
     # arp cache attack, will exit quickly
@@ -328,7 +328,7 @@ if java_applet == "on" or meta_attack == "on" or harvester == "on" or tabnabbing
         debug_msg(me, "importing 'src.core.arp_cache.arp'", 1)
         try:
             module_reload(arp)
-        except:
+        except Exception:
             import arp
 
 # start the stuff for java applet
@@ -337,7 +337,7 @@ if java_applet == "on":
     debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
     try:
         module_reload(create_payloads)
-    except:
+    except Exception:
         import create_payloads
     payloadgen = 1
     applet_choice()
@@ -363,7 +363,7 @@ if harvester == "on" or tabnabbing == "on" or webjacking == "on":
         debug_msg(me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
         try:
             module_reload(tabnabbing)
-        except:
+        except Exception:
             import tabnabbing
     # if the harvester is on set the multi_harvester flag
     sys.path.append("src/webattack/harvester")
@@ -381,7 +381,7 @@ if mlitm == "on":
         debug_msg(me, "importing 'src.mlitm.mlitm'", 1)
         try:
             module_reload(mlitm)
-        except:
+        except Exception:
             import mlitm
 
 # start the web server
@@ -390,7 +390,7 @@ if java_applet == "on" or meta_attack == "on":
     debug_msg(me, "importing 'src.html.spawn'", 1)
     try:
         module_reload(spawn)
-    except:
+    except Exception:
         import spawn
 
     # if using cred harvester or tabnabbing

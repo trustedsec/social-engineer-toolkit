@@ -16,7 +16,7 @@ from src.core.menu import text
 
 try:
     raw_input
-except:
+except Exception:
     raw_input = input
 
 ipaddr = ""
@@ -96,7 +96,7 @@ try:
                             me, "importing 'src.core.msf_attacks.create_payload'", 1)
                         try:
                             module_reload(create_payload)
-                        except:
+                        except Exception:
                             pass
                         import create_payload
                     # Spearphish menu choice 2: Create a FileFormat Payload
@@ -106,7 +106,7 @@ try:
                             me, "importing 'src.core.msf_attacks.create_payload'", 1)
                         try:
                             reload(create_payload)
-                        except:
+                        except Exception:
                             import create_payload
                     # Spearphish menu choice 3: Create a Social-Engineering
                     # Template
@@ -156,7 +156,7 @@ try:
 
                 try:
                     attack_check = int(attack_vector)
-                except:
+                except Exception:
                     print_error("ERROR:Invalid selection, going back to menu.")
                     break
                 if attack_check > 9:
@@ -371,7 +371,7 @@ this is how networking works.
                         debug_msg(me, "importing src.html.templates.template'", 1)
                         try:
                             module_reload(template)
-                        except:
+                        except Exception:
                             import template
 
                         # grab browser exploit selection
@@ -382,7 +382,7 @@ this is how networking works.
                             debug_msg(me, "line 357: importing 'src.webattack.browser_exploits.gen_payload'", 1)
                             try:
                                 module_reload(gen_payload)
-                            except:
+                            except Exception:
                                 import gen_payload
 
                         # arp cache attack, will exit quickly
@@ -391,7 +391,7 @@ this is how networking works.
                         debug_msg(me, "line 364: importing 'src.core.arp_cache.arp'", 1)
                         try:
                             module_reload(arp)
-                        except:
+                        except Exception:
                             import arp
 
                         # actual website attack here
@@ -407,7 +407,7 @@ this is how networking works.
                         debug_msg(me, "line 375: importing 'src.webattack.web_clone.cloner'", 1)
                         try:
                             module_reload(src.webattack.web_clone.cloner)
-                        except:
+                        except Exception:
                             import src.webattack.web_clone.cloner
 
                         # grab java applet attack
@@ -415,7 +415,7 @@ this is how networking works.
                             debug_msg(me, "importing 'src.core.payloadgen.create_payloads'", 1)
                             try:
                                 module_reload(src.core.payloadgen.create_payloads)
-                            except:
+                            except Exception:
                                 import src.core.payloadgen.create_payloads
 
                         if os.path.isfile(userconfigpath + "cloner.failed"):
@@ -430,7 +430,7 @@ this is how networking works.
                                         me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
                                     try:
                                         module_reload(src.webattack.tabnabbing)
-                                    except:
+                                    except Exception:
                                         import src.webattack.tabnabbing
                                 # start web cred harvester here
                                 debug_msg(
@@ -439,7 +439,7 @@ this is how networking works.
                                     definepath + "/src/webattack/harvester/")
                                 try:
                                     module_reload(harvester)
-                                except:
+                                except Exception:
                                     import harvester
 
                             # if we are using profiler lets prep everything to
@@ -481,7 +481,7 @@ this is how networking works.
                                             "src/progam_junk/multiattack.template", "w")
                                         filewrite.write("TEMPLATE=TRUE")
                                         filewrite.close()
-                                    except:
+                                    except Exception:
                                         pass
                                     debug_msg(
                                         me, "importing 'src.webattack.multi_attack.multiattack'", 1)
@@ -544,7 +544,7 @@ this is how networking works.
                                 me, "importing 'src.webattack.browser_exploits.gen_payload'", 1)
                             try:
                                 module_reload(gen_payload)
-                            except:
+                            except Exception:
                                 import gen_payload
 
                         # set site cloner to true
@@ -558,7 +558,7 @@ this is how networking works.
                                 me, "importing 'src.webattack.web_clone.cloner'", 1)
                             try:
                                 module_reload(src.webattack.web_clone.cloner)
-                            except:
+                            except Exception:
                                 import src.webattack.web_clone.cloner
 
                             if os.path.isfile(userconfigpath + "cloner.failed"):
@@ -573,7 +573,7 @@ this is how networking works.
                                 try:
                                     module_reload(
                                         src.core.payloadgen.create_payloads)
-                                except:
+                                except Exception:
                                     import src.core.payloadgen.create_payloads
 
                             # arp cache if applicable
@@ -583,7 +583,7 @@ this is how networking works.
                                 me, "line 500: importing 'src.core.arp_cache.arp'", 1)
                             try:
                                 module_reload(arp)
-                            except:
+                            except Exception:
                                 import arp
 
                             # tabnabbing and harvester selection here
@@ -595,7 +595,7 @@ this is how networking works.
                                         me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
                                     try:
                                         module_reload(tabnabbing)
-                                    except:
+                                    except Exception:
                                         import tabnabbing
                                 sys.path.append(
                                     definepath + "/src/webattack/harvester")
@@ -604,7 +604,7 @@ this is how networking works.
 
                                 try:
                                     module_reload(harvester)
-                                except:
+                                except Exception:
                                     import harvester
 
                             # multi_attack vector here
@@ -615,7 +615,7 @@ this is how networking works.
                                     me, "importing 'src.webattack.multi_attack.multiattack'", 1)
                                 try:
                                     module_reload(multiattack)
-                                except:
+                                except Exception:
                                     import multiattack
 
                             # if we arent using credential harvester or
@@ -631,7 +631,7 @@ this is how networking works.
                                                     me, "importing 'src.html.spawn'", 1)
                                                 try:
                                                     module_reload(spawn)
-                                                except:
+                                                except Exception:
                                                     import spawn
 
                     # Import your own site
@@ -731,7 +731,7 @@ this is how networking works.
                                 me, "importing 'src.webattack.browser_exploits.gen_payload'", 1)
                             try:
                                 module_reload(gen_payload)
-                            except:
+                            except Exception:
                                 import gen_payload
 
                         # arp cache if applicable
@@ -740,7 +740,7 @@ this is how networking works.
                             me, "line 592: importing 'src.core.arp_cache.arp'", 1)
                         try:
                             module_reload(arp)
-                        except:
+                        except Exception:
                             import arp
 
                         # if not harvester spawn server
@@ -750,7 +750,7 @@ this is how networking works.
                             debug_msg(me, "importing 'src.html.spawn'", 1)
                             try:
                                 module_reload(spawn)
-                            except:
+                            except Exception:
                                 import spawn
 
                         # cred harvester for auto site here
@@ -775,7 +775,7 @@ this is how networking works.
                                 me, "importing 'src.webattack.harvester.harvester'", 1)
                             try:
                                 module_reload(harvester)
-                            except:
+                            except Exception:
                                 import harvester
 
                         # tabnabbing for auto site here
@@ -799,7 +799,7 @@ this is how networking works.
                                 me, "importing 'src.webattack.tabnabbing.tabnabbing'", 1)
                             try:
                                 module_reload(tabnabbing)
-                            except:
+                            except Exception:
                                 import tabnabbing
 
                             # start web cred harvester here
@@ -809,7 +809,7 @@ this is how networking works.
                                 me, "importing 'src.webattack.harvester.harvester'", 1)
                             try:
                                 module_reload(harvester)
-                            except:
+                            except Exception:
                                 import harvester
 
                         # multi attack vector here
@@ -819,7 +819,7 @@ this is how networking works.
                                     "src/progam_junk/multiattack.template", "w")
                                 filewrite.write("TEMPLATE=TRUE")
                                 filewrite.close()
-                            except:
+                            except Exception:
                                 pass
                             debug_msg(
                                 me, "importing 'src.webattack.multi_attack.multiattack'", 1)
@@ -875,7 +875,7 @@ this is how networking works.
                     me, "importing 'src.core.msf_attacks.create_payload'", 1)
                 try:
                     module_reload(create_payload)
-                except:
+                except Exception:
                     import create_payload
 
             # if choice is standard payload
@@ -884,14 +884,14 @@ this is how networking works.
                 update_options("INFECTION_MEDIA=ON")
                 try:
                     import src.core.payloadgen.solo
-                except:
+                except Exception:
                     module_reload(src.core.payloadgen.solo)
 
             # if we aren't exiting, then launch autorun
             if infectious_menu_choice != "99":
                 try:
                     import src.autorun.autolaunch
-                except:
+                except Exception:
                     module_reload(src.autorun.autolaunch)
 
         #
@@ -914,7 +914,7 @@ this is how networking works.
             debug_msg(me, "importing 'src.phishing.smtp.client.smtp_web'", 1)
             try:
                 module_reload(src.phishing.smtp.client.smtp_web)
-            except:
+            except Exception:
                 import src.phishing.smtp.client.smtp_web
 
         # Main Menu choice 6: Teensy USB HID Attack Vector
@@ -949,7 +949,7 @@ this is how networking works.
                             me, "importing 'src.core.payloadgen.create_payloads'", 1)
                         try:
                             module_reload(create_payloads)
-                        except:
+                        except Exception:
                             import create_payloads
                 if yes_or_no == "NO":
                     filewrite.close()
@@ -966,7 +966,7 @@ this is how networking works.
                     debug_msg(me, "importing 'src.teensy.teensy'", 1)
                     try:
                         module_reload(teensy)
-                    except:
+                    except Exception:
                         import teensy
                 if teensy_menu_choice == "7":
                     debug_msg(me, "importing 'src.teensy.binary2teensy'", 1)
@@ -1102,7 +1102,7 @@ this is how networking works.
                                     me, "importing 'src.wireless.wifiattack'", 1)
                                 try:
                                     module_reload(wifiattack)
-                                except:
+                                except Exception:
                                     import wifiattack
 
                             # if we want to stop the wifi attack
@@ -1112,7 +1112,7 @@ this is how networking works.
                                     me, "importing 'src.wireless.stop_wifiattack'", 1)
                                 try:
                                     module_reload(stop_wifiattack)
-                                except:
+                                except Exception:
                                     import stop_wifiattack
 
                             # if we want to return to the main menu
@@ -1164,7 +1164,7 @@ and send the QRCode via a mailer.
         if main_menu_choice == '9':
             try:
                 module_reload(src.powershell.powershell)
-            except:
+            except Exception:
                 import src.powershell.powershell
 
         # Main Menu choice 11: Third Party Modules
@@ -1173,7 +1173,7 @@ and send the QRCode via a mailer.
             debug_msg(me, "importing 'src.core.module_handler'", 1)
             try:
                 module_reload(module_handler)
-            except:
+            except Exception:
                 import module_handler
 
         # Main Menu choice 99: Exit the Social-Engineer Toolkit

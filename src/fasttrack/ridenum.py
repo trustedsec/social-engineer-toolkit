@@ -292,7 +292,7 @@ try:
                                 # if domain isn't specified
                                 else:
                                     password = user.lower()
-                            except:
+                            except Exception:
                                 pass
                         # if we specify a uppercase username
                         if password == "uc username":
@@ -302,7 +302,7 @@ try:
                                     password = password.upper()
                                 else:
                                     password = user.lower()
-                            except:
+                            except Exception:
                                 pass
                         if password != "":
                             child = pexpect.spawn("rpcclient -U '{0}%{1}' {2}".format(user_fixed, password, ip))

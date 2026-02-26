@@ -117,7 +117,7 @@ try:
             break
 
         # if we bomb out then loop through again
-        except:
+        except Exception:
             print_error("[!] Not a valid port number, try again.")
             # pass through
             pass

@@ -16,7 +16,7 @@ try:
         ipaddr = check_options("IPADDR=")
     else:
         ipaddr = ""
-except:
+except Exception:
     ipaddr = ""
 
 me = mod_name()

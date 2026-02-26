@@ -116,7 +116,7 @@ if firstprompt == "2":
             use_flag = 1
 
         # exception here in case it was already imported before
-        except:
+        except Exception:
             pass
 
     # this will exit the menu

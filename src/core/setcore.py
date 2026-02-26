@@ -40,7 +40,7 @@ except ImportError:
 
 try:
     raw_input
-except:
+except Exception:
     raw_input = input
 
 # check to see if we have python-pycrypto
@@ -491,7 +491,7 @@ def cleanup_routine():
         if os.path.isfile(userconfigpath + "version.lock"):
             os.remove(userconfigpath + "version.lock")
         src.core.minifakedns.stop_dns_server()
-    except:
+    except Exception:
         pass
 
 #
@@ -590,7 +590,7 @@ def site_cloner(website, exportpath, *args):
         debug_msg("setcore", "importing 'src.webattack.web_clone.cloner'", 1)
         module_reload(cloner)
 
-    except:
+    except Exception:
         debug_msg("setcore", "importing 'src.webattack.web_clone.cloner'", 1)
         import cloner
 
@@ -1843,7 +1843,7 @@ def get_sql_port(host):
 
         # if we have an exception, udp 1434 isnt there could be firewalled off
         # so we need to check 1433 just in case
-        except:
+        except Exception:
             sql_port = "1433"
             pass
 
@@ -1856,7 +1856,7 @@ def get_sql_port(host):
                 return host + ":" + sql_port
 
         # if port is closed
-        except:
+        except Exception:
             return None
 
     except Exception as err:
@@ -1877,7 +1877,7 @@ def capture(func, *args, **kwargs):
     result = None
     try:
         result = func(*args, **kwargs)
-    except:
+    except Exception:
         traceback.print_exc()
     sys.stdout = stdout
     sys.stderr = stderr
@@ -1941,7 +1941,7 @@ Select which option you want:
     if choice1 == "1":
         try:
             import src.html.unsigned.self_sign
-        except:
+        except Exception:
             module_reload(src.html.unsigned.self_sign)
 
     # if we need to use the built in applet
@@ -1953,7 +1953,7 @@ Select which option you want:
     if choice1 == "3":
         try:
             import src.html.unsigned.verified_sign
-        except:
+        except Exception:
             module_reload(src.html.unsigned.verified_sign)
 
 # reload module function for python 2 and python 3
