@@ -65,3 +65,13 @@ For a full document on how to use SET, [visit the SET user manual](https://githu
 ## Bugs and enhancements
 For bug reports or enhancements, please open an [issue](https://github.com/trustedsec/social-engineer-toolkit/issues) here.
 <br/>
+## 🔐 Security Awareness Note
+
+This toolkit is designed for authorized security testing and educational purposes only.
+
+Before use:
+- Ensure you have explicit permission
+- Operate within defined scope
+- Log all activities for accountability
+
+Unauthorized usage may violate legal and ethical standards.
