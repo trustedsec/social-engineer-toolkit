@@ -1328,7 +1328,7 @@ def custom_template():
         print("\n")
         filewrite.close()
     except Exception as e:
-        print_error("ERROR:An error occured:")
+        print_error("ERROR:An error occurred:")
         print(bcolors.RED + "ERROR:" + str(e) + bcolors.ENDC)
 
 

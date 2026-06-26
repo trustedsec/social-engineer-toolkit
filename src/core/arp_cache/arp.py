@@ -113,7 +113,7 @@ if ettercapchoice == 'y':
         except Exception as error:
             os.chdir(cwd)
             # log(error)
-            print_error("ERROR:An error has occured:")
+            print_error("ERROR:An error has occurred:")
             print("ERROR:" + str(error))
 
 # if we are using dsniff

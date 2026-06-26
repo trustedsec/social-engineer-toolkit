@@ -216,7 +216,7 @@ def start_listener():
         # handle exceptions
         except Exception as e:
             print_warning(
-                "An exception occured. Handling it and keeping session alive. Error: " + str(e))
+                "An exception occurred. Handling it and keeping session alive. Error: " + str(e))
             pass
 
     # decrypt received packets
@@ -235,7 +235,7 @@ def start_listener():
         # handle exceptions
         except Exception as e:
             print_warning(
-                "An exception occured. Handling it and keeping session alive. Error: " + str(e))
+                "An exception occurred. Handling it and keeping session alive. Error: " + str(e))
             pass
 
     # handle tab completion here for set interactive menu
