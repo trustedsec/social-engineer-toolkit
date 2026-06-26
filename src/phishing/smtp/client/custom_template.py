@@ -27,4 +27,4 @@ try:
     print("\n")
     filewrite.close()
 except Exception as e:
-    print("   An error occured, printing error message: " + str(e))
+    print("   An error occurred, printing error message: " + str(e))
