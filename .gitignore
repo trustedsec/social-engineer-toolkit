@@ -134,3 +134,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# SET specific
+src/logs/
+src/agreement*
+

@@ -1,0 +1,79 @@
+# SET Phishing Lab Setup Guide
+
+## Prerequisites
+- Kali Linux machine
+- Root/sudo access
+- SET installed
+
+## Installation Steps
+
+### 1. Install SET Dependencies
+```bash
+cd /path/to/setoolkit
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+### 2. Configure SET for Offline Lab
+Edit `/etc/setoolkit/set.config`:
+```
+SENDMAIL=OFF  →  SENDMAIL=ON
+```
+
+This tells SET to use the local sendmail command. Do NOT install the sendmail package.
+
+### 3. Install Postfix (Provides sendmail command)
+```bash
+sudo apt-get install postfix -y
+```
+- Choose "Local only" configuration
+- Set system mail name: `localhost`
+
+Postfix provides the `/usr/sbin/sendmail` command that SET uses.
+
+### 4. Install Mail Utilities
+```bash
+sudo apt-get install mailutils -y
+sudo apt-get install thunderbird -y
+```
+
+### 5. Test Postfix
+```bash
+echo "Subject: Test
+From: test@localhost
+To: sudolovemebaby@localhost
+
+This is a test email." | sendmail -t
+```
+
+Check if email arrived:
+```bash
+mail
+```
+
+### 6. Start SET
+```bash
+sudo ./setoolkit
+```
+
+## Phishing Email Workflow
+1. Select `1) Social-Engineering Attacks`
+2. Select `5) Mass Mailer Attack`
+3. Select `1) E-Mail Attack Single Email Address`
+4. Select `2) One-Time Use Email Template`
+5. Enter subject line
+6. Choose `h` for HTML format
+7. Paste HTML body, then type `END`
+8. Send to: `username@localhost`
+9. Choose `2) Use your own server or open relay`
+10. From address: any fake email
+11. SMTP server: `localhost`
+12. Port: `25` (default)
+13. Username/Password: leave blank
+
+## View Emails
+- Command line: `mail`
+  - Press `s` to save email to ~/mbox (txt)
+- Decode base64 body: `echo "base64body" | base64 -d`
