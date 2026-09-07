@@ -55,6 +55,9 @@ track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 
 definepath = os.getcwd()
 
+# For the while loop to address input handling
+print_bool = True
+
 # DEFINE SENDMAIL CONFIG and WEB ATTACK
 sendmail = 0
 
@@ -117,9 +120,11 @@ for line in sendmail_file:
                 smtp = ("smtp.live.com")
                 port = ("587")
 
-
-print ("""
-   Social Engineer Toolkit Mass E-Mailer
+# Empty declaration for option1
+option1 = ""
+while print_bool == True:
+    print ("""
+    Social Engineer Toolkit Mass E-Mailer
 
    There are two options on the mass e-mailer, the first would
    be to send an email to one individual person. The second option
@@ -134,20 +139,27 @@ print ("""
     99. Return to main menu.
    """)
 
-option1 = input(setprompt(["5"], ""))
+    option1 = input(setprompt(["5"], ""))
 
-if option1 == 'exit':
-    exit_set()
+    if option1 == 'exit':
+        exit_set()
+
+    # Adding a case to guard against unexpected user input
+    if option1 != '1' or '2' or '99':
+        print("Invalid option")
+
+
+    if option1 =='1' or '2' or '99':
+        pass
 
 if option1 == '1' or option1 == '2':
-
     print ("""
-       Do you want to use a predefined template or craft
-       a one time email template.
+        Do you want to use a predefined template or craft
+        a one time email template.
 
-       1. Pre-Defined Template
-       2. One-Time Use Email Template
-       """)
+        1. Pre-Defined Template
+        2. One-Time Use Email Template
+        """)
     template_choice = input(setprompt(["1"], ""))
     # if predefined template go here
     if template_choice == '1':
@@ -184,7 +196,7 @@ if option1 == '1' or option1 == '2':
                     line2 = line2.replace('"', "")
                     # display results back
                     print(line[1] + ": " + line2)
-        # allow user to select template
+                # allow user to select template
         choice = input(setprompt(["1"], ""))
         for line in fileread:
             # split based off of space
@@ -265,20 +277,18 @@ if option1 == '1' or option1 == '2':
             print_warning(
                 "IMPORTANT: When finished, type END (all capital) then hit {return} on a new line.")
             body = input(setprompt(
-                ["1"], "Enter the body of the message, type END (capitals) when finished"))
+            ["1"], "Enter the body of the message, type END (capitals) when finished"))
             # loop through until they are finished with the body of the subject
             # line
             while body != 'exit':
                 try:
-
                     body += ("\n")
                     body_1 = input("Next line of the body: ")
                     if body_1 == "END":
                         break
                     else:
                         body = body + body_1
-
-                # except KeyboardInterrupts (control-c) and pass through.
+                        # except KeyboardInterrupts (control-c) and pass through.
                 except KeyboardInterrupt:
                     break
 
@@ -297,108 +307,110 @@ if option1 == '1' or option1 == '2':
 
     # except KeyboardInterrupts (control-c) and pass through.
         except KeyboardInterrupt:
-           pass
+            pass
 
-# single email
-if option1 == '1':
-    to = input(setprompt(["1"], "Send email to"))
+    # single email
+    if option1 == '1':
+        to = input(setprompt(["1"], "Send email to"))
 
-# mass emailer
-if option1 == '2':
-    print ("""
-  The mass emailer will allow you to send emails to multiple
-  individuals in a list. The format is simple, it will email
-  based off of a line. So it should look like the following:
+    # mass emailer
+    if option1 == '2':
+        print ("""
+    The mass emailer will allow you to send emails to multiple
+    individuals in a list. The format is simple, it will email
+    based off of a line. So it should look like the following:
 
-  john.doe@ihazemail.com
-  jane.doe@ihazemail.com
-  wayne.doe@ihazemail.com
+    john.doe@ihazemail.com
+    jane.doe@ihazemail.com
+    wayne.doe@ihazemail.com
 
-  This will continue through until it reaches the end of the
-  file. You will need to specify where the file is, for example
-  if its in the SET folder, just specify filename.txt (or whatever
-  it is). If its somewhere on the filesystem, enter the full path,
-  for example /home/relik/ihazemails.txt
- """)
-    filepath = input(
-        setprompt(["1"], "Path to the file to import into SET"))
-    if not os.path.isfile(filepath):
-        while 1:
-            print(
-                "[!] File not found! Please try again and enter the FULL path to the file.")
-            filepath = input(
-                setprompt(["1"], "Path to the file to import into SET"))
-            if os.path.isfile(filepath):
-                break
+    This will continue through until it reaches the end of the
+    file. You will need to specify where the file is, for example
+    if its in the SET folder, just specify filename.txt (or whatever
+    it is). If its somewhere on the filesystem, enter the full path,
+    for example /home/relik/ihazemails.txt
+    """)
+        filepath = input(
+            setprompt(["1"], "Path to the file to import into SET"))
+        if not os.path.isfile(filepath):
+            while 1:
+                print(
+                    "[!] File not found! Please try again and enter the FULL path to the file.")
+                filepath = input(
+                    setprompt(["1"], "Path to the file to import into SET"))
+                if os.path.isfile(filepath):
+                    break
 
-# exit mass mailer menu
-if option1 == '99':
-    print("Returning to main menu...")
+    # exit mass mailer menu
+    if option1 == '99':
+        print("Returning to main menu...")
 
-if option1 != "99":
-    print(("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (
-        email_provider)))
-    relay = input(setprompt(["1"], ""))
+    if option1 != "99":
+        print(("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (
+            email_provider)))
+        relay = input(setprompt(["1"], ""))
 
-    counter = 0
-    # Specify mail Option Here
-    if relay == '1':
-        provideruser = input(
-            setprompt(["1"], "Your %s email address" % (email_provider)))
-        from_address = provideruser
-        from_displayname = input(
-            setprompt(["1"], "The FROM NAME the user will see"))
-        pwd = getpass.getpass("Email password: ")
-
-    # Specify Open-Relay Option Here
-    if relay == '2':
-        from_address = input(
-            setprompt(["1"], "From address (ex: moo@example.com)"))
-        from_displayname = input(
-            setprompt(["1"], "The FROM NAME the user will see"))
-        if sendmail == 0:
-            # Ask for a username and password if we aren't using sendmail
+        counter = 0
+        # Specify mail Option Here
+        if relay == '1':
             provideruser = input(
-                setprompt(["1"], "Username for open-relay [blank]"))
-            pwd = getpass.getpass("Password for open-relay [blank]: ")
+                setprompt(["1"], "Your %s email address" % (email_provider)))
+            from_address = provideruser
+            from_displayname = input(
+                setprompt(["1"], "The FROM NAME the user will see"))
+            pwd = getpass.getpass("Email password [NOTE Gmail users will need to get an App Password, as the account password\n"
+                                  "will not work. App Passwords can be attained at https://myaccount.google.com/apppasswords]: ")
 
-        if sendmail == 0:
-            smtp = input(setprompt(
+
+        # Specify Open-Relay Option Here
+        if relay == '2':
+            from_address = input(
+                setprompt(["1"], "From address (ex: moo@example.com)"))
+            from_displayname = input(
+                setprompt(["1"], "The FROM NAME the user will see"))
+            if sendmail == 0:
+                # Ask for a username and password if we aren't using sendmail
+                provideruser = input(
+                    setprompt(["1"], "Username for open-relay [blank]"))
+                pwd = getpass.getpass("Password for open-relay [blank]: ")
+
+            if sendmail == 0:
+                smtp = input(setprompt(
                 ["1"], "SMTP email server address (ex. smtp.youremailserveryouown.com)"))
-            port = input(
-                setprompt(["1"], "Port number for the SMTP server [25]"))
-            if port == "":
-                port = ("25")
+                port = input(
+                    setprompt(["1"], "Port number for the SMTP server [25]"))
+                if port == "":
+                    port = ("25")
 
-    # specify if its a high priority or not
-    highpri = yesno_prompt(
+        # specify if its a high priority or not
+        highpri = yesno_prompt(
         ["1"], "Flag this message/s as high priority? [yes|no]")
-    if not "YES" in highpri:
-        prioflag1 = ""
-        prioflag2 = ""
-    else:
-        prioflag1 = ' 1 (Highest)'
-        prioflag2 = ' High'
-
-    # if we want to attach a file
-    file_format = ""
-    yesno = raw_input("Do you want to attach a file - [y/n]: ")
-    if yesno.lower() == "y" or yesno.lower() == "yes":
-        file_format = raw_input(
-            "Enter the path to the file you want to attach: ")
-        if not os.path.isfile(file_format):
-            file_format = ""
-
-    inline_files = []
-    while True:
-        yesno = raw_input("Do you want to attach an inline file - [y/n]: ")
-        if yesno.lower() == "y" or yesno.lower() == "yes":
-            inline_file = raw_input(
-                "Enter the path to the inline file you want to attach: ")
-            if os.path.isfile(inline_file):
-                inline_files.append( inline_file )
+        if not "YES" in highpri:
+            prioflag1 = ""
+            prioflag2 = ""
         else:
-            break
+            prioflag1 = ' 1 (Highest)'
+            prioflag2 = ' High'
+
+        # if we want to attach a file
+        file_format = ""
+        yesno = raw_input("Do you want to attach a file - [y/n]: ")
+        if yesno.lower() == "y" or yesno.lower() == "yes":
+            file_format = raw_input(
+                "Enter the path to the file you want to attach: ")
+            if not os.path.isfile(file_format):
+                file_format = ""
+
+        inline_files = []
+        while True:
+            yesno = raw_input("Do you want to attach an inline file - [y/n]: ")
+            if yesno.lower() == "y" or yesno.lower() == "yes":
+                inline_file = raw_input(
+                    "Enter the path to the inline file you want to attach: ")
+                if os.path.isfile(inline_file):
+                    inline_files.append( inline_file )
+            else:
+                break
 
 def mail(to, subject, prioflag1, prioflag2, text):
 
@@ -413,9 +425,11 @@ def mail(to, subject, prioflag1, prioflag2, text):
     body_type = MIMEText(text, "%s" % (message_flag), 'UTF-8')
     msg.attach(body_type)
 
+
     # now attach the file
+    # 'octet-stream' added
     if file_format != "":
-        fileMsg = email.mime.base.MIMEBase('application', '')
+        fileMsg = email.mime.base.MIMEBase('application', 'octet-stream')
         fileMsg.set_payload(open(file_format, 'rb').read())
         email.encoders.encode_base64(fileMsg)
         fileMsg.add_header(
