@@ -122,8 +122,7 @@ for line in sendmail_file:
 
 # Empty declaration for option1
 option1 = ""
-while print_bool == True:
-    print ("""
+print ("""
     Social Engineer Toolkit Mass E-Mailer
 
    There are two options on the mass e-mailer, the first would
@@ -139,18 +138,18 @@ while print_bool == True:
     99. Return to main menu.
    """)
 
-    option1 = input(setprompt(["5"], ""))
+option1 = input(setprompt(["5"], ""))
 
-    if option1 == 'exit':
-        exit_set()
+if option1 == 'exit':
+    exit_set()
 
     # Adding a case to guard against unexpected user input
-    if option1 != '1' or '2' or '99':
-        print("Invalid option")
+if option1 == range(3, 99):
+    print("Invalid option")
 
-
-    if option1 =='1' or '2' or '99':
-        pass
+if option1 == '1' or '2' or '99':
+    print("You chose option one")
+    pass
 
 if option1 == '1' or option1 == '2':
     print ("""
@@ -470,7 +469,8 @@ def mail(to, subject, prioflag1, prioflag2, text):
             mailServer.sendmail(from_address, to, io.getvalue())
         else:
             mailServer.sendmail(from_address, to, io.getvalue())
-    except:
+    except (Exception) as e:
+        print_error("SMTP failure: " + repr(e))
         # try logging in with base64 encoding here
         try:
             mailServer.docmd("AUTH LOGIN", smtp_auth_b64(provideruser))
