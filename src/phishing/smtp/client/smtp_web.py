@@ -339,7 +339,7 @@ while (print_conditon):
                         break
 
         # exit mass mailer menu
-        if option1 == '99':
+        if option1 == str(99):
             print("Returning to main menu...")
 
 
