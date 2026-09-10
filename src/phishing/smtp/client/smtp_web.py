@@ -9,6 +9,7 @@ import glob
 import random
 import time
 import base64
+import socket
 # fix for python2 to 3 compatibility
 try:
     from cStringIO import StringIO
@@ -122,7 +123,10 @@ for line in sendmail_file:
 
 # Empty declaration for option1
 option1 = ""
-print ("""
+# the bool and while loop are for handling false user input
+print_conditon = True
+while (print_conditon):
+    print ("""
     Social Engineer Toolkit Mass E-Mailer
 
    There are two options on the mass e-mailer, the first would
@@ -138,278 +142,277 @@ print ("""
     99. Return to main menu.
    """)
 
-option1 = input(setprompt(["5"], ""))
+    option1 = input(setprompt(["5"], ""))
+    if option1 == 99:
+        break
 
-if option1 == 'exit':
-    exit_set()
+    if option1 == 'exit':
+        exit_set()
 
-    # Adding a case to guard against unexpected user input
-if option1 == range(3, 99):
-    print("Invalid option")
-
-if option1 == '1' or '2' or '99':
-    print("You chose option one")
-    pass
-
-if option1 == '1' or option1 == '2':
-    print ("""
+    if option1 == '1' or option1 == '2':
+        print ("""
         Do you want to use a predefined template or craft
         a one time email template.
 
         1. Pre-Defined Template
         2. One-Time Use Email Template
         """)
-    template_choice = input(setprompt(["1"], ""))
-    # if predefined template go here
-    if template_choice == '1':
-        # set path for
-        path = 'src/templates/'
-        filewrite = open(userconfigpath + "email.templates", "w")
-        counter = 0
-        # Pull all files in the templates directory
-        for infile in glob.glob(os.path.join(path, '*.template')):
-            infile = infile.split("/")
-            # grab just the filename
-            infile = infile[2]
-            counter = counter + 1
-            # put it in a format we can use later in a file
-            filewrite.write(infile + " " + str(counter) + "\n")
-        # close the file
-        filewrite.close()
-        # read in formatted filenames
-        fileread = open(userconfigpath + "email.templates", "r").readlines()
-        print_info("Available templates:")
-        for line in fileread:
-            line = line.rstrip()
-            line = line.split(" ")
-            filename = line[0]
-            # read in file
-            fileread2 = open("src/templates/%s" % (filename), "r").readlines()
-            for line2 in fileread2:
-                match = re.search("SUBJECT=", line2)
+        template_choice = input(setprompt(["1"], ""))
+        # if predefined template go here
+        if template_choice == '1':
+            # set path for
+            path = 'src/templates/'
+            filewrite = open(userconfigpath + "email.templates", "w")
+            counter = 0
+            # Pull all files in the templates directory
+            for infile in glob.glob(os.path.join(path, '*.template')):
+                infile = infile.split("/")
+                # grab just the filename
+                infile = infile[2]
+                counter = counter + 1
+                # put it in a format we can use later in a file
+                filewrite.write(infile + " " + str(counter) + "\n")
+            # close the file
+            filewrite.close()
+            # read in formatted filenames
+            fileread = open(userconfigpath + "email.templates", "r").readlines()
+            print_info("Available templates:")
+            for line in fileread:
+                line = line.rstrip()
+                line = line.split(" ")
+                filename = line[0]
+                # read in file
+                fileread2 = open("src/templates/%s" % (filename), "r").readlines()
+                for line2 in fileread2:
+                    match = re.search("SUBJECT=", line2)
+                    if match:
+                        line2 = line2.rstrip()
+                        line2 = line2.split("=")
+                        line2 = line2[1]
+                        # strip double quotes
+                        line2 = line2.replace('"', "")
+                        # display results back
+                        print(line[1] + ": " + line2)
+                    # allow user to select template
+            choice = input(setprompt(["1"], ""))
+            for line in fileread:
+                # split based off of space
+                line = line.split(" ")
+                # search for the choice
+                match = re.search(str(choice), line[1])
                 if match:
-                    line2 = line2.rstrip()
-                    line2 = line2.split("=")
-                    line2 = line2[1]
-                    # strip double quotes
-                    line2 = line2.replace('"', "")
-                    # display results back
-                    print(line[1] + ": " + line2)
-                # allow user to select template
-        choice = input(setprompt(["1"], ""))
-        for line in fileread:
-            # split based off of space
-            line = line.split(" ")
-            # search for the choice
-            match = re.search(str(choice), line[1])
-            if match:
-                # print line[0]
-                extract = line[0]
-                fileopen = open("src/templates/" +
-                                str(extract), "r").readlines()
-                for line2 in fileopen:
-                    match2 = re.search("SUBJECT=", line2)
-                    if match2:
-                        subject = line2.replace('"', "")
-                        subject = subject.split("=")
-                        subject = subject[1]
-                    match3 = re.search("BODY=", line2)
-                    if match3:
-                        body = line2.replace('"', "")
-                        body = body.replace(r'\n', " \n ")
-                        body = body.split("=")
-                        body = body[1]
-                    match4 = re.search("HTML=", line2)
-                    if match4:
-                        message_flag = "html"
-                        body = "\n"
-                        for line3 in fileopen:
-                            if re.match("SUBJECT=", line3):
-                                match = False
-                            elif re.match('HTML="', line3):
-                                match = True
-                            elif re.match('END"', line3):
-                                match = False
-                            elif match:
-                                body = body + line3
-    if template_choice == '2':
-        subject = input(setprompt(["1"], "Subject of the email"))
-        try:
-            html_flag = input(
-                setprompt(["1"], "Send the message as html or plain? 'h' or 'p' [p]"))
-            if html_flag == "" or html_flag == "p":
-                message_flag = "plain"
-            if html_flag == "h":
-                message_flag = "html"
-                    # Here we start to check if we want to track users when they click
-                    # essentially if this flag is turned on, a quick search and replace
-                    # occurs via base64 encoding on the user name. that is then added
-                    # during the def mail function call and the username is posted as
-                    # part of the URL. When we check the users, they can be coorelated
-                    # back to the individual user when they click the link.
+                    # print line[0]
+                    extract = line[0]
+                    fileopen = open("src/templates/" +
+                                    str(extract), "r").readlines()
+                    for line2 in fileopen:
+                        match2 = re.search("SUBJECT=", line2)
+                        if match2:
+                            subject = line2.replace('"', "")
+                            subject = subject.split("=")
+                            subject = subject[1]
+                        match3 = re.search("BODY=", line2)
+                        if match3:
+                            body = line2.replace('"', "")
+                            body = body.replace(r'\n', " \n ")
+                            body = body.split("=")
+                            body = body[1]
+                        match4 = re.search("HTML=", line2)
+                        if match4:
+                            message_flag = "html"
+                            body = "\n"
+                            for line3 in fileopen:
+                                if re.match("SUBJECT=", line3):
+                                    match = False
+                                elif re.match('HTML="', line3):
+                                    match = True
+                                elif re.match('END"', line3):
+                                    match = False
+                                elif match:
+                                    body = body + line3
+        if template_choice == '2':
+            subject = input(setprompt(["1"], "Subject of the email"))
+            try:
+                html_flag = input(
+                    setprompt(["1"], "Send the message as html or plain? 'h' or 'p' [p]"))
+                if html_flag == "" or html_flag == "p":
+                    message_flag = "plain"
+                if html_flag == "h":
+                    message_flag = "html"
+                        # Here we start to check if we want to track users when they click
+                        # essentially if this flag is turned on, a quick search and replace
+                        # occurs via base64 encoding on the user name. that is then added
+                        # during the def mail function call and the username is posted as
+                        # part of the URL. When we check the users, they can be coorelated
+                        # back to the individual user when they click the link.
 
-                    # track email is pulled dynamically from the config as
-                    # TRACK_EMAIL_ADDRESSES
-            if track_email.lower() == "on":
-                        print(
-                            "You have specified to track user email accounts when they are sent. In")
-                        print(
-                            "order for this to work, you will need to specify the URL within the body")
-                        print(
-                            "of the email and where you would like to inject the base64 encoded name.")
-                        print(
-                            "\nWhen a user clicks on the link, the URL Will post back to SET and track")
-                        print(
-                            "each of the users clicks and who the user was. As an example, say my SET")
-                        print(
-                            "website is hosted at http://www.trustedsec.com/index.php and I want to track users.")
-                        print("I would type below " + bcolors.BOLD +
-                            "http://www.trustedsec.com/index.php?INSERTUSERHERE" + bcolors.ENDC + ". Note that in")
-                        print(
-                            "order for SET to work, you will need to specify index.php?INSERTUSERHERE. That is the")
-                        print(
-                            "keyword that SET uses in order to replace the base name with the URL.")
-                        print("\nInsert the FULL url and the " + bcolors.BOLD + "INSERTUSERHERE" + bcolors.ENDC +
-                            "on where you want to insert the base64 name.\n\nNOTE: You must have a index.php and a ? mark seperating the user. YOU MUST USE PHP!")
-                        print(
-                            "\nNote that the actual URL does NOT need to contain index.php but has to be named that for the php code in Apache to work.")
-            print_warning(
-                "IMPORTANT: When finished, type END (all capital) then hit {return} on a new line.")
-            body = input(setprompt(
-            ["1"], "Enter the body of the message, type END (capitals) when finished"))
-            # loop through until they are finished with the body of the subject
-            # line
-            while body != 'exit':
-                try:
-                    body += ("\n")
-                    body_1 = input("Next line of the body: ")
-                    if body_1 == "END":
+                        # track email is pulled dynamically from the config as
+                        # TRACK_EMAIL_ADDRESSES
+                if track_email.lower() == "on":
+                            print(
+                                "You have specified to track user email accounts when they are sent. In")
+                            print(
+                                "order for this to work, you will need to specify the URL within the body")
+                            print(
+                                "of the email and where you would like to inject the base64 encoded name.")
+                            print(
+                                "\nWhen a user clicks on the link, the URL Will post back to SET and track")
+                            print(
+                                "each of the users clicks and who the user was. As an example, say my SET")
+                            print(
+                                "website is hosted at http://www.trustedsec.com/index.php and I want to track users.")
+                            print("I would type below " + bcolors.BOLD +
+                                "http://www.trustedsec.com/index.php?INSERTUSERHERE" + bcolors.ENDC + ". Note that in")
+                            print(
+                                "order for SET to work, you will need to specify index.php?INSERTUSERHERE. That is the")
+                            print(
+                                "keyword that SET uses in order to replace the base name with the URL.")
+                            print("\nInsert the FULL url and the " + bcolors.BOLD + "INSERTUSERHERE" + bcolors.ENDC +
+                                "on where you want to insert the base64 name.\n\nNOTE: You must have a index.php and a ? mark seperating the user. YOU MUST USE PHP!")
+                            print(
+                                "\nNote that the actual URL does NOT need to contain index.php but has to be named that for the php code in Apache to work.")
+                print_warning(
+                    "IMPORTANT: When finished, type END (all capital) then hit {return} on a new line.")
+                body = input(setprompt(
+                ["1"], "Enter the body of the message, type END (capitals) when finished"))
+                # loop through until they are finished with the body of the subject
+                # line
+                while body != 'exit':
+                    try:
+                        body += ("\n")
+                        body_1 = input("Next line of the body: ")
+                        if body_1 == "END":
+                            break
+                        else:
+                            body = body + body_1
+                           # except KeyboardInterrupts (control-c) and pass through.
+                    except KeyboardInterrupt:
                         break
-                    else:
-                        body = body + body_1
-                        # except KeyboardInterrupts (control-c) and pass through.
-                except KeyboardInterrupt:
-                    break
 
-            # if we are tracking emails, this is some cleanup and detection to see
-            # if they entered .html instead or didn't specify insertuserhere
-            if track_email.lower() == "on":
-            # here we replace url with .php if they made a mistake
-                body = body.replace(".html", ".php")
-                if not "?INSERTUSERHERE" in body:
-                    print_error(
-                        "You have track email to on however did not specify ?INSERTUSERHERE.")
-                    print_error(
-                        "Tracking of users will not work and is disabled. Please re-read the instructions.")
-                    pause = input(
-                        "Press {" + bcolors.BOLD + "return" + bcolors.ENDC + "} to continue.")
+                # if we are tracking emails, this is some cleanup and detection to see
+                # if they entered .html instead or didn't specify insertuserhere
+                if track_email.lower() == "on":
+                # here we replace url with .php if they made a mistake
+                    body = body.replace(".html", ".php")
+                    if not "?INSERTUSERHERE" in body:
+                        print_error(
+                            "You have track email to on however did not specify ?INSERTUSERHERE.")
+                        print_error(
+                            "Tracking of users will not work and is disabled. Please re-read the instructions.")
+                        pause = input(
+                            "Press {" + bcolors.BOLD + "return" + bcolors.ENDC + "} to continue.")
 
-    # except KeyboardInterrupts (control-c) and pass through.
-        except KeyboardInterrupt:
-            pass
+        # except KeyboardInterrupts (control-c) and pass through.
+            except KeyboardInterrupt:
+                pass
 
-    # single email
-    if option1 == '1':
-        to = input(setprompt(["1"], "Send email to"))
+        # single email
+        if option1 == '1':
+            to = input(setprompt(["1"], "Send email to"))
 
-    # mass emailer
-    if option1 == '2':
-        print ("""
-    The mass emailer will allow you to send emails to multiple
-    individuals in a list. The format is simple, it will email
-    based off of a line. So it should look like the following:
+        # mass emailer
+        if option1 == '2':
+            print ("""
+        The mass emailer will allow you to send emails to multiple
+        individuals in a list. The format is simple, it will email
+        based off of a line. So it should look like the following:
 
-    john.doe@ihazemail.com
-    jane.doe@ihazemail.com
-    wayne.doe@ihazemail.com
+        john.doe@ihazemail.com
+        jane.doe@ihazemail.com
+        wayne.doe@ihazemail.com
 
-    This will continue through until it reaches the end of the
-    file. You will need to specify where the file is, for example
-    if its in the SET folder, just specify filename.txt (or whatever
-    it is). If its somewhere on the filesystem, enter the full path,
-    for example /home/relik/ihazemails.txt
-    """)
-        filepath = input(
-            setprompt(["1"], "Path to the file to import into SET"))
-        if not os.path.isfile(filepath):
-            while 1:
-                print(
-                    "[!] File not found! Please try again and enter the FULL path to the file.")
-                filepath = input(
-                    setprompt(["1"], "Path to the file to import into SET"))
-                if os.path.isfile(filepath):
-                    break
+        This will continue through until it reaches the end of the
+        file. You will need to specify where the file is, for example
+        if its in the SET folder, just specify filename.txt (or whatever
+        it is). If its somewhere on the filesystem, enter the full path,
+        for example /home/relik/ihazemails.txt
+        """)
+            filepath = input(
+                setprompt(["1"], "Path to the file to import into SET"))
+            if not os.path.isfile(filepath):
+                while 1:
+                    print(
+                        "[!] File not found! Please try again and enter the FULL path to the file.")
+                    filepath = input(
+                        setprompt(["1"], "Path to the file to import into SET"))
+                    if os.path.isfile(filepath):
+                        break
 
-    # exit mass mailer menu
-    if option1 == '99':
-        print("Returning to main menu...")
+        # exit mass mailer menu
+        if option1 == '99':
+            print("Returning to main menu...")
+            break
 
-    if option1 != "99":
-        print(("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (
-            email_provider)))
-        relay = input(setprompt(["1"], ""))
+        if option1 != "99":
+            print(("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (
+                email_provider)))
+            relay = input(setprompt(["1"], ""))
 
-        counter = 0
-        # Specify mail Option Here
-        if relay == '1':
-            provideruser = input(
-                setprompt(["1"], "Your %s email address" % (email_provider)))
-            from_address = provideruser
-            from_displayname = input(
-                setprompt(["1"], "The FROM NAME the user will see"))
-            pwd = getpass.getpass("Email password [NOTE Gmail users will need to get an App Password, as the account password\n"
-                                  "will not work. App Passwords can be attained at https://myaccount.google.com/apppasswords]: ")
-
-
-        # Specify Open-Relay Option Here
-        if relay == '2':
-            from_address = input(
-                setprompt(["1"], "From address (ex: moo@example.com)"))
-            from_displayname = input(
-                setprompt(["1"], "The FROM NAME the user will see"))
-            if sendmail == 0:
-                # Ask for a username and password if we aren't using sendmail
+            counter = 0
+            # Specify mail Option Here
+            if relay == '1':
                 provideruser = input(
-                    setprompt(["1"], "Username for open-relay [blank]"))
-                pwd = getpass.getpass("Password for open-relay [blank]: ")
+                    setprompt(["1"], "Your %s email address" % (email_provider)))
+                from_address = provideruser
+                from_displayname = input(
+                    setprompt(["1"], "The FROM NAME the user will see"))
+                pwd = getpass.getpass("Email password [NOTE Gmail users will need to get an App Password, as the account password\n"
+                                      "will not work. App Passwords can be attained at https://myaccount.google.com/apppasswords]\n"
+                                      "Also note that you should remove any spaces from your app password: ")
 
-            if sendmail == 0:
-                smtp = input(setprompt(
-                ["1"], "SMTP email server address (ex. smtp.youremailserveryouown.com)"))
-                port = input(
-                    setprompt(["1"], "Port number for the SMTP server [25]"))
-                if port == "":
-                    port = ("25")
 
-        # specify if its a high priority or not
-        highpri = yesno_prompt(
-        ["1"], "Flag this message/s as high priority? [yes|no]")
-        if not "YES" in highpri:
-            prioflag1 = ""
-            prioflag2 = ""
-        else:
-            prioflag1 = ' 1 (Highest)'
-            prioflag2 = ' High'
+            # Specify Open-Relay Option Here
+            if relay == '2':
+                from_address = input(
+                    setprompt(["1"], "From address (ex: moo@example.com)"))
+                from_displayname = input(
+                    setprompt(["1"], "The FROM NAME the user will see"))
+                if sendmail == 0:
+                    # Ask for a username and password if we aren't using sendmail
+                    provideruser = input(
+                        setprompt(["1"], "Username for open-relay [blank]"))
+                    pwd = getpass.getpass("Password for open-relay [blank]: ")
 
-        # if we want to attach a file
-        file_format = ""
-        yesno = raw_input("Do you want to attach a file - [y/n]: ")
-        if yesno.lower() == "y" or yesno.lower() == "yes":
-            file_format = raw_input(
-                "Enter the path to the file you want to attach: ")
-            if not os.path.isfile(file_format):
-                file_format = ""
+                if sendmail == 0:
+                    smtp = input(setprompt(
+                    ["1"], "SMTP email server address (ex. smtp.youremailserveryouown.com)"))
+                    port = input(
+                        setprompt(["1"], "Port number for the SMTP server [25]"))
+                    if port == "":
+                        port = ("25")
 
-        inline_files = []
-        while True:
-            yesno = raw_input("Do you want to attach an inline file - [y/n]: ")
-            if yesno.lower() == "y" or yesno.lower() == "yes":
-                inline_file = raw_input(
-                    "Enter the path to the inline file you want to attach: ")
-                if os.path.isfile(inline_file):
-                    inline_files.append( inline_file )
+            # specify if its a high priority or not
+            highpri = yesno_prompt(
+            ["1"], "Flag this message/s as high priority? [yes|no]")
+            if not "YES" in highpri:
+                prioflag1 = ""
+                prioflag2 = ""
             else:
-                break
+                prioflag1 = ' 1 (Highest)'
+                prioflag2 = ' High'
+
+            # if we want to attach a file
+            file_format = ""
+            yesno = raw_input("Do you want to attach a file - [y/n]: ")
+            if yesno.lower() == "y" or yesno.lower() == "yes":
+                file_format = raw_input(
+                    "Enter the path to the file you want to attach: ")
+                if not os.path.isfile(file_format):
+                    file_format = ""
+
+            inline_files = []
+            while True:
+                yesno = raw_input("Do you want to attach an inline file - [y/n]: ")
+                if yesno.lower() == "y" or yesno.lower() == "yes":
+                    inline_file = raw_input(
+                        "Enter the path to the inline file you want to attach: ")
+                    if os.path.isfile(inline_file):
+                        inline_files.append( inline_file )
+                else:
+                    break
+            print_condition = False
+    else:
+        print("Input error")
 
 def mail(to, subject, prioflag1, prioflag2, text):
 
@@ -470,14 +473,7 @@ def mail(to, subject, prioflag1, prioflag2, text):
         else:
             mailServer.sendmail(from_address, to, io.getvalue())
     except (Exception) as e:
-        print_error("SMTP failure: " + repr(e))
-        # try logging in with base64 encoding here
-        try:
-            mailServer.docmd("AUTH LOGIN", smtp_auth_b64(provideruser))
-            mailServer.docmd(smtp_auth_b64(pwd), "")
-
         # except exceptions and print incorrect password
-        except Exception as e:
             print_warning(
                 "It appears your password was incorrect.\nPrinting response: " + (str(e)))
             return_continue()
