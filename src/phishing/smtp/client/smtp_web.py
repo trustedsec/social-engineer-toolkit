@@ -143,7 +143,7 @@ while (print_conditon):
    """)
 
     option1 = input(setprompt(["5"], ""))
-    if option1 == 99:
+    if option1 == str(99):
         break
 
     if option1 == 'exit':
@@ -341,7 +341,8 @@ while (print_conditon):
         # exit mass mailer menu
         if option1 == '99':
             print("Returning to main menu...")
-            break
+
+
 
         if option1 != "99":
             print(("""\n  1. Use a %s Account for your email attack.\n  2. Use your own server or open relay\n""" % (
@@ -410,7 +411,7 @@ while (print_conditon):
                         inline_files.append( inline_file )
                 else:
                     break
-            print_condition = False
+        print_condition = False
     else:
         print("Input error")
 
