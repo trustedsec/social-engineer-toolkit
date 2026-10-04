@@ -6,6 +6,7 @@ import glob
 import re
 import sys
 from src.core.setcore import *
+from src.core.i18n import translate as _
 
 # this is just if the user wants to return to menu
 menu_return = "false"
@@ -15,9 +16,9 @@ counter = 0
 
 # get the menu going
 print("\n")
-print_info_spaces("Social-Engineer Toolkit Third Party Modules menu.")
+print_info_spaces(_("Social-Engineer Toolkit Third Party Modules menu."))
 print_info_spaces(
-    "Please read the readme/modules.txt for information on how to create your own modules.\n")
+    _("Please read the readme/modules.txt for information on how to create your own modules.\n"))
 
 for name in glob.glob("modules/*.py"):
 
@@ -33,7 +34,7 @@ for name in glob.glob("modules/*.py"):
             line = "  " + str(counter) + ". " + line
             print(line)
 
-print("\n  99. Return to the previous menu\n")
+print(_("\n  99. Return to the previous menu\n"))
 choice = raw_input(setprompt(["9"], ""))
 
 if choice == 'exit':
@@ -46,7 +47,7 @@ if choice == '99':
 try:
     choice = int(choice)
 except:
-    print_warning("An integer was not used try again")
+    print_warning(_("An integer was not used try again"))
     choice = raw_input(setprompt(["9"], ""))
 
 # start a new counter to match choice
@@ -78,5 +79,5 @@ if menu_return == "false":
                 exec("%s.main()" % (name))
             # handle the exception if main isn't there
             except Exception as e:
-                raw_input("   [!] There was an issue with a module: %s." % (e))
+                raw_input(_("   [!] There was an issue with a module: %s.") % (e))
                 return_continue()

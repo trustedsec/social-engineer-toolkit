@@ -15,6 +15,7 @@ except NameError:
 
 # import main core functionality into SET
 import src.core.setcore as core
+from src.core.i18n import translate as _
 
 # check which operating system
 operating_system = core.check_os()
@@ -26,8 +27,8 @@ if operating_system == "posix":
     #
 
     if os.geteuid() != 0:
-        print("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)")
-        print("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n")
+        print(_("\n The Social-Engineer Toolkit (SET) - by David Kennedy (ReL1K)"))
+        print(_("\n Not running as root. \n\nExiting the Social-Engineer Toolkit (SET).\n"))
         core.exit_set()
 
 # if we are running in the path no need to change
@@ -59,7 +60,7 @@ with open("/etc/setoolkit/set.config") as fileopen:
     data = fileopen.read()
 
 if "CONFIG_VERSION=7.7.9" not in data:
-    print("[*] Overwriting old config for updates to SET. Backing up your old one in /etc/setoolkit/")
+    print(_("[*] Overwriting old config for updates to SET. Backing up your old one in /etc/setoolkit/"))
     shutil.move("/etc/setoolkit/set.config", "/etc/setoolkit/set.config.bak")
     shutil.copyfile("src/core/config.baseline", "/etc/setoolkit/set.config")
 
@@ -98,7 +99,7 @@ if not os.path.isdir(os.path.join(core.userconfigpath, "reports")):
 try:
     from Crypto.Cipher import AES
 except ImportError:
-    print("[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector.")
+    print(_("[!] The python-pycrypto python module not installed. You will lose the ability to use multi-pyinjector."))
     pass
 
 #
@@ -171,7 +172,7 @@ try:
             for line in fileopen:
                 print((line.rstrip()))
 
-        print("{0}The Social-Engineer Toolkit is designed purely"
+        print(_("{0}The Social-Engineer Toolkit is designed purely"
               " for good and not evil. If you are planning on "
               "using this tool for malicious purposes that are "
               "not authorized by the company you are performing "
@@ -179,16 +180,16 @@ try:
               "service and license of this toolset. By hitting "
               "yes (only one time), you agree to the terms of "
               "service and that you will only use this tool for "
-              "lawful purposes only.{1}".format(core.bcolors.RED, core.bcolors.ENDC))
+              "lawful purposes only.{1}").format(core.bcolors.RED, core.bcolors.ENDC))
         print(core.bcolors.GREEN)
-        choice = input("\nDo you agree to the terms of service [y/n]: ")
+        choice = input(_("\nDo you agree to the terms of service [y/n]: "))
         choice += " "  # b/c method below
-        if choice[0].lower() == "y":
+        if choice[0].lower() == "y" or choice[0].lower() == "o":
             with open("src/agreement4", "w") as filewrite:
                 filewrite.write("user accepted")
             print(core.bcolors.ENDC)
         else:
-            print(core.bcolors.ENDC + "[!] Exiting the Social-Engineer Toolkit, have a nice day." + core.bcolors.ENDC)
+            print(core.bcolors.ENDC + _("[!] Exiting the Social-Engineer Toolkit, have a nice day.") + core.bcolors.ENDC)
             sys.exit()
 
     while True:
@@ -196,35 +197,35 @@ try:
         show_main_menu = core.create_menu(text.main_text, text.main_menu)
 
         # special case of list item 99
-        print('\n  99) Exit the Social-Engineer Toolkit\n')
+        print(_('\n  99) Exit the Social-Engineer Toolkit\n'))
 
         # main core menu
         main_menu_choice = (input(core.setprompt("0", "")))
 
         # funny
         if main_menu_choice == "hugs":
-            core.print_warning("Have you given someone a hug today? Remember a hug can change the world.")
-            pause = input("\nPlease give someone a hug then press {return} to continue.")
+            core.print_warning(_("Have you given someone a hug today? Remember a hug can change the world."))
+            pause = input(_("\nPlease give someone a hug then press {return} to continue."))
 
         # funny2
         if main_menu_choice == "freehugs":
-            core.print_warning("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG.")
-            pause = input("\nDo not press return until giving someone a hug.")
+            core.print_warning(_("HUGS ARE ALWAYS FREE! NEVER CHARGE! ALWAYS HUG."))
+            pause = input(_("\nDo not press return until giving someone a hug."))
 
         # funny3
         if main_menu_choice == "derbycon":
-            core.print_warning(core.bcolors.BOLD + "YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 7.0 'Legacy' -- September 22th - 24th 2017" + core.bcolors.ENDC)
-            pause = input(core.bcolors.BOLD + "\nDon't miss it! Sep 23 - Sep 25th! Press {return} to continue." + core.bcolors.ENDC)
+            core.print_warning(core.bcolors.BOLD + _("YAYYYYYYYYYYYYYYYYYYYYYY DerbyCon.\n\nDerbyCon 7.0 'Legacy' -- September 22th - 24th 2017") + core.bcolors.ENDC)
+            pause = input(core.bcolors.BOLD + _("\nDon't miss it! Sep 23 - Sep 25th! Press {return} to continue.") + core.bcolors.ENDC)
 
         # rance
         if main_menu_choice == "rance":
-            core.print_warning(core.bcolors.BOLD + "We miss you buddy. David Jones (Rance) changed a lot of us and you'll always be apart of our lives (and SET). Fuck Cancer." + core.bcolors.ENDC)
-            pause = input("Press {return} to continue.")
+            core.print_warning(core.bcolors.BOLD + _("We miss you buddy. David Jones (Rance) changed a lot of us and you'll always be apart of our lives (and SET). Fuck Cancer.") + core.bcolors.ENDC)
+            pause = input(_("Press {return} to continue."))
 
         # cavs
         if main_menu_choice == "cavs":
-            core.print_warning(core.bcolors.BOLD + "2015-2016 CHAMPS BABY!!! C l e e e e e  e v  eeee l a a n n d d d d d d d d d d d " + core.bcolors.ENDC)
-            pause = input("Press {return} to continue.")
+            core.print_warning(core.bcolors.BOLD + _("2015-2016 CHAMPS BABY!!! C l e e e e e  e v  eeee l a a n n d d d d d d d d d d d ") + core.bcolors.ENDC)
+            pause = input(_("Press {return} to continue."))
 
         # quit out
         if main_menu_choice == 'exit' or main_menu_choice == "99" or main_menu_choice == "quit":
@@ -273,14 +274,14 @@ try:
 
 # handle keyboard interrupts
 except KeyboardInterrupt:
-    print(("\n\nThank you for {0}shopping{1} with the Social-Engineer Toolkit."
+    print((_("\n\nThank you for {0}shopping{1} with the Social-Engineer Toolkit."
            "\n\nHack the Gibson...and remember...hugs are worth more "
-           "than handshakes.\n".format(core.bcolors.RED, core.bcolors.ENDC)))
+           "than handshakes.\n").format(core.bcolors.RED, core.bcolors.ENDC)))
 
 # handle exceptions
 except Exception as error:
     core.log(error)
-    print("\n\n[!] Something went wrong, printing the error: " + str(error))
+    print(_("\n\n[!] Something went wrong, printing the error: ") + str(error))
 
 # cleanup routine
 core.cleanup_routine()

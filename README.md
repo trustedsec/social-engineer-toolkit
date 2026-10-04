@@ -1,20 +1,22 @@
 # The Social-Engineer Toolkit (SET)
 
-The Social-Engineer Toolkit is an open-source penetration testing framework for authorized social-engineering assessments. SET provides guided attack vectors for security teams that need to test user awareness, validate controls, and run consent-based red-team exercises.
+*[Read this in English](https://github.com/trustedsec/social-engineer-toolkit)*
 
-SET is a TrustedSec project written by David Kennedy (ReL1K) / @HackingDave.
+Le Social-Engineer Toolkit est un framework de tests d'intrusion open source destiné aux évaluations d'ingénierie sociale autorisées. SET propose des vecteurs d'attaque guidés pour les équipes de sécurité qui doivent tester la vigilance des utilisateurs, valider des contrôles de sécurité et mener des exercices red-team réalisés avec le consentement des parties concernées.
 
-## Responsible Use
+SET est un projet TrustedSec écrit par David Kennedy (ReL1K) / @HackingDave.
 
-SET is only for authorized testing where explicit permission and scope have been established. Do not use SET against systems, accounts, networks, or people without consent. Review the license in [readme/LICENSE](readme/LICENSE) before using or distributing SET.
+## Utilisation responsable
 
-## Supported Platforms
+SET est destiné uniquement à des tests autorisés, pour lesquels une permission explicite et un périmètre ont été définis. N'utilisez pas SET contre des systèmes, comptes, réseaux ou personnes sans leur consentement. Consultez la licence dans [readme/LICENSE](readme/LICENSE) avant d'utiliser ou de distribuer SET.
+
+## Plateformes prises en charge
 
 - Linux
-- macOS, experimental
-- Windows through WSL/WSL2 Kali or another supported Linux environment
+- macOS, expérimental
+- Windows via WSL/WSL2 Kali ou un autre environnement Linux pris en charge
 
-SET 8.1.3 targets Python 3.11 through Python 3.13.
+SET 8.1.3 cible Python 3.11 à 3.13.
 
 ## Installation
 
@@ -25,7 +27,7 @@ sudo apt update
 sudo apt install set -y
 ```
 
-### From Source
+### Depuis les sources
 
 ```bash
 git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
@@ -36,31 +38,42 @@ python -m pip install --upgrade pip
 python -m pip install -e .
 ```
 
-For the legacy system-wide layout, run the installer with elevated privileges:
+Pour l'ancienne disposition système, lancez l'installateur avec des privilèges élevés :
 
 ```bash
 sudo python3 setup.py
 ```
 
-The legacy installer copies SET to `/usr/local/share/setoolkit`, writes `/etc/setoolkit/set.config`, and creates `/usr/local/bin/setoolkit`.
+L'installateur historique copie SET vers `/usr/local/share/setoolkit`, écrit `/etc/setoolkit/set.config`, et crée `/usr/local/bin/setoolkit`.
 
-## Usage
+## Utilisation
 
-Launch the interactive console:
+Lancez la console interactive :
 
 ```bash
 sudo setoolkit
 ```
 
-From a source checkout, you can also run:
+Depuis une copie des sources, vous pouvez aussi lancer :
 
 ```bash
 sudo ./setoolkit
 ```
 
-The full user manual is available at [readme/User_Manual.pdf](https://github.com/trustedsec/social-engineer-toolkit/raw/master/readme/User_Manual.pdf).
+Le manuel utilisateur complet est disponible sur [readme/User_Manual.pdf](https://github.com/trustedsec/social-engineer-toolkit/raw/master/readme/User_Manual.pdf).
 
-## Development
+## Langue
+
+Ce fork est bilingue. Par défaut, SET s'affiche en anglais, exactement comme en amont. Pour basculer l'interface en français, définissez `SET_LANG=fr` avant de lancer l'outil :
+
+```bash
+export SET_LANG=fr
+sudo -E setoolkit
+```
+
+(le `-E` conserve la variable d'environnement sous `sudo`). Toute valeur autre que `fr` retombe sur l'anglais. Les chaînes françaises vivent dans [src/core/i18n_fr.py](src/core/i18n_fr.py) ; le mécanisme de traduction est dans [src/core/i18n.py](src/core/i18n.py).
+
+## Développement
 
 ```bash
 python -m pip install -e .
@@ -69,10 +82,14 @@ python -m compileall -q .
 pytest -q
 ```
 
-## Security Reports
+## Signalement de failles de sécurité
 
-Please report vulnerabilities through the process in [SECURITY.md](SECURITY.md). Do not open public issues for exploitable vulnerabilities.
+Merci de signaler les vulnérabilités en suivant le processus décrit dans [SECURITY.md](SECURITY.md). N'ouvrez pas d'issue publique pour une vulnérabilité exploitable.
 
-## Bugs and Enhancements
+## Bugs et suggestions
 
-For non-sensitive bug reports or enhancement requests, open an issue at https://github.com/trustedsec/social-engineer-toolkit/issues with SET version, platform, Python version, and reproduction steps.
+Pour les rapports de bugs non sensibles ou les demandes d'amélioration, ouvrez une issue sur https://github.com/trustedsec/social-engineer-toolkit/issues en précisant la version de SET, la plateforme, la version de Python et les étapes de reproduction.
+
+---
+
+*Cette traduction française est maintenue dans un fork communautaire ([abiyeenzo/social-engineer-toolkit](https://github.com/abiyeenzo/social-engineer-toolkit)) et n'est pas affiliée à TrustedSec.*

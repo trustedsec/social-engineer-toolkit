@@ -17,6 +17,7 @@ import string
 import inspect
 import base64
 from src.core import dictionaries
+from src.core.i18n import translate as _
 import src.core.minifakedns
 import io
 import trace
@@ -260,13 +261,13 @@ def yesno_prompt(category, text):
             response = "YES"
             valid_response = True
         else:
-            print_warning("valid responses are 'n|y|N|Y|no|yes|No|Yes|NO|YES'")
+            print_warning(_("valid responses are 'n|y|N|Y|no|yes|No|Yes|NO|YES'"))
     return response
 
 
 def return_continue():
-    print(("\n      Press " + bcolors.RED +
-           "<return> " + bcolors.ENDC + "to continue"))
+    print((_("\n      Press ") + bcolors.RED +
+           _("<return> ") + bcolors.ENDC + _("to continue")))
     pause = raw_input()
 
 # DEBUGGING #############
@@ -350,7 +351,7 @@ class create_menu:
                 else:
                     print(('  %s) %s' % (menunum, option)))
             else:
-                print('\n  99) Return to Main Menu\n')
+                print(_('\n  99) Return to Main Menu\n'))
         return
 
 
@@ -373,7 +374,7 @@ def validate_ip(address):
                 debug_msg("setcore", "this is a valid IP address", 5)
                 return True
             else:
-                print_error("This is not a valid IP address...")
+                print_error(_("This is not a valid IP address..."))
                 raise socket.error
 
         else:
@@ -664,7 +665,7 @@ def site_cloner(website, exportpath, *args):
         import cloner
 
     # copy the file to a new folder
-    print_status("Site has been successfully cloned and is: " + exportpath)
+    print_status(_("Site has been successfully cloned and is: ") + exportpath)
     os.makedirs(exportpath, exist_ok=True)
     web_clone_path = os.path.join(userconfigpath, "web_clone")
     for entry in os.listdir(web_clone_path):
@@ -932,21 +933,22 @@ def show_banner(define_version, graphic):
     else:
         os.system("clear")
 
-    print(bcolors.BLUE + """
-[---]        The Social-Engineer Toolkit (""" + bcolors.YELLOW + """SET""" + bcolors.BLUE + """)         [---]
-[---]        Created by:""" + bcolors.RED + """ David Kennedy """ + bcolors.BLUE + """(""" + bcolors.YELLOW + """ReL1K""" + bcolors.BLUE + """)         [---]
-                      Version: """ + bcolors.RED + """%s""" % (define_version) + bcolors.BLUE + """
-                    Codename: '""" + bcolors.YELLOW + """Maverick""" + bcolors.ENDC + bcolors.BLUE + """'
-[---]        Follow us on Twitter: """ + bcolors.PURPLE + """@TrustedSec""" + bcolors.BLUE + """         [---]
-[---]        Follow me on Twitter: """ + bcolors.PURPLE + """@HackingDave""" + bcolors.BLUE + """        [---]
-[---]       Homepage: """ + bcolors.YELLOW + """https://www.trustedsec.com""" + bcolors.BLUE + """       [---]
-""" + bcolors.GREEN + """        Welcome to the Social-Engineer Toolkit (SET).
+    print(_("""{blue}
+[---]        The Social-Engineer Toolkit ({yellow}SET{blue})         [---]
+[---]        Created by:{red} David Kennedy {blue}({yellow}ReL1K{blue})         [---]
+                      Version: {red}{version}{blue}
+                    Codename: '{yellow}Maverick{endc}{blue}'
+[---]        Follow us on Twitter: {purple}@TrustedSec{blue}         [---]
+[---]        Follow me on Twitter: {purple}@HackingDave{blue}        [---]
+[---]       Homepage: {yellow}https://www.trustedsec.com{blue}       [---]
+{green}        Welcome to the Social-Engineer Toolkit (SET).
          The one stop shop for all of your SE needs.
-""")
-    print(bcolors.BOLD + """   The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: """ +
+""").format(blue=bcolors.BLUE, yellow=bcolors.YELLOW, red=bcolors.RED, purple=bcolors.PURPLE,
+            green=bcolors.GREEN, endc=bcolors.ENDC, version=define_version))
+    print(bcolors.BOLD + _("   The Social-Engineer Toolkit is a product of TrustedSec.\n\n           Visit: ") +
           bcolors.GREEN + """https://www.trustedsec.com\n""" + bcolors.ENDC)
-    print(bcolors.BLUE + """   It's easy to update using the PenTesters Framework! (PTF)\nVisit """ + bcolors.YELLOW +
-          """https://github.com/trustedsec/ptf""" + bcolors.BLUE + """ to update all your tools!\n\n""" + bcolors.ENDC)
+    print(bcolors.BLUE + _("   It's easy to update using the PenTesters Framework! (PTF)\nVisit ") + bcolors.YELLOW +
+          """https://github.com/trustedsec/ptf""" + bcolors.BLUE + _(" to update all your tools!\n\n") + bcolors.ENDC)
 
     # here we check if  there is a new version of SET - if there is, then
     # display a banner
@@ -975,8 +977,8 @@ def show_banner(define_version, graphic):
 
             if cv != version:
                 if version != "":
-                    print(bcolors.RED + "          There is a new version of SET available.\n                    " + bcolors.GREEN + " Your version: " + bcolors.RED + cv + bcolors.GREEN +
-                          "\n                  Current version: " + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + "\n\nPlease update SET to the latest before submitting any git issues.\n\n" + bcolors.ENDC)
+                    print(bcolors.RED + _("          There is a new version of SET available.\n                    ") + bcolors.GREEN + _(" Your version: ") + bcolors.RED + cv + bcolors.GREEN +
+                          _("\n                  Current version: ") + bcolors.ENDC + bcolors.BOLD + version + bcolors.YELLOW + _("\n\nPlease update SET to the latest before submitting any git issues.\n\n") + bcolors.ENDC)
 
         # why urllib and sockets cant control DNS resolvers is beyond me - so
         # we use this as a hack job to add a delay and kill if updates are
@@ -990,7 +992,7 @@ def show_banner(define_version, graphic):
         # If thread is still active
         if p.is_alive():
             print(
-                bcolors.RED + " Unable to check for new version of SET (is your network up?)\n" + bcolors.ENDC)
+                bcolors.RED + _(" Unable to check for new version of SET (is your network up?)\n") + bcolors.ENDC)
             # terminate the process
             p.terminate()
             p.join()
@@ -1706,8 +1708,8 @@ def shellcode_replace(ipaddr, port, shellcode):
 
 def exit_set():
     cleanup_routine()
-    print("\n\n Thank you for " + bcolors.RED + "shopping" + bcolors.ENDC +
-          " with the Social-Engineer Toolkit.\n\n Hack the Gibson...and remember...hugs are worth more than handshakes.\n")
+    print(_("\n\n Thank you for ") + bcolors.RED + _("shopping") + bcolors.ENDC +
+          _(" with the Social-Engineer Toolkit.\n\n Hack the Gibson...and remember...hugs are worth more than handshakes.\n"))
     sys.exit()
 
 
